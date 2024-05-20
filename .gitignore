@@ -485,12 +485,13 @@ phpunit.phar
 /frontend/web/index-test.php
 /frontend/runtime
 /frontend/web/robots.txt
-/backend/web/storage
+
 
 /backend/web/index.php
-/backend/web/files
 /backend/web/index-test.php
 /backend/runtime
+/backend/web/assets
+/backend/web/storage
 /backend/web/robots.txt
 
 
