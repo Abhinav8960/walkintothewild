@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\animal\MasterAnimalSearch $model */
+/** @var common\models\master\bonusexperience\MasterBonusExperienceSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
-        <?= $form->field($model, 'name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
+        <?= $form->field($model, 'title')->textInput(['placeholder' => 'Search by Title'])->label(false) ?>
     </div>
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
@@ -32,8 +32,12 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
+
     <div class="col-md-3">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
+        <div class="form-group">
+            <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
+        </div>
     </div>
+
 </div>
 <?php ActiveForm::end(); ?>

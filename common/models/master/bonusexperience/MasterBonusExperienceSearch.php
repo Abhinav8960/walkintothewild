@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\master\animal;
+namespace common\models\master\bonusexperience;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\animal\MasterAnimal;
+use common\models\master\bonusexperience\MasterBonusExperience;
 
 /**
- * MasterAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
+ * MasterBonusExperienceSearch represents the model behind the search form of `common\models\master\bonusexperience\MasterBonusExperience`.
  */
-class MasterAnimalSearch extends MasterAnimal
+class MasterBonusExperienceSearch extends MasterBonusExperience
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,7 @@ class MasterAnimalSearch extends MasterAnimal
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -41,7 +40,7 @@ class MasterAnimalSearch extends MasterAnimal
      */
     public function search($params)
     {
-        $query = MasterAnimal::find()->where(['status' => [1, 2]]);
+        $query = MasterBonusExperience::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -60,9 +59,6 @@ class MasterAnimalSearch extends MasterAnimal
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'slug' => $this->slug,
-            'know_as' => $this->know_as,
-            'image' => $this->image,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
@@ -70,7 +66,7 @@ class MasterAnimalSearch extends MasterAnimal
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
     }

@@ -6,11 +6,11 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\office\MasterDepartmentSearch $searchModel */
+/** @var common\models\master\bonusexperience\MasterBonusExperienceSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Vehicle';
-$this->params['breadcrumbs_home_url'] = '/master/vehicle';
+$this->title = 'Bonus Experience';
+$this->params['breadcrumbs_home_url'] = '/master/bonus-experience';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -30,16 +30,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'vehicle_name',
-                    [
-                        'attribute' => 'icon',
-                        'format' => 'html',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'label' => 'Icon',
-                        'value' => function ($model) {
-                            return Html::img($model->Imagepath, ['alt' => 'Vehicle Photograph', 'style' => 'max-width:60px;']);
-                        }
-                    ],
+                    'title',
 
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
@@ -79,7 +70,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->vehicle_name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

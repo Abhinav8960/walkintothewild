@@ -3,27 +3,26 @@
 namespace backend\modules\master\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\master\animal\form\MasterAnimalForm;
-use common\models\master\animal\MasterAnimal;
-use common\models\master\animal\MasterAnimalSearch;
-use yii\web\UploadedFile;
+use common\models\master\bonusexperience\form\MasterBonusExperienceForm;
+use common\models\master\bonusexperience\MasterBonusExperience;
+use common\models\master\bonusexperience\MasterBonusExperienceSearch;
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * AnimalController.
+ * BonusExperienceController.
  */
-class AnimalController extends Controller
+class BonusExperienceController extends Controller
 {
     /**
-     * Lists all MasterAnimal models.
+     * Lists all MasterCenterSeatType models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new MasterAnimalSearch();
+        $searchModel = new MasterBonusExperienceSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -41,23 +40,21 @@ class AnimalController extends Controller
      */
     public function actionCreate()
     {
-        $model = new MasterAnimalForm();
+        $model = new MasterBonusExperienceForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->image = UploadedFile::getInstance($model, 'image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->animal_model->save(false)) {
-                        $model->uploadFile();
+                    if ($model->bonus_experience_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->animal_model->loadDefaultValues();
+            $model->bonus_experience_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -66,7 +63,7 @@ class AnimalController extends Controller
     }
 
     /**
-     * Updates an existing MasterAnimal model.
+     * Updates an existing MasterCenterSeatType model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -74,24 +71,22 @@ class AnimalController extends Controller
      */
     public function actionUpdate($id)
     {
-        $animal_model = $this->findModel($id);
-        $model = new MasterAnimalForm($animal_model);
+        $bonus_experience_model = $this->findModel($id);
+        $model = new MasterBonusExperienceForm($bonus_experience_model);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->image = UploadedFile::getInstance($model, 'image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->animal_model->save()) {
-                        $model->uploadFile($model->animal_model->id);
-                        $model->animal_model->save();
+                    if ($model->bonus_experience_model->save()) {
+                        $model->bonus_experience_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->animal_model->loadDefaultValues();
+            $model->bonus_experience_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -100,7 +95,7 @@ class AnimalController extends Controller
     }
 
 
-    
+
     public function actionView($id)
     {
         $model = $this->findModel($id);
@@ -113,7 +108,7 @@ class AnimalController extends Controller
 
 
     /**
-     * Deletes an existing MasterAnimal model.
+     * Deletes an existing MasterCenterSeatType model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -122,7 +117,7 @@ class AnimalController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->name = $model->id . '_' . $model->name;
+        $model->title = $model->id . '_' . $model->title;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
@@ -130,15 +125,15 @@ class AnimalController extends Controller
     }
 
     /**
-     * Finds the MasterAnimal model based on its primary key value.
+     * Finds the MasterCenterSeatType model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MasterAnimal the loaded model
+     * @return MasterCenterSeatType the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterBonusExperience::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

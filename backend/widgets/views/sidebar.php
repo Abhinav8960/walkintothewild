@@ -50,8 +50,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li><a class="slide-item" href="/meta/package">Package</a></li>
 						<li><a class="slide-item" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
 						<li><a class="slide-item" href="/meta/animal-type">Animal Type</a></li>
-						<li><a class="slide-item" href="/meta/team-condition">Team & Condition</a></li>
-						<li><a class="slide-item" href="/meta/email">Email</a></li>
+						<li><a class="slide-item" href="/meta/term-condition-type">Term & Condition</a></li>
 					</ul>
 				</li>
 

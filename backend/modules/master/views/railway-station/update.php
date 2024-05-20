@@ -1,13 +1,15 @@
 <?php
 
-/** @var yii\web\View $this */
-/** @var common\models\master\vehicle\MasterVehicle $model */
+use yii\helpers\Html;
 
-$this->title = 'Vehicle';
+/** @var yii\web\View $this */
+/** @var common\models\master\animal\MasterAnimal $model */
+
+$this->title = 'Railway Station';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => 'Master', 'url' => '#'];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/vehicle'];
-$this->params['breadcrumbs'][] = "Create";
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/railway-station'];
+$this->params['breadcrumbs'][] = "Update";
 $this->params['title'] = $this->title;
 ?>
 
