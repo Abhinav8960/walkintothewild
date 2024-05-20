@@ -18,13 +18,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
 
 ?>
-
-<?php Pjax::begin([
-    'id' => 'grid-data',
-    'enablePushState' => false,
-    'enableReplaceState' => false,
-    'timeout' => false,
-]); ?>
 <div class="card">
 
     <div class="card-body">
@@ -66,7 +59,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
-                                ', ['update', 'id' => $model->id], [
+                                ', ['view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
 
@@ -86,7 +79,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->id . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

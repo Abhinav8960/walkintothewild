@@ -18,7 +18,7 @@ use yii\bootstrap5\ActiveForm;
 
 
     <div class="col-md-6">
-        <?= $form->field($model, 'know_as')->textInput(['maxlength' => true, 'placeholder' => 'Enter ']) ?>
+        <?= $form->field($model, 'know_as')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
     </div>
     <div class="col-md-5">
         <?= $form->field($model, 'image')->fileInput() ?>
@@ -36,6 +36,13 @@ use yii\bootstrap5\ActiveForm;
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
         </div>
     <?php } ?>
+
+    <div class="col-md-12">
+        <?= $form->field($model, 'short_description')->textarea() ?>
+    </div>
+    <div class="col-md-12">
+        <?= $form->field($model, 'long_description')->textarea() ?>
+    </div>
     <hr>
     <div class="col-md-12">
         <div class="form-group">

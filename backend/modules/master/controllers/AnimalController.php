@@ -72,7 +72,7 @@ class AnimalController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate( $id)
+    public function actionUpdate($id)
     {
         $animal_model = $this->findModel($id);
         $model = new MasterAnimalForm($animal_model);
@@ -99,6 +99,17 @@ class AnimalController extends Controller
         ]);
     }
 
+
+    
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
 
 
     /**

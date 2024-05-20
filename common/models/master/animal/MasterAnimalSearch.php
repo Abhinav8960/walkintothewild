@@ -41,7 +41,7 @@ class MasterAnimalSearch extends MasterAnimal
      */
     public function search($params)
     {
-        $query = MasterAnimal::find();
+        $query = MasterAnimal::find()->where(['status' => [1, 0]]);
 
         // add conditions that should always apply here
 

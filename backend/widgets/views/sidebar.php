@@ -136,7 +136,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				</li>
 
 				<li class="slide">
-					<a class="side-menu__item" href="widgets.html"> <img src="/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
+					<a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
 						<span class="side-menu__label">Logout</span></a>
 				</li>
 

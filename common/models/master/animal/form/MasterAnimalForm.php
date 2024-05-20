@@ -18,6 +18,8 @@ class MasterAnimalForm extends model
     public $slug;
     public $name;
     public $know_as;
+    public $short_description;
+    public $long_description;
     public $image;
     public $status;
     public $status_option = [];
@@ -39,6 +41,8 @@ class MasterAnimalForm extends model
             $this->slug = $this->animal_model->slug;
             $this->know_as = $this->animal_model->know_as;
             $this->name = $this->animal_model->name;
+            $this->short_description = $this->animal_model->short_description;
+            $this->long_description = $this->animal_model->long_description;
             $this->status = $this->animal_model->status;
         }
 
@@ -52,10 +56,12 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'short_description'], 'required'],
             [['status'], 'integer'],
             [['name', 'slug', 'know_as'], 'string', 'max' => 255],
+            [['short_description'], 'string', 'max' => 512],
             [['status'], 'default', 'value' => 1],
+            [['long_description'], 'safe']
 
         ];
     }
@@ -81,6 +87,8 @@ class MasterAnimalForm extends model
         $this->animal_model->slug = $this->slug;
         $this->animal_model->know_as = $this->know_as;
         $this->animal_model->name = $this->name;
+        $this->animal_model->short_description = $this->short_description;
+        $this->animal_model->long_description = $this->long_description;
         $this->animal_model->status = $this->status;
     }
 
