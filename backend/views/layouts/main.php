@@ -62,8 +62,13 @@ AppAsset::register($this);
             </div>
         </div>
 
-        
+
         <!-- END #content -->
+
+
+        <!-- BEGIN Setting -->
+        <?= \backend\widgets\Setting::widget() ?>
+        <!-- END Setting -->
     </div>
     <!-- END #app -->
     <?php $this->endBody() ?>

@@ -15,7 +15,7 @@ class NovaAppAsset extends AssetBundle
     ];
     public $css = [
         'css/icons.css',
-        'css/custom.css',
+        // 'css/custom.css',
         'css/skin-modes.css',
         'css/style-dark.css',
         'css/style-transparent.css',

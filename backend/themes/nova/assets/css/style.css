@@ -16293,12 +16293,13 @@ a.tag-addon:hover {
 }
 
 
-.table-bordered thead th, .table-bordered thead td {
-    border-top-width: 1px;
-    padding-top: 11px;
-    padding-bottom: 11px;
-    background-color: #237729 !important;
-    color: #fff;
+.table-bordered thead th,
+.table-bordered thead td {
+  border-top-width: 1px;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  background-color: #237729 !important;
+  color: #fff;
 }
 
 .fade:not(.show) {
@@ -112218,6 +112219,27 @@ a.text-dark:focus {
   color: #1E1E1E;
   background-color: #F7BF39;
   border-color: #F7BF39;
+}
+
+
+
+.table_design thead th {
+  padding: 19px;
+  border-bottom: 0;
+  color: #fff;
+
+}
+
+.table_design thead {
+  background: #237729;
+}
+
+
+
+.table_design.table>tbody>tr>td {
+  vertical-align: middle;
+  border-bottom: 0 !important;
+
 }
 
 /*# sourceMappingURL=style.css.map */
