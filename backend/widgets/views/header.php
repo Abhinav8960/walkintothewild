@@ -40,7 +40,7 @@
 									</div>
 									<a class="dropdown-item" href="profile.html"><i class="far fa-user-circle"></i>Profile</a>
 									<a class="dropdown-item" href="mail-settings.html"><i class="far fa-sun"></i> Settings</a>
-									<a class="dropdown-item" href="signup.html"><i class="far fa-arrow-alt-circle-left"></i> Sign Out</a>
+									<a class="dropdown-item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"><i class="far fa-arrow-alt-circle-left"></i> Sign Out</a>
 								</div>
 							</li>
 						</ul>
