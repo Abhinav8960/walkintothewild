@@ -19,7 +19,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			<div class="slide-left disabled" id="slide-left"><img src="/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
 			<ul class="side-menu">
 				<li class="slide">
-					<a class="side-menu__item" href="widgets.html"><img src="/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
+					<a class="side-menu__item" href="/"><img src="/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
 				<li class="slide <?= in_array($active_url, array(
 										"/master",
