@@ -53,10 +53,10 @@ class MasterVehicleForm extends model
             // [['icon'],'safe'],
             [
                 ['icon'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 250,
-                'maxWidth' => 250,
-                'maxHeight' => 250,
-                'minHeight' => 250,
+                'minWidth' => 75,
+                'maxWidth' => 75,
+                'maxHeight' => 75,
+                'minHeight' => 75,
                 'maxSize' => 100 * 1024
             ],
         ];
@@ -69,7 +69,7 @@ class MasterVehicleForm extends model
     {
         return [
             'vehicle_name' => 'Vehicle Name',
-            'icon' => 'Icon  (JPEG /JPG or PNG / 250 Pixels x 250 Pixels / 150 KB)',
+            'icon' => 'Icon  (JPEG /JPG or PNG / 75 Pixels x 75 Pixels / 150 KB)',
             'status' => 'Status',
         ];
     }
