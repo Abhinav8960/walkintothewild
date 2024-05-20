@@ -2,24 +2,22 @@
 
 namespace backend\modules\meta\controllers;
 
-
-use common\models\meta\MetaWildLifeType;
-
+use common\models\meta\MetaTermConditionType;
 use yii\web\Controller;
 
 /**
- * WildLifeTypeController.
+ * TermConditionTypeController.
  */
-class WildLifeTypeController extends Controller
+class TermConditionTypeController extends Controller
 {
     /**
-     * Lists all MetaWildLifeType models.
+     * Lists all MetaTermConditionType models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model =  MetaWildLifeType::find()->where(['status' => 1])->all();
+        $model =  MetaTermConditionType::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'models' => $model,

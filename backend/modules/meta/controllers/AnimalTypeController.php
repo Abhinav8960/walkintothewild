@@ -2,24 +2,22 @@
 
 namespace backend\modules\meta\controllers;
 
-
-use common\models\meta\MetaWildLifeType;
-
+use common\models\meta\MetaAnimalType;
 use yii\web\Controller;
 
 /**
- * WildLifeTypeController.
+ * AnimalTypeController.
  */
-class WildLifeTypeController extends Controller
+class AnimalTypeController extends Controller
 {
     /**
-     * Lists all MetaWildLifeType models.
+     * Lists all MetaAnimalType models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model =  MetaWildLifeType::find()->where(['status' => 1])->all();
+        $model =  MetaAnimalType::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'models' => $model,

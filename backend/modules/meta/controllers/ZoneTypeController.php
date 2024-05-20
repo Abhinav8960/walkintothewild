@@ -2,24 +2,22 @@
 
 namespace backend\modules\meta\controllers;
 
-
-use common\models\meta\MetaWildLifeType;
-
+use common\models\meta\MetaZoneType;
 use yii\web\Controller;
 
 /**
- * WildLifeTypeController.
+ * ZoneTypeController.
  */
-class WildLifeTypeController extends Controller
+class ZoneTypeController extends Controller
 {
     /**
-     * Lists all MetaWildLifeType models.
+     * Lists all MetaZoneType models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model =  MetaWildLifeType::find()->where(['status' => 1])->all();
+        $model =  MetaZoneType::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'models' => $model,

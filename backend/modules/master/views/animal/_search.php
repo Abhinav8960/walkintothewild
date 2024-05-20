@@ -32,24 +32,8 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
-
+    <div class="col-md-3">
+        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
+    </div>
 </div>
 <?php ActiveForm::end(); ?>
-
-<?php
-$script = <<< JS
-    $('form').on('change', function(){
-        $("#Searchform").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
-    }); 
-    $('form input[type=text]').on('keyup', function(){
-        setTimeout(() => {
-            $("#Searchform").attr("data-pjax", "true");    
-            $(this).closest('form').submit();
-        }, 500);
-       
-    }); 
-                  
-JS;
-$this->registerJs($script);
-?>

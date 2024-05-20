@@ -3,17 +3,16 @@
 namespace backend\modules\meta\controllers;
 
 use common\models\meta\MetaLocation;
-use common\models\meta\MetaWildLifeType;
 
 use yii\web\Controller;
 
 /**
- * WildLifeTypeController.
+ * LocationController.
  */
 class LocationController extends Controller
 {
     /**
-     * Lists all MasterAnimal models.
+     * Lists all MetaLocation models.
      *
      * @return string
      */

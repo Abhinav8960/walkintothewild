@@ -2,24 +2,22 @@
 
 namespace backend\modules\meta\controllers;
 
-
-use common\models\meta\MetaWildLifeType;
-
+use common\models\meta\MetaPackageRange;
 use yii\web\Controller;
 
 /**
- * WildLifeTypeController.
+ * PackageController.
  */
-class WildLifeTypeController extends Controller
+class PackageController extends Controller
 {
     /**
-     * Lists all MetaWildLifeType models.
+     * Lists all MetaPackageRange models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model =  MetaWildLifeType::find()->where(['status' => 1])->all();
+        $model =  MetaPackageRange::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'models' => $model,

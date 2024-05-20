@@ -2,24 +2,22 @@
 
 namespace backend\modules\meta\controllers;
 
-
-use common\models\meta\MetaWildLifeType;
-
+use common\models\meta\MetaStayCategory;
 use yii\web\Controller;
 
 /**
- * WildLifeTypeController.
+ * StayCategoryController.
  */
-class WildLifeTypeController extends Controller
+class StayCategoryController extends Controller
 {
     /**
-     * Lists all MetaWildLifeType models.
+     * Lists all MetaStayCategory models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model =  MetaWildLifeType::find()->where(['status' => 1])->all();
+        $model =  MetaStayCategory::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'models' => $model,

@@ -31,7 +31,8 @@ class MetaAnimalType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 

@@ -17,14 +17,14 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MetaPackageRage extends \yii\db\ActiveRecord
+class MetaPackageRange extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'meta_package_rage';
+        return 'meta_package_range';
     }
 
     /**

@@ -5,7 +5,7 @@ namespace common\models\meta;
 use Yii;
 
 /**
- * This is the model class for table "meta_othe_wildlife_activities".
+ * This is the model class for table "meta_other_wildlife_activities".
  *
  * @property int $id
  * @property string|null $title
@@ -15,14 +15,14 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MetaOtheWildlifeActivities extends \yii\db\ActiveRecord
+class MetaOtherWildlifeActivities extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'meta_othe_wildlife_activities';
+        return 'meta_other_wildlife_activities';
     }
 
     /**

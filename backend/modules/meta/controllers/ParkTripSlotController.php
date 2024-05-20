@@ -2,24 +2,22 @@
 
 namespace backend\modules\meta\controllers;
 
-
-use common\models\meta\MetaWildLifeType;
-
+use common\models\meta\MetaParkTripSlot;
 use yii\web\Controller;
 
 /**
- * WildLifeTypeController.
+ * ParkTripSlotController.
  */
-class WildLifeTypeController extends Controller
+class ParkTripSlotController extends Controller
 {
     /**
-     * Lists all MetaWildLifeType models.
+     * Lists all MetaParkTripSlot models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $model =  MetaWildLifeType::find()->where(['status' => 1])->all();
+        $model =  MetaParkTripSlot::find()->where(['status' => 1])->all();
 
         return $this->render('index', [
             'models' => $model,
