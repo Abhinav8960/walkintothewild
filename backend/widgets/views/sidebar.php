@@ -21,36 +21,83 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<li class="slide">
 					<a class="side-menu__item" href="widgets.html"><img src="/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
-				<li class="slide">
-					<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
+				<li class="slide <?= in_array($active_url, array(
+										"/master",
+										"/master/animal",
+										"/master/vehicle",
+										"/master/state",
+										"/master/city",
+										"/master/railway-station",
+										"/master/airport",
+										"/master/bonus-experience",
+										"/master/email",
+										"master/bonus-experience",
+									)) ? "is-expanded" : "" ?>">
+					<a class="side-menu__item <?= in_array($active_url, array(
+													"/meta",
+													"/master/animal",
+													"/master/vehicle",
+													"/master/state",
+													"/master/city",
+													"/master/railway-station",
+													"/master/airport",
+													"/master/bonus-experience",
+													"/master/email",
+												)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 					<ul class="slide-menu">
 						<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
-						<li><a class="slide-item" href="/master/animal">Animal</a></li>
-						<li><a class="slide-item" href="/master/vehicle">Vehicle</a></li>
-						<li><a class="slide-item" href="/master/state">State</a></li>
-						<li><a class="slide-item" href="/master/city">City</a></li>
-						<li><a class="slide-item" href="/master/railway-station">Railway Station</a></li>
-						<li><a class="slide-item" href="/master/airport">Airport</a></li>
-						<li><a class="slide-item" href="/master/bonus-experience">Bonus Experience</a></li>
-						<li><a class="slide-item" href="/master/email">Email</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/animal")) ? "active" : "" ?>" href="/master/animal">Animal</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle")) ? "active" : "" ?>" href="/master/vehicle">Vehicle</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/state")) ? "active" : "" ?>" href="/master/state">State</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/city")) ? "active" : "" ?>" href="/master/city">City</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station")) ? "active" : "" ?>" href="/master/railway-station">Railway Station</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/airport")) ? "active" : "" ?>" href="/master/airport">Airport</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience")) ? "active" : "/master/bonus-experience" ?>" href="">Bonus Experience</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/email")) ? "active" : "" ?>" href="/master/email">Email</a></li>
 					</ul>
 				</li>
 
-				<li class="slide">
-					<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
+				<li class="slide <?= in_array($active_url, array(
+										"/meta",
+										"/meta/term-condition-type",
+										"/meta/wild-life-type",
+										"/meta/location",
+										"/meta/zone-type",
+										"/meta/stay-category",
+										"/meta/tour-operator",
+										"/meta/park-trip-slot",
+										"/meta/operator-credibility",
+										"/meta/package",
+										"/meta/other-wildlife-activities",
+										"/meta/animal-type",
+									)) ? "is-expanded" : "" ?>">
+					<a class="side-menu__item <?= in_array($active_url, array(
+													"/meta",
+													"/meta/term-condition-type",
+													"/meta/wild-life-type",
+													"/meta/location",
+													"/meta/zone-type",
+													"/meta/stay-category",
+													"/meta/tour-operator",
+													"/meta/park-trip-slot",
+													"/meta/operator-credibility",
+													"/meta/package",
+													"/meta/other-wildlife-activities",
+													"/meta/animal-type",
+												)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
 					<ul class="slide-menu">
 						<li class="side-menu__label1"><a href="javascript:void(0);">Meta</a></li>
-						<li><a class="slide-item" href="/meta/wild-life-type">Wild Life Type</a></li>
-						<li><a class="slide-item" href="/meta/location">Location</a></li>
-						<li><a class="slide-item" href="/meta/zone-type">Zone Type</a></li>
-						<li><a class="slide-item" href="/meta/stay-category">Stay Category</a></li>
-						<li><a class="slide-item" href="/meta/tour-operator">Tour Operator</a></li>
-						<li><a class="slide-item" href="/meta/park-trip-slot">Park Trip Slot</a></li>
-						<li><a class="slide-item" href="/meta/operator-credibility">Operator Credibility</a></li>
-						<li><a class="slide-item" href="/meta/package">Package</a></li>
-						<li><a class="slide-item" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
-						<li><a class="slide-item" href="/meta/animal-type">Animal Type</a></li>
-						<li><a class="slide-item" href="/meta/term-condition-type">Term & Condition</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/wild-life-type")) ? "active" : "" ?>" href="/meta/wild-life-type">Wild Life Type</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/location")) ? "active" : "" ?>" href="/meta/location">Location</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/zone-type")) ? "active" : "" ?>" href="/meta/zone-type">Zone Type</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/stay-category")) ? "active" : "" ?>" href="/meta/stay-category">Stay Category</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/tour-operator")) ? "active" : "" ?>" href="/meta/tour-operator">Tour Operator</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/park-trip-slot")) ? "active" : "" ?>" href="/meta/park-trip-slot">Park Trip Slot</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/operator-credibility")) ? "active" : "" ?>" href="/meta/operator-credibility">Operator Credibility</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/package")) ? "active" : "" ?>" href="/meta/package">Package</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/other-wildlife-activities")) ? "active" : "" ?>" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/animal-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/term-condition-type")) ? "active" : "" ?>" href="/meta/term-condition-type">Term & Condition</a></li>
 					</ul>
 				</li>
 
