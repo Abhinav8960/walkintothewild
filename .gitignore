@@ -485,6 +485,7 @@ phpunit.phar
 /frontend/web/index-test.php
 /frontend/runtime
 /frontend/web/robots.txt
+/backend/web/storage
 
 /backend/web/index.php
 /backend/web/files
