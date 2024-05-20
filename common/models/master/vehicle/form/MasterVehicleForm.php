@@ -1,0 +1,113 @@
+<?php
+
+namespace common\models\master\vehicle\form;
+
+use Yii;
+use yii\base\Model;
+use common\models\GeneralModel;
+use common\models\master\vehicle\MasterVehicle;
+use yii\web\UploadedFile;
+
+/**
+ * Update and Create Holiday
+ */
+class MasterVehicleForm extends model
+{
+    public $vehicle_name;
+    public $icon;
+    public $status;
+    public $status_option = [];
+    public $vehicle_model;
+
+
+    public function __construct(MasterVehicle $vehicle_model = null)
+    {
+
+        $this->vehicle_model = Yii::createObject([
+            'class' => MasterVehicle::className()
+        ]);
+
+
+
+        if ($vehicle_model  != '') {
+            $this->vehicle_model = $vehicle_model;
+            $this->vehicle_name = $this->vehicle_model->vehicle_name;
+            $this->icon = $this->vehicle_model->icon;
+            $this->status = $this->vehicle_model->status;
+        }
+
+        $this->status_option = GeneralModel::statusoption();
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['vehicle_name', 'icon'], 'required'],
+            [['status'], 'integer'],
+            [['vehicle_name'], 'string', 'max' => 255],
+            [['status'], 'default', 'value' => 1],
+            // [['icon'],'safe'],
+            [
+                ['icon'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 250,
+                'maxWidth' => 250,
+                'maxHeight' => 250,
+                'minHeight' => 250,
+                'maxSize' => 100 * 1024
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'vehicle_name' => 'Vehicle Name',
+            'icon' => 'Icon  (JPEG /JPG or PNG / 250 Pixels x 250 Pixels / 150 KB)',
+            'status' => 'Status',
+        ];
+    }
+    /**
+     * Initial Form Values
+     *
+     * @return void
+     */
+    public function initializeForm()
+    {
+        // $this->vehicle_model->icon = $this->icon;
+        $this->vehicle_model->vehicle_name = $this->vehicle_name;
+        $this->vehicle_model->status = $this->status;
+    }
+
+
+    public function uploadFile()
+    {
+        if ($this->icon) {
+            $storagePath = Yii::$app->params['datapath'] . '/vehicle';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->vehicle_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
+            $fileName = 'vehicle' . time() . '.' . $this->icon->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+            if ($this->icon->saveAs($filePath)) {
+                $this->vehicle_model->icon = $fileName;
+                $this->vehicle_model->save(false);
+            }
+        }
+    }
+}
