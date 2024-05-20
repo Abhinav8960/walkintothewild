@@ -6,13 +6,13 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\office\MasterDepartmentSearch $searchModel */
+/** @var common\models\master\state\MasterStateSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Airport';
-$this->params['breadcrumbs_home_url'] = '/master/airport';
+$this->title = 'State';
+$this->params['breadcrumbs_home_url'] = '/master/state';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/airport'];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/state'];
 $this->params['breadcrumbs'][] = 'View';
 $this->params['title'] = $this->title;
 ?>
@@ -22,12 +22,13 @@ $this->params['title'] = $this->title;
     <div class="card-body">
 
         <div class="row">
-            
+
             <div class="col-md-10">
                 <div class="text-box">
                     <p>
-                        <span>Name: </span><?= $model->name ?>
+                        <span>Name: </span><?= $model->state_name ?>
                     </p>
+
                 </div>
             </div>
         </div>
