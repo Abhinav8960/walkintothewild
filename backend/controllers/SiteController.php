@@ -7,6 +7,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use backend\components\AuthHandler;
 use yii\web\Response;
 
 /**
@@ -21,14 +22,14 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::class,
+                'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'auth'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'auth'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -51,6 +52,10 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => \yii\web\ErrorAction::class,
+            ],
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
             ],
         ];
     }
@@ -100,5 +105,11 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+
+    public function onAuthSuccess($client)
+    {
+        (new AuthHandler($client))->handle();
     }
 }

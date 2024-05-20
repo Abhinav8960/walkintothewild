@@ -37,6 +37,23 @@ return [
         ]
     ],
     'components' => [
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'google' => [
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId' => '721720540588-bid238duisalcoud2te5sjnrhc72r3i0.apps.googleusercontent.com',
+                    'clientSecret' => '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',
+                    'returnUrl' => 'http://admin.walkintothewild.local/site/auth?authclient=google',
+                ],
+                // 'facebook' => [
+                //     'class' => 'yii\authclient\clients\Facebook',
+                //     'clientId' => 'facebook_client_id',
+                //     'clientSecret' => 'facebook_client_secret',
+                // ],
+                // etc.
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
@@ -61,14 +78,13 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
-        
+
     ],
     'params' => $params,
 ];

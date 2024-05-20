@@ -52,7 +52,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li><a class="slide-item <?= in_array($active_url, array("/master/city")) ? "active" : "" ?>" href="/master/city">City</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station")) ? "active" : "" ?>" href="/master/railway-station">Railway Station</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/airport")) ? "active" : "" ?>" href="/master/airport">Airport</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience")) ? "active" : "/master/bonus-experience" ?>" href="">Bonus Experience</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience")) ? "active" : "/master/bonus-experience" ?>" href="/master/bonus-experience">Bonus Experience</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/email")) ? "active" : "" ?>" href="/master/email">Email</a></li>
 					</ul>
 				</li>
