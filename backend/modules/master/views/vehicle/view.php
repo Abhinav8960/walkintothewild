@@ -6,7 +6,7 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\office\MasterDepartmentSearch $searchModel */
+/** @var common\models\master\vehicle\MasterVehicleSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Vehicle';

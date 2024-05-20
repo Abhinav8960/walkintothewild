@@ -1,7 +1,5 @@
 <?php
 
-use common\models\GeneralModel;
-use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
