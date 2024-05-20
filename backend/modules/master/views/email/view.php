@@ -9,10 +9,10 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Airport';
-$this->params['breadcrumbs_home_url'] = '/master/airport';
+$this->title = 'Email';
+$this->params['breadcrumbs_home_url'] = '/master/email';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/airport'];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/email'];
 $this->params['breadcrumbs'][] = 'View';
 $this->params['title'] = $this->title;
 ?>
@@ -26,7 +26,7 @@ $this->params['title'] = $this->title;
             <div class="col-md-10">
                 <div class="text-box">
                     <p>
-                        <span>Name: </span><?= $model->name ?>
+                        <span>Email: </span><?= $model->email ?>
                     </p>
                 </div>
             </div>

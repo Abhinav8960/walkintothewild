@@ -32,6 +32,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li><a class="slide-item" href="/master/railway-station">Railway Station</a></li>
 						<li><a class="slide-item" href="/master/airport">Airport</a></li>
 						<li><a class="slide-item" href="/master/bonus-experience">Bonus Experience</a></li>
+						<li><a class="slide-item" href="/master/email">Email</a></li>
 					</ul>
 				</li>
 
