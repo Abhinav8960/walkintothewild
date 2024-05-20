@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -40,8 +41,14 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-12">
         <?= $form->field($model, 'short_description')->textarea() ?>
     </div>
+
+
     <div class="col-md-12">
-        <?= $form->field($model, 'long_description')->textarea() ?>
+        <?= $form->field($model, 'long_description')->widget(CKEditor::className(), [
+            'options' => ['rows' => 4],
+            'preset' => 'full',
+
+        ]) ?>
     </div>
     <hr>
     <div class="col-md-12">

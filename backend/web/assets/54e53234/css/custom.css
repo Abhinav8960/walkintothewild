@@ -634,6 +634,11 @@ color-fg-muted {
     background-color: transparent;
 }
 
+.text-box p span {
+
+    color: #6E7C87;
+}
+
 .old-title {
     color: #085b9b !important;
     background-color: transparent;

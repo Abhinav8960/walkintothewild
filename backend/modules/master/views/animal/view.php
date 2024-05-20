@@ -22,10 +22,10 @@ $this->params['title'] = $this->title;
     <div class="card-body">
 
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-md-2">
                 <img src="<?= $model->Imagepath ?>">
             </div>
-            <div class="col-lg-9">
+            <div class="col-md-10">
                 <div class="text-box">
                     <p>
                         <span>Name: </span><?= $model->name ?>
