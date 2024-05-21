@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\master\animal\MasterAnimal;
+use common\models\master\country\MasterCountry;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
 use Yii;
@@ -106,5 +107,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function animaloption()
     {
         return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function countryoption()
+    {
+        return ArrayHelper::map(MasterCountry::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['country_name' => SORT_ASC])->all(), 'id', 'country_name');
     }
 }

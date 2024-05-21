@@ -1,23 +1,22 @@
 <?php
 
-namespace common\models\master\state;
+namespace common\models\master\country;
 
-use common\models\master\country\MasterCountry;
 use common\traits\CommanRelationship;
 use Yii;
 
 /**
- * This is the model class for table "master_state".
+ * This is the model class for table "master_country".
  *
  * @property int $id
- * @property string $state_name
+ * @property string $country_name
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterCountry extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
     /**
@@ -25,7 +24,7 @@ class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\Sta
      */
     public static function tableName()
     {
-        return 'master_state';
+        return 'master_country';
     }
 
 
@@ -59,9 +58,9 @@ class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function rules()
     {
         return [
-            [['state_name'], 'required'],
+            [['country_name'], 'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['state_name'], 'string', 'max' => 255],
+            [['country_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -72,17 +71,12 @@ class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     {
         return [
             'id' => 'ID',
-            'state_name' => 'State',
+            'country_name' => 'Country',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
-    }
-
-    public function getCountry()
-    {
-        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\state\MasterState $model */
+/** @var common\models\master\country\MasterCountry $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
@@ -13,15 +12,11 @@ use yii\bootstrap5\ActiveForm;
 <div class="row">
 
     <div class="col-md-6">
-        <?= $form->field($model, 'country_id')->dropDownList(GeneralModel::countryoption(), ['prompt' => 'Select Country'])->label('Country') ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'state_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter State Name']) ?>
+        <?= $form->field($model, 'country_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Country Name']) ?>
     </div>
 
 
-    <?php if ($model->state_model->id) { ?>
+    <?php if ($model->country_model->id) { ?>
         <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
         </div>

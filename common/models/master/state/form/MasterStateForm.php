@@ -11,6 +11,7 @@ use common\models\master\state\MasterState;
 class MasterStateForm extends model
 {
     public $state_name;
+    public $country_id;
     public $status;
     public $status_option = [];
     public $state_model;
@@ -25,6 +26,7 @@ class MasterStateForm extends model
 
         if ($state_model  != '') {
             $this->state_model = $state_model;
+            $this->country_id = $this->state_model->country_id;
             $this->state_name = $this->state_model->state_name;
             $this->status = $this->state_model->status;
         }
@@ -39,9 +41,9 @@ class MasterStateForm extends model
     public function rules()
     {
         return [
-            [['state_name'], 'required'],
+            [['state_name','country_id'], 'required'],
             [['status'], 'integer'],
-            [['state_name'], 'string', 'max' => 255],
+            [['state_name','country_id'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
 
         ];
@@ -54,6 +56,7 @@ class MasterStateForm extends model
     {
         return [
             'state_name' => 'State',
+            'country_id' => 'Country',
             'status' => 'Status',
         ];
     }
@@ -64,6 +67,7 @@ class MasterStateForm extends model
      */
     public function initializeForm()
     {
+        $this->state_model->country_id = $this->country_id;
         $this->state_model->state_name = $this->state_name;
         $this->state_model->status = $this->status;
     }

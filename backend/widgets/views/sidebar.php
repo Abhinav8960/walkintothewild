@@ -26,6 +26,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										"/master/animal",
 										"/master/vehicle",
 										"/master/state",
+										"/master/country",
 										"/master/city",
 										"/master/railway-station",
 										"/master/airport",
@@ -37,6 +38,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/meta",
 													"/master/animal",
 													"/master/vehicle",
+													"/master/country",
 													"/master/state",
 													"/master/city",
 													"/master/railway-station",
@@ -48,6 +50,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/animal")) ? "active" : "" ?>" href="/master/animal">Animal</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle")) ? "active" : "" ?>" href="/master/vehicle">Vehicle</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/country")) ? "active" : "" ?>" href="/master/country">Country</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/state")) ? "active" : "" ?>" href="/master/state">State</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/city")) ? "active" : "" ?>" href="/master/city">City</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station")) ? "active" : "" ?>" href="/master/railway-station">Railway Station</a></li>
@@ -100,7 +103,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				</li>
 
 				<li class="slide">
-					<a class="side-menu__item" href="widgets.html"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span></a>
+					<a class="side-menu__item" href="/park"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span></a>
 				</li>
 
 
