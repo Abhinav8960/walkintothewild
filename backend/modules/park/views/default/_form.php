@@ -23,9 +23,15 @@ use yii\bootstrap5\ActiveForm;
     <?php } ?>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select Vehicle'])->label('Vehicle') ?>
+        <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::vehicleoption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select Vehicles', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
     </div>
-
     <div class="col-md-6">
         <?= $form->field($model, 'avg_safari_price')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
     </div>
@@ -51,16 +57,34 @@ use yii\bootstrap5\ActiveForm;
 <h5>Address</h5>
 <div class="row">
     <div class="col-md-6">
-        <?= $form->field($model, 'country_id')->dropDownList(GeneralModel::countryoption(), ['prompt' => 'Select Country'])->label('Country') ?>
+        <?= $form->field($model, 'country_id', ['inputOptions' => ['id' => 'country']])->dropDownList(
+            GeneralModel::countryoption(),
+            [
+                'prompt' => 'Select Country',
+                'onchange' => '
+                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
+                    $( "select#state" ).html( data );
+                    })'
+            ]
+        ); ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'state_id')->dropDownList(GeneralModel::stateoption(), ['prompt' => 'Select State'])->label('State') ?>
+        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
+            GeneralModel::getAllState($model->country_id),
+            [
+                'prompt' => 'Select State',
+                'onchange' => '
+                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
+                    $( "select#city" ).html( data );
+                    })'
+            ]
+        ); ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(GeneralModel::getAllCity($model->state_id), ['prompt' => 'Select City'])->label('City') ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'city_id')->dropDownList(GeneralModel::cityoption(), ['prompt' => 'Select City'])->label('City') ?>
-    </div>
 
     <div class="col-md-6">
         <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'Select Location'])->label('Location') ?>
