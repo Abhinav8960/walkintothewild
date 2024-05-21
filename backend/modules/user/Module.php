@@ -26,7 +26,7 @@ class Module extends \yii\base\Module
             if (!Yii::$app->user->identity) {
                 \Yii::$app->response->redirect('/site/login')->send();
             } else {
-                if (!in_array(Yii::$app->user->identity->role_id, [User::ROLE_ADMINISTRATOR, User::ROLE_ATHENA_INFONOMICS_LEVEL])) {
+                if ((Yii::$app->user->identity->is_adminstrator == 1 && Yii::$app->user->identity->is_admin == 1)) {
                     throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Adminstrator can view this page.');
                 }
             }

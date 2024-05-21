@@ -18,7 +18,7 @@ class MasterAnimalSearch extends MasterAnimal
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 255],
+            [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 125],
             [['slug'], 'unique'],
         ];
     }

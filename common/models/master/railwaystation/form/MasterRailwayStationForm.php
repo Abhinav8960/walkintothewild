@@ -52,7 +52,7 @@ class MasterRailwayStationForm extends model
     public function rules()
     {
         return [
-            [['city_id', 'state_id', 'country_id', 'title'], 'required'],
+            [['city_id', 'state_id', 'country_id', 'title','status'], 'required'],
             [['status'], 'integer'],
             [['state_id', 'country_id', 'title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],

@@ -22,28 +22,33 @@ use yii\bootstrap5\ActiveForm;
             [
                 'prompt' => 'Select Country',
                 'onchange' => '
-                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
-                    $( "select#state" ).html( data );
-                    })'
-
+            $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function(data) {
+                $("select#state").html(data);
+                $("select#state").prop("disabled", false);
+                $("select#city").html("<option value>Select City</option>");
+                $("select#city").prop("disabled", true);
+            })'
             ]
         ); ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
-            GeneralModel::getAllState($model->country_id),
+        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state', 'disabled' => true]])->dropDownList(
+            [],
             [
                 'prompt' => 'Select State',
                 'onchange' => '
-                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
-                    $( "select#city" ).html( data );
-                    })'
-
+            $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function(data) {
+                $("select#city").html(data);
+                $("select#city").prop("disabled", false);
+            })'
             ]
         ); ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(GeneralModel::getAllCity($model->state_id), ['prompt' => 'Select City'])->label('City') ?>
+        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city', 'disabled' => true]])->dropDownList(
+            [],
+            ['prompt' => 'Select City']
+        )->label('City') ?>
     </div>
 
     <?php if ($model->railway_station_model->id) { ?>

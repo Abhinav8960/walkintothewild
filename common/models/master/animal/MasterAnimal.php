@@ -74,7 +74,7 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
         return [
             [['name'], 'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 255],
+            [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 125],
             [['slug'], 'unique'],
         ];
     }

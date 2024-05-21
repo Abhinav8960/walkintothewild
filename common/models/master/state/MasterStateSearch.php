@@ -18,7 +18,7 @@ class MasterStateSearch extends MasterState
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['state_name'], 'string', 'max' => 255],
+            [['state_name'], 'string', 'max' => 125],
         ];
     }
 

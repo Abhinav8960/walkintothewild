@@ -62,7 +62,7 @@ class MasterCity extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return [
             [['city_name', 'state_id','country_id'], 'required'],
             [['status', 'state_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['city_name'], 'string', 'max' => 255],
+            [['city_name'], 'string', 'max' => 125],
         ];
     }
 
