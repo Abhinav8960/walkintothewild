@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\park\Park;
+use common\models\park\ParkAnimal;
+use common\models\park\ParkBonusExperience;
 use common\models\park\ParkVehicle;
 
 /**
@@ -17,6 +19,7 @@ class ParkForm extends model
     public $slug;
     public $vehicle_id;
     public $master_animal_id;
+    public $master_bonus_experience_id;
     public $short_description;
     public $long_description;
     public $official_website;
@@ -36,7 +39,6 @@ class ParkForm extends model
     public $meta_keywords;
     public $latitude;
     public $longitude;
-    public $master_bonus_experience_id;
     public $status;
     public $status_option = [];
     public $park_model;
@@ -74,6 +76,8 @@ class ParkForm extends model
             $this->longitude = $this->park_model->longitude;
             $this->status = $this->park_model->status;
             $this->vehicle_id = ParkVehicle::find()->select('vehicle_id')->where(['park_id' => $this->park_model->id, 'status' => 1])->column();
+            $this->master_animal_id = ParkAnimal::find()->select('master_animal_id')->where(['park_id' => $this->park_model->id, 'status' => 1])->column();
+            $this->master_bonus_experience_id = ParkBonusExperience::find()->select('master_bonus_experience_id')->where(['park_id' => $this->park_model->id, 'status' => 1])->column();
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -90,7 +94,7 @@ class ParkForm extends model
             [['status'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description', 'vehicle_id'], 'safe']
+            [['master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description', 'vehicle_id', 'master_animal_id'], 'safe']
 
         ];
     }
@@ -136,8 +140,6 @@ class ParkForm extends model
     {
         $this->park_model->title = $this->title;
         $this->park_model->slug = $this->slug;
-        // $this->park_model->vehicle_id = $this->vehicle_id;
-        // $this->park_model->master_animal_id = $this->master_animal_id;
         $this->park_model->short_description = $this->short_description;
         $this->park_model->long_description = $this->long_description;
         $this->park_model->official_website = $this->official_website;

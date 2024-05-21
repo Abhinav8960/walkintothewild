@@ -37,7 +37,14 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animaloption(), ['prompt' => 'Select Animal'])->label('Animal') ?>
+        <?= $form->field($model, 'master_animal_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::animaloption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select Animal', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
     </div>
 
     <div class="col-md-12">
@@ -130,9 +137,18 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
     </div>
+
     <div class="col-md-6">
-        <?= $form->field($model, 'master_bonus_experience_id')->dropDownList(GeneralModel::bonusexperienceoption(), ['prompt' => 'Select Bonus Experience'])->label('Bonus Experience') ?>
+        <?= $form->field($model, 'master_bonus_experience_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::bonusexperienceoption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select Animal', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
     </div>
+
 </div>
 
 
@@ -141,9 +157,6 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug']) ?>
-    </div>
 <?php } ?>
 
 

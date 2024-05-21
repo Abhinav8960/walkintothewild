@@ -5,6 +5,8 @@ namespace backend\modules\park\controllers;
 use common\interfaces\StatusInterface;
 use common\models\park\form\ParkForm;
 use common\models\park\Park;
+use common\models\park\ParkAnimal;
+use common\models\park\ParkBonusExperience;
 use common\models\park\ParkSearch;
 use common\models\park\ParkVehicle;
 use yii\web\Controller;
@@ -41,17 +43,36 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->park_model->save(false)) {
-                        // print_r($model->vehicle_id);
-                        // die;
                         $vehicles = $model->vehicle_id;
-                        print_r($vehicles);
-                        die();
-                        foreach ($vehicles as $vehicle) {
-                            $parkVehicle = new ParkVehicle();
-                            $parkVehicle->park_id = $model->park_model->id;
-                            $parkVehicle->vehicle_id = $vehicle;
-                            $parkVehicle->save(false);
+                        if ($vehicles) {
+                            foreach ($vehicles as $vehicle) {
+                                $parkVehicle = new ParkVehicle();
+                                $parkVehicle->park_id = $model->park_model->id;
+                                $parkVehicle->vehicle_id = $vehicle;
+                                $parkVehicle->save(false);
+                            }
                         }
+
+                        $animals = $model->master_animal_id;
+                        if ($animals) {
+                            foreach ($animals as $animal) {
+                                $parkAnimal = new ParkAnimal();
+                                $parkAnimal->park_id = $model->park_model->id;
+                                $parkAnimal->master_animal_id = $animal;
+                                $parkAnimal->save(false);
+                            }
+                        }
+
+                        $bonusexperience = $model->master_bonus_experience_id;
+                        if ($bonusexperience) {
+                            foreach ($bonusexperience as $bonus) {
+                                $parkBonus = new ParkBonusExperience();
+                                $parkBonus->park_id = $model->park_model->id;
+                                $parkBonus->master_bonus_experience_id = $bonus;
+                                $parkBonus->save(false);
+                            }
+                        }
+
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
@@ -86,6 +107,29 @@ class DefaultController extends Controller
                                 $parkVehicle->save(false);
                             }
                         }
+
+                        $animals = $model->master_animal_id;
+                        if ($animals) {
+                            ParkAnimal::updateAll(['status' => 2], ['park_id' => $id]);
+                            foreach ($animals as $animal) {
+                                $parkAnimal = new ParkAnimal();
+                                $parkAnimal->park_id = $model->park_model->id;
+                                $parkAnimal->master_animal_id = $animal;
+                                $parkAnimal->save(false);
+                            }
+                        }
+
+                        $bonusexperience = $model->master_bonus_experience_id;
+                        if ($bonusexperience) {
+                            ParkAnimal::updateAll(['status' => 2], ['park_id' => $id]);
+                            foreach ($bonusexperience as $bonus) {
+                                $parkBonus = new ParkBonusExperience();
+                                $parkBonus->park_id = $model->park_model->id;
+                                $parkBonus->master_bonus_experience_id = $bonus;
+                                $parkBonus->save(false);
+                            }
+                        }
+
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
@@ -114,6 +158,22 @@ class DefaultController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+
+        $parkVehicles = ParkVehicle::findAll(['park_id' => $model->id]);
+        if (!empty($parkVehicles)) {
+            ParkVehicle::deleteAll(['park_id' => $model->id]);
+        }
+
+        $parkAnimals = ParkAnimal::findAll(['park_id' => $model->id]);
+        if (!empty($parkAnimals)) {
+            ParkVehicle::deleteAll(['park_id' => $model->id]);
+        }
+
+        $parkBonus = ParkBonusExperience::findAll(['park_id' => $model->id]);
+        if (!empty($parkBonus)) {
+            ParkVehicle::deleteAll(['park_id' => $model->id]);
+        }
+
         $model->title = $model->id . '_' . $model->title;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
