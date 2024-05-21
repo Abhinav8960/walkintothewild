@@ -130,7 +130,7 @@ class RailwayStationController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->name = $model->id . '_' . $model->name;
+        $model->title = $model->id . '_' . $model->title;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');

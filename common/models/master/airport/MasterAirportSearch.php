@@ -17,7 +17,7 @@ class MasterAirportSearch extends MasterAirport
     public function rules()
     {
         return [
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['city_id','state_id','country_id','created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
             [['status'], 'safe']
@@ -61,6 +61,9 @@ class MasterAirportSearch extends MasterAirport
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'country_id' => $this->country_id,
+            'state_id' => $this->state_id,
+            'city_id' => $this->city_id,
             'slug' => $this->slug,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

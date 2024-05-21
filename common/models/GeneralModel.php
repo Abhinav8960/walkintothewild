@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\master\city\MasterCity;
 use common\models\master\country\MasterCountry;
 use common\models\master\state\MasterState;
 use Yii;
@@ -119,5 +120,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function getAllState($countryId)
     {
         return ArrayHelper::map(MasterState::find()->where(['country_id' => $countryId, 'status' => self::STATUS_ACTIVE])->orderBy(['state_name' => SORT_ASC])->all(), 'id', 'state_name');
+    }
+
+
+
+    public static function getAllCity($master_state_id)
+    {
+        return ArrayHelper::map(MasterCity::find()->where(['state_id' => $master_state_id, 'status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
     }
 }
