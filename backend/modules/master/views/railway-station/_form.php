@@ -17,13 +17,33 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'country_id')->dropDownList(GeneralModel::countryoption(), ['prompt' => 'Select Country'])->label('Country') ?>
+        <?= $form->field($model, 'country_id', ['inputOptions' => ['id' => 'country']])->dropDownList(
+            GeneralModel::countryoption(),
+            [
+                'prompt' => 'Select Country',
+                'onchange' => '
+                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
+                    $( "select#state" ).html( data );
+                    })'
+
+            ]
+        ); ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'state_id')->dropDownList(GeneralModel::stateoption(), ['prompt' => 'Select State'])->label('State') ?>
+        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
+            GeneralModel::getAllState($model->country_id),
+            [
+                'prompt' => 'Select State',
+                'onchange' => '
+                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
+                    $( "select#city" ).html( data );
+                    })'
+
+            ]
+        ); ?>
     </div>
     <div class="col-md-6">
-    <?= $form->field($model, 'city_id')->dropDownList(GeneralModel::cityoption(), ['prompt' => 'Select City'])->label('City') ?>
+        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(GeneralModel::getAllCity($model->state_id), ['prompt' => 'Select City'])->label('City') ?>
     </div>
 
     <?php if ($model->railway_station_model->id) { ?>
