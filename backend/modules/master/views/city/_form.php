@@ -17,9 +17,9 @@ use yii\bootstrap5\ActiveForm;
             [
                 'prompt' => 'Select Country',
                 'onchange' => '
-                   $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
-                      $( "select#state" ).html( data );
-                      })'
+                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
+                    $( "select#state" ).html( data );
+                    })'
 
             ]
         ); ?>

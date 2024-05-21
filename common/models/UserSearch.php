@@ -1,24 +1,28 @@
 <?php
 
-namespace common\models\master\state;
+namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\state\MasterState;
 
 /**
- * MasterStateSearch represents the model behind the search form of `common\models\master\state\MasterState`.
  */
-class MasterStateSearch extends MasterState
+class UserSearch extends User
 {
+    public $role_id;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['state_name'], 'string', 'max' => 125],
+            [['created_at', 'updated_at'], 'integer'],
+            [['username', 'email', 'password_hash'], 'string', 'max' => 255],
+            [['name', 'role_id'], 'string', 'max' => 3],
+            [['auth_key'], 'string', 'max' => 32],
+            [['name'], 'string', 'max' => 30],
+            [['username'], 'unique'],
+            [['email'], 'unique'],
         ];
     }
 
@@ -27,6 +31,7 @@ class MasterStateSearch extends MasterState
      */
     public function scenarios()
     {
+
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,34 +45,32 @@ class MasterStateSearch extends MasterState
      */
     public function search($params)
     {
-        $query = MasterState::find()->where(['status' => [1, 2]]);
+
+        $query = User::find(); // Do not Show Adminstrator Role User
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_ASC]]
         ]);
 
         $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'user.email' => $this->email,
+            'password_hash' => $this->password_hash,
+            'auth_key' => $this->auth_key,
+            'name' => $this->name,
             'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+
         ]);
 
-        $query->andFilterWhere(['like', 'state_name', $this->state_name]);
 
+        $query->andFilterWhere(['like', 'username', $this->username]);
         return $dataProvider;
     }
 }

@@ -81,7 +81,6 @@ class AirportController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->airport_model->save()) {
-                        //$model->uploadFile($model->airport_model->id);
                         $model->airport_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);

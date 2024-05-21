@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -35,8 +36,9 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class Park extends \yii\db\ActiveRecord
+class Park extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -45,13 +47,43 @@ class Park extends \yii\db\ActiveRecord
         return 'park';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+            'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'slug', //The attribute to be generated
+                'attribute' => 'title', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '-',
+                    'trim' => true
+                ]
+            ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['title', 'slug', 'official_website', 'master_location_id', 'country_id', 'country_name', 'state_id', 'state_name', 'city_id', 'city_name', 'meta_title', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
             [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
@@ -95,4 +127,9 @@ class Park extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+    // public function getParkvehicle()
+    // {
+    //     return $this->hasMany(ParkVehicle::className(), ['park_id' => 'id']);
+    // }
 }

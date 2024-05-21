@@ -58,16 +58,17 @@ class MasterAnimalForm extends model
         return [
             [['name', 'short_description'], 'required'],
             [['status'], 'integer'],
-            [['name', 'slug', 'know_as'], 'string', 'max' => 255],
-            [['short_description'], 'string', 'max' => 512],
+            [['name', 'slug', 'know_as'], 'string', 'max' => 125],
+            [['short_description'], 'string', 'max' => 255],
+            [['long_description'], 'string', 'max' => 512],            
             [['status'], 'default', 'value' => 1],
             [['long_description'], 'safe'],
             [
                 ['image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 556,
-                'maxWidth' => 556,
-                'maxHeight' => 386,
-                'minHeight' => 386,
+                'minWidth' => 350,
+                'maxWidth' => 350,
+                'maxHeight' => 350,
+                'minHeight' => 350,
                 'maxSize' => 100 * 1024
             ],
         ];
@@ -80,7 +81,7 @@ class MasterAnimalForm extends model
     {
         return [
             'name' => 'Name',
-            'image' => 'Image  (JPEG /JPG or PNG / 400 Pixels x 400 Pixels / 150 KB)',
+            'image' => 'Image  (JPEG /JPG or PNG / 350 Pixels x 350 Pixels / 100 KB)',
             'status' => 'Status',
         ];
     }
@@ -102,6 +103,7 @@ class MasterAnimalForm extends model
 
     public function uploadFile()
     {
+        
         if ($this->image) {
             $storagePath = Yii::$app->params['datapath'] . '/animal';
 

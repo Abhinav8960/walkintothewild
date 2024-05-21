@@ -98,6 +98,21 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+
+
+    public static function roles()
+    {
+        return [
+            1 => 'Administrator',
+            2 => 'Admin',
+            3 => 'Safari Operator',
+            4 => 'Operator',
+            5 => 'Cms Manager',
+            6 => 'Resort Manager',
+        ];
+    }
+
+
     public static function stateoption()
     {
         return ArrayHelper::map(MasterState::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['state_name' => SORT_ASC])->all(), 'id', 'state_name');
@@ -107,7 +122,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return ArrayHelper::map(MasterCountry::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['country_name' => SORT_ASC])->all(), 'id', 'country_name');
     }
-    
+
     public static function vehicleoption()
     {
         return ArrayHelper::map(MasterVehicle::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['vehicle_name' => SORT_ASC])->all(), 'id', 'vehicle_name');
@@ -116,11 +131,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function animaloption()
     {
         return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
-    }
-
-    public static function cityoption()
-    {
-        return ArrayHelper::map(MasterCity::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
     }
 
     public static function locationoption()

@@ -1,40 +1,32 @@
 <?php
 
-namespace common\models\master\city;
+namespace common\models\park;
 
-use common\models\master\country\MasterCountry;
-use common\models\master\state\MasterState;
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
- * This is the model class for table "master_city".
+ * This is the model class for table "parks_animal".
  *
  * @property int $id
- * @property string $name
- * @property string $slug
+ * @property int $park_id
+ * @property int $master_animal_id
+ * @property string|null $animal_name
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterCity extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ParkAnimal extends \yii\db\ActiveRecord
 {
-    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'master_city';
+        return 'parks_animal';
     }
 
-
-
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
@@ -60,9 +52,9 @@ class MasterCity extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     public function rules()
     {
         return [
-            [['city_name', 'state_id','country_id'], 'required'],
-            [['status', 'state_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['city_name'], 'string', 'max' => 125],
+            [['park_id', 'master_animal_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['park_id', 'master_animal_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['animal_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -73,23 +65,14 @@ class MasterCity extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     {
         return [
             'id' => 'ID',
-            'city_name' => 'City',
-            'state_id' => 'State',
-            'country_id' => 'Country',
+            'park_id' => 'Park ID',
+            'master_animal_id' => 'Master Animals ID',
+            'animal_name' => 'Animal Name',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
-    }
-
-    public function getState()
-    {
-        return $this->hasOne(MasterState::className(), ['id' => 'state_id']);
-    }
-    public function getCountry()
-    {
-        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
     }
 }

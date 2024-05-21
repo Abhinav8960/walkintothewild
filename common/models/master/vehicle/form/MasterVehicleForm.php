@@ -48,7 +48,7 @@ class MasterVehicleForm extends model
         return [
             [['vehicle_name', 'icon'], 'required'],
             [['status'], 'integer'],
-            [['vehicle_name'], 'string', 'max' => 255],
+            [['vehicle_name'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
             // [['icon'],'safe'],
             [

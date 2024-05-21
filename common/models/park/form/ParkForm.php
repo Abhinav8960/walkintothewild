@@ -6,6 +6,9 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\park\Park;
+use common\models\park\ParkAnimal;
+use common\models\park\ParkBonusExperience;
+use common\models\park\ParkVehicle;
 
 /**
  * Update and Create Holiday
@@ -16,6 +19,7 @@ class ParkForm extends model
     public $slug;
     public $vehicle_id;
     public $master_animal_id;
+    public $master_bonus_experience_id;
     public $short_description;
     public $long_description;
     public $official_website;
@@ -35,7 +39,6 @@ class ParkForm extends model
     public $meta_keywords;
     public $latitude;
     public $longitude;
-    public $master_bonus_experience_id;
     public $status;
     public $status_option = [];
     public $park_model;
@@ -48,14 +51,10 @@ class ParkForm extends model
             'class' => Park::className()
         ]);
 
-
-
         if ($park_model  != '') {
             $this->park_model = $park_model;
             $this->title = $this->park_model->title;
             $this->slug = $this->park_model->slug;
-            $this->vehicle_id = $this->park_model->vehicle_id;
-            $this->master_animal_id = $this->park_model->master_animal_id;
             $this->short_description = $this->park_model->short_description;
             $this->long_description = $this->park_model->long_description;
             $this->official_website = $this->park_model->official_website;
@@ -76,6 +75,9 @@ class ParkForm extends model
             $this->latitude = $this->park_model->latitude;
             $this->longitude = $this->park_model->longitude;
             $this->status = $this->park_model->status;
+            $this->vehicle_id = ParkVehicle::find()->select('vehicle_id')->where(['park_id' => $this->park_model->id, 'status' => 1])->column();
+            $this->master_animal_id = ParkAnimal::find()->select('master_animal_id')->where(['park_id' => $this->park_model->id, 'status' => 1])->column();
+            $this->master_bonus_experience_id = ParkBonusExperience::find()->select('master_bonus_experience_id')->where(['park_id' => $this->park_model->id, 'status' => 1])->column();
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -88,11 +90,11 @@ class ParkForm extends model
     public function rules()
     {
         return [
-            [['title', 'avg_safari_price', 'master_location_id', 'meta_title', 'meta_description', 'meta_keywords', 'latitude', 'longitude'], 'required'],
+            [['title', 'vehicle_id', 'avg_safari_price', 'master_location_id', 'meta_title', 'meta_description', 'meta_keywords', 'latitude', 'longitude', 'country_id', 'state_id', 'city_id', 'nearest_railway_station', 'nearest_airport'], 'required'],
             [['status'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['master_bonus_experience_id'], 'safe']
+            [['master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description', 'vehicle_id', 'master_animal_id'], 'safe']
 
         ];
     }
@@ -111,11 +113,11 @@ class ParkForm extends model
             'long_description' => 'Long Description',
             'official_website' => 'Official Website',
             'master_location_id' => 'Location',
-            'country_id' => 'country Id',
+            'country_id' => 'Country',
             'country_name' => 'Country Name',
-            'state_id' => 'State Id',
+            'state_id' => 'State',
             'state_name' => 'State Name',
-            'city_id' => 'City Id',
+            'city_id' => 'City',
             'city_name' => 'City Name',
             'avg_safari_price' => 'Avg Safari Price',
             'nearest_railway_station' => 'Nearest Railway Station',
@@ -138,8 +140,6 @@ class ParkForm extends model
     {
         $this->park_model->title = $this->title;
         $this->park_model->slug = $this->slug;
-        $this->park_model->vehicle_id = $this->vehicle_id;
-        $this->park_model->master_animal_id = $this->master_animal_id;
         $this->park_model->short_description = $this->short_description;
         $this->park_model->long_description = $this->long_description;
         $this->park_model->official_website = $this->official_website;

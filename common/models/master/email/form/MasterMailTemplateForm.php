@@ -17,7 +17,6 @@ class MasterMailTemplateForm extends model
 {
 
     public $name;
-    public $subject;
     public $path;
     public $status;
     public $status_option = [];
@@ -36,7 +35,6 @@ class MasterMailTemplateForm extends model
         if ($mail_template_model  != '') {
             $this->mail_template_model = $mail_template_model;
             $this->name = $this->mail_template_model->name;
-            $this->subject = $this->mail_template_model->subject;
             $this->path = $this->mail_template_model->path;
             $this->status = $this->mail_template_model->status;
         }
@@ -51,11 +49,10 @@ class MasterMailTemplateForm extends model
     public function rules()
     {
         return [
-            [['name', 'subject', 'path'], 'required'],
+            [['name', 'path'], 'required'],
             [['status'], 'integer'],
             [['status'], 'default', 'value' => 1],
             [['name', 'path'], 'string', 'max' => 255],
-            [['subject'], 'string', 'max' => 512],
 
         ];
     }
@@ -67,7 +64,6 @@ class MasterMailTemplateForm extends model
     {
         return [
             'name' => 'Name',
-            'subject' => 'Subject',
             'path' => 'Path',
             'status' => 'Status',
         ];
@@ -80,7 +76,6 @@ class MasterMailTemplateForm extends model
     public function initializeForm()
     {
         $this->mail_template_model->name = $this->name;
-        $this->mail_template_model->subject = $this->subject;
         $this->mail_template_model->path = $this->path;
         $this->mail_template_model->status = $this->status;
     }
