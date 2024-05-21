@@ -92,6 +92,21 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+
+
+    public static function roles()
+    {
+        return [
+            1 => 'Administrator',
+            2 => 'Admin',
+            3 => 'Safari Operator',
+            4 => 'Operator',
+            5 => 'Cms Manager',
+            6 => 'Resort Manager',
+        ];
+    }
+
+
     public static function stateoption()
     {
         return ArrayHelper::map(MasterState::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['state_name' => SORT_ASC])->all(), 'id', 'state_name');

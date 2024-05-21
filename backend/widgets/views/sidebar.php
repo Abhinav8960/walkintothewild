@@ -23,43 +23,43 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				</li>
 				<li class="slide <?= in_array($active_url, array(
 										"/master",
-										"/master/animal",
-										"/master/vehicle",
-										"/master/state",
-										"/master/country",
-										"/master/city",
-										"/master/railway-station",
-										"/master/airport",
-										"/master/bonus-experience",
-										"/master/email",
-										"/master/mail-template",
+										"/master/animal/index",
+										"/master/vehicle/index",
+										"/master/state/index",
+										"/master/country/index",
+										"/master/city/index",
+										"/master/railway-station/index",
+										"/master/airport/index",
+										"/master/bonus-experience/index",
+										"/master/email/index",
+										"/master/mail-template/index",
 										"master/bonus-experience",
 									)) ? "is-expanded" : "" ?>">
 					<a class="side-menu__item <?= in_array($active_url, array(
 													"/meta",
-													"/master/animal",
-													"/master/vehicle",
-													"/master/country",
-													"/master/state",
-													"/master/city",
-													"/master/railway-station",
-													"/master/airport",
-													"/master/bonus-experience",
-													"/master/email",
-													"/master/mail-template",
+													"/master/animal/index",
+													"/master/vehicle/index",
+													"/master/country/index",
+													"/master/state/index",
+													"/master/city/index",
+													"/master/railway-station/index",
+													"/master/airport/index",
+													"/master/bonus-experience/index",
+													"/master/email/index",
+													"/master/mail-template/index",
 												)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 					<ul class="slide-menu">
 						<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/animal")) ? "active" : "" ?>" href="/master/animal">Animal</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle")) ? "active" : "" ?>" href="/master/vehicle">Vehicle</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/country")) ? "active" : "" ?>" href="/master/country">Country</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/state")) ? "active" : "" ?>" href="/master/state">State</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/city")) ? "active" : "" ?>" href="/master/city">City</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station")) ? "active" : "" ?>" href="/master/railway-station">Railway Station</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/airport")) ? "active" : "" ?>" href="/master/airport">Airport</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience")) ? "active" : "/master/bonus-experience" ?>" href="/master/bonus-experience">Bonus Experience</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/email")) ? "active" : "" ?>" href="/master/email">Email</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/master/mail-template")) ? "active" : "" ?>" href="/master/mail-template">Mail Template</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/animal/index")) ? "active" : "" ?>" href="/master/animal/index">Animal</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle/index")) ? "active" : "" ?>" href="/master/vehicle/index">Vehicle</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/country/index")) ? "active" : "" ?>" href="/master/country/index">Country</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/state/index")) ? "active" : "" ?>" href="/master/state/index">State</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/city/index")) ? "active" : "" ?>" href="/master/city/index">City</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station/index")) ? "active" : "" ?>" href="/master/railway-station/index">Railway Station</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/airport/index")) ? "active" : "" ?>" href="/master/airport/index">Airport</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience/index")) ? "active" : "/master/bonus-experience/index" ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/email/index")) ? "active" : "" ?>" href="/master/email/index">Email</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/mail-template/index")) ? "active" : "" ?>" href="/master/mail-template/index">Mail Template</a></li>
 					</ul>
 				</li>
 
@@ -184,6 +184,15 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li><a class="slide-item" href="#">Tracking</a></li>
 						<li><a class="slide-item" href="#">Ranking</a></li>
 					</ul>
+				</li>
+
+
+
+				<li class="slide">
+					<a class="side-menu__item <?= in_array($active_url, array(
+													"/user",
+													"/user/default/index",
+												)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 				</li>
 
 				<li class="slide">
