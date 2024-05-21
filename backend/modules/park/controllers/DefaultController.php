@@ -159,19 +159,29 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
-        $parkVehicles = ParkVehicle::findAll(['park_id' => $model->id]);
-        if (!empty($parkVehicles)) {
-            ParkVehicle::deleteAll(['park_id' => $model->id]);
+        $parkVehicle = ParkVehicle::findAll(['park_id' => $model->id]);
+        if (!empty($parkVehicle)) {
+            // ParkVehicle::deleteAll(['park_id' => $model->id]);
+            foreach ($parkVehicle as $vehicle) {
+                $vehicle->status = StatusInterface::STATUS_DELETE;
+                $vehicle->save();
+            }
         }
 
-        $parkAnimals = ParkAnimal::findAll(['park_id' => $model->id]);
-        if (!empty($parkAnimals)) {
-            ParkAnimal::deleteAll(['park_id' => $model->id]);
+        $parkAnimal = ParkAnimal::findAll(['park_id' => $model->id]);
+        if (!empty($parkAnimal)) {
+            foreach ($parkAnimal as $animal) {
+                $animal->status = StatusInterface::STATUS_DELETE;
+                $animal->save();
+            }
         }
 
         $parkBonus = ParkBonusExperience::findAll(['park_id' => $model->id]);
         if (!empty($parkBonus)) {
-            ParkBonusExperience::deleteAll(['park_id' => $model->id]);
+            foreach ($parkBonus as $bonus) {
+                $bonus->status = StatusInterface::STATUS_DELETE;
+                $bonus->save();
+            }
         }
 
         $model->title = $model->id . '_' . $model->title;

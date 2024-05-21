@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $park_id
- * @property int $master_animals_id
+ * @property int $master_animal_id
  * @property string|null $animal_name
  * @property int $status
  * @property int $created_at
@@ -52,8 +52,8 @@ class ParkAnimal extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['park_id', 'master_animals_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
-            [['park_id', 'master_animals_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['park_id', 'master_animal_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['park_id', 'master_animal_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['animal_name'], 'string', 'max' => 255],
         ];
     }
@@ -66,7 +66,7 @@ class ParkAnimal extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'park_id' => 'Park ID',
-            'master_animals_id' => 'Master Animals ID',
+            'master_animal_id' => 'Master Animals ID',
             'animal_name' => 'Animal Name',
             'status' => 'Status',
             'created_at' => 'Created At',
