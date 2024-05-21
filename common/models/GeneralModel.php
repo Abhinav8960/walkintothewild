@@ -4,8 +4,13 @@ namespace common\models;
 
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
+use common\models\master\airport\MasterAirport;
+use common\models\master\bonusexperience\MasterBonusExperience;
+use common\models\master\city\MasterCity;
+use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\meta\MetaLocation;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -93,7 +98,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
-
     public static function stateoption()
     {
         return ArrayHelper::map(MasterState::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['state_name' => SORT_ASC])->all(), 'id', 'state_name');
@@ -112,5 +116,40 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function animaloption()
     {
         return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function cityoption()
+    {
+        return ArrayHelper::map(MasterCity::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
+    }
+
+    public static function locationoption()
+    {
+        return ArrayHelper::map(MetaLocation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function railwaystationoption()
+    {
+        return ArrayHelper::map(MasterRailwayStation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function airportoption()
+    {
+        return ArrayHelper::map(MasterAirport::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function bonusexperienceoption()
+    {
+        return ArrayHelper::map(MasterBonusExperience::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function getAllState($countryId)
+    {
+        return ArrayHelper::map(MasterState::find()->where(['country_id' => $countryId, 'status' => self::STATUS_ACTIVE])->orderBy(['state_name' => SORT_ASC])->all(), 'id', 'state_name');
+    }
+
+    public static function getAllCity($master_state_id)
+    {
+        return ArrayHelper::map(MasterCity::find()->where(['state_id' => $master_state_id, 'status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
     }
 }

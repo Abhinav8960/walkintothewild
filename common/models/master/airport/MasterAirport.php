@@ -2,6 +2,9 @@
 
 namespace common\models\master\airport;
 
+use common\models\master\city\MasterCity;
+use common\models\master\country\MasterCountry;
+use common\models\master\state\MasterState;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -70,7 +73,7 @@ class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\S
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','city_id', 'state_id','country_id'], 'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
@@ -84,6 +87,10 @@ class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\S
     {
         return [
             'id' => 'ID',
+            'city_id' => 'City',
+            'state_id' => 'State',
+            'country_id' => 'Country',
+            'id' => 'ID',
             'name' => 'Name',
             'slug' => 'Slug',
             'status' => 'Status',
@@ -93,12 +100,18 @@ class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\S
             'updated_by' => 'Updated By',
         ];
     }
+    public function getCity()
+    {
+        return $this->hasOne(MasterCity::className(), ['id' => 'city_id']);
+    }
+    public function getState()
+    {
+        return $this->hasOne(MasterState::className(), ['id' => 'state_id']);
+    }
+    public function getCountry()
+    {
+        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
+    }
 
 
-    // public function getImagepath()
-    // {
-    //     if ($this->image != '') {
-    //         return '/storage/airport/' . $this->id . '/' . $this->image;
-    //     }
-    // }
 }

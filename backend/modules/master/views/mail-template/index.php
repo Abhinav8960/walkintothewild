@@ -9,16 +9,15 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Railway Station';
-$this->params['breadcrumbs_home_url'] = '/master/railway-station';
+$this->title = 'Mail Template';
+$this->params['breadcrumbs_home_url'] = '/master/mail-template';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 
-?>
 
+?>
 <div class="card">
 
     <div class="card-body">
@@ -28,34 +27,11 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
-                //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'title',
-                    [
-                        'label' => 'Country',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->country) ? $model->country->country_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'State',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->state) ? $model->state->state_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'City',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->city) ? $model->city->city_name : '';
-                        }
-                    ],
+                    'name',
+                    'subject',
+                    'path',
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [
@@ -80,12 +56,13 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
                                 ]);
                             },
+
                             'delete' => function ($url, $model) {
                                 return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

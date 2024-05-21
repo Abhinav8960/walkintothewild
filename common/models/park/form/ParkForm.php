@@ -16,7 +16,7 @@ class ParkForm extends model
     public $slug;
     public $vehicle_id;
     public $master_animal_id;
-    public $sort_description;
+    public $short_description;
     public $long_description;
     public $official_website;
     public $master_location_id;
@@ -35,6 +35,7 @@ class ParkForm extends model
     public $meta_keywords;
     public $latitude;
     public $longitude;
+    public $master_bonus_experience_id;
     public $status;
     public $status_option = [];
     public $park_model;
@@ -55,7 +56,7 @@ class ParkForm extends model
             $this->slug = $this->park_model->slug;
             $this->vehicle_id = $this->park_model->vehicle_id;
             $this->master_animal_id = $this->park_model->master_animal_id;
-            $this->sort_description = $this->park_model->sort_description;
+            $this->short_description = $this->park_model->short_description;
             $this->long_description = $this->park_model->long_description;
             $this->official_website = $this->park_model->official_website;
             $this->master_location_id = $this->park_model->master_location_id;
@@ -87,10 +88,11 @@ class ParkForm extends model
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title', 'avg_safari_price', 'master_location_id', 'meta_title', 'meta_description', 'meta_keywords', 'latitude', 'longitude'], 'required'],
             [['status'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
+            [['master_bonus_experience_id'], 'safe']
 
         ];
     }
@@ -105,10 +107,10 @@ class ParkForm extends model
             'slug' => 'Slug',
             'vehicle_id' => 'Vehicle Id',
             'master_animal_id' => 'Animal',
-            'sort_description' => 'Sort Description',
+            'short_description' => 'Short Description',
             'long_description' => 'Long Description',
             'official_website' => 'Official Website',
-            'master_location_id' => 'Master Location Id',
+            'master_location_id' => 'Location',
             'country_id' => 'country Id',
             'country_name' => 'Country Name',
             'state_id' => 'State Id',
@@ -138,7 +140,7 @@ class ParkForm extends model
         $this->park_model->slug = $this->slug;
         $this->park_model->vehicle_id = $this->vehicle_id;
         $this->park_model->master_animal_id = $this->master_animal_id;
-        $this->park_model->sort_description = $this->sort_description;
+        $this->park_model->short_description = $this->short_description;
         $this->park_model->long_description = $this->long_description;
         $this->park_model->official_website = $this->official_website;
         $this->park_model->master_location_id = $this->master_location_id;

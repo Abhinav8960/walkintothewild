@@ -17,7 +17,7 @@ class ParkSearch extends Park
     public function rules()
     {
         return [
-            [['sort_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
+            [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
