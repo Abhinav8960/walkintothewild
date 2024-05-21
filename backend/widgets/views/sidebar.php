@@ -32,6 +32,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										"/master/airport",
 										"/master/bonus-experience",
 										"/master/email",
+										"/master/mail-template",
 										"master/bonus-experience",
 									)) ? "is-expanded" : "" ?>">
 					<a class="side-menu__item <?= in_array($active_url, array(
@@ -45,6 +46,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/master/airport",
 													"/master/bonus-experience",
 													"/master/email",
+													"/master/mail-template",
 												)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 					<ul class="slide-menu">
 						<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
@@ -57,6 +59,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li><a class="slide-item <?= in_array($active_url, array("/master/airport")) ? "active" : "" ?>" href="/master/airport">Airport</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience")) ? "active" : "/master/bonus-experience" ?>" href="/master/bonus-experience">Bonus Experience</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/email")) ? "active" : "" ?>" href="/master/email">Email</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/mail-template")) ? "active" : "" ?>" href="/master/mail-template">Mail Template</a></li>
 					</ul>
 				</li>
 
