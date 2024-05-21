@@ -12,7 +12,22 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="row">
     <div class="col-md-6">
-        <?= $form->field($model, 'state_id')->dropDownList(GeneralModel::stateoption(), ['prompt' => 'Select State'])->label('State') ?>
+        <?= $form->field($model, 'country_id', ['inputOptions' => ['id' => 'country']])->dropDownList(
+            GeneralModel::countryoption(),
+            [
+                'prompt' => 'Select Country',
+                'onchange' => '
+                   $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
+                      $( "select#state" ).html( data );
+                      })'
+
+            ]
+        ); ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state',]])->dropDownList(
+            GeneralModel::getAllState($model->country_id)
+        ); ?>
     </div>
     <div class="col-md-6">
         <?= $form->field($model, 'city_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>

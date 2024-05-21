@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\master\airport;
+namespace common\models\master\email;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\airport\MasterAirport;
+use common\models\master\email\MasterMailTemplate;
 
 /**
- * MasterAirportSearch represents the model behind the search form of `common\models\master\airport\MasterAirport`.
+ * MasterMailTemplateSearch represents the model behind the search form of `common\models\master\email\MasterMailTemplate`.
  */
-class MasterAirportSearch extends MasterAirport
+class MasterMailTemplateSearch extends MasterMailTemplate
 {
     /**
      * {@inheritdoc}
@@ -17,10 +17,9 @@ class MasterAirportSearch extends MasterAirport
     public function rules()
     {
         return [
-            [['city_id','state_id','country_id','created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
-            [['status'], 'safe']
+            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['name', 'path'], 'string', 'max' => 255],
+            [['subject'], 'string', 'max' => 512],
         ];
     }
 
@@ -42,7 +41,7 @@ class MasterAirportSearch extends MasterAirport
      */
     public function search($params)
     {
-        $query = MasterAirport::find()->where(['status' => [1, 2]]);
+        $query = MasterMailTemplate::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -61,10 +60,8 @@ class MasterAirportSearch extends MasterAirport
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'country_id' => $this->country_id,
-            'state_id' => $this->state_id,
-            'city_id' => $this->city_id,
-            'slug' => $this->slug,
+            'subject' => $this->subject,
+            'path' => $this->path,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

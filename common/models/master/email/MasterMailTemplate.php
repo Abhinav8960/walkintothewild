@@ -1,25 +1,24 @@
 <?php
 
-namespace common\models\master\railwaystation;
+namespace common\models\master\email;
 
-use common\models\master\city\MasterCity;
-use common\models\master\country\MasterCountry;
-use common\models\master\state\MasterState;
 use common\traits\CommanRelationship;
 use Yii;
 
 /**
- * This is the model class for table "master_railway_station".
+ * This is the model class for table "master_mail_template".
  *
  * @property int $id
- * @property string|null $title
+ * @property string|null $name
+ * @property string|null $subject
+ * @property string|null $path
  * @property int $status
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterMailTemplate extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
     /**
@@ -27,8 +26,9 @@ class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\inte
      */
     public static function tableName()
     {
-        return 'master_railway_station';
+        return 'master_mail_template';
     }
+
 
 
 
@@ -51,17 +51,19 @@ class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\inte
                     return time();
                 },
             ],
+            
         ];
     }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['city_id', 'state_id','country_id'], 'required'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['title'], 'string', 'max' => 255],
+            [['name', 'path'], 'string', 'max' => 255],
+            [['subject'], 'string', 'max' => 512],
         ];
     }
 
@@ -72,27 +74,14 @@ class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\inte
     {
         return [
             'id' => 'ID',
-            'city_id' => 'City',
-            'state_id' => 'State',
-            'country_id' => 'Country',
-            'title' => 'Title',
+            'name' => 'Name',
+            'subject' => 'Subject',
+            'path' => 'Path',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
-    }
-    public function getCity()
-    {
-        return $this->hasOne(MasterCity::className(), ['id' => 'city_id']);
-    }
-    public function getState()
-    {
-        return $this->hasOne(MasterState::className(), ['id' => 'state_id']);
-    }
-    public function getCountry()
-    {
-        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
     }
 }

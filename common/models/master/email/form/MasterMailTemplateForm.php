@@ -1,0 +1,87 @@
+<?php
+
+namespace common\models\master\email\form;
+
+use Yii;
+use yii\base\Model;
+use common\models\GeneralModel;
+use common\models\master\email\MasterEmail;
+use common\models\master\email\MasterMailTemplate;
+
+/**
+ * @author Smriti Pal <smritipal2201@gmial.com>
+ * 
+ * Update and Create Holiday
+ */
+class MasterMailTemplateForm extends model
+{
+
+    public $name;
+    public $subject;
+    public $path;
+    public $status;
+    public $status_option = [];
+    public $mail_template_model;
+
+
+    public function __construct(MasterMailTemplate $mail_template_model = null)
+    {
+
+        $this->mail_template_model = Yii::createObject([
+            'class' => MasterMailTemplate::className()
+        ]);
+
+
+
+        if ($mail_template_model  != '') {
+            $this->mail_template_model = $mail_template_model;
+            $this->name = $this->mail_template_model->name;
+            $this->subject = $this->mail_template_model->subject;
+            $this->path = $this->mail_template_model->path;
+            $this->status = $this->mail_template_model->status;
+        }
+
+        $this->status_option = GeneralModel::statusoption();
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'subject', 'path'], 'required'],
+            [['status'], 'integer'],
+            [['status'], 'default', 'value' => 1],
+            [['name', 'path'], 'string', 'max' => 255],
+            [['subject'], 'string', 'max' => 512],
+
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'name' => 'Name',
+            'subject' => 'Subject',
+            'path' => 'Path',
+            'status' => 'Status',
+        ];
+    }
+    /**
+     * Initial Form Values
+     *
+     * @return void
+     */
+    public function initializeForm()
+    {
+        $this->mail_template_model->name = $this->name;
+        $this->mail_template_model->subject = $this->subject;
+        $this->mail_template_model->path = $this->path;
+        $this->mail_template_model->status = $this->status;
+    }
+}

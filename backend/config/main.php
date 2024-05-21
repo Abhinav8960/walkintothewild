@@ -78,7 +78,24 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
+        'mailer' => [
+            'class' => \yii\symfonymailer\Mailer::class,
+            'viewPath' => '@app/mail',
+            // send all mails to a file by default.
+            'useFileTransport' => true,
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'smritipal2201@gmail.com',
+                'password' => 'ybsaphazhjtlakau',
+                'port' => '587',
+                'encryption' => 'tls',
+            ]
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
