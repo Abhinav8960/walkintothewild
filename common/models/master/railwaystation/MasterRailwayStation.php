@@ -2,6 +2,9 @@
 
 namespace common\models\master\railwaystation;
 
+use common\models\master\city\MasterCity;
+use common\models\master\country\MasterCountry;
+use common\models\master\state\MasterState;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -56,6 +59,7 @@ class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\inte
     public function rules()
     {
         return [
+            [['city_id', 'state_id','country_id'], 'required'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
@@ -68,6 +72,9 @@ class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\inte
     {
         return [
             'id' => 'ID',
+            'city_id' => 'City',
+            'state_id' => 'State',
+            'country_id' => 'Country',
             'title' => 'Title',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -75,5 +82,17 @@ class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\inte
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+    public function getCity()
+    {
+        return $this->hasOne(MasterCity::className(), ['id' => 'city_id']);
+    }
+    public function getState()
+    {
+        return $this->hasOne(MasterState::className(), ['id' => 'state_id']);
+    }
+    public function getCountry()
+    {
+        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
     }
 }
