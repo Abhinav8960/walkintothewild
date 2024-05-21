@@ -121,7 +121,7 @@ class DefaultController extends Controller
 
                         $bonusexperience = $model->master_bonus_experience_id;
                         if ($bonusexperience) {
-                            ParkAnimal::updateAll(['status' => 2], ['park_id' => $id]);
+                            ParkBonusExperience::updateAll(['status' => 2], ['park_id' => $id]);
                             foreach ($bonusexperience as $bonus) {
                                 $parkBonus = new ParkBonusExperience();
                                 $parkBonus->park_id = $model->park_model->id;
@@ -166,12 +166,12 @@ class DefaultController extends Controller
 
         $parkAnimals = ParkAnimal::findAll(['park_id' => $model->id]);
         if (!empty($parkAnimals)) {
-            ParkVehicle::deleteAll(['park_id' => $model->id]);
+            ParkAnimal::deleteAll(['park_id' => $model->id]);
         }
 
         $parkBonus = ParkBonusExperience::findAll(['park_id' => $model->id]);
         if (!empty($parkBonus)) {
-            ParkVehicle::deleteAll(['park_id' => $model->id]);
+            ParkBonusExperience::deleteAll(['park_id' => $model->id]);
         }
 
         $model->title = $model->id . '_' . $model->title;
