@@ -61,7 +61,7 @@ class MasterVehicle extends \yii\db\ActiveRecord implements \common\interfaces\S
         return [
             [['vehicle_name'], 'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['vehicle_name', 'icon'], 'string', 'max' => 255],
+            [['vehicle_name', 'icon'], 'string', 'max' => 125],
         ];
     }
 

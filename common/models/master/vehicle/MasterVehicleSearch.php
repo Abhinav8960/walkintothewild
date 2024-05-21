@@ -18,7 +18,7 @@ class MasterVehicleSearch extends MasterVehicle
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['vehicle_name', 'icon'], 'string', 'max' => 255],
+            [['vehicle_name', 'icon'], 'string', 'max' => 125],
         ];
     }
 

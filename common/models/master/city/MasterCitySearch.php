@@ -18,7 +18,7 @@ class MasterCitySearch extends MasterCity
     {
         return [
             [['status', 'state_id','country_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['city_name'], 'string', 'max' => 255],
+            [['city_name'], 'string', 'max' => 125],
         ];
     }
 

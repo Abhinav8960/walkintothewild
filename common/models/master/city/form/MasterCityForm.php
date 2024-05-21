@@ -51,7 +51,7 @@ class MasterCityForm extends model
         return [
             [['city_name', 'state_id','country_id'], 'required'],
             [['status'], 'integer'],
-            [['city_name', 'state_id','country_id'], 'string', 'max' => 255],
+            [['city_name', 'state_id','country_id'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
 
         ];

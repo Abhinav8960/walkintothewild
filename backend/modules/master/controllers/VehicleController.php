@@ -124,7 +124,7 @@ class VehicleController extends Controller
         $model = $this->findModel($id);
         $model->vehicle_name = $model->id . '_' . $model->vehicle_name;
         $model->status = StatusInterface::STATUS_DELETE;
-        $model->save();
+        $model->save(false);
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
     }
