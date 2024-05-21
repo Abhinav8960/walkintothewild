@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property string $title
  * @property string $slug
- * @property string|null $sort_description
+ * @property string|null $short_description
  * @property string|null $long_description
  * @property string $official_website
  * @property int $master_location_id
@@ -52,7 +52,7 @@ class Park extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'slug', 'official_website', 'master_location_id', 'country_id', 'country_name', 'state_id', 'state_name', 'city_id', 'city_name', 'meta_title', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
-            [['sort_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
+            [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
@@ -69,7 +69,7 @@ class Park extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'slug' => 'Slug',
-            'sort_description' => 'Sort Description',
+            'short_description' => 'Sort Description',
             'long_description' => 'Long Description',
             'official_website' => 'Official Website',
             'master_location_id' => 'Master Location ID',
