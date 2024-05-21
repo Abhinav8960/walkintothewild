@@ -8,7 +8,7 @@ use common\models\GeneralModel;
 use common\models\master\railwaystation\MasterRailwayStation;
 
 /**
- * @author Aayush Kuamr <aayushsaini9999@gmial.com>
+ * @author Smriti Pal <smritipal2201@gmial.com>
  * 
  * Update and Create Holiday
  */
