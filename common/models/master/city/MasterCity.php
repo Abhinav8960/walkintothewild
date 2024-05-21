@@ -2,6 +2,7 @@
 
 namespace common\models\master\city;
 
+use common\models\master\country\MasterCountry;
 use common\models\master\state\MasterState;
 use common\traits\CommanRelationship;
 use Yii;
@@ -59,7 +60,7 @@ class MasterCity extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     public function rules()
     {
         return [
-            [['city_name', 'state_id'], 'required'],
+            [['city_name', 'state_id','country_id'], 'required'],
             [['status', 'state_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['city_name'], 'string', 'max' => 255],
         ];
@@ -74,6 +75,7 @@ class MasterCity extends \yii\db\ActiveRecord implements \common\interfaces\Stat
             'id' => 'ID',
             'city_name' => 'City',
             'state_id' => 'State',
+            'country_id' => 'Country',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -85,5 +87,9 @@ class MasterCity extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     public function getState()
     {
         return $this->hasOne(MasterState::className(), ['id' => 'state_id']);
+    }
+    public function getCountry()
+    {
+        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
     }
 }

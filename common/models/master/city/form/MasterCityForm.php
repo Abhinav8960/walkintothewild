@@ -14,6 +14,7 @@ use common\models\master\city\MasterCity;
  */
 class MasterCityForm extends model
 {
+    public $country_id;
     public $state_id;
     public $city_name;
     public $status;
@@ -32,6 +33,7 @@ class MasterCityForm extends model
 
         if ($city_model  != '') {
             $this->city_model = $city_model;
+            $this->country_id = $this->city_model->country_id;
             $this->state_id = $this->city_model->state_id;
             $this->city_name = $this->city_model->city_name;
             $this->status = $this->city_model->status;
@@ -47,9 +49,9 @@ class MasterCityForm extends model
     public function rules()
     {
         return [
-            [['city_name', 'state_id'], 'required'],
+            [['city_name', 'state_id','country_id'], 'required'],
             [['status'], 'integer'],
-            [['city_name', 'state_id'], 'string', 'max' => 255],
+            [['city_name', 'state_id','country_id'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
 
         ];
@@ -63,6 +65,7 @@ class MasterCityForm extends model
         return [
             'city_name' => 'City',
             'state_id' => 'State',
+            'country_id' => 'Country',
             'status' => 'Status',
         ];
     }
@@ -73,6 +76,7 @@ class MasterCityForm extends model
      */
     public function initializeForm()
     {
+        $this->city_model->country_id = $this->country_id;
         $this->city_model->state_id = $this->state_id;
         $this->city_model->city_name = $this->city_name;
         $this->city_model->status = $this->status;

@@ -17,7 +17,7 @@ class MasterCitySearch extends MasterCity
     public function rules()
     {
         return [
-            [['status', 'state_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'state_id','country_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['city_name'], 'string', 'max' => 255],
         ];
     }
@@ -59,6 +59,7 @@ class MasterCitySearch extends MasterCity
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'country_id' => $this->country_id,
             'state_id' => $this->state_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
