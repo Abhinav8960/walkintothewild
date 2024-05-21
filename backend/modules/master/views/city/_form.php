@@ -11,6 +11,9 @@ use yii\bootstrap5\ActiveForm;
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
 <div class="row">
+<div class="col-md-6">
+        <?= $form->field($model, 'country_id')->dropDownList(GeneralModel::countryoption(), ['prompt' => 'Select Country'])->label('Country') ?>
+    </div>
     <div class="col-md-6">
         <?= $form->field($model, 'state_id')->dropDownList(GeneralModel::stateoption(), ['prompt' => 'Select State'])->label('State') ?>
     </div>
