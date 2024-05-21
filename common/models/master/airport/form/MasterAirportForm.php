@@ -9,7 +9,7 @@ use common\models\master\airport\MasterAirport;
 use yii\web\UploadedFile;
 
 /**
- * @author Aayush Kuamr <aayushsaini9999@gmial.com>
+ * @author Smriti Pal <smritipal2201@gmial.com>
  * 
  * Update and Create Holiday
  */
