@@ -6,11 +6,11 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\state\MasterStateSearch $searchModel */
+/** @var common\models\master\country\MasterCountrySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'State';
-$this->params['breadcrumbs_home_url'] = '/master/state';
+$this->title = 'Country';
+$this->params['breadcrumbs_home_url'] = '/master/country';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -30,15 +30,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'label' => 'Country',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->country) ? $model->country->country_name : '';
-                        }
-                    ],
-                    'state_name',
+                    'country_name',
 
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
@@ -78,7 +70,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->state_name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->country_name . '?',
                                         'method' => 'post',
                                     ],
                                 ]);
