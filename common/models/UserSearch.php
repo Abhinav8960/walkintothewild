@@ -16,7 +16,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at'], 'integer'],
             [['username', 'email', 'password_hash'], 'string', 'max' => 255],
             [['name', 'role_id'], 'string', 'max' => 3],
             [['auth_key'], 'string', 'max' => 32],
@@ -64,8 +64,6 @@ class UserSearch extends User
             'password_hash' => $this->password_hash,
             'auth_key' => $this->auth_key,
             'name' => $this->name,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
 
