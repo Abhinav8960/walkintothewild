@@ -19,7 +19,6 @@ class MasterMailTemplateSearch extends MasterMailTemplate
         return [
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name', 'path'], 'string', 'max' => 255],
-            [['subject'], 'string', 'max' => 512],
         ];
     }
 
@@ -60,7 +59,6 @@ class MasterMailTemplateSearch extends MasterMailTemplate
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'subject' => $this->subject,
             'path' => $this->path,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

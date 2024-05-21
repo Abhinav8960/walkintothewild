@@ -110,7 +110,8 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
+    public static function findByVerificationToken($token)
+    {
         return static::findOne([
             'verification_token' => $token,
             'status' => self::STATUS_INACTIVE
@@ -209,5 +210,98 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+
+
+
+
+    /**
+     * Before Insert
+     *
+     * @param [type] $insert
+     * @return void
+     */
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            $this->setAttribute('token_key', \Yii::$app->security->generateRandomString(32));
+            $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
+            if (\Yii::$app instanceof \yii\web\Application) {
+                $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
+            }
+        }
+
+        return parent::beforeSave($insert);
+    }
+
+    /**
+     * Blocks the user by setting 'blocked_at' field to current time.
+     */
+    public function block()
+    {
+        return (bool) $this->updateAttributes(['blocked_at' => time()]);
+    }
+
+    /**
+     * Blocks the user by setting 'blocked_at' field to null.
+     */
+    public function unblock()
+    {
+        return (bool) $this->updateAttributes(['blocked_at' => null]);
+    }
+
+    /**
+     * @return bool Whether the user is blocked or not.
+     */
+    public function getIsBlocked()
+    {
+        return $this->blocked_at != null;
+    }
+
+    /**
+     * Get User Cascade Status
+     *
+     * @return void
+     */
+    public function getIsCascade()
+    {
+        return $this->cascade_at != null;
+    }
+
+    /**
+     * Blocks the user by setting 'cascade_at' field to current time.
+     */
+    public function cascade()
+    {
+        return (bool) $this->updateAttributes(['cascade_at' => time()]);
+    }
+
+    /**
+     * Blocks the user by setting 'cascade_at' field to null.
+     */
+    public function uncascade()
+    {
+        return (bool) $this->updateAttributes(['cascade_at' => null]);
+    }
+
+    public function getFullname()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
+     * Get How Many Days are Completed Until Password is Not Change
+     *
+     * @return void
+     */
+    public function getPasswordupdatedays()
+    {
+        if ($this->password_update_at != null) {
+            $curent_time = time();
+            $diff = $curent_time - $this->password_update_at;
+            return ceil(abs($diff / 86400));
+        }
+        return 365;
     }
 }

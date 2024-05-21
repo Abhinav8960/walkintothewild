@@ -22,10 +22,12 @@
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.45",
         "yiisoft/yii2-bootstrap5": "~2.0.2",
-        "yiisoft/yii2-symfonymailer": "~2.0.3",
+        "yiisoft/yii2-symfonymailer": "^3.0",
         "skeeks/yii2-slug-behavior": "*",
         "kartik-v/yii2-widget-select2": "dev-master",
-        "yiisoft/yii2-authclient": "~2.2.0"
+        "yiisoft/yii2-authclient": "~2.2.0",
+        "symfony/mailer": "^6.0",
+        "symfony/amazon-mailer": "^6.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -39,7 +41,8 @@
         "codeception/module-filesystem": "^3.0 || ^2.0 || ^1.1",
         "codeception/verify": "^3.0 || ^2.2",
         "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4",
-        "2amigos/yii2-ckeditor-widget": "~2.1"
+        "2amigos/yii2-ckeditor-widget": "~2.1",
+        "yiisoft/yii2-swiftmailer": "~2.0.0"
     },
     "autoload-dev": {
         "psr-4": {

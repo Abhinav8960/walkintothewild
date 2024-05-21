@@ -8,6 +8,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use backend\components\AuthHandler;
+use common\models\MailLog;
 use yii\web\Response;
 
 /**
@@ -85,6 +86,17 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $user = $model->user;
+            // echo '<pre>';
+            // print_r($user);
+            // die();
+            $to_mail = $user->email;
+            $subject = 'User Login';
+            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_LOGIN;
+            $req = ['username' => $user->name];
+
+            MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+
             return $this->goBack();
         }
 

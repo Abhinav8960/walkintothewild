@@ -63,7 +63,6 @@ class MasterMailTemplate extends \yii\db\ActiveRecord implements \common\interfa
         return [
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name', 'path'], 'string', 'max' => 255],
-            [['subject'], 'string', 'max' => 512],
         ];
     }
 
@@ -75,7 +74,6 @@ class MasterMailTemplate extends \yii\db\ActiveRecord implements \common\interfa
         return [
             'id' => 'ID',
             'name' => 'Name',
-            'subject' => 'Subject',
             'path' => 'Path',
             'status' => 'Status',
             'created_at' => 'Created At',

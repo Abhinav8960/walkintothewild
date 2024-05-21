@@ -19,11 +19,6 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'path')->textInput(['maxlength' => true, 'placeholder' => 'Enter Path']) ?>
     </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'subject')->textarea() ?>
-    </div>
-
-
 
     <?php if ($model->mail_template_model->id) { ?>
         <div class="col-md-3">
