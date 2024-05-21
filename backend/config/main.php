@@ -42,9 +42,9 @@ return [
             'clients' => [
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
-                    'clientId' => '721720540588-bid238duisalcoud2te5sjnrhc72r3i0.apps.googleusercontent.com',
-                    'clientSecret' => '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',
-                    'returnUrl' => 'http://admin.walkintothewild.local/site/auth?authclient=google',
+                    'clientId' => '500526108747-sat0quehomhc59pogk8mm50ch2id5kp7.apps.googleusercontent.com',
+                    'clientSecret' => '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',
+                    'returnUrl' => 'http://admin.walkintothewild.io/site/auth?authclient=google',
                 ],
                 // 'facebook' => [
                 //     'class' => 'yii\authclient\clients\Facebook',

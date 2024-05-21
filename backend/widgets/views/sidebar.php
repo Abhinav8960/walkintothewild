@@ -78,7 +78,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/meta/location",
 													"/meta/zone-type",
 													"/meta/stay-category",
-													"/meta/tour-operator",
 													"/meta/park-trip-slot",
 													"/meta/operator-credibility",
 													"/meta/package",
@@ -91,13 +90,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/location")) ? "active" : "" ?>" href="/meta/location">Location</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/zone-type")) ? "active" : "" ?>" href="/meta/zone-type">Zone Type</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/stay-category")) ? "active" : "" ?>" href="/meta/stay-category">Stay Category</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/meta/tour-operator")) ? "active" : "" ?>" href="/meta/tour-operator">Tour Operator</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/park-trip-slot")) ? "active" : "" ?>" href="/meta/park-trip-slot">Park Trip Slot</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/operator-credibility")) ? "active" : "" ?>" href="/meta/operator-credibility">Operator Credibility</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/package")) ? "active" : "" ?>" href="/meta/package">Package</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/other-wildlife-activities")) ? "active" : "" ?>" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/animal-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/meta/term-condition-type")) ? "active" : "" ?>" href="/meta/term-condition-type">Term & Condition</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/meta/term-condition-type")) ? "active" : "" ?>" href="/meta/term-condition-type">Term & Condition Type</a></li>
 					</ul>
 				</li>
 

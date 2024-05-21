@@ -5,6 +5,7 @@
 
 use backend\assets\AppAsset;
 use backend\assets\NovaAppAsset;
+use common\widgets\Alert;
 
 NovaAppAsset::register($this);
 AppAsset::register($this);
@@ -53,11 +54,14 @@ AppAsset::register($this);
             <!-- container -->
             <div class="main-container container-fluid">
 
+                <?= Alert::widget() ?>
 
                 <?= \backend\widgets\PageHeader::widget([
                     'title' => isset($this->params['title']) ? $this->params['title'] : '',
                     'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
                 ]) ?>
+
+
                 <?= $content ?>
             </div>
         </div>
