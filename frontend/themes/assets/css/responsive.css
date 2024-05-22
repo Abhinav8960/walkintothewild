@@ -1,0 +1,639 @@
+@media only screen and (min-width:1600px) {
+
+    .title_web h2 {
+
+        font-size: var(--fs-40);
+        text-align: center;
+    }
+
+    .shareimg {
+
+        width: 100%;
+        height: 183px;
+        object-fit: cover;
+    }
+
+}
+
+@media only screen and (max-width:1600px) {
+
+    .inner_animals>img {
+
+        height: 210px;
+    }
+
+.sharesafribg {
+
+    height: 500px;
+
+}
+
+}
+
+
+
+@media only screen and (max-width: 1400px) and (min-width: 768px) {
+
+    .banner_section picture img {
+
+        height: 700px;
+        object-fit: cover;
+    }
+    .placeholder_select{
+
+        left: 20%;
+    }
+}
+
+
+@media only screen and (max-width: 1400px) and (min-width: 1200px) {
+
+    .select_boxes .form-select {
+
+        width: 248px;
+    }
+    .footer_object{
+
+        top: -56px;
+    }
+    .parksImg img{
+
+      object-fit: cover;
+    }
+    .mobile_width{
+
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+
+    .footer_object{
+
+        top: -30px;
+    }
+    .placeholder_select{
+        left: 14%;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+    .select_boxes .form-select{
+        width: 370px ;
+    }
+}
+
+@media only screen and (min-device-width: 769px) and (max-device-width: 820px) and (min-device-height: 1024px) and (max-device-height: 1180px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    .select_boxes .form-select {
+        width: 388px;
+    }
+}
+
+@media only screen and (max-width: 767px) and (min-width: 576px) {
+
+    .placeholder_select{
+        left: 8%;
+    }
+}
+@media only screen and (max-width: 1200px) and (min-width: 992px) {
+
+    .select_boxes .form-select {
+
+        width: 383px;
+    }
+    .serch_btn button{
+
+        width: 100%;
+    }
+    .footer_object{
+
+        top: -37px;
+    }
+    .placeholder_select{
+        left: 14%;
+    }
+    .parksImg img{
+
+        border-radius: 10px 10px 0px 0px;
+    }
+}
+@media only screen and (max-width: 1200px) and (min-width: 576px) {
+.mobile_width{
+
+    width: 48%;
+}
+
+}
+@media only screen and (max-width: 842px) and (min-width: 768px){
+
+    .title_yellow.h1{
+        font-size: 89px;
+      
+
+    }
+    .title_white.h4{
+
+        font-size: 29px;
+    }
+}
+@media only screen and (min-width:992px) {
+
+    .navbar-nav {
+
+        gap: 32px;
+    }
+    .container-fluid{
+
+        padding-left: 55px !important;
+        padding-right: 55px !important;
+    }
+
+}
+
+@media only screen and (max-width:1400px) {
+
+    .safarishareBox {
+
+        position: relative;
+        left: 0;
+    }
+
+    /* .registratin_text h6 br {
+
+        display: none;
+    } */
+
+    .intested_btn2 {
+
+        font-size: 14px;
+    }
+
+    .banner_section-inner picture img {
+
+        height: 250px;
+        object-fit: cover;
+    }
+    .banner_section-inner .banner_search{
+
+        height: 350px;
+        object-fit: cover;
+    }
+  
+
+}
+@media only screen and (max-width:1200px) {
+    .select_boxes .form-select{
+
+        border-radius: 10px !important;
+    }
+
+}
+
+@media (max-width: 991px) {
+    .tab-content>.tab-pane {
+        display: block !important;
+        opacity: 1 !important;
+    }
+    .header_wrapper.navigation_hide{
+
+        line-height: 30px;
+    }
+    .creat-safri .safari_create br{
+
+        display: none;
+    }
+    .sahreSafari.active{
+
+        background-color: transparent;
+    }
+ 
+}
+@media only screen and (max-width:992px) {
+    .safari_create{
+
+        width: 100%;
+        margin-top: 15px;
+    }
+    .creat-safri{
+        padding-bottom: 20px;
+    }
+
+    .header_wrapper {
+
+        line-height: 70px;
+    }
+
+
+    .navbar-toggler {
+
+        border: 0 !important;
+    }
+
+    .navbar-toggler:focus {
+
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .navbar-toggler i {
+
+        color: var(--colorwhite);
+        font-size: 30px;
+    }
+    .menu-navbar-nav .nav-item.active::after{
+
+        bottom: -2px;
+    }
+
+    .menu-navbar-nav .nav-item {
+
+        line-height: 43px;
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+
+    .menu-navbar-nav .nav-item .nav-link {
+
+        color: #09422D;
+        padding: 0 !important;
+
+    }
+
+    .logo_provide2 {
+
+        height: 100%;
+    }
+    .serch_btn button{
+
+        margin-top: 10px;
+    }
+    .Slider_safariimg3 img{
+
+        border-radius: 10px 10px 0px 0px;
+    }
+
+
+    .navbar-nav.menu-navbar-nav {
+
+        align-items: flex-start !important;
+    }
+
+    .sahreSafari {
+
+        margin-left: 0 !important;
+        padding-left: 0;
+        height: auto;
+        padding-top: 12px;
+    }
+
+    .offcanvas-header {
+        background-color: #09422D;
+    }
+
+    .nav-link {
+
+        padding: 0;
+    }
+
+    .card-img {
+        display: none;
+    }
+
+    .inner_animals>img {
+
+        height: 225px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .inner_animals .safariBox {
+
+        text-align: center;
+    }
+
+    .mobile-responsive {
+
+        text-align: center;
+
+    }
+
+    .copyright p {
+
+        padding-top: 20px;
+    }
+
+    .terms p {
+
+        padding-top: 20px;
+    }
+    .border_bottom_mobile{
+
+        border-bottom: 1.5px solid #0000004D
+    }
+    .border-right.border_bottom_mobile{
+
+        border-right: 0;
+    }
+    .author_wrapper .artical-info{
+
+        padding-top: 10px !important;
+    }
+
+    /* .banner_section-inner img {
+
+        height: 300px;
+        object-fit: cover;
+    } */
+    .banner_section-inner .banner_search{
+
+        height: 450px ;
+        object-fit: cover;
+    }
+
+    .parksImg img{
+
+        border-radius: 10px 10px 0px 0px;
+    }
+    .form-wrapper .input-group2{
+
+        width: 50%;
+    }
+
+}
+
+@media only screen and (max-width:767px) {
+    .title_white.h4{
+
+        font-size: 20px;
+    }
+    .title_yellow.h1{
+
+        font-size: 60px;
+    }
+    .logo_area{
+
+       left: 50%;
+       transform: translateX(-50%);
+       top: 28px;
+    }
+    .logo_area img{
+
+        width: 200px;
+    }
+    .header_wrapper {
+
+        height: 60px;
+        line-height: 60px;
+    }
+
+    .logo {
+
+        width: 200px;
+    }
+
+    .select_boxes .form-select{
+
+        width: 100%;
+    }
+.select_searcjBox .select_boxes{
+
+    margin-top: 10px;
+}
+
+    .banner_section picture img {
+
+        height: 900px;
+        object-fit: cover;
+    }
+
+    .sharesafribg {
+
+        background: var(--background-primary) !important;
+        height: auto;
+        padding-top: 30px;
+
+    }
+   
+
+    .sharesafribg.home .shareimg {
+        height: 258px;
+    }
+
+    .safari_content h5 {
+
+        font-size: var(--fs-20);
+    }
+
+    .btn-knowmore {
+
+        font-size: var(--fs-18);
+    }
+
+    .banner_section-inner .banner_search{
+
+        height: 740px;
+        object-fit: cover;
+    }
+    .footer_object{
+
+        top: -50px;
+        left: -113px;
+    }
+    .footer_object img{
+
+        width: auto;
+    }
+    
+  
+    :root {
+        --fs-35: 24px;
+    }
+    .commentsOther{
+
+        padding: 10px 14px 10px 21px;
+    }
+    .inner_animals>img{
+
+        height: 335px;
+    }
+    .term-condition p{
+
+        padding-left: 0px;
+    }
+}
+
+@media(min-width:576px){
+
+    .title_white br{
+
+        display: none;
+    }
+}
+
+@media only screen and (max-width:576px) {
+    .title_yellow.h1{
+
+        font-size: 48px;
+    }
+    .title_white.h4 {
+        font-size: 25px;
+    }
+    .logo {
+
+        width: 160px;
+        
+    }
+
+    .banner_section-inner .banner_search{
+
+        height: 600px;
+        object-fit: cover;
+    }
+
+    .banner_section-inner .headingBnner_inner h1 {
+
+        font-size: 24px;
+    }
+
+    .title_web h2 br {
+
+        display: none;
+    }
+
+    .title_web {
+
+        padding: 5px 0px;
+    }
+
+    .btn_registrtion {
+
+        padding: 10px 35px;
+        font-size: 14px;
+
+    }
+
+    .registratin_text {
+
+        width: 76%;
+    }
+
+    .registratin_text h6 {
+
+        font-size: var(--fs-16);
+    }
+
+    .bg_sky {
+
+        padding: 70px 0px 50px 0px;
+    }
+
+    .artical_cards .lower-content h3 a {
+        font-size: var(--fs-20);
+
+    }
+
+    .artical_cards .lower-content {
+
+        padding: 31px 12px 0px 12px;
+    }
+    .headingBnner h1{
+        font-size: 23px;
+        line-height: 32px;
+    }
+    .tab-block .tab-mnu li{
+        padding: 10px 3px;
+    }
+    .coreZone,.bufferzone{
+
+        padding: 15px 10px;
+        border-radius: 10px 10px 0px 0px;
+    }
+    .title_tours{
+
+        flex-wrap: wrap;
+        gap: 2px !important;
+    }
+    .placeholder_select{
+        left: 11%;
+    }
+    .banner_section-inner .headingBnner_inner p{
+
+        font-size: var(--fs-20);
+    }
+    /* .footer_object{
+
+        top: -50px;
+        left: -219px;
+    }
+    .footer_object img{
+
+        width: auto;
+    } */
+    .footer_object img {
+        width: 1120px;
+    }
+    .footer_object {
+        top: -50px;
+        left: -197px;
+    }
+    .serch_btn button{
+
+        padding: 12px 30px;
+    }
+    .safariduring_sesons.innerpage{
+
+        padding-bottom: 100px;
+    }
+    .title_tours p{
+
+        padding-top: 10px;
+    }
+    .footerContent.legal ul li a{
+
+        font-size: 14px;
+    }
+    .footer_listing li a{
+
+        font-size: 14px; 
+    }
+    .copyright p {
+
+        font-size: 14px;
+    }
+    #arrow{
+        left: 43%;
+        transform: translateX(-43%);
+    }
+    .formInput .form-control, .formInput .form-select{
+
+        font-size: 14px;
+        
+    }
+    .mobile_width{
+
+        width: 100%;
+    }
+    .formInput .input_check label{
+        font-size: 14px;
+    }
+    :root {
+        --fs-35: 22px;
+    }
+
+}
+
+@media (max-width:420px){
+
+    .placeholder_select{
+
+        left: 14%;
+    }
+    .title_yellow.h1{
+
+        font-size: 35px;
+    }
+    .title_white.h4{
+
+        font-size: 19px;
+    }
+  
+}
