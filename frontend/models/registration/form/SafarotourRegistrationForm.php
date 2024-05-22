@@ -199,9 +199,41 @@ class SafarotourRegistrationForm extends model
         $this->safarioperator_request_model->has_cancellation_policy         =  $this->has_cancellation_policy;
         $this->safarioperator_request_model->wildlife_photographer           =  $this->wildlife_photographer;
         $this->safarioperator_request_model->wildlife_influencer             =  $this->wildlife_influencer;
+
+
+
+
+        if (in_array(1, $this->budget_segment) && in_array(2, $this->budget_segment) && in_array(3, $this->budget_segment)) {
+            $this->safarioperator_request_model->is_offer_premium_budget         =  1;
+            $this->safarioperator_request_model->is_offer_standard_budget        =  1;
+            $this->safarioperator_request_model->is_offer_economical_budget      =  1;
+        } else if (in_array(1, $this->budget_segment) && in_array(2, $this->budget_segment) && !(in_array(3, $this->budget_segment))) {
+            $this->safarioperator_request_model->is_offer_premium_budget         =  1;
+            $this->safarioperator_request_model->is_offer_standard_budget        =  1;
+            $this->safarioperator_request_model->is_offer_economical_budget      =  0;
+        } else if (in_array(1, $this->budget_segment) && in_array(3, $this->budget_segment) && !(in_array(2, $this->budget_segment))) {
+            $this->safarioperator_request_model->is_offer_premium_budget         =  1;
+            $this->safarioperator_request_model->is_offer_standard_budget        =  0;
+            $this->safarioperator_request_model->is_offer_economical_budget      =  1;
+        } else if (in_array(3, $this->budget_segment) && in_array(2, $this->budget_segment) && !(in_array(1, $this->budget_segment))) {
+            $this->safarioperator_request_model->is_offer_premium_budget         =  0;
+            $this->safarioperator_request_model->is_offer_standard_budget        =  1;
+            $this->safarioperator_request_model->is_offer_economical_budget      =  1;
+        } else if (in_array(1, $this->budget_segment) && !(in_array(2, $this->budget_segment)) && !(in_array(3, $this->budget_segment))) {
+            $this->safarioperator_request_model->is_offer_premium_budget         =  1;
+            $this->safarioperator_request_model->is_offer_standard_budget        =  0;
+            $this->safarioperator_request_model->is_offer_economical_budget      =  0;
+        } else {
+            $this->safarioperator_request_model->is_offer_premium_budget         =  0;
+            $this->safarioperator_request_model->is_offer_standard_budget        =  0;
+            $this->safarioperator_request_model->is_offer_economical_budget      =  0;
+        }
+
+
         $this->safarioperator_request_model->is_offer_premium_budget         =  $this->is_offer_premium_budget;
         $this->safarioperator_request_model->is_offer_standard_budget        =  $this->is_offer_standard_budget;
         $this->safarioperator_request_model->is_offer_economical_budget      =  $this->is_offer_economical_budget;
+
         $this->safarioperator_request_model->starting_price                  =  $this->starting_price;
         $this->safarioperator_request_model->is_approved                     =  $this->is_approved;
         $this->safarioperator_request_model->operator_name                   =  $this->operator_name;

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\interfaces\StatusInterface;
 use frontend\models\registration\form\SafarotourRegistrationForm;
+use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
 use yii\web\Controller;
 
@@ -36,6 +37,17 @@ class SafaritourRegistrationController extends Controller
                                 $safarioperatorrequestpark = new SafariOperatorRequestPark();
                                 $safarioperatorrequestpark->safari_operator_request_id = $model->safarioperator_request_model->id;
                                 $safarioperatorrequestpark->park_id = $park;
+                                $safarioperatorrequestpark->save(false);
+                            }
+                        }
+
+
+                        $activities = $model->offers_other_wildlifeactivities;
+                        if ($activities) {
+                            foreach ($activities as $activity) {
+                                $safarioperatorrequestpark = new SafariOperatorRequestActivities();
+                                $safarioperatorrequestpark->safari_operator_request_id = $model->safarioperator_request_model->id;
+                                $safarioperatorrequestpark->wildlife_activity_id = $activity;
                                 $safarioperatorrequestpark->save(false);
                             }
                         }
