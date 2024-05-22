@@ -21,7 +21,7 @@ class Header extends Widget
         $active_url = "/" . Yii::$app->requestedRoute;
         if (in_array($active_url, array("/safaritour-registration", "/birdingtour-registration"))) {
             return $this->render('initialheader');
-        } else if (in_array($active_url, array("/coming-soon"))) {
+        } else if (in_array($active_url, array("/", "/coming-soon"))) {
         } else {
             return $this->render('header');
         }

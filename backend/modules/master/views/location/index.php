@@ -6,17 +6,19 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\office\MasterDepartmentSearch $searchModel */
+/** @var common\models\master\location\MasterLocationSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Park';
-$this->params['breadcrumbs_home_url'] = '#';
+$this->title = 'Location';
+$this->params['breadcrumbs_home_url'] = '/master/location';
+$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
+
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 
-
 ?>
+
 <div class="card">
 
     <div class="card-body">
@@ -26,6 +28,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
@@ -53,7 +56,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return isset($model->city) ? $model->city->city_name : '';
                         }
                     ],
-
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [
@@ -78,7 +80,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
                                 ]);
                             },
-
                             'delete' => function ($url, $model) {
                                 return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
