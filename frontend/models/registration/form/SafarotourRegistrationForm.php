@@ -15,7 +15,9 @@ use frontend\models\registration\SafariOperatorRequest;
 class SafarotourRegistrationForm extends model
 {
     public $park_id;
+    public $category_id;
     public $safari_operator_id;
+    public $budget_segment;
     public $business_name;
     public $register_comapany_name;
     public $address;
@@ -67,6 +69,7 @@ class SafarotourRegistrationForm extends model
 
 
 
+            $this->category_id              =  $this->safarioperator_request_model->category_id;
             $this->safari_operator_id              =  $this->safarioperator_request_model->safari_operator_id;
             $this->business_name                   =  $this->safarioperator_request_model->business_name;
             $this->register_comapany_name          =  $this->safarioperator_request_model->register_comapany_name;
@@ -107,20 +110,20 @@ class SafarotourRegistrationForm extends model
 
 
     /**
-     * {@inheritdoc}
+     * {@inheritdoc}is_offer_premium_budget
      */
     public function rules()
     {
 
 
         return [
-            [['safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'offers_other_wildlifeactivities', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
+            [['category_id', 'safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'offers_other_wildlifeactivities', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
             [['business_name', 'phone_no', 'operator_name', 'operator_phone_no', 'operator_email', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
             [['google_rating', 'starting_price'], 'number'],
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['park_id'], 'safe']
+            [['park_id', 'budget_segment'], 'safe']
         ];
     }
 
@@ -173,6 +176,7 @@ class SafarotourRegistrationForm extends model
      */
     public function initializeForm()
     {
+        $this->safarioperator_request_model->category_id                     =  $this->category_id;
         $this->safarioperator_request_model->safari_operator_id              =  $this->safari_operator_id;
         $this->safarioperator_request_model->business_name                   =  $this->business_name;
         $this->safarioperator_request_model->register_comapany_name          =  $this->register_comapany_name;
