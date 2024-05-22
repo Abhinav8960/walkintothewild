@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -59,7 +60,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <div class="col-lg-12 mb-4">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
-                                            <?= $form->field($model, 'safari_operator_id')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select Category'])->label(false) ?>
+                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
 
                                         </div>
                                     </div>
@@ -75,7 +76,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <label for="">Operates in Parks <span>*</span></label>
                                                 <p class="mb-0 pb-xl-0 pb-2">In case of multiple parks, select the parks you operate in.</p>
                                             </div>
-                                            <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Safari Tour Operator, Wildlife Photographer...'])->label(false) ?>
+
+                                            <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
+                                                'data' => GeneralModel::parkoption(),
+                                                // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'multiple' => true],
+                                                'pluginOptions' => [
+                                                    'allowClear' => true
+                                                ],
+                                            ])->label(false) ?>
 
                                         </div>
                                     </div>
@@ -161,15 +170,23 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <div class="formInput  mb-3">
                                     <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
                                         <label for="">Budget Segment <span>*</span></label>
-                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-100','aria-label'=>"Large select example"])->label(false) ?> 
+
+                                        <?= $form->field($model, 'budget_segment')->widget(Select2::classname(), [
+                                            'data' => GeneralModel::packageoption(),
+                                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                                            'options' => ['placeholder' => 'Select', 'multiple' => true],
+                                            'pluginOptions' => [
+                                                'allowClear' => true
+                                            ],
+                                        ])->label(false) ?>
                                     </div>
 
                                 </div>
                                 <div class="formInput  mb-3">
                                     <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
                                         <label for="">Cancellation Policy</label>
-                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-100','aria-label'=>"Large select example"])->label(false) ?> 
-                                        
+                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-100', 'aria-label' => "Large select example"])->label(false) ?>
+
 
                                     </div>
 
@@ -177,7 +194,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <div class="formInput  mb-3">
                                     <div class="d-flex align-items-center justify-content-between  gap-3">
                                         <label for="">Google Rating</label>
-                                        <input type="text" class="form-control w-50 text-center" placeholder="4.5">
+                                        <?= $form->field($model, 'google_rating')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label(false) ?>
                                     </div>
 
                                 </div>
@@ -188,23 +205,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         <label for="">Offers Other Wildlife Activities</label>
                                         <div class="checkbb mt-md-0 mt-3">
                                             <div class="input_check d-flex gap-3 align-items-center">
-                                                <input type="checkbox" name="" id="text" class="checkbox_design">
-                                                <label for="text" class=" text_check">Wildlife Trekking /
-                                                    Hiking</label>
-                                            </div>
-                                            <div class="input_check d-flex gap-3 align-items-center">
-                                                <input type="checkbox" name="" id="text" class="checkbox_design">
-                                                <label for="text" class=" text_check">Wildlife Non-safari
-                                                    Drive</label>
-                                            </div>
-                                            <div class="input_check d-flex gap-3 align-items-center">
-                                                <input type="checkbox" name="" id="text" class="checkbox_design">
-                                                <label for="text" class=" text_check">Birding / Bird
-                                                    Watching</label>
-                                            </div>
-                                            <div class="input_check d-flex gap-3 align-items-center">
-                                                <input type="checkbox" name="" id="text" class="checkbox_design">
-                                                <label for="text" class=" text_check">Camping</label>
+                                                <?= $form->field($model, 'offers_other_wildlifeactivities')->checkboxList(
+                                                    GeneralModel::wildlifeactivities(),
+                                                    ['required' => true],
+                                                    ['separator' => '<br>']
+                                                )->label(false); ?>
                                             </div>
                                         </div>
 

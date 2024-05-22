@@ -17,6 +17,7 @@ class SafarotourRegistrationForm extends model
     public $park_id;
     public $category_id;
     public $safari_operator_id;
+    public $budget_segment;
     public $business_name;
     public $register_comapany_name;
     public $address;
@@ -109,7 +110,7 @@ class SafarotourRegistrationForm extends model
 
 
     /**
-     * {@inheritdoc}
+     * {@inheritdoc}is_offer_premium_budget
      */
     public function rules()
     {
@@ -122,7 +123,7 @@ class SafarotourRegistrationForm extends model
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['park_id'], 'safe']
+            [['park_id', 'budget_segment'], 'safe']
         ];
     }
 
