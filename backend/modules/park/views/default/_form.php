@@ -71,6 +71,9 @@ use yii\bootstrap5\ActiveForm;
                 'onchange' => '
                 $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
                     $( "select#state" ).html( data );
+                    $("select#city").html("<option value>Select City</option>");
+                    $("select#railway_station").html("<option value>Select Railway Station</option>");
+                    $("select#airport").html("<option value>Select Airport</option>");
                     })'
             ]
         ); ?>
@@ -84,6 +87,8 @@ use yii\bootstrap5\ActiveForm;
                 'onchange' => '
                 $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
                     $( "select#city" ).html( data );
+                    $("select#railway_station").html("<option value>Select Railway Station</option>");
+                    $("select#airport").html("<option value>Select Airport</option>");
                     })'
             ]
         ); ?>
