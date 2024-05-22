@@ -21,30 +21,27 @@ use yii\bootstrap5\ActiveForm;
             [
                 'prompt' => 'Select Country',
                 'onchange' => '
-            $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function(data) {
-                $("select#state").html(data);
-                $("select#state").prop("disabled", false);
-                $("select#city").html("<option value>Select City</option>");
-                $("select#city").prop("disabled", true);
-            })'
+                 $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
+                     $( "select#state" ).html( data );
+                     $("select#city").html("<option value>Select City</option>");
+                     })'
             ]
         ); ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state', 'disabled' => true]])->dropDownList(
-            [],
+        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
+            GeneralModel::getAllState($model->country_id),
             [
                 'prompt' => 'Select State',
                 'onchange' => '
-            $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function(data) {
-                $("select#city").html(data);
-                $("select#city").prop("disabled", false);
-            })'
+                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
+                    $( "select#city" ).html( data );
+                    })'
             ]
         ); ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city', 'disabled' => true]])->dropDownList(
+        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city',]])->dropDownList(
             [],
             ['prompt' => 'Select City']
         )->label('City') ?>
