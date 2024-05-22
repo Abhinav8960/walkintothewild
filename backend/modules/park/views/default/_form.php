@@ -88,8 +88,23 @@ use yii\bootstrap5\ActiveForm;
             ]
         ); ?>
     </div>
+
     <div class="col-md-6">
-        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(GeneralModel::getAllCity($model->state_id), ['prompt' => 'Select City'])->label('City') ?>
+        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(
+            GeneralModel::getAllCity($model->state_id),
+            [
+                'prompt' => 'Select City',
+                'onchange' => '
+                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getrailway?master_city_id=') . '"+$(this).val(), function(data) {
+                    $("select#railway_station").html(data);
+                });
+                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getairport?master_city_id=') . '"+$(this).val(), function(data) {
+                    $("select#airport").html(data);
+                });'
+            ]
+        ); ?>
+
+
     </div>
 
 
@@ -98,11 +113,11 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'nearest_railway_station')->dropDownList(GeneralModel::railwaystationoption(), ['prompt' => 'Select Railway Station'])->label('Railway Station') ?>
+        <?= $form->field($model, 'nearest_railway_station', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation($model->city_id), ['prompt' => 'Select Railway Station'])->label('Railway Station') ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'nearest_airport')->dropDownList(GeneralModel::airportoption(), ['prompt' => 'Select Airport'])->label('Airport') ?>
+        <?= $form->field($model, 'nearest_airport', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport($model->city_id), ['prompt' => 'Select Airport'])->label('Airport') ?>
     </div>
 
 </div>

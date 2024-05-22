@@ -162,4 +162,18 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return ArrayHelper::map(MasterCity::find()->where(['state_id' => $master_state_id, 'status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
     }
+
+    public static function getAllRailwayStation($master_city_id)
+    {
+        // echo $master_city_id;
+        // die;
+        return ArrayHelper::map(MasterRailwayStation::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function getAllAirport($master_city_id)
+    {
+        // echo $master_city_id;
+        // die;
+        return ArrayHelper::map(MasterAirport::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
 }
