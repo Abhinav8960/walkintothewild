@@ -11,6 +11,7 @@ use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\meta\MetaLocation;
+use common\models\park\Park;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -161,5 +162,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function getAllCity($master_state_id)
     {
         return ArrayHelper::map(MasterCity::find()->where(['state_id' => $master_state_id, 'status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
+    }
+
+
+    public static function parkoption()
+    {
+        return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }
