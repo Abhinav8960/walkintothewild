@@ -71,29 +71,29 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                         'contentOptions' => ['style' => 'width:5%;'],
                         'visible' => $isvisible,
                     ],
-                    // [
-                    //     'header' => 'Block',
-                    //     'value' => function ($model) {
-                    //         if ($model->blocked_at) {
-                    //             return Html::a('<i class="fa fa-toggle-on"></i>', ['block', 'id' => $model->id], [
-                    //                 'class' => 'btn btn-xs btn-success',
-                    //                 'data-method' => 'post',
-                    //                 'data-confirm' => 'Are you sure to unblock this user?',
-                    //                 'title' => 'Unblock User', 'data-bs-toggle' => "tooltip"
-                    //             ]);
-                    //         } else {
-                    //             return Html::a('<i class="fa fa-toggle-off"></i>', ['/user/default/block', 'id' => $model->id], [
-                    //                 'class' => 'btn btn-xs btn-danger',
-                    //                 'data-method' => 'post',
-                    //                 'data-confirm' => 'Are you sure to block this user?',
-                    //                 'title' => 'Block User', 'data-bs-toggle' => "tooltip"
-                    //             ]);
-                    //         }
-                    //     },
-                    //     'format' => 'raw',
-                    //     'headerOptions' => ['style' => 'width:5%;'],
-                    //     'contentOptions' => ['style' => 'width:5%;'],
-                    // ],
+                    [
+                        'header' => 'Block',
+                        'value' => function ($model) {
+                            if ($model->blocked_at) {
+                                return Html::a('<i class="fa fa-toggle-on"></i>', ['block', 'id' => $model->id], [
+                                    'class' => 'btn btn-xs btn-success',
+                                    'data-method' => 'post',
+                                    'data-confirm' => 'Are you sure to unblock this user?',
+                                    'title' => 'Unblock User', 'data-bs-toggle' => "tooltip"
+                                ]);
+                            } else {
+                                return Html::a('<i class="fa fa-toggle-off"></i>', ['/user/default/block', 'id' => $model->id], [
+                                    'class' => 'btn btn-xs btn-danger',
+                                    'data-method' => 'post',
+                                    'data-confirm' => 'Are you sure to block this user?',
+                                    'title' => 'Block User', 'data-bs-toggle' => "tooltip"
+                                ]);
+                            }
+                        },
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'width:5%;'],
+                        'contentOptions' => ['style' => 'width:5%;'],
+                    ],
 
                     [
                         'label' => 'Switch',

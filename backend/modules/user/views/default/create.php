@@ -52,7 +52,7 @@ $this->title = 'User: Register New User';
 
                     </div>
 
-                    <div class="col-md-6 col-xl-4 col-lg-4 col-sm-6">
+                    <div class="col-md-4 select_width">
                         <?= $form->field($model, 'role_id')->widget(\kartik\select2\Select2::classname(), [
                             'data' => GeneralModel::roles(),
                             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -88,5 +88,11 @@ $this->registerJs($js);
 <style>
     .field-userregistrationform-password {
         width: 100%;
+    }
+
+    .select_width .select2.select2-container {
+
+        width: 100% !important;
+        display: block !important;
     }
 </style>

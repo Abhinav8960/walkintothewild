@@ -38,20 +38,20 @@ $this->title = 'List of Users : Update User (' . $user->username . ')';
                     </div>
 
                     <div class="col-md-4">
-                        <div style="display:flex; width:100%; align-items:center;">
+                        <div class="d-flex align-items-center gap-1 w-100">
                             <?= $form->field($model, 'password')
                                 ->passwordInput([
                                     'placeholder' => 'Enter Password',
                                 ]) ?>
-                            <span class="btn btn-info p-2 toggle-password" title="View Password" data-bs-toggle="tooltip"><i class="fa fa-eye"></i></span>
+                            <span class="btn btn-info p-2 mt-4 toggle-password" title="View Password" data-bs-toggle="tooltip"><i class="fa fa-eye"></i></span>
                         </div>
                     </div>
+                    
 
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 select_width">
                         <?= $form->field($model, 'role_id')->widget(\kartik\select2\Select2::classname(), [
                             'data' => GeneralModel::roles(),
-                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                             'options' => ['placeholder' => 'Select User Role', 'multiple' => true],
                             'pluginOptions' => [
                                 'allowClear' => true
@@ -85,4 +85,9 @@ $this->registerJs($js);
     .field-userregistrationform-password {
         width: 100%;
     }
+    .select_width .select2.select2-container {
+
+width: 100% !important;
+display: block !important;
+}
 </style>
