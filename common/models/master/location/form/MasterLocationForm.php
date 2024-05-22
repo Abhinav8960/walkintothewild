@@ -7,7 +7,6 @@ use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\master\location\MasterLocation;
 
-
 class MasterLocationForm extends model
 {
     public $country_id;

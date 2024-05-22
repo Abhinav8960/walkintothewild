@@ -41,7 +41,8 @@ use yii\bootstrap5\ActiveForm;
         ); ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city',]])->dropDownList(
+        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city',]])->dropDownList( 
+            GeneralModel::getAllCity($model->state_id),
             ['prompt' => 'Select City']
         )->label('City') ?>
     </div>
