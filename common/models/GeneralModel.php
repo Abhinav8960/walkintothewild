@@ -7,6 +7,7 @@ use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
+use common\models\master\location\MasterLocation;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
@@ -168,5 +169,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function parkoption()
     {
         return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+    public static function getAllRailwayStation($master_city_id)
+    {
+        return ArrayHelper::map(MasterRailwayStation::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function getAllAirport($master_city_id)
+    {
+        return ArrayHelper::map(MasterAirport::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function getAllLocation($master_city_id)
+    {
+        return ArrayHelper::map(MasterLocation::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }

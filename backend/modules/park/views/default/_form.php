@@ -22,7 +22,7 @@ use yii\bootstrap5\ActiveForm;
         </div>
     <?php } ?>
 
-    <div class="col-md-6">
+    <div class="col-md-6 select_width">
         <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::vehicleoption(),
             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -36,7 +36,7 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'avg_safari_price')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 select_width">
         <?= $form->field($model, 'master_animal_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::animaloption(),
             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -71,6 +71,10 @@ use yii\bootstrap5\ActiveForm;
                 'onchange' => '
                 $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
                     $( "select#state" ).html( data );
+                    $("select#city").html("<option value>Select City</option>");
+                    $("select#railway_station").html("<option value>Select Railway Station</option>");
+                    $("select#airport").html("<option value>Select Airport</option>");
+                    $("select#location").html("<option value>Select Location</option>");
                     })'
             ]
         ); ?>
@@ -84,25 +88,45 @@ use yii\bootstrap5\ActiveForm;
                 'onchange' => '
                 $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
                     $( "select#city" ).html( data );
+                    $("select#railway_station").html("<option value>Select Railway Station</option>");
+                    $("select#airport").html("<option value>Select Airport</option>");
+                    $("select#location").html("<option value>Select Location</option>");
                     })'
             ]
         ); ?>
     </div>
+
     <div class="col-md-6">
-        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(GeneralModel::getAllCity($model->state_id), ['prompt' => 'Select City'])->label('City') ?>
+        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(
+            GeneralModel::getAllCity($model->state_id),
+            [
+                'prompt' => 'Select City',
+                'onchange' => '
+                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getrailway?master_city_id=') . '"+$(this).val(), function(data) {
+                    $("select#railway_station").html(data);
+                });
+                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getairport?master_city_id=') . '"+$(this).val(), function(data) {
+                    $("select#airport").html(data);
+                });
+                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getlocation?master_city_id=') . '"+$(this).val(), function(data) {
+                    $("select#location").html(data);
+                });'
+            ]
+        ); ?>
+
+
     </div>
 
-
     <div class="col-md-6">
-        <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'Select Location'])->label('Location') ?>
+        <?= $form->field($model, 'master_location_id', ['inputOptions' => ['id' => 'location']])->dropDownList(GeneralModel::getAllLocation($model->city_id), ['prompt' => 'Select Location'])->label('Location') ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'nearest_railway_station')->dropDownList(GeneralModel::railwaystationoption(), ['prompt' => 'Select Railway Station'])->label('Railway Station') ?>
+        <?= $form->field($model, 'nearest_railway_station', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation($model->city_id), ['prompt' => 'Select Railway Station'])->label('Railway Station') ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'nearest_airport')->dropDownList(GeneralModel::airportoption(), ['prompt' => 'Select Airport'])->label('Airport') ?>
+        <?= $form->field($model, 'nearest_airport', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport($model->city_id), ['prompt' => 'Select Airport'])->label('Airport') ?>
     </div>
 
 </div>
@@ -138,7 +162,7 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 select_width">
         <?= $form->field($model, 'master_bonus_experience_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::bonusexperienceoption(),
             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -171,4 +195,12 @@ use yii\bootstrap5\ActiveForm;
 
 
 </div>
+
+<style>
+    .select_width .select2.select2-container {
+
+        width: 100% !important;
+        display: block !important;
+    }
+</style>
 <?php ActiveForm::end(); ?>

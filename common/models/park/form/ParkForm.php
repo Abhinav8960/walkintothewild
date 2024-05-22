@@ -107,7 +107,7 @@ class ParkForm extends model
         return [
             'title' => 'Title',
             'slug' => 'Slug',
-            'vehicle_id' => 'Vehicle Id',
+            'vehicle_id' => 'Vehicle',
             'master_animal_id' => 'Animal',
             'short_description' => 'Short Description',
             'long_description' => 'Long Description',
