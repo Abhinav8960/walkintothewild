@@ -1870,6 +1870,15 @@ figure {
     justify-content: center;
     border-radius: 50%;
 }
+.div_remove > div{
+
+    margin-bottom: 0 !important;
+    width: 100% ;
+}
+.slect_remove label{
+
+    width: 98%;
+}
 
 .phone a {
 
