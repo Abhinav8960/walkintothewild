@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Devator Exp';
+    src: url('Devator-BoldExpanded.eot');
+    src: local('Devator Bold Expanded'), local('Devator-BoldExpanded'),
+        url('Devator-BoldExpanded.eot?#iefix') format('embedded-opentype'),
+        url('Devator-BoldExpanded.woff2') format('woff2'),
+        url('Devator-BoldExpanded.woff') format('woff'),
+        url('Devator-BoldExpanded.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
