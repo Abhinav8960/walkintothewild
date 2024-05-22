@@ -47,8 +47,16 @@ $this->title = 'List of Users : Update User (' . $user->username . ')';
                         </div>
                     </div>
 
+
                     <div class="col-md-4">
-                        <?= $form->field($model, 'role_id')->dropDownList(GeneralModel::roles(), ['prompt' => 'Select User Role', 'disabled' => true]) ?>
+                        <?= $form->field($model, 'role_id')->widget(\kartik\select2\Select2::classname(), [
+                            'data' => GeneralModel::roles(),
+                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                            'options' => ['placeholder' => 'Select User Role', 'multiple' => true],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]) ?>
                     </div>
                 </div>
 

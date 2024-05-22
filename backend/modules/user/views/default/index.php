@@ -30,7 +30,35 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                     'username:raw:Login ID',
                     'name:raw:Full Name',
                     'email:raw:Email',
-                    'rolelabel:raw:Role',
+                    // 'rolelabel:raw:Role',
+                    [
+                        'label' => 'Role',
+                        'value' => function ($model) {
+                            $roles = [];
+                            if ($model->is_adminstrator == 1) {
+                                $roles[] = "Administrator";
+                            }
+                            if ($model->is_admin == 1) {
+                                $roles[] = "Admin";
+                            }
+                            if ($model->is_safari_operator == 1) {
+                                $roles[] = "Safari Operator";
+                            }
+                            if ($model->is_birding_operator == 1) {
+                                $roles[] = "Birding Operator";
+                            }
+                            if ($model->is_cms_manager == 1) {
+                                $roles[] = "CMS Manager";
+                            }
+                            if ($model->is_resort == 1) {
+                                $roles[] = "Resort Manager";
+                            }
+                            return implode(', ', $roles);
+                        },
+                        'format' => 'raw',
+                        'visible' => $isvisible,
+                    ],
+
                     'created_at:datetime:Created At',
                     'password_update_at:relativeTime:Last Password Update',
                     [

@@ -22,13 +22,14 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property Post[] $posts
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
-    const ROLE_ADMINISTRATOR  = 1; 
+    const ROLE_ADMINISTRATOR  = 1;
 
 
     /**
@@ -57,6 +58,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort', 'name'], 'safe'],
         ];
     }
 
@@ -229,7 +231,7 @@ class User extends ActiveRecord implements IdentityInterface
             $this->setAttribute('token_key', \Yii::$app->security->generateRandomString(32));
             $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
             if (\Yii::$app instanceof \yii\web\Application) {
-               // $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
+                // $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
             }
         }
 
@@ -305,4 +307,8 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return 365;
     }
+    // public function getPosts()
+    // {
+    //     return $this->hasMany(User::className(), ['user_id' => 'id']);
+    // }
 }
