@@ -2,6 +2,9 @@
 
 namespace common\models\park;
 
+use common\models\master\city\MasterCity;
+use common\models\master\country\MasterCountry;
+use common\models\master\state\MasterState;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -128,8 +131,16 @@ class Park extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
         ];
     }
 
-    // public function getParkvehicle()
-    // {
-    //     return $this->hasMany(ParkVehicle::className(), ['park_id' => 'id']);
-    // }
+    public function getCity()
+    {
+        return $this->hasOne(MasterCity::className(), ['id' => 'city_id']);
+    }
+    public function getState()
+    {
+        return $this->hasOne(MasterState::className(), ['id' => 'state_id']);
+    }
+    public function getCountry()
+    {
+        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
+    }
 }

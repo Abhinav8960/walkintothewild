@@ -7,6 +7,7 @@ use yii\web\Controller;
 use common\Helpers\LocationHelper;
 use common\models\master\airport\MasterAirport;
 use common\models\master\city\MasterCity;
+use common\models\master\location\MasterLocation;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 
@@ -55,6 +56,16 @@ class DropdownController extends Controller
         $airportList = $airports;
         foreach ($airportList as $airport) {
             echo "<option value='" . $airport->id . "'>" . $airport->name . "</option>";
+        }
+    }
+
+    public function actionGetlocation($master_city_id)
+    {
+        $locations = MasterLocation::find()->where(['city_id' => $master_city_id, 'status' => 1])->all();
+        echo "<option value=''>Select Location</option>";
+        $locationList = $locations;
+        foreach ($locationList as $location) {
+            echo "<option value='" . $location->id . "'>" . $location->title . "</option>";
         }
     }
 }

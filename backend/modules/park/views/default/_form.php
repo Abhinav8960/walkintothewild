@@ -74,6 +74,7 @@ use yii\bootstrap5\ActiveForm;
                     $("select#city").html("<option value>Select City</option>");
                     $("select#railway_station").html("<option value>Select Railway Station</option>");
                     $("select#airport").html("<option value>Select Airport</option>");
+                    $("select#location").html("<option value>Select Location</option>");
                     })'
             ]
         ); ?>
@@ -89,6 +90,7 @@ use yii\bootstrap5\ActiveForm;
                     $( "select#city" ).html( data );
                     $("select#railway_station").html("<option value>Select Railway Station</option>");
                     $("select#airport").html("<option value>Select Airport</option>");
+                    $("select#location").html("<option value>Select Location</option>");
                     })'
             ]
         ); ?>
@@ -105,6 +107,9 @@ use yii\bootstrap5\ActiveForm;
                 });
                 $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getairport?master_city_id=') . '"+$(this).val(), function(data) {
                     $("select#airport").html(data);
+                });
+                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getlocation?master_city_id=') . '"+$(this).val(), function(data) {
+                    $("select#location").html(data);
                 });'
             ]
         ); ?>
@@ -112,9 +117,8 @@ use yii\bootstrap5\ActiveForm;
 
     </div>
 
-
     <div class="col-md-6">
-        <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'Select Location'])->label('Location') ?>
+        <?= $form->field($model, 'master_location_id', ['inputOptions' => ['id' => 'location']])->dropDownList(GeneralModel::getAllLocation($model->city_id), ['prompt' => 'Select Location'])->label('Location') ?>
     </div>
 
     <div class="col-md-6">
