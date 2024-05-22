@@ -90,7 +90,6 @@ class SafarotourRegistrationForm extends model
             $this->website                         =  $this->safarioperator_request_model->website;
             $this->is_register_company             =  $this->safarioperator_request_model->is_register_company;
             $this->has_a_website                   =  $this->safarioperator_request_model->has_a_website;
-            $this->offers_other_wildlifeactivities =  $this->safarioperator_request_model->offers_other_wildlifeactivities;
             $this->has_cancellation_policy         =  $this->safarioperator_request_model->has_cancellation_policy;
             $this->wildlife_photographer           =  $this->safarioperator_request_model->wildlife_photographer;
             $this->wildlife_influencer             =  $this->safarioperator_request_model->wildlife_influencer;
@@ -197,7 +196,6 @@ class SafarotourRegistrationForm extends model
         $this->safarioperator_request_model->website                         =  $this->website;
         $this->safarioperator_request_model->is_register_company             =  $this->is_register_company;
         $this->safarioperator_request_model->has_a_website                   =  $this->has_a_website;
-        $this->safarioperator_request_model->offers_other_wildlifeactivities =  $this->offers_other_wildlifeactivities;
         $this->safarioperator_request_model->has_cancellation_policy         =  $this->has_cancellation_policy;
         $this->safarioperator_request_model->wildlife_photographer           =  $this->wildlife_photographer;
         $this->safarioperator_request_model->wildlife_influencer             =  $this->wildlife_influencer;
