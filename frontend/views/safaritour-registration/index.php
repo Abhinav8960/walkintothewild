@@ -109,11 +109,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                                 <div class="formInput mb-3">
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
-                                        <div class="mobile_width">
+                                        <div class="mobile_width div_remove">
                                             <label for="">Phone Number <span>*</span></label>
                                             <?= $form->field($model, 'phone_no')->textInput(['maxlength' => true, 'placeholder' => '+91 00000 00000'])->label(false) ?>
                                         </div>
-                                        <div class="mobile_width">
+                                        <div class="mobile_width div_remove">
                                             <p class="mb-0 pt-xxl-0 pt-3 pb-2">This phone number will be visible to clients</p>
                                             <input type="text" class="form-control w-100" placeholder="+91 00000 00000">
                                         </div>
@@ -121,11 +121,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                                 <div class="formInput mb-3">
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
-                                        <div class="mobile_width">
+                                        <div class="mobile_width div_remove">
                                             <label for="">Email Adress <span>*</span></label>
                                             <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'yourbusiness@domain.com'])->label(false) ?>
                                         </div>
-                                        <div class="mobile_width">
+                                        <div class="mobile_width div_remove">
                                             <p class="mb-0 pt-xl-2 pt-3 pb-2">This email address will be visible to clients</p>
                                             <input type="text" class="form-control w-100" placeholder="yourbusiness@domain.com">
                                         </div>
@@ -139,19 +139,19 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         <label for="">Social Media</label>
                                         <p class="mb-0 pt-lg-0 pb-2">These social media profiles will be visible to clients</p>
                                     </div>
-                                    <div class="d-flex gap-2 socil-links align-items-center">
+                                    <div class="d-flex gap-2 socil-links div_remove align-items-center">
                                         <a href=""><i class="fa-brands fa-instagram"></i></a>
                                         <?= $form->field($model, 'instagram_url')->textInput(['maxlength' => true, 'placeholder' => 'Instagram Profile Link'])->label(false) ?>
                                     </div>
                                 </div>
                                 <div class="formInput mb-5">
-                                    <div class="d-flex gap-2 socil-links align-items-center">
+                                    <div class="d-flex gap-2 socil-links div_remove align-items-center">
                                         <a href=""><i class="fa-brands fa-facebook-f"></i></a>
                                         <?= $form->field($model, 'facebook_url')->textInput(['maxlength' => true, 'placeholder' => 'Facebook Profile Link'])->label(false) ?>
                                     </div>
                                 </div>
                                 <div class="formInput mb-3">
-                                    <div class="d-flex gap-2 socil-links align-items-center">
+                                    <div class="d-flex gap-2 socil-links div_remove align-items-center">
                                         <a href=""><i class="fa-brands fa-youtube"></i></a>
                                         <?= $form->field($model, 'youtube_link')->textInput(['maxlength' => true, 'placeholder' => 'Youtube Profile Link'])->label(false) ?>
                                     </div>
@@ -159,27 +159,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <div class="col-xl-6 mt-3">
                                 <div class="formInput  mb-3">
-                                    <div class="d-flex align-items-center justify-content-between gap-3">
+                                    <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
                                         <label for="">Budget Segment <span>*</span></label>
-                                        <select class="form-select form-select-lg mb-3 w-50" aria-label="Large select example">
-                                            <option selected>Premium</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
+                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-100','aria-label'=>"Large select example"])->label(false) ?> 
                                     </div>
 
                                 </div>
                                 <div class="formInput  mb-3">
-                                    <div class="d-flex align-items-center justify-content-between  gap-3">
+                                    <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
                                         <label for="">Cancellation Policy</label>
-                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-50','aria-label'=>"Large select example"])->label(false) ?>
-                                        <!-- <select class="form-select form-select-lg mb-3 w-50" aria-label="Large select example">
-                                            <option selected>yes</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select> -->
+                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-100','aria-label'=>"Large select example"])->label(false) ?> 
                                         
 
                                     </div>
