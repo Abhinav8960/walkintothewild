@@ -22,7 +22,7 @@ use yii\bootstrap5\ActiveForm;
         </div>
     <?php } ?>
 
-    <div class="col-md-6">
+    <div class="col-md-6 select_width">
         <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::vehicleoption(),
             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -36,7 +36,7 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'avg_safari_price')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 select_width">
         <?= $form->field($model, 'master_animal_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::animaloption(),
             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -162,7 +162,7 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 select_width">
         <?= $form->field($model, 'master_bonus_experience_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::bonusexperienceoption(),
             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -195,4 +195,12 @@ use yii\bootstrap5\ActiveForm;
 
 
 </div>
+
+<style>
+    .select_width .select2.select2-container {
+
+        width: 100% !important;
+        display: block !important;
+    }
+</style>
 <?php ActiveForm::end(); ?>
