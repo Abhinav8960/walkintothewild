@@ -2731,6 +2731,50 @@ figure {
 
     margin-bottom: 10px;
 }
+.formInput .input_check .form-check{
+
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 0;
+}
+.formInput .input_check .form-check label{
+
+    font-weight: 500;
+    font-size: var(--fs-14);
+    padding-bottom: 0;
+}
+.select2-selection.select2-selection--multiple{
+
+    height: 35px !important;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: none;
+    font-family: "Roboto", sans-serif !important;
+}
+.budgetSeg .select2-selection.select2-selection--multiple{
+
+    height: 35px !important;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: none;
+    font-family: "Roboto", sans-serif !important;
+}
+.budgetSeg .select2.select2-container.select2-container--krajee-bs5.select2-container--below.select2-container--focus{
+
+    width: 247px !important;
+}
+
+.budgetSeg .select2.select2-container.select2-container--krajee-bs5{
+
+    width: 247px !important;
+    margin-bottom: 10px;
+}
+.budgetSeg .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__rendered{
+
+    width: auto !important;
+}
 
 .formInput .input_check label {
 

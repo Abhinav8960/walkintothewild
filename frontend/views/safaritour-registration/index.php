@@ -34,10 +34,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div class="row pt-4">
                             <div class="col-lg-3 col-md-3">
 
-                                <div class="browslogow3">
+                                <div class="browslogow3" id="browslogow3">
                                     <div class="text" id="uploadText">Browse Logo</div>
                                     <input id="fileupload" type="file" class="fileupload" />
                                 </div>
+
 
                             </div>
                             <div class="col-lg-9 col-md-9">
@@ -167,7 +168,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                             </div>
                             <div class="col-xl-6 mt-3">
-                                <div class="formInput  mb-3">
+                                <div class="formInput budgetSeg mb-3">
                                     <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
                                         <label for="">Budget Segment <span>*</span></label>
 
@@ -192,9 +193,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                                 </div>
                                 <div class="formInput  mb-3">
-                                    <div class="d-flex align-items-center justify-content-between  gap-3">
+                                    <div class="d-flex align-items-center justify-content-between div_remove slect_remove gap-3">
                                         <label for="">Google Rating</label>
-                                        <?= $form->field($model, 'google_rating')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label(false) ?>
+                                        <?= $form->field($model, 'google_rating')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'text-center form-control'])->label(false) ?>
                                     </div>
 
                                 </div>
@@ -207,8 +208,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <div class="input_check d-flex gap-3 align-items-center">
                                                 <?= $form->field($model, 'offers_other_wildlifeactivities')->checkboxList(
                                                     GeneralModel::wildlifeactivities(),
-                                                    ['required' => true],
-                                                    ['separator' => '<br>']
+                                                    [
+                                                        'required' => true,
+                                                        // 'separator' => '<br>',
+                                                        'itemOptions' => ['class' => 'checkbox_design'],
+                                                    ]
                                                 )->label(false); ?>
                                             </div>
                                         </div>
