@@ -12,6 +12,8 @@ use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\meta\MetaLocation;
+use common\models\meta\MetaOperatorCategory;
+use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\park\Park;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -183,5 +185,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function getAllLocation($master_city_id)
     {
         return ArrayHelper::map(MasterLocation::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function wildlifeactivities()
+    {
+        return ArrayHelper::map(MetaOtherWildlifeActivities::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function operatorcategory()
+    {
+        return ArrayHelper::map(MetaOperatorCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }
