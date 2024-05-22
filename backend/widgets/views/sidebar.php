@@ -28,6 +28,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										"/master/state/index",
 										"/master/country/index",
 										"/master/city/index",
+										"/master/location/index",
 										"/master/railway-station/index",
 										"/master/airport/index",
 										"/master/bonus-experience/index",
@@ -42,6 +43,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/master/country/index",
 													"/master/state/index",
 													"/master/city/index",
+													"/master/location/index",
 													"/master/railway-station/index",
 													"/master/airport/index",
 													"/master/bonus-experience/index",
@@ -55,6 +57,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<li><a class="slide-item <?= in_array($active_url, array("/master/country/index")) ? "active" : "" ?>" href="/master/country/index">Country</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/state/index")) ? "active" : "" ?>" href="/master/state/index">State</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/city/index")) ? "active" : "" ?>" href="/master/city/index">City</a></li>
+						<li><a class="slide-item <?= in_array($active_url, array("/master/location/index")) ? "active" : "" ?>" href="/master/location/index">Location</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station/index")) ? "active" : "" ?>" href="/master/railway-station/index">Railway Station</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/airport/index")) ? "active" : "" ?>" href="/master/airport/index">Airport</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience/index")) ? "active" : "/master/bonus-experience/index" ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>
@@ -67,7 +70,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										"/meta",
 										"/meta/term-condition-type",
 										"/meta/wild-life-type",
-										"/meta/location",
 										"/meta/zone-type",
 										"/meta/stay-category",
 										"/meta/tour-operator",
@@ -81,7 +83,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/meta",
 													"/meta/term-condition-type",
 													"/meta/wild-life-type",
-													"/meta/location",
 													"/meta/zone-type",
 													"/meta/stay-category",
 													"/meta/park-trip-slot",
@@ -93,7 +94,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<ul class="slide-menu">
 						<li class="side-menu__label1"><a href="javascript:void(0);">Meta</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/wild-life-type")) ? "active" : "" ?>" href="/meta/wild-life-type">Wild Life Type</a></li>
-						<li><a class="slide-item <?= in_array($active_url, array("/meta/location")) ? "active" : "" ?>" href="/meta/location">Location</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/zone-type")) ? "active" : "" ?>" href="/meta/zone-type">Zone Type</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/stay-category")) ? "active" : "" ?>" href="/meta/stay-category">Stay Category</a></li>
 						<li><a class="slide-item <?= in_array($active_url, array("/meta/park-trip-slot")) ? "active" : "" ?>" href="/meta/park-trip-slot">Park Trip Slot</a></li>
