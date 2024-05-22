@@ -28,6 +28,7 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
+    const ROLE_ADMINISTRATOR  = 1; 
 
 
     /**
@@ -228,7 +229,7 @@ class User extends ActiveRecord implements IdentityInterface
             $this->setAttribute('token_key', \Yii::$app->security->generateRandomString(32));
             $this->setAttribute('auth_key', \Yii::$app->security->generateRandomString());
             if (\Yii::$app instanceof \yii\web\Application) {
-                $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
+               // $this->setAttribute('registration_ip', \Yii::$app->request->userIP);
             }
         }
 

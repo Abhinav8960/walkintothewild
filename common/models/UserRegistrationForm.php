@@ -30,7 +30,6 @@ class UserRegistrationForm extends Model
     {
         return [
             ['role_id', 'required'],
-            ['role_id', 'integer'],
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'match', 'pattern' => '/^[a-zA-Z0-9]\w+$/'],
             ['username', 'required'],
@@ -76,9 +75,12 @@ class UserRegistrationForm extends Model
         $this->user_model->username = $this->username;
         $this->user_model->name = $this->name;
         $this->user_model->email = $this->email;
-        if (in_array($this->role_id, array_keys($this->user_model->userRolelist()))) {
-            $this->user_model->role_id = $this->role_id;
-        }
+        // if (in_array($this->role_id, array_keys(GeneralModel::roles()))) {
+        //     $this->user_model->role_id = $this->role_id;
+        // }
+        $this->role_id;
+        // print_r($role_id);
+        // /die();
         $this->user_model->auth_key = \Yii::$app->security->generateRandomString();
         $this->user_model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($this->password);
         $this->user_model->save();

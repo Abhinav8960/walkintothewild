@@ -53,7 +53,14 @@ $this->title = 'User: Register New User';
                     </div>
 
                     <div class="col-md-6 col-xl-4 col-lg-4 col-sm-6">
-                        <?= $form->field($model, 'role_id')->dropDownList(GeneralModel::roles(), ['prompt' => 'Select User Role']) ?>
+                        <?= $form->field($model, 'role_id')->widget(\kartik\select2\Select2::classname(), [
+                            'data' => GeneralModel::roles(),
+                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                            'options' => ['placeholder' => 'Select User Role', 'multiple' => true],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]) ?>
                     </div>
                 </div>
 
