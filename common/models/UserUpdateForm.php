@@ -14,10 +14,23 @@ class UserUpdateForm extends Model
     public $user_model;
     public $email;
     public $username;
-    public $first_name;
-    public $last_name;
+    public $name;
     public $password;
+    public $is_adminstrator;
+    public $is_admin;
+    public $is_safari_operator;
+    public $is_birding_operator;
+    public $is_cms_manager;
+    public $is_resort;
     public $role_id;
+
+    // 1 => 'Administrator',
+    // 2 => 'Admin',
+    // 3 => 'Safari Operator',
+    // 4 => 'Operator',
+    // 5 => 'Cms Manager',
+    // 6 => 'Resort Manager',
+
 
     public function __construct(User $user_model = null)
     {
@@ -29,9 +42,30 @@ class UserUpdateForm extends Model
             $this->user_model = $user_model;
             $this->username = $this->user_model->username;
             $this->email = $this->user_model->email;
-            $this->first_name = $this->user_model->first_name;
-            $this->last_name = $this->user_model->last_name;
-            $this->role_id = $this->user_model->role_id;
+            $this->name = $this->user_model->name;
+
+
+            $this->role_id = [];
+
+            if ($this->user_model->is_adminstrator == 1) {
+                $this->role_id[] = 1;
+            }
+            if ($this->user_model->is_admin == 1) {
+                $this->role_id[] = 2;
+            }
+            if ($this->user_model->is_safari_operator == 1) {
+                $this->role_id[] = 3;
+            }
+            if ($this->user_model->is_birding_operator == 1) {
+                $this->role_id[] = 4;
+            }
+            if ($this->user_model->is_cms_manager == 1) {
+                $this->role_id[] = 5;
+            }
+            if ($this->user_model->is_resort == 1) {
+                $this->role_id[] = 6;
+            }
+
         }
     }
 
@@ -44,14 +78,11 @@ class UserUpdateForm extends Model
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'match', 'pattern' => '/^[a-zA-Z0-9]\w+$/'],
             ['username', 'required'],
-            //first_name rules
-            ['first_name', 'required'],
-            ['first_name', 'string', 'min' => 3, 'max' => 150],
-            ['first_name', 'trim'],
+            //name rules
+            ['name', 'required'],
+            ['name', 'string', 'min' => 3, 'max' => 150],
+            ['name', 'trim'],
             //last_name rules
-            ['last_name', 'required'],
-            ['last_name', 'string', 'min' => 3, 'max' => 150],
-            ['last_name', 'trim'],
             [
                 'username', 'unique', 'when' => function ($model, $attribute) {
                     return $this->user_model->$attribute != $model->$attribute;
@@ -62,6 +93,7 @@ class UserUpdateForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
+            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort'], 'safe'],
             [
                 'email', 'unique',
                 'when' => function ($model, $attribute) {
@@ -99,11 +131,41 @@ class UserUpdateForm extends Model
         }
         $this->user_model->username = $this->username;
         $this->user_model->email = $this->email;
-        if (in_array($this->role_id, array_keys(GeneralModel::roles()))) {
-            $this->user_model->role_id = $this->role_id;
+
+        $this->user_model->is_admin = 0;
+        $this->user_model->is_adminstrator = 0;
+        $this->user_model->is_safari_operator = 0;
+        $this->user_model->is_birding_operator = 0;
+        $this->user_model->is_cms_manager = 0;
+        $this->user_model->is_resort = 0;
+        $this->user_model->save(false);
+
+        if($this->role_id){
+            foreach($this->role_id as $role){
+                if($role==1){
+                    $this->user_model->is_adminstrator = 1;
+                }
+
+                if($role==2){
+                    $this->user_model->is_admin = 1;
+                }
+
+                if($role==3){
+                    $this->user_model->is_safari_operator = 1;
+                }
+                if($role==4){
+                    $this->user_model->is_birding_operator = 1;
+                }
+                if($role==5){
+                    $this->user_model->is_cms_manager = 1;
+                }
+                if($role==6){
+                    $this->user_model->is_resort = 1;
+                }
+            }
         }
-        $this->user_model->first_name = $this->first_name;
-        $this->user_model->last_name = $this->last_name;
-        $this->user_model->save();
+
+        $this->user_model->name = $this->name;
+        $this->user_model->save(false);
     }
 }
