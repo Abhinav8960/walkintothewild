@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\interfaces\StatusInterface;
-use frontend\models\registration\form\SafarotourRegistrationForm;
+use frontend\models\registration\form\SafaritourRegistrationForm;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
 use yii\web\UploadedFile;
@@ -22,7 +22,7 @@ class SafaritourRegistrationController extends Controller
     public function actionIndex()
     {
 
-        $model = new SafarotourRegistrationForm();
+        $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
