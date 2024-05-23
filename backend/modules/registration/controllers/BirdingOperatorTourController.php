@@ -60,7 +60,7 @@ class BirdingOperatorTourController extends Controller
                                 $birding_operator = $old_birding_operator;
                             }
                             $birding_operator->category_id                     =  $model->birdingoperator_request_approval_model->category_id;
-                            $birding_operator->birding_operator_request_id      =  $model->birdingoperator_request_approval_model->birding_operator_id;
+                            $birding_operator->birding_operator_request_id     =  $model->birdingoperator_request_approval_model->id;
                             $birding_operator->business_name                   =  $model->birdingoperator_request_approval_model->business_name;
                             $birding_operator->register_comapany_name          =  $model->birdingoperator_request_approval_model->register_comapany_name;
                             $birding_operator->address                         =  $model->birdingoperator_request_approval_model->address;

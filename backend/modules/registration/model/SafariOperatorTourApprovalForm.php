@@ -16,6 +16,7 @@ class SafariOperatorTourApprovalForm extends model
 {
     public $comment;
     public $is_approved;
+    public $safari_operator_id;
 
     public $status;
     public $status_option = [];
@@ -51,7 +52,7 @@ class SafariOperatorTourApprovalForm extends model
         return [
             [['is_approved', 'status'], 'integer'],
             [['is_approved', 'comment'], 'required'],
-            [['comment'], 'safe']
+            [['comment', 'safari_operator_id'], 'safe']
         ];
     }
 
