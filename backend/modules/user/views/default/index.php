@@ -95,16 +95,16 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                         'contentOptions' => ['style' => 'width:5%;'],
                     ],
 
-                    [
-                        'label' => 'Switch',
-                        'value' => function ($model) {
-                            return Html::a(' <i class="mdi mdi-account-switch text-white"></i>', ['/user/default/switchidentity?id=' . $model->id], ['class' => 'btn btn-info btn-secondary']);
-                        },
-                        'format' => 'raw',
-                        'headerOptions' => ['style' => 'width:5%;'],
-                        'contentOptions' => ['style' => 'width:5%;'],
-                        'visible' => $isvisible,
-                    ],
+                    // [
+                    //     'label' => 'Switch',
+                    //     'value' => function ($model) {
+                    //         return Html::a(' <i class="mdi mdi-account-switch text-white"></i>', ['/user/default/switchidentity?id=' . $model->id], ['class' => 'btn btn-info btn-secondary']);
+                    //     },
+                    //     'format' => 'raw',
+                    //     'headerOptions' => ['style' => 'width:5%;'],
+                    //     'contentOptions' => ['style' => 'width:5%;'],
+                    //     'visible' => $isvisible,
+                    // ],
                 ],
             ]);  ?>
 
