@@ -91,7 +91,7 @@ class Park extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     {
         return [
             [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
-            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'nearest_airport_distance', 'nearest_railway_station_distance'], 'integer'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
             [['slug'], 'unique'],
@@ -119,7 +119,9 @@ class Park extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
             'city_name' => 'City Name',
             'avg_safari_price' => 'Avg Safari Price',
             'nearest_railway_station' => 'Nearest Railway Station',
+            'nearest_railway_station_distance' => 'Nearest Railway Station Distance',
             'nearest_airport' => 'Nearest Airport',
+            'nearest_airport_distance' => 'Nearest Airport Distance',
             'nearest_bus_station' => 'Nearest Bus Station',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
