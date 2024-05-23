@@ -265,7 +265,7 @@ class SafarotourRegistrationForm extends model
                 chmod($storagePath, 0777);
             }
 
-            $fileName = 'animal' . time() . '.' . $this->logo->extension;
+            $fileName = 'safarioperator' . time() . '.' . $this->logo->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->logo->saveAs($filePath)) {

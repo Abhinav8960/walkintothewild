@@ -141,4 +141,13 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+
+
+    public function getImagepath()
+    {
+        if ($this->logo != '') {
+            return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
+        }
+    }
 }
