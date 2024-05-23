@@ -33,12 +33,13 @@
     --fs-35: 35px;
     --fs-40: 40px;
     --bs-body-font-family: "Roboto", sans-serif !important;
+     
 }
 
 body {
 
     font-family: "Roboto", sans-serif !important;
-    /* overflow-x: hidden; */
+    /* overflow-x: hidden !important; */
 }
 
 
@@ -2820,10 +2821,12 @@ figure {
     border-radius: 50%;
     display: inline-block;
     margin: 0 5px;
+    cursor: pointer;
 }
 
 .dot.active {
     background-color: #333;
+    
 }
 
 /* footer css start */

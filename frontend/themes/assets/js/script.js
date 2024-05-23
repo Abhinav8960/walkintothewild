@@ -240,35 +240,83 @@ window.addEventListener('scroll', function(e){
 //      });
     
 //   });
+// document.addEventListener('DOMContentLoaded', function() {
+//     const forms = document.querySelectorAll('.form');
+//     const dots = document.querySelectorAll('.dot');
+//     const nextButton = document.querySelector('.next-btn');
+//     const termCondition = document.querySelector('.term-condition');
+
+//     let currentFormIndex = 0;
+
+//     nextButton.addEventListener('click', function(event) {
+//       event.preventDefault();
+//       forms[currentFormIndex].classList.remove('active');
+//       dots[currentFormIndex].classList.remove('active');
+//       currentFormIndex++;
+//       if (currentFormIndex < forms.length) {
+//         forms[currentFormIndex].classList.add('active');
+//         dots[currentFormIndex].classList.add('active');
+//         if (currentFormIndex === forms.length - 1) {
+//           nextButton.textContent = 'Submit';
+//           nextButton.classList.add('submit-button');
+//           termCondition.classList.add('active');
+//         }
+//       } else {
+//         // Handle form submission here
+//         alert('Form submitted successfully!');
+//         // You can also submit the form to a server using AJAX or similar
+//       }
+//     });
+    
+//   });
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
     const nextButton = document.querySelector('.next-btn');
+    const submitButton = document.querySelector('.submit-btn');
     const termCondition = document.querySelector('.term-condition');
 
     let currentFormIndex = 0;
 
-    nextButton.addEventListener('click', function(event) {
-      event.preventDefault();
-      forms[currentFormIndex].classList.remove('active');
-      dots[currentFormIndex].classList.remove('active');
-      currentFormIndex++;
-      if (currentFormIndex < forms.length) {
-        forms[currentFormIndex].classList.add('active');
-        dots[currentFormIndex].classList.add('active');
+    function updateButtonVisibility() {
         if (currentFormIndex === forms.length - 1) {
-          nextButton.textContent = 'Submit';
-          nextButton.classList.add('submit-button');
-          termCondition.classList.add('active');
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'block';
+            termCondition.classList.add('active');
+        } else {
+            nextButton.style.display = 'block';
+            submitButton.style.display = 'none';
+            termCondition.classList.remove('active');
         }
-      } else {
-        // Handle form submission here
-        alert('Form submitted successfully!');
-        // You can also submit the form to a server using AJAX or similar
-      }
+    }
+
+    nextButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (currentFormIndex < forms.length - 1) {
+            forms[currentFormIndex].classList.remove('active');
+            dots[currentFormIndex].classList.remove('active');
+            currentFormIndex++;
+            forms[currentFormIndex].classList.add('active');
+            dots[currentFormIndex].classList.add('active');
+            updateButtonVisibility();
+        }
     });
-    
-  });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            if (index !== currentFormIndex) {
+                forms[currentFormIndex].classList.remove('active');
+                dots[currentFormIndex].classList.remove('active');
+                currentFormIndex = index;
+                forms[currentFormIndex].classList.add('active');
+                dots[currentFormIndex].classList.add('active');
+                updateButtonVisibility();
+            }
+        });
+    });
+});
+
   
   const fileUpload = document.getElementById('fileupload');
   const uploadText = document.getElementById('uploadText');
