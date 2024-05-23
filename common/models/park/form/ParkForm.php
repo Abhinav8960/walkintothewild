@@ -32,7 +32,9 @@ class ParkForm extends model
     public $city_name;
     public $avg_safari_price;
     public $nearest_railway_station;
+    public $nearest_railway_station_distance;
     public $nearest_airport;
+    public $nearest_airport_distance;
     public $nearest_bus_station;
     public $meta_title;
     public $meta_description;
@@ -67,7 +69,9 @@ class ParkForm extends model
             $this->city_name = $this->park_model->city_name;
             $this->avg_safari_price = $this->park_model->avg_safari_price;
             $this->nearest_railway_station = $this->park_model->nearest_railway_station;
+            $this->nearest_railway_station_distance = $this->park_model->nearest_railway_station_distance;
             $this->nearest_airport = $this->park_model->nearest_airport;
+            $this->nearest_airport_distance = $this->park_model->nearest_airport_distance;
             $this->nearest_bus_station = $this->park_model->nearest_bus_station;
             $this->meta_title = $this->park_model->meta_title;
             $this->meta_description = $this->park_model->meta_description;
@@ -91,9 +95,9 @@ class ParkForm extends model
     {
         return [
             [['title', 'vehicle_id', 'avg_safari_price', 'master_location_id', 'meta_title', 'meta_description', 'meta_keywords', 'latitude', 'longitude', 'country_id', 'state_id', 'city_id', 'nearest_railway_station', 'nearest_airport', 'master_animal_id', 'short_description', 'long_description'], 'required'],
-            [['status','avg_safari_price'], 'integer'],
+            [['status', 'avg_safari_price', 'nearest_airport_distance', 'nearest_railway_station_distance'], 'integer'],
             [['title'], 'string', 'max' => 255],
-            [['short_description'], 'string', 'max' => 251],    
+            [['short_description'], 'string', 'max' => 251],
             [['long_description', 'meta_title', 'meta_description'], 'string'],
             [['long_description'], 'validateMaxWords', 'params' => ['max' => 200]],
             [['status'], 'default', 'value' => 1],
@@ -132,7 +136,9 @@ class ParkForm extends model
             'city_name' => 'City Name',
             'avg_safari_price' => 'Avg Safari Price',
             'nearest_railway_station' => 'Nearest Railway Station',
+            'nearest_railway_station_distance' => 'Nearest Railway Station Distance (in km)',
             'nearest_airport' => 'Nearest Airport',
+            'nearest_airport_distance' => 'Nearest Airport Distance  (in km)',
             'nearest_bus_station' => 'Nearest Bus Station',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
@@ -163,7 +169,9 @@ class ParkForm extends model
         $this->park_model->city_name = $this->city_name;
         $this->park_model->avg_safari_price = $this->avg_safari_price;
         $this->park_model->nearest_railway_station = $this->nearest_railway_station;
+        $this->park_model->nearest_railway_station_distance = $this->nearest_railway_station_distance;
         $this->park_model->nearest_airport = $this->nearest_airport;
+        $this->park_model->nearest_airport_distance = $this->nearest_airport_distance;
         $this->park_model->nearest_bus_station = $this->nearest_bus_station;
         $this->park_model->meta_title = $this->meta_title;
         $this->park_model->meta_description = $this->meta_description;
