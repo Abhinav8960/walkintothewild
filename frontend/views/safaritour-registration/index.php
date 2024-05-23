@@ -128,7 +128,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         </div>
                                         <div class="mobile_width div_remove">
                                             <p class="mb-0 pt-xxl-0 pt-3 pb-2">This phone number will be visible to clients</p>
-                                            <input type="text" class="form-control w-100" placeholder="+91 00000 00000">
+                                            <?= $form->field($model, 'operator_phone_no')->textInput(['maxlength' => true, 'placeholder' => '+91 00000 00000'])->label(false) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         </div>
                                         <div class="mobile_width div_remove">
                                             <p class="mb-0 pt-xl-2 pt-3 pb-2">This email address will be visible to clients</p>
-                                            <input type="text" class="form-control w-100" placeholder="yourbusiness@domain.com">
+                                            <?= $form->field($model, 'operator_email')->textInput(['maxlength' => true, 'placeholder' => 'yourbusiness@domain.com'])->label(false) ?>
                                         </div>
                                     </div>
                                 </div>
