@@ -30,7 +30,35 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                     'username:raw:Login ID',
                     'name:raw:Full Name',
                     'email:raw:Email',
-                    'rolelabel:raw:Role',
+                    // 'rolelabel:raw:Role',
+                    [
+                        'label' => 'Role',
+                        'value' => function ($model) {
+                            $roles = [];
+                            if ($model->is_adminstrator == 1) {
+                                $roles[] = "Administrator";
+                            }
+                            if ($model->is_admin == 1) {
+                                $roles[] = "Admin";
+                            }
+                            if ($model->is_safari_operator == 1) {
+                                $roles[] = "Safari Operator";
+                            }
+                            if ($model->is_birding_operator == 1) {
+                                $roles[] = "Birding Operator";
+                            }
+                            if ($model->is_cms_manager == 1) {
+                                $roles[] = "CMS Manager";
+                            }
+                            if ($model->is_resort == 1) {
+                                $roles[] = "Resort Manager";
+                            }
+                            return implode(', ', $roles);
+                        },
+                        'format' => 'raw',
+                        'visible' => $isvisible,
+                    ],
+
                     'created_at:datetime:Created At',
                     'password_update_at:relativeTime:Last Password Update',
                     [
@@ -43,40 +71,40 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                         'contentOptions' => ['style' => 'width:5%;'],
                         'visible' => $isvisible,
                     ],
-                    // [
-                    //     'header' => 'Block',
-                    //     'value' => function ($model) {
-                    //         if ($model->blocked_at) {
-                    //             return Html::a('<i class="fa fa-toggle-on"></i>', ['block', 'id' => $model->id], [
-                    //                 'class' => 'btn btn-xs btn-success',
-                    //                 'data-method' => 'post',
-                    //                 'data-confirm' => 'Are you sure to unblock this user?',
-                    //                 'title' => 'Unblock User', 'data-bs-toggle' => "tooltip"
-                    //             ]);
-                    //         } else {
-                    //             return Html::a('<i class="fa fa-toggle-off"></i>', ['/user/default/block', 'id' => $model->id], [
-                    //                 'class' => 'btn btn-xs btn-danger',
-                    //                 'data-method' => 'post',
-                    //                 'data-confirm' => 'Are you sure to block this user?',
-                    //                 'title' => 'Block User', 'data-bs-toggle' => "tooltip"
-                    //             ]);
-                    //         }
-                    //     },
-                    //     'format' => 'raw',
-                    //     'headerOptions' => ['style' => 'width:5%;'],
-                    //     'contentOptions' => ['style' => 'width:5%;'],
-                    // ],
-
                     [
-                        'label' => 'Switch',
+                        'header' => 'Block',
                         'value' => function ($model) {
-                            return Html::a(' <i class="mdi mdi-account-switch text-white"></i>', ['/user/default/switchidentity?id=' . $model->id], ['class' => 'btn btn-info btn-secondary']);
+                            if ($model->blocked_at) {
+                                return Html::a('<i class="fa fa-toggle-on"></i>', ['block', 'id' => $model->id], [
+                                    'class' => 'btn btn-xs btn-success',
+                                    'data-method' => 'post',
+                                    'data-confirm' => 'Are you sure to unblock this user?',
+                                    'title' => 'Unblock User', 'data-bs-toggle' => "tooltip"
+                                ]);
+                            } else {
+                                return Html::a('<i class="fa fa-toggle-off"></i>', ['/user/default/block', 'id' => $model->id], [
+                                    'class' => 'btn btn-xs btn-danger',
+                                    'data-method' => 'post',
+                                    'data-confirm' => 'Are you sure to block this user?',
+                                    'title' => 'Block User', 'data-bs-toggle' => "tooltip"
+                                ]);
+                            }
                         },
                         'format' => 'raw',
                         'headerOptions' => ['style' => 'width:5%;'],
                         'contentOptions' => ['style' => 'width:5%;'],
-                        'visible' => $isvisible,
                     ],
+
+                    // [
+                    //     'label' => 'Switch',
+                    //     'value' => function ($model) {
+                    //         return Html::a(' <i class="mdi mdi-account-switch text-white"></i>', ['/user/default/switchidentity?id=' . $model->id], ['class' => 'btn btn-info btn-secondary']);
+                    //     },
+                    //     'format' => 'raw',
+                    //     'headerOptions' => ['style' => 'width:5%;'],
+                    //     'contentOptions' => ['style' => 'width:5%;'],
+                    //     'visible' => $isvisible,
+                    // ],
                 ],
             ]);  ?>
 

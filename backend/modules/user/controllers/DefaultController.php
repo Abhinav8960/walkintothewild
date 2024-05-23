@@ -34,7 +34,8 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
-        if (Yii::$app->user->identity && !in_array(Yii::$app->user->identity->role_id, [User::ROLE_ADMINISTRATOR])) {
+     
+        if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator != 1) {
             throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Adminstrator can view this page.');
         }
         $model = new UserRegistrationForm();
@@ -60,7 +61,7 @@ class DefaultController extends Controller
      */
     public function actionUpdate($user_id)
     {
-        if (Yii::$app->user->identity && !in_array(Yii::$app->user->identity->role_id, [User::ROLE_ADMINISTRATOR])) {
+        if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator != 1) {
             throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Adminstrator can view this page.');
         }
         $user = $this->findModel($user_id);

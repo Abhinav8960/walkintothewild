@@ -1,8 +1,6 @@
 <?php
 
 use common\models\GeneralModel;
-use kartik\select2\Select2;
-use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -35,13 +33,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div class="row pt-4">
                             <div class="col-lg-3 col-md-3">
 
-                                <div class="browslogow3" id="browslogow3">
+                                <div class="browslogow3">
                                     <div class="text" id="uploadText">Browse Logo</div>
-                                    <?= $form->field($model, 'logo')->fileInput(['class' => 'fileupload', 'id' => 'fileupload'])->label(false) ?>
-
-                                    <!-- <input id="fileupload" type="file" class="fileupload" /> -->
+                                    <input id="fileupload" type="file" class="fileupload" />
                                 </div>
-
 
                             </div>
                             <div class="col-lg-9 col-md-9">
@@ -64,7 +59,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <div class="col-lg-12 mb-4">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
-                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
+                                            <?= $form->field($model, 'safari_operator_id')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select Category'])->label(false) ?>
 
                                         </div>
                                     </div>
@@ -80,15 +75,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <label for="">Operates in Parks <span>*</span></label>
                                                 <p class="mb-0 pb-xl-0 pb-2">In case of multiple parks, select the parks you operate in.</p>
                                             </div>
-
-                                            <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
-                                                'data' => GeneralModel::parkoption(),
-                                                // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'multiple' => true],
-                                                'pluginOptions' => [
-                                                    'allowClear' => true
-                                                ],
-                                            ])->label(false) ?>
+                                            <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Safari Tour Operator, Wildlife Photographer...'])->label(false) ?>
 
                                         </div>
                                     </div>
@@ -122,25 +109,25 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                                 <div class="formInput mb-3">
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
-                                        <div class="mobile_width div_remove">
+                                        <div class="mobile_width">
                                             <label for="">Phone Number <span>*</span></label>
                                             <?= $form->field($model, 'phone_no')->textInput(['maxlength' => true, 'placeholder' => '+91 00000 00000'])->label(false) ?>
                                         </div>
-                                        <div class="mobile_width div_remove">
+                                        <div class="mobile_width">
                                             <p class="mb-0 pt-xxl-0 pt-3 pb-2">This phone number will be visible to clients</p>
-                                            <input type="text" class="form-control w-100" placeholder="+91 00000 00000">
+                                            <?= $form->field($model, 'operator_phone_no')->textInput(['maxlength' => true, 'placeholder' => '+91 00000 00000'])->label(false) ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="formInput mb-3">
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
-                                        <div class="mobile_width div_remove">
+                                        <div class="mobile_width">
                                             <label for="">Email Adress <span>*</span></label>
                                             <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'yourbusiness@domain.com'])->label(false) ?>
                                         </div>
-                                        <div class="mobile_width div_remove">
+                                        <div class="mobile_width">
                                             <p class="mb-0 pt-xl-2 pt-3 pb-2">This email address will be visible to clients</p>
-                                            <input type="text" class="form-control w-100" placeholder="yourbusiness@domain.com">
+                                            <?= $form->field($model, 'operator_email')->textInput(['maxlength' => true, 'placeholder' => 'yourbusiness@domain.com'])->label(false) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -152,53 +139,56 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         <label for="">Social Media</label>
                                         <p class="mb-0 pt-lg-0 pb-2">These social media profiles will be visible to clients</p>
                                     </div>
-                                    <div class="d-flex gap-2 socil-links div_remove align-items-center">
+                                    <div class="d-flex gap-2 socil-links align-items-center">
                                         <a href=""><i class="fa-brands fa-instagram"></i></a>
                                         <?= $form->field($model, 'instagram_url')->textInput(['maxlength' => true, 'placeholder' => 'Instagram Profile Link'])->label(false) ?>
                                     </div>
                                 </div>
                                 <div class="formInput mb-5">
-                                    <div class="d-flex gap-2 socil-links div_remove align-items-center">
+                                    <div class="d-flex gap-2 socil-links align-items-center">
                                         <a href=""><i class="fa-brands fa-facebook-f"></i></a>
                                         <?= $form->field($model, 'facebook_url')->textInput(['maxlength' => true, 'placeholder' => 'Facebook Profile Link'])->label(false) ?>
                                     </div>
                                 </div>
                                 <div class="formInput mb-3">
-                                    <div class="d-flex gap-2 socil-links div_remove align-items-center">
+                                    <div class="d-flex gap-2 socil-links align-items-center">
                                         <a href=""><i class="fa-brands fa-youtube"></i></a>
                                         <?= $form->field($model, 'youtube_link')->textInput(['maxlength' => true, 'placeholder' => 'Youtube Profile Link'])->label(false) ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-6 mt-3">
-                                <div class="formInput budgetSeg mb-3">
-                                    <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
+                                <div class="formInput  mb-3">
+                                    <div class="d-flex align-items-center justify-content-between gap-3">
                                         <label for="">Budget Segment <span>*</span></label>
-
-                                        <?= $form->field($model, 'budget_segment')->widget(Select2::classname(), [
-                                            'data' => GeneralModel::packageoption(),
-                                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                                            'options' => ['placeholder' => 'Select', 'multiple' => true],
-                                            'pluginOptions' => [
-                                                'allowClear' => true
-                                            ],
-                                        ])->label(false) ?>
+                                        <select class="form-select form-select-lg mb-3 w-50" aria-label="Large select example">
+                                            <option selected>Premium</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
                                     </div>
 
                                 </div>
                                 <div class="formInput  mb-3">
-                                    <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
+                                    <div class="d-flex align-items-center justify-content-between  gap-3">
                                         <label for="">Cancellation Policy</label>
-                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-100', 'aria-label' => "Large select example"])->label(false) ?>
+                                        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-50', 'aria-label' => "Large select example"])->label(false) ?>
+                                        <!-- <select class="form-select form-select-lg mb-3 w-50" aria-label="Large select example">
+                                            <option selected>yes</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select> -->
 
 
                                     </div>
 
                                 </div>
                                 <div class="formInput  mb-3">
-                                    <div class="d-flex align-items-center justify-content-between div_remove slect_remove gap-3">
+                                    <div class="d-flex align-items-center justify-content-between  gap-3">
                                         <label for="">Google Rating</label>
-                                        <?= $form->field($model, 'google_rating')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'text-center form-control'])->label(false) ?>
+                                        <input type="text" class="form-control w-50 text-center" placeholder="4.5">
                                     </div>
 
                                 </div>
@@ -211,11 +201,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <div class="input_check d-flex gap-3 align-items-center">
                                                 <?= $form->field($model, 'offers_other_wildlifeactivities')->checkboxList(
                                                     GeneralModel::wildlifeactivities(),
-                                                    [
-                                                        'required' => true,
-                                                        // 'separator' => '<br>',
-                                                        'itemOptions' => ['class' => 'checkbox_design'],
-                                                    ]
+                                                    ['required' => true],
+                                                    ['separator' => '<br>']
                                                 )->label(false); ?>
                                             </div>
                                         </div>
@@ -227,28 +214,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         </div>
                     </div>
                     <div class="dots-container">
-                            <span class="dot active" data-index="0"></span>
-                            <span class="dot" data-index="1"></span>
-                            <!-- Add more dots for additional steps -->
-                        </div>
+                        <span class="dot active"></span>
+                        <span class="dot "></span>
+                        <!-- Add more dots for additional steps -->
+                    </div>
                 </div>
                 <div class="row align-items-center pt-3">
-                        <div class="col-sm-10">
-                            <div class="term-condition text-center">
-                                <p class="mb-0 d-flex justify-content-center align-items-center">
-                                    <input type="checkbox" class="me-2 checkbox_design"> I agree to the <a href="">terms and conditions.</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="nextBtn float-end">
-                                <button class="next-btn">Next</button>
-                                <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn', 'style' => 'display:none;']) ?>
-                                <!-- <button class="submit-btn submit-button next-btn" style="display:none;">Submit</button> -->
-                            </div>
-                        </div>
-                    </div>
-                <!-- <div class="row align-items-center pt-3">
                     <div class="col-sm-10">
                         <div class="term-condition text-center">
                             <p class="mb-0 d-flex justify-content-center align-items-center"> <input type="checkbox" class="me-2 checkbox_design"> I agree to the <a href=""> terms and conditions.</a></p>
@@ -257,11 +228,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="col-sm-2">
                         <div class="nextBtn float-end">
                             <button class="next-btn">Next</button>
-                            <?= Html::submitButton('Submit', ['class' => 'btn btn-success text-black', 'style' => 'background-color:#F7BF39 !important;border: 0;padding: 10px 70px;border-radius: 4px;margin-top: 10px;font-size: var(--fs-18);font-weight: 600;']) ?>
-
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <?php ActiveForm::end(); ?>
 
             </div>

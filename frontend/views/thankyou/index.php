@@ -1,0 +1,1 @@
+<p>Thank for resigistrating</p>

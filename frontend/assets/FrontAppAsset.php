@@ -24,7 +24,7 @@ class FrontAppAsset extends AssetBundle
     ];
 
     public $js = [
-        'https://code.jquery.com/jquery-3.7.1.js',
+        // 'https://code.jquery.com/jquery-3.7.1.js',
         'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js',
         'js/script.js',
        

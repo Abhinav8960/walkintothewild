@@ -240,45 +240,114 @@ window.addEventListener('scroll', function(e){
 //      });
     
 //   });
+// document.addEventListener('DOMContentLoaded', function() {
+//     const forms = document.querySelectorAll('.form');
+//     const dots = document.querySelectorAll('.dot');
+//     const nextButton = document.querySelector('.next-btn');
+//     const termCondition = document.querySelector('.term-condition');
+
+//     let currentFormIndex = 0;
+
+//     nextButton.addEventListener('click', function(event) {
+//       event.preventDefault();
+//       forms[currentFormIndex].classList.remove('active');
+//       dots[currentFormIndex].classList.remove('active');
+//       currentFormIndex++;
+//       if (currentFormIndex < forms.length) {
+//         forms[currentFormIndex].classList.add('active');
+//         dots[currentFormIndex].classList.add('active');
+//         if (currentFormIndex === forms.length - 1) {
+//           nextButton.textContent = 'Submit';
+//           nextButton.classList.add('submit-button');
+//           termCondition.classList.add('active');
+//         }
+//       } else {
+//         // Handle form submission here
+//         alert('Form submitted successfully!');
+//         // You can also submit the form to a server using AJAX or similar
+//       }
+//     });
+    
+//   });
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
     const nextButton = document.querySelector('.next-btn');
+    const submitButton = document.querySelector('.submit-btn');
     const termCondition = document.querySelector('.term-condition');
 
     let currentFormIndex = 0;
 
-    nextButton.addEventListener('click', function(event) {
-      event.preventDefault();
-      forms[currentFormIndex].classList.remove('active');
-      dots[currentFormIndex].classList.remove('active');
-      currentFormIndex++;
-      if (currentFormIndex < forms.length) {
-        forms[currentFormIndex].classList.add('active');
-        dots[currentFormIndex].classList.add('active');
+    function updateButtonVisibility() {
         if (currentFormIndex === forms.length - 1) {
-          nextButton.textContent = 'Submit';
-          nextButton.classList.add('submit-button');
-          termCondition.classList.add('active');
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'block';
+            termCondition.classList.add('active');
+        } else {
+            nextButton.style.display = 'block';
+            submitButton.style.display = 'none';
+            termCondition.classList.remove('active');
         }
-      } else {
-        // Handle form submission here
-        alert('Form submitted successfully!');
-        // You can also submit the form to a server using AJAX or similar
-      }
+    }
+
+    nextButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        if (currentFormIndex < forms.length - 1) {
+            forms[currentFormIndex].classList.remove('active');
+            dots[currentFormIndex].classList.remove('active');
+            currentFormIndex++;
+            forms[currentFormIndex].classList.add('active');
+            dots[currentFormIndex].classList.add('active');
+            updateButtonVisibility();
+        }
     });
-    
-  });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            if (index !== currentFormIndex) {
+                forms[currentFormIndex].classList.remove('active');
+                dots[currentFormIndex].classList.remove('active');
+                currentFormIndex = index;
+                forms[currentFormIndex].classList.add('active');
+                dots[currentFormIndex].classList.add('active');
+                updateButtonVisibility();
+            }
+        });
+    });
+});
+
   
   const fileUpload = document.getElementById('fileupload');
-const uploadText = document.getElementById('uploadText');
-
-fileUpload.addEventListener('change', function() {
-  if (fileUpload.files.length > 0) {
-    uploadText.textContent = fileUpload.files[0].name;
-  } else {
-    uploadText.textContent = 'Click to upload file';
-  }
-});
+  const uploadText = document.getElementById('uploadText');
+  const browslogow3 = document.getElementById('browslogow3');
+  
+  fileUpload.addEventListener('change', function() {
+    if (fileUpload.files.length > 0) {
+      const file = fileUpload.files[0];
+      
+      const img = document.createElement('img');
+      img.style.maxWidth = '100%';
+      img.style.maxHeight = '100%';
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      
+      // Clear any existing images before appending the new one
+      const existingImg = browslogow3.querySelector('img');
+      if (existingImg) {
+        browslogow3.removeChild(existingImg);
+      }
+      
+      browslogow3.appendChild(img);
+      // Hide the uploadText when an image is uploaded
+      uploadText.style.display = 'none';
+    }
+  });
+  
+  
 
 

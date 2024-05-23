@@ -33,12 +33,13 @@
     --fs-35: 35px;
     --fs-40: 40px;
     --bs-body-font-family: "Roboto", sans-serif !important;
+     
 }
 
 body {
 
     font-family: "Roboto", sans-serif !important;
-    overflow-x: hidden;
+    /* overflow-x: hidden !important; */
 }
 
 
@@ -1870,6 +1871,15 @@ figure {
     justify-content: center;
     border-radius: 50%;
 }
+.div_remove > div{
+
+    margin-bottom: 0 !important;
+    width: 100% ;
+}
+.slect_remove label{
+
+    width: 98%;
+}
 
 .phone a {
 
@@ -2722,6 +2732,50 @@ figure {
 
     margin-bottom: 10px;
 }
+.formInput .input_check .form-check{
+
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 0;
+}
+.formInput .input_check .form-check label{
+
+    font-weight: 500;
+    font-size: var(--fs-14);
+    padding-bottom: 0;
+}
+.select2-selection.select2-selection--multiple{
+
+    height: 35px !important;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: none;
+    font-family: "Roboto", sans-serif !important;
+}
+.budgetSeg .select2-selection.select2-selection--multiple{
+
+    height: 35px !important;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: none;
+    font-family: "Roboto", sans-serif !important;
+}
+.budgetSeg .select2.select2-container.select2-container--krajee-bs5.select2-container--below.select2-container--focus{
+
+    width: 247px !important;
+}
+
+.budgetSeg .select2.select2-container.select2-container--krajee-bs5{
+
+    width: 247px !important;
+    margin-bottom: 10px;
+}
+.budgetSeg .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__rendered{
+
+    width: auto !important;
+}
 
 .formInput .input_check label {
 
@@ -2767,10 +2821,12 @@ figure {
     border-radius: 50%;
     display: inline-block;
     margin: 0 5px;
+    cursor: pointer;
 }
 
 .dot.active {
     background-color: #333;
+    
 }
 
 /* footer css start */
