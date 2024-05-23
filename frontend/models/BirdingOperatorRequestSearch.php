@@ -4,12 +4,12 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\registration\SafariOperatorRequest;
+use frontend\models\registration\BirdingOperatorRequest;
 
 /**
- * SafariOperatorRequestSearch represents the model behind the search form of `frontend\models\registration\SafariOperatorRequest`.
+ * BirdingOperatorRequestSearch represents the model behind the search form of `frontend\models\registration\BirdingOperatorRequest`.
  */
-class SafariOperatorRequestSearch extends SafariOperatorRequest
+class BirdingOperatorRequestSearch extends BirdingOperatorRequest
 {
     public $budget_segment;
 
@@ -19,7 +19,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
     public function rules()
     {
         return [
-            [['id', 'safari_operator_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'birding_operator_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'about_business', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'safe'],
             [['google_rating', 'starting_price'], 'number'],
             [['budget_segment'], 'safe']
@@ -44,7 +44,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
      */
     public function search($params)
     {
-        $query = SafariOperatorRequest::find();
+        $query = BirdingOperatorRequest::find();
 
         // add conditions that should always apply here
 
@@ -63,7 +63,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'safari_operator_id' => $this->safari_operator_id,
+            'birding_operator_id' => $this->birding_operator_id,
             'category_id' => $this->category_id,
             'is_highlighted' => $this->is_highlighted,
             'google_rating' => $this->google_rating,

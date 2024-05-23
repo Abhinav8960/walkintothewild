@@ -5,12 +5,10 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-/** @var yii\web\View $this */
-/** @var common\models\master\office\MasterDepartmentSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Park';
-$this->params['breadcrumbs_home_url'] = '#';
+$this->title = 'Disclaimer';
+$this->params['breadcrumbs_home_url'] = '/cms/disclaimer';
+$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
@@ -26,36 +24,17 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'title',
+                    // 'title',
                     [
-                        'label' => 'Country',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Content',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->country) ? $model->country->country_name : '';
+                            return $model->title;
                         }
                     ],
-                    [
-                        'label' => 'State',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->state) ? $model->state->state_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'City',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->city) ? $model->city->city_name : '';
-                        }
-                    ],
-
-                    'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%;'],

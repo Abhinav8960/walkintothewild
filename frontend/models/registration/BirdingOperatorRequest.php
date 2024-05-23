@@ -5,10 +5,10 @@ namespace frontend\models\registration;
 use Yii;
 
 /**
- * This is the model class for table "safari_operator_request".
+ * This is the model class for table "birding_operator_request".
  *
  * @property int $id
- * @property int|null $safari_operator_id
+ * @property int|null $birding_operator_id
  * @property string $business_name
  * @property string|null $register_comapany_name
  * @property string|null $address
@@ -45,14 +45,14 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class SafariOperatorRequest extends \yii\db\ActiveRecord
+class BirdingOperatorRequest extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'safari_operator_request';
+        return 'birding_operator_request';
     }
 
 
@@ -86,7 +86,7 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['birding_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['google_rating', 'starting_price'], 'number'],
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
@@ -100,7 +100,7 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'safari_operator_id' => 'Safari Operator ID',
+            'birding_operator_id' => 'Safari Operator ID',
             'business_name' => 'Business Name',
             'register_comapany_name' => 'Register Comapany Name',
             'address' => 'Address',
@@ -144,7 +144,7 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
     public function getImagepath()
     {
         if ($this->logo != '') {
-            return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
+            return '/storage/birdingoperator/' . $this->id . '/' . $this->logo;
         }
     }
 }

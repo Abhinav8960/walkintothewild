@@ -2,8 +2,11 @@
 
 namespace common\models\park;
 
+use common\models\master\airport\MasterAirport;
 use common\models\master\city\MasterCity;
 use common\models\master\country\MasterCountry;
+use common\models\master\location\MasterLocation;
+use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\traits\CommanRelationship;
 use Yii;
@@ -142,5 +145,18 @@ class Park extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
     public function getCountry()
     {
         return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
+    }
+
+    public function getLocation()
+    {
+        return $this->hasOne(MasterLocation::className(), ['id' => 'master_location_id']);
+    }
+    public function getAirport()
+    {
+        return $this->hasOne(MasterAirport::className(), ['id' => 'nearest_airport']);
+    }
+    public function getRailwaystation()
+    {
+        return $this->hasOne(MasterRailwayStation::className(), ['id' => 'nearest_railway_station']);
     }
 }

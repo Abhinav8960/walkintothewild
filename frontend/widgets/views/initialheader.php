@@ -8,7 +8,7 @@
 		<div class="container">
 			<div class="col-12 text-center pt-3">
 				<a href="index.html">
-					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="240px" class="logo">
+					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="180" class="logo">
 				</a>
 			</div>
 		</div>

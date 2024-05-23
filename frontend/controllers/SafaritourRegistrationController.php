@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\interfaces\StatusInterface;
-use frontend\models\registration\form\SafarotourRegistrationForm;
+use frontend\models\registration\form\SafaritourRegistrationForm;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
 use yii\web\UploadedFile;
@@ -22,7 +22,7 @@ class SafaritourRegistrationController extends Controller
     public function actionIndex()
     {
 
-        $model = new SafarotourRegistrationForm();
+        $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
@@ -55,7 +55,7 @@ class SafaritourRegistrationController extends Controller
                         }
                         //$model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/coming-soon/index']);
+                        return $this->redirect(['/coming-soon']);
                     }
                 } else {
                     print_r($model->errors);
