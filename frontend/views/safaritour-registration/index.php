@@ -227,41 +227,27 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         </div>
                     </div>
                     <div class="dots-container">
-                            <span class="dot active" data-index="0"></span>
-                            <span class="dot" data-index="1"></span>
-                            <!-- Add more dots for additional steps -->
-                        </div>
+                        <span class="dot active" data-index="0"></span>
+                        <span class="dot" data-index="1"></span>
+                        <!-- Add more dots for additional steps -->
+                    </div>
                 </div>
                 <div class="row align-items-center pt-3">
-                        <div class="col-sm-10">
-                            <div class="term-condition text-center">
-                                <p class="mb-0 d-flex justify-content-center align-items-center">
-                                    <input type="checkbox" class="me-2 checkbox_design"> I agree to the <a href="">terms and conditions.</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="nextBtn float-end">
-                                <button class="next-btn">Next</button>
-                                <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn', 'style' => 'display:none;']) ?>
-                                <!-- <button class="submit-btn submit-button next-btn" style="display:none;">Submit</button> -->
-                            </div>
-                        </div>
-                    </div>
-                <!-- <div class="row align-items-center pt-3">
                     <div class="col-sm-10">
                         <div class="term-condition text-center">
-                            <p class="mb-0 d-flex justify-content-center align-items-center"> <input type="checkbox" class="me-2 checkbox_design"> I agree to the <a href=""> terms and conditions.</a></p>
+                            <p class="mb-0 d-flex justify-content-center align-items-center">
+                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a href="">terms and conditions.</a>'); ?>
+                            </p>
                         </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="nextBtn float-end">
                             <button class="next-btn">Next</button>
-                            <?= Html::submitButton('Submit', ['class' => 'btn btn-success text-black', 'style' => 'background-color:#F7BF39 !important;border: 0;padding: 10px 70px;border-radius: 4px;margin-top: 10px;font-size: var(--fs-18);font-weight: 600;']) ?>
-
+                            <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn', 'style' => 'display:none;']) ?>
+                            <!-- <button class="submit-btn submit-button next-btn" style="display:none;">Submit</button> -->
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <?php ActiveForm::end(); ?>
 
             </div>

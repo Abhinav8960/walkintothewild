@@ -55,7 +55,7 @@ class SafaritourRegistrationController extends Controller
                         }
                         //$model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/coming-soon/index']);
+                        return $this->redirect(['/coming-soon']);
                     }
                 } else {
                     print_r($model->errors);

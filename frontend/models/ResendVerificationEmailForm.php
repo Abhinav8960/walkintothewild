@@ -40,7 +40,7 @@ class ResendVerificationEmailForm extends Model
     {
         $user = User::findOne([
             'email' => $this->email,
-            'status' => User::STATUS_INACTIVE
+            'status' => User::STATUS_ACTIVE
         ]);
 
         if ($user === null) {
