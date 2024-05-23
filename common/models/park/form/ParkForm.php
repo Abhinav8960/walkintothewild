@@ -94,7 +94,7 @@ class ParkForm extends model
     public function rules()
     {
         return [
-            [['title', 'vehicle_id', 'avg_safari_price', 'master_location_id', 'meta_title', 'meta_description', 'meta_keywords', 'latitude', 'longitude', 'country_id', 'state_id', 'city_id', 'nearest_railway_station', 'nearest_airport', 'master_animal_id', 'short_description', 'long_description'], 'required'],
+            [['title', 'vehicle_id', 'avg_safari_price', 'master_location_id', 'meta_title', 'meta_description', 'meta_keywords', 'latitude', 'longitude', 'country_id', 'state_id', 'city_id', 'nearest_railway_station', 'nearest_airport', 'master_animal_id', 'short_description', 'long_description', 'nearest_airport_distance', 'nearest_railway_station_distance'], 'required'],
             [['status', 'avg_safari_price', 'nearest_airport_distance', 'nearest_railway_station_distance'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['short_description'], 'string', 'max' => 251],
