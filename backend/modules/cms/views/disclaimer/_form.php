@@ -1,5 +1,6 @@
 <?php
 
+use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -8,10 +9,14 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="row">
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
-    </div>
+   
+    <div class="col-md-12">
+        <?= $form->field($model, 'title')->widget(CKEditor::className(), [
+            'options' => ['rows' => 4],
+            'preset' => 'full',
 
+        ]) ?>
+    </div>
 
     <?php if ($model->disclaimer_model->id) { ?>
         <div class="col-md-3">
