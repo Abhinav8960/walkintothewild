@@ -56,6 +56,31 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
         return 'safari_operator_request';
     }
 
+
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -115,5 +140,14 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+
+
+    public function getImagepath()
+    {
+        if ($this->logo != '') {
+            return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
+        }
     }
 }

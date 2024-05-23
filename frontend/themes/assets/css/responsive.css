@@ -64,6 +64,10 @@
 
         width: 100%;
     }
+    .budgetSeg .select2.select2-container.select2-container--krajee-bs5{
+
+        width: 210px !important;
+    }
 }
 @media only screen and (max-width: 1024px) and (min-width: 768px) {
 
@@ -184,6 +188,14 @@
     .select_boxes .form-select{
 
         border-radius: 10px !important;
+    }
+    .budgetSeg .select2.select2-container.select2-container--krajee-bs5{
+
+        width: 100% !important;
+    }
+    .budgetSeg .select2.select2-container.select2-container--krajee-bs5.select2-container--below.select2-container--focus{
+
+        width: 174px !important;
     }
 
 }
@@ -361,6 +373,10 @@
 }
 
 @media only screen and (max-width:767px) {
+    body {
+
+        overflow-x: hidden !important;
+    }
     .title_white.h4{
 
         font-size: 20px;

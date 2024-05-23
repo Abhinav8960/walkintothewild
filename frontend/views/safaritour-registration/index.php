@@ -2,6 +2,7 @@
 
 use common\models\GeneralModel;
 use kartik\select2\Select2;
+use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -34,10 +35,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div class="row pt-4">
                             <div class="col-lg-3 col-md-3">
 
-                                <div class="browslogow3">
+                                <div class="browslogow3" id="browslogow3">
                                     <div class="text" id="uploadText">Browse Logo</div>
-                                    <input id="fileupload" type="file" class="fileupload" />
+                                    <?= $form->field($model, 'logo')->fileInput(['class' => 'fileupload', 'id' => 'fileupload'])->label(false) ?>
+
+                                    <!-- <input id="fileupload" type="file" class="fileupload" /> -->
                                 </div>
+
 
                             </div>
                             <div class="col-lg-9 col-md-9">
@@ -167,7 +171,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                             </div>
                             <div class="col-xl-6 mt-3">
-                                <div class="formInput  mb-3">
+                                <div class="formInput budgetSeg mb-3">
                                     <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
                                         <label for="">Budget Segment <span>*</span></label>
 
@@ -192,9 +196,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                                 </div>
                                 <div class="formInput  mb-3">
-                                    <div class="d-flex align-items-center justify-content-between  gap-3">
+                                    <div class="d-flex align-items-center justify-content-between div_remove slect_remove gap-3">
                                         <label for="">Google Rating</label>
-                                        <?= $form->field($model, 'google_rating')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label(false) ?>
+                                        <?= $form->field($model, 'google_rating')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'text-center form-control'])->label(false) ?>
                                     </div>
 
                                 </div>
@@ -207,8 +211,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <div class="input_check d-flex gap-3 align-items-center">
                                                 <?= $form->field($model, 'offers_other_wildlifeactivities')->checkboxList(
                                                     GeneralModel::wildlifeactivities(),
-                                                    ['required' => true],
-                                                    ['separator' => '<br>']
+                                                    [
+                                                        'required' => true,
+                                                        // 'separator' => '<br>',
+                                                        'itemOptions' => ['class' => 'checkbox_design'],
+                                                    ]
                                                 )->label(false); ?>
                                             </div>
                                         </div>
@@ -220,12 +227,28 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         </div>
                     </div>
                     <div class="dots-container">
-                        <span class="dot active"></span>
-                        <span class="dot "></span>
-                        <!-- Add more dots for additional steps -->
-                    </div>
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                            <!-- Add more dots for additional steps -->
+                        </div>
                 </div>
                 <div class="row align-items-center pt-3">
+                        <div class="col-sm-10">
+                            <div class="term-condition text-center">
+                                <p class="mb-0 d-flex justify-content-center align-items-center">
+                                    <input type="checkbox" class="me-2 checkbox_design"> I agree to the <a href="">terms and conditions.</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="nextBtn float-end">
+                                <button class="next-btn">Next</button>
+                                <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn', 'style' => 'display:none;']) ?>
+                                <!-- <button class="submit-btn submit-button next-btn" style="display:none;">Submit</button> -->
+                            </div>
+                        </div>
+                    </div>
+                <!-- <div class="row align-items-center pt-3">
                     <div class="col-sm-10">
                         <div class="term-condition text-center">
                             <p class="mb-0 d-flex justify-content-center align-items-center"> <input type="checkbox" class="me-2 checkbox_design"> I agree to the <a href=""> terms and conditions.</a></p>
@@ -234,9 +257,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="col-sm-2">
                         <div class="nextBtn float-end">
                             <button class="next-btn">Next</button>
+                            <?= Html::submitButton('Submit', ['class' => 'btn btn-success text-black', 'style' => 'background-color:#F7BF39 !important;border: 0;padding: 10px 70px;border-radius: 4px;margin-top: 10px;font-size: var(--fs-18);font-weight: 600;']) ?>
+
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <?php ActiveForm::end(); ?>
 
             </div>
