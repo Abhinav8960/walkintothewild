@@ -10,9 +10,9 @@ use frontend\models\registration\SafariOperatorRequest;
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
  * 
- * Update and Create Holiday
+ * Update and Create Safari Operator
  */
-class SafarotourRegistrationForm extends model
+class SafaritourRegistrationForm extends model
 {
     public $park_id;
     public $category_id;
@@ -123,8 +123,10 @@ class SafarotourRegistrationForm extends model
 
             [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'frontend\models\registration\SafariOperatorRequest',  'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
             [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^\d{10}$/', 'message' => 'phone must contain exactly 10 digits.'],
-
+            [['facebook_url', 'instagram_url', 'youtube_link'], 'url'],
+            [['operator_email', 'email'], 'email'],
             [['google_rating', 'starting_price'], 'number'],
+            [['google_rating'], 'number', 'max' => 5],
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst',  'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],

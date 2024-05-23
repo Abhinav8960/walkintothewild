@@ -60,7 +60,7 @@ class SafariOperatorTourController extends Controller
                                 $safari_operator = $old_safari_operator;
                             }
                             $safari_operator->category_id                     =  $model->safarioperator_request_approval_model->category_id;
-                            $safari_operator->safari_operator_request_id      =  $model->safarioperator_request_approval_model->safari_operator_id;
+                            $safari_operator->safari_operator_request_id      =  $model->safarioperator_request_approval_model->id;
                             $safari_operator->business_name                   =  $model->safarioperator_request_approval_model->business_name;
                             $safari_operator->register_comapany_name          =  $model->safarioperator_request_approval_model->register_comapany_name;
                             $safari_operator->address                         =  $model->safarioperator_request_approval_model->address;
