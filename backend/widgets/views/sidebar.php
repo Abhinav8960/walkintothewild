@@ -148,7 +148,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							</li>
 							<li><a class="slide-item" href="#">Banners</a></li>
 							<li><a class="slide-item" href="#">About</a></li>
-							<li><a class="slide-item" href="#">Disclaimer</a></li>
+							<li><a class="slide-item" href="cms/disclaimer">Disclaimer</a></li>
 							<li><a class="slide-item" href="#">Privacy Policy</a></li>
 							<li><a class="slide-item" href="#">Team & Conditions</a></li>
 						</ul>
@@ -169,10 +169,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Registrations</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-														"/registration/safari-operator-tour",
-														"/registration/safari-operator-tour/index",
-														"/registration/safari-operator-tour/view",
-													)) ? "active" : "" ?>" href="/registration/safari-operator-tour">Safari Tour Operator</a></li>
+															"/registration/safari-operator-tour",
+															"/registration/safari-operator-tour/index",
+															"/registration/safari-operator-tour/view",
+														)) ? "active" : "" ?>" href="/registration/safari-operator-tour">Safari Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Birding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Article Comments</a></li>
 						</ul>
