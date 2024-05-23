@@ -421,6 +421,12 @@ a {
     accent-color: var(--background-primary);
     border-color: var(--background-primary);
 }
+/* .checkbox_design.is-valid{
+    accent-color: red;
+    border-color: red;
+
+
+} */
 
 .left_text p {
 
@@ -2788,6 +2794,12 @@ figure {
 .budgetSeg .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__rendered{
 
     width: auto !important;
+}
+.term-condition .form-check{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .formInput .input_check label {
