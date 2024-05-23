@@ -101,6 +101,7 @@ class SafarotourRegistrationForm extends model
             $this->operator_name                   =  $this->safarioperator_request_model->operator_name;
             $this->operator_phone_no               =  $this->safarioperator_request_model->operator_phone_no;
             $this->operator_email                  =  $this->safarioperator_request_model->operator_email;
+            $this->is_highlighted                  =  $this->safarioperator_request_model->is_highlighted;
             $this->status                          =  $this->safarioperator_request_model->this->safarioperator_request_model->status;
         }
 
@@ -116,13 +117,20 @@ class SafarotourRegistrationForm extends model
 
 
         return [
-            [['category_id', 'safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'offers_other_wildlifeactivities', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
-            [['business_name', 'phone_no', 'operator_name', 'operator_phone_no', 'operator_email', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['category_id', 'safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
+            [['business_name', 'phone_no'], 'required'],
+
+            ['phone_no', 'required'],
+            // ['roles', 'required'],
+            [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'frontend\models\registration\SafariOperatorRequest',  'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
+            [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^\d{10}$/', 'message' => 'phone must contain exactly 10 digits.'],
+
             [['google_rating', 'starting_price'], 'number'],
             [['about_business'], 'string'],
-            [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
+            [['business_name', 'register_comapany_name', 'address', 'gst',  'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['park_id', 'budget_segment'], 'safe']
+            [['is_highlighted', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved', 'starting_price','operator_name','operator_phone_no','operator_email'], 'default', 'value' => 0],
+            [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities'], 'safe']
         ];
     }
 
@@ -202,7 +210,6 @@ class SafarotourRegistrationForm extends model
 
 
 
-
         if (in_array(1, $this->budget_segment) && in_array(2, $this->budget_segment) && in_array(3, $this->budget_segment)) {
             $this->safarioperator_request_model->is_offer_premium_budget         =  1;
             $this->safarioperator_request_model->is_offer_standard_budget        =  1;
@@ -229,16 +236,42 @@ class SafarotourRegistrationForm extends model
             $this->safarioperator_request_model->is_offer_economical_budget      =  0;
         }
 
-
-        $this->safarioperator_request_model->is_offer_premium_budget         =  $this->is_offer_premium_budget;
-        $this->safarioperator_request_model->is_offer_standard_budget        =  $this->is_offer_standard_budget;
-        $this->safarioperator_request_model->is_offer_economical_budget      =  $this->is_offer_economical_budget;
-
         $this->safarioperator_request_model->starting_price                  =  $this->starting_price;
         $this->safarioperator_request_model->is_approved                     =  $this->is_approved;
         $this->safarioperator_request_model->operator_name                   =  $this->operator_name;
         $this->safarioperator_request_model->operator_phone_no               =  $this->operator_phone_no;
         $this->safarioperator_request_model->operator_email                  =  $this->operator_email;
-        $this->safarioperator_request_model->status                          =  $this->this->safarioperator_request_model->status;
+        $this->safarioperator_request_model->is_highlighted                  =  $this->is_highlighted;
+        $this->safarioperator_request_model->status                          =  $this->status;
+    }
+
+
+
+
+
+    public function uploadFile()
+    {
+
+        if ($this->logo) {
+            $storagePath = Yii::$app->params['datapath'] . '/safarioperator';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->safarioperator_request_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
+            $fileName = 'animal' . time() . '.' . $this->logo->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+            if ($this->logo->saveAs($filePath)) {
+                $this->safarioperator_request_model->logo = $fileName;
+                $this->safarioperator_request_model->save(false);
+            }
+        }
     }
 }

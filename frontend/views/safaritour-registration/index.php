@@ -2,6 +2,7 @@
 
 use common\models\GeneralModel;
 use kartik\select2\Select2;
+use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -36,7 +37,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                                 <div class="browslogow3" id="browslogow3">
                                     <div class="text" id="uploadText">Browse Logo</div>
-                                    <input id="fileupload" type="file" class="fileupload" />
+                                    <?= $form->field($model, 'logo')->fileInput(['class' => 'fileupload', 'id' => 'fileupload'])->label(false) ?>
+
+                                    <!-- <input id="fileupload" type="file" class="fileupload" /> -->
                                 </div>
 
 
@@ -238,6 +241,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="col-sm-2">
                         <div class="nextBtn float-end">
                             <button class="next-btn">Next</button>
+                            <?= Html::submitButton('Submit', ['class' => 'btn btn-success text-black', 'style' => 'background-color:#F7BF39 !important;border: 0;padding: 10px 70px;border-radius: 4px;margin-top: 10px;font-size: var(--fs-18);font-weight: 600;']) ?>
+
                         </div>
                     </div>
                 </div>
