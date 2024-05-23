@@ -6,8 +6,10 @@ use common\interfaces\StatusInterface;
 use common\models\master\state\form\MasterStateForm;
 use common\models\master\state\MasterState;
 use common\models\master\state\MasterStateSearch;
-
+use yii\web\UploadedFile;
+use Yii;
 use yii\web\Controller;
+use yii\helpers\FileHelper;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -94,6 +96,63 @@ class StateController extends Controller
         ]);
     }
 
+
+
+    /**
+     * Creates a new Student studentfromfile OLD Function.
+     * @return mixed
+     */
+    public function actionStatefromfile()
+    {
+
+        $model = new MasterStateForm();
+        $model->scenario = 'uploadfile';
+        if ($model->load(Yii::$app->request->post())) {
+            $uploadedfile = UploadedFile::getInstance($model, 'uploadfile');
+            if ($uploadedfile) {
+                $time = date("Y/m/d");
+                $path = Yii::$app->params['datapath'] . '/csv/' . $time;
+                FileHelper::createDirectory($path, $mode = 0775, $recursive = true);
+                $filepath =  $uploadedfile;
+                $uploadedfile->saveAs($path . '/' . $uploadedfile);
+                $uploadedfile->saveAs($filepath);
+                $uploadFileName = $uploadedfile->name;
+                $uploadFilePath = $filepath;
+                $fullpath = $path . '/' . $uploadFileName;
+                $csv = array();
+                $rowcount = 0;
+                if (($handle = fopen($fullpath, "r")) !== FALSE) {
+                    $max_line_length = defined('MAX_LINE_LENGTH') ? MAX_LINE_LENGTH : 10000;
+                    while (($row = fgetcsv($handle, $max_line_length)) !== FALSE) {
+                        $row_colcount = count($row);
+                        $csv[] = $row;
+                        $rowcount++;
+                    }
+                    fclose($handle);
+                }
+                // Remove first row from count
+                $rowcount = $rowcount - 1;
+                if (!empty($csv)) {
+                    $countsuccess = 0;
+                    foreach (array_slice($csv, 1) as $key => $value) {
+                        $model = new MasterStateForm();
+                        $model->scenario = 'create';
+                        $model->state_model->country_id = 1;
+                        $model->state_model->state_name = $value[0];
+                        $model->state_model->status = 1;
+                        $model->state_model->save(false);
+                    }
+                        \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' State Successfully Imported');
+                        return $this->redirect(['/master/state/index']);
+                }
+            }
+        }
+
+
+        return $this->render('statefromfile', [
+            'model' => $model
+        ]);
+    }
 
 
     public function actionView($id)

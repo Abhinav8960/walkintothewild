@@ -154,6 +154,8 @@ class SafaritourRegistrationForm extends model
             'business_name' => 'Business Name',
             'register_comapany_name' => 'Register Comapany Name',
             'address' => 'Address',
+            'category_id' => 'Category Type',
+            'park_id' => 'Park',
             'gst' => 'Gst',
             'logo' => 'Logo',
             'is_highlighted' => 'Is Highlighted',

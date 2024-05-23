@@ -155,6 +155,8 @@ class BirdingtourRegistrationForm extends model
             'register_comapany_name' => 'Register Comapany Name',
             'address' => 'Address',
             'gst' => 'Gst',
+            'category_id' => 'Category Type',
+            'park_id' => 'Park',
             'logo' => 'Logo',
             'is_highlighted' => 'Is Highlighted',
             'google_rating' => 'Google Rating',
