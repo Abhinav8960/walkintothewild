@@ -14,7 +14,7 @@ $this->params['breadcrumbs_home_url'] = '/master/city';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create', 'style' => 'margin-right: 2px;']);
 $this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['class' => 'btn btn-orange ', 'title' => 'Upload City Csv']);
 
 
