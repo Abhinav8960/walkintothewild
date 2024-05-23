@@ -79,36 +79,7 @@ use yii\grid\GridView;
                     </div>
                 </div>
 
-
-                <div class="tab-pane fade" id="park_animal">
-                    <p>cum soluta nobis est eligendi optio cumque nihil Et harum quidem rerum facilis est et expedita distinctio., similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
-                    <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil Et harum quidem rerum facilis est et expedita distinctio. impedit quo minus id quod maxime</p>
-                    <p class="mb-0">placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-                </div>
-                <div class="tab-pane fade" id="park_zone">
-                    <p>aborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio cupiditate non provident praesentium</p>
-                    <p class="mb-0">deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.similique sunt in culpa qui officia Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-                </div>
-                <div class="tab-pane fade" id="park_vehicle">
-                    <p>aborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio cupiditate non provident praesentium</p>
-                    <p class="mb-0">deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.similique sunt in culpa qui officia Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-                </div>
-                <div class="tab-pane fade" id="about_park">
-                    <p>aborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio cupiditate non provident praesentium</p>
-                    <p class="mb-0">deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.similique sunt in culpa qui officia Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-                </div>
-                <div class="tab-pane fade" id="flora_fauna">
-                    <p>aborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio cupiditate non provident praesentium</p>
-                    <p class="mb-0">deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.similique sunt in culpa qui officia Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-                </div>
-                <div class="tab-pane fade" id="how_to_reach">
-                    <p>aborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio cupiditate non provident praesentium</p>
-                    <p class="mb-0">deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.similique sunt in culpa qui officia Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-                </div>
-                <div class="tab-pane fade" id="map">
-                    <p>aborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio cupiditate non provident praesentium</p>
-                    <p class="mb-0">deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.similique sunt in culpa qui officia Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-                </div>
+              
             </div>
         </div>
     </div>
