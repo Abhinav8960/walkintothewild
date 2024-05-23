@@ -21,6 +21,7 @@ class SafarotourRegistrationForm extends model
     public $business_name;
     public $register_comapany_name;
     public $address;
+    public $is_agree;
     public $gst;
     public $logo;
     public $is_highlighted;
@@ -118,7 +119,7 @@ class SafarotourRegistrationForm extends model
 
         return [
             [['category_id', 'safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
-            [['business_name', 'phone_no', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment'], 'required'],
+            [['business_name', 'phone_no', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment', 'is_agree'], 'required'],
 
             [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'frontend\models\registration\SafariOperatorRequest',  'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
             [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^\d{10}$/', 'message' => 'phone must contain exactly 10 digits.'],
@@ -127,7 +128,7 @@ class SafarotourRegistrationForm extends model
             [['about_business'], 'string'],
             [['business_name', 'register_comapany_name', 'address', 'gst',  'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-            [['is_highlighted', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved', 'starting_price', 'operator_name', 'operator_phone_no', 'operator_email'], 'default', 'value' => 0],
+            [['is_highlighted', 'has_cancellation_policy', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved', 'starting_price', 'operator_name', 'operator_phone_no', 'operator_email'], 'default', 'value' => 0],
             [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities'], 'safe']
         ];
     }

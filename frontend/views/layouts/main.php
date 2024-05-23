@@ -26,7 +26,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column ">
     <?php $this->beginBody() ?>
 
     <header>

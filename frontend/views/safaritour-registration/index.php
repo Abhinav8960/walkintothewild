@@ -61,20 +61,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <div class="col-lg-7 mt-4">
                                 <div class="row">
-                                    <div class="col-lg-12 mb-4">
+                                    <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
                                             <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 mb-4">
+                                    <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Address <span>*</span></label>
                                             <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder' => 'Enter Address'])->label(false) ?>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 mb-4">
+                                    <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <div class="d-sm-flex align-items-center justify-content-between flex-wrap">
                                                 <label for="">Operates in Parks <span>*</span></label>
@@ -236,7 +236,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="col-sm-10">
                         <div class="term-condition text-center">
                             <p class="mb-0 d-flex justify-content-center align-items-center">
-                                <input type="checkbox" class="me-2 checkbox_design"> I agree to the <a href="">terms and conditions.</a>
+                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a href="">terms and conditions.</a>'); ?>
                             </p>
                         </div>
                     </div>
