@@ -21,10 +21,29 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row">
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?= $form->field($model, 'business_name')->textInput(['placeholder' => 'Search by Business Name'])->label(false) ?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
+        <?= $form->field($model, 'register_comapany_name')->textInput(['placeholder' => 'Search by Business Name'])->label(false) ?>
+    </div>
+    <div class="col-md-2">
+        <?= $form->field($model, 'category_id')->dropDownList(
+            GeneralModel::operatorcategory(),
+            [
+                'prompt' => 'Select Category',
+            ]
+        ) ?>
+    </div>
+    <div class="col-md-2">
+        <?= $form->field($model, 'budget_segment')->dropDownList(
+            GeneralModel::packageoption(),
+            [
+                'prompt' => 'Select Budget Segment',
+            ]
+        ) ?>
+    </div>
+    <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel::statusoption(),
             [
@@ -32,7 +51,7 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>
 </div>
