@@ -5,36 +5,36 @@ namespace backend\modules\registration\model;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use frontend\models\registration\SafariOperatorRequest;
+use frontend\models\registration\BirdingOperatorRequest;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
  * 
  * Update and Create Approval
  */
-class SafariOperatorTourApprovalForm extends model
+class BirdingOperatorTourApprovalForm extends model
 {
     public $comment;
     public $is_approved;
 
     public $status;
     public $status_option = [];
-    public $safarioperator_request_approval_model;
+    public $birdingoperator_request_approval_model;
 
 
-    public function __construct(SafariOperatorRequest $safarioperator_request_approval_model = null)
+    public function __construct(BirdingOperatorRequest $birdingoperator_request_approval_model = null)
     {
 
-        $this->safarioperator_request_approval_model = Yii::createObject([
-            'class' => SafariOperatorRequest::className()
+        $this->birdingoperator_request_approval_model = Yii::createObject([
+            'class' => BirdingOperatorRequest::className()
         ]);
 
 
 
-        if ($safarioperator_request_approval_model  != '') {
-            $this->safarioperator_request_approval_model = $safarioperator_request_approval_model;
-            $this->is_approved              =  $this->safarioperator_request_approval_model->is_approved;
-            $this->comment              =  $this->safarioperator_request_approval_model->comment;
+        if ($birdingoperator_request_approval_model  != '') {
+            $this->birdingoperator_request_approval_model = $birdingoperator_request_approval_model;
+            $this->is_approved              =  $this->birdingoperator_request_approval_model->is_approved;
+            $this->comment              =  $this->birdingoperator_request_approval_model->comment;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -47,7 +47,7 @@ class SafariOperatorTourApprovalForm extends model
     public function rules()
     {
 
-
+ 
         return [
             [['is_approved', 'status'], 'integer'],
             [['is_approved', 'comment'], 'required'],
@@ -74,7 +74,7 @@ class SafariOperatorTourApprovalForm extends model
      */
     public function initializeForm()
     {
-        $this->safarioperator_request_approval_model->is_approved               =  $this->is_approved;
-        $this->safarioperator_request_approval_model->comment                   =  $this->comment;
+        $this->birdingoperator_request_approval_model->is_approved               =  $this->is_approved;
+        $this->birdingoperator_request_approval_model->comment                   =  $this->comment;
     }
 }
