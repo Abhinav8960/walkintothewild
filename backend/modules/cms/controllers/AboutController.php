@@ -3,9 +3,9 @@
 namespace backend\modules\cms\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\cms\about\form\CmsAboutForm;
-use common\models\cms\about\CmsAbout;
-use common\models\cms\about\form\CmsAboutSearch;
+use common\models\cms\about\form\AboutForm;
+use common\models\cms\about\About;
+use common\models\cms\about\form\AboutSearch;
 
 use Yii;
 use yii\web\Controller;
@@ -15,7 +15,7 @@ class AboutController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new CmsAboutSearch();
+        $searchModel = new AboutSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -26,10 +26,8 @@ class AboutController extends Controller
 
     public function actionCreate()
     {
-        $model = new CmsAboutForm();
+        $model = new AboutForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-
-       
 
 
 
@@ -49,6 +47,31 @@ class AboutController extends Controller
         }
 
         return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionUpdate($id)
+    {
+        $about_model = $this->findModel($id);
+        $model = new AboutForm($about_model);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->about_model->save()) {
+                        $model->about_model->save();
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->about_model->loadDefaultValues();
+        }
+
+        return $this->render('update', [
             'model' => $model,
         ]);
     }
@@ -75,7 +98,7 @@ class AboutController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = CmsAbout::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = About::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

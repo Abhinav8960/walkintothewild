@@ -4,9 +4,9 @@ namespace common\models\cms\about\form;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\cms\about\CmsAbout;
+use common\models\cms\about\About;
 
-class CmsAboutSearch extends Model
+class AboutSearch extends Model
 {
     public $id;
     public $name;
@@ -24,6 +24,7 @@ class CmsAboutSearch extends Model
             [['name', 'slug', 'description'], 'safe'], // Add 'slug' and 'description' to the safe validator
             [['slug'], 'unique'], // Unique validation for 'slug'
             [['name'], 'string', 'max' => 125], // Max length validation for 'name'
+            [['description'], 'string'],
         ];
     }
 
@@ -36,7 +37,7 @@ class CmsAboutSearch extends Model
      */
     public function search($params)
     {
-        $query = CmsAbout::find()->where(['status' => [1, 2]]);
+        $query = About::find()->where(['status' => [1, 2]]);
 
         // Add conditions that should always apply here
 

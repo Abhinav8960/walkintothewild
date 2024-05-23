@@ -12,7 +12,7 @@ use Yii;
  * @property int $status
  * @property string $description
  */
-class CmsAbout extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class About extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
     /**
@@ -20,7 +20,7 @@ class CmsAbout extends \yii\db\ActiveRecord implements \common\interfaces\Status
      */
     public static function tableName()
     {
-        return 'cms_about';
+        return 'about';
     }
 
 
@@ -38,7 +38,8 @@ class CmsAbout extends \yii\db\ActiveRecord implements \common\interfaces\Status
             [['name'], 'required'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 125],
-            [['description'], 'safe'],  
+            [['description'], 'safe'],
+            
         ];
     }
 

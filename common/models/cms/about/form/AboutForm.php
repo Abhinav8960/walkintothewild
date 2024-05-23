@@ -5,36 +5,36 @@ namespace common\models\cms\about\form;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\cms\about\CmsAbout;
+use common\models\cms\about\About;
 
 /**
- * Class CmsAboutForm
+ * Class AboutForm
  * @package common\models\cms\about\form
  *
- * Handles the creation and updating of CmsAbout models
+ * Handles the creation and updating of About models
  */
-class CmsAboutForm extends Model
+class AboutForm extends Model
 {
     public $name;
     public $description;
     public $status;
-    public $statusOptions = [];
-    public $aboutModel;
+    public $status_option = [];
+    public $about_model;
 
-    public function __construct(CmsAbout $aboutModel = null, $config = [])
+    public function __construct(About $about_model = null, $config = [])
     {
         parent::__construct($config);
 
-        if ($aboutModel === null) {
-            $this->aboutModel = new CmsAbout();
+        if ($about_model === null) {
+            $this->about_model = new About();
         } else {
-            $this->aboutModel = $aboutModel;
-            $this->name = $this->aboutModel->name;
-            $this->description = $this->aboutModel->description;
-            $this->status = $this->aboutModel->status;
+            $this->about_model = $about_model;
+            $this->name = $this->about_model->name;
+            $this->description = $this->about_model->description;
+            $this->status = $this->about_model->status;
         }
 
-        $this->statusOptions = GeneralModel::statusOption();
+        $this->status_option = GeneralModel::statusOption();
     }
 
     /**
@@ -81,8 +81,8 @@ class CmsAboutForm extends Model
      */
     public function initializeForm()
     {
-        $this->aboutModel->name = $this->name;
-        $this->aboutModel->description = $this->description;
-        $this->aboutModel->status = $this->status;
+        $this->about_model->name = $this->name;
+        $this->about_model->description = $this->description;
+        $this->about_model->status = $this->status;
     }
 }

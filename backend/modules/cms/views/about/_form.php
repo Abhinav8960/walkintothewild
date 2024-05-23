@@ -16,11 +16,15 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>
     </div>
 
+    
+
     <div class="col-md-12">
-        <?= $form->field($model, 'description')->textarea() ?>
+        <?= $form->field($model, 'description')->widget(CKEditor::className(), [
+            'options' => ['rows' => 4],
+            'preset' => 'full',
+
+        ]) ?>
     </div>
-
-
 </div>
 
 
@@ -31,7 +35,6 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
     </div>
-
 <?php } ?>
 
 
@@ -43,8 +46,6 @@ use yii\bootstrap5\ActiveForm;
             <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
         </div>
     </div>
-
-
 </div>
 
 <?php ActiveForm::end(); ?>

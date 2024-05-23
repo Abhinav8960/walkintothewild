@@ -9,7 +9,7 @@ $this->title = 'Park';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/park'];
 $this->params['breadcrumbs'][] = "Update";
-$this->params['title'] = $this->title;
+$this->params['name'] = $this->title;
 ?>
 
 <div class="card">

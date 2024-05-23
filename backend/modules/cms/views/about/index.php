@@ -31,10 +31,10 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     'name',
                     [
                         'label' => 'Description',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 50%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->description) ? $model->description->description : '';
+                            return isset($model->description) ? $model->description : '';
                         }
                     ],
                     [
@@ -65,7 +65,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
                                         'method' => 'post',
                                     ],
                                 ]);
