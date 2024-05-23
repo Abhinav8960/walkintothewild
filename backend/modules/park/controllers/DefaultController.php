@@ -8,6 +8,7 @@ use common\models\park\Park;
 use common\models\park\ParkAnimal;
 use common\models\park\ParkBonusExperience;
 use common\models\park\ParkSearch;
+use common\models\park\ParkGallerySearch;
 use common\models\park\ParkVehicle;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -148,9 +149,17 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
+        // return $this->render('view', [
+        //     'model' => $model,
+        // ]);
+
+        $searchModel = new ParkGallerySearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('view', [
             'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
