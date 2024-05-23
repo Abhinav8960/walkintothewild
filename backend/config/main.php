@@ -138,5 +138,15 @@ return [
         ],
 
     ],
+    'container' => [
+        'definitions' => [
+            \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
+            'yii\bootstrap5\LinkPager' => [
+                'firstPageLabel' => 'First',
+                'lastPageLabel' => 'Last',
+                'options' => ['class' => 'pagination pagination-primary mg-sm-b-0']
+            ],
+        ],
+    ],
     'params' => $params,
 ];
