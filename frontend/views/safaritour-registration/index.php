@@ -61,20 +61,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <div class="col-lg-7 mt-4">
                                 <div class="row">
-                                    <div class="col-lg-12 mb-4">
+                                    <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
                                             <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
 
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 mb-4">
+                                    <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Address <span>*</span></label>
                                             <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder' => 'Enter Address'])->label(false) ?>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 mb-4">
+                                    <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <div class="d-sm-flex align-items-center justify-content-between flex-wrap">
                                                 <label for="">Operates in Parks <span>*</span></label>
