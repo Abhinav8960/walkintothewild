@@ -6,8 +6,11 @@ use common\interfaces\StatusInterface;
 use common\models\master\city\form\MasterCityForm;
 use common\models\master\city\MasterCity;
 use common\models\master\city\MasterCitySearch;
+use Yii;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * CityController.
@@ -42,7 +45,7 @@ class CityController extends Controller
         $model = new MasterCityForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
-        if ($this->request->isPost) {
+        if ($this->request->isPost) {use yii\helpers\FileHelper;
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
@@ -51,7 +54,7 @@ class CityController extends Controller
                         return $this->redirect(['index']);
                     }
                 }
-            }
+            }use yii\helpers\FileHelper;
         } else {
             $model->city_model->loadDefaultValues();
         }
@@ -62,7 +65,7 @@ class CityController extends Controller
     }
 
     /**
-     * Updates an existing MasterCity model.
+     * Updates an existing MasterCityuse yii\helpers\FileHelper;model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -94,7 +97,57 @@ class CityController extends Controller
     }
 
 
+    public function actionCityfromfile()
+    {
 
+        $model = new MasterCityForm();
+        $model->scenario = 'uploadfile';
+        if ($model->load(Yii::$app->request->post())) {
+            $uploadedfile = UploadedFile::getInstance($model, 'uploadfile');
+            if ($uploadedfile) {
+                $time = date("Y/m/d");
+                $path = Yii::$app->params['datapath'] . '/csv/' . $time;
+                FileHelper::createDirectory($path, $mode = 0775, $recursive = true);
+                $filepath =  $uploadedfile;
+                $uploadedfile->saveAs($path . '/' . $uploadedfile);
+                $uploadedfile->saveAs($filepath);
+                $uploadFileName = $uploadedfile->name;
+                $uploadFilePath = $filepath;
+                $fullpath = $path . '/' . $uploadFileName;
+                $csv = array();
+                $rowcount = 0;
+                if (($handle = fopen($fullpath, "r")) !== FALSE) {
+                    $max_line_length = defined('MAX_LINE_LENGTH') ? MAX_LINE_LENGTH : 10000;
+                    while (($row = fgetcsv($handle, $max_line_length)) !== FALSE) {
+                        $row_colcount = count($row);
+                        $csv[] = $row;
+                        $rowcount++;
+                    }
+                    fclose($handle);
+                }
+                // Remove first row from count
+                $rowcount = $rowcount - 1;
+                if (!empty($csv)) {
+                    $countsuccess = 0;
+                    foreach (array_slice($csv, 1) as $key => $value) {
+                        $model = new MasterCityForm();
+                        $model->scenario = 'create';
+                        $model->city_model->country_id = 1;
+                        $model->city_model->city_name = $value[0];
+                        $model->city_model->status = 1;
+                        $model->city_model->save(false);
+                    }
+                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' city Successfully Imported');
+                    return $this->redirect(['/master/city/index']);
+                }
+            }
+        }
+
+
+        return $this->render('cityfromfile', [
+            'model' => $model
+        ]);
+    }
 
 
     /**
