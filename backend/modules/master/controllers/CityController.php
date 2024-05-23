@@ -45,7 +45,7 @@ class CityController extends Controller
         $model = new MasterCityForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
-        if ($this->request->isPost) {use yii\helpers\FileHelper;
+        if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
@@ -54,7 +54,7 @@ class CityController extends Controller
                         return $this->redirect(['index']);
                     }
                 }
-            }use yii\helpers\FileHelper;
+            }
         } else {
             $model->city_model->loadDefaultValues();
         }
@@ -65,7 +65,7 @@ class CityController extends Controller
     }
 
     /**
-     * Updates an existing MasterCityuse yii\helpers\FileHelper;model.
+     * Updates an existing MasterCity model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response

@@ -20,6 +20,8 @@ class MasterCityForm extends model
     public $status;
     public $status_option = [];
     public $city_model;
+    public $uploadfile;
+
 
 
     public function __construct(MasterCity $city_model = null)
@@ -49,12 +51,22 @@ class MasterCityForm extends model
     public function rules()
     {
         return [
-            [['city_name', 'state_id','country_id'], 'required'],
+            [['city_name', 'state_id', 'country_id'], 'required'],
             [['status'], 'integer'],
-            [['city_name', 'state_id','country_id'], 'string', 'max' => 125],
+            [['city_name', 'state_id', 'country_id'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
+            [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
 
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['uploadfile'] = ['uploadfile'];
+        $scenarios['create'] = ['city_name', 'state_id',  'country_id', 'status'];
+        $scenarios['update'] = ['city_name', 'state_id', 'country_id', 'status'];
+        return $scenarios;
     }
 
     /**
