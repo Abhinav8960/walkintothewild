@@ -76,16 +76,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
   </div>
 </footer>
 <div class="modal fade" id="modalTermscondition" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">TERMS & CONDITIONS</h1>
-          <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i
-              class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="modal-body modal_form">
-          <div class="title_terms text-center">
-            <h5>TERMS & CONDITIONS</h5>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">TERMS & CONDITIONS</h1>
+        <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body modal_form">
+        <div class="title_terms text-center">
+          <h5>TERMS & CONDITIONS</h5>
         </div>
         <div class="terms_details">
           <h6 class="h6 pb-3">By accessing, using, or signing up for this website, newsletters, or any services, you enter into a legally binding agreement with Walk Into The Wild based on these terms. </h6>
@@ -94,24 +93,23 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <p>Welcome to the www.walkintothewild.in website ("Website", "website", "Site" or "site"). This website, its pages, the content, services, and infrastructure are owned, operated, and provided by Walk Into The Wild ("Walk Into The Wild", "Us", "us", "We" or "we") or other parties. The website and its content are provided for your personal, non-commercial use only, subject to the terms of use as set out below. These terms of use (this "Agreement") set forth the terms and conditions governing your use of this website.</p>
           <h6>Modifications to this Agreement</h6>
           <p>We reserve the right to modify this Agreement at our sole discretion. Changes are effective immediately upon updating this page. Please review this Agreement periodically. By continuing to use our website after changes are made, you accept those changes.</p>
-         </p>
+          </p>
         </div>
-        </div>
-
       </div>
+
     </div>
   </div>
-  <div class="modal fade" id="modalprivacyPolicy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">PRIVACY POLICY</h1>
-          <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i
-              class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="modal-body modal_form">
-          <div class="title_terms text-center">
-            <h5>PRIVACY POLICY</h5>
+</div>
+<div class="modal fade" id="modalprivacyPolicy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">PRIVACY POLICY</h1>
+        <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body modal_form">
+        <div class="title_terms text-center">
+          <h5>PRIVACY POLICY</h5>
         </div>
         <div class="terms_details">
           <h6>Privacy </h6>
@@ -120,10 +118,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <p>We offer a diverse range of content on our website, including information, advice, recommendations, messages, comments, posts, text, graphics, software, music, sound, photographs, videos, data, and other materials ("Content" or "content"). Some content is provided by us or our suppliers, while other content is contributed by users of our website ("Users" or "users"), such as opinions and views shared via reviews, chat rooms, blogs, or message boards. While we strive to ensure the accuracy, completeness, and timeliness of the content on our website, we cannot guarantee it and are not responsible for any inaccuracies, omissions, or delays, whether in content provided by us, our suppliers, or users. Any opinions, advice, statements, or other information expressed by users or third parties are solely their own and do not represent our views.</p>
           <p>We are not obligated to prescreen, edit, or remove any user-provided content posted on or available through our website. However, we reserve the right (but not the obligation), at our sole discretion and for any reason, to prescreen, edit, refuse, remove, or relocate any such content.</p>
         </div>
-       
 
-        </div>
 
       </div>
+
     </div>
   </div>
+</div>
