@@ -133,7 +133,8 @@ class CityController extends Controller
                         $model = new MasterCityForm();
                         $model->scenario = 'create';
                         $model->city_model->country_id = 1;
-                        $model->city_model->city_name = $value[0];
+                        $model->city_model->state_id = $value[0];
+                        $model->city_model->city_name = $value[1];
                         $model->city_model->status = 1;
                         $model->city_model->save(false);
                     }
