@@ -12,11 +12,11 @@ $website = Yii::$app->request->post('SafaritourRegistrationForm')['website'];
 $phone_no = Yii::$app->request->post('SafaritourRegistrationForm')['phone_no'];
 
 ?>
-<div class="verify-email">
-    <p>Dear ,</p>
+<div class="verify-email" style="text-align:center">
     <h4 style="text-align:center">THANK YOU</h4>
     <p style="text-align:center"> Thank you for sharing your details! Your service and contact details will soon be featured on our website, allowing adventurers to walk into the wild with you. </p>
     <p style="text-align:center">Stay tuned for updates!</p>
     <p style="text-align:center">Team Walk into the Wild</p>
-    <a href="https://www.walkintothewild.in" style="text-align:center !important;color:blue !important;">www.walkintothewild.in</a>
+    <p style="text-align:center"><a href="https://www.walkintothewild.in" style="text-align:center !important;color:blue !important;">www.walkintothewild.in</a></p>
+    <p><img src="https://staging-manage.walkintothewild.in/img/logo.png"></p>
 </div>

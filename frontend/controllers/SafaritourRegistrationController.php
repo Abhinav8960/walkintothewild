@@ -56,7 +56,8 @@ class SafaritourRegistrationController extends Controller
                         }
 
                         $to_mail = $model->safarioperator_request_model->email;
-                        $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
+                        // $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
+                        $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
                         $req = ['username' => $model->safarioperator_request_model->business_name];
 

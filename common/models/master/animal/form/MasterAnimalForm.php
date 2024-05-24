@@ -68,10 +68,10 @@ class MasterAnimalForm extends model
             [['long_description'], 'safe'],
             [
                 ['image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 350,
-                'maxWidth' => 350,
-                'maxHeight' => 350,
-                'minHeight' => 350,
+                'minWidth' => 285,
+                'maxWidth' => 285,
+                'maxHeight' => 285,
+                'minHeight' => 285,
                 'maxSize' => 100 * 1024
             ],
         ];
