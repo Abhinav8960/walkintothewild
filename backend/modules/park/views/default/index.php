@@ -14,6 +14,7 @@ $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('Upload State CSV', ['/park/default/parkfromfile'], ['class' => 'btn btn-orange ml-2', 'title' => 'Upload State Csv']);
 
 
 ?>
