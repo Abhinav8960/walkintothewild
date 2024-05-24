@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /** @var common\models\User $user */
 
 $request = Yii::$app->request->post();
-$first_name = Yii::$app->request->post('SafaritourRegistrationForm')['bussiness_name'];
-$register_comapany_name = Yii::$app->request->post('SafaritourRegistrationForm')['register_comapany_name'];
-$website = Yii::$app->request->post('SafaritourRegistrationForm')['website'];
-$phone_no = Yii::$app->request->post('SafaritourRegistrationForm')['phone_no'];
+$first_name = Yii::$app->request->post('BirdingtourRegistrationForm')['bussiness_name'];
+$register_comapany_name = Yii::$app->request->post('BirdingtourRegistrationForm')['register_comapany_name'];
+$website = Yii::$app->request->post('BirdingtourRegistrationForm')['website'];
+$phone_no = Yii::$app->request->post('BirdingtourRegistrationForm')['phone_no'];
 
 ?>
 <div class="verify-email">

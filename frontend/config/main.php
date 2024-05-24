@@ -15,8 +15,8 @@ return [
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
-            'site_key'   => '6LdlvuYpAAAAAK2nW4xcNThJOMxVl2S6cGKqVJ9C',
-            'secret_key' => '6LdlvuYpAAAAABTlzZZ2dSAH3BhHL9WkxG7gfyUi',
+            'site_key'   => $_SERVER['GOOGLE_CAPTCHA_SITE_KEY'] ? $_SERVER['GOOGLE_CAPTCHA_SITE_KEY'] : NULL,
+            'secret_key' => $_SERVER['GOOGLE_CAPTCHA_SECRET_KEY'] ? $_SERVER['GOOGLE_CAPTCHA_SECRET_KEY'] : NULL,
         ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
