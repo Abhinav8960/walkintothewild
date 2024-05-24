@@ -81,9 +81,6 @@ class DefaultController extends Controller
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
-                } else {
-                    print_r($model->errors);
-                    exit();
                 }
             }
         } else {
