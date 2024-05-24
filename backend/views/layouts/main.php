@@ -21,6 +21,21 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= $this->title ?></title>
     <?php $this->head() ?>
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X449945MQ2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-X449945MQ2');
+    </script>
+
     <style>
         .invalid-feedback {
             color: #dc3545;
