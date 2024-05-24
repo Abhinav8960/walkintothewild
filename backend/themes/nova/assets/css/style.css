@@ -112273,4 +112273,10 @@ a.text-dark:focus {
 .app-content{
   min-height: 100vh !important;
 }
+.pagination .page-link:hover{
+
+  background-color: #09422D !important;
+  border-color:#09422D !important ;
+  color:#fff !important;
+}
 /*# sourceMappingURL=style.css.map */
