@@ -62,7 +62,7 @@ class BirdingtourRegistrationController extends Controller
 
                         $to_mail = $model->birdingoperator_request_model->email;
                         $subject = 'Welcome to ' . $model->birdingoperator_request_model->business_name . ' – Your Registration is Successful!';
-                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_BIRDING_OPERATOR_REGISTRATION;
                         $req = ['username' => $model->birdingoperator_request_model->business_name];
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);

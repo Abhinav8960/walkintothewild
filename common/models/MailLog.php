@@ -128,7 +128,7 @@ class MailLog extends \yii\db\ActiveRecord
                 }
 
 
-                // self::sendmail($log);
+                self::sendmail($log);
             }
 
             return json_decode($log->params, true);
