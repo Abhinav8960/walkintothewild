@@ -3082,6 +3082,13 @@ figure {
     opacity: 0;
     cursor: pointer;
 }
+.field-fileupload .invalid-feedback{
+
+    position: absolute;
+    bottom: -36px;
+    left: 10px;
+    font-size: 12px;
+}
 
 .headings h3 {
 

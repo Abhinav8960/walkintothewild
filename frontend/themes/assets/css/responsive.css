@@ -373,10 +373,7 @@
 }
 
 @media only screen and (max-width:767px) {
-    body {
 
-        overflow-x: hidden !important;
-    }
     .title_white.h4{
 
         font-size: 20px;
@@ -449,16 +446,19 @@
         height: 740px;
         object-fit: cover;
     }
-    .footer_object{
+    /* .footer_object{
 
         top: -50px;
         left: -113px;
-    }
-    .footer_object img{
+    } */
+    /* .footer_object img{
 
         width: auto;
+    } */
+    .footer_object img{
+
+        margin-top: -4px;
     }
-    
   
     :root {
         --fs-35: 24px;
@@ -584,12 +584,16 @@
 
         width: auto;
     } */
-    .footer_object img {
+    /* .footer_object img {
         width: 1120px;
-    }
-    .footer_object {
+    } */
+    /* .footer_object {
         top: -49px;
         left: -197px;
+    } */
+    .footer_object img{
+
+        margin-top: 14px;
     }
     .serch_btn button{
 
@@ -651,5 +655,17 @@
 
         font-size: 19px;
     }
+    .footer_object img{
+
+        margin-top: 24px;
+    }
   
+}
+
+@media (max-width:300px){
+
+    .footer_object img{
+
+        margin-top: 38px;
+    }
 }
