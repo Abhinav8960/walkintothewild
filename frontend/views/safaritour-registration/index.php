@@ -75,7 +75,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
-                                        <div class="formInput">
+                                        <div class="formInput position-relative">
                                             <div class="d-sm-flex align-items-center justify-content-between flex-wrap">
                                                 <label for="">Operates in Parks <span>*</span></label>
                                                 <p class="mb-0 pb-xl-0 pb-2">In case of multiple parks, select the parks you operate in.</p>
@@ -89,7 +89,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     'allowClear' => true
                                                 ],
                                             ])->label(false) ?>
-
+                                           <div class="arrowIcon">
+                                           <i class="fa-solid fa-chevron-down"></i>
+                                           </div>
                                         </div>
                                     </div>
 
@@ -171,18 +173,21 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                             </div>
                             <div class="col-xl-6 mt-3">
-                                <div class="formInput budgetSeg mb-3">
-                                    <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
+                                <div class="formInput budgetSeg mb-3 position-relative">
+                                    <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3 ">
                                         <label for="">Budget Segment <span>*</span></label>
 
                                         <?= $form->field($model, 'budget_segment')->widget(Select2::classname(), [
                                             'data' => GeneralModel::packageoption(),
-                                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                                            'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                                             'options' => ['placeholder' => 'Select', 'multiple' => true],
                                             'pluginOptions' => [
                                                 'allowClear' => true
                                             ],
                                         ])->label(false) ?>
+                                         <div class="arrowIcon2">
+                                           <i class="fa-solid fa-chevron-down"></i>
+                                           </div>
                                     </div>
 
                                 </div>

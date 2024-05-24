@@ -29,30 +29,30 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
-                    [
-                        'label' => 'Country',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->country) ? $model->country->country_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'State',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->state) ? $model->state->state_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'City',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->city) ? $model->city->city_name : '';
-                        }
-                    ],
+                    // [
+                    //     'label' => 'Country',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->country) ? $model->country->country_name : '';
+                    //     }
+                    // ],
+                    // [
+                    //     'label' => 'State',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->state) ? $model->state->state_name : '';
+                    //     }
+                    // ],
+                    // [
+                    //     'label' => 'City',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->city) ? $model->city->city_name : '';
+                    //     }
+                    // ],
 
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
