@@ -67,7 +67,7 @@ class BirdingtourRegistrationController extends Controller
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         //$model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        // \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['/thankyou']);
                     }
                 } else {
