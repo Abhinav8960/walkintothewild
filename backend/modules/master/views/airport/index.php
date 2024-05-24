@@ -15,6 +15,7 @@ $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('Upload Airport CSV', ['/master/airport/airportfromfile'], ['class' => 'btn btn-orange', 'title' => 'Upload Airport Csv', 'style' => 'margin-left: 4px;']);
 
 
 ?>
@@ -38,15 +39,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return isset($model->state) ? $model->state->state_name : '';
                         }
                     ],
-                    [
-                        'label' => 'City',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->city) ? $model->city->city_name : '';
-                        }
-                    ],
-
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [

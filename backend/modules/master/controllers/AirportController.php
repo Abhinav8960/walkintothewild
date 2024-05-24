@@ -6,10 +6,12 @@ use common\interfaces\StatusInterface;
 use common\models\master\airport\form\MasterAirportForm;
 use common\models\master\airport\MasterAirport;
 use common\models\master\airport\MasterAirportSearch;
+use Yii;
 use yii\web\UploadedFile;
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\helpers\FileHelper;
 
 /**
  * AirportController.
@@ -43,6 +45,7 @@ class AirportController extends Controller
     {
         $model = new MasterAirportForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -75,6 +78,7 @@ class AirportController extends Controller
     {
         $airport_model = $this->findModel($id);
         $model = new MasterAirportForm($airport_model);
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -98,6 +102,61 @@ class AirportController extends Controller
 
 
 
+
+    public function actionAirportfromfile()
+    {
+
+        $model = new MasterAirportForm();
+        $model->scenario = 'uploadfile';
+        if ($model->load(Yii::$app->request->post())) {
+            $uploadedfile = UploadedFile::getInstance($model, 'uploadfile');
+            if ($uploadedfile) {
+                $time = date("Y/m/d");
+                $path = Yii::$app->params['datapath'] . '/csv/' . $time;
+                FileHelper::createDirectory($path, $mode = 0775, $recursive = true);
+                $filepath =  $uploadedfile;
+                $uploadedfile->saveAs($path . '/' . $uploadedfile);
+                $uploadedfile->saveAs($filepath);
+                $uploadFileName = $uploadedfile->name;
+                $uploadFilePath = $filepath;
+                $fullpath = $path . '/' . $uploadFileName;
+                $csv = array();
+                $rowcount = 0;
+                if (($handle = fopen($fullpath, "r")) !== FALSE) {
+                    $max_line_length = defined('MAX_LINE_LENGTH') ? MAX_LINE_LENGTH : 10000;
+                    while (($row = fgetcsv($handle, $max_line_length)) !== FALSE) {
+                        $row_colcount = count($row);
+                        $csv[] = $row;
+                        $rowcount++;
+                    }
+                    fclose($handle);
+                }
+                // Remove first row from count
+                $rowcount = $rowcount - 1;
+                if (!empty($csv)) {
+                    $countsuccess = 0;
+                    foreach (array_slice($csv, 1) as $key => $value) {
+                        $model = new MasterAirportForm();
+                        $model->scenario = 'create';
+                        $model->airport_model->name = $value[1];
+                        $model->airport_model->country_id = 1;
+                        $model->airport_model->state_id = $value[0];
+                        $model->airport_model->iata_code = $value[2];
+                        $model->airport_model->icao_code = $value[3];
+                        $model->airport_model->status = 1;
+                        $model->airport_model->save(false);
+                    }
+                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' airport Successfully Imported');
+                    return $this->redirect(['/master/airport']);
+                }
+            }
+        }
+
+
+        return $this->render('parkfromfile', [
+            'model' => $model
+        ]);
+    }
 
 
     /**
