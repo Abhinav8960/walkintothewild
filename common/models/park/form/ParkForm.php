@@ -135,7 +135,7 @@ class ParkForm extends model
         $maxWords = $params['max'];
         $wordCount = str_word_count($this->$attribute);
         if ($wordCount > $maxWords) {
-            $this->addError($attribute, "The $attribute must not exceed $maxWords words.");
+            $this->addError($attribute, "The Long Description must not exceed $maxWords words.");
         }
     }
     /**
