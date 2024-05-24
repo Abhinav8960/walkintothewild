@@ -142,15 +142,17 @@ class SafaritourRegistrationForm extends model
                 'minHeight' => 123,
                 'maxSize' => 100 * 1024
             ],
+            ['about_business', \common\validators\Word500Validator::className()],
+
         ];
-    
+
         if (\Yii::$app->params['isGoogleV3CaptchaValidateNeeded'] == true) {
             $rules[] = [['reCaptcha'], \kekaadrenalin\recaptcha3\ReCaptchaValidator::className(), 'acceptance_score' => 0];
         }
-    
+
         return $rules;
     }
-    
+
     /**
      * {@inheritdoc}
      */
