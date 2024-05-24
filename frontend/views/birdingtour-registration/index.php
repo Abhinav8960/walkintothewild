@@ -243,6 +243,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="col-sm-2">
                         <div class="nextBtn float-end">
                             <button class="next-btn">Next</button>
+                            <?= $form->field($model, 'reCaptcha')->widget(\kekaadrenalin\recaptcha3\ReCaptchaWidget::class)->label(false) ?>
+                            <?= $form->field($model, 'referrer_url')->hiddenInput()->label(false) ?>
                             <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn', 'style' => 'display:none;']) ?>
                             <!-- <button class="submit-btn submit-button next-btn" style="display:none;">Submit</button> -->
                         </div>

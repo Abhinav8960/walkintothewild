@@ -13,6 +13,11 @@ return [
     'defaultRoute' => '/coming-soon',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'reCaptcha3' => [
+            'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
+            'site_key'   => '6LdlvuYpAAAAAK2nW4xcNThJOMxVl2S6cGKqVJ9C',
+            'secret_key' => '6LdlvuYpAAAAABTlzZZ2dSAH3BhHL9WkxG7gfyUi',
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
