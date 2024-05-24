@@ -82,7 +82,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             </div>
 
                                             <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
-                                                'data' => GeneralModel::parkoption(),
+                                                'data' => GeneralModel::safariparkoption(),
                                                 // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                                                 'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'multiple' => true],
                                                 'pluginOptions' => [
