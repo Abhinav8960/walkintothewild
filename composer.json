@@ -27,6 +27,8 @@
         "kartik-v/yii2-widget-select2": "dev-master",
         "yiisoft/yii2-authclient": "~2.2.0",
         "symfony/mailer": "^6.0",
+        "himiklab/yii2-recaptcha-widget": "*",
+        "kekaadrenalin/yii2-module-recaptcha-v3": "*",
         "symfony/amazon-mailer": "^6.0"
     },
     "require-dev": {
