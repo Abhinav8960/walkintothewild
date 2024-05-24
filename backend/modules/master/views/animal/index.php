@@ -32,6 +32,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ['class' => 'yii\grid\SerialColumn'],
                     'name',
                     [
+                        'label' => 'Animal Type',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->animal_type_id) ? $model->animaltype->title : '';
+                        }
+                    ],
+                    [
                         'attribute' => 'image',
                         'format' => 'html',
                         'contentOptions' => ['style' => 'width: 10%;'],

@@ -31,6 +31,12 @@ $this->params['title'] = $this->title;
                         <span>Name: </span><?= $model->name ?>
                     </p>
                     <p>
+                    <p>
+                        <span>Animal Type: </span><?= isset($model->animal_type_id) ? $model->animaltype->title : ''; ?>
+                    </p>
+
+                    </p>
+                    <p>
                         <span>Short Description: </span><?= $model->short_description ?>
                     </p>
                     <p>
