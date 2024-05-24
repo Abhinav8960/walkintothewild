@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\interfaces\StatusInterface;
+use common\models\MailLog;
 use frontend\models\registration\form\SafaritourRegistrationForm;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
@@ -21,10 +22,10 @@ class SafaritourRegistrationController extends Controller
      */
     public function actionIndex()
     {
-
+       
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-
+        $model->referrer_url = \Yii::$app->request->referrer;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->logo = UploadedFile::getInstance($model, 'logo');
@@ -53,9 +54,16 @@ class SafaritourRegistrationController extends Controller
                                 $safarioperatorrequestpark->save(false);
                             }
                         }
+
+                        $to_mail = $model->safarioperator_request_model->email;
+                        $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        $req = ['username' => $model->safarioperator_request_model->business_name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         //$model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/coming-soon']);
+                        return $this->redirect(['/thankyou']);
                     }
                 } else {
                     print_r($model->errors);

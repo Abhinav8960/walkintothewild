@@ -13,6 +13,11 @@ return [
     'defaultRoute' => '/coming-soon',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'reCaptcha3' => [
+            'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
+            'site_key'   => $_SERVER['GOOGLE_CAPTCHA_SITE_KEY'] ? $_SERVER['GOOGLE_CAPTCHA_SITE_KEY'] : NULL,
+            'secret_key' => $_SERVER['GOOGLE_CAPTCHA_SECRET_KEY'] ? $_SERVER['GOOGLE_CAPTCHA_SECRET_KEY'] : NULL,
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

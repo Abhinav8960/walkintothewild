@@ -2858,7 +2858,7 @@ figure {
 .footer_object {
 
     position: absolute;
-    top: -60px;
+    top: -76px;
     width: 100%;
     left: 0;
 }
@@ -3093,6 +3093,38 @@ figure {
 .headings h3 {
 
     color: var(--background-primary);
+}
+.thankyoupage{
+
+    background-color: #F5F5F5;
+    padding: 30px 5px ;
+    min-height: 680px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+}
+
+.card_tankyou{
+
+    background-color: var(--colorwhite);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 30px 10px;
+    border-radius: 10px;
+}
+.tanksHeading h3{
+
+    color: var(--background-primary);
+}
+.content_wrp p{
+
+    font-size: var(--fs-18);
+    padding-bottom: 20px;
+}
+.content_wrp  span{
+
+    color: var(--background-yellow);
+    font-weight: 700;
 }
 
 /* footer css end */

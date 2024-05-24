@@ -23,7 +23,9 @@ class MasterAnimalForm extends model
     public $image;
     public $status;
     public $status_option = [];
+    public $animal_type_id;
     public $animal_model;
+
 
 
     public function __construct(MasterAnimal $animal_model = null)
@@ -44,6 +46,7 @@ class MasterAnimalForm extends model
             $this->short_description = $this->animal_model->short_description;
             $this->long_description = $this->animal_model->long_description;
             $this->status = $this->animal_model->status;
+            $this->animal_type_id = $this->animal_model->animal_type_id;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -56,7 +59,7 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name', 'short_description'], 'required'],
+            [['name', 'short_description','animal_type_id'], 'required'],
             [['status'], 'integer'],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
             [['short_description'], 'string', 'max' => 255],
@@ -83,6 +86,8 @@ class MasterAnimalForm extends model
             'name' => 'Name',
             'image' => 'Image  (JPEG /JPG or PNG / 350 Pixels x 350 Pixels / 100 KB)',
             'status' => 'Status',
+            'animal_type_id' => 'Animal Type'
+
         ];
     }
     /**
@@ -98,6 +103,7 @@ class MasterAnimalForm extends model
         $this->animal_model->short_description = $this->short_description;
         $this->animal_model->long_description = $this->long_description;
         $this->animal_model->status = $this->status;
+        $this->animal_model->animal_type_id = $this->animal_type_id;
     }
 
 

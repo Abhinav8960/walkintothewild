@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\interfaces\StatusInterface;
+use common\models\MailLog;
 use frontend\models\registration\BirdingOperatorRequestActivities;
 use frontend\models\registration\BirdingOperatorRequestPark;
 use frontend\models\registration\form\BirdingtourRegistrationForm;
@@ -58,9 +59,16 @@ class BirdingtourRegistrationController extends Controller
                                 $birdingoperatorrequestactivity->save(false);
                             }
                         }
+
+                        $to_mail = $model->birdingoperator_request_model->email;
+                        $subject = 'Welcome to ' . $model->birdingoperator_request_model->business_name . ' – Your Registration is Successful!';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_BIRDING_OPERATOR_REGISTRATION;
+                        $req = ['username' => $model->birdingoperator_request_model->business_name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         //$model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/coming-soon']);
+                        return $this->redirect(['/thankyou']);
                     }
                 } else {
                     print_r($model->errors);

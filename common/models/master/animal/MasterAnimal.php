@@ -2,6 +2,7 @@
 
 namespace common\models\master\animal;
 
+use common\models\meta\MetaAnimalType;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -105,4 +106,10 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
             return '/storage/animal/' . $this->id . '/' . $this->image;
         }
     }
+
+    public function getAnimaltype()
+    {
+        return $this->hasOne(MetaAnimalType::className(), ['id' => 'animal_type_id']);
+    }
+
 }

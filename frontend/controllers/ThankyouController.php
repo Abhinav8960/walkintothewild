@@ -12,7 +12,7 @@ use yii\web\Controller;
 /**
  *  Home controller
  */
-class SafaritourRegistrationController extends Controller
+class ThankyouController extends Controller
 {
     /**
      * Displays Safari tour form Page.

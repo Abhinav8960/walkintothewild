@@ -11,6 +11,7 @@ use common\models\master\location\MasterLocation;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\meta\MetaAnimalType;
 use common\models\meta\MetaLocation;
 use common\models\meta\MetaOperatorCategory;
 use common\models\meta\MetaOtherWildlifeActivities;
@@ -129,6 +130,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterCountry::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['country_name' => SORT_ASC])->all(), 'id', 'country_name');
     }
 
+    
+
     public static function vehicleoption()
     {
         return ArrayHelper::map(MasterVehicle::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['vehicle_name' => SORT_ASC])->all(), 'id', 'vehicle_name');
@@ -137,6 +140,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function animaloption()
     {
         return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function animaltypeoption()
+    {
+        return ArrayHelper::map(MetaAnimalType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function locationoption()
