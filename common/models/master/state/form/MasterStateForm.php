@@ -44,7 +44,7 @@ class MasterStateForm extends model
         return [
             [['state_name', 'country_id'], 'required'],
             [['status'], 'integer'],
-            [['state_name', 'country_id'], 'string', 'max' => 125],
+            [['state_name'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
 
