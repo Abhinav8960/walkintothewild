@@ -120,6 +120,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     }
 
 
+
+    public static function parktype()
+    {
+        return [
+            1 => 'Safari',
+            2 => 'Birding',
+        ];
+    }
+
+
+
     public static function stateoption()
     {
         return ArrayHelper::map(MasterState::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['state_name' => SORT_ASC])->all(), 'id', 'state_name');
@@ -130,7 +141,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterCountry::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['country_name' => SORT_ASC])->all(), 'id', 'country_name');
     }
 
-    
+
 
     public static function vehicleoption()
     {
@@ -182,6 +193,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
+
+
+    public static function birdingparkoption()
+    {
+        return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+    public static function safariparkoption()
+    {
+        return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
     public static function getAllRailwayStation($master_city_id)
     {
         return ArrayHelper::map(MasterRailwayStation::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');

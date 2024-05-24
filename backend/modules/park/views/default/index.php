@@ -14,6 +14,7 @@ $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('Upload State CSV', ['/park/default/parkfromfile'], ['class' => 'btn btn-orange ml-2', 'title' => 'Upload State Csv']);
 
 
 ?>
@@ -29,14 +30,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
-                    // [
-                    //     'label' => 'Country',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->country) ? $model->country->country_name : '';
-                    //     }
-                    // ],
+                    [
+                        'label' => 'Park Type',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->park_type_id) ? GeneralModel::parktype()[$model->park_type_id]  : '';
+                        }
+                    ],
                     // [
                     //     'label' => 'State',
                     //     'contentOptions' => ['style' => 'width: 10%;'],

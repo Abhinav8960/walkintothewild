@@ -59,11 +59,11 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name', 'short_description','animal_type_id'], 'required'],
+            [['name', 'short_description', 'animal_type_id', 'image'], 'required'],
             [['status'], 'integer'],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
             [['short_description'], 'string', 'max' => 255],
-            [['long_description'], 'string', 'max' => 512],            
+            [['long_description'], 'string', 'max' => 512],
             [['status'], 'default', 'value' => 1],
             [['long_description'], 'safe'],
             [
@@ -109,7 +109,7 @@ class MasterAnimalForm extends model
 
     public function uploadFile()
     {
-        
+
         if ($this->image) {
             $storagePath = Yii::$app->params['datapath'] . '/animal';
 
