@@ -112241,5 +112241,31 @@ a.text-dark:focus {
   border-bottom: 0 !important;
 
 }
+.pagination .page-item:first-child a.page-link{
 
+  width:64px !important;
+  display: block !important;
+}
+.pagination .page-item:last-child a.page-link{
+
+  width:64px !important;
+  display: block !important;
+}
+.pagination .page-item .page-link{
+
+  width:44px !important;
+  display: block !important;
+  text-align: center;
+  color: #09422D;
+}
+
+.pagination-primary .page-item.active .page-link{
+
+  background-color: #09422D !important;
+  border-color:#09422D !important ;
+}
+.main-content .container-fluid{
+
+  margin-top: 86px;
+}
 /*# sourceMappingURL=style.css.map */
