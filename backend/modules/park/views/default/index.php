@@ -29,14 +29,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
-                    // [
-                    //     'label' => 'Country',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->country) ? $model->country->country_name : '';
-                    //     }
-                    // ],
+                    [
+                        'label' => 'Park Type',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->park_type_id) ? GeneralModel::parktype()[$model->park_type_id]  : '';
+                        }
+                    ],
                     // [
                     //     'label' => 'State',
                     //     'contentOptions' => ['style' => 'width: 10%;'],

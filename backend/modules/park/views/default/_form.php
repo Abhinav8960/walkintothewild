@@ -22,6 +22,11 @@ use yii\bootstrap5\ActiveForm;
         </div>
     <?php } ?>
 
+    <div class="col-md-6">
+        <?= $form->field($model, 'park_type_id')->dropDownList(GeneralModel::parktype(), ['prompt' => 'Select Park Type']) ?>
+    </div>
+
+
     <div class="col-md-6 select_width">
         <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::vehicleoption(),
