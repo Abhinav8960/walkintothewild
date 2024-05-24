@@ -96,7 +96,7 @@ class DefaultController extends Controller
     {
         $park_model = $this->findModel($id);
         $model = new ParkForm($park_model);
-        $model->scenario = 'create';
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

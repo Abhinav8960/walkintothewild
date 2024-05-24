@@ -40,7 +40,7 @@ class ParkSearch extends Park
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $pagination = true)
     {
         $query = Park::find()->where(['status' => [1, 2]]);
 
@@ -48,6 +48,8 @@ class ParkSearch extends Park
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
+
         ]);
 
         $this->load($params);

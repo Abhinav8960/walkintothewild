@@ -6,10 +6,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Student */
 
-$this->title = 'Park';
+$this->title = 'Airport';
 $this->params['breadcrumbs_home_url'] = '#';
+$this->params['breadcrumbs'][] = ['label' => 'Master', 'url' => '/master/airport'];
 $this->params['breadcrumbs'][] = $this->title;
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/park'];
 $this->params['breadcrumbs'][] = "Upload CSV";
 $this->params['title'] = $this->title;
 ?>
@@ -19,7 +19,7 @@ $this->params['title'] = $this->title;
             <div class="col-md-12 mt-4">
                 <div class="datatable-box-wrapper">
                     <div class="text-right">
-                        <small class="text-danger float-left mb-2">All entries in the CSV file should be filled in the correct format. If data is not filled in the correct format, the park list will not get uploaded. </small>
+                        <small class="text-danger float-left mb-2">All entries in the CSV file should be filled in the correct format. If data is not filled in the correct format, the airport list will not get uploaded. </small>
                         <div class="clearfix"></div>
                     </div>
                     <div class="mt-3">

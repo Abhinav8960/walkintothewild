@@ -36,7 +36,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="col-lg-3 col-md-3">
 
                                 <div class="browslogow3" id="browslogow3">
-                                    <div class="text" id="uploadText">Browse Logo</div>
+                                    <div class="text" id="uploadText">Browse Logo <span> (JPEG /JPG or PNG / 500 Pixels x 123 Pixels / 150 KB)</span></div>
                                     <?= $form->field($model, 'logo')->fileInput(['class' => 'fileupload', 'id' => 'fileupload'])->label(false) ?>
 
                                     <!-- <input id="fileupload" type="file" class="fileupload" /> -->
@@ -89,9 +89,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     'allowClear' => true
                                                 ],
                                             ])->label(false) ?>
-                                           <div class="arrowIcon">
-                                           <i class="fa-solid fa-chevron-down"></i>
-                                           </div>
+                                            <div class="arrowIcon">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -185,9 +185,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 'allowClear' => true
                                             ],
                                         ])->label(false) ?>
-                                         <div class="arrowIcon2">
-                                           <i class="fa-solid fa-chevron-down"></i>
-                                           </div>
+                                        <div class="arrowIcon2">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
                                     </div>
 
                                 </div>

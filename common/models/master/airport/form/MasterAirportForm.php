@@ -22,6 +22,7 @@ class MasterAirportForm extends model
     public $status;
     public $status_option = [];
     public $airport_model;
+    public $uploadfile;
 
 
     public function __construct(MasterAirport $airport_model = null)
@@ -53,12 +54,29 @@ class MasterAirportForm extends model
     public function rules()
     {
         return [
-            [['city_id', 'state_id', 'country_id','name'], 'required'],
+            [['city_id', 'state_id', 'country_id', 'name'], 'required'],
             [['status'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
 
+            [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
+            ['uploadfile', 'required', 'on' => 'uploadfile'],
+
         ];
+    }
+
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['uploadfile'] = ['uploadfile'];
+        $scenarios['create'] = [
+            'city_id', 'state_id', 'country_id', 'name', 'slug', 'icao_code', 'iata_code'
+        ];
+        $scenarios['update'] = [
+            'city_id', 'state_id', 'country_id', 'name', 'slug', 'icao_code', 'iata_code'
+        ];
+        return $scenarios;
     }
 
     /**
@@ -88,5 +106,4 @@ class MasterAirportForm extends model
         $this->airport_model->name = $this->name;
         $this->airport_model->status = $this->status;
     }
-
 }

@@ -295,7 +295,7 @@ a {
 }
 
 .sharesafribg {
-    background: url('/img/sharedsafaribanner.jpg');
+    background: url('../img/sharedsafaribanner.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     height: 470px;
