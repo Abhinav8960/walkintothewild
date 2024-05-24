@@ -61,6 +61,7 @@ class MasterAnimalForm extends model
         return [
             [['name', 'short_description', 'animal_type_id', 'image'], 'required'],
             [['status'], 'integer'],
+            [['name'], 'string', 'max' => 125],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
             [['short_description'], 'string', 'max' => 255],
             [['long_description'], 'string', 'max' => 512],
