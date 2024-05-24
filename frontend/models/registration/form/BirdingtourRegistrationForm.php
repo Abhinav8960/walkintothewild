@@ -148,7 +148,7 @@ class BirdingtourRegistrationForm extends model
         ];
 
         if (\Yii::$app->params['isGoogleV3CaptchaValidateNeeded'] == true) {
-            $rules[] = [['reCaptcha'], \kekaadrenalin\recaptcha3\ReCaptchaValidator::className(), 'acceptance_score' => 0];
+            $rules[] = [['reCaptcha'], \kekaadrenalin\recaptcha3\ReCaptchaValidator::className(), 'acceptance_score' => 1];
         }
 
         return $rules;
