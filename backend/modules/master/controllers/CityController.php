@@ -44,7 +44,8 @@ class CityController extends Controller
     {
         $model = new MasterCityForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-
+        $model->scenario = 'create';
+        
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -75,6 +76,7 @@ class CityController extends Controller
     {
         $city_model = $this->findModel($id);
         $model = new MasterCityForm($city_model);
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

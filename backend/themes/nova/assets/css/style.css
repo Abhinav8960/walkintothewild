@@ -112253,7 +112253,7 @@ a.text-dark:focus {
 }
 .pagination .page-item .page-link{
 
-  width:44px !important;
+  width:47px !important;
   display: block !important;
   text-align: center;
   color: #09422D;
@@ -112272,5 +112272,11 @@ a.text-dark:focus {
 
 .app-content{
   min-height: 100vh !important;
+}
+.pagination .page-link:hover{
+
+  background-color: #09422D !important;
+  border-color:#09422D !important ;
+  color:#fff !important;
 }
 /*# sourceMappingURL=style.css.map */
