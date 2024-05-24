@@ -17,6 +17,15 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>
     </div>
 
+    <div class="col-md-6">
+        <?= $form->field($model, 'animal_type_id', ['inputOptions' => ['id' => 'title']])->dropDownList(
+            GeneralModel::animaltypeoption(),
+            [
+                'prompt' => 'Select Animal Type',                
+            ]
+        ); ?>
+    </div>
+
 
     <div class="col-md-6">
         <?= $form->field($model, 'know_as')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
