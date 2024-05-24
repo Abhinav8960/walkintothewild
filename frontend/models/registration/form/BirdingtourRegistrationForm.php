@@ -145,6 +145,7 @@ class BirdingtourRegistrationForm extends model
                 'minHeight' => 123,
                 'maxSize' => 100 * 1024
             ],
+            ['about_business', \common\validators\Word500Validator::className()],
         ];
 
         if (\Yii::$app->params['isGoogleV3CaptchaValidateNeeded'] == true) {
