@@ -35,8 +35,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 <section class="bg_sky " id="section02">
     <div class="container-fluid">
-        <div class="row pb-5">
-            <div class="col-lg-6 mb-5 pb-md-3 pb-5 mb-lg-4">
+        <div class="row pb-md-5 pb-2 gx-0 px-lg-5 px-0">
+            <div class="col-lg-6 mb-5 pb-md-3 pb-3 mb-lg-4">
                 <div class="registration_img position-relative">
                     <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100">
                     <div class="registratin_text text-center">
@@ -49,7 +49,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 mb-5 pb-md-0  mb-lg-4">
+            <div class="col-lg-6 mb-3 pb-md-0  mb-lg-5">
                 <div class="registration_img  position-relative">
                     <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100">
                     <div class="registratin_text text-center">
