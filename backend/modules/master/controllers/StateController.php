@@ -44,6 +44,7 @@ class StateController extends Controller
     {
         $model = new MasterStateForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -75,6 +76,7 @@ class StateController extends Controller
     {
         $state_model = $this->findModel($id);
         $model = new MasterStateForm($state_model);
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -142,8 +144,8 @@ class StateController extends Controller
                         $model->state_model->status = 1;
                         $model->state_model->save(false);
                     }
-                        \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' State Successfully Imported');
-                        return $this->redirect(['/master/state/index']);
+                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' State Successfully Imported');
+                    return $this->redirect(['/master/state/index']);
                 }
             }
         }
