@@ -1069,10 +1069,10 @@ figure {
 
     position: absolute;
     bottom: 15%;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
+    left: 53%;
+    -webkit-transform: translateX(-53%);
+    -ms-transform: translateX(-53%);
+    transform: translateX(-53%);
 }
 
 .registratin_text h6 {
@@ -1089,11 +1089,34 @@ figure {
     -webkit-box-shadow: 0px 3px 6px #00000029;
     box-shadow: 0px 3px 6px #00000029;
     border: 1px solid #707070;
-    padding: 10px 50px;
+    padding: 12px 50px;
     border-radius: 30px;
     color: #000000;
     font-weight: 600;
     font-family: "Roboto", sans-serif !important;
+}
+.arrowIcon{
+
+    position: absolute;
+    top: 38px;
+    right: 10px;
+}
+.arrowIcon i{
+
+    color: #152F1B;
+    font-size: 12px;
+}
+.arrowIcon2{
+
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    width: auto !important; 
+}
+.arrowIcon2 i{
+
+    color: #152F1B;
+    font-size: 12px;
 }
 
 .safariBox {
@@ -2858,7 +2881,7 @@ figure {
 .footer_object {
 
     position: absolute;
-    top: -60px;
+    top: -76px;
     width: 100%;
     left: 0;
 }
@@ -3093,6 +3116,38 @@ figure {
 .headings h3 {
 
     color: var(--background-primary);
+}
+.thankyoupage{
+
+    background-color: #F5F5F5;
+    padding: 30px 5px ;
+    min-height: 680px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ 
+}
+
+.card_tankyou{
+
+    background-color: var(--colorwhite);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 30px 10px;
+    border-radius: 10px;
+}
+.tanksHeading h3{
+
+    color: var(--background-primary);
+}
+.content_wrp p{
+
+    font-size: var(--fs-18);
+    padding-bottom: 20px;
+}
+.content_wrp  span{
+
+    color: var(--background-yellow);
+    font-weight: 700;
 }
 
 /* footer css end */

@@ -22,7 +22,7 @@ class SafaritourRegistrationController extends Controller
      */
     public function actionIndex()
     {
-
+       
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->referrer_url = \Yii::$app->request->referrer;
@@ -62,7 +62,7 @@ class SafaritourRegistrationController extends Controller
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         //$model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        // \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['/thankyou']);
                     }
                 } else {

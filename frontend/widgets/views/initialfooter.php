@@ -4,7 +4,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 <footer class="main_footer position-relative">
   <div class="footer_object">
-  <img src="<?= $this->params['baseurl'] ?>/img/footer.png" alt="" class="d-md-block d-none">
+  <img src="<?= $this->params['baseurl'] ?>/img/desktopfooter.png" alt="" class="d-md-block d-none">
         <img src="<?= $this->params['baseurl'] ?>/img/footermobile.png" alt="" class="d-md-none d-block">
   </div>
   <div class="container-fluid">
