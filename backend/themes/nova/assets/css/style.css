@@ -112264,8 +112264,13 @@ a.text-dark:focus {
   background-color: #09422D !important;
   border-color:#09422D !important ;
 }
-.main-content .container-fluid{
-
+.breadcrumb-header {
   margin-top: 86px;
+}
+
+ 
+
+.app-content{
+  min-height: 100vh !important;
 }
 /*# sourceMappingURL=style.css.map */
