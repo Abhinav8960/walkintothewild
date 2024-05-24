@@ -3065,6 +3065,18 @@ figure {
     cursor: pointer;
     position: relative;
 }
+.span_title{
+
+    text-align: center;
+    font-size: 10px;
+    justify-content: center;
+    color: #000000;
+    opacity: 70%;
+}
+.text{
+
+    text-align: center;
+}
 
 .browslogophotos {
     border: 1px dashed #000000;
