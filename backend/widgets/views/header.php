@@ -37,9 +37,7 @@
 												<h6 class="tx-15 font-weight-semibold mb-0">Teri Dactyl</h6><span class="dropdown-title-text subtext op-6  tx-12">Premium Member</span>
 											</div>
 										</div>
-									</div>
-									<a class="dropdown-item" href="profile.html"><i class="far fa-user-circle"></i>Profile</a>
-									<a class="dropdown-item" href="mail-settings.html"><i class="far fa-sun"></i> Settings</a>
+									</div>									
 									<a class="dropdown-item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"><i class="far fa-arrow-alt-circle-left"></i> Sign Out</a>
 								</div>
 							</li>

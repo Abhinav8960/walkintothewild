@@ -1069,10 +1069,10 @@ figure {
 
     position: absolute;
     bottom: 15%;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
+    left: 53%;
+    -webkit-transform: translateX(-53%);
+    -ms-transform: translateX(-53%);
+    transform: translateX(-53%);
 }
 
 .registratin_text h6 {
@@ -1089,11 +1089,34 @@ figure {
     -webkit-box-shadow: 0px 3px 6px #00000029;
     box-shadow: 0px 3px 6px #00000029;
     border: 1px solid #707070;
-    padding: 10px 50px;
+    padding: 12px 50px;
     border-radius: 30px;
     color: #000000;
     font-weight: 600;
     font-family: "Roboto", sans-serif !important;
+}
+.arrowIcon{
+
+    position: absolute;
+    top: 38px;
+    right: 10px;
+}
+.arrowIcon i{
+
+    color: #152F1B;
+    font-size: 12px;
+}
+.arrowIcon2{
+
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    width: auto !important; 
+}
+.arrowIcon2 i{
+
+    color: #152F1B;
+    font-size: 12px;
 }
 
 .safariBox {

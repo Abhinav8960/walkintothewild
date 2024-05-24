@@ -17,6 +17,7 @@ class ParkForm extends model
 {
     public $title;
     public $slug;
+    public $park_type_id;
     public $vehicle_id;
     public $master_animal_id;
     public $master_bonus_experience_id;
@@ -44,6 +45,8 @@ class ParkForm extends model
     public $status;
     public $status_option = [];
     public $park_model;
+    public $uploadfile;
+
 
 
     public function __construct(Park $park_model = null)
@@ -57,6 +60,7 @@ class ParkForm extends model
             $this->park_model = $park_model;
             $this->title = $this->park_model->title;
             $this->slug = $this->park_model->slug;
+            $this->park_type_id = $this->park_model->park_type_id;
             $this->short_description = $this->park_model->short_description;
             $this->long_description = $this->park_model->long_description;
             $this->official_website = $this->park_model->official_website;
@@ -94,16 +98,36 @@ class ParkForm extends model
     public function rules()
     {
         return [
-            [['title'], 'required'],
+            [['title', 'park_type_id'], 'required'],
             [['status', 'avg_safari_price', 'nearest_airport_distance', 'nearest_railway_station_distance'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['short_description'], 'string', 'max' => 251],
             [['long_description', 'meta_title', 'meta_description'], 'string'],
             [['long_description'], 'validateMaxWords', 'params' => ['max' => 200]],
             [['status', 'master_location_id', 'country_id', 'state_id', 'city_id'], 'default', 'value' => 1],
-            [['master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description', 'vehicle_id', 'master_animal_id'], 'safe']
+            [['master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description', 'vehicle_id', 'master_animal_id'], 'safe'],
+            [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
+            ['uploadfile', 'required', 'on' => 'uploadfile'],
 
         ];
+    }
+
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['uploadfile'] = ['uploadfile'];
+        $scenarios['create'] = [
+            'title', 'park_type_id', 'slug', 'status', 'avg_safari_price', 'nearest_airport_distance', 'nearest_railway_station_distance',
+            'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
+            'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'vehicle_id', 'master_animal_id'
+        ];
+        $scenarios['update'] = [
+            'title', 'park_type_id', 'slug', 'status', 'avg_safari_price', 'nearest_airport_distance', 'nearest_railway_station_distance',
+            'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
+            'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'vehicle_id', 'master_animal_id'
+        ];
+        return $scenarios;
     }
 
     public function validateMaxWords($attribute, $params)
@@ -111,7 +135,7 @@ class ParkForm extends model
         $maxWords = $params['max'];
         $wordCount = str_word_count($this->$attribute);
         if ($wordCount > $maxWords) {
-            $this->addError($attribute, "The $attribute must not exceed $maxWords words.");
+            $this->addError($attribute, "The Long Description must not exceed $maxWords words.");
         }
     }
     /**
@@ -122,6 +146,7 @@ class ParkForm extends model
         return [
             'title' => 'Title',
             'slug' => 'Slug',
+            'park_type_id' => 'Park Type',
             'vehicle_id' => 'Vehicle',
             'master_animal_id' => 'Animal',
             'short_description' => 'Short Description',
@@ -157,6 +182,7 @@ class ParkForm extends model
     {
         $this->park_model->title = $this->title;
         $this->park_model->slug = $this->slug;
+        $this->park_model->park_type_id = $this->park_type_id;
         $this->park_model->short_description = $this->short_description;
         $this->park_model->long_description = $this->long_description;
         $this->park_model->official_website = $this->official_website;

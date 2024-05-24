@@ -11,7 +11,7 @@ class FrontAppAsset extends AssetBundle
 {
     public $sourcePath = '@frontend/themes/assets/';
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $css = [
         'css/style.css',
@@ -33,6 +33,6 @@ class FrontAppAsset extends AssetBundle
 
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset',
+        // 'yii\bootstrap5\BootstrapAsset',
     ];
 }

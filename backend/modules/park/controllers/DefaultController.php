@@ -10,8 +10,11 @@ use common\models\park\ParkBonusExperience;
 use common\models\park\ParkSearch;
 use common\models\park\ParkGallerySearch;
 use common\models\park\ParkVehicle;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\helpers\FileHelper;
+use yii\web\UploadedFile;
 
 /**
  * DefaultController.
@@ -38,6 +41,7 @@ class DefaultController extends Controller
     {
         $model = new ParkForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -77,6 +81,9 @@ class DefaultController extends Controller
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
+                } else {
+                    print_r($model->errors);
+                    exit();
                 }
             }
         } else {
@@ -92,6 +99,7 @@ class DefaultController extends Controller
     {
         $park_model = $this->findModel($id);
         $model = new ParkForm($park_model);
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -163,6 +171,59 @@ class DefaultController extends Controller
         ]);
     }
 
+
+    public function actionParkfromfile()
+    {
+
+        $model = new ParkForm();
+        $model->scenario = 'uploadfile';
+        if ($model->load(Yii::$app->request->post())) {
+            $uploadedfile = UploadedFile::getInstance($model, 'uploadfile');
+            if ($uploadedfile) {
+                $time = date("Y/m/d");
+                $path = Yii::$app->params['datapath'] . '/csv/' . $time;
+                FileHelper::createDirectory($path, $mode = 0775, $recursive = true);
+                $filepath =  $uploadedfile;
+                $uploadedfile->saveAs($path . '/' . $uploadedfile);
+                $uploadedfile->saveAs($filepath);
+                $uploadFileName = $uploadedfile->name;
+                $uploadFilePath = $filepath;
+                $fullpath = $path . '/' . $uploadFileName;
+                $csv = array();
+                $rowcount = 0;
+                if (($handle = fopen($fullpath, "r")) !== FALSE) {
+                    $max_line_length = defined('MAX_LINE_LENGTH') ? MAX_LINE_LENGTH : 10000;
+                    while (($row = fgetcsv($handle, $max_line_length)) !== FALSE) {
+                        $row_colcount = count($row);
+                        $csv[] = $row;
+                        $rowcount++;
+                    }
+                    fclose($handle);
+                }
+                // Remove first row from count
+                $rowcount = $rowcount - 1;
+                if (!empty($csv)) {
+                    $countsuccess = 0;
+                    foreach (array_slice($csv, 1) as $key => $value) {
+                        $model = new ParkForm();
+                        $model->scenario = 'create';
+                        $model->park_model->title = $value[0];
+                        $model->park_model->slug = $value[1];
+                        $model->park_model->park_type_id = $value[2];
+                        $model->park_model->status = 1;
+                        $model->park_model->save(false);
+                    }
+                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' park Successfully Imported');
+                    return $this->redirect(['/park']);
+                }
+            }
+        }
+
+
+        return $this->render('parkfromfile', [
+            'model' => $model
+        ]);
+    }
 
     public function actionDelete($id)
     {
