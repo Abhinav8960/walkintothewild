@@ -31,14 +31,6 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ['class' => 'yii\grid\SerialColumn'],
                     'name',
                     [
-                        'label' => 'Country',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->country) ? $model->country->country_name : '';
-                        }
-                    ],
-                    [
                         'label' => 'State',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',

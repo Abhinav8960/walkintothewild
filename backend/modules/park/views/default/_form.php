@@ -126,7 +126,15 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
     <div class="col-md-6">
+        <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Railway Station Distance']) ?>
+    </div>
+
+    <div class="col-md-6">
         <?= $form->field($model, 'nearest_airport', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport($model->city_id), ['prompt' => 'Select Airport'])->label('Airport') ?>
+    </div>
+
+    <div class="col-md-6">
+        <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Airport Distance']) ?>
     </div>
 
 </div>

@@ -9,13 +9,11 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'City';
-$this->params['breadcrumbs_home_url'] = '/master/city';
-$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
+$this->title = 'About';
+$this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create', 'style' => 'margin-right: 2px;']);
-$this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['class' => 'btn btn-orange ', 'title' => 'Upload City Csv']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 
 
 ?>
@@ -30,18 +28,15 @@ $this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['clas
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    'name',
                     [
-                        'label' => 'State',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Description',
+                        'contentOptions' => ['style' => 'width: 50%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->state) ? $model->state->state_name : '';
+                            return isset($model->description) ? $model->description : '';
                         }
                     ],
-                    'city_name',
-
-                    'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -70,7 +65,7 @@ $this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['clas
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->city_name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

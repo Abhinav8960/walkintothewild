@@ -14,7 +14,8 @@ $this->params['breadcrumbs_home_url'] = '/master/state';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange', 'title' => 'Create', 'style' => 'margin-right: 2px;']);
+$this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['class' => 'btn btn-orange ', 'title' => 'Upload State Csv']);
 
 
 ?>
@@ -30,16 +31,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'label' => 'Country',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->country) ? $model->country->country_name : '';
-                        }
-                    ],
                     'state_name',
-
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [

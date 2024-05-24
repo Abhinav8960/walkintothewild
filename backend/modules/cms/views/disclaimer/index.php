@@ -5,17 +5,13 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-/** @var yii\web\View $this */
-/** @var common\models\master\office\MasterDepartmentSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'City';
-$this->params['breadcrumbs_home_url'] = '/master/city';
+$this->title = 'Disclaimer';
+$this->params['breadcrumbs_home_url'] = '/cms/disclaimer';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create', 'style' => 'margin-right: 2px;']);
-$this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['class' => 'btn btn-orange ', 'title' => 'Upload City Csv']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 
 
 ?>
@@ -28,20 +24,17 @@ $this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['clas
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
+                //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    // 'title',
                     [
-                        'label' => 'State',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Content',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->state) ? $model->state->state_name : '';
+                            return $model->title;
                         }
                     ],
-                    'city_name',
-
-                    'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -54,8 +47,16 @@ $this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['clas
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'View',
+
+                            //     ]);
+                            // },
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
@@ -70,7 +71,7 @@ $this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['clas
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->city_name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

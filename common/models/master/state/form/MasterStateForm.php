@@ -15,6 +15,7 @@ class MasterStateForm extends model
     public $status;
     public $status_option = [];
     public $state_model;
+    public $uploadfile;
 
 
     public function __construct(MasterState $state_model = null)
@@ -41,14 +42,25 @@ class MasterStateForm extends model
     public function rules()
     {
         return [
-            [['state_name','country_id'], 'required'],
+            [['state_name', 'country_id'], 'required'],
             [['status'], 'integer'],
-            [['state_name','country_id'], 'string', 'max' => 125],
+            [['state_name', 'country_id'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
+            [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
 
         ];
     }
 
+
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['uploadfile'] = ['uploadfile'];
+        $scenarios['create'] = ['state_name', 'country_id', 'status'];
+        $scenarios['update'] = ['state_name', 'country_id', 'status'];
+        return $scenarios;
+    }
     /**
      * {@inheritdoc}
      */
