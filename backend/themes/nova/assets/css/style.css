@@ -112257,6 +112257,7 @@ a.text-dark:focus {
   display: block !important;
   text-align: center;
   color: #09422D;
+  padding: 9px 0px !important;
 }
 
 .pagination-primary .page-item.active .page-link{
