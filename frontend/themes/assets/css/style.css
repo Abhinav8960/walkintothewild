@@ -2802,7 +2802,7 @@ figure {
 }
 .budgetSeg .select2-selection.select2-selection--multiple{
 
-    height: 35px !important;
+    height: 35px!important;
     overflow: hidden;
     border-radius: 0.5rem;
     box-shadow: none;
@@ -2810,12 +2810,12 @@ figure {
 }
 .budgetSeg .select2.select2-container.select2-container--krajee-bs5.select2-container--below.select2-container--focus{
 
-    width: 247px !important;
+    width: 247px!important;
 }
 
 .budgetSeg .select2.select2-container.select2-container--krajee-bs5{
 
-    width: 247px !important;
+    width: 247px!important;
     margin-bottom: 10px;
 }
 .budgetSeg .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__rendered{

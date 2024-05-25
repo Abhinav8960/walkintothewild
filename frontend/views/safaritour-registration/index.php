@@ -181,7 +181,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                                         <?= $form->field($model, 'budget_segment')->widget(Select2::classname(), [
                                             'data' => GeneralModel::packageoption(),
-                                            'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                                             'options' => ['placeholder' => 'Select', 'multiple' => true],
                                             'pluginOptions' => [
                                                 'allowClear' => true
