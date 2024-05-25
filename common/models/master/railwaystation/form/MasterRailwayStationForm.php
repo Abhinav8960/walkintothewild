@@ -14,6 +14,7 @@ use common\models\master\railwaystation\MasterRailwayStation;
  */
 class MasterRailwayStationForm extends model
 {
+    public $station_code;
     public $country_id;
     public $state_id;
     public $city_id;
@@ -35,6 +36,7 @@ class MasterRailwayStationForm extends model
 
         if ($railway_station_model  != '') {
             $this->railway_station_model = $railway_station_model;
+            $this->station_code = $this->railway_station_model->station_code;
             $this->country_id = $this->railway_station_model->country_id;
             $this->state_id = $this->railway_station_model->state_id;
             $this->city_id = $this->railway_station_model->city_id;
@@ -53,10 +55,11 @@ class MasterRailwayStationForm extends model
     public function rules()
     {
         return [
-            [['city_id', 'state_id', 'country_id', 'title', 'status'], 'required'],
+            [['state_id', 'country_id', 'title', 'status'], 'required'],
             [['status'], 'integer'],
             [['state_id', 'country_id', 'title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
+            [['station_code'], 'string', 'max' => 20],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
         ];
     }
@@ -66,8 +69,8 @@ class MasterRailwayStationForm extends model
     {
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
-        $scenarios['create'] = ['city_id', 'state_id', 'country_id', 'title'];
-        $scenarios['update'] = ['city_id', 'state_id', 'country_id', 'title'];
+        $scenarios['create'] = ['city_id', 'state_id', 'country_id', 'title', 'station_code'];
+        $scenarios['update'] = ['city_id', 'state_id', 'country_id', 'title', 'station_code'];
         return $scenarios;
     }
 
@@ -81,6 +84,7 @@ class MasterRailwayStationForm extends model
             'state_id' => 'State',
             'country_id' => 'Country',
             'title' => 'Title',
+            'station_code' => 'Station Code',
             'status' => 'Status',
         ];
     }
@@ -95,6 +99,7 @@ class MasterRailwayStationForm extends model
         $this->railway_station_model->state_id = $this->state_id;
         $this->railway_station_model->city_id = $this->city_id;
         $this->railway_station_model->title = $this->title;
+        $this->railway_station_model->station_code = $this->station_code;
         $this->railway_station_model->status = $this->status;
     }
 }

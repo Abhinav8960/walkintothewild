@@ -59,7 +59,7 @@ class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\inte
     public function rules()
     {
         return [
-            [['city_id', 'state_id','country_id','status'], 'required'],
+            [['state_id','country_id','status'], 'required'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
