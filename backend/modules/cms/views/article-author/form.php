@@ -40,7 +40,7 @@ $this->params['title'] = $this->title;
                         <?= $form->field($model, 'author_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Author Name']) ?>
                     </div>
                     <div class="col-md-4">
-                        <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->article_author_model) ? true : false]) ?>
+                        <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->article_author_model->id) ? true : false]) ?>
                     </div>
                 </div>
 

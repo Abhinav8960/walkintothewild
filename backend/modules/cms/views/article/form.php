@@ -7,9 +7,9 @@ use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 
-$this->title = 'Article Category';
+$this->title = 'Article';
 $this->params['breadcrumbs'][] = "Create";
-if (isset($model->master_article_topic_model->id)) {
+if (isset($model->article_model->id)) {
     $this->params['breadcrumbs'][] = "Update";
 }
 $this->params['title'] = $this->title;
@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
 <div class="card">
     <div class="card-body">
         <?php $form = ActiveForm::begin([
-            'id' => 'category-form',
+            'id' => 'author-form',
             'method' => 'POST',
             'fieldConfig' => [
                 'template' => '<div class="form-group">{label}{input}{error}</div>',
@@ -37,17 +37,22 @@ $this->params['title'] = $this->title;
 
                 <div class="row">
                     <div class="col-md-4">
-                        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Category Name']) ?>
+                        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Title']) ?>
                     </div>
+
                     <div class="col-md-4">
-                        <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->master_article_topic_model->id) ? true : false]) ?>
+                        <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Meta Title']) ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->article_model->id) ? true : false]) ?>
                     </div>
                 </div>
 
 
                 <div class="row">
                     <?php
-                    if (!empty($model->master_article_topic_model->id)) { ?>
+                    if (!empty($model->article_model->id)) { ?>
                         <div class="col-md-6">
                             <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
                         </div>

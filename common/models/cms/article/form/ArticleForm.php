@@ -19,8 +19,8 @@ class ArticleForm extends \yii\base\Model
 {
     public $title;
     public $slug;
-    public $description;
     public $article_author_id;
+    public $description;
     public $meta_title;
     public $meta_description;
     public $meta_keywords;
@@ -60,7 +60,8 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'article_author_id', 'description'], 'required'],
+            [['title', 'meta_title'], 'required'],
+            // [['title', 'article_author_id', 'description'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
