@@ -42,7 +42,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="col-lg-3 col-md-3">
 
                                 <div class="browslogow3" id="browslogow3">
-                                    <div class="text" id="uploadText">Browse Logo <br><span class="span_title"> (JPEG /JPG or PNG / 500 Pixels x 123 Pixels / 150 KB)</span></div>
+                                    <div class="text" id="uploadText">Browse Logo <br><span class="span_title"> (JPEG /JPG or PNG / 250 KB)</span></div>
                                     <?= $form->field($model, 'logo')->fileInput(['class' => 'fileupload', 'id' => 'fileupload'])->label(false) ?>
 
                                     <!-- <input id="fileupload" type="file" class="fileupload" /> -->

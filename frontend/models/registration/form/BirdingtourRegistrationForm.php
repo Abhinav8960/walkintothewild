@@ -143,11 +143,11 @@ class BirdingtourRegistrationForm extends model
             [['referrer_url'], 'safe'],
             [
                 ['logo'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 500,
-                'maxWidth' => 500,
-                'maxHeight' => 123,
-                'minHeight' => 123,
-                'maxSize' => 100 * 1024
+                // 'minWidth' => 500,
+                // 'maxWidth' => 500,
+                // 'maxHeight' => 123,
+                // 'minHeight' => 123,
+                'maxSize' => 250 * 1024
             ],
             ['about_business', \common\validators\Word500Validator::className()],
 
