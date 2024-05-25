@@ -64,7 +64,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
-                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
+                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::birdingoperatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
 
                                         </div>
                                     </div>

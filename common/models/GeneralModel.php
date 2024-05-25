@@ -8,6 +8,7 @@ use common\models\master\airport\MasterAirport;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
 use common\models\master\location\MasterLocation;
+use common\models\master\operatorcategory\MasterOperatorCategory;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
@@ -226,9 +227,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function operatorcategory()
     {
-        return ArrayHelper::map(MetaOperatorCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterOperatorCategory::find()->where(['status' => self::STATUS_ACTIVE, 'type_id' => 1])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
     }
 
+    public static function birdingoperatorcategory()
+    {
+        return ArrayHelper::map(MasterOperatorCategory::find()->where(['status' => self::STATUS_ACTIVE, 'type_id' => 2])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
+    }
 
     public static function packageoption()
     {

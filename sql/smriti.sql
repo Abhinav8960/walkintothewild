@@ -10,3 +10,5 @@ ALTER TABLE `master_location`
 
 
 ALTER TABLE `master_state` ADD `location_id` INT NULL DEFAULT NULL AFTER `state_name`;
+RENAME TABLE `walkintothewild`.`meta_operator_category` TO `walkintothewild`.`master_operator_category`;
+ALTER TABLE `master_operator_category` ADD `type_id` INT NULL DEFAULT NULL AFTER `title`;

@@ -1,11 +1,12 @@
 <?php
 
-namespace common\models\meta;
+namespace common\models\master\operatorcategory;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
- * This is the model class for table "meta_operator_category".
+ * This is the model class for table "master_operator_category".
  *
  * @property int $id
  * @property string|null $title
@@ -15,14 +16,15 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MetaOperatorCategory extends \yii\db\ActiveRecord
+class MasterOperatorCategory extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'meta_operator_category';
+        return 'master_operator_category';
     }
 
     /**
@@ -31,7 +33,7 @@ class MetaOperatorCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['status', 'type_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
     }
@@ -44,6 +46,7 @@ class MetaOperatorCategory extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Title',
+            'type_id' => 'Type',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
