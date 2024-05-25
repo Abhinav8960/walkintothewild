@@ -8,7 +8,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <div class="card_tankyou">
+          <a href="/">
+          <div class="card_tankyou">
                    <div class="tanksHeading">
                     <h3 class="text-center pt-4">Thank you</h3>
                    </div>
@@ -19,6 +20,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                    <img src="<?= $this->params['baseurl'] ?>/img/check-mark.png" alt="" width="200">
                    </div>
             </div>
+          </a>
         </div>
     </div>
 </div>
