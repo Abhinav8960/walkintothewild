@@ -3,6 +3,7 @@
 namespace common\models\master\state;
 
 use common\models\master\country\MasterCountry;
+use common\models\master\location\MasterLocation;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -84,5 +85,10 @@ class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function getCountry()
     {
         return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
+    }
+
+    public function getLocation()
+    {
+        return $this->hasOne(MasterLocation::className(), ['id' => 'location_id']);
     }
 }

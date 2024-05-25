@@ -49,14 +49,6 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'About Business',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->about_business;
-                        }
-                    ],
-                    [
                         'label' => 'Budget Segment',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',

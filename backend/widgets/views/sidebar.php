@@ -57,9 +57,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/animal/index")) ? "active" : "" ?>" href="/master/animal/index">Animal</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle/index")) ? "active" : "" ?>" href="/master/vehicle/index">Vehicle</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/master/location/index")) ? "active" : "" ?>" href="/master/location/index">Location</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/state/index")) ? "active" : "" ?>" href="/master/state/index">State</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/city/index")) ? "active" : "" ?>" href="/master/city/index">City</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/master/location/index")) ? "active" : "" ?>" href="/master/location/index">Location</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/railway-station/index")) ? "active" : "" ?>" href="/master/railway-station/index">Railway Station</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/airport/index")) ? "active" : "" ?>" href="/master/airport/index">Airport</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience/index")) ? "active" : "/master/bonus-experience/index" ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>

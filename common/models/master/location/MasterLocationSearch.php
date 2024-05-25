@@ -7,7 +7,7 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * MasterAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
+ * MasterLocationSearch represents the model behind the search form of `common\models\master\location\MasterLocation`.
  */
 class MasterLocationSearch extends MasterLocation
 {
@@ -17,7 +17,7 @@ class MasterLocationSearch extends MasterLocation
     public function rules()
     {
         return [
-            [['status', 'city_id', 'state_id', 'country_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
         ];
     }
@@ -59,9 +59,6 @@ class MasterLocationSearch extends MasterLocation
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'country_id' => $this->country_id,
-            'state_id' => $this->state_id,
-            'city_id' => $this->city_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

@@ -32,6 +32,14 @@ $this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['cl
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'state_name',
+                    [
+                        'label' => 'Location',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->location_id) ? $model->location->title : '';
+                        }
+                    ],
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [
