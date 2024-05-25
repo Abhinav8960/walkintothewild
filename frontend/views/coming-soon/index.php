@@ -15,10 +15,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
     <picture class="banner_img">
-        <source media="(min-width: 991px)" srcset="<?= $this->params['baseurl'] ?>/img/comingsoonbg.jpg">
+        <source media="(min-width: 991px)" srcset="<?= $this->params['baseurl'] ?>/img/soonbanner.jpg">
         <source media="(min-width: 577px)" srcset="<?= $this->params['baseurl'] ?>/img/tabbanner.jpg">
         <source media="(max-width: 576px)" srcset="<?= $this->params['baseurl'] ?>/img/mobilebanner.jpg">
-        <img src="<?= $this->params['baseurl'] ?>/img/comingsoonbg.jpg" alt="banner">
+        <img src="<?= $this->params['baseurl'] ?>/img/soonbanner.jpg" alt="banner">
         <div class="banner_heding">
             <h4 class="title_white h4">One-stop Solution <br> For Safaris In India </h4>
             <h1 class="title_yellow h1">Coming Soon</h1>

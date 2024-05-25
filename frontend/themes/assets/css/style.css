@@ -1192,7 +1192,7 @@ figure {
 }
 
 .banner_section-inner picture img {
-    height: 250px;
+    height: 300px;
     -o-object-fit: cover;
     object-fit: cover;
 

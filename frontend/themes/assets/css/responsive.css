@@ -108,7 +108,11 @@
         width: 388px;
     }
 }
-
+@media only screen and (max-device-width: 1440px) and (min-device-height: 3000px) and (max-device-height: 3100px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    #arrow {
+        bottom: 48px;
+    }
+}
 @media only screen and (max-width: 767px) and (min-width: 576px) {
 
     .placeholder_select{
@@ -188,11 +192,11 @@
         font-size: 14px;
     }
 
-    .banner_section-inner picture img {
+    /* .banner_section-inner picture img {
 
         height: 250px;
         object-fit: cover;
-    }
+    } */
     .banner_section-inner .banner_search{
 
         height: 350px;

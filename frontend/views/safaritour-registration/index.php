@@ -11,8 +11,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 <section class="banner_section-inner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/safari.jpg" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/safari.jpg" class="d-block w-100 " alt="banner">
+        <source srcset="<?= $this->params['baseurl'] ?>/img/safariformbanner.jpg" media="(max-width:576px)" type="image/webp">
+        <img src="<?= $this->params['baseurl'] ?>/img/safariformbanner.jpg" class="d-block w-100 " alt="banner">
     </picture>
 
 </section>
