@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
     </div>
     <div class="col-md-2">
         <?= $form->field($model, 'category_id')->dropDownList(
-            GeneralModel::operatorcategory(),
+            GeneralModel::birdingoperatorcategory(),
             [
                 'prompt' => 'Select Category',
             ]

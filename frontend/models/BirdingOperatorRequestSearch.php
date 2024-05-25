@@ -42,7 +42,7 @@ class BirdingOperatorRequestSearch extends BirdingOperatorRequest
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $pagination = true)
     {
         $query = BirdingOperatorRequest::find();
 
@@ -50,6 +50,7 @@ class BirdingOperatorRequestSearch extends BirdingOperatorRequest
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
         ]);
 
         $this->load($params);

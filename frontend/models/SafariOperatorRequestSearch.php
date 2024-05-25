@@ -42,7 +42,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $pagination = true)
     {
         $query = SafariOperatorRequest::find();
 
@@ -50,9 +50,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination'=>[
-                'defaultPageSize'=>2
-            ]
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
         ]);
 
         $this->load($params);

@@ -41,16 +41,26 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Category',
+                        'label' => 'Phone Number',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->category_id) ? GeneralModel::operatorcategory()[$model->category_id] : '';
+                            return $model->phone_no;
+                        }
+                    ],
+                    [
+                        'label' => 'Category',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->category_id) {
+                                return isset(GeneralModel::birdingoperatorcategory()[$model->category_id]) ? GeneralModel::birdingoperatorcategory()[$model->category_id] : '';
+                            }
                         }
                     ],
                     [
                         'label' => 'Budget Segment',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $budget = [];
@@ -69,7 +79,7 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'template' => '{view}',
                         'buttons' => [
                             'view' => function ($url, $model) {
