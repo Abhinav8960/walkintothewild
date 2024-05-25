@@ -1917,6 +1917,10 @@ figure {
     opacity: 0.7;
     font-size: var(--fs-14);
 }
+.select2-container .select2-selection--multiple .select2-selection__rendered{
+
+    overflow:visible!important;
+}
 .phone a {
 
 
