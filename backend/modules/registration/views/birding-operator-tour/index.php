@@ -53,7 +53,9 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->category_id) ? GeneralModel::birdingoperatorcategory()[$model->category_id] : '';
+                            if ($model->category_id) {
+                                return isset(GeneralModel::birdingoperatorcategory()[$model->category_id]) ? GeneralModel::birdingoperatorcategory()[$model->category_id] : '';
+                            }
                         }
                     ],
                     [

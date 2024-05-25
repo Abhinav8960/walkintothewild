@@ -50,10 +50,12 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Category',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->category_id) ? GeneralModel::operatorcategory()[$model->category_id] : '';
+                            if ($model->category_id) {
+                                return isset(GeneralModel::operatorcategory()[$model->category_id]) ? GeneralModel::operatorcategory()[$model->category_id] : '';
+                            }
                         }
                     ],
                     [
