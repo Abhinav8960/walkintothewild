@@ -120,10 +120,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li class="sub-slide">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Article</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu" style="display: none;">
-									<li><a class="sub-side-menu__item" href="#">Article Topics</a></li>
+									<li><a class="sub-side-menu__item" href="/cms/article-category/index">Article Topics</a></li>
+									<li><a class="sub-side-menu__item" href="/cms/article-author/index">Artcile Author</a></li>
+									<li><a class="sub-side-menu__item" href="/cms/article-tag/index">Article Tag</a></li>
 									<li><a class="sub-side-menu__item" href="#">Article Comments</a></li>
-									<li><a class="sub-side-menu__item" href="#">Artcile Author</a></li>
-									<li><a class="sub-side-menu__item" href="#">Article Tag</a></li>
 									<li><a class="sub-side-menu__item" href="#">Artcile</a></li>
 								</ul>
 							</li>
