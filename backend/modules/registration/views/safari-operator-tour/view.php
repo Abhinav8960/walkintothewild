@@ -53,7 +53,11 @@ foreach ($activies as $key => $role) {
                         <span>Registered Name: </span><?= $model->safarioperator_request_approval_model->register_comapany_name ?>
                     </p>
                     <p>
-                        <span>Category: </span><?= isset($model->safarioperator_request_approval_model->category_id) ? GeneralModel::operatorcategory()[$model->safarioperator_request_approval_model->category_id] : '' ?>
+                        <span>Category: </span><?php
+
+                                                if ($model->safarioperator_request_approval_model->category_id) {
+                                                    echo isset(GeneralModel::operatorcategory()[$model->safarioperator_request_approval_model->category_id]) ? GeneralModel::operatorcategory()[$model->safarioperator_request_approval_model->category_id] : '';
+                                                } ?>
                     </p>
 
                 </div>
