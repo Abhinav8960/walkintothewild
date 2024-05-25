@@ -146,7 +146,7 @@ class SafaritourRegistrationForm extends model
             ['phone_no', function () {
                 if ($this->phone_no === $this->operator_phone_no) {
                     $this->addError('phone_no', 'PHone Number Should not matched');
-                    $this->addError('operator_phone_no', 'Phone Number Should not match with operator phone number visible to client');
+                    $this->addError('operator_phone_no', 'Phone Number Should not match');
                 }
             }],
         ];

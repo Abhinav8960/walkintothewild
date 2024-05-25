@@ -20,7 +20,7 @@ use yii\bootstrap5\ActiveForm;
 
 
     <?php if ($model->operator_category_model->id) { ?>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
         </div>
     <?php } ?>
