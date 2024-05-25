@@ -25,6 +25,12 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'title')->textInput(['placeholder' => 'Search by Title'])->label(false) ?>
     </div>
     <div class="col-md-3">
+        <?= $form->field($model, 'park_type_id')->dropDownList(
+            GeneralModel::parktype(),
+            ['prompt' => 'Select Park Type']
+        ) ?>
+    </div>
+    <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel::statusoption(),
             [
