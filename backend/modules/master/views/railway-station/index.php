@@ -32,6 +32,7 @@ $this->params['buttons'][] = Html::a('Upload Railway Station CSV', ['/master/rai
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
+                    'station_code',
                     [
                         'label' => 'Country',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -46,14 +47,6 @@ $this->params['buttons'][] = Html::a('Upload Railway Station CSV', ['/master/rai
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->state) ? $model->state->state_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'City',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->city) ? $model->city->city_name : '';
                         }
                     ],
                     'created_at:dateTime:Created at',
