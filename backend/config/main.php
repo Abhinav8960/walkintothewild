@@ -37,6 +37,9 @@ return [
         ],
         'user' => [
             'class' => 'backend\modules\user\Module',
+        ],
+        'log' => [
+            'class' => 'backend\modules\log\Module',
         ]
     ],
     'components' => [

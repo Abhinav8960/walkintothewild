@@ -7,6 +7,7 @@ use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
+use common\models\master\email\MasterMailTemplate;
 use common\models\master\location\MasterLocation;
 use common\models\master\operatorcategory\MasterOperatorCategory;
 use common\models\master\railwaystation\MasterRailwayStation;
@@ -238,6 +239,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function packageoption()
     {
         return ArrayHelper::map(MetaPackageRange::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+    public static function mailtemplateoption()
+    {
+        return ArrayHelper::map(MasterMailTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
 

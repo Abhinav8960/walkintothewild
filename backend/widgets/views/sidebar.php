@@ -127,7 +127,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="sub-side-menu__item" href="/cms/article-author/index">Artcile Author</a></li>
 									<li><a class="sub-side-menu__item" href="/cms/article-tag/index">Article Tag</a></li>
 									<li><a class="sub-side-menu__item" href="#">Article Comments</a></li>
-									<li><a class="sub-side-menu__item" href="#">Artcile</a></li>
+									<li><a class="sub-side-menu__item" href="#">Article</a></li>
 								</ul>
 							</li>
 							<li class="sub-slide">
@@ -137,7 +137,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="sub-side-menu__item" href="#">Article</a></li>
 									<li><a class="sub-side-menu__item" href="#">RARE AND EXOTIC</a></li>
 									<li><a class="sub-side-menu__item" href="#">Article Tag</a></li>
-									<li><a class="sub-side-menu__item" href="#">Artcile</a></li>
+									<li><a class="sub-side-menu__item" href="#">Article</a></li>
 								</ul>
 							</li>
 							<li class="sub-slide">
@@ -221,6 +221,17 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+					<li class="slide <?= in_array($active_url, array(
+											"/log/default/index",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/log/default/index",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
+						</ul>
+					</li>
 
 
 

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\models\master\email\MasterMailTemplate;
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -21,14 +22,45 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class MailLog extends \yii\db\ActiveRecord
+class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'mail_log';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],     'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'slug', //The attribute to be generated
+                'attribute' => 'title', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '-',
+                    'trim' => true
+                ]
+            ]
+        ];
     }
 
     /**
@@ -98,7 +130,7 @@ class MailLog extends \yii\db\ActiveRecord
             $log->subject = $subject;
             $log->mail_template_id = $template->id;
             $log->params = json_encode($params, true);
-            $log->status = 0; // Mail Not Send
+            $log->status = 2; // Mail Not Send
 
             if ($log->save(false)) {
                 if (!empty($mail_to)) {
@@ -193,5 +225,10 @@ class MailLog extends \yii\db\ActiveRecord
     public function getBccrecipients()
     {
         return $this->hasMany(MailLogRecipients::className(), ['mail_log_id' => 'id'])->where(['send_as' => MailLogRecipients::SEND_AS_BCC_RECIPIENTS]);
+    }
+
+    public function getTemplate()
+    {
+        return $this->hasOne(MasterMailTemplate::className(), ['id' => 'mail_template_id']);
     }
 }
