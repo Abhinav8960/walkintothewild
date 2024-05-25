@@ -8,7 +8,7 @@ use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\railwaystation\MasterRailwayStationSearch;
 use Yii;
 use yii\web\UploadedFile;
-
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -44,6 +44,7 @@ class RailwayStationController extends Controller
     {
         $model = new MasterRailwayStationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -81,6 +82,7 @@ class RailwayStationController extends Controller
     {
         $railway_station_model = $this->findModel($id);
         $model = new MasterRailwayStationForm($railway_station_model);
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -107,6 +109,60 @@ class RailwayStationController extends Controller
         }
     }
 
+
+
+    public function actionRailwayfromfile()
+    {
+
+        $model = new MasterRailwayStationForm();
+        $model->scenario = 'uploadfile';
+        if ($model->load(Yii::$app->request->post())) {
+            $uploadedfile = UploadedFile::getInstance($model, 'uploadfile');
+            if ($uploadedfile) {
+                $time = date("Y/m/d");
+                $path = Yii::$app->params['datapath'] . '/csv/' . $time;
+                FileHelper::createDirectory($path, $mode = 0775, $recursive = true);
+                $filepath =  $uploadedfile;
+                $uploadedfile->saveAs($path . '/' . $uploadedfile);
+                $uploadedfile->saveAs($filepath);
+                $uploadFileName = $uploadedfile->name;
+                $uploadFilePath = $filepath;
+                $fullpath = $path . '/' . $uploadFileName;
+                $csv = array();
+                $rowcount = 0;
+                if (($handle = fopen($fullpath, "r")) !== FALSE) {
+                    $max_line_length = defined('MAX_LINE_LENGTH') ? MAX_LINE_LENGTH : 10000;
+                    while (($row = fgetcsv($handle, $max_line_length)) !== FALSE) {
+                        $row_colcount = count($row);
+                        $csv[] = $row;
+                        $rowcount++;
+                    }
+                    fclose($handle);
+                }
+                // Remove first row from count
+                $rowcount = $rowcount - 1;
+                if (!empty($csv)) {
+                    $countsuccess = 0;
+                    foreach (array_slice($csv, 1) as $key => $value) {
+                        $model = new MasterRailwayStationForm();
+                        $model->scenario = 'create';
+                        $model->railway_station_model->country_id = 1;
+                        $model->railway_station_model->state_id = $value[0];
+                        $model->railway_station_model->title = $value[2];
+                        $model->railway_station_model->status = 1;
+                        $model->railway_station_model->save(false);
+                    }
+                    \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' railway station Successfully Imported');
+                    return $this->redirect(['/master/railway-station']);
+                }
+            }
+        }
+
+
+        return $this->render('railwayfromfile', [
+            'model' => $model
+        ]);
+    }
 
 
     public function actionView($id)

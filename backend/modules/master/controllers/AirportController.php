@@ -153,7 +153,7 @@ class AirportController extends Controller
         }
 
 
-        return $this->render('parkfromfile', [
+        return $this->render('airportfromfile', [
             'model' => $model
         ]);
     }

@@ -13,9 +13,10 @@ $this->title = 'Login';
 
 <div class="container">
     <div class="login-box">
+        <img src="/img/logo_transparent.png">
         <h1>Walk into the Wild</h1>
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-        <?= $form->field($model, 'password')->passwordInput() ?>
+        <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
+        <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false)  ?>
         <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
 
         <div class="login-with">
@@ -93,5 +94,5 @@ $this->title = 'Login';
 
     .login-box button[type="submit"] {
         width: 80%;
-        /* 
+    }
 </style>

@@ -21,6 +21,7 @@ class MasterRailwayStationForm extends model
     public $status;
     public $status_option = [];
     public $railway_station_model;
+    public $uploadfile;
 
 
     public function __construct(MasterRailwayStation $railway_station_model = null)
@@ -52,12 +53,22 @@ class MasterRailwayStationForm extends model
     public function rules()
     {
         return [
-            [['city_id', 'state_id', 'country_id', 'title','status'], 'required'],
+            [['city_id', 'state_id', 'country_id', 'title', 'status'], 'required'],
             [['status'], 'integer'],
             [['state_id', 'country_id', 'title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-
+            ['uploadfile', 'required', 'on' => 'uploadfile'],
         ];
+    }
+
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['uploadfile'] = ['uploadfile'];
+        $scenarios['create'] = ['city_id', 'state_id', 'country_id', 'title'];
+        $scenarios['update'] = ['city_id', 'state_id', 'country_id', 'title'];
+        return $scenarios;
     }
 
     /**

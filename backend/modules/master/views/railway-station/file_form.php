@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="">
     <?php $form = ActiveForm::begin(
         [
-            'id' => 'airportfile-form',
+            'id' => 'parkfile-form',
             'method' => 'POST',
         ]
     ); ?>
@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
         <div class="col-md-12">
             <div class="form-group mt-5 text-center">
                 <?= Html::submitButton('Upload', ['class' => 'btn btn-outline-success']) ?>
-                <?php echo Html::a('Cancel', ['/master/airport'], ['class' => 'btn btn-outline-danger']) ?>
+                <?php echo Html::a('Cancel', ['/master/railway-station'], ['class' => 'btn btn-outline-danger']) ?>
             </div>
         </div>
 

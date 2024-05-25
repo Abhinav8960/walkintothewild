@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
-
+$this->params['buttons'][] = Html::a('Upload Railway Station CSV', ['/master/railway-station/railwayfromfile'], ['class' => 'btn btn-orange', 'title' => 'Upload Railway Station Csv', 'style' => 'margin-left: 4px;']);
 ?>
 
 <div class="card">
