@@ -59,6 +59,8 @@ class SafaritourRegistrationForm extends model
     public $reCaptcha;
     public $referrer_url;
 
+    public $action_url;
+    public $action_validate_url;
 
     public function __construct(SafariOperatorRequest $safarioperator_request_model = null)
     {
@@ -147,6 +149,12 @@ class SafaritourRegistrationForm extends model
                 if ($this->phone_no === $this->operator_phone_no) {
                     $this->addError('phone_no', 'PHone Number Should not matched');
                     $this->addError('operator_phone_no', 'Phone Number Should not match');
+                }
+            }],
+            ['email', function () {
+                if ($this->email === $this->operator_email) {
+                    $this->addError('email', 'Email Should not matched');
+                    $this->addError('operator_email', 'Email Should not match');
                 }
             }],
         ];

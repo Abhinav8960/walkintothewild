@@ -7,6 +7,7 @@ use common\models\MailLog;
 use frontend\models\registration\form\SafaritourRegistrationForm;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
+use Yii;
 use yii\web\UploadedFile;
 use yii\web\Controller;
 
@@ -25,6 +26,9 @@ class SafaritourRegistrationController extends Controller
 
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->action_url = '/safaritour-registration/index';
+        $model->action_validate_url = '/safaritour-registration/validate';
+
         $model->referrer_url = \Yii::$app->request->referrer;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -75,5 +79,29 @@ class SafaritourRegistrationController extends Controller
         return $this->render('index', [
             'model' => $model,
         ]);
+    }
+
+
+
+
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidate($id = null)
+    {
+        $model = new SafaritourRegistrationForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $model = new SafaritourRegistrationForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 }

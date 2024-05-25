@@ -25,8 +25,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
             </div>
             <div class="col-xl-10 col-lg-11 mb-4">
-                <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-
+                <?php $form = ActiveForm::begin([
+                    'id' => 'birdingform',
+                    'enableAjaxValidation' => true,
+                    'enableClientValidation' => false,
+                    'enableClientScript' => true,
+                    'action' => $model->action_url,
+                    'validationUrl' => $model->action_validate_url,
+                ]); ?>
                 <div class="registration-form">
                     <div id="form1" class="form active">
                         <div class="form_title text-center pb-3">
@@ -98,7 +104,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                             </div>
                             <div class="col-lg-5  mt-md-4 mt-2">
-                                
+
                                 <div class="formInput">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <label for="">About Business</label>

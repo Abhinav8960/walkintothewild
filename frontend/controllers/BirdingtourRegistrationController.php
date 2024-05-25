@@ -7,6 +7,7 @@ use common\models\MailLog;
 use frontend\models\registration\BirdingOperatorRequestActivities;
 use frontend\models\registration\BirdingOperatorRequestPark;
 use frontend\models\registration\form\BirdingtourRegistrationForm;
+use Yii;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
@@ -30,6 +31,10 @@ class BirdingtourRegistrationController extends Controller
 
         $model = new BirdingtourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->action_url = '/birdingtour-registration/index';
+        $model->action_validate_url = '/birdingtour-registration/validate';
+
+        $model->referrer_url = \Yii::$app->request->referrer;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -80,5 +85,26 @@ class BirdingtourRegistrationController extends Controller
         return $this->render('index', [
             'model' => $model,
         ]);
+    }
+
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidate($id = null)
+    {
+        $model = new BirdingtourRegistrationForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $model = new BirdingtourRegistrationForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 }
