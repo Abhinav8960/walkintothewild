@@ -53,7 +53,11 @@ foreach ($activies as $key => $role) {
                         <span>Registered Name: </span><?= $model->birdingoperator_request_approval_model->register_comapany_name ?>
                     </p>
                     <p>
-                        <span>Category: </span><?= isset($model->birdingoperator_request_approval_model->category_id) ? GeneralModel::operatorcategory()[$model->birdingoperator_request_approval_model->category_id] : '' ?>
+                        <span>Category: </span><?php
+
+                                                if ($model->birdingoperator_request_approval_model->category_id) {
+                                                    echo isset(GeneralModel::birdingoperatorcategory()[$model->birdingoperator_request_approval_model->category_id]) ? GeneralModel::birdingoperatorcategory()[$model->birdingoperator_request_approval_model->category_id] : '';
+                                                } ?>
                     </p>
 
                 </div>

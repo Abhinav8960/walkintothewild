@@ -8,7 +8,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 <div class="sticky">
 	<aside class="app-sidebar ">
 		<div class="main-sidebar-header active" style="background: #09422D !important;">
-			<a class="header-logo active" href="index.html">
+			<a class="header-logo active" href="#">
 				<img src="/img/logo.png" class="main-logo  desktop-logo" alt="logo">
 				<img src="/img/2.jpg" class="main-logo  desktop-dark" alt="logo">
 				<img src="/img/2.jpg" class="main-logo  mobile-logo" alt="logo">
@@ -192,34 +192,37 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
-
 					<li class="slide">
-						<a class="side-menu__item" href="widgets.html"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Safari Park</span></a>
+						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Safari Operator</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Safari Operator</a></li>
+							<li><a class="slide-item" href="#">Safari Tour Operator</a></li>
+							<li><a class="slide-item" href="#">Biriding Tour Operator</a></li>
+							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
+						</ul>
+					</li>
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
+							<li><a class="slide-item" href="#">Safari</a></li>
+							<li><a class="slide-item" href="#">Safari Comments</a></li>
+						</ul>
+					</li>
+					<li class="slide">
+						<a class="side-menu__item" href="#"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
 					</li>
 
-					<li class="slide">
-						<a class="side-menu__item" href="widgets.html"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
-					</li>
+
 
 					<li class="slide">
-						<a class="side-menu__item" href="widgets.html"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Shared Safari</span></a>
-					</li>
-
-					<li class="slide">
-						<a class="side-menu__item" href="widgets.html"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Reviews</span></a>
+						<a class="side-menu__item" href="#"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Reviews</span></a>
 					</li>
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
-					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
-							<li><a class="slide-item" href="index.html">Safari</a></li>
-							<li><a class="slide-item" href="index1.html">Safari Comments</a></li>
-						</ul>
-					</li>
+
 
 
 					<li class="slide">
@@ -239,7 +242,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/user",
 														"/user/default/index",
-													)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
+													)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 					</li>
 
 				<?php endif; ?>
