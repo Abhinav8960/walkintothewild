@@ -41,6 +41,14 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'Phone Number',
+                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->phone_no;
+                        }
+                    ],
+                    [
                         'label' => 'Category',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
