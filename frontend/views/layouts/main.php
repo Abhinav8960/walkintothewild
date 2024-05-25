@@ -53,11 +53,11 @@ AppAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
     </main>
-
-    <footer class="footer mt-auto py-3 text-muted">
+    <?= \frontend\widgets\Footer::widget() ?>
+    <!-- <footer class="footer mt-auto py-3 text-muted">
         <?= \frontend\widgets\Footer::widget() ?>
 
-    </footer>
+    </footer> -->
 
     <?php $this->endBody() ?>
 </body>
