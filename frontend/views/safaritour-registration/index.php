@@ -249,7 +249,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="col-sm-10">
                         <div class="term-condition text-center">
                             <p class="mb-0 d-flex justify-content-center align-items-center">
-                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a href="">terms and conditions.</a>'); ?>
+                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a href="" data-bs-toggle="modal" data-bs-target="#modalsafritermsForm">terms and conditions.</a>'); ?>
                             </p>
                         </div>
                     </div>
@@ -268,3 +268,4 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
 </section>
+
