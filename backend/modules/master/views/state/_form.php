@@ -15,7 +15,9 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'country_id')->dropDownList(GeneralModel::countryoption(), ['prompt' => 'Select Country'])->label('Country') ?>
     </div>
-
+    <div class="col-md-6">
+        <?= $form->field($model, 'location_id')->dropDownList(GeneralModel::getAllLocation(), ['prompt' => 'Select Location'])->label('Location') ?>
+    </div>
     <div class="col-md-6">
         <?= $form->field($model, 'state_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter State Name']) ?>
     </div>

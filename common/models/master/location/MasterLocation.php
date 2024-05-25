@@ -72,7 +72,7 @@ class MasterLocation extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return [
             [['title', 'slug'], 'required'],
-            [['country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
         ];
@@ -87,27 +87,11 @@ class MasterLocation extends \yii\db\ActiveRecord implements \common\interfaces\
             'id' => 'ID',
             'title' => 'Title',
             'slug' => 'Slug',
-            'country_id' => 'Country ID',
-            'state_id' => 'State ID',
-            'city_id' => 'City ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
-    }
-
-    public function getCity()
-    {
-        return $this->hasOne(MasterCity::className(), ['id' => 'city_id']);
-    }
-    public function getState()
-    {
-        return $this->hasOne(MasterState::className(), ['id' => 'state_id']);
-    }
-    public function getCountry()
-    {
-        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
     }
 }

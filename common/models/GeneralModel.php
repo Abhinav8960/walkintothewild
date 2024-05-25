@@ -8,6 +8,7 @@ use common\models\master\airport\MasterAirport;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
 use common\models\master\location\MasterLocation;
+use common\models\master\operatorcategory\MasterOperatorCategory;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
@@ -214,25 +215,29 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterAirport::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
-    public static function getAllLocation($master_city_id)
+    public static function getAllLocation()
     {
-        return ArrayHelper::map(MasterLocation::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterLocation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function wildlifeactivities()
     {
-        return ArrayHelper::map(MetaOtherWildlifeActivities::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MetaOtherWildlifeActivities::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function operatorcategory()
     {
-        return ArrayHelper::map(MetaOperatorCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterOperatorCategory::find()->where(['status' => self::STATUS_ACTIVE, 'type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
+    public static function birdingoperatorcategory()
+    {
+        return ArrayHelper::map(MasterOperatorCategory::find()->where(['status' => self::STATUS_ACTIVE, 'type_id' => 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
 
     public static function packageoption()
     {
-        return ArrayHelper::map(MetaPackageRange::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MetaPackageRange::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
 

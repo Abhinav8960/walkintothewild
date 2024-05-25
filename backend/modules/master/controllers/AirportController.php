@@ -147,7 +147,7 @@ class AirportController extends Controller
                         $model->airport_model->save(false);
                     }
                     \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' airport Successfully Imported');
-                    return $this->redirect(['/master/airport']);
+                    return $this->redirect(['/master/airport/index']);
                 }
             }
         }

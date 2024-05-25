@@ -1,24 +1,22 @@
 <?php
 
-namespace common\models\master\state;
+namespace common\models\master\operatorcategory;
 
-use common\models\master\country\MasterCountry;
-use common\models\master\location\MasterLocation;
 use common\traits\CommanRelationship;
 use Yii;
 
 /**
- * This is the model class for table "master_state".
+ * This is the model class for table "master_operator_category".
  *
  * @property int $id
- * @property string $state_name
+ * @property string|null $title
  * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property int|null $created_at
+ * @property int|null $created_by
+ * @property int|null $updated_at
+ * @property int|null $updated_by
  */
-class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterOperatorCategory extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
     /**
@@ -26,10 +24,8 @@ class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\Sta
      */
     public static function tableName()
     {
-        return 'master_state';
+        return 'master_operator_category';
     }
-
-
 
     /**
      * {@inheritdoc}
@@ -50,19 +46,16 @@ class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\Sta
                     return time();
                 },
             ],
-
         ];
     }
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['state_name'], 'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['state_name'], 'string', 'max' => 125],
+            [['status', 'type_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -73,22 +66,13 @@ class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     {
         return [
             'id' => 'ID',
-            'state_name' => 'State',
+            'title' => 'Title',
+            'type_id' => 'Type',
             'status' => 'Status',
             'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
             'created_by' => 'Created By',
+            'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
-    }
-
-    public function getCountry()
-    {
-        return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
-    }
-
-    public function getLocation()
-    {
-        return $this->hasOne(MasterLocation::className(), ['id' => 'location_id']);
     }
 }

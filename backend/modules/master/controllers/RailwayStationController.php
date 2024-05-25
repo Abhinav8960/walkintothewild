@@ -148,7 +148,7 @@ class RailwayStationController extends Controller
                         $model->scenario = 'create';
                         $model->railway_station_model->country_id = 1;
                         $model->railway_station_model->state_id = $value[0];
-                        $model->railway_station_model->title = $value[2];
+                        $model->railway_station_model->title = $value[1];
                         $model->railway_station_model->status = 1;
                         $model->railway_station_model->save(false);
                     }

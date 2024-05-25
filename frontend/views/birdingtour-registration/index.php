@@ -36,7 +36,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="col-lg-3 col-md-3">
 
                                 <div class="browslogow3" id="browslogow3">
-                                    <div class="text" id="uploadText">Browse Logo</div>
+                                    <div class="text" id="uploadText">Browse Logo <br><span class="span_title"> (JPEG /JPG or PNG / 500 Pixels x 123 Pixels / 150 KB)</span></div>
                                     <?= $form->field($model, 'logo')->fileInput(['class' => 'fileupload', 'id' => 'fileupload'])->label(false) ?>
 
                                     <!-- <input id="fileupload" type="file" class="fileupload" /> -->
@@ -64,7 +64,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
-                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
+                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::birdingoperatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
 
                                         </div>
                                     </div>

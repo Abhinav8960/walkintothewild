@@ -6,18 +6,15 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\state\MasterStateSearch $searchModel */
+/** @var common\models\master\operatorcategory\MasterOperatorCategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'State';
-$this->params['breadcrumbs_home_url'] = '/master/state';
+$this->title = 'Operator Category';
+$this->params['breadcrumbs_home_url'] = '/master/operator-category';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange', 'title' => 'Create', 'style' => 'margin-right: 2px;']);
-$this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['class' => 'btn btn-orange ', 'title' => 'Upload State Csv']);
-
-
 ?>
 <div class="card">
 
@@ -31,13 +28,13 @@ $this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['cl
                 //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'state_name',
+                    'title',
                     [
-                        'label' => 'Location',
+                        'label' => 'Type',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->location_id) ? $model->location->title : '';
+                            return isset($model->type_id) ? GeneralModel::parktype()[$model->type_id] : '';
                         }
                     ],
                     'created_at:dateTime:Created at',
@@ -78,7 +75,7 @@ $this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['cl
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->state_name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

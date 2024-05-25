@@ -125,6 +125,27 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const textarea = document.getElementById('safaritourregistrationform-about_business');
+    const wordCount = document.getElementById('wordCount');
+    const maxLength = 500; // Maximum allowed characters
+
+    function updateCharacterCount() {
+        const characters = textarea.value.length;
+        wordCount.textContent = `${characters}/${maxLength}`;
+
+        if (characters > maxLength) {
+            wordCount.style.color = 'red'; // Set color to red if characters exceed the limit
+            // Trim the textarea value to the maximum length
+            textarea.value = textarea.value.substring(0, maxLength);
+        } else {
+            wordCount.style.color = ''; // Reset color if characters are within the limit
+        }
+    }
+
+    textarea.addEventListener('input', updateCharacterCount);
+    updateCharacterCount(); // Call the function initially to ensure the count is displayed correctly
+});
 function increment(id) {
     let input = document.getElementById(id);
     input.value = parseInt(input.value) + 1;
@@ -269,6 +290,11 @@ window.addEventListener('scroll', function(e){
 //     });
     
 //   });
+
+  // Get the textarea element
+  const textarea = document.getElementById('about_business');
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
@@ -347,7 +373,8 @@ document.addEventListener('DOMContentLoaded', function() {
       uploadText.style.display = 'none';
     }
   });
-  
+
+
   
 
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\master\location;
+namespace common\models\master\operatorcategory;
 
-use common\models\master\location\MasterLocation;
+use common\models\master\operatorcategory\MasterOperatorCategory;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * MasterLocationSearch represents the model behind the search form of `common\models\master\location\MasterLocation`.
+ * MasterOperatorCategorySearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
  */
-class MasterLocationSearch extends MasterLocation
+class MasterOperatorCategorySearch extends MasterOperatorCategory
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class MasterLocationSearch extends MasterLocation
     public function rules()
     {
         return [
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['title', 'slug'], 'string', 'max' => 255],
+            [['status', 'type_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,7 +40,7 @@ class MasterLocationSearch extends MasterLocation
      */
     public function search($params)
     {
-        $query = MasterLocation::find()->where(['status' => [1, 2]]);
+        $query = MasterOperatorCategory::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -59,6 +59,7 @@ class MasterLocationSearch extends MasterLocation
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'type_id' => $this->type_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

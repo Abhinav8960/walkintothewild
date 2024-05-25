@@ -11,6 +11,7 @@ use common\models\master\state\MasterState;
 class MasterStateForm extends model
 {
     public $state_name;
+    public $location_id;
     public $country_id;
     public $status;
     public $status_option = [];
@@ -28,6 +29,7 @@ class MasterStateForm extends model
         if ($state_model  != '') {
             $this->state_model = $state_model;
             $this->country_id = $this->state_model->country_id;
+            $this->location_id = $this->state_model->location_id;
             $this->state_name = $this->state_model->state_name;
             $this->status = $this->state_model->status;
         }
@@ -43,7 +45,7 @@ class MasterStateForm extends model
     {
         return [
             [['state_name', 'country_id'], 'required'],
-            [['status'], 'integer'],
+            [['status', 'location_id'], 'integer'],
             [['state_name'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
@@ -57,8 +59,8 @@ class MasterStateForm extends model
     {
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
-        $scenarios['create'] = ['state_name', 'country_id', 'status'];
-        $scenarios['update'] = ['state_name', 'country_id', 'status'];
+        $scenarios['create'] = ['state_name', 'country_id', 'location_id', 'status'];
+        $scenarios['update'] = ['state_name', 'country_id', 'location_id', 'status'];
         return $scenarios;
     }
     /**
@@ -68,6 +70,7 @@ class MasterStateForm extends model
     {
         return [
             'state_name' => 'State',
+            'location_id' => 'Location',
             'country_id' => 'Country',
             'status' => 'Status',
         ];
@@ -79,6 +82,7 @@ class MasterStateForm extends model
      */
     public function initializeForm()
     {
+        $this->state_model->location_id = $this->location_id;
         $this->state_model->country_id = $this->country_id;
         $this->state_model->state_name = $this->state_name;
         $this->state_model->status = $this->status;

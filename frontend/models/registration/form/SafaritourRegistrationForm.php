@@ -143,7 +143,12 @@ class SafaritourRegistrationForm extends model
                 'maxSize' => 100 * 1024
             ],
             ['about_business', \common\validators\Word500Validator::className()],
-
+            ['phone_no', function () {
+                if ($this->phone_no === $this->operator_phone_no) {
+                    $this->addError('phone_no', 'PHone Number Should not matched');
+                    $this->addError('operator_phone_no', 'Phone Number Should not match');
+                }
+            }],
         ];
 
         if (\Yii::$app->params['isGoogleV3CaptchaValidateNeeded'] == true) {
