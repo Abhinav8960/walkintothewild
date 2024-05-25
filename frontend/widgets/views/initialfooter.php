@@ -4,8 +4,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 <footer class="main_footer position-relative">
   <div class="footer_object">
-  <img src="<?= $this->params['baseurl'] ?>/img/desktopfooter.png" alt="" class="d-md-block d-none">
-        <img src="<?= $this->params['baseurl'] ?>/img/footermobile.png" alt="" class="d-md-none d-block">
+    <img src="<?= $this->params['baseurl'] ?>/img/desktopfooter.png" alt="" class="d-md-block d-none">
+    <img src="<?= $this->params['baseurl'] ?>/img/footermobile.png" alt="" class="d-md-none d-block">
   </div>
   <div class="container-fluid">
     <div class="row  border_bottom soon_pagefooter">
@@ -18,7 +18,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="d-flex align-items-center gap-2 flex-wrap">
               <div class="comingsoonpage-footer d-flex align-items-center gap-2">
                 <div class="insticon"><i class="fa-brands fa-instagram"></i> </div>
-                <a href="">walkintothewild.in</a>
+                <a href="https://www.instagram.com/walkintothewild.in/">walkintothewild.in</a>
               </div>
               <span class="d-sm-block d-none">|</span>
               <div class="comingsoonpage-footer">
@@ -36,9 +36,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
           </div>
           <div class="footerContent">
             <ul class="footer_listing d-flex gap-md-3 gap-2 flex-wrap">
-              <li><a href="">Safari Tour Operator</a></li>
+              <li><a href="/safaritour-registration">Safari Tour Operator</a></li>
               <li>|</li>
-              <li><a href="">Birding Tour Operator</a></li>
+              <li><a href="/birdingtour-registration">Birding Tour Operator</a></li>
             </ul>
           </div>
         </div>
@@ -98,7 +98,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <p>User-generated content ("User Content" or "user content") refers to information provided by our users with the intention of being published on our website (e.g., writing a review or posting on our boards). As a user of our website, you assume responsibility for all user content that you submit, post, or otherwise make available through our platform.</p>
           <p>While we do not claim ownership of user content, by submitting, posting, or otherwise making content available through our website, you automatically grant us the right to utilize your user content as we see fit. This includes the non-exclusive, perpetual, transferable, irrevocable right, with the right of sublicensing, and without any royalty or compensation in return, to use, reproduce, modify, translate, distribute, publish, create derivative works, disclose, and duplicate the content across all known and future media. You acknowledge that we may determine how your user content is credited and accept that the content provided may be indexed by search engines such as Google. Additionally, you grant us and any third party appointed by us the right to take legal actions deemed necessary for the protection of the rights of your user content, including, but not limited to, taking legal action on your behalf.</p>
           <p>You agree not to submit, post, or otherwise make available through our website any personally identifiable information about other people or any abusive, obscene, vulgar, slanderous, hateful, threatening, sexually-oriented user content, or any other material that may violate any laws, whether of your country, the Indian, any other country, or international law. You confirm that such user content is not confidential and that you have all necessary permissions to submit, post, and otherwise make available such user content. Moreover, you undertake not to submit, post, or otherwise make available through our website any commercial, advertising, promotional, or spam-like user content. Violation of any of these conditions may lead to immediate and permanent banning, with notification to your Internet Service Provider if deemed necessary by us, and we reserve the right to take other legal action. You agree that we have the discretion to remove, edit, move, or close your account and/or any user content at any time as we deem appropriate.</p>
-         
+
           <h6>Ownership and Intellectual property rights</h6>
           <p>This website is owned by Walk Into The Wild. All rights and interest in the content available via the website, the website's look and feel, the designs, trademarks, service marks, and trade names displayed on the website, and the website URL are the property of Walk Into The Wild or its licensors, and are protected by copyrights, trademarks, patents, or other proprietary rights and laws. You may not use any content available via the website in any manner or for any purpose without the prior written permission of us or, if applicable, our licensors. All rights not expressly granted in this Agreement are expressly reserved to Walk Into The Wild and its licensors.</p>
           <h6>Your contact with advertisers or other third parties</h6>
@@ -111,13 +111,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
           </p>
           <h6>Indemnification</h6>
           <p>You agree to indemnify and hold harmless Walk Into The Wild, its directors, officers, employees, owners, agents, and affiliates, from and against any and all liability, damages, losses, claims, and expenses of any kind (including, without limitation, reasonable attorneys' fees) directly or indirectly related to (1) your breach of the Agreement; or (2) the user content you submit, post, or transmit through the website.</p>
-          
+
           <h6>Your account</h6>
           <p>You are accountable for safeguarding the confidentiality of any passwords linked to your account on our website, monitoring all activity under the account, and taking full responsibility for all actions occurring under your account.</p>
-          
+
           <h6>Modification or suspension of our website</h6>
           <p>We may at any time modify, discontinue, or suspend the operation of our website, or any part thereof, temporarily or permanently, without notice to you. </p>
-          
+
           <h6>Change of ownership</h6>
           <p>If we are in the process of selling Walk Into The Wild, our website, or substantial parts of our business, you agree we may disclose and/or transfer your personally identifiable information as well as other information to the (potential) new owner so they can better value our business and, if sold, continue to operate the service this website provides. This will also be the case if the new owner is a non-EU company, organization, or individual.</p>
           <p>You also agree that in the event of a change in ownership of Walk Into The Wild or our website, the rights, obligations, and restrictions you have towards us, as outlined in this agreement, will be transferred to the new owner without notice to you, and you accept the new owner as your new counterparty in this Agreement.</p>
@@ -128,7 +128,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <h6>Complaints regarding content</h6>
           <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
 
-          
+
         </div>
       </div>
 
@@ -162,7 +162,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <p>User-generated content ("User Content" or "user content") refers to information provided by our users with the intention of being published on our website (e.g., writing a review or posting on our boards). As a user of our website, you assume responsibility for all user content that you submit, post, or otherwise make available through our platform.</p>
           <p>While we do not claim ownership of user content, by submitting, posting, or otherwise making content available through our website, you automatically grant us the right to utilize your user content as we see fit. This includes the non-exclusive, perpetual, transferable, irrevocable right, with the right of sublicensing, and without any royalty or compensation in return, to use, reproduce, modify, translate, distribute, publish, create derivative works, disclose, and duplicate the content across all known and future media. You acknowledge that we may determine how your user content is credited and accept that the content provided may be indexed by search engines such as Google. Additionally, you grant us and any third party appointed by us the right to take legal actions deemed necessary for the protection of the rights of your user content, including, but not limited to, taking legal action on your behalf.</p>
           <p>You agree not to submit, post, or otherwise make available through our website any personally identifiable information about other people or any abusive, obscene, vulgar, slanderous, hateful, threatening, sexually-oriented user content, or any other material that may violate any laws, whether of your country, the Indian, any other country, or international law. You confirm that such user content is not confidential and that you have all necessary permissions to submit, post, and otherwise make available such user content. Moreover, you undertake not to submit, post, or otherwise make available through our website any commercial, advertising, promotional, or spam-like user content. Violation of any of these conditions may lead to immediate and permanent banning, with notification to your Internet Service Provider if deemed necessary by us, and we reserve the right to take other legal action. You agree that we have the discretion to remove, edit, move, or close your account and/or any user content at any time as we deem appropriate.</p>
-         
+
           <h6>Ownership and Intellectual property rights</h6>
           <p>This website is owned by Walk Into The Wild. All rights and interest in the content available via the website, the website's look and feel, the designs, trademarks, service marks, and trade names displayed on the website, and the website URL are the property of Walk Into The Wild or its licensors, and are protected by copyrights, trademarks, patents, or other proprietary rights and laws. You may not use any content available via the website in any manner or for any purpose without the prior written permission of us or, if applicable, our licensors. All rights not expressly granted in this Agreement are expressly reserved to Walk Into The Wild and its licensors.</p>
           <h6>Your contact with advertisers or other third parties</h6>
@@ -175,13 +175,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
           </p>
           <h6>Indemnification</h6>
           <p>You agree to indemnify and hold harmless Walk Into The Wild, its directors, officers, employees, owners, agents, and affiliates, from and against any and all liability, damages, losses, claims, and expenses of any kind (including, without limitation, reasonable attorneys' fees) directly or indirectly related to (1) your breach of the Agreement; or (2) the user content you submit, post, or transmit through the website.</p>
-          
+
           <h6>Your account</h6>
           <p>You are accountable for safeguarding the confidentiality of any passwords linked to your account on our website, monitoring all activity under the account, and taking full responsibility for all actions occurring under your account.</p>
-          
+
           <h6>Modification or suspension of our website</h6>
           <p>We may at any time modify, discontinue, or suspend the operation of our website, or any part thereof, temporarily or permanently, without notice to you. </p>
-          
+
           <h6>Change of ownership</h6>
           <p>If we are in the process of selling Walk Into The Wild, our website, or substantial parts of our business, you agree we may disclose and/or transfer your personally identifiable information as well as other information to the (potential) new owner so they can better value our business and, if sold, continue to operate the service this website provides. This will also be the case if the new owner is a non-EU company, organization, or individual.</p>
           <p>You also agree that in the event of a change in ownership of Walk Into The Wild or our website, the rights, obligations, and restrictions you have towards us, as outlined in this agreement, will be transferred to the new owner without notice to you, and you accept the new owner as your new counterparty in this Agreement.</p>
@@ -192,7 +192,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <h6>Complaints regarding content</h6>
           <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
 
-          
+
         </div>
 
 
@@ -225,7 +225,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <p>User-generated content ("User Content" or "user content") refers to information provided by our users with the intention of being published on our website (e.g., writing a review or posting on our boards). As a user of our website, you assume responsibility for all user content that you submit, post, or otherwise make available through our platform.</p>
           <p>While we do not claim ownership of user content, by submitting, posting, or otherwise making content available through our website, you automatically grant us the right to utilize your user content as we see fit. This includes the non-exclusive, perpetual, transferable, irrevocable right, with the right of sublicensing, and without any royalty or compensation in return, to use, reproduce, modify, translate, distribute, publish, create derivative works, disclose, and duplicate the content across all known and future media. You acknowledge that we may determine how your user content is credited and accept that the content provided may be indexed by search engines such as Google. Additionally, you grant us and any third party appointed by us the right to take legal actions deemed necessary for the protection of the rights of your user content, including, but not limited to, taking legal action on your behalf.</p>
           <p>You agree not to submit, post, or otherwise make available through our website any personally identifiable information about other people or any abusive, obscene, vulgar, slanderous, hateful, threatening, sexually-oriented user content, or any other material that may violate any laws, whether of your country, the Indian, any other country, or international law. You confirm that such user content is not confidential and that you have all necessary permissions to submit, post, and otherwise make available such user content. Moreover, you undertake not to submit, post, or otherwise make available through our website any commercial, advertising, promotional, or spam-like user content. Violation of any of these conditions may lead to immediate and permanent banning, with notification to your Internet Service Provider if deemed necessary by us, and we reserve the right to take other legal action. You agree that we have the discretion to remove, edit, move, or close your account and/or any user content at any time as we deem appropriate.</p>
-         
+
           <h6>Ownership and Intellectual property rights</h6>
           <p>This website is owned by Walk Into The Wild. All rights and interest in the content available via the website, the website's look and feel, the designs, trademarks, service marks, and trade names displayed on the website, and the website URL are the property of Walk Into The Wild or its licensors, and are protected by copyrights, trademarks, patents, or other proprietary rights and laws. You may not use any content available via the website in any manner or for any purpose without the prior written permission of us or, if applicable, our licensors. All rights not expressly granted in this Agreement are expressly reserved to Walk Into The Wild and its licensors.</p>
           <h6>Your contact with advertisers or other third parties</h6>
@@ -238,13 +238,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
           </p>
           <h6>Indemnification</h6>
           <p>You agree to indemnify and hold harmless Walk Into The Wild, its directors, officers, employees, owners, agents, and affiliates, from and against any and all liability, damages, losses, claims, and expenses of any kind (including, without limitation, reasonable attorneys' fees) directly or indirectly related to (1) your breach of the Agreement; or (2) the user content you submit, post, or transmit through the website.</p>
-          
+
           <h6>Your account</h6>
           <p>You are accountable for safeguarding the confidentiality of any passwords linked to your account on our website, monitoring all activity under the account, and taking full responsibility for all actions occurring under your account.</p>
-          
+
           <h6>Modification or suspension of our website</h6>
           <p>We may at any time modify, discontinue, or suspend the operation of our website, or any part thereof, temporarily or permanently, without notice to you. </p>
-          
+
           <h6>Change of ownership</h6>
           <p>If we are in the process of selling Walk Into The Wild, our website, or substantial parts of our business, you agree we may disclose and/or transfer your personally identifiable information as well as other information to the (potential) new owner so they can better value our business and, if sold, continue to operate the service this website provides. This will also be the case if the new owner is a non-EU company, organization, or individual.</p>
           <p>You also agree that in the event of a change in ownership of Walk Into The Wild or our website, the rights, obligations, and restrictions you have towards us, as outlined in this agreement, will be transferred to the new owner without notice to you, and you accept the new owner as your new counterparty in this Agreement.</p>
@@ -255,7 +255,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <h6>Complaints regarding content</h6>
           <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
 
-          
+
         </div>
       </div>
 

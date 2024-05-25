@@ -52,7 +52,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                             <div class="col-lg-9 col-md-9">
                                 <div class="formInput pt-lg-0 pt-2">
-                                    <label for="">Business Name </label>
+                                    <label for="">Business Name <span>*</span></label>
                                     <?= $form->field($model, 'business_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name'])->label(false) ?>
                                 </div>
                                 <div class="formInput mt-3">
@@ -268,4 +268,3 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
 </section>
-
