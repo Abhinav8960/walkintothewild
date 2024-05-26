@@ -153,6 +153,27 @@ class BirdingOperatorTourController extends Controller
         ]);
     }
 
+    /**
+     * Suspend Model
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionSuspend($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 2;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionActive($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 1;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
 
     /**
      * Finds the MasterAnimal model based on its primary key value.

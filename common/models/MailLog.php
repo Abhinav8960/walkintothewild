@@ -48,7 +48,7 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
                 'value' => function () {
                     return time();
                 },
-            ], 
+            ],
         ];
     }
 

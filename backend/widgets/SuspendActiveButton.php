@@ -29,8 +29,9 @@ class SuspendActiveButton extends Widget implements \common\interfaces\StatusInt
     public function run()
     {
         if ($this->model->status == self::STATUS_ACTIVE) {
-            return Html::a($this->suspend_button_title, ['suspend', 'id' => $this->model->id, 'corporate_id' => $this->corporate_id, 'center_id' => $this->center_id], [
-                'class' => 'btn btn-icon btn-sm btn-outline-danger',
+            return Html::a($this->suspend_button_title, ['suspend', 'id' => $this->model->id], [
+                'class' => 'btn btn-outline-danger',
+                'style' => 'color:black !important;',
                 'title' => $this->suspend_button_title,
                 'data' => [
                     'confirm' => "Are You Sure you want to " . $this->suspend_button_title . " this " . $this->suspend_title . " ?",
@@ -39,8 +40,9 @@ class SuspendActiveButton extends Widget implements \common\interfaces\StatusInt
                 ],
             ]);
         } else if ($this->model->status == self::STATUS_SUSPEND) {
-            return Html::a($this->active_button_title, ['active', 'id' => $this->model->id, 'corporate_id' => $this->corporate_id, 'center_id' => $this->center_id], [
-                'class' => 'btn btn-icon btn-sm btn btn-outline-success',
+            return Html::a($this->active_button_title, ['active', 'id' => $this->model->id], [
+                'class' => 'btn btn btn-outline-success',
+                'style' => 'color:black !important;',
                 'title' => $this->active_button_title,
                 'data' => [
                     'confirm' => "Are You Sure you want to " . $this->active_button_title . " this " . $this->active_title . "?",

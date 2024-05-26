@@ -80,7 +80,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}',
+                        'template' => '{view}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
@@ -89,6 +89,9 @@ $this->params['title'] = $this->title;
                                     'title' => 'View',
 
                                 ]);
+                            },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
                             },
                         ]
                     ],
