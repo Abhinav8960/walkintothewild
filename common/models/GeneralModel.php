@@ -19,6 +19,8 @@ use common\models\meta\MetaOperatorCategory;
 use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\meta\MetaPackageRange;
 use common\models\park\Park;
+use frontend\models\registration\BirdingOperatorRequest;
+use frontend\models\registration\BirdingOperatorRequestPark;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
 use Yii;
@@ -280,6 +282,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function operatorresquestpark($safari_operator_request_id)
     {
         $query = SafariOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
+        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
+    }
+
+    public static function birdingoperatorresquestpark($birding_operator_request_id)
+    {
+        $query = BirdingOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'birding_operator_request_id' => $birding_operator_request_id]);
         return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
     }
 }

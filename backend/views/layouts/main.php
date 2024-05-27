@@ -35,7 +35,6 @@ AppAsset::register($this);
 
         gtag('config', 'G-X449945MQ2');
     </script>
-
     <style>
         .invalid-feedback {
             color: #dc3545;
