@@ -2702,13 +2702,13 @@ figure {
     background-color: #F5F5F5;
 }
 
-/* .term-condition {
+.term-condition {
     display: none;
 }
 
 .term-condition.active {
     display: block;
-} */
+}
 
 .term-condition p a {
 
