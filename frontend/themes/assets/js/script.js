@@ -128,23 +128,31 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener("DOMContentLoaded", function() {
     const textarea = document.getElementById('safaritourregistrationform-about_business');
     const wordCount = document.getElementById('wordCount');
-    const maxLength = 500; // Maximum allowed characters
+    const maxLength = 500; // Maximum allowed words
 
-    function updateCharacterCount() {
-        const characters = textarea.value.length;
-        wordCount.textContent = `${characters}/${maxLength}`;
+    function updateWordCount() {
+        const words = textarea.value.trim().split(/\s+/).length;
+        wordCount.textContent = `${words}/${maxLength}`;
 
-        if (characters > maxLength) {
-            wordCount.style.color = 'red'; // Set color to red if characters exceed the limit
+        if (words > maxLength) {
+            wordCount.style.color = 'red'; // Set color to red if words exceed the limit
             // Trim the textarea value to the maximum length
-            textarea.value = textarea.value.substring(0, maxLength);
+            textarea.value = trimTextToWordCount(textarea.value, maxLength);
         } else {
-            wordCount.style.color = ''; // Reset color if characters are within the limit
+            wordCount.style.color = ''; // Reset color if words are within the limit
         }
     }
 
-    textarea.addEventListener('input', updateCharacterCount);
-    updateCharacterCount(); // Call the function initially to ensure the count is displayed correctly
+    function trimTextToWordCount(text, maxWords) {
+        const wordsArray = text.trim().split(/\s+/);
+        return wordsArray.slice(0, maxWords).join(' ');
+    }
+
+    textarea.addEventListener('input', updateWordCount);
+    updateWordCount(); // Call the function initially to ensure the count is displayed correctly
+
+    // Display initial count
+    wordCount.textContent = `0/${maxLength}`;
 });
 function increment(id) {
     let input = document.getElementById(id);
@@ -295,7 +303,7 @@ window.addEventListener('scroll', function(e){
   const textarea = document.getElementById('about_business');
 
 
-  document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
     const nextButton = document.querySelector('.next-btn');
@@ -341,40 +349,7 @@ window.addEventListener('scroll', function(e){
             }
         });
     });
-
-    submitButton.addEventListener('click', function(event) {
-        event.preventDefault();
-        let isValid = true;
-        let firstInvalidFormIndex = -1;
-
-        forms.forEach((form, index) => {
-            const inputs = form.querySelectorAll('input, select, textarea');
-            inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
-                    if (firstInvalidFormIndex === -1) {
-                        firstInvalidFormIndex = index;
-                    }
-                }
-            });
-        });
-
-        if (!isValid && firstInvalidFormIndex !== -1) {
-            forms[currentFormIndex].classList.remove('active');
-            dots[currentFormIndex].classList.remove('active');
-            currentFormIndex = firstInvalidFormIndex;
-            forms[currentFormIndex].classList.add('active');
-            dots[currentFormIndex].classList.add('active');
-            updateButtonVisibility();
-        } else {
-            // Proceed with form submission
-            document.querySelector('form').submit();
-        }
-    });
 });
-
-
-
 
   
   const fileUpload = document.getElementById('fileupload');
@@ -409,5 +384,4 @@ window.addEventListener('scroll', function(e){
 
 
   
-
 
