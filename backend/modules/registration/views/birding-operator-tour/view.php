@@ -30,7 +30,7 @@ foreach ($activies as $key => $role) {
 }
 
 $html_park = '';
-$park = GeneralModel::operatorresquestpark($model->birdingoperator_request_approval_model->id);
+$park = GeneralModel::birdingoperatorresquestpark($model->birdingoperator_request_approval_model->id);
 foreach ($park as $key => $role) {
     if (isset(GeneralModel::parkoption()[$key])) {
         $html_park .= GeneralModel::parkoption()[$key] . ', ';

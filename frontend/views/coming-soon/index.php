@@ -2,6 +2,9 @@
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+
+$this->title = 'Coming Soon';
+$this->params['title'] = $this->title;
 ?>
 
 <section class="commingsoon position-relative">

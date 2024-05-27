@@ -2,6 +2,10 @@
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+
+
+$this->title = 'Thank You';
+$this->params['title'] = $this->title;
 ?>
 
 <section class="thankyoupage ">
