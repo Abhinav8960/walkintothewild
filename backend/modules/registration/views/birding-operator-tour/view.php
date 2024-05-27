@@ -28,6 +28,14 @@ foreach ($activies as $key => $role) {
         $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
     }
 }
+
+$html_park = '';
+$park = GeneralModel::operatorresquestpark($model->birdingoperator_request_approval_model->id);
+foreach ($park as $key => $role) {
+    if (isset(GeneralModel::parkoption()[$key])) {
+        $html_park .= GeneralModel::parkoption()[$key] . ', ';
+    }
+}
 ?>
 
 <div class="card">
@@ -93,6 +101,9 @@ foreach ($activies as $key => $role) {
                     </p>
                     <p>
                         <span>Offers Other Wildlife Activities: </span><?= substr($html, 0, -2) ?>
+                    </p>
+                    <p>
+                        <span>Operates in Parks : </span><?= substr($html_park, 0, -2) ?>
                     </p>
                 </div>
             </div>
