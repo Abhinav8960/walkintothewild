@@ -56,7 +56,7 @@ $this->params['title'] = $this->title;
                             <div class="col-lg-9 col-md-9">
                                 <div class="formInput pt-lg-0 pt-2">
                                     <label for="">Business Name <span>*</span></label>
-                                    <?= $form->field($model, 'business_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name'])->label(false) ?>
+                                    <?= $form->field($model, 'business_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name', 'data-label' => 'Business Name'])->label(false) ?>
                                 </div>
                                 <div class="formInput mt-3">
                                     <div class="d-sm-flex align-items-center justify-content-between flex-wrap">
@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
                                             result</p>
                                     </div>
 
-                                    <?= $form->field($model, 'register_comapany_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Registered Company Name'])->label(false) ?>
+                                    <?= $form->field($model, 'register_comapany_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Registered Company Name', 'data-label' => 'Registered Name'])->label(false) ?>
                                 </div>
                             </div>
                             <div class="col-lg-7 mt-4">
@@ -73,14 +73,14 @@ $this->params['title'] = $this->title;
                                     <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
-                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category'])->label(false) ?>
+                                            <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category', 'data-label' => 'Category'])->label(false) ?>
 
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Address <span>*</span></label>
-                                            <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder' => 'Enter Address'])->label(false) ?>
+                                            <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder' => 'Enter Address', 'data-label' => 'Address'])->label(false) ?>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mb-2">
@@ -93,7 +93,7 @@ $this->params['title'] = $this->title;
                                             <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
                                                 'data' => GeneralModel::safariparkoption(),
                                                 // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'multiple' => true],
+                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'data-label' => 'Parks', 'multiple' => true],
                                                 'pluginOptions' => [
                                                     'allowClear' => true
                                                 ],
@@ -270,5 +270,5 @@ $this->params['title'] = $this->title;
 
             </div>
         </div>
-        
+
 </section>
