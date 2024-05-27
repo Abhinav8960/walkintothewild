@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 document.addEventListener("DOMContentLoaded", function() {
     const textarea = document.getElementById('safaritourregistrationform-about_business');
     const wordCount = document.getElementById('wordCount');
@@ -153,8 +154,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Display initial count
     wordCount.textContent = `0/${maxLength}`;
 });
-
-
 function increment(id) {
     let input = document.getElementById(id);
     input.value = parseInt(input.value) + 1;
@@ -299,6 +298,11 @@ window.addEventListener('scroll', function(e){
 //     });
     
 //   });
+
+  // Get the textarea element
+  const textarea = document.getElementById('about_business');
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
@@ -320,29 +324,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function validateForm1() {
-        const inputs = forms[0].querySelectorAll('input, select, textarea');
-        let isValid = true;
-        inputs.forEach(input => {
-            if (input.hasAttribute('required') && !input.value.trim()) {
-                isValid = false;
-            }
-        });
-        return isValid;
-    }
-
-    function enableNextButton() {
-        if (currentFormIndex === 0) {
-            nextButton.disabled = !validateForm1();
-        }
-    }
-
     nextButton.addEventListener('click', function(event) {
         event.preventDefault();
-        if (currentFormIndex === 0 && !validateForm1()) {
-            alert("Please fill in all required fields before proceeding.");
-            return;
-        }
         if (currentFormIndex < forms.length - 1) {
             forms[currentFormIndex].classList.remove('active');
             dots[currentFormIndex].classList.remove('active');
@@ -350,7 +333,6 @@ document.addEventListener('DOMContentLoaded', function() {
             forms[currentFormIndex].classList.add('active');
             dots[currentFormIndex].classList.add('active');
             updateButtonVisibility();
-            enableNextButton();
         }
     });
 
@@ -364,26 +346,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 forms[currentFormIndex].classList.add('active');
                 dots[currentFormIndex].classList.add('active');
                 updateButtonVisibility();
-                enableNextButton();
             }
         });
     });
-
-    // Enable or disable next button on form input change
-    forms.forEach(form => {
-        form.addEventListener('input', enableNextButton);
-    });
-
-    // Initially disable next button
-    enableNextButton();
 });
-
-
-
-
-
-
-
 
   
   const fileUpload = document.getElementById('fileupload');
@@ -415,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
       uploadText.style.display = 'none';
     }
   });
-  
-  
 
+
+  
 
