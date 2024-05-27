@@ -17,3 +17,5 @@ ALTER TABLE `master_operator_category` ADD `type_id` INT NULL DEFAULT NULL AFTER
 
 ALTER TABLE `safari_operator_request` CHANGE `operator_email` `operator_email` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 ALTER TABLE `birding_operator_request` CHANGE `operator_email` `operator_email` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
+ALTER TABLE `safari_operator_request` ADD `is_agree` INT NOT NULL DEFAULT '1' AFTER `comment`;
+ALTER TABLE `birding_operator_request` ADD `is_agree` INT NOT NULL DEFAULT '1' AFTER `comment`;

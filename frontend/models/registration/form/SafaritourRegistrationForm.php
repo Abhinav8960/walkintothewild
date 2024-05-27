@@ -110,6 +110,7 @@ class SafaritourRegistrationForm extends model
             $this->operator_email                  =  $this->safarioperator_request_model->operator_email;
             $this->is_highlighted                  =  $this->safarioperator_request_model->is_highlighted;
             $this->status                          =  $this->safarioperator_request_model->status;
+            $this->is_agree                          =  $this->safarioperator_request_model->is_agree;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -175,7 +176,7 @@ class SafaritourRegistrationForm extends model
             'id' => 'ID',
             'safari_operator_id' => 'Safari Operator ID',
             'business_name' => 'Business Name',
-            'register_comapany_name' => 'Register Comapany Name',
+            'register_comapany_name' => 'Register Name',
             'address' => 'Address',
             'category_id' => 'Category Type',
             'park_id' => 'Park',
@@ -262,6 +263,7 @@ class SafaritourRegistrationForm extends model
         $this->safarioperator_request_model->operator_email                  =  $this->operator_email;
         $this->safarioperator_request_model->is_highlighted                  =  $this->is_highlighted;
         $this->safarioperator_request_model->status                          =  $this->status;
+        $this->safarioperator_request_model->is_agree                        =  $this->is_agree;
     }
 
 

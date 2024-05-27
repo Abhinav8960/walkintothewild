@@ -148,7 +148,7 @@ $this->params['title'] = $this->title;
                                 <div class="formInput mb-3">
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
                                         <div class="mobile_width div_remove">
-                                            <label for="">Email Adress <span>*</span></label>
+                                            <label for="">Email Address <span>*</span></label>
                                             <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'yourbusiness@domain.com'])->label(false) ?>
                                         </div>
                                         <div class="mobile_width div_remove">
