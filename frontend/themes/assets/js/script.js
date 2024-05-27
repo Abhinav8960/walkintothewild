@@ -336,24 +336,34 @@ window.addEventListener('scroll', function(e){
         }
     }
 
-    function validateForm(index) {
-        const form = forms[index];
-        const requiredDivs = form.querySelectorAll('.required');
+    function validateForm1() {
+        const form1 = forms[0];
+        const requiredDivs = form1.querySelectorAll('.required');
         let isValid = true;
 
         requiredDivs.forEach(div => {
-            const inputs = div.querySelectorAll('input, select, textarea');
-            let isFieldValid = false;
+            const inputs = div.querySelectorAll('input, textarea, select');
+            let divValid = false;
 
             inputs.forEach(input => {
-                if (input.classList.contains('is-invalid')) {
-                    isValid = false;
-                } else if (input.classList.contains('is-valid')) {
-                    isFieldValid = true;
+                const feedback = input.nextElementSibling;
+
+                if (input.classList.contains('is-valid')) {
+                    divValid = true;
+                    if (feedback && feedback.classList.contains('invalid-feedback')) {
+                        feedback.style.display = 'none';
+                    }
+                } else {
+                    input.classList.add('is-invalid');
+                    input.setAttribute('aria-required', 'true');
+                    input.setAttribute('aria-invalid', 'true');
+                    if (feedback && feedback.classList.contains('invalid-feedback')) {
+                        feedback.style.display = 'block';
+                    }
                 }
             });
 
-            if (!isFieldValid) {
+            if (!divValid) {
                 isValid = false;
             }
         });
@@ -363,9 +373,9 @@ window.addEventListener('scroll', function(e){
 
     nextButton.addEventListener('click', function(event) {
         event.preventDefault();
-        // Validate the current form
-        if (validateForm(currentFormIndex)) {
-            // If the current form is valid, proceed to the next form
+        // Validate form1
+        if (currentFormIndex === 0 && validateForm1()) {
+            // If form1 is valid, proceed to the next form
             if (currentFormIndex < forms.length - 1) {
                 forms[currentFormIndex].classList.remove('active');
                 dots[currentFormIndex].classList.remove('active');
@@ -374,24 +384,20 @@ window.addEventListener('scroll', function(e){
                 dots[currentFormIndex].classList.add('active');
                 updateButtonVisibility();
             }
-        } else {
-            // alert("Please fill in all required fields correctly.");
         }
     });
 
     dots.forEach(dot => {
         dot.addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
-            if (index !== currentFormIndex) {
-                if (index < currentFormIndex || validateForm(currentFormIndex)) {
+            if (index <= currentFormIndex) {
+                if (index === 0 || validateForm1()) {
                     forms[currentFormIndex].classList.remove('active');
                     dots[currentFormIndex].classList.remove('active');
                     currentFormIndex = index;
                     forms[currentFormIndex].classList.add('active');
                     dots[currentFormIndex].classList.add('active');
                     updateButtonVisibility();
-                } else {
-                    // alert("Please fill in all required fields correctly.");
                 }
             }
         });
@@ -404,18 +410,11 @@ window.addEventListener('scroll', function(e){
         }
     });
 
-    // Validate form on input change
-    forms.forEach(form => {
-        form.addEventListener('input', function() {
-            validateForm(currentFormIndex);
-        });
+    // Validate form1 when any input changes
+    forms[0].addEventListener('input', function() {
+        validateForm1();
     });
 });
-
-
-
-
-
 
 
 
