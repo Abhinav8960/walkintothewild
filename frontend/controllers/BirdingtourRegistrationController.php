@@ -17,11 +17,6 @@ use yii\web\UploadedFile;
 class BirdingtourRegistrationController extends Controller
 {
     /**
-     * Displays profile Page.
-     *
-     * @return mixed
-     */
-    /**
      * Displays Safari tour form Page.
      *
      * @return mixed

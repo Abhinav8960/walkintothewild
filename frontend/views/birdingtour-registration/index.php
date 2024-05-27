@@ -105,13 +105,16 @@ $this->params['title'] = $this->title;
 
                                 </div>
                             </div>
+
                             <div class="col-lg-5  mt-md-4 mt-2">
+
                                 <div class="formInput">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <label for="">About Business</label>
                                         <p class="mb-0">500 words max.</p>
                                     </div>
                                     <?= $form->field($model, 'about_business')->textarea()->label(false) ?>
+                                    <p id="wordCount" class="mb-0 text-end">0/500</p>
                                 </div>
                             </div>
                         </div>
