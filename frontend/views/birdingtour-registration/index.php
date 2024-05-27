@@ -181,7 +181,7 @@ $this->params['title'] = $this->title;
                                 </div>
                             </div>
                             <div class="col-xl-6 mt-3">
-                                <div class="formInput budgetSeg mb-3">
+                                <div class="formInput budgetSeg position-relative mb-3">
                                     <div class="d-flex align-items-center justify-content-between  div_remove slect_remove gap-3">
                                         <label for="">Budget Segment <span>*</span></label>
 
@@ -193,6 +193,9 @@ $this->params['title'] = $this->title;
                                                 'allowClear' => true
                                             ],
                                         ])->label(false) ?>
+                                        <div class="arrowIcon2">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
                                     </div>
 
                                 </div>
