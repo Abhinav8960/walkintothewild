@@ -20,6 +20,7 @@ use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\meta\MetaPackageRange;
 use common\models\park\Park;
 use frontend\models\registration\SafariOperatorRequestActivities;
+use frontend\models\registration\SafariOperatorRequestPark;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -199,11 +200,35 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function birdingparkoption()
     {
-        return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        $query = Park::find()
+            ->where(['status' => Park::STATUS_ACTIVE, 'park_type_id' => 2])
+            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+
+        // Get all the models
+        $parks = $query->all();
+
+        // Use ArrayHelper::map to create the key-value pairs
+        $result = ArrayHelper::map($parks, 'id', 'title');
+        return $result;
+
+        // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
     public static function safariparkoption()
     {
-        return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+
+        $query = Park::find()
+            ->where(['status' => Park::STATUS_ACTIVE, 'park_type_id' => 1])
+            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+
+        // Get all the models
+        $parks = $query->all();
+
+        // Use ArrayHelper::map to create the key-value pairs
+        $result = ArrayHelper::map($parks, 'id', 'title');
+        return $result;
+        // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function getAllRailwayStation($master_city_id)
@@ -250,5 +275,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         $query = SafariOperatorRequestActivities::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
         return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
+    }
+
+    public static function operatorresquestpark($safari_operator_request_id)
+    {
+        $query = SafariOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
+        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
     }
 }
