@@ -295,7 +295,7 @@ window.addEventListener('scroll', function(e){
   const textarea = document.getElementById('about_business');
 
 
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
     const nextButton = document.querySelector('.next-btn');
@@ -341,7 +341,40 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    submitButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        let isValid = true;
+        let firstInvalidFormIndex = -1;
+
+        forms.forEach((form, index) => {
+            const inputs = form.querySelectorAll('input, select, textarea');
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    isValid = false;
+                    if (firstInvalidFormIndex === -1) {
+                        firstInvalidFormIndex = index;
+                    }
+                }
+            });
+        });
+
+        if (!isValid && firstInvalidFormIndex !== -1) {
+            forms[currentFormIndex].classList.remove('active');
+            dots[currentFormIndex].classList.remove('active');
+            currentFormIndex = firstInvalidFormIndex;
+            forms[currentFormIndex].classList.add('active');
+            dots[currentFormIndex].classList.add('active');
+            updateButtonVisibility();
+        } else {
+            // Proceed with form submission
+            document.querySelector('form').submit();
+        }
+    });
 });
+
+
+
 
   
   const fileUpload = document.getElementById('fileupload');
