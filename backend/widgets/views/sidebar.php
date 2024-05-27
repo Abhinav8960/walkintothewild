@@ -116,18 +116,53 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_cms_manager) : ?>
 
-					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu" style="display: none;">
+					<li class="slide <?= in_array($active_url, array(
+											"/cms",
+											"/cms/article-category/index",
+											"/cms/article-author/index",
+											"/cms/article-tag/index",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/cms",
+														"/cms/article-category/index",
+														"/cms/article-author/index",
+														"/cms/article-tag/index",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu <?= in_array($active_url, array(
+													"/cms",
+													"/cms/article-category/index",
+													"/cms/article-author/index",
+													"/cms/article-tag/index",
+												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																				"/cms",
+																				"/cms/article-category/index",
+																				"/cms/article-author/index",
+																				"/cms/article-tag/index",
+																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
-							<li class="sub-slide">
+							<li class="sub-slide <?= in_array($active_url, array(
+														"/cms",
+														"/cms/article-category/index",
+														"/cms/article-author/index",
+														"/cms/article-tag/index",
+													)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Article</span><i class="sub-angle fe fe-chevron-right"></i></a>
-								<ul class="sub-slide-menu" style="display: none;">
-									<li><a class="sub-side-menu__item" href="/cms/article-category/index">Article Topics</a></li>
-									<li><a class="sub-side-menu__item" href="/cms/article-author/index">Artcile Author</a></li>
-									<li><a class="sub-side-menu__item" href="/cms/article-tag/index">Article Tag</a></li>
-									<li><a class="sub-side-menu__item" href="#">Article Comments</a></li>
-									<li><a class="sub-side-menu__item" href="#">Article</a></li>
+								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																"/cms",
+																"/cms/article-category/index",
+																"/cms/article-author/index",
+																"/cms/article-tag/index",
+															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																							"/cms",
+																							"/cms/article-category/index",
+																							"/cms/article-author/index",
+																							"/cms/article-tag/index",
+																						)) ? "display: block;" : "display: none;" ?>">
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-category/index")) ? "active" : "" ?>" href="/cms/article-category/index">Article Topics</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-author/index")) ? "active" : "" ?>" href="/cms/article-author/index">Artcile Author</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-tag/index")) ? "active" : "" ?>" href="/cms/article-tag/index">Article Tag</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-comment/index")) ? "active" : "" ?>" href="#">Article Comments</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article/index")) ? "active" : "" ?>" href="#">Article</a></li>
 								</ul>
 							</li>
 							<li class="sub-slide">
