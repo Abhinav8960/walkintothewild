@@ -250,12 +250,11 @@ $this->params['title'] = $this->title;
                 </div>
                 <div class="row align-items-center pt-3">
                     <div class="col-sm-10">
-                        <!-- <div class="term-condition text-center">
-                            
-                        </div> -->
-                        <p class="mb-0 d-flex justify-content-center align-items-center">
+                        <div class="term-condition text-center">
+                            <p class="mb-0 d-flex justify-content-center align-items-center">
                                 <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a href="" data-bs-toggle="modal" data-bs-target="#modalsafritermsForm">terms and conditions.</a>'); ?>
                             </p>
+                        </div>
                     </div>
                     <div class="col-sm-2">
                         <div class="nextBtn float-end">
