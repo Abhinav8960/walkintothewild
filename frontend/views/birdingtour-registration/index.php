@@ -7,6 +7,9 @@ use yii\bootstrap5\ActiveForm;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+
+$this->title = 'Birding Tour Operator Registration';
+$this->params['title'] = $this->title;
 ?>
 
 <section class="banner_section-inner position-relative">
@@ -131,11 +134,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
                                         <div class="mobile_width div_remove">
                                             <label for="">Phone Number <span>*</span></label>
-                                            <?= $form->field($model, 'phone_no')->textInput(['maxlength' => true, 'placeholder' => '00000 00000'])->label(false) ?>
+                                            <?= $form->field($model, 'phone_no')->textInput(['maxlength' => true, 'placeholder' => '0000000000'])->label(false) ?>
                                         </div>
                                         <div class="mobile_width div_remove">
                                             <p class="mb-0 pt-xxl-0 pt-3 pb-2">This phone number will be visible to clients</p>
-                                            <?= $form->field($model, 'operator_phone_no')->textInput(['maxlength' => true, 'placeholder' => '00000 00000'])->label(false) ?>
+                                            <?= $form->field($model, 'operator_phone_no')->textInput(['maxlength' => true, 'placeholder' => '0000000000'])->label(false) ?>
                                         </div>
                                     </div>
                                 </div>

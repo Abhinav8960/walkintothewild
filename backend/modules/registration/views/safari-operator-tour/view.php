@@ -22,7 +22,7 @@ if ($model->safarioperator_request_approval_model->is_offer_economical_budget ==
 }
 
 $html = '';
-$activies = GeneralModel::operatorresquestactivties($model->safarioperator_request_approval_model->is_offer_economical_budget);
+$activies = GeneralModel::operatorresquestactivties($model->safarioperator_request_approval_model->id);
 foreach ($activies as $key => $role) {
     if (isset(GeneralModel::wildlifeactivities()[$key])) {
         $html .= GeneralModel::wildlifeactivities()[$key] . ', ';

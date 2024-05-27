@@ -48,7 +48,7 @@ class ParkSearch extends Park
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
+            // 'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
 
         ]);
 
