@@ -31,7 +31,7 @@ class BirdingtourRegistrationController extends Controller
 
         $model = new BirdingtourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/birdingtour-registration/index';
+        $model->action_url = '/birdingtour-registration';
         $model->action_validate_url = '/birdingtour-registration/validate';
 
         $model->referrer_url = \Yii::$app->request->referrer;

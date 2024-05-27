@@ -26,7 +26,7 @@ class SafaritourRegistrationController extends Controller
 
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/safaritour-registration/index';
+        $model->action_url = '/safaritour-registration';
         $model->action_validate_url = '/safaritour-registration/validate';
 
         $model->referrer_url = \Yii::$app->request->referrer;
