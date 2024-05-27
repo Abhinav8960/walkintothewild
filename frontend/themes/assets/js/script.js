@@ -145,15 +145,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function trimTextToWordCount(text, maxWords) {
         const wordsArray = text.trim().split(/\s+/);
+        // Join only the first 'maxWords' words
         return wordsArray.slice(0, maxWords).join(' ');
     }
 
-    textarea.addEventListener('input', updateWordCount);
+    textarea.addEventListener('input', function(event) {
+        const words = event.target.value.trim().split(/\s+/).length;
+        if (words > maxLength) {
+            // Prevent further input if word count exceeds the limit
+            event.preventDefault();
+        } else {
+            updateWordCount();
+        }
+    });
+
     updateWordCount(); // Call the function initially to ensure the count is displayed correctly
 
     // Display initial count
     wordCount.textContent = `0/${maxLength}`;
 });
+
+
 function increment(id) {
     let input = document.getElementById(id);
     input.value = parseInt(input.value) + 1;
@@ -303,7 +315,7 @@ window.addEventListener('scroll', function(e){
   const textarea = document.getElementById('about_business');
 
 
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
     const nextButton = document.querySelector('.next-btn');
@@ -324,15 +336,46 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function validateForm(index) {
+        const form = forms[index];
+        const requiredDivs = form.querySelectorAll('.required');
+        let isValid = true;
+
+        requiredDivs.forEach(div => {
+            const inputs = div.querySelectorAll('input, select, textarea');
+            let isFieldValid = false;
+
+            inputs.forEach(input => {
+                if (input.classList.contains('is-invalid')) {
+                    isValid = false;
+                } else if (input.classList.contains('is-valid')) {
+                    isFieldValid = true;
+                }
+            });
+
+            if (!isFieldValid) {
+                isValid = false;
+            }
+        });
+
+        return isValid;
+    }
+
     nextButton.addEventListener('click', function(event) {
         event.preventDefault();
-        if (currentFormIndex < forms.length - 1) {
-            forms[currentFormIndex].classList.remove('active');
-            dots[currentFormIndex].classList.remove('active');
-            currentFormIndex++;
-            forms[currentFormIndex].classList.add('active');
-            dots[currentFormIndex].classList.add('active');
-            updateButtonVisibility();
+        // Validate the current form
+        if (validateForm(currentFormIndex)) {
+            // If the current form is valid, proceed to the next form
+            if (currentFormIndex < forms.length - 1) {
+                forms[currentFormIndex].classList.remove('active');
+                dots[currentFormIndex].classList.remove('active');
+                currentFormIndex++;
+                forms[currentFormIndex].classList.add('active');
+                dots[currentFormIndex].classList.add('active');
+                updateButtonVisibility();
+            }
+        } else {
+            // alert("Please fill in all required fields correctly.");
         }
     });
 
@@ -340,18 +383,42 @@ document.addEventListener('DOMContentLoaded', function() {
         dot.addEventListener('click', function() {
             const index = parseInt(this.getAttribute('data-index'));
             if (index !== currentFormIndex) {
-                forms[currentFormIndex].classList.remove('active');
-                dots[currentFormIndex].classList.remove('active');
-                currentFormIndex = index;
-                forms[currentFormIndex].classList.add('active');
-                dots[currentFormIndex].classList.add('active');
-                updateButtonVisibility();
+                if (index < currentFormIndex || validateForm(currentFormIndex)) {
+                    forms[currentFormIndex].classList.remove('active');
+                    dots[currentFormIndex].classList.remove('active');
+                    currentFormIndex = index;
+                    forms[currentFormIndex].classList.add('active');
+                    dots[currentFormIndex].classList.add('active');
+                    updateButtonVisibility();
+                } else {
+                    // alert("Please fill in all required fields correctly.");
+                }
             }
+        });
+    });
+
+    // Prevent form submission on Enter key press
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' && currentFormIndex < forms.length - 1) {
+            event.preventDefault();
+        }
+    });
+
+    // Validate form on input change
+    forms.forEach(form => {
+        form.addEventListener('input', function() {
+            validateForm(currentFormIndex);
         });
     });
 });
 
-  
+
+
+
+
+
+
+
   const fileUpload = document.getElementById('fileupload');
   const uploadText = document.getElementById('uploadText');
   const browslogow3 = document.getElementById('browslogow3');
