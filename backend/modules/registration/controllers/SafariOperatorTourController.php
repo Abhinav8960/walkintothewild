@@ -30,6 +30,7 @@ class SafariOperatorTourController extends Controller
 
         $searchModel = new SafariOperatorRequestSearch();
         $searchModel->is_approved = 0;
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
