@@ -110,7 +110,6 @@ class SafaritourRegistrationForm extends model
             $this->operator_email                  =  $this->safarioperator_request_model->operator_email;
             $this->is_highlighted                  =  $this->safarioperator_request_model->is_highlighted;
             $this->status                          =  $this->safarioperator_request_model->status;
-            $this->is_agree                          =  $this->safarioperator_request_model->is_agree;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -124,7 +123,9 @@ class SafaritourRegistrationForm extends model
     {
         $rules = [
             [['category_id', 'safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
-            [['business_name', 'phone_no', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment', 'is_agree'], 'required'],
+            [['is_agree'], 'required', 'requiredValue' => 1, 'message' => 'You must agree to the terms and conditions.'],
+
+            [['business_name', 'phone_no', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment'], 'required'],
             [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'frontend\models\registration\SafariOperatorRequest', 'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
             [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^[123456789]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['facebook_url', 'instagram_url', 'youtube_link'], 'url'],
@@ -278,7 +279,6 @@ class SafaritourRegistrationForm extends model
         $this->safarioperator_request_model->operator_email                  =  $this->operator_email;
         $this->safarioperator_request_model->is_highlighted                  =  $this->is_highlighted;
         $this->safarioperator_request_model->status                          =  $this->status;
-        $this->safarioperator_request_model->is_agree                          =  $this->is_agree;
     }
 
 
