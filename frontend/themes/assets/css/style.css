@@ -2822,12 +2822,13 @@ figure {
 
     width: auto !important;
 }
-.term-condition .form-check{
+/* .term-condition .form-check{
 
     display: flex;
     align-items: center;
     justify-content: center;
-}
+    
+} */
 
 .formInput .input_check label {
 
