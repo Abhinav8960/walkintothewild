@@ -37,7 +37,7 @@ class UserRegistrationForm extends Model
         return [
             ['role_id', 'required'],
             ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'match', 'pattern' => '/^[a-zA-Z0-9]\w+$/'],
+            ['username', 'email'],
             ['username', 'required'],
             //name rules
             ['name', 'required'],
