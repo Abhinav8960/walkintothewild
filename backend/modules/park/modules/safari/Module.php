@@ -1,16 +1,16 @@
 <?php
 
-namespace backend\modules\park\modules\birding;
+namespace backend\modules\park\modules\safari;
 
 /**
- * birding module definition class
+ * safari module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'backend\modules\park\modules\birding\controllers';
+    public $controllerNamespace = 'backend\modules\park\modules\safari\controllers';
 
     /**
      * {@inheritdoc}

@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\modules\park\safari\controllers;
+namespace backend\modules\park\modules\safari\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\park\form\ParkForm;
-use common\models\park\Park;
-use common\models\park\ParkAnimal;
-use common\models\park\ParkBonusExperience;
-use common\models\park\ParkSearch;
-use common\models\park\ParkGallerySearch;
-use common\models\park\ParkVehicle;
+use common\models\park\form\SafariParkForm;
+use common\models\park\SafariParkBonusExperience;
+use common\models\park\SafariPark;
+use common\models\park\SafariParkAnimal;
+use common\models\park\SafariParkGallerySearch;
+use common\models\park\SafariParkSearch;
+use common\models\park\SafariParkVehicle;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,7 +28,7 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ParkSearch();
+        $searchModel = new SafariParkSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -39,7 +39,7 @@ class DefaultController extends Controller
 
     public function actionCreate()
     {
-        $model = new ParkForm();
+        $model = new SafariParkForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->scenario = 'create';
 
@@ -47,34 +47,34 @@ class DefaultController extends Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->park_model->save(false)) {
-                        $vehicles = $model->vehicle_id;
-                        if ($vehicles) {
-                            foreach ($vehicles as $vehicle) {
-                                $parkVehicle = new ParkVehicle();
-                                $parkVehicle->park_id = $model->park_model->id;
-                                $parkVehicle->vehicle_id = $vehicle;
-                                $parkVehicle->save(false);
+                    if ($model->safari_park_model->save(false)) {
+                        $safarivehicles = $model->vehicle_id;
+                        if ($safarivehicles) {
+                            foreach ($safarivehicles as $safarivehicle) {
+                                $safariparkVehicle = new SafariParkVehicle();
+                                $safariparkVehicle->safari_park_id = $model->safari_park_model->id;
+                                $safariparkVehicle->vehicle_id = $safarivehicle;
+                                $safariparkVehicle->save(false);
                             }
                         }
 
                         $animals = $model->master_animal_id;
                         if ($animals) {
                             foreach ($animals as $animal) {
-                                $parkAnimal = new ParkAnimal();
-                                $parkAnimal->park_id = $model->park_model->id;
-                                $parkAnimal->master_animal_id = $animal;
-                                $parkAnimal->save(false);
+                                $safariparkAnimal = new SafariParkAnimal();
+                                $safariparkAnimal->safari_park_id = $model->safari_park_model->id;
+                                $safariparkAnimal->master_animal_id = $animal;
+                                $safariparkAnimal->save(false);
                             }
                         }
 
                         $bonusexperience = $model->master_bonus_experience_id;
                         if ($bonusexperience) {
                             foreach ($bonusexperience as $bonus) {
-                                $parkBonus = new ParkBonusExperience();
-                                $parkBonus->park_id = $model->park_model->id;
-                                $parkBonus->master_bonus_experience_id = $bonus;
-                                $parkBonus->save(false);
+                                $safariparkBonus = new SafariParkBonusExperience();
+                                $safariparkBonus->safari_park_id = $model->safari_park_model->id;
+                                $safariparkBonus->master_bonus_experience_id = $bonus;
+                                $safariparkBonus->save(false);
                             }
                         }
 
@@ -84,7 +84,7 @@ class DefaultController extends Controller
                 }
             }
         } else {
-            $model->park_model->loadDefaultValues();
+            $model->safari_park_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -94,45 +94,45 @@ class DefaultController extends Controller
 
     public function actionUpdate($id)
     {
-        $park_model = $this->findModel($id);
-        $model = new ParkForm($park_model);
+        $safari_park_model = $this->findModel($id);
+        $model = new SafariParkForm($safari_park_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->park_model->save()) {
-                        $vehicles = $model->vehicle_id;
-                        if ($vehicles) {
-                            ParkVehicle::updateAll(['status' => 2], ['park_id' => $id]);
-                            foreach ($vehicles as $vehicle) {
-                                $parkVehicle = new ParkVehicle();
-                                $parkVehicle->park_id = $model->park_model->id;
-                                $parkVehicle->vehicle_id = $vehicle;
-                                $parkVehicle->save(false);
+                    if ($model->safari_park_model->save()) {
+                        $safarivehicles = $model->vehicle_id;
+                        if ($safarivehicles) {
+                            SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            foreach ($safarivehicles as $safarivehicle) {
+                                $safariparkVehicle = new SafariParkVehicle();
+                                $safariparkVehicle->safari_park_id = $model->safari_park_model->id;
+                                $safariparkVehicle->vehicle_id = $safarivehicle;
+                                $safariparkVehicle->save(false);
                             }
                         }
 
                         $animals = $model->master_animal_id;
                         if ($animals) {
-                            ParkAnimal::updateAll(['status' => 2], ['park_id' => $id]);
+                            SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $id]);
                             foreach ($animals as $animal) {
-                                $parkAnimal = new ParkAnimal();
-                                $parkAnimal->park_id = $model->park_model->id;
-                                $parkAnimal->master_animal_id = $animal;
-                                $parkAnimal->save(false);
+                                $safariparkAnimal = new SafariParkAnimal();
+                                $safariparkAnimal->safari_park_id = $model->safari_park_model->id;
+                                $safariparkAnimal->master_animal_id = $animal;
+                                $safariparkAnimal->save(false);
                             }
                         }
 
                         $bonusexperience = $model->master_bonus_experience_id;
                         if ($bonusexperience) {
-                            ParkBonusExperience::updateAll(['status' => 2], ['park_id' => $id]);
+                            SafariParkBonusExperience::updateAll(['status' => 2], ['safari_park_id' => $id]);
                             foreach ($bonusexperience as $bonus) {
-                                $parkBonus = new ParkBonusExperience();
-                                $parkBonus->park_id = $model->park_model->id;
-                                $parkBonus->master_bonus_experience_id = $bonus;
-                                $parkBonus->save(false);
+                                $safariparkBonus = new SafariParkBonusExperience();
+                                $safariparkBonus->safari_park_id = $model->safari_park_model->id;
+                                $safariparkBonus->master_bonus_experience_id = $bonus;
+                                $safariparkBonus->save(false);
                             }
                         }
 
@@ -142,7 +142,7 @@ class DefaultController extends Controller
                 }
             }
         } else {
-            $model->park_model->loadDefaultValues();
+            $model->safari_park_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -158,7 +158,7 @@ class DefaultController extends Controller
         //     'model' => $model,
         // ]);
 
-        $searchModel = new ParkGallerySearch();
+        $searchModel = new SafariParkGallerySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('view', [
@@ -172,7 +172,7 @@ class DefaultController extends Controller
     public function actionParkfromfile()
     {
 
-        $model = new ParkForm();
+        $model = new SafariParkForm();
         $model->scenario = 'uploadfile';
         if ($model->load(Yii::$app->request->post())) {
             $uploadedfile = UploadedFile::getInstance($model, 'uploadfile');
@@ -202,16 +202,15 @@ class DefaultController extends Controller
                 if (!empty($csv)) {
                     $countsuccess = 0;
                     foreach (array_slice($csv, 1) as $key => $value) {
-                        $model = new ParkForm();
+                        $model = new SafariParkForm();
                         $model->scenario = 'create';
-                        $model->park_model->title = $value[0];
-                        $model->park_model->slug = $value[1];
-                        $model->park_model->park_type_id = $value[2];
-                        $model->park_model->status = 1;
-                        $model->park_model->save(false);
+                        $model->safari_park_model->title = $value[0];
+                        $model->safari_park_model->slug = $value[1];
+                        $model->safari_park_model->status = 1;
+                        $model->safari_park_model->save(false);
                     }
                     \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' park Successfully Imported');
-                    return $this->redirect(['/park']);
+                    return $this->redirect(['/park/safari/default/index']);
                 }
             }
         }
@@ -226,26 +225,26 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
-        $parkVehicle = ParkVehicle::findAll(['park_id' => $model->id]);
-        if (!empty($parkVehicle)) {
-            // ParkVehicle::deleteAll(['park_id' => $model->id]);
-            foreach ($parkVehicle as $vehicle) {
-                $vehicle->status = StatusInterface::STATUS_DELETE;
-                $vehicle->save();
+        $safariparkVehicle = SafariParkVehicle::findAll(['safari_park_id' => $model->id]);
+        if (!empty($safariparkVehicle)) {
+            // ParkVehicle::deleteAll(['safari_park_id' => $model->id]);
+            foreach ($safariparkVehicle as $safarivehicle) {
+                $safarivehicle->status = StatusInterface::STATUS_DELETE;
+                $safarivehicle->save();
             }
         }
 
-        $parkAnimal = ParkAnimal::findAll(['park_id' => $model->id]);
-        if (!empty($parkAnimal)) {
-            foreach ($parkAnimal as $animal) {
+        $safariparkAnimal = SafariParkAnimal::findAll(['safari_park_id' => $model->id]);
+        if (!empty($safariparkAnimal)) {
+            foreach ($safariparkAnimal as $animal) {
                 $animal->status = StatusInterface::STATUS_DELETE;
                 $animal->save();
             }
         }
 
-        $parkBonus = ParkBonusExperience::findAll(['park_id' => $model->id]);
-        if (!empty($parkBonus)) {
-            foreach ($parkBonus as $bonus) {
+        $safariparkBonus = SafariParkBonusExperience::findAll(['safari_park_id' => $model->id]);
+        if (!empty($safariparkBonus)) {
+            foreach ($safariparkBonus as $bonus) {
                 $bonus->status = StatusInterface::STATUS_DELETE;
                 $bonus->save();
             }
@@ -260,7 +259,7 @@ class DefaultController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Park::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = SafariPark::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
