@@ -112265,9 +112265,26 @@ a.text-dark:focus {
   background-color: #09422D !important;
   border-color:#09422D !important ;
 }
+
 .breadcrumb-header {
+
   margin-top: 86px;
 }
+.alert{
+
+  z-index: 10000;
+}
+.alert ~ .breadcrumb-header{
+
+  margin-top: 0px !important;
+}
+.alert .btn-close{
+
+  top: 7px !important;
+  right: 6px !important;
+}
+ 
+
 
  
 
@@ -112280,4 +112297,11 @@ a.text-dark:focus {
   border-color:#09422D !important ;
   color:#fff !important;
 }
+/* .main-container .alert-success {
+
+  position: absolute;
+    top: 6%;
+    left: 50%;
+    transform: translateX(-50%);
+} */
 /*# sourceMappingURL=style.css.map */

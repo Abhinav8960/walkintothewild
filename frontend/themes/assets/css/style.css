@@ -245,14 +245,14 @@ a {
     padding: 5px 20px;
     height: 70px;
     margin-left: 32px;
-    border-radius: 0px 0px 10px 10px;
+    /* border-radius: 0px 0px 10px 10px; */
     color: var(--colorBlack);
     text-decoration: none;
 }
 
 .sahreSafari.active {
 
-    background-color: var(--background-yellow);
+    background-color:#A2D22B;
 }
 
 .sahreSafari h5 {

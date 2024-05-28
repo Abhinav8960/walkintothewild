@@ -19,7 +19,9 @@ use common\models\meta\MetaLocation;
 use common\models\meta\MetaOperatorCategory;
 use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\meta\MetaPackageRange;
+use common\models\park\BirdingPark;
 use common\models\park\Park;
+use common\models\park\SafariPark;
 use frontend\models\registration\BirdingOperatorRequest;
 use frontend\models\registration\BirdingOperatorRequestPark;
 use frontend\models\registration\SafariOperatorRequestActivities;
@@ -135,7 +137,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
-
+    /**
+     * Get Panel Option List
+     *
+     * @return void
+     */
+    public static function paneloption()
+    {
+        return [1 => 'Backend', 2 => 'Frontend'];
+    }
 
     public static function stateoption()
     {
@@ -208,8 +218,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function birdingparkoption()
     {
-        $query = Park::find()
-            ->where(['status' => Park::STATUS_ACTIVE, 'park_type_id' => 2])
+        $query = BirdingPark::find()
+            ->where(['status' => Park::STATUS_ACTIVE])
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
@@ -225,8 +235,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function safariparkoption()
     {
 
-        $query = Park::find()
-            ->where(['status' => Park::STATUS_ACTIVE, 'park_type_id' => 1])
+        $query = SafariPark::find()
+            ->where(['status' => Park::STATUS_ACTIVE])
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 

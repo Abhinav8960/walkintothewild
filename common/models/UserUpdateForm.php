@@ -21,7 +21,7 @@ class UserUpdateForm extends Model
     public $is_safari_operator;
     public $is_birding_operator;
     public $is_cms_manager;
-    public $is_resort;
+    public $is_resort_manager;
     public $role_id;
 
     // 1 => 'Administrator',
@@ -62,10 +62,9 @@ class UserUpdateForm extends Model
             if ($this->user_model->is_cms_manager == 1) {
                 $this->role_id[] = 5;
             }
-            if ($this->user_model->is_resort == 1) {
+            if ($this->user_model->is_resort_manager == 1) {
                 $this->role_id[] = 6;
             }
-
         }
     }
 
@@ -76,7 +75,7 @@ class UserUpdateForm extends Model
         return [
             [['role_id'], 'required'],
             ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'match', 'pattern' => '/^[a-zA-Z0-9]\w+$/'],
+            ['username', 'email'],
             ['username', 'required'],
             //name rules
             ['name', 'required'],
@@ -93,7 +92,7 @@ class UserUpdateForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort'], 'safe'],
+            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager'], 'safe'],
             [
                 'email', 'unique',
                 'when' => function ($model, $attribute) {
@@ -137,30 +136,30 @@ class UserUpdateForm extends Model
         $this->user_model->is_safari_operator = 0;
         $this->user_model->is_birding_operator = 0;
         $this->user_model->is_cms_manager = 0;
-        $this->user_model->is_resort = 0;
+        $this->user_model->is_resort_manager = 0;
         $this->user_model->save(false);
 
-        if($this->role_id){
-            foreach($this->role_id as $role){
-                if($role==1){
+        if ($this->role_id) {
+            foreach ($this->role_id as $role) {
+                if ($role == 1) {
                     $this->user_model->is_adminstrator = 1;
                 }
 
-                if($role==2){
+                if ($role == 2) {
                     $this->user_model->is_admin = 1;
                 }
 
-                if($role==3){
+                if ($role == 3) {
                     $this->user_model->is_safari_operator = 1;
                 }
-                if($role==4){
+                if ($role == 4) {
                     $this->user_model->is_birding_operator = 1;
                 }
-                if($role==5){
+                if ($role == 5) {
                     $this->user_model->is_cms_manager = 1;
                 }
-                if($role==6){
-                    $this->user_model->is_resort = 1;
+                if ($role == 6) {
+                    $this->user_model->is_resort_manager = 1;
                 }
             }
         }

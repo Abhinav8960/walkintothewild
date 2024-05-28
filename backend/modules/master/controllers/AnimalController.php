@@ -100,7 +100,7 @@ class AnimalController extends Controller
     }
 
 
-    
+
     public function actionView($id)
     {
         $model = $this->findModel($id);

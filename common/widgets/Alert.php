@@ -38,12 +38,15 @@ class Alert extends \yii\bootstrap5\Widget
         'info'    => 'alert-info',
         'warning' => 'alert-warning'
     ];
+
     /**
      * @var array the options for rendering the close button tag.
      * Array will be passed to [[\yii\bootstrap\Alert::closeButton]].
      */
-    public $closeButton = [];
-
+    public $closeButton = [
+        'label' => '<i class="bi bi-x"></i>',
+        'encode' => false,
+    ];
 
     /**
      * {@inheritdoc}
@@ -62,7 +65,9 @@ class Alert extends \yii\bootstrap5\Widget
             foreach ((array) $flash as $i => $message) {
                 echo \yii\bootstrap5\Alert::widget([
                     'body' => $message,
-                    'closeButton' => $this->closeButton,
+                    'closeButton' => array_merge($this->closeButton, [
+                        'label' => '<i class="bi bi-x"></i>',
+                    ]),
                     'options' => array_merge($this->options, [
                         'id' => $this->getId() . '-' . $type . '-' . $i,
                         'class' => $this->alertTypes[$type] . $appendClass,
