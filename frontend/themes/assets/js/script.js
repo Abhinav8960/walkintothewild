@@ -125,38 +125,26 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const textarea = document.getElementById('safaritourregistrationform-about_business');
     const wordCount = document.getElementById('wordCount');
     const maxLength = 500; // Maximum allowed words
 
     function updateWordCount() {
-        const words = textarea.value.trim().split(/\s+/).length;
-        wordCount.textContent = `${words}/${maxLength}`;
+        const wordsArray = textarea.value.trim().split(/\s+/);
+        const wordsLength = wordsArray.filter(word => word).length; // Filter out any empty strings
 
-        if (words > maxLength) {
+        if (wordsLength > maxLength) {
+            wordCount.textContent = `${maxLength}/${maxLength}`;
             wordCount.style.color = 'red'; // Set color to red if words exceed the limit
-            // Trim the textarea value to the maximum length
-            textarea.value = trimTextToWordCount(textarea.value, maxLength);
         } else {
+            wordCount.textContent = `${wordsLength}/${maxLength}`;
             wordCount.style.color = ''; // Reset color if words are within the limit
         }
     }
 
-    function trimTextToWordCount(text, maxWords) {
-        const wordsArray = text.trim().split(/\s+/);
-        // Join only the first 'maxWords' words
-        return wordsArray.slice(0, maxWords).join(' ');
-    }
-
-    textarea.addEventListener('input', function (event) {
-        const words = event.target.value.trim().split(/\s+/).length;
-        if (words > maxLength) {
-            // Prevent further input if word count exceeds the limit
-            event.preventDefault();
-        } else {
-            updateWordCount();
-        }
+    textarea.addEventListener('input', function(event) {
+        updateWordCount();
     });
 
     updateWordCount(); // Call the function initially to ensure the count is displayed correctly
@@ -165,38 +153,26 @@ document.addEventListener("DOMContentLoaded", function () {
     wordCount.textContent = `0/${maxLength}`;
 });
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     const textarea = document.getElementById('birdingtourregistrationform-about_business');
     const wordCount = document.getElementById('wordCount');
     const maxLength = 500; // Maximum allowed words
 
     function updateWordCount() {
-        const words = textarea.value.trim().split(/\s+/).length;
-        wordCount.textContent = `${words}/${maxLength}`;
+        const wordsArray = textarea.value.trim().split(/\s+/);
+        const wordsLength = wordsArray.filter(word => word).length; // Filter out any empty strings
 
-        if (words > maxLength) {
+        if (wordsLength > maxLength) {
+            wordCount.textContent = `${maxLength}/${maxLength}`;
             wordCount.style.color = 'red'; // Set color to red if words exceed the limit
-            // Trim the textarea value to the maximum length
-            textarea.value = trimTextToWordCount(textarea.value, maxLength);
         } else {
+            wordCount.textContent = `${wordsLength}/${maxLength}`;
             wordCount.style.color = ''; // Reset color if words are within the limit
         }
     }
 
-    function trimTextToWordCount(text, maxWords) {
-        const wordsArray = text.trim().split(/\s+/);
-        // Join only the first 'maxWords' words
-        return wordsArray.slice(0, maxWords).join(' ');
-    }
-
-    textarea.addEventListener('input', function (event) {
-        const words = event.target.value.trim().split(/\s+/).length;
-        if (words > maxLength) {
-            // Prevent further input if word count exceeds the limit
-            event.preventDefault();
-        } else {
-            updateWordCount();
-        }
+    textarea.addEventListener('input', function(event) {
+        updateWordCount();
     });
 
     updateWordCount(); // Call the function initially to ensure the count is displayed correctly
