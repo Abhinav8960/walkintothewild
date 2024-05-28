@@ -21,7 +21,7 @@ class UserRegistrationForm extends Model
     public $is_safari_operator;
     public $is_birding_operator;
     public $is_cms_manager;
-    public $is_resort;
+    public $is_resort_manager;
 
     public function __construct(User $user_model = null)
     {
@@ -50,7 +50,7 @@ class UserRegistrationForm extends Model
             ['username', 'string', 'min' => 3, 'max' => 20],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
-            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort'], 'safe'],
+            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager'], 'safe'],
             ['email', 'email'],
             [
                 'email', 'unique', 'targetClass' => 'common\models\User',
@@ -88,49 +88,49 @@ class UserRegistrationForm extends Model
             $this->user_model->is_safari_operator = 1;
             $this->user_model->is_birding_operator = 1;
             $this->user_model->is_cms_manager = 1;
-            $this->user_model->is_resort = 1;
+            $this->user_model->is_resort_manager = 1;
         } else if (in_array(1, $this->role_id) && in_array(2, $this->role_id) && in_array(3, $this->role_id) && in_array(4, $this->role_id) && in_array(5, $this->role_id)) {
             $this->user_model->is_adminstrator = 1;
             $this->user_model->is_admin = 1;
             $this->user_model->is_safari_operator = 1;
             $this->user_model->is_birding_operator = 1;
             $this->user_model->is_cms_manager = 1;
-            $this->user_model->is_resort = 0;
+            $this->user_model->is_resort_manager = 0;
         } else if (in_array(1, $this->role_id) && in_array(2, $this->role_id) && in_array(3, $this->role_id) && in_array(4, $this->role_id)) {
             $this->user_model->is_adminstrator = 1;
             $this->user_model->is_admin = 1;
             $this->user_model->is_safari_operator = 1;
             $this->user_model->is_birding_operator = 1;
             $this->user_model->is_cms_manager = 0;
-            $this->user_model->is_resort = 0;
+            $this->user_model->is_resort_manager = 0;
         } else if (in_array(1, $this->role_id) && in_array(2, $this->role_id) && in_array(3, $this->role_id)) {
             $this->user_model->is_adminstrator = 1;
             $this->user_model->is_admin = 1;
             $this->user_model->is_safari_operator = 1;
             $this->user_model->is_birding_operator = 0;
             $this->user_model->is_cms_manager = 0;
-            $this->user_model->is_resort = 0;
+            $this->user_model->is_resort_manager = 0;
         } else if (in_array(1, $this->role_id) && in_array(2, $this->role_id)) {
             $this->user_model->is_adminstrator = 1;
             $this->user_model->is_admin = 1;
             $this->user_model->is_safari_operator = 0;
             $this->user_model->is_birding_operator = 0;
             $this->user_model->is_cms_manager = 0;
-            $this->user_model->is_resort = 0;
+            $this->user_model->is_resort_manager = 0;
         } else if (in_array(1, $this->role_id)) {
             $this->user_model->is_adminstrator = 1;
             $this->user_model->is_admin = 0;
             $this->user_model->is_safari_operator = 0;
             $this->user_model->is_birding_operator = 0;
             $this->user_model->is_cms_manager = 0;
-            $this->user_model->is_resort = 0;
+            $this->user_model->is_resort_manager = 0;
         }else{
             $this->user_model->is_adminstrator = 0;
             $this->user_model->is_admin = 0;
             $this->user_model->is_safari_operator = 0;
             $this->user_model->is_birding_operator = 0;
             $this->user_model->is_cms_manager = 0;
-            $this->user_model->is_resort = 0;
+            $this->user_model->is_resort_manager = 0;
         }
         $this->user_model->auth_key = \Yii::$app->security->generateRandomString();
         $this->user_model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($this->password);
