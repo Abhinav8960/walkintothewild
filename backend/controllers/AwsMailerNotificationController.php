@@ -23,13 +23,13 @@ class AwsMailerNotificationController extends Controller
     public function actionIndex()
     {
         // die('tyui');
-        $request = file_get_contents('php://input'); 
-        // $request = Yii::$app->request->getRawBody(); 
-        $jsonfile= '@backend/web/assets/sns.php';
-        $fp = fopen($jsonfile, 'w+');
-        fwrite($fp, $request);
-        fclose($fp);
-        exit;
+        // $request = file_get_contents('php://input'); 
+        // // $request = Yii::$app->request->getRawBody(); 
+        // $jsonfile= '@backend/web/assets/sns.php';
+        // $fp = fopen($jsonfile, 'w+');
+        // fwrite($fp, $request);
+        // fclose($fp);
+        // exit;
         // $request =  '{"notificationType":"Delivery","mail":{"timestamp":"2023-09-05T08:01:05.508Z","source":"support@triline.in","sourceArn":"arn:aws:ses:ap-south-1:548108762076:identity/support@triline.in","sourceIp":"180.151.20.127","callerIdentity":"inhouse-app-ses-smtp-user.20230821-130925","sendingAccountId":"548108762076","messageId":"0109018a645bffe4-d214d5e4-1dc3-4bfc-91e2-63e4bc82aa98-000000","destination":["mranurag101@gmail.com"],"headersTruncated":false,"headers":[{"name":"From","value":"support@triline.in"},{"name":"To","value":"mranurag101@gmail.com"},{"name":"Subject","value":"Leave Application"},{"name":"MIME-Version","value":"1.0"},{"name":"Content-Type","value":"multipart/alternative;  boundary=\"----=_Part_4225662_872001774.1693900865514\""}],"commonHeaders":{"from":["support@triline.in"],"to":["mranurag101@gmail.com"],"subject":"Leave Application"}},"delivery":{"timestamp":"2023-09-05T08:01:07.467Z","processingTimeMillis":1959,"recipients":["mranurag101@gmail.com"],"smtpResponse":"250 2.0.0 OK  1693900867 r36-20020a635164000000b0056fbf85c743si8976579pgl.790 - gsmtp","remoteMtaIp":"74.125.24.26","reportingMTA":"c180-15.smtp-out.ap-south-1.amazonses.com"}}';+
         $request = file_get_contents('php://input');
 
