@@ -149,7 +149,10 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [],
+            'rules' => [
+
+                '/aws-mailer-notification' => '/aws-mailer-notification/index'
+            ],
         ],
 
     ],

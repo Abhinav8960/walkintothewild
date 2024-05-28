@@ -112,7 +112,7 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         $template = MasterMailTemplate::find()->where(['code' => $mail_template_id, 'status' => 1])->limit(1)->one();
         if ($template) {
-            $mail_from = 'no-reply.spider@triline.in';
+            $mail_from = 'no-reply@walkintothewild.in';
             $log = new self();
             // $log->mail_to = $mail_to;
             // $log->mail_from = $mail_from;
@@ -177,7 +177,7 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
                 $mailer =  \Yii::$app->mailer;
                 $message = $mailer->compose($template->path, json_decode($log->params, true))
                     // ->setFrom($log->mail_from)
-                    ->setFrom('no-reply.spider@triline.in')
+                    ->setFrom('no-reply@walkintothewild.in')
                     ->setTo($log->torecipient->recipient)
                     ->setBcc($bcc)
                     ->setCc($cc)
