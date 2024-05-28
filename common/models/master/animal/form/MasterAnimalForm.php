@@ -59,7 +59,7 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name', 'short_description', 'animal_type_id', 'image'], 'required'],
+            [['name', 'short_description', 'animal_type_id'], 'required'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 125],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
