@@ -10,28 +10,19 @@ use yii\bootstrap5\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-<h5>Basic Detail</h5>
+<h5>FAQ Category</h5>
 <div class="row">
     <div class="col-md-6">
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Module Title']) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Category Name']) ?>
     </div>
 
-    
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'description')->widget(CKEditor::className(), [
-            'options' => ['rows' => 4],
-            'preset' => 'full',
-
-        ]) ?>
-    </div>
 </div>
 
 
 
 
 
-<?php if ($model->privacypolicy_model->id) { ?>
+<?php if ($model->faq_model->id) { ?>
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
     </div>
