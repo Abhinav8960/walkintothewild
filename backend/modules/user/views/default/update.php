@@ -4,8 +4,12 @@ use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'List of Users : Update User (' . $user->username . ')';
 
+$this->title = 'List of Users : Update User (' . $user->username . ')';
+$this->params['breadcrumbs_home_url'] = '/user/default/index';
+$this->params['breadcrumbs'][] =  ['label' => 'User', 'url' => '#'];
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 <div class="row">
     <div class="col-md-12">
@@ -46,7 +50,7 @@ $this->title = 'List of Users : Update User (' . $user->username . ')';
                             <span class="btn btn-info p-2 mt-4 toggle-password" title="View Password" data-bs-toggle="tooltip"><i class="fa fa-eye"></i></span>
                         </div>
                     </div>
-                    
+
 
 
                     <div class="col-md-4 select_width">
@@ -85,9 +89,10 @@ $this->registerJs($js);
     .field-userregistrationform-password {
         width: 100%;
     }
+
     .select_width .select2.select2-container {
 
-width: 100% !important;
-display: block !important;
-}
+        width: 100% !important;
+        display: block !important;
+    }
 </style>
