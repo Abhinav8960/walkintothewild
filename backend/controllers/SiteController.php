@@ -127,22 +127,30 @@ class SiteController extends Controller
     }
 
 
-    public function actionError() {
+    public function actionError()
+    {
         $exception = Yii::$app->errorHandler->exception;
+        // if ($exception !== null) {
+        //     var_dump($exception); // Output the exception object for debugging
+        // }
+        // echo "<pre>";
+        // print_r($exception);
+        // die();
         // error log reporting
-        $request = Yii::$app->request; 
-        $user_session_id=Yii::$app->user->id;
-        $error_type=$exception->statusCode;
-        $error_msg=$exception->getMessage();
-        $pathInfo=$request->pathInfo;
-        $source=$request->userAgent;
-        $request_url=$request->absoluteUrl;
-        $reference_url=$request->referrer;
-        $method=$request->getMethod();
-        $ip_address=$request->getRemoteIP();
+        $request = Yii::$app->request;
+        $user_session_id = Yii::$app->user->id;
+        $error_type = $exception->statusCode;
+        $error_msg = $exception->getMessage();
+        $pathInfo = $request->pathInfo;
+        $source = $request->userAgent;
+        $request_url = $request->absoluteUrl;
+        $reference_url = $request->referrer;
+        $method = $request->getMethod();
+        $ip_address = $request->getRemoteIP();
         $error_model = new ErrorLogForm();
         $error_model->scenario = 'create';
         $error_model->errorlog->setAttributes([
+            'panel_type_id'         => 1,
             'error_type'            => $error_type,
             'request_url'           => $request_url,
             'reference_url'         => $reference_url,
@@ -154,11 +162,13 @@ class SiteController extends Controller
         ]);
         $error_model->errorlog->save(false);
 
-        return $this->render('error',
-                        [
-                            'name' => $exception->getMessage() . '(#' . $exception->statusCode . ')',
-                            'message' => $exception->getMessage(),
-                            'exception' => $exception
-        ]);
+        return $this->render(
+            'error',
+            [
+                'name' => $exception->getMessage() . '(#' . $exception->statusCode . ')',
+                'message' => $exception->getMessage(),
+                'exception' => $exception
+            ]
+        );
     }
 }

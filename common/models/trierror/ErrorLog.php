@@ -7,6 +7,7 @@ use Yii;
 use yii\helpers\Json;
 use yii\web\ErrorHandler;
 use Exception;
+
 /**
  * This is the model class for table "error_report".
  *
@@ -36,11 +37,11 @@ class ErrorLog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['error_type'], 'integer'],
-            [['request_url','reference_url',], 'url'],
+            [['error_type', 'panel_type_id'], 'integer'],
+            [['request_url', 'reference_url',], 'url'],
             [['ip_address'], 'required'],
             [['request_type'], 'string', 'max' => 255],
-            [['error_msg','reference_url','user_session_id'],'safe']
+            [['error_msg', 'reference_url', 'user_session_id'], 'safe']
         ];
     }
 
@@ -60,6 +61,4 @@ class ErrorLog extends \yii\db\ActiveRecord
             'user_session_id'       => 'User Id',
         ];
     }
-
 }
-
