@@ -24,6 +24,7 @@ class AnimalController extends Controller
     public function actionIndex()
     {
         $searchModel = new MasterAnimalSearch();
+        $searchModel->status1 = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -100,7 +101,7 @@ class AnimalController extends Controller
     }
 
 
-    
+
     public function actionView($id)
     {
         $model = $this->findModel($id);
