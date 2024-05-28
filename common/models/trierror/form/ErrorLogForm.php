@@ -18,12 +18,14 @@ use common\models\trierror\ErrorLog;
  * @property string|null $request_type
  * @property string|null $error_msg
  */
-class ErrorLogForm extends Model {
+class ErrorLogForm extends Model
+{
 
     /**
      * {@inheritdoc}
      */
     public $id;
+    public $panel_type_id;
     public $error_report;
     public $request_url;
     public $reference_url;
@@ -38,9 +40,10 @@ class ErrorLogForm extends Model {
     public $cnt;
 
 
-    public function __construct($model = null) {
+    public function __construct($model = null)
+    {
         $this->errorlog = \Yii::createObject([
-                    'class' => ErrorLog::className()
+            'class' => ErrorLog::className()
         ]);
 
         $this->isNew = true;
@@ -49,6 +52,7 @@ class ErrorLogForm extends Model {
             $this->errorlog = $model;
             $this->id = $this->errorlog->id;
             $this->error_report = $this->errorlog->error_report;
+            $this->panel_type_id = $this->errorlog->panel_type_id;
             $this->request_url = $this->errorlog->request_url;
             $this->reference_url = $this->errorlog->reference_url;
             $this->ip_address = $this->errorlog->ip_address;
@@ -61,27 +65,30 @@ class ErrorLogForm extends Model {
     /**
      * {@inheritdoc}
      */
-    public function rules() {
+    public function rules()
+    {
         return [
-            [['error_type'], 'integer'],
-            [['request_url','reference_url',], 'url'],
+            [['error_type', 'panel_type_id'], 'integer'],
+            [['request_url', 'reference_url',], 'url'],
             [['ip_address'], 'required'],
             [['request_type'], 'string', 'max' => 255],
-            [['error_msg','reference_url','user_session_id','source'],'safe']
+            [['error_msg', 'reference_url', 'user_session_id', 'source'], 'safe']
         ];
     }
 
-    public function scenarios() {
+    public function scenarios()
+    {
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['error_type', 'request_url', 'reference_url', 'ip_address', 'request_type', 'error_msg','user_session_id','source'];
-        $scenarios['update'] = ['error_type', 'request_url', 'reference_url', 'ip_address', 'request_type', 'error_msg','user_session_id','source'];
+        $scenarios['create'] = ['error_type', 'panel_type_id', 'request_url', 'reference_url', 'ip_address', 'request_type', 'error_msg', 'user_session_id', 'source'];
+        $scenarios['update'] = ['error_type', 'panel_type_id', 'request_url', 'reference_url', 'ip_address', 'request_type', 'error_msg', 'user_session_id', 'source'];
         return $scenarios;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
             'error_type'            => 'Error Type',
             'request_url'           => 'Request URL',
@@ -92,5 +99,4 @@ class ErrorLogForm extends Model {
             'user_session_id'       => 'User Id',
         ];
     }
-
 }
