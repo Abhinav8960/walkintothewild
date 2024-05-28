@@ -25,18 +25,20 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NPYSHF37NV"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+    <?php if (\Yii::$app->params['environment'] == "production") { ?>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NPYSHF37NV"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
 
-        gtag('config', 'G-NPYSHF37NV');
-    </script>
+            gtag('config', 'G-NPYSHF37NV');
+        </script>
+    <?php } ?>
 </head>
 
 <body class="d-flex flex-column ">

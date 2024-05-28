@@ -9,6 +9,7 @@ use common\widgets\Alert;
 
 NovaAppAsset::register($this);
 AppAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -22,19 +23,21 @@ AppAsset::register($this);
     <title><?= $this->title ?></title>
     <?php $this->head() ?>
 
+    <?php if (\Yii::$app->params['environment'] == "production") { ?>
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-X449945MQ2"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-X449945MQ2"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
 
-        gtag('config', 'G-X449945MQ2');
-    </script>
+            gtag('config', 'G-X449945MQ2');
+        </script>
+    <?php } ?>
     <style>
         .invalid-feedback {
             color: #dc3545;
