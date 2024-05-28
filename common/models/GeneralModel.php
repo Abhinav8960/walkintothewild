@@ -134,7 +134,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
-
+    /**
+     * Get Panel Option List
+     *
+     * @return void
+     */
+    public static function paneloption()
+    {
+        return [1 => 'Backend', 2 => 'Frontend'];
+    }
 
     public static function stateoption()
     {

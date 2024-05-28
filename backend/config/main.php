@@ -40,6 +40,9 @@ return [
         ],
         'log' => [
             'class' => 'backend\modules\log\Module',
+        ],
+        'trierror' => [
+            'class' => 'backend\modules\trierror\Module',
         ]
     ],
     'components' => [
@@ -83,7 +86,16 @@ return [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
+            'class' => 'yii\web\ErrorHandler',
+            'on ' . \yii\web\Response::EVENT_BEFORE_SEND => function ($event) {
+                // Check if the response status code is not already set
+                if ($event->sender->statusCode == null || $event->sender->statusCode == 200) {
+                    // Set the response status code to 500 (Internal Server Error)
+                    $event->sender->setStatusCode(500);
+                }
+            },
         ],
+
         // 'mailer' => [
         //     'class' => \yii\symfonymailer\Mailer::class,
         //     'viewPath' => '@app/mail',

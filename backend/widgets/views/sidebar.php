@@ -258,13 +258,16 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide <?= in_array($active_url, array(
 											"/log/default/index",
+											"/trierror",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/log/default/index",
+														"/trierror",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror")) ? "active" : "" ?>" href="/trierror">Error Log</a></li>
 						</ul>
 					</li>
 
