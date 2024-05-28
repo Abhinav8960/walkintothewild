@@ -112278,6 +112278,11 @@ a.text-dark:focus {
 
   margin-top: 0px !important;
 }
+.alert .btn-close{
+
+  top: 7px !important;
+  right: 6px !important;
+}
  
 
 
