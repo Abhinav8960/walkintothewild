@@ -5,11 +5,11 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirport $model */
 
-$this->title = 'Privacy Policy';
+$this->title = 'Terms & Conditions';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/park'];
-$this->params['breadcrumbs'][] = "Update";
-$this->params['name'] = $this->title;
+$this->params['breadcrumbs'][] = "Create";
+$this->params['type'] = $this->title;
 ?>
 
 <div class="card">

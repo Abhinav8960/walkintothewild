@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\cms\faqcategory\Faq;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
@@ -197,6 +198,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function parkoption()
     {
         return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function faqoption()
+    {
+        return ArrayHelper::map(Faq::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
 

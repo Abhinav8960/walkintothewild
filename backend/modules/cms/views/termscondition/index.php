@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Privacy Policy';
+$this->title = 'Terms & Conditions';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -28,14 +28,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    [
-                        'label' => 'Module Title',
-                        'contentOptions' => ['style' => 'width: 20%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->name) ? $model->name : '';
-                        }
-                    ],
+                    'type',
                     [
                         'label' => 'Module Description',
                         'contentOptions' => ['style' => 'width: 50%;'],
@@ -58,21 +51,27 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="/img/view.png" alt="View" width="25" height="25">
+                                ', ['view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'type' => 'View',
+                                ]);
+                            },
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
+                                    'type' => 'Update',
 
                                 ]);
                             },
-
                             'delete' => function ($url, $model) {
                                 return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
+                                    'type' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->type . '?',
                                         'method' => 'post',
                                     ],
                                 ]);
