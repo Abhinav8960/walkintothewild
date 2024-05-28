@@ -130,6 +130,7 @@ class SiteController extends Controller
     public function actionError()
     {
         $exception = Yii::$app->errorHandler->exception;
+        
         // error log reporting
         $request = Yii::$app->request;
         $user_session_id = Yii::$app->user->id;

@@ -40,6 +40,9 @@ return [
         ],
         'log' => [
             'class' => 'backend\modules\log\Module',
+        ],
+        'trierror' => [
+            'class' => 'backend\modules\trierror\Module',
         ]
     ],
     'components' => [
@@ -84,7 +87,7 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        
+
         // 'mailer' => [
         //     'class' => \yii\symfonymailer\Mailer::class,
         //     'viewPath' => '@app/mail',

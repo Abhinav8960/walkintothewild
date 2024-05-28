@@ -1,6 +1,8 @@
 <?php
 
-namespace app\modules\admin\modules\trierror;
+namespace backend\modules\trierror;
+
+use Yii;
 
 /**
  * lamp module definition class
@@ -10,18 +12,19 @@ class Module extends \yii\base\Module
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'app\modules\admin\modules\trierror\controllers';
+    public $controllerNamespace = 'backend\modules\trierror\controllers';
 
     /**
      * {@inheritdoc}
      */
     public function init()
     {
-        parent::init();
-        if (\Yii::$app->user->isGuest) {
-            header('Location:/login');
+        if (!isset(Yii::$app->user->identity)) {
+            return Yii::$app->getResponse()->redirect('/site/login')->send();
             exit;
         }
+        parent::init();
+
         // custom initialization code goes here
     }
 }
