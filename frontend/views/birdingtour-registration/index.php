@@ -137,11 +137,22 @@ $this->params['title'] = $this->title;
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
                                         <div class="mobile_width div_remove">
                                             <label for="">Phone Number <span>*</span></label>
-                                            <?= $form->field($model, 'phone_no')->textInput(['maxlength' => true, 'placeholder' => '0000000000'])->label(false) ?>
+                                            <?= $form->field($model, 'phone_no')->widget(\yii\widgets\MaskedInput::class, [
+                                                'mask' => '9999999999',
+                                                'options' => [
+                                                    'placeholder' => '0000000000',
+                                                ],
+                                            ])->label(false) ?>
                                         </div>
                                         <div class="mobile_width div_remove">
                                             <p class="mb-0 pt-xxl-0 pt-3 pb-2">This phone number will be visible to clients</p>
-                                            <?= $form->field($model, 'operator_phone_no')->textInput(['maxlength' => true, 'placeholder' => '0000000000'])->label(false) ?>
+
+                                            <?= $form->field($model, 'operator_phone_no')->widget(\yii\widgets\MaskedInput::class, [
+                                                'mask' => '9999999999',
+                                                'options' => [
+                                                    'placeholder' => '0000000000',
+                                                ],
+                                            ])->label(false) ?>
                                         </div>
                                     </div>
                                 </div>
@@ -214,7 +225,13 @@ $this->params['title'] = $this->title;
                                 <div class="formInput  mb-3">
                                     <div class="d-flex align-items-center justify-content-between div_remove slect_remove gap-3">
                                         <label for="">Google Rating</label>
-                                        <?= $form->field($model, 'google_rating')->textInput(['maxlength' => true, 'placeholder' => 'Enter', 'class' => 'text-center form-control'])->label(false) ?>
+                                        <?= $form->field($model, 'google_rating')->widget(\yii\widgets\MaskedInput::class, [
+                                            'mask' => '9.9',
+                                            'options' => [
+                                                'class' => 'form-control',
+                                                'placeholder' => 'Enter rating (e.g., 4.50)',
+                                            ],
+                                        ])->label(false) ?>
                                     </div>
 
                                 </div>
