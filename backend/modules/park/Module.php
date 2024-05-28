@@ -24,5 +24,15 @@ class Module extends \yii\base\Module
             exit;
         }
         parent::init();
+
+        $this->modules = [
+            'safari' => [
+                'class' => 'backend\modules\park\modules\safari\Module',
+            ],
+            'birding' => [
+                'class' => 'backend\modules\park\modules\birding\Module',
+            ],
+
+        ];
     }
 }
