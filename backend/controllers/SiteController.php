@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use backend\components\AuthHandler;
 use common\models\MailLog;
+use common\models\trierror\form\ErrorLogForm;
 use yii\web\Response;
 
 /**
@@ -51,9 +52,9 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
-            ],
+            // 'error' => [
+            //     'class' => \yii\web\ErrorAction::class,
+            // ],
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'onAuthSuccess'],
@@ -123,5 +124,41 @@ class SiteController extends Controller
     public function onAuthSuccess($client)
     {
         (new AuthHandler($client))->handle();
+    }
+
+
+    public function actionError() {
+        $exception = Yii::$app->errorHandler->exception;
+        // error log reporting
+        $request = Yii::$app->request; 
+        $user_session_id=Yii::$app->user->id;
+        $error_type=$exception->statusCode;
+        $error_msg=$exception->getMessage();
+        $pathInfo=$request->pathInfo;
+        $source=$request->userAgent;
+        $request_url=$request->absoluteUrl;
+        $reference_url=$request->referrer;
+        $method=$request->getMethod();
+        $ip_address=$request->getRemoteIP();
+        $error_model = new ErrorLogForm();
+        $error_model->scenario = 'create';
+        $error_model->errorlog->setAttributes([
+            'error_type'            => $error_type,
+            'request_url'           => $request_url,
+            'reference_url'         => $reference_url,
+            'ip_address'            => $ip_address,
+            'request_type'          => $method,
+            'error_msg'             => $error_msg,
+            'user_session_id'       => $user_session_id,
+            'source'                => $source,
+        ]);
+        $error_model->errorlog->save(false);
+
+        return $this->render('error',
+                        [
+                            'name' => $exception->getMessage() . '(#' . $exception->statusCode . ')',
+                            'message' => $exception->getMessage(),
+                            'exception' => $exception
+        ]);
     }
 }
