@@ -11,7 +11,7 @@ class NovaAppAsset extends AssetBundle
 {
     public $sourcePath = '@backend/themes/nova/assets/';
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $css = [
         'css/icons.css',
