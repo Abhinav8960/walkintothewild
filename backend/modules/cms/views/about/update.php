@@ -7,7 +7,8 @@ use yii\helpers\Html;
 
 $this->title = 'Park';
 $this->params['breadcrumbs_home_url'] = '/';
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/park'];
+$this->params['breadcrumbs'][] = ['label' => 'Master', 'url' => '#'];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/about'];
 $this->params['breadcrumbs'][] = "Update";
 $this->params['name'] = $this->title;
 ?>
