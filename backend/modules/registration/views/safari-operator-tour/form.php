@@ -20,6 +20,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 ]); ?>
 <div class="row">
     <div class="col-md-6">
+        <?= $form->field($model, 'logo')->fileInput() ?>
+    </div>
+    <div class="col-md-6">
         <?= $form->field($model, 'business_name')->textInput(['placeholder' => 'Search by Business Name']) ?>
     </div>
     <div class="col-md-6">
@@ -40,6 +43,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 'allowClear' => true
             ],
         ]) ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'about_business')->textarea() ?>
     </div>
     <div class="col-md-6">
         <?= $form->field($model, 'website')->textInput(['maxlength' => true, 'placeholder' => 'This website will be visible to clients']) ?>
