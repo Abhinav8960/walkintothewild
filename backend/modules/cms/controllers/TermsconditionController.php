@@ -86,16 +86,6 @@ class TermsconditionController extends Controller
         ]);
     }
 
-    public function actionDelete($id)
-    {
-        $model = $this->findModel($id);
-        $model->type = $model->id . '_' . $model->type;
-        $model->status = StatusInterface::STATUS_DELETE;
-        $model->save();
-        Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-        return $this->redirect(Yii::$app->request->referrer); // corrected Yii::$app->request
-    }
-
     protected function findModel($id)
     {
         if (($model = Termscondition::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
