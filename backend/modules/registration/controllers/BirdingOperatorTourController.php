@@ -226,7 +226,7 @@ class BirdingOperatorTourController extends Controller
             $model->birdingoperator_request_model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->render('form', [
             'model' => $model,
         ]);
     }
