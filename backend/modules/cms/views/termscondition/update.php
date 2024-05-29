@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var common\models\master\airport\MasterAirport $model */
 
 
-$this->title = 'Terms & Conditions';
+$this->title = 'TERMS & CONDITIONS';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/termscondition'];
