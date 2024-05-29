@@ -1,12 +1,11 @@
 <?php
 
-namespace frontend\models\registration\form;
+namespace common\models\registration\form;
 
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\validators\CompareValidator;
-use frontend\models\registration\BirdingOperatorRequest;
+use common\models\registration\BirdingOperatorRequest;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
@@ -133,7 +132,7 @@ class BirdingtourRegistrationForm extends model
             [['category_id', 'birding_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
             [['is_agree'], 'required', 'requiredValue' => 1, 'message' => 'You must agree to the terms and conditions.'],
             [['business_name', 'phone_no', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment'], 'required'],
-            [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'frontend\models\registration\SafariOperatorRequest', 'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
+            [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'common\models\registration\SafariOperatorRequest', 'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
             [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^[123456789]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['facebook_url', 'instagram_url', 'youtube_link'], 'url'],
             [['operator_email', 'email'], 'email'],
@@ -270,8 +269,8 @@ class BirdingtourRegistrationForm extends model
         $this->birdingoperator_request_model->operator_email                  =  $this->operator_email;
         $this->birdingoperator_request_model->is_highlighted                  =  $this->is_highlighted;
         $this->birdingoperator_request_model->status                          =  $this->status;
-        $this->birdingoperator_request_model->is_agree                          =  $this->is_agree;
-        $this->birdingoperator_request_model->registration_platform           =  2;
+        $this->birdingoperator_request_model->is_agree                        =  $this->is_agree;
+        $this->birdingoperator_request_model->registration_platform           =  1;
     }
 
 
