@@ -7,14 +7,6 @@ use yii\bootstrap5\ActiveForm;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-
-
-$this->title = 'Birding Operator Tour Registrations';
-$this->params['breadcrumbs_home_url'] = '/';
-$this->params['breadcrumbs'][] = ['label' => 'Master', 'url' => '#'];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/registration/birding-operator-tour'];
-$this->params['breadcrumbs'][] = "Create";
-$this->params['title'] = $this->title;
 ?>
 
 <?php $form = ActiveForm::begin([
