@@ -5,12 +5,11 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirport $model */
 
-$this->title = 'About';
+$this->title = 'Category Name';
 $this->params['breadcrumbs_home_url'] = '/';
-$this->params['breadcrumbs'][] = ['label' => 'CMS', 'url' => '#'];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/about'];
-$this->params['breadcrumbs'][] = "Create";
-$this->params['name'] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => 'Master', 'url' => '#'];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/faqs'];
+$this->params['breadcrumbs'][] = "Update";
 ?>
 
 <div class="card">

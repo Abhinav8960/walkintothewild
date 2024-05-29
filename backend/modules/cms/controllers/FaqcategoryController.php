@@ -3,19 +3,19 @@
 namespace backend\modules\cms\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\cms\privacypolicy\form\PrivacypolicyForm;
-use common\models\cms\privacypolicy\Privacypolicy;
-use common\models\cms\privacypolicy\PrivacypolicySearch;
+use common\models\cms\faqcategory\form\FaqForm;
+use common\models\cms\faqcategory\Faq;
+use common\models\cms\faqcategory\FaqSearch;
 
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class PrivacypolicyController extends Controller
+class FaqcategoryController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new PrivacypolicySearch();
+        $searchModel = new FaqSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -26,16 +26,14 @@ class PrivacypolicyController extends Controller
 
     public function actionCreate()
     {
-        $model = new PrivacypolicyForm();
+        $model = new FaqForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-
-
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->privacypolicy_model->save(false)) {
+                    if ($model->faq_model->save(false)) {
                         //$model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
@@ -43,7 +41,7 @@ class PrivacypolicyController extends Controller
                 }
             }
         } else {
-            $model->privacypolicy_model->loadDefaultValues();
+            $model->faq_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -53,22 +51,22 @@ class PrivacypolicyController extends Controller
 
     public function actionUpdate($id)
     {
-        $privacypolicy_model = $this->findModel($id);
-        $model = new PrivacypolicyForm($privacypolicy_model);
+        $faq_model = $this->findModel($id);
+        $model = new FaqForm($faq_model);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->privacypolicy_model->save()) {
-                        $model->privacypolicy_model->save();
+                    if ($model->faq_model->save()) {
+                        $model->faq_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->privacypolicy_model->loadDefaultValues();
+            $model->faq_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -98,7 +96,7 @@ class PrivacypolicyController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Privacypolicy::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = Faq::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

@@ -189,15 +189,15 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li class="sub-slide">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">FAQs</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu" style="display: none;">
-									<li><a class="sub-side-menu__item" href="#">FAQ Category</a></li>
-									<li><a class="sub-side-menu__item" href="#">FAQs</a></li>
+									<li><a class="sub-side-menu__item" href="/cms/faqcategory">FAQ Category</a></li>
+									<li><a class="sub-side-menu__item" href="/cms/faqs">FAQs</a></li>
 								</ul>
 							</li>
 							<li><a class="slide-item" href="#">Banners</a></li>
 							<li><a class="slide-item" href="/cms/about">About</a></li>
 							<li><a class="slide-item" href="/cms/disclaimer">Disclaimer</a></li>
-							<li><a class="slide-item" href="#">Privacy Policy</a></li>
-							<li><a class="slide-item" href="#">Team & Conditions</a></li>
+							<li><a class="slide-item" href="/cms/privacypolicy">Privacy Policy</a></li>
+							<li><a class="slide-item" href="/cms/termscondition">Team & Conditions</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>

@@ -1,37 +1,37 @@
 <?php
 
-namespace common\models\cms\privacypolicy\form;
+namespace common\models\cms\termscondition\form;
 
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\cms\privacypolicy\Privacypolicy;
+use common\models\cms\termscondition\Termscondition;
 
 /**
- * Class PrivacypolicyForm
- * @package common\models\cms\privactpolicy\form
+ * Class TermsconditionForm
+ * @package common\models\cms\termscondition\form
  *
- * Handles the creation and updating of Privacypolicy models
+ * Handles the creation and updating of Termscondition models
  */
-class PrivacypolicyForm extends Model
+class TermsconditionForm extends Model
 {
-    public $name;
+    public $type;
     public $description;
     public $status;
     public $status_option = [];
-    public $privacypolicy_model;
+    public $termscondition_model;
 
-    public function __construct(Privacypolicy $privacypolicy_model = null, $config = [])
+    public function __construct(Termscondition $termscondition_model = null, $config = [])
     {
         parent::__construct($config);
 
-        if ($privacypolicy_model === null) {
-            $this->privacypolicy_model = new Privacypolicy();
+        if ($termscondition_model === null) {
+            $this->termscondition_model = new Termscondition();
         } else {
-            $this->privacypolicy_model = $privacypolicy_model;
-            $this->name = $this->privacypolicy_model->name;
-            $this->description = $this->privacypolicy_model->description;
-            $this->status = $this->privacypolicy_model->status;
+            $this->termscondition_model = $termscondition_model;
+            $this->type = $this->termscondition_model->type;
+            $this->description = $this->termscondition_model->description;
+            $this->status = $this->termscondition_model->status;
         }
 
         $this->status_option = GeneralModel::statusOption();
@@ -43,9 +43,9 @@ class PrivacypolicyForm extends Model
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['type'], 'required'],
             [['status'], 'integer'],
-            [['name'], 'string', 'max' => 512],
+            [['type'], 'string', 'max' => 251],
             [['description'], 'string'],
             [['description'], 'validateMaxWords', 'params' => ['max' => 500]],          
             [['status'], 'default', 'value' => 1],
@@ -68,8 +68,8 @@ class PrivacypolicyForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'Name',
-            'description' => 'Description',
+            'type' => 'Type',
+            'description' => 'Module Description',
             'status' => 'Status',
         ];
     }
@@ -81,8 +81,8 @@ class PrivacypolicyForm extends Model
      */
     public function initializeForm()
     {
-        $this->privacypolicy_model->name = $this->name;
-        $this->privacypolicy_model->description = $this->description;
-        $this->privacypolicy_model->status = $this->status;
+        $this->termscondition_model->type = $this->type;
+        $this->termscondition_model->description = $this->description;
+        $this->termscondition_model->status = $this->status;
     }
 }

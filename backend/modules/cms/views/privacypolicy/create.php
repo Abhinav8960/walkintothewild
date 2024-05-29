@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirport $model */
 
-$this->title = 'About';
+$this->title = 'Privacy Policy';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/park'];
 $this->params['breadcrumbs'][] = "Create";

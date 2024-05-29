@@ -9,8 +9,9 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Privacy Policy';
-$this->params['breadcrumbs_home_url'] = '#';
+$this->title = 'FAQ';
+$this->params['breadcrumbs_home_url'] = '/cms/faqcategory';
+$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
@@ -29,19 +30,27 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Module Title',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'label' => 'Category',
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->name) ? $model->name : '';
+                            return isset($model->category_id) ? $model->category->name : '';
                         }
                     ],
                     [
-                        'label' => 'Module Description',
-                        'contentOptions' => ['style' => 'width: 50%;'],
+                        'label' => 'question',
+                        'contentOptions' => ['style' => 'width: 30%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->description) ? $model->description : '';
+                            return strip_tags($model->question);
+                        }
+                    ],
+                    [
+                        'label' => 'answer',
+                        'contentOptions' => ['style' => 'width: 40%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return strip_tags($model->answer);
                         }
                     ],
                     [
@@ -58,21 +67,21 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
+
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
+                                    'name' => 'Update',
 
                                 ]);
                             },
-
                             'delete' => function ($url, $model) {
                                 return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
+                                    'name' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->category_id . '?',
                                         'method' => 'post',
                                     ],
                                 ]);
