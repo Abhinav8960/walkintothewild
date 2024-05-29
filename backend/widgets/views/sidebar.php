@@ -199,7 +199,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item" href="/cms/about">About</a></li>
 							<li><a class="slide-item" href="/cms/disclaimer">Disclaimer</a></li>
 							<li><a class="slide-item" href="/cms/privacypolicy">Privacy Policy</a></li>
-							<li><a class="slide-item" href="/cms/termscondition">Team & Conditions</a></li>
+							<li><a class="slide-item" href="/cms/termscondition">Terms & Conditions</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
