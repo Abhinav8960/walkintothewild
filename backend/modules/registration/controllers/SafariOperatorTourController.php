@@ -13,7 +13,7 @@ use common\models\User;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
-use frontend\models\SafariOperatorRequestSearch;
+use common\models\SafariOperatorRequestSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -329,6 +329,17 @@ class SafariOperatorTourController extends Controller
         $model = $this->findModel($id);
         $model->status = 1;
         $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $model->business_name = $model->id . '_' . $model->business_name;
+        $model->status = StatusInterface::STATUS_DELETE;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
     }
 

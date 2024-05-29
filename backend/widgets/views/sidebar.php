@@ -134,6 +134,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/article-category/index",
 											"/cms/article-author/index",
 											"/cms/article-tag/index",
+											"/cms/banner",
+											"/cms/about",
+											"/cms/disclaimer",
+											"/cms/privacypolicy",
+											"/cms/termscondition"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
@@ -146,11 +151,21 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/article-category/index",
 													"/cms/article-author/index",
 													"/cms/article-tag/index",
+													"/cms/banner",
+													"/cms/about",
+													"/cms/disclaimer",
+													"/cms/privacypolicy",
+													"/cms/termscondition"
 												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/article-category/index",
 																				"/cms/article-author/index",
 																				"/cms/article-tag/index",
+																				"/cms/banner",
+																				"/cms/about",
+																				"/cms/disclaimer",
+																				"/cms/privacypolicy",
+																				"/cms/termscondition"
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -195,11 +210,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="sub-side-menu__item" href="/cms/faqs">FAQs</a></li>
 								</ul>
 							</li>
-							<li><a class="slide-item" href="#">Banners</a></li>
-							<li><a class="slide-item" href="/cms/about">About</a></li>
-							<li><a class="slide-item" href="/cms/disclaimer">Disclaimer</a></li>
-							<li><a class="slide-item" href="/cms/privacypolicy">Privacy Policy</a></li>
-							<li><a class="slide-item" href="/cms/termscondition">Terms & Conditions</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/banner")) ? "active" : "" ?>" href="#">Banners</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/about")) ? "active" : "" ?>" href="/cms/about">About</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>

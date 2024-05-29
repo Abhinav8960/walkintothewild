@@ -26,14 +26,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <?= $form->field($model, 'register_comapany_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Registered Company Name', 'data-label' => 'Registered Name']) ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::birdingoperatorcategory(), ['prompt' => 'Select Category', 'data-label' => 'Category']) ?>
+        <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category', 'data-label' => 'Category']) ?>
     </div>
     <div class="col-md-6">
         <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder' => 'Enter Address', 'data-label' => 'Address']) ?>
     </div>
     <div class="col-md-6">
         <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
-            'data' => GeneralModel::birdingparkoption(),
+            'data' => GeneralModel::safariparkoption(),
             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
             'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'data-label' => 'Parks', 'multiple' => true],
             'pluginOptions' => [
@@ -76,27 +76,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <?= $form->field($model, 'youtube_link')->textInput(['maxlength' => true, 'placeholder' => 'Youtube Profile Link']) ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'budget_segment')->widget(Select2::classname(), [
-            'data' => GeneralModel::packageoption(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Select', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]) ?>
+        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select']) ?>
     </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'has_cancellation_policy')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3 w-100', 'aria-label' => "Large select example"]) ?>
-    </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'google_rating')->widget(\yii\widgets\MaskedInput::class, [
-            'mask' => '9.9',
-            'options' => [
-                'class' => 'form-control',
-                'placeholder' => 'Enter rating (e.g., 4.50)',
-            ],
-        ]) ?>
-    </div>
+
     <div class="col-md-6">
         <?= $form->field($model, 'offers_other_wildlifeactivities')->checkboxList(
             GeneralModel::wildlifeactivities(),
@@ -107,6 +89,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
             ]
         ) ?>
     </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'budget_segment')->checkboxList(
+            GeneralModel::packageoption(),
+            [
+                'required' => true,
+                // 'separator' => '<br>',
+                'itemOptions' => ['class' => 'checkbox_design'],
+            ]
+        ) ?>
+    </div>
+</div>
+<br>
+<div class="row">
+
     <div class="col-md-6">
         <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a href="" data-bs-toggle="modal" data-bs-target="#modalsafritermsForm">terms and conditions.</a>'); ?>
     </div>

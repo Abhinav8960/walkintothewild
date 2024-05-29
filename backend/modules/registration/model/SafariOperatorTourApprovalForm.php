@@ -5,7 +5,7 @@ namespace backend\modules\registration\model;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use frontend\models\registration\SafariOperatorRequest;
+use common\models\registration\SafariOperatorRequest;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
