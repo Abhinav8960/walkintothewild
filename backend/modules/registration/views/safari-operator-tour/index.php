@@ -10,6 +10,7 @@ $this->params['breadcrumbs_home_url'] = '/registration/safari-operator-tour';
 $this->params['breadcrumbs'][] =  ['label' => 'Registration', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 
 
 ?>
