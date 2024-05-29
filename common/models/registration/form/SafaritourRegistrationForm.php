@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\registration\SafariOperatorRequest;
+use common\models\registration\SafariOperatorRequestActivities;
+use common\models\registration\SafariOperatorRequestPark;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
@@ -113,6 +115,8 @@ class SafaritourRegistrationForm extends model
             $this->status                          =  $this->safarioperator_request_model->status;
             $this->is_agree                        =  $this->safarioperator_request_model->is_agree;
             $this->registration_platform           =  $this->safarioperator_request_model->registration_platform;
+            $this->park_id                         = SafariOperatorRequestPark::find()->select('park_id')->where(['safari_operator_request_id' => $this->safarioperator_request_model->id, 'status' => 1])->column();
+            $this->offers_other_wildlifeactivities                         = SafariOperatorRequestActivities::find()->select('wildlife_activity_id')->where(['safari_operator_request_id' => $this->safarioperator_request_model->id, 'status' => 1])->column();
         }
 
         $this->status_option = GeneralModel::statusoption();

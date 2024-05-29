@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\registration\BirdingOperatorRequest;
+use common\models\registration\BirdingOperatorRequestActivities;
+use common\models\registration\BirdingOperatorRequestPark;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
@@ -114,6 +116,8 @@ class BirdingtourRegistrationForm extends model
             $this->status                          =  $this->birdingoperator_request_model->status;
             $this->is_agree                        =  $this->birdingoperator_request_model->is_agree;
             $this->registration_platform           =  $this->birdingoperator_request_model->registration_platform;
+            $this->park_id                         = BirdingOperatorRequestPark::find()->select('park_id')->where(['birding_operator_request_id' => $this->birdingoperator_request_model->id, 'status' => 1])->column();
+            $this->offers_other_wildlifeactivities                         = BirdingOperatorRequestActivities::find()->select('wildlife_activity_id')->where(['birding_operator_request_id' => $this->birdingoperator_request_model->id, 'status' => 1])->column();
         }
 
         $this->status_option = GeneralModel::statusoption();
