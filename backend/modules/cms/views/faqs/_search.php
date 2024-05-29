@@ -22,8 +22,12 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
-        <?= $form->field($model, 'category_id')->textInput(['placeholder' => 'Search by Category Name'])->label(false) ?>
+        <?= $form->field($model, 'category_id')->dropDownList(
+            $categoryList,
+            ['prompt' => 'Search by Category Name']
+        )->label(false) ?>
     </div>
+
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel::statusoption(),
