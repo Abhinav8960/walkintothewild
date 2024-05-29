@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\registration\BirdingOperatorRequest;
+use common\models\registration\BirdingOperatorRequestActivities;
+use common\models\registration\BirdingOperatorRequestPark;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
@@ -51,7 +53,7 @@ class BirdingtourRegistrationForm extends model
     public $operator_phone_no;
     public $operator_email;
     public $registration_platform;
-
+    operator_name
     public $status;
     public $status_option = [];
     public $birdingoperator_request_model;
@@ -78,42 +80,60 @@ class BirdingtourRegistrationForm extends model
 
 
 
-            $this->category_id              =  $this->birdingoperator_request_model->category_id;
-            $this->birding_operator_id              =  $this->birdingoperator_request_model->birding_operator_id;
-            $this->business_name                   =  $this->birdingoperator_request_model->business_name;
-            $this->register_comapany_name          =  $this->birdingoperator_request_model->register_comapany_name;
-            $this->address                         =  $this->birdingoperator_request_model->address;
-            $this->gst                             =  $this->birdingoperator_request_model->gst;
-            $this->logo                            =  $this->birdingoperator_request_model->logo;
-            $this->is_highlighted                  =  $this->birdingoperator_request_model->is_highlighted;
-            $this->google_rating                   =  $this->birdingoperator_request_model->google_rating;
-            $this->google_review_count             =  $this->birdingoperator_request_model->google_review_count;
-            $this->google_business_url             =  $this->birdingoperator_request_model->google_business_url;
-            $this->google_business_name            =  $this->birdingoperator_request_model->google_business_name;
-            $this->about_business                  =  $this->birdingoperator_request_model->about_business;
-            $this->facebook_url                    =  $this->birdingoperator_request_model->facebook_url;
-            $this->instagram_url                   =  $this->birdingoperator_request_model->instagram_url;
-            $this->youtube_link                    =  $this->birdingoperator_request_model->youtube_link;
-            $this->phone_no                        =  $this->birdingoperator_request_model->phone_no;
-            $this->email                           =  $this->birdingoperator_request_model->email;
-            $this->website                         =  $this->birdingoperator_request_model->website;
-            $this->is_register_company             =  $this->birdingoperator_request_model->is_register_company;
-            $this->has_a_website                   =  $this->birdingoperator_request_model->has_a_website;
-            $this->has_cancellation_policy         =  $this->birdingoperator_request_model->has_cancellation_policy;
-            $this->wildlife_photographer           =  $this->birdingoperator_request_model->wildlife_photographer;
-            $this->wildlife_influencer             =  $this->birdingoperator_request_model->wildlife_influencer;
-            $this->is_offer_premium_budget         =  $this->birdingoperator_request_model->is_offer_premium_budget;
-            $this->is_offer_standard_budget        =  $this->birdingoperator_request_model->is_offer_standard_budget;
-            $this->is_offer_economical_budget      =  $this->birdingoperator_request_model->is_offer_economical_budget;
-            $this->starting_price                  =  $this->birdingoperator_request_model->starting_price;
-            $this->is_approved                     =  $this->birdingoperator_request_model->is_approved;
-            $this->operator_name                   =  $this->birdingoperator_request_model->operator_name;
-            $this->operator_phone_no               =  $this->birdingoperator_request_model->operator_phone_no;
-            $this->operator_email                  =  $this->birdingoperator_request_model->operator_email;
-            $this->is_highlighted                  =  $this->birdingoperator_request_model->is_highlighted;
-            $this->status                          =  $this->birdingoperator_request_model->status;
-            $this->is_agree                        =  $this->birdingoperator_request_model->is_agree;
-            $this->registration_platform           =  $this->birdingoperator_request_model->registration_platform;
+            $this->category_id                                             =  $this->birdingoperator_request_model->category_id;
+            $this->birding_operator_id                                     =  $this->birdingoperator_request_model->birding_operator_id;
+            $this->business_name                                           =  $this->birdingoperator_request_model->business_name;
+            $this->register_comapany_name                                  =  $this->birdingoperator_request_model->register_comapany_name;
+            $this->address                                                 =  $this->birdingoperator_request_model->address;
+            $this->gst                                                     =  $this->birdingoperator_request_model->gst;
+            $this->logo                                                    =  $this->birdingoperator_request_model->logo;
+            $this->is_highlighted                                          =  $this->birdingoperator_request_model->is_highlighted;
+            $this->google_rating                                           =  $this->birdingoperator_request_model->google_rating;
+            $this->google_review_count                                     =  $this->birdingoperator_request_model->google_review_count;
+            $this->google_business_url                                     =  $this->birdingoperator_request_model->google_business_url;
+            $this->google_business_name                                    =  $this->birdingoperator_request_model->google_business_name;
+            $this->about_business                                          =  $this->birdingoperator_request_model->about_business;
+            $this->facebook_url                                            =  $this->birdingoperator_request_model->facebook_url;
+            $this->instagram_url                                           =  $this->birdingoperator_request_model->instagram_url;
+            $this->youtube_link                                            =  $this->birdingoperator_request_model->youtube_link;
+            $this->phone_no                                                =  $this->birdingoperator_request_model->phone_no;
+            $this->email                                                   =  $this->birdingoperator_request_model->email;
+            $this->website                                                 =  $this->birdingoperator_request_model->website;
+            $this->is_register_company                                     =  $this->birdingoperator_request_model->is_register_company;
+            $this->has_a_website                                           =  $this->birdingoperator_request_model->has_a_website;
+            $this->has_cancellation_policy                                 =  $this->birdingoperator_request_model->has_cancellation_policy;
+            $this->wildlife_photographer                                   =  $this->birdingoperator_request_model->wildlife_photographer;
+            $this->wildlife_influencer                                     =  $this->birdingoperator_request_model->wildlife_influencer;
+            $this->is_offer_premium_budget                                 =  $this->birdingoperator_request_model->is_offer_premium_budget;
+            $this->is_offer_standard_budget                                =  $this->birdingoperator_request_model->is_offer_standard_budget;
+            $this->is_offer_economical_budget                              =  $this->birdingoperator_request_model->is_offer_economical_budget;
+            $this->starting_price                                          =  $this->birdingoperator_request_model->starting_price;
+            $this->is_approved                                             =  $this->birdingoperator_request_model->is_approved;
+            $this->operator_name                                           =  $this->birdingoperator_request_model->operator_name;
+            $this->operator_phone_no                                       =  $this->birdingoperator_request_model->operator_phone_no;
+            $this->operator_email                                          =  $this->birdingoperator_request_model->operator_email;
+            $this->is_highlighted                                          =  $this->birdingoperator_request_model->is_highlighted;
+            $this->status                                                  =  $this->birdingoperator_request_model->status;
+            $this->is_agree                                                =  $this->birdingoperator_request_model->is_agree;
+            $this->registration_platform                                   =  $this->birdingoperator_request_model->registration_platform;
+            $this->park_id                                                 = BirdingOperatorRequestPark::find()->select('park_id')->where(['birding_operator_request_id' => $this->birdingoperator_request_model->id, 'status' => 1])->column();
+            $this->offers_other_wildlifeactivities                         = BirdingOperatorRequestActivities::find()->select('wildlife_activity_id')->where(['birding_operator_request_id' => $this->birdingoperator_request_model->id, 'status' => 1])->column();
+
+            if ($this->birdingoperator_request_model->is_offer_premium_budget == true && $this->birdingoperator_request_model->is_offer_standard_budget == true && $this->birdingoperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment = [1, 2, 3];
+            } else if ($this->birdingoperator_request_model->is_offer_standard_budget == true && $this->birdingoperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment = [2, 3];
+            } else if ($this->birdingoperator_request_model->is_offer_premium_budget == true && $this->birdingoperator_request_model->is_offer_standard_budget == true) {
+                $this->budget_segment = [1, 2];
+            } else if ($this->birdingoperator_request_model->is_offer_premium_budget == true && $this->birdingoperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment = [1, 3];
+            } else if ($this->birdingoperator_request_model->is_offer_premium_budget == true) {
+                $this->budget_segment[] = 1;
+            } else if ($this->birdingoperator_request_model->is_offer_standard_budget == true) {
+                $this->budget_segment[] = 2;
+            } else if ($this->birdingoperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment[] = 3;
+            }
         }
 
         $this->status_option = GeneralModel::statusoption();

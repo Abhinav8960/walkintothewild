@@ -13,7 +13,7 @@ use common\models\User;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
-use frontend\models\SafariOperatorRequestSearch;
+use common\models\SafariOperatorRequestSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
