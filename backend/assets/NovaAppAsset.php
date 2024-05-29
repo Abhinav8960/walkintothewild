@@ -57,10 +57,11 @@ class NovaAppAsset extends AssetBundle
         'js/select2.js',
         'js/themecolor.js',
         'js/custom.js',
+        'js/formcustom.js'
     ];
 
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset',
+        // 'yii\bootstrap5\BootstrapAsset',
     ];
 }

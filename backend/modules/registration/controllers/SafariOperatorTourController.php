@@ -14,6 +14,7 @@ use frontend\models\registration\SafariOperatorRequest;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
 use frontend\models\SafariOperatorRequestSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -168,8 +169,8 @@ class SafariOperatorTourController extends Controller
 
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/safaritour-registration';
-        $model->action_validate_url = '/safaritour-registration/validate';
+        $model->action_url = '/registration/safari-operator-tour/create';
+        $model->action_validate_url = '/registration/safari-operator-tour/validate';
 
         $model->referrer_url = \Yii::$app->request->referrer;
         if ($this->request->isPost) {
@@ -218,7 +219,7 @@ class SafariOperatorTourController extends Controller
             $model->safarioperator_request_model->loadDefaultValues();
         }
 
-        return $this->render('index', [
+        return $this->render('form', [
             'model' => $model,
         ]);
     }

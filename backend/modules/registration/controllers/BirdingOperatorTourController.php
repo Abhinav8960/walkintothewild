@@ -175,8 +175,8 @@ class BirdingOperatorTourController extends Controller
 
         $model = new BirdingtourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/registration/birdingtour-registration/create';
-        $model->action_validate_url = '/registration/birdingtour-registration/validate';
+        $model->action_url = '/registration/birding-operator-tour/create';
+        $model->action_validate_url = '/registration/birding-operator-tour/validate';
 
         $model->referrer_url = \Yii::$app->request->referrer;
 
@@ -226,7 +226,7 @@ class BirdingOperatorTourController extends Controller
             $model->birdingoperator_request_model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->render('form', [
             'model' => $model,
         ]);
     }
