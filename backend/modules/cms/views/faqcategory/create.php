@@ -10,7 +10,7 @@ $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/faqcategory'];
 $this->params['breadcrumbs'][] = "Create";
-$this->params['name'] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 
 <div class="card">

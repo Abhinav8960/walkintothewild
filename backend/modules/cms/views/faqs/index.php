@@ -9,19 +9,20 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'FAQ';
-$this->params['breadcrumbs_home_url'] = '/cms/faqcategory';
-$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
+
+
+
+$this->title = 'About';
+$this->params['breadcrumbs_home_url'] = '/cms/faqs';
+$this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
-
-
 ?>
 <div class="card">
 
     <div class="card-body">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php echo $this->render('_search', ['model' => $searchModel, 'categoryList' => $categoryList,]); ?>
         <div id="w1-button" class="mb-3"></div>
 
         <div class="table-responsive">
