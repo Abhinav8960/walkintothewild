@@ -16,7 +16,7 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>
     </div>
 
-    
+
 
     <div class="col-md-12">
         <?= $form->field($model, 'description')->widget(CKEditor::className(), [
@@ -25,17 +25,17 @@ use yii\bootstrap5\ActiveForm;
 
         ]) ?>
     </div>
+    <?php if ($model->about_model->id) { ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
+        </div>
+    <?php } ?>
 </div>
 
 
 
 
 
-<?php if ($model->about_model->id) { ?>
-    <div class="col-md-3">
-        <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
-    </div>
-<?php } ?>
 
 
 
