@@ -79,44 +79,60 @@ class SafaritourRegistrationForm extends model
 
 
 
-            $this->category_id              =  $this->safarioperator_request_model->category_id;
-            $this->safari_operator_id              =  $this->safarioperator_request_model->safari_operator_id;
-            $this->business_name                   =  $this->safarioperator_request_model->business_name;
-            $this->register_comapany_name          =  $this->safarioperator_request_model->register_comapany_name;
-            $this->address                         =  $this->safarioperator_request_model->address;
-            $this->gst                             =  $this->safarioperator_request_model->gst;
-            $this->logo                            =  $this->safarioperator_request_model->logo;
-            $this->is_highlighted                  =  $this->safarioperator_request_model->is_highlighted;
-            $this->google_rating                   =  $this->safarioperator_request_model->google_rating;
-            $this->google_review_count             =  $this->safarioperator_request_model->google_review_count;
-            $this->google_business_url             =  $this->safarioperator_request_model->google_business_url;
-            $this->google_business_name            =  $this->safarioperator_request_model->google_business_name;
-            $this->about_business                  =  $this->safarioperator_request_model->about_business;
-            $this->facebook_url                    =  $this->safarioperator_request_model->facebook_url;
-            $this->instagram_url                   =  $this->safarioperator_request_model->instagram_url;
-            $this->youtube_link                    =  $this->safarioperator_request_model->youtube_link;
-            $this->phone_no                        =  $this->safarioperator_request_model->phone_no;
-            $this->email                           =  $this->safarioperator_request_model->email;
-            $this->website                         =  $this->safarioperator_request_model->website;
-            $this->is_register_company             =  $this->safarioperator_request_model->is_register_company;
-            $this->has_a_website                   =  $this->safarioperator_request_model->has_a_website;
-            $this->has_cancellation_policy         =  $this->safarioperator_request_model->has_cancellation_policy;
-            $this->wildlife_photographer           =  $this->safarioperator_request_model->wildlife_photographer;
-            $this->wildlife_influencer             =  $this->safarioperator_request_model->wildlife_influencer;
-            $this->is_offer_premium_budget         =  $this->safarioperator_request_model->is_offer_premium_budget;
-            $this->is_offer_standard_budget        =  $this->safarioperator_request_model->is_offer_standard_budget;
-            $this->is_offer_economical_budget      =  $this->safarioperator_request_model->is_offer_economical_budget;
-            $this->starting_price                  =  $this->safarioperator_request_model->starting_price;
-            $this->is_approved                     =  $this->safarioperator_request_model->is_approved;
-            $this->operator_name                   =  $this->safarioperator_request_model->operator_name;
-            $this->operator_phone_no               =  $this->safarioperator_request_model->operator_phone_no;
-            $this->operator_email                  =  $this->safarioperator_request_model->operator_email;
-            $this->is_highlighted                  =  $this->safarioperator_request_model->is_highlighted;
-            $this->status                          =  $this->safarioperator_request_model->status;
-            $this->is_agree                        =  $this->safarioperator_request_model->is_agree;
-            $this->registration_platform           =  $this->safarioperator_request_model->registration_platform;
-            $this->park_id                         = SafariOperatorRequestPark::find()->select('park_id')->where(['safari_operator_request_id' => $this->safarioperator_request_model->id, 'status' => 1])->column();
-            $this->offers_other_wildlifeactivities                         = SafariOperatorRequestActivities::find()->select('wildlife_activity_id')->where(['safari_operator_request_id' => $this->safarioperator_request_model->id, 'status' => 1])->column();
+            $this->category_id                                    =  $this->safarioperator_request_model->category_id;
+            $this->safari_operator_id                             =  $this->safarioperator_request_model->safari_operator_id;
+            $this->business_name                                  =  $this->safarioperator_request_model->business_name;
+            $this->register_comapany_name                         =  $this->safarioperator_request_model->register_comapany_name;
+            $this->address                                        =  $this->safarioperator_request_model->address;
+            $this->gst                                            =  $this->safarioperator_request_model->gst;
+            $this->logo                                           =  $this->safarioperator_request_model->logo;
+            $this->is_highlighted                                 =  $this->safarioperator_request_model->is_highlighted;
+            $this->google_rating                                  =  $this->safarioperator_request_model->google_rating;
+            $this->google_review_count                            =  $this->safarioperator_request_model->google_review_count;
+            $this->google_business_url                            =  $this->safarioperator_request_model->google_business_url;
+            $this->google_business_name                           =  $this->safarioperator_request_model->google_business_name;
+            $this->about_business                                 =  $this->safarioperator_request_model->about_business;
+            $this->facebook_url                                   =  $this->safarioperator_request_model->facebook_url;
+            $this->instagram_url                                  =  $this->safarioperator_request_model->instagram_url;
+            $this->youtube_link                                   =  $this->safarioperator_request_model->youtube_link;
+            $this->phone_no                                       =  $this->safarioperator_request_model->phone_no;
+            $this->email                                          =  $this->safarioperator_request_model->email;
+            $this->website                                        =  $this->safarioperator_request_model->website;
+            $this->is_register_company                            =  $this->safarioperator_request_model->is_register_company;
+            $this->has_a_website                                  =  $this->safarioperator_request_model->has_a_website;
+            $this->has_cancellation_policy                        =  $this->safarioperator_request_model->has_cancellation_policy;
+            $this->wildlife_photographer                          =  $this->safarioperator_request_model->wildlife_photographer;
+            $this->wildlife_influencer                            =  $this->safarioperator_request_model->wildlife_influencer;
+            $this->is_offer_premium_budget                        =  $this->safarioperator_request_model->is_offer_premium_budget;
+            $this->is_offer_standard_budget                       =  $this->safarioperator_request_model->is_offer_standard_budget;
+            $this->is_offer_economical_budget                     =  $this->safarioperator_request_model->is_offer_economical_budget;
+            $this->starting_price                                 =  $this->safarioperator_request_model->starting_price;
+            $this->is_approved                                    =  $this->safarioperator_request_model->is_approved;
+            $this->operator_name                                  =  $this->safarioperator_request_model->operator_name;
+            $this->operator_phone_no                              =  $this->safarioperator_request_model->operator_phone_no;
+            $this->operator_email                                 =  $this->safarioperator_request_model->operator_email;
+            $this->is_highlighted                                 =  $this->safarioperator_request_model->is_highlighted;
+            $this->status                                         =  $this->safarioperator_request_model->status;
+            $this->is_agree                                       =  $this->safarioperator_request_model->is_agree;
+            $this->registration_platform                          =  $this->safarioperator_request_model->registration_platform;
+            $this->park_id                                        = SafariOperatorRequestPark::find()->select('park_id')->where(['safari_operator_request_id' => $this->safarioperator_request_model->id, 'status' => 1])->column();
+            $this->offers_other_wildlifeactivities                = SafariOperatorRequestActivities::find()->select('wildlife_activity_id')->where(['safari_operator_request_id' => $this->safarioperator_request_model->id, 'status' => 1])->column();
+
+            if ($this->safarioperator_request_model->is_offer_premium_budget == true && $this->safarioperator_request_model->is_offer_standard_budget == true && $this->safarioperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment = [1, 2, 3];
+            } else if ($this->safarioperator_request_model->is_offer_standard_budget == true && $this->safarioperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment = [2, 3];
+            } else if ($this->safarioperator_request_model->is_offer_premium_budget == true && $this->safarioperator_request_model->is_offer_standard_budget == true) {
+                $this->budget_segment = [1, 2];
+            } else if ($this->safarioperator_request_model->is_offer_premium_budget == true && $this->safarioperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment = [1, 3];
+            } else if ($this->safarioperator_request_model->is_offer_premium_budget == true) {
+                $this->budget_segment[] = 1;
+            } else if ($this->safarioperator_request_model->is_offer_standard_budget == true) {
+                $this->budget_segment[] = 2;
+            } else if ($this->safarioperator_request_model->is_offer_economical_budget == true) {
+                $this->budget_segment[] = 3;
+            }
         }
 
         $this->status_option = GeneralModel::statusoption();
