@@ -12,7 +12,7 @@ use yii\grid\GridView;
 
 
 
-$this->title = 'About';
+$this->title = 'FAQ';
 $this->params['breadcrumbs_home_url'] = '/cms/faqs';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;

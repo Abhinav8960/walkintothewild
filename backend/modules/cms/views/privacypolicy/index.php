@@ -10,12 +10,14 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 
-$this->title = 'Privacy Policy';
+$this->title = 'PRIVACY POLICY';
 $this->params['breadcrumbs_home_url'] = '/cms/privacypolicy';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create','style' => 'margin-right: 20px;']);
+$this->params['buttons'][] = Html::a('Set Sequence', ['#'], ['class' => 'btn btn-orange ', '#' => '#']);
+
 ?>
 <div class="card">
 

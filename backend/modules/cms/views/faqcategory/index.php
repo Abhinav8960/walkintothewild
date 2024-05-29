@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Category Name';
+$this->title = 'FAQ CATEGORY';
 $this->params['breadcrumbs_home_url'] = '/cms/faqcategory';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
