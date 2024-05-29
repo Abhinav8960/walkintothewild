@@ -9,11 +9,12 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+
 $this->title = 'Terms & Condition';
-$this->params['breadcrumbs_home_url'] = '/master/animal';
-$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/animal'];
-$this->params['breadcrumbs'][] = 'View';
+$this->params['breadcrumbs_home_url'] = '/';
+$this->params['breadcrumbs'][] = ['label' => 'CMS', 'url' => '#'];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/termscondition'];
+$this->params['breadcrumbs'][] = "View";
 $this->params['title'] = $this->title;
 ?>
 

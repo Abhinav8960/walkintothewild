@@ -9,7 +9,7 @@ $this->title = 'About';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/about'];
-$this->params['breadcrumbs'][] = "Create";
+$this->params['breadcrumbs'][] = "Update";
 $this->params['title'] = $this->title;
 ?>
 

@@ -9,13 +9,13 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+
 $this->title = 'Privacy Policy';
-$this->params['breadcrumbs_home_url'] = '#';
+$this->params['breadcrumbs_home_url'] = '/cms/privacypolicy';
+$this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
-
-
 ?>
 <div class="card">
 
