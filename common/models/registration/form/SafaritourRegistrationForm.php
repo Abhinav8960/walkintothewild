@@ -246,7 +246,6 @@ class SafaritourRegistrationForm extends model
         $this->safarioperator_request_model->register_comapany_name          =  $this->register_comapany_name;
         $this->safarioperator_request_model->address                         =  $this->address;
         $this->safarioperator_request_model->gst                             =  $this->gst;
-        $this->safarioperator_request_model->logo                            =  $this->logo;
         $this->safarioperator_request_model->is_highlighted                  =  $this->is_highlighted;
         $this->safarioperator_request_model->google_rating                   =  $this->google_rating;
         $this->safarioperator_request_model->google_review_count             =  $this->google_review_count;

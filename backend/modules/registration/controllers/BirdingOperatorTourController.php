@@ -247,6 +247,7 @@ class BirdingOperatorTourController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->birdingoperator_request_model->save(false)) {

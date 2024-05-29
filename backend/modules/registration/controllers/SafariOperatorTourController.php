@@ -234,13 +234,14 @@ class SafariOperatorTourController extends Controller
         // die();
         $model = new SafaritourRegistrationForm($request_model);
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/registration/safari-operator-tour/update';
+        $model->action_url = '/registration/safari-operator-tour/update?id=' . $id . '';
         $model->action_validate_url = '/registration/safari-operator-tour/validate?id=' . $id . '';
 
         $model->referrer_url = \Yii::$app->request->referrer;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->safarioperator_request_model->save(false)) {
