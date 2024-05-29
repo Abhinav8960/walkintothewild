@@ -112339,19 +112339,22 @@ a.text-dark:focus {
 .select2-selection.select2-selection--multiple{
 
   height: 35px !important;
-  overflow: hidden;
+  overflow: hidden ;
   border-radius: 0.5rem;
   padding-left: 12px;
   box-shadow: none;
-  font-family: "Roboto", sans-serif !important;
+  font-family: 'Poppins', sans-serif !important;
+}
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+  overflow: visible!important;
 }
 .budgetSeg .select2-selection.select2-selection--multiple{
 
-  height: 35px!important;
+  height: 38px!important;
   overflow: hidden;
   border-radius: 0.5rem;
   box-shadow: none;
-  font-family: "Roboto", sans-serif !important;
+  font-family: 'Poppins', sans-serif !important;
 }
 .budgetSeg .select2.select2-container.select2-container--krajee-bs5.select2-container--below.select2-container--focus{
 
@@ -112366,6 +112369,10 @@ a.text-dark:focus {
 .budgetSeg .select2-container--krajee-bs5 .select2-selection--multiple .select2-selection__rendered{
 
   width: auto !important;
+}
+.select2-container--krajee-bs5 .select2-selection--multiple .select2-search--inline .select2-search__field{
+
+  font-family: 'Poppins', sans-serif !important;
 }
 /* .term-condition .form-check{
 
@@ -112532,4 +112539,15 @@ font-size: 23px;
     position: absolute;
     pointer-events: none;
     font-weight: 700;
+}
+
+.formInput .form-control, .formInput .form-select {
+  font-size: 15px;
+  padding: 8px 20px;
+  color: #212529!important;
+  opacity: 75%;
+}
+.select2-container--krajee-bs5{
+
+  display: block !important;
 }

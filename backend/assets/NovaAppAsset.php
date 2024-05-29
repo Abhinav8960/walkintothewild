@@ -11,7 +11,7 @@ class NovaAppAsset extends AssetBundle
 {
     public $sourcePath = '@backend/themes/nova/assets/';
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
     public $css = [
         'css/icons.css',
@@ -57,10 +57,11 @@ class NovaAppAsset extends AssetBundle
         'js/select2.js',
         'js/themecolor.js',
         'js/custom.js',
+        'js/formcustom.js'
     ];
 
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset',
+        // 'yii\bootstrap5\BootstrapAsset',
     ];
 }
