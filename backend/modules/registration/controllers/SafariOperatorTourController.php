@@ -10,9 +10,9 @@ use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
 use common\models\registration\form\SafaritourRegistrationForm;
 use common\models\User;
-use frontend\models\registration\SafariOperatorRequest;
-use frontend\models\registration\SafariOperatorRequestActivities;
-use frontend\models\registration\SafariOperatorRequestPark;
+use common\models\registration\SafariOperatorRequest;
+use common\models\registration\SafariOperatorRequestActivities;
+use common\models\registration\SafariOperatorRequestPark;
 use frontend\models\SafariOperatorRequestSearch;
 use Yii;
 use yii\web\Controller;
@@ -195,10 +195,10 @@ class SafariOperatorTourController extends Controller
                         $activities = $model->offers_other_wildlifeactivities;
                         if ($activities) {
                             foreach ($activities as $activity) {
-                                $safarioperatorrequestpark = new SafariOperatorRequestActivities();
-                                $safarioperatorrequestpark->safari_operator_request_id = $model->safarioperator_request_model->id;
-                                $safarioperatorrequestpark->wildlife_activity_id = $activity;
-                                $safarioperatorrequestpark->save(false);
+                                $safarioperatorrequestactivity = new SafariOperatorRequestActivities();
+                                $safarioperatorrequestactivity->safari_operator_request_id = $model->safarioperator_request_model->id;
+                                $safarioperatorrequestactivity->wildlife_activity_id = $activity;
+                                $safarioperatorrequestactivity->save(false);
                             }
                         }
 
@@ -219,14 +219,76 @@ class SafariOperatorTourController extends Controller
             $model->safarioperator_request_model->loadDefaultValues();
         }
 
-        return $this->render('form', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
 
 
 
+    public function actionUpdate($id)
+    {
+        $request_model = $this->findModel($id);
+        // echo '<pre>';
+        // print_r($request_model);
+        // die();
+        $model = new SafaritourRegistrationForm($request_model);
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->action_url = '/registration/safari-operator-tour/update';
+        $model->action_validate_url = '/registration/safari-operator-tour/validate?id=' . $id . '';
 
+        $model->referrer_url = \Yii::$app->request->referrer;
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safarioperator_request_model->save(false)) {
+                        $model->uploadFile();
+                        $parks = $model->park_id;
+                        if ($parks) {
+                            SafariOperatorRequestPark::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safarioperator_request_model->id]);
+                            foreach ($parks as $park) {
+                                $safarioperatorrequestpark = new SafariOperatorRequestPark();
+                                $safarioperatorrequestpark->safari_operator_request_id = $model->safarioperator_request_model->id;
+                                $safarioperatorrequestpark->park_id = $park;
+                                $safarioperatorrequestpark->save(false);
+                            }
+                        }
+
+
+                        $activities = $model->offers_other_wildlifeactivities;
+                        if ($activities) {
+                            SafariOperatorRequestActivities::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safarioperator_request_model->id]);
+                            foreach ($activities as $activity) {
+                                $safarioperatorrequestactivity = new SafariOperatorRequestActivities();
+                                $safarioperatorrequestactivity->safari_operator_request_id = $model->safarioperator_request_model->id;
+                                $safarioperatorrequestactivity->wildlife_activity_id = $activity;
+                                $safarioperatorrequestactivity->save(false);
+                            }
+                        }
+
+                        $to_mail = $model->safarioperator_request_model->email;
+                        // $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
+                        $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        $req = ['username' => $model->safarioperator_request_model->business_name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        //$model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Safari Operator Added Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->safarioperator_request_model->loadDefaultValues();
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * Validate 
