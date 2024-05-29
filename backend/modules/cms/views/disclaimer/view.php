@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-$this->title = 'Disclaimer';
+$this->title = 'DISCLAIMER';
 $this->params['breadcrumbs_home_url'] = '/cms/disclaimer';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/disclaimer'];
