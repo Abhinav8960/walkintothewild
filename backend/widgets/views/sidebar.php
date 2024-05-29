@@ -225,20 +225,24 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/registration/safari-operator-tour/index",
 											"/registration/safari-operator-tour/view",
 											"/registration/safari-operator-tour/create",
+											"/registration/safari-operator-tour/update",
 											"/registration/birding-operator-tour",
 											"/registration/birding-operator-tour/index",
 											"/registration/birding-operator-tour/view",
 											"/registration/birding-operator-tour/create",
+											"/registration/birding-operator-tour/update",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/registration/safari-operator-tour",
 														"/registration/safari-operator-tour/index",
 														"/registration/safari-operator-tour/view",
 														"/registration/safari-operator-tour/create",
+														"/registration/safari-operator-tour/update",
 														"/registration/birding-operator-tour",
 														"/registration/birding-operator-tour/index",
 														"/registration/birding-operator-tour/view",
 														"/registration/birding-operator-tour/create",
+														"/registration/birding-operator-tour/update",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_app-registration.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Registrations</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Registrations</a></li>
@@ -247,12 +251,14 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/registration/safari-operator-tour/index",
 															"/registration/safari-operator-tour/view",
 															"/registration/safari-operator-tour/create",
+															"/registration/safari-operator-tour/update",
 														)) ? "active" : "" ?>" href="/registration/safari-operator-tour">Safari Tour Operator</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/registration/birding-operator-tour",
 															"/registration/birding-operator-tour/index",
 															"/registration/birding-operator-tour/view",
 															"/registration/birding-operator-tour/create",
+															"/registration/birding-operator-tour/update",
 														)) ? "active" : "" ?>" href="/registration/birding-operator-tour">Birding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Article Comments</a></li>
 						</ul>
