@@ -15,8 +15,10 @@ $this->params['title'] = $this->title;
         <div id="w1-button" class="mb-3"></div>
 
         <div class="row">
+        
             <div class="col-md-12 table-responsive">
-                <table class="table table_design">
+            <table class="table table-striped table-bordered table_design">
+            
                     <thead>
                         <tr>
                             <th style="width: 5%!important;">Sr. No.</th>
