@@ -318,23 +318,6 @@ class BirdingOperatorTourController extends Controller
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Suspend Model
      *
@@ -357,6 +340,16 @@ class BirdingOperatorTourController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
+
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $model->business_name = $model->id . '_' . $model->business_name;
+        $model->status = StatusInterface::STATUS_DELETE;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
     /**
      * Finds the MasterAnimal model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
