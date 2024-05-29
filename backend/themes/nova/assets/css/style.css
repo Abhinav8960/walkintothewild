@@ -112308,3 +112308,25 @@ a.text-dark:focus {
 
 
 
+.select2-selection.select2-selection--multiple{
+
+  height: 40px !important;
+  overflow: hidden;
+  border-radius: 6px;
+  padding-left: 12px;
+  box-shadow: none;
+  font-family: 'Poppins', sans-serif !important;
+}
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+  overflow: visible!important;
+}
+
+.select2-container--krajee-bs5 .select2-selection--multiple .select2-search--inline .select2-search__field{
+
+  font-family: 'Poppins', sans-serif !important;
+}
+
+.select2-container--krajee-bs5{
+
+  display: block !important;
+}
