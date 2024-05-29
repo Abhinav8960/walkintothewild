@@ -43,6 +43,9 @@ return [
         ],
         'trierror' => [
             'class' => 'backend\modules\trierror\Module',
+        ],
+        'deploymentphase' => [
+            'class' => 'backend\modules\deploymentphase\Module',
         ]
     ],
     'components' => [
