@@ -62,7 +62,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{view}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
@@ -72,14 +72,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
 
                                 ]);
                             },
-                            'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
-                                ', ['update', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
 
-                                ]);
-                            },
 
                             'delete' => function ($url, $model) {
                                 return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [

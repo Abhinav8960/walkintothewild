@@ -62,21 +62,13 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{view}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
                                 ', ['/park/birding/profile', 'birding_park_id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
-
-                                ]);
-                            },
-                            'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
-                                ', ['update', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
 
                                 ]);
                             },
