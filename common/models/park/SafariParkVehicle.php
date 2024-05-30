@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -16,8 +17,9 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class SafariParkVehicle extends \yii\db\ActiveRecord
+class SafariParkVehicle extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -52,7 +54,6 @@ class SafariParkVehicle extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['safari_park_id', 'vehicle_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
             [['safari_park_id', 'vehicle_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['safari_park_id', 'vehicle_id'], 'unique', 'targetAttribute' => ['safari_park_id', 'vehicle_id']],
         ];

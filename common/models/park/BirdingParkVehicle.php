@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -16,8 +17,9 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class BirdingParkVehicle extends \yii\db\ActiveRecord
+class BirdingParkVehicle extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -52,9 +54,7 @@ class BirdingParkVehicle extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['birding_park_id', 'vehicle_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
             [['birding_park_id', 'vehicle_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['birding_park_id', 'vehicle_id'], 'unique', 'targetAttribute' => ['birding_park_id', 'vehicle_id']],
         ];
     }
 

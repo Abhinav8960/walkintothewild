@@ -12,44 +12,16 @@ use yii\bootstrap5\ActiveForm;
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 <h5>Basic Detail</h5>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
     </div>
 
-    <?php if ($model->safari_park_model->id) { ?>
-        <div class="col-md-6">
-            <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug']) ?>
-        </div>
-    <?php } ?>
-
-
-    <div class="col-md-6 select_width">
-        <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::vehicleoption(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Select Vehicles', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]) ?>
-    </div>
-    <div class="col-md-6">
-        <?= $form->field($model, 'avg_safari_price')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
+    <div class="col-md-4">
+        <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
     </div>
 
-    <div class="col-md-6 select_width">
-        <?= $form->field($model, 'master_animal_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::animaloption(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Select Animal', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]) ?>
-    </div>
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'short_description')->textarea() ?>
+    <div class="col-md-4">
+        <?= $form->field($model, 'logo')->fileInput() ?>
     </div>
 
     <div class="col-md-12">
@@ -59,31 +31,78 @@ use yii\bootstrap5\ActiveForm;
 
         ]) ?>
     </div>
+
+    <?php if ($model->safari_park_model->id) { ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug']) ?>
+        </div>
+    <?php } ?>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'avg_safari_price_min')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price Min'])->label('Average Safri Cost (Min)') ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'avg_safari_price_max')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price Max'])->label('Average Safri Cost (Max)') ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'official_website')->textInput(['maxlength' => true, 'placeholder' => 'Enter Offical Website']) ?>
+    </div>
+
+    <div class="col-md-3 select_width">
+        <?= $form->field($model, 'master_bonus_experience_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::bonusexperienceoption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Bonus Experience') ?>
+    </div>
+    <div class="col-md-3 select_width">
+        <?= $form->field($model, 'accomodation')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::accomodationoption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Accomodation') ?>
+    </div>
+    <div class="col-md-3 select_width">
+        <?= $form->field($model, 'safari_session')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::safarisessionoption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Safari Session') ?>
+    </div>
+    <div class="col-md-3 select_width">
+        <?= $form->field($model, 'month')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::monthoption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label('Month') ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'feature_image')->fileInput() ?>
+    </div>
 </div>
 <hr>
 
 <h5>Address</h5>
 <div class="row">
-    <div class="col-md-6">
-        <?= $form->field($model, 'country_id', ['inputOptions' => ['id' => 'country']])->dropDownList(
-            GeneralModel::countryoption(),
-            [
-                'prompt' => 'Select Country',
-                'onchange' => '
-                $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getstate?country_id=') . '"+$(this).val(), function( data ) {
-                    $( "select#state" ).html( data );
-                    $("select#city").html("<option value>Select City</option>");
-                    $("select#railway_station").html("<option value>Select Railway Station</option>");
-                    $("select#airport").html("<option value>Select Airport</option>");
-                    $("select#location").html("<option value>Select Location</option>");
-                    })'
-            ]
-        ); ?>
-    </div>
 
-    <div class="col-md-6">
+
+    <div class="col-md-3">
         <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
-            GeneralModel::getAllState($model->country_id),
+            GeneralModel::getAllState(1),
             [
                 'prompt' => 'Select State',
                 'onchange' => '
@@ -97,7 +116,7 @@ use yii\bootstrap5\ActiveForm;
         ); ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(
             GeneralModel::getAllCity($model->state_id),
             [
@@ -118,73 +137,23 @@ use yii\bootstrap5\ActiveForm;
 
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'master_location_id', ['inputOptions' => ['id' => 'location']])->dropDownList(GeneralModel::getAllLocation($model->city_id), ['prompt' => 'Select Location'])->label('Location') ?>
+    <div class="col-md-3">
+        <?= $form->field($model, 'master_location_id', ['inputOptions' => ['id' => 'location']])->dropDownList(GeneralModel::getAllLocation(), ['prompt' => 'Select Location'])->label('Location') ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'pincode')->textInput(['maxlength' => true, 'placeholder' => 'Enter Pincode']) ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'nearest_railway_station', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation($model->city_id), ['prompt' => 'Select Railway Station'])->label('Railway Station') ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Railway Station Distance']) ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'nearest_airport', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport($model->city_id), ['prompt' => 'Select Airport'])->label('Airport') ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Airport Distance']) ?>
-    </div>
-
-</div>
-<hr>
-
-<h5>Meta</h5>
-<div class="row">
-    <div class="col-md-6">
-        <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Title']) ?>
-    </div>
-
-    <div class="col-md-6">
-        <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Keywords']) ?>
-    </div>
-
-    <div class="col-md-12">
-        <?= $form->field($model, 'meta_description')->textarea() ?>
-    </div>
-</div>
-<hr>
-
-<h5>Other</h5>
-<div class="row">
-    <div class="col-md-6">
-        <?= $form->field($model, 'official_website')->textInput(['maxlength' => true, 'placeholder' => 'Enter Offical Website']) ?>
-    </div>
-
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Latitude']) ?>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
     </div>
 
-    <div class="col-md-6 select_width">
-        <?= $form->field($model, 'master_bonus_experience_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' => GeneralModel::bonusexperienceoption(),
-            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-            'options' => ['placeholder' => 'Select Animal', 'multiple' => true],
-            'pluginOptions' => [
-                'allowClear' => true
-            ],
-        ]) ?>
-    </div>
-
 </div>
-
-
+<hr>
 <?php if ($model->safari_park_model->id) { ?>
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>

@@ -6,9 +6,12 @@ use common\interfaces\StatusInterface;
 use common\models\park\form\SafariParkForm;
 use common\models\park\SafariParkBonusExperience;
 use common\models\park\SafariPark;
+use common\models\park\SafariParkAccomodation;
 use common\models\park\SafariParkAnimal;
 use common\models\park\SafariParkGallerySearch;
+use common\models\park\SafariParkMonth;
 use common\models\park\SafariParkSearch;
+use common\models\park\SafariParkSession;
 use common\models\park\SafariParkVehicle;
 use Yii;
 use yii\web\Controller;
@@ -45,26 +48,40 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->safari_park_model->save(false)) {
-                        $safarivehicles = $model->vehicle_id;
-                        if ($safarivehicles) {
-                            foreach ($safarivehicles as $safarivehicle) {
-                                $safariparkVehicle = new SafariParkVehicle();
-                                $safariparkVehicle->safari_park_id = $model->safari_park_model->id;
-                                $safariparkVehicle->vehicle_id = $safarivehicle;
-                                $safariparkVehicle->save(false);
+                        $model->uploadFile();
+                        $safariaccomodation = $model->accomodation;
+                        if ($safariaccomodation) {
+                            foreach ($safariaccomodation as $safari_accomodation) {
+                                $safariparkAccomodation = new SafariParkAccomodation();
+                                $safariparkAccomodation->safari_park_id = $model->safari_park_model->id;
+                                $safariparkAccomodation->master_accomodation_id = $safari_accomodation;
+                                $safariparkAccomodation->save(false);
                             }
                         }
 
-                        $animals = $model->master_animal_id;
-                        if ($animals) {
-                            foreach ($animals as $animal) {
-                                $safariparkAnimal = new SafariParkAnimal();
-                                $safariparkAnimal->safari_park_id = $model->safari_park_model->id;
-                                $safariparkAnimal->master_animal_id = $animal;
-                                $safariparkAnimal->save(false);
+                        $sessions = $model->safari_session;
+                        if ($sessions) {
+                            foreach ($sessions as $session) {
+                                $safariparkSession = new SafariParkSession();
+                                $safariparkSession->safari_park_id = $model->safari_park_model->id;
+                                $safariparkSession->session_id = $session;
+                                $safariparkSession->save(false);
+                            }
+                        }
+
+                        $months = $model->month;
+                        if ($months) {
+                            foreach ($months as $safari_month) {
+                                $safariparkMonth = new SafariParkMonth();
+                                $safariparkMonth->safari_park_id = $model->safari_park_model->id;
+                                $safariparkMonth->month_id = $safari_month;
+                                $safariparkMonth->save(false);
                             }
                         }
 
@@ -100,9 +117,46 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->safari_park_model->save()) {
+                        $model->uploadFile();
+                        $safariaccomodation = $model->accomodation;
+                        if ($safariaccomodation) {
+                            SafariParkAccomodation::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            foreach ($safariaccomodation as $safari_accomodation) {
+                                $safariparkAccomodation = new SafariParkAccomodation();
+                                $safariparkAccomodation->safari_park_id = $model->safari_park_model->id;
+                                $safariparkAccomodation->master_accomodation_id = $safari_accomodation;
+                                $safariparkAccomodation->save(false);
+                            }
+                        }
+
+                        $sessions = $model->safari_session;
+                        if ($sessions) {
+                            SafariParkSession::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            foreach ($sessions as $session) {
+                                $safariparkSession = new SafariParkSession();
+                                $safariparkSession->safari_park_id = $model->safari_park_model->id;
+                                $safariparkSession->session_id = $session;
+                                $safariparkSession->save(false);
+                            }
+                        }
+
+                        $months = $model->month;
+                        if ($months) {
+                            SafariParkMonth::updateAll(['status' => 2], ['safari_park_id' => $id]);
+
+                            foreach ($months as $safari_month) {
+                                $safariparkMonth = new SafariParkMonth();
+                                $safariparkMonth->safari_park_id = $model->safari_park_model->id;
+                                $safariparkMonth->month_id = $safari_month;
+                                $safariparkMonth->save(false);
+                            }
+                        }
+
                         $safarivehicles = $model->vehicle_id;
                         if ($safarivehicles) {
                             SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $id]);

@@ -10,15 +10,19 @@ use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
 use common\models\master\email\MasterMailTemplate;
 use common\models\master\location\MasterLocation;
+use common\models\master\month\MasterMonth;
 use common\models\master\operatorcategory\MasterOperatorCategory;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
+use common\models\meta\MetaAccommodation;
 use common\models\meta\MetaAnimalType;
 use common\models\meta\MetaLocation;
 use common\models\meta\MetaOperatorCategory;
 use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\meta\MetaPackageRange;
+use common\models\meta\MetaSafariSession;
+use common\models\meta\MetaZoneType;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
 use common\models\park\SafariPark;
@@ -179,6 +183,28 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MetaLocation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
+    public static function safarisessionoption()
+    {
+        return ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function accomodationoption()
+    {
+        return ArrayHelper::map(MetaAccommodation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+
+    public static function zonetypeoption()
+    {
+        return ArrayHelper::map(MetaZoneType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+    public static function monthoption()
+    {
+        return ArrayHelper::map(MasterMonth::find()->orderBy(['month' => SORT_ASC])->all(), 'month', 'month_name');
+    }
+
+
     public static function railwaystationoption()
     {
         return ArrayHelper::map(MasterRailwayStation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
@@ -249,14 +275,14 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
-    public static function getAllRailwayStation($master_city_id)
+    public static function getAllRailwayStation()
     {
-        return ArrayHelper::map(MasterRailwayStation::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterRailwayStation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
-    public static function getAllAirport($master_city_id)
+    public static function getAllAirport()
     {
-        return ArrayHelper::map(MasterAirport::find()->where(['city_id' => $master_city_id, 'status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(MasterAirport::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
     public static function getAllLocation()

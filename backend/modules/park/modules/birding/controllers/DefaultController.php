@@ -6,9 +6,12 @@ use common\interfaces\StatusInterface;
 use common\models\park\form\BirdingParkForm;
 use common\models\park\BirdingParkBonusExperience;
 use common\models\park\BirdingPark;
+use common\models\park\BirdingParkAccomodation;
 use common\models\park\BirdingParkAnimal;
 use common\models\park\BirdingParkGallerySearch;
+use common\models\park\BirdingParkMonth;
 use common\models\park\BirdingParkSearch;
+use common\models\park\BirdingParkSession;
 use common\models\park\BirdingParkVehicle;
 use Yii;
 use yii\web\Controller;
@@ -36,7 +39,6 @@ class DefaultController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
     public function actionCreate()
     {
         $model = new BirdingParkForm();
@@ -45,26 +47,40 @@ class DefaultController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->birding_park_model->save(false)) {
-                        $safarivehicles = $model->vehicle_id;
-                        if ($safarivehicles) {
-                            foreach ($safarivehicles as $safarivehicle) {
-                                $birdingparkVehicle = new BirdingParkVehicle();
-                                $birdingparkVehicle->safari_park_id = $model->birding_park_model->id;
-                                $birdingparkVehicle->vehicle_id = $safarivehicle;
-                                $birdingparkVehicle->save(false);
+                        $model->uploadFile();
+                        $birdingaccomodation = $model->accomodation;
+                        if ($birdingaccomodation) {
+                            foreach ($birdingaccomodation as $birding_accomodation) {
+                                $birdingparkAccomodation = new BirdingParkAccomodation();
+                                $birdingparkAccomodation->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkAccomodation->master_accomodation_id = $birding_accomodation;
+                                $birdingparkAccomodation->save(false);
                             }
                         }
 
-                        $animals = $model->master_animal_id;
-                        if ($animals) {
-                            foreach ($animals as $animal) {
-                                $birdingparkAnimal = new BirdingParkAnimal();
-                                $birdingparkAnimal->safari_park_id = $model->birding_park_model->id;
-                                $birdingparkAnimal->master_animal_id = $animal;
-                                $birdingparkAnimal->save(false);
+                        $sessions = $model->safari_session;
+                        if ($sessions) {
+                            foreach ($sessions as $session) {
+                                $birdingparkSession = new BirdingParkSession();
+                                $birdingparkSession->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkSession->session_id = $session;
+                                $birdingparkSession->save(false);
+                            }
+                        }
+
+                        $months = $model->month;
+                        if ($months) {
+                            foreach ($months as $birding_month) {
+                                $birdingparkMonth = new BirdingParkMonth();
+                                $birdingparkMonth->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkMonth->month_id = $birding_month;
+                                $birdingparkMonth->save(false);
                             }
                         }
 
@@ -103,13 +119,13 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->birding_park_model->save()) {
-                        $safarivehicles = $model->vehicle_id;
-                        if ($safarivehicles) {
+                        $birdingvehicles = $model->vehicle_id;
+                        if ($birdingvehicles) {
                             BirdingParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $id]);
-                            foreach ($safarivehicles as $safarivehicle) {
+                            foreach ($birdingvehicles as $birdingvehicle) {
                                 $birdingparkVehicle = new BirdingParkVehicle();
                                 $birdingparkVehicle->safari_park_id = $model->birding_park_model->id;
-                                $birdingparkVehicle->vehicle_id = $safarivehicle;
+                                $birdingparkVehicle->vehicle_id = $birdingvehicle;
                                 $birdingparkVehicle->save(false);
                             }
                         }
@@ -228,9 +244,9 @@ class DefaultController extends Controller
         $birdingparkVehicle = BirdingParkVehicle::findAll(['safari_park_id' => $model->id]);
         if (!empty($birdingparkVehicle)) {
             // ParkVehicle::deleteAll(['safari_park_id' => $model->id]);
-            foreach ($birdingparkVehicle as $safarivehicle) {
-                $safarivehicle->status = StatusInterface::STATUS_DELETE;
-                $safarivehicle->save();
+            foreach ($birdingparkVehicle as $birdingvehicle) {
+                $birdingvehicle->status = StatusInterface::STATUS_DELETE;
+                $birdingvehicle->save();
             }
         }
 

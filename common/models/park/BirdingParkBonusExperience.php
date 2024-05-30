@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -16,8 +17,9 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class BirdingParkBonusExperience extends \yii\db\ActiveRecord
+class BirdingParkBonusExperience extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */

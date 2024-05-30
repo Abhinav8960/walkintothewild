@@ -114,14 +114,33 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<li class="slide <?= in_array($active_url, array(
 											"/park/safari/default/index",
 											"/park/birding/default/index",
+											"/park/safari/profile",
+											"/park/safari/profile/gallery",
+											"/park/safari/profile/animal",
+											"/park/safari/profile/zone", "/park/safari/profile/vehicle", "/park/safari/profile/flora-fauna", "/park/safari/profile/how-to-reach", "/park/safari/profile/map"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/park/safari/default/index",
 														"/park/birding/default/index",
+														"/park/safari/profile", "/park/safari/profile/gallery",
+														"/park/safari/profile/animal",
+														"/park/safari/profile/zone",
+														"/park/safari/profile/vehicle",
+														"/park/safari/profile/flora-fauna",
+														"/park/safari/profile/how-to-reach",
+														"/park/safari/profile/map"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/park/safari/default/index")) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/park/safari/default/index", "/park/safari/profile", "/park/safari/profile/gallery",
+															"/park/safari/profile/animal",
+															"/park/safari/profile/zone",
+															"/park/safari/profile/vehicle",
+															"/park/safari/profile/flora-fauna",
+															"/park/safari/profile/how-to-reach",
+															"/park/safari/profile/map"
+														)) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/park/birding/default/index")) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li>
 						</ul>
 					</li>

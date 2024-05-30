@@ -1,0 +1,75 @@
+<?php
+
+namespace common\models\park;
+
+use common\traits\CommanRelationship;
+use Yii;
+
+/**
+ * This is the model class for table "birding_park_session".
+ *
+ * @property int $id
+ * @property int|null $birding_park_id
+ * @property int|null $session_id
+ * @property int $status
+ * @property int|null $created_at
+ * @property int|null $created_by
+ * @property int|null $updated_at
+ * @property int|null $updated_by
+ */
+class BirdingParkSession extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+{
+    use CommanRelationship;
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'birding_park_session';
+    }
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['birding_park_id', 'session_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'birding_park_id' => 'Birding Park ID',
+            'session_id' => 'Session ID',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'created_by' => 'Created By',
+            'updated_at' => 'Updated At',
+            'updated_by' => 'Updated By',
+        ];
+    }
+}

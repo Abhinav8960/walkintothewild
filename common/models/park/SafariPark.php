@@ -92,7 +92,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return [
             [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'nearest_airport_distance', 'nearest_railway_station_distance'], 'integer'],
-            [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
+            [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
             [['slug'], 'unique'],
         ];
@@ -117,7 +117,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
             'state_name' => 'State Name',
             'city_id' => 'City ID',
             'city_name' => 'City Name',
-            'avg_safari_price' => 'Avg Safari Price',
+            'avg_safari_price_min' => 'Avg Safari Price',
             'nearest_railway_station' => 'Nearest Railway Station',
             'nearest_railway_station_distance' => 'Nearest Railway Station Distance',
             'nearest_airport' => 'Nearest Airport',
@@ -160,5 +160,21 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     public function getRailwaystation()
     {
         return $this->hasOne(MasterRailwayStation::className(), ['id' => 'nearest_railway_station']);
+    }
+
+
+
+    public function getFeatureimagepath()
+    {
+        if ($this->feature_image != '') {
+            return '/storage/safaripark/' . $this->id . '/' . $this->feature_image;
+        }
+    }
+
+    public function getLogoimagepath()
+    {
+        if ($this->logo != '') {
+            return '/storage/safaripark/' . $this->id . '/' . $this->logo;
+        }
     }
 }
