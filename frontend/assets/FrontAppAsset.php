@@ -29,10 +29,13 @@ class FrontAppAsset extends AssetBundle
         'js/script.js',
         'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js'
 
+
     ];
 
     public $depends = [
         'yii\web\YiiAsset',
-        // 'yii\bootstrap5\BootstrapAsset',
+        'yii\bootstrap5\BootstrapAsset',
+        'bedezign\yii2\audit\web\JSLoggingAsset',
+
     ];
 }

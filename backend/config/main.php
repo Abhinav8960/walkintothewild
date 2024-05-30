@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'timeZone' => 'Asia/Calcutta',
-
+    
     'modules' => [
         'cms' => [
             'class' => 'backend\modules\cms\Module',
@@ -93,8 +93,9 @@ return [
             ],
         ],
         'errorHandler' => [
+            // 'class' => '\bedezign\yii2\audit\components\web\ErrorHandler',
             'errorAction' => 'site/error',
-            'class' => 'yii\web\ErrorHandler',
+            // 'class' => 'yii\web\ErrorHandler',
             'on ' . \yii\web\Response::EVENT_BEFORE_SEND => function ($event) {
                 // Check if the response status code is not already set
                 if ($event->sender->statusCode == null || $event->sender->statusCode == 200) {
