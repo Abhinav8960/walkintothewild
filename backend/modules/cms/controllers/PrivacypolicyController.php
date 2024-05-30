@@ -5,7 +5,7 @@ namespace backend\modules\cms\controllers;
 use common\interfaces\StatusInterface;
 use common\models\cms\privacypolicy\form\PrivacypolicyForm;
 use common\models\cms\privacypolicy\Privacypolicy;
-use common\models\cms\privacypolicy\form\PrivacypolicySearch;
+use common\models\cms\privacypolicy\PrivacypolicySearch;
 
 use Yii;
 use yii\web\Controller;

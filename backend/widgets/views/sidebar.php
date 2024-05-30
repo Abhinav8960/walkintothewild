@@ -106,11 +106,24 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/other-wildlife-activities")) ? "active" : "" ?>" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/animal-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/term-condition-type")) ? "active" : "" ?>" href="/meta/term-condition-type">Term & Condition Type</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/meta/accommodation")) ? "active" : "" ?>" href="/meta/accommodation">Accommodation</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/meta/safari-session")) ? "active" : "" ?>" href="/meta/safari-session">Safari Session</a></li>
 						</ul>
 					</li>
 
-					<li class="slide">
-						<a class="side-menu__item" href="/park"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span></a>
+					<li class="slide <?= in_array($active_url, array(
+											"/park/safari/default/index",
+											"/park/birding/default/index",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/park/safari/default/index",
+														"/park/birding/default/index",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/park/safari/default/index")) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/park/birding/default/index")) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li>
+						</ul>
 					</li>
 				<?php endif; ?>
 
@@ -121,6 +134,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/article-category/index",
 											"/cms/article-author/index",
 											"/cms/article-tag/index",
+											"/cms/banner",
+											"/cms/about",
+											"/cms/disclaimer",
+											"/cms/privacypolicy",
+											"/cms/termscondition"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
@@ -133,11 +151,21 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/article-category/index",
 													"/cms/article-author/index",
 													"/cms/article-tag/index",
+													"/cms/banner",
+													"/cms/about",
+													"/cms/disclaimer",
+													"/cms/privacypolicy",
+													"/cms/termscondition"
 												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/article-category/index",
 																				"/cms/article-author/index",
 																				"/cms/article-tag/index",
+																				"/cms/banner",
+																				"/cms/about",
+																				"/cms/disclaimer",
+																				"/cms/privacypolicy",
+																				"/cms/termscondition"
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -178,15 +206,15 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li class="sub-slide">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">FAQs</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu" style="display: none;">
-									<li><a class="sub-side-menu__item" href="#">FAQ Category</a></li>
-									<li><a class="sub-side-menu__item" href="#">FAQs</a></li>
+									<li><a class="sub-side-menu__item" href="/cms/faqcategory">FAQ Category</a></li>
+									<li><a class="sub-side-menu__item" href="/cms/faqs">FAQs</a></li>
 								</ul>
 							</li>
-							<li><a class="slide-item" href="#">Banners</a></li>
-							<li><a class="slide-item" href="/cms/about">About</a></li>
-							<li><a class="slide-item" href="/cms/disclaimer">Disclaimer</a></li>
-							<li><a class="slide-item" href="#">Privacy Policy</a></li>
-							<li><a class="slide-item" href="#">Team & Conditions</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/banner")) ? "active" : "" ?>" href="#">Banners</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/about")) ? "active" : "" ?>" href="/cms/about">About</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
@@ -196,17 +224,25 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/registration/safari-operator-tour",
 											"/registration/safari-operator-tour/index",
 											"/registration/safari-operator-tour/view",
+											"/registration/safari-operator-tour/create",
+											"/registration/safari-operator-tour/update",
 											"/registration/birding-operator-tour",
 											"/registration/birding-operator-tour/index",
 											"/registration/birding-operator-tour/view",
+											"/registration/birding-operator-tour/create",
+											"/registration/birding-operator-tour/update",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/registration/safari-operator-tour",
 														"/registration/safari-operator-tour/index",
 														"/registration/safari-operator-tour/view",
+														"/registration/safari-operator-tour/create",
+														"/registration/safari-operator-tour/update",
 														"/registration/birding-operator-tour",
 														"/registration/birding-operator-tour/index",
 														"/registration/birding-operator-tour/view",
+														"/registration/birding-operator-tour/create",
+														"/registration/birding-operator-tour/update",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_app-registration.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Registrations</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Registrations</a></li>
@@ -214,11 +250,15 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/registration/safari-operator-tour",
 															"/registration/safari-operator-tour/index",
 															"/registration/safari-operator-tour/view",
+															"/registration/safari-operator-tour/create",
+															"/registration/safari-operator-tour/update",
 														)) ? "active" : "" ?>" href="/registration/safari-operator-tour">Safari Tour Operator</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/registration/birding-operator-tour",
 															"/registration/birding-operator-tour/index",
 															"/registration/birding-operator-tour/view",
+															"/registration/birding-operator-tour/create",
+															"/registration/birding-operator-tour/update",
 														)) ? "active" : "" ?>" href="/registration/birding-operator-tour">Birding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Article Comments</a></li>
 						</ul>

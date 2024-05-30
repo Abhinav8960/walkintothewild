@@ -32,8 +32,8 @@ foreach ($activies as $key => $role) {
 $html_park = '';
 $park = GeneralModel::operatorresquestpark($model->safarioperator_request_approval_model->id);
 foreach ($park as $key => $role) {
-    if (isset(GeneralModel::parkoption()[$key])) {
-        $html_park .= GeneralModel::parkoption()[$key] . ', ';
+    if (isset(GeneralModel::safariparkoption()[$key])) {
+        $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
     }
 }
 ?>

@@ -5,7 +5,10 @@ use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
 $this->title = 'User: Register New User';
-
+$this->params['breadcrumbs_home_url'] = '/user/default/index';
+$this->params['breadcrumbs'][] =  ['label' => 'User', 'url' => '#'];
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['title'] = $this->title;
 ?>
 <div class="row">
     <div class="col-md-12">

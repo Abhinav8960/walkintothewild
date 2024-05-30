@@ -4,16 +4,20 @@ namespace backend\modules\registration\controllers;
 
 use backend\modules\registration\model\BirdingOperatorTourApprovalForm;
 use common\interfaces\StatusInterface;
+use common\models\MailLog;
 use common\models\operator\BirdingOperatorActivities;
 use common\models\operator\BirdingOperatorPark;
 use common\models\operator\SafariOperator;
+use common\models\registration\BirdingOperatorRequest;
+use common\models\registration\BirdingOperatorRequestActivities;
+use common\models\registration\BirdingOperatorRequestPark;
+use common\models\registration\form\BirdingtourRegistrationForm;
 use common\models\User;
 use frontend\models\BirdingOperatorRequestSearch;
-use frontend\models\registration\BirdingOperatorRequest;
-use frontend\models\registration\BirdingOperatorRequestActivities;
-use frontend\models\registration\BirdingOperatorRequestPark;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * BirdingOperatorTourController.
@@ -154,6 +158,167 @@ class BirdingOperatorTourController extends Controller
         ]);
     }
 
+
+
+
+
+
+
+
+    /**
+     * Displays Birding tour form Page.
+     *
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+
+        $model = new BirdingtourRegistrationForm();
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->action_url = '/registration/birding-operator-tour/create';
+        $model->action_validate_url = '/registration/birding-operator-tour/validate';
+
+        $model->referrer_url = \Yii::$app->request->referrer;
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->birdingoperator_request_model->save(false)) {
+                        $model->uploadFile();
+                        $parks = $model->park_id;
+                        if ($parks) {
+                            foreach ($parks as $park) {
+                                $birdingoperatorrequestpark = new BirdingOperatorRequestPark();
+                                $birdingoperatorrequestpark->birding_operator_request_id = $model->birdingoperator_request_model->id;
+                                $birdingoperatorrequestpark->park_id = $park;
+                                $birdingoperatorrequestpark->save(false);
+                            }
+                        }
+
+
+                        $activities = $model->offers_other_wildlifeactivities;
+                        if ($activities) {
+                            foreach ($activities as $activity) {
+                                $birdingoperatorrequestactivity = new BirdingOperatorRequestActivities();
+                                $birdingoperatorrequestactivity->birding_operator_request_id = $model->birdingoperator_request_model->id;
+                                $birdingoperatorrequestactivity->wildlife_activity_id = $activity;
+                                $birdingoperatorrequestactivity->save(false);
+                            }
+                        }
+
+                        $to_mail = $model->birdingoperator_request_model->email;
+                        // $subject = 'Welcome to ' . $model->birdingoperator_request_model->business_name . ' – Your Registration is Successful!';
+                        $subject = 'Birding Tour Operator Submission Received: Let`s Walk into the Wild!';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_BIRDING_OPERATOR_REGISTRATION;
+                        $req = ['username' => $model->birdingoperator_request_model->business_name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        //$model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Birding Operator Added Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->birdingoperator_request_model->loadDefaultValues();
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionUpdate($id)
+    {
+        $request_model = $this->findModel($id);
+        // echo '<pre>';
+        // print_r($request_model);
+        // die();
+        $model = new BirdingtourRegistrationForm($request_model);
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->action_url = '/registration/birding-operator-tour/update?id=' . $id . '';
+        $model->action_validate_url = '/registration/birding-operator-tour/validate?id=' . $id . '';
+
+        $model->referrer_url = \Yii::$app->request->referrer;
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->birdingoperator_request_model->save(false)) {
+                        $model->uploadFile();
+                        $parks = $model->park_id;
+                        if ($parks) {
+                            BirdingOperatorRequestPark::updateAll(['status' => 2], ['birding_operator_request_id' => $model->birdingoperator_request_model->id]);
+                            foreach ($parks as $park) {
+                                $birdingoperatorrequestpark = new BirdingOperatorRequestPark();
+                                $birdingoperatorrequestpark->birding_operator_request_id = $model->birdingoperator_request_model->id;
+                                $birdingoperatorrequestpark->park_id = $park;
+                                $birdingoperatorrequestpark->save(false);
+                            }
+                        }
+
+
+                        $activities = $model->offers_other_wildlifeactivities;
+                        if ($activities) {
+                            BirdingOperatorRequestActivities::updateAll(['status' => 2], ['birding_operator_request_id' => $model->birdingoperator_request_model->id]);
+                            foreach ($activities as $activity) {
+                                $birdingoperatorrequestactivity = new BirdingOperatorRequestActivities();
+                                $birdingoperatorrequestactivity->birding_operator_request_id = $model->birdingoperator_request_model->id;
+                                $birdingoperatorrequestactivity->wildlife_activity_id = $activity;
+                                $birdingoperatorrequestactivity->save(false);
+                            }
+                        }
+
+                        $to_mail = $model->birdingoperator_request_model->email;
+                        // $subject = 'Welcome to ' . $model->birdingoperator_request_model->business_name . ' – Your Registration is Successful!';
+                        $subject = 'Birding Tour Operator Submission Received: Let`s Walk into the Wild!';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_BIRDING_OPERATOR_REGISTRATION;
+                        $req = ['username' => $model->birdingoperator_request_model->business_name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        //$model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Birding Operator Added Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->birdingoperator_request_model->loadDefaultValues();
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidate($id = null)
+    {
+        $model = new BirdingtourRegistrationForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $model = new BirdingtourRegistrationForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
+
     /**
      * Suspend Model
      *
@@ -176,6 +341,16 @@ class BirdingOperatorTourController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
+
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $model->business_name = $model->id . '_' . $model->business_name;
+        $model->status = StatusInterface::STATUS_DELETE;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
     /**
      * Finds the MasterAnimal model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

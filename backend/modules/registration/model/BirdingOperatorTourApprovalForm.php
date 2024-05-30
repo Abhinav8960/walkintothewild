@@ -5,7 +5,7 @@ namespace backend\modules\registration\model;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use frontend\models\registration\BirdingOperatorRequest;
+use common\models\registration\BirdingOperatorRequest;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
@@ -47,7 +47,7 @@ class BirdingOperatorTourApprovalForm extends model
     public function rules()
     {
 
- 
+
         return [
             [['is_approved', 'status'], 'integer'],
             [['is_approved', 'comment'], 'required'],

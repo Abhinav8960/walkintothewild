@@ -19,3 +19,8 @@ ALTER TABLE `safari_operator_request` CHANGE `operator_email` `operator_email` V
 ALTER TABLE `birding_operator_request` CHANGE `operator_email` `operator_email` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL;
 ALTER TABLE `safari_operator_request` ADD `is_agree` INT NOT NULL DEFAULT '1' AFTER `comment`;
 ALTER TABLE `birding_operator_request` ADD `is_agree` INT NOT NULL DEFAULT '1' AFTER `comment`;
+
+
+
+ALTER TABLE `safari_operator_request` ADD `registration_platform` INT NULL DEFAULT NULL AFTER `operator_email`;
+ALTER TABLE `birding_operator_request` ADD `registration_platform` INT NULL DEFAULT NULL AFTER `operator_email`;

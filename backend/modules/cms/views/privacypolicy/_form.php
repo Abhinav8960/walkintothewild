@@ -13,7 +13,7 @@ use yii\bootstrap5\ActiveForm;
 <h5>Basic Detail</h5>
 <div class="row">
     <div class="col-md-6">
-        <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Module Title']) ?>
     </div>
 
     
@@ -31,7 +31,7 @@ use yii\bootstrap5\ActiveForm;
 
 
 
-<?php if ($model->about_model->id) { ?>
+<?php if ($model->privacypolicy_model->id) { ?>
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
     </div>

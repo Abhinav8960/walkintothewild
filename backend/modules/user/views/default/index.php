@@ -50,7 +50,7 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                             if ($model->is_cms_manager == 1) {
                                 $roles[] = "CMS Manager";
                             }
-                            if ($model->is_resort == 1) {
+                            if ($model->is_resort_manager == 1) {
                                 $roles[] = "Resort Manager";
                             }
                             return implode(', ', $roles);

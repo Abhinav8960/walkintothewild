@@ -9,12 +9,14 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'About';
-$this->params['breadcrumbs_home_url'] = '#';
+
+$this->title = 'PRIVACY POLICY';
+$this->params['breadcrumbs_home_url'] = '/cms/privacypolicy';
+$this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
-
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create','style' => 'margin-right: 20px;']);
+$this->params['buttons'][] = Html::a('Set Sequence', ['#'], ['class' => 'btn btn-orange ', '#' => '#']);
 
 ?>
 <div class="card">
@@ -28,9 +30,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'name',
                     [
-                        'label' => 'Description',
+                        'label' => 'Module Title',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->name) ? $model->name : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Module Description',
                         'contentOptions' => ['style' => 'width: 50%;'],
                         'format' => 'raw',
                         'value' => function ($model) {

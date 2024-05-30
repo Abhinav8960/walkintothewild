@@ -4,6 +4,7 @@ namespace console\controllers;
 
 use common\models\MailLog;
 use common\models\MailLogRecipients;
+use common\models\master\email\MasterMailTemplate;
 use yii\console\Controller;
 
 
@@ -21,12 +22,13 @@ class SendMailController extends Controller
      */
     public function actionIndex()
     {
-        // $this->sendmail();
-        if ($this->sendmail()) {
+        if (\Yii::$app->params['environment'] == "production") {
+            if ($this->sendmail()) {
 
-            echo 'Email Send Done';
-        } else{
-            echo "No email to send";
+                echo 'Email Send Done';
+            } else {
+                echo "No email to send";
+            }
         }
     }
 
@@ -37,45 +39,50 @@ class SendMailController extends Controller
      */
     protected function sendmail()
     {
-        $logs = MailLog::find()->where(['status' => 0])->limit(100)->orderBy(['id' => SORT_DESC])->all();
+        $logs = MailLog::find()->where(['status' => 2])->limit(100)->orderBy(['id' => SORT_DESC])->all();
 
         if ($logs) {
 
-            foreach ($logs as $mail) {
+            foreach ($logs as $log) {
                 $cc = [];
                 $bcc = [];
-                foreach ($mail->ccrecipients as $c) {
+                foreach ($log->ccrecipients as $c) {
 
                     $cc[] = $c->recipient;
                 }
 
-                foreach ($mail->bccrecipients as $b) {
+                foreach ($log->bccrecipients as $b) {
 
                     $bcc[] = $b->recipient;
                 }
 
-                $mailer =  \Yii::$app->mailer;
-                $message = $mailer->compose($mail->mail_template_id, json_decode($mail->params, true))
-                    // ->setFrom($mail->mail_from)
-                    ->setFrom('no-reply@walkintothewild.in')
-                    ->setTo($mail->torecipient->recipient)
-                    ->setBcc($bcc)
-                    ->setCc($cc)
-                    ->setSubject($mail->subject)
-                    ->send();
+                if ($log->mail_template_id) {
+                    $template = MasterMailTemplate::find()->where(['id' => $log->mail_template_id, 'status' => 1])->limit(1)->one();
+                    if ($template) {
+                        $mailer =  \Yii::$app->mailer;
+                        $message = $mailer->compose($template->path, json_decode($log->params, true))
+                            // ->setFrom($log->mail_from)
+                            ->setFrom('no-reply@walkintothewild.in')
+                            ->setTo($log->torecipient->recipient)
+                            ->setBcc($bcc)
+                            ->setCc($cc)
+                            ->setSubject($log->subject)
+                            ->send();
 
-                if ($message) {
-                    $m = MailLog::find()->where(['id' => $mail->id])->one();
+                        if ($message) {
+                            $m = MailLog::find()->where(['id' => $log->id])->one();
 
-                    $id = $mailer->getSentMessage()->getMessageId();
-                    $m->aws_message_id = $id;
-                    $m->try_send_count = $m->try_send_count + 1;
-                    $m->status = true;
-                    $m->mail_send_time = date('Y-m-d H:i:s');
-                    $m->save(false);
-                    MailLogRecipients::updateAll([
-                        'aws_message_id' => $id,
-                    ], ['mail_log_id' => $mail->id]);
+                            $id = $mailer->getSentMessage()->getMessageId();
+                            $m->aws_message_id = $id;
+                            $m->try_send_count = $m->try_send_count + 1;
+                            $m->status = true;
+                            $m->mail_send_time = date('Y-m-d H:i:s');
+                            $m->save(false);
+                            MailLogRecipients::updateAll([
+                                'aws_message_id' => $id,
+                            ], ['mail_log_id' => $log->id]);
+                        }
+                    }
                 }
             }
         }

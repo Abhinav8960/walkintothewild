@@ -10,6 +10,7 @@ $this->params['breadcrumbs_home_url'] = '/registration/safari-operator-tour';
 $this->params['breadcrumbs'][] =  ['label' => 'Registration', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 
 
 ?>
@@ -80,8 +81,16 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{suspend}',
+                        'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
+                            'update' => function ($url, $model) {
+                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
+                                ', ['update', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'Update',
+
+                                ]);
+                            },
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
                                 ', ['view', 'id' => $model->id], [
@@ -90,9 +99,22 @@ $this->params['title'] = $this->title;
 
                                 ]);
                             },
+                            'delete' => function ($url, $model) {
+                                if ($model->status == 2) {
+                                    return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'Delete',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to delete  ' . $model->business_name . '?',
+                                            'method' => 'post',
+                                        ],
+                                    ]);
+                                }
+                            },
                             'suspend' => function ($url, $model) {
                                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
                             },
+
                         ]
                     ],
                 ],

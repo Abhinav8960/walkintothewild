@@ -61,7 +61,6 @@ class NovaAppAsset extends AssetBundle
 
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset',
-        // 'bedezign\yii2\audit\web\JSLoggingAsset',
+        // 'yii\bootstrap5\BootstrapAsset',
     ];
 }

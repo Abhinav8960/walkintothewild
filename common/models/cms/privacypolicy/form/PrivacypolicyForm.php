@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\cms\about\form;
+namespace common\models\cms\privacypolicy\form;
 
 use Yii;
 use yii\base\Model;
@@ -11,7 +11,7 @@ use common\models\cms\privacypolicy\Privacypolicy;
  * Class PrivacypolicyForm
  * @package common\models\cms\privactpolicy\form
  *
- * Handles the creation and updating of About models
+ * Handles the creation and updating of Privacypolicy models
  */
 class PrivacypolicyForm extends Model
 {

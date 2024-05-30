@@ -50,6 +50,7 @@ class SafaritourRegistrationForm extends model
     public $operator_name;
     public $operator_phone_no;
     public $operator_email;
+    public $registration_platform;
 
     public $status;
     public $status_option = [];
@@ -110,7 +111,8 @@ class SafaritourRegistrationForm extends model
             $this->operator_email                  =  $this->safarioperator_request_model->operator_email;
             $this->is_highlighted                  =  $this->safarioperator_request_model->is_highlighted;
             $this->status                          =  $this->safarioperator_request_model->status;
-            $this->is_agree                          =  $this->safarioperator_request_model->is_agree;
+            $this->is_agree                        =  $this->safarioperator_request_model->is_agree;
+            $this->registration_platform           =  $this->safarioperator_request_model->registration_platform;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -138,7 +140,7 @@ class SafaritourRegistrationForm extends model
             [['status'], 'default', 'value' => 1],
             [['is_highlighted', 'has_cancellation_policy', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved', 'starting_price', 'operator_name'], 'default', 'value' => 0],
             [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities'], 'safe'],
-            [['referrer_url'], 'safe'],
+            [['referrer_url', 'registration_platform'], 'safe'],
             [
                 ['logo'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'minWidth' => 500,
@@ -264,6 +266,7 @@ class SafaritourRegistrationForm extends model
         $this->safarioperator_request_model->is_highlighted                  =  $this->is_highlighted;
         $this->safarioperator_request_model->status                          =  $this->status;
         $this->safarioperator_request_model->is_agree                        =  $this->is_agree;
+        $this->safarioperator_request_model->registration_platform           =  2;
     }
 
 

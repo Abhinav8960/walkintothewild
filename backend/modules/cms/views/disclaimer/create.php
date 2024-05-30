@@ -1,6 +1,6 @@
 <?php
 
-$this->title = 'Disclaimer';
+$this->title = 'DISCLAIMER';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/cms/disclaimer'];

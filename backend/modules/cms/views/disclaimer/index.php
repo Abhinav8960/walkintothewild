@@ -6,9 +6,9 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 
-$this->title = 'Disclaimer';
+$this->title = 'DISCLAIMER';
 $this->params['breadcrumbs_home_url'] = '/cms/disclaimer';
-$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
+$this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
@@ -30,6 +30,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     // 'title',
                     [
                         'label' => 'Content',
+                        'contentOptions' => ['style' => 'width: 80%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->title;

@@ -2,6 +2,7 @@
 
 namespace backend\modules\user\controllers;
 
+use common\models\MailLog;
 use Yii;
 use common\models\User;
 use yii\web\Controller;
@@ -34,7 +35,7 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
-     
+
         if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator != 1) {
             throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Adminstrator can view this page.');
         }
@@ -44,6 +45,15 @@ class DefaultController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->user_model->save()) {
+                        $user = $model->user_model;
+
+                        $to_mail = $user->email;
+                        $subject = 'User Regitration';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_USER_REGISTERATION;
+                        $req = ['username' => $user->name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+
                         \Yii::$app->session->setFlash('success', 'User Registration Successfully Completed');
                         return $this->redirect(['index']);
                     }
