@@ -9,7 +9,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'audit'],
     'defaultRoute' => '/coming-soon',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
@@ -40,6 +40,7 @@ return [
             ],
         ],
         'errorHandler' => [
+            'class' => '\bedezign\yii2\audit\components\web\ErrorHandler',
             'errorAction' => 'site/error',
         ],
 

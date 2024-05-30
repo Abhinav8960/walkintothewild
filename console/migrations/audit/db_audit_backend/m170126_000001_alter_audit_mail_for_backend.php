@@ -1,0 +1,29 @@
+<?php
+
+
+
+use yii\db\Migration;
+use yii\db\Schema;
+
+class m170126_000001_alter_audit_mail_for_backend extends Migration
+{
+    const TABLE = '{{%audit_mail}}';
+     public function getDb()
+    {
+        return Yii::$app->db_audit_frontend; // Use the second database connection
+    }
+
+    
+   
+
+    public function up()
+    {
+        if ($this->db->driverName === 'mysql') {
+            $this->alterColumn(self::TABLE, 'data', 'LONGBLOB');
+        } elseif ($this->db->driverName === 'sqlsrv') {
+            $this->alterColumn(self::TABLE, 'data', 'VARBINARY(MAX)');
+        } else {
+            $this->alterColumn(self::TABLE, 'data', 'BYTEA');
+        }
+    }
+}

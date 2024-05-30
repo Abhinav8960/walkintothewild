@@ -24,7 +24,7 @@ class AnimalController extends Controller
     public function actionIndex()
     {
         $searchModel = new MasterAnimalSearch();
-        $searchModel->status1 = 1;
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
