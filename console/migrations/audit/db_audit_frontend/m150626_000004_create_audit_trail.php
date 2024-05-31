@@ -8,10 +8,7 @@ use yii\db\Schema;
 class m150626_000004_create_audit_trail extends Migration
 {
     const TABLE = '{{%audit_trail}}';
-     public function getDb()
-    {
-        return Yii::$app->db_audit_frontend; // Use the second database connection
-    }
+    
 
     
    

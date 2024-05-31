@@ -11,10 +11,7 @@ class m150626_000001_create_audit_entry extends Migration
     const TABLE = '{{%audit_entry}}';
 
 
-    public function getDb()
-    {
-        return Yii::$app->db_audit_frontend; // Use the second database connection
-    }
+   
 
 
     public function up()

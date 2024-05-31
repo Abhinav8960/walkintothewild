@@ -9,10 +9,7 @@ class m150626_000003_create_audit_error extends Migration
 {
     const TABLE = '{{%audit_error}}';
 
-     public function getDb()
-    {
-        return Yii::$app->db_audit_frontend; // Use the second database connection
-    }
+    
 
     
     

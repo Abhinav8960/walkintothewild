@@ -8,11 +8,7 @@ use yii\db\Schema;
 class m150626_000005_create_audit_javascript_for_backend extends Migration
 {
     const TABLE = '{{%audit_javascript}}';
-     public function getDb()
-    {
-        return Yii::$app->db_audit_backend; // Use the second database connection
-    }
-
+    
     
    
 

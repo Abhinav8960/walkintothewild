@@ -8,10 +8,7 @@ use yii\db\Schema;
 class m150626_000006_create_audit_mail extends Migration
 {
     const TABLE = '{{%audit_mail}}';
-     public function getDb()
-    {
-        return Yii::$app->db_audit_frontend; // Use the second database connection
-    }
+    
 
     
    
