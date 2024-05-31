@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Widget;
 
 /**
- * @author Aayush Saini <aayushsaini9999@gmail.com>
+ * @author Smriti Pal <smritipal2201@gmail.com>
  */
 class Footer extends Widget
 {
@@ -22,10 +22,10 @@ class Footer extends Widget
         $active_url = "/" . Yii::$app->requestedRoute;
 
 
-        if (in_array($active_url, array("/", "/thankyou", "/safaritour-registration", "/birdingtour-registration", "/coming-soon"))) {
-            return $this->render('initialfooter');
-        } else {
-            return $this->render('footer');
-        }
+        return $this->render('initialfooter');
+        // if (in_array($active_url, array("/", "/thankyou", "/safaritour-registration", "/birdingtour-registration", "/coming-soon"))) {
+        // } else {
+        //     return $this->render('footer');
+        // }
     }
 }

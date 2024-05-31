@@ -6,7 +6,7 @@ use Yii;
 use yii\base\Widget;
 
 /**
- * @author Aayush Saini <aayushsaini9999@gmail.com>
+ * @author Smriti Pal <smritipal2201@gmail.com>
  * 
  * Usage example
  * 

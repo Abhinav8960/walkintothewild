@@ -6,7 +6,7 @@ use yii\validators\Validator;
 
 /**
  * Class Word500Validator
- * @author Aayush Saini <aayushsaini9999@gmail.com>
+ * @author Smriti Pal <smritipal2201@gmail.com>
  */
 class Word500Validator extends Validator
 {

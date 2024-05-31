@@ -7,7 +7,7 @@ use yii\base\Widget;
 use yii\helpers\Html;
 
 /**
- * @author Aayush Saini <aayushsaini9999@gmail.com>
+ * @author Smriti Pal <smritipal2201@gmail.com>
  */
 class SuspendActiveButton extends Widget implements \common\interfaces\StatusInterface
 {
