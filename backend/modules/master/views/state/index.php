@@ -54,7 +54,7 @@ $this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['cl
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             // 'view' => function ($url, $model) {
                             //     return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
