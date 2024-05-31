@@ -145,7 +145,7 @@ class SafariParkForm extends model
             [['short_description'], 'string', 'max' => 251],
             [['long_description', 'meta_title', 'meta_description'], 'string'],
             [['long_description'], 'validateMaxWords', 'params' => ['max' => 200]],
-            [['status', 'master_location_id', 'country_id', 'state_id', 'city_id'], 'default', 'value' => 1],
+            [['status', 'country_id', 'is_published'], 'default', 'value' => 1],
             [[
                 'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description',
                 'vehicle_id', 'master_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'nearest_railway_station', 'nearest_airport', 'nearest_railway_station_two', 'nearest_airport_two',

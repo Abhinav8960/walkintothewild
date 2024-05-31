@@ -68,3 +68,10 @@ new TABLE for birding
 2 month
 3 session
 4 accomodation
+
+
+
+ 31 May 
+
+ ALTER TABLE `birding_park` ADD `is_published` TINYINT NOT NULL DEFAULT '1' AFTER `longitude`;
+ALTER TABLE `safari_park` ADD `is_published` TINYINT NOT NULL DEFAULT '1' AFTER `longitude`;

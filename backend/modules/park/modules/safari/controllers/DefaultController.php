@@ -311,6 +311,30 @@ class DefaultController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
+
+    public function actionPublish($id)
+    {
+        $model = $this->findModel($id);
+        $model->is_published = 1;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+
+    /**
+     * Suspend Model
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionUnpublish($id)
+    {
+        $model = $this->findModel($id);
+        $model->is_published = 2;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
     protected function findModel($id)
     {
         if (($model = SafariPark::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
