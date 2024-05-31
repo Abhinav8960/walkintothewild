@@ -299,9 +299,6 @@ class ProfileController extends Controller
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['/park/birding/profile/zone?birding_park_id=' . $birding_park_id . '']);
                     }
-                } else {
-                    print_r($model->errors);
-                    die();
                 }
             }
         }

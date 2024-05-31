@@ -14,14 +14,14 @@ use yii\bootstrap5\ActiveForm;
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
+                <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title'])->label('Title *') ?>
             </div>
             <div class="col-md-12">
                 <?= $form->field($model, 'description')->widget(CKEditor::className(), [
                     'options' => ['rows' => 4],
                     'preset' => 'full',
 
-                ]) ?>
+                ])->label('Description *') ?>
             </div>
             <?php if ($model->birding_park_florafauna_model->id) { ?>
                 <div class="col-md-6">

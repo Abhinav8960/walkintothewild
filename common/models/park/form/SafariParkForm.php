@@ -134,8 +134,10 @@ class SafariParkForm extends model
     public function rules()
     {
         return [
-            [['title'], 'required', 'on' => 'create'],
-            [['title'], 'required', 'on' => 'update'],
+            [['title', 'feature_image', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'create'],
+            [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'update'],
+            [['nearest_airport', 'nearest_airport_two', 'nearest_railway_station', 'nearest_railway_station_two', 'module_title'], 'required', 'on' => 'howtoreach'],
+
             [['nearest_airport', 'nearest_railway_station', 'nearest_airport_two', 'nearest_railway_station_two', 'module_title'], 'required', 'on' => 'howtoreach'],
 
             [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two'], 'integer'],
@@ -161,6 +163,16 @@ class SafariParkForm extends model
                     $this->addError('nearest_railway_station_two', 'Both Railway Station Should not match');
                 }
             }],
+
+
+            [
+                ['logo', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                // 'minWidth' => 500,
+                // 'maxWidth' => 500,
+                // 'maxHeight' => 123,
+                // 'minHeight' => 123,
+                'maxSize' => 250 * 1024
+            ],
         ];
     }
 
@@ -202,7 +214,7 @@ class SafariParkForm extends model
     public function attributeLabels()
     {
         return [
-            'title' => 'Title',
+            'title' => 'Title *',
             'slug' => 'Slug',
             'park_type_id' => 'Park Type',
             'vehicle_id' => 'Vehicle',
@@ -210,21 +222,25 @@ class SafariParkForm extends model
             'short_description' => 'Short Description',
             'long_description' => 'Long Description',
             'official_website' => 'Official Website',
-            'master_location_id' => 'Location',
+            'master_location_id' => 'Location *',
             'country_id' => 'Country',
             'country_name' => 'Country Name',
-            'state_id' => 'State',
+            'state_id' => 'State *',
             'state_name' => 'State Name',
-            'city_id' => 'City',
+            'city_id' => 'City *',
             'city_name' => 'City Name',
+            'about_title' => 'About Title *',
+            'module_title' => 'Module Title *',
+            'feature_image' => 'Feature Image (JPEG /JPG or PNG / 250 KB) *',
+            'logo' => 'Logo (JPEG /JPG or PNG / 250 KB) *',
             'avg_safari_price_min' => 'Avg Safari Price',
-            'nearest_railway_station' => 'Nearest Railway Station',
+            'nearest_railway_station' => 'Nearest Railway',
             'nearest_railway_station_distance' => 'Nearest Railway Station Distance (in km)',
-            'nearest_airport' => 'Nearest Airport',
+            'nearest_airport' => 'Airport',
             'nearest_airport_distance' => 'Nearest Airport Distance  (in km)',
-            'nearest_railway_station_two' => 'Nearest Railway Station',
+            'nearest_railway_station_two' => 'Nearest Railway',
             'nearest_railway_station_distance_two' => 'Nearest Railway Station Distance (in km)',
-            'nearest_airport_two' => 'Nearest Airport',
+            'nearest_airport_two' => 'Airport',
             'nearest_airport_distance_two' => 'Nearest Airport Distance  (in km)',
             'nearest_bus_station' => 'Nearest Bus Station',
             'meta_title' => 'Meta Title',

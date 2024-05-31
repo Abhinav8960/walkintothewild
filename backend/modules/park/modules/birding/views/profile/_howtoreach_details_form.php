@@ -15,34 +15,34 @@ use yii\bootstrap5\ActiveForm;
         <h5>Basic Detail</h5>
         <div class="row">
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_railway_station', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation(), ['prompt' => 'Select Railway Station'])->label('Railway Station') ?>
+                <?= $form->field($model, 'nearest_railway_station', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation(), ['prompt' => 'Select'])->label('Nearest Railway *') ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Railway Station Distance']) ?>
+                <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_airport', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport(), ['prompt' => 'Select Airport'])->label('Airport') ?>
+                <?= $form->field($model, 'nearest_airport', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport(), ['prompt' => 'Select'])->label('Airport *') ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Airport Distance']) ?>
+                <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_railway_station_two', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation(), ['prompt' => 'Select Railway Station'])->label('Railway Station') ?>
-            </div>
-
-            <div class="col-md-3">
-                <?= $form->field($model, 'nearest_railway_station_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Railway Station Distance']) ?>
+                <?= $form->field($model, 'nearest_railway_station_two', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation(), ['prompt' => 'Select'])->label('Nearest Railway *') ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_airport_two', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport(), ['prompt' => 'Select Airport'])->label('Airport') ?>
+                <?= $form->field($model, 'nearest_railway_station_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_airport_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter Nearest Airport Distance']) ?>
+                <?= $form->field($model, 'nearest_airport_two', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport(), ['prompt' => 'Select'])->label('Airport *') ?>
+            </div>
+
+            <div class="col-md-3">
+                <?= $form->field($model, 'nearest_airport_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
         </div>
         <hr>

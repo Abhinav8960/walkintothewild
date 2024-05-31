@@ -300,9 +300,6 @@ class ProfileController extends Controller
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['/park/safari/profile/zone?safari_park_id=' . $safari_park_id . '']);
                     }
-                } else {
-                    print_r($model->errors);
-                    die();
                 }
             }
         }

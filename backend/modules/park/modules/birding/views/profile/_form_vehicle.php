@@ -14,7 +14,7 @@ use yii\bootstrap5\ActiveForm;
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select Vehicle']) ?>
+                <?= $form->field($model, 'vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select Vehicle'])->label('Vehicle *') ?>
             </div>
             <?php if ($model->birding_park_vehicle_model->id) { ?>
                 <div class="col-md-6">

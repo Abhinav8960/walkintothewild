@@ -51,6 +51,7 @@ class BirdingParkGalleryForm extends model
     {
         return [
             [['image_caption', 'image'], 'required', 'on' => 'create'],
+            [['image_caption'], 'required', 'on' => 'update'],
             [['status'], 'integer'],
             [['image_caption'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
@@ -82,8 +83,8 @@ class BirdingParkGalleryForm extends model
     public function attributeLabels()
     {
         return [
-            'image_caption' => 'Image Caption',
-            'image' => 'Image  (JPEG /JPG or PNG / 75 Pixels x 75 Pixels / 150 KB)',
+            'image_caption' => 'Image Caption *',
+            'image' => 'Image  (JPEG /JPG or PNG / 75 Pixels x 75 Pixels / 150 KB) *',
             'status' => 'Status',
         ];
     }

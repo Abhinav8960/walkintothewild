@@ -71,12 +71,12 @@ class BirdingParkZoneForm extends model
     {
         return [
             'birding_park_id' => 'Safari Park',
-            'master_zone_type_id' => 'Master Zone Type',
+            'master_zone_type_id' => 'Master Zone Type *',
             'master_zone_type_name' => 'Master Zone Type Name',
-            'zone_name' => 'Zone Name',
-            'entry_gate_name' => 'Entry Gate Name',
-            'entry_gate_latitude' => 'Entry Gate Latitude',
-            'entry_gate_longitude' => 'Entry Gate Longitude',
+            'zone_name' => 'Zone Name *',
+            'entry_gate_name' => 'Entry Gate Name *',
+            'entry_gate_latitude' => 'Entry Gate Latitude *',
+            'entry_gate_longitude' => 'Entry Gate Longitude *',
             'status' => 'Status',
         ];
     }
