@@ -15,7 +15,14 @@ use yii\bootstrap5\ActiveForm;
         <h5>Basic Detail</h5>
         <div class="row">
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_railway_station', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation(), ['prompt' => 'Select'])->label('Nearest Railway *') ?>
+                <?= $form->field($model, 'nearest_railway_station')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllRailwayStation(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Nearest Railway *')  ?>
             </div>
 
             <div class="col-md-3">
@@ -23,14 +30,27 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_airport', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport(), ['prompt' => 'Select'])->label('Airport *') ?>
-            </div>
+                <?= $form->field($model, 'nearest_airport')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllAirport(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Airport *')  ?> </div>
 
             <div class="col-md-3">
                 <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_railway_station_two', ['inputOptions' => ['id' => 'railway_station']])->dropDownList(GeneralModel::getAllRailwayStation(), ['prompt' => 'Select'])->label('Nearest Railway *') ?>
+                <?= $form->field($model, 'nearest_railway_station_two')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllRailwayStation(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Nearest Railway *')  ?>
             </div>
 
             <div class="col-md-3">
@@ -38,7 +58,14 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'nearest_airport_two', ['inputOptions' => ['id' => 'airport']])->dropDownList(GeneralModel::getAllAirport(), ['prompt' => 'Select'])->label('Airport *') ?>
+                <?= $form->field($model, 'nearest_airport_two')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllAirport(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Airport *')  ?>
             </div>
 
             <div class="col-md-3">

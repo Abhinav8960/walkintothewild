@@ -21,9 +21,9 @@ trait CommanRelationship
 
         if (isset($statuses[$this->status])) {
             if ($this->status == 1) {
-                return '<img src="/img/active.png" alt="" width="30" height="25">';
+                return '<img src="/img/active.png" alt="" width="30" height="30">';
             } else if ($this->status == 2) {
-                return '<img src="/img/suspend.png" alt="" width="30" height="25">';
+                return '<img src="/img/suspend.png" alt="" width="30" height="30">';
             }
         }
         return $this->status;

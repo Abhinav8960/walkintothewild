@@ -51,7 +51,7 @@ class BirdingParkFloraFaunaForm extends model
         return [
             [['description', 'title'], 'required'],
             [['status'], 'integer'],
-            [['description'], 'string', 'max' => 125],
+            ['description', \common\validators\Word500Validator::className()],
             [['status'], 'default', 'value' => 1],
             [['title', 'birding_park_id'], 'safe'],
         ];

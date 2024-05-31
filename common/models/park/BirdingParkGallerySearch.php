@@ -61,6 +61,7 @@ class BirdingParkGallerySearch extends BirdingParkGallery
         $query->andFilterWhere([
             'id' => $this->id,
             'image_caption' => $this->image_caption,
+            'birding_park_id' => $this->birding_park_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

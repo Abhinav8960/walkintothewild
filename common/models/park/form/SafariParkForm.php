@@ -134,7 +134,7 @@ class SafariParkForm extends model
     public function rules()
     {
         return [
-            [['title', 'feature_image', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'create'],
+            [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'create'],
             [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'update'],
             [['nearest_airport', 'nearest_airport_two', 'nearest_railway_station', 'nearest_railway_station_two', 'module_title'], 'required', 'on' => 'howtoreach'],
 

@@ -60,6 +60,7 @@ class BirdingParkFloraFaunaSearch extends BirdingParkFloraFauna
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'birding_park_id' => $this->birding_park_id,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

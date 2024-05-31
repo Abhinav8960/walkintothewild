@@ -58,17 +58,17 @@ class DefaultController extends Controller
                         if ($birdingaccomodation) {
                             foreach ($birdingaccomodation as $birding_accomodation) {
                                 $birdingparkAccomodation = new BirdingParkAccomodation();
-                                $birdingparkAccomodation->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkAccomodation->birding_park_id = $model->birding_park_model->id;
                                 $birdingparkAccomodation->master_accomodation_id = $birding_accomodation;
                                 $birdingparkAccomodation->save(false);
                             }
                         }
 
-                        $sessions = $model->safari_session;
+                        $sessions = $model->birding_session;
                         if ($sessions) {
                             foreach ($sessions as $session) {
                                 $birdingparkSession = new BirdingParkSession();
-                                $birdingparkSession->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkSession->birding_park_id = $model->birding_park_model->id;
                                 $birdingparkSession->session_id = $session;
                                 $birdingparkSession->save(false);
                             }
@@ -78,7 +78,7 @@ class DefaultController extends Controller
                         if ($months) {
                             foreach ($months as $birding_month) {
                                 $birdingparkMonth = new BirdingParkMonth();
-                                $birdingparkMonth->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkMonth->birding_park_id = $model->birding_park_model->id;
                                 $birdingparkMonth->month_id = $birding_month;
                                 $birdingparkMonth->save(false);
                             }
@@ -88,7 +88,7 @@ class DefaultController extends Controller
                         if ($bonusexperience) {
                             foreach ($bonusexperience as $bonus) {
                                 $birdingparkBonus = new BirdingParkBonusExperience();
-                                $birdingparkBonus->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkBonus->birding_park_id = $model->birding_park_model->id;
                                 $birdingparkBonus->master_bonus_experience_id = $bonus;
                                 $birdingparkBonus->save(false);
                             }
@@ -121,10 +121,10 @@ class DefaultController extends Controller
                     if ($model->birding_park_model->save()) {
                         $birdingvehicles = $model->vehicle_id;
                         if ($birdingvehicles) {
-                            BirdingParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            BirdingParkVehicle::updateAll(['status' => 2], ['birding_park_id' => $id]);
                             foreach ($birdingvehicles as $birdingvehicle) {
                                 $birdingparkVehicle = new BirdingParkVehicle();
-                                $birdingparkVehicle->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkVehicle->birding_park_id = $model->birding_park_model->id;
                                 $birdingparkVehicle->vehicle_id = $birdingvehicle;
                                 $birdingparkVehicle->save(false);
                             }
@@ -132,10 +132,10 @@ class DefaultController extends Controller
 
                         $animals = $model->master_animal_id;
                         if ($animals) {
-                            BirdingParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            BirdingParkAnimal::updateAll(['status' => 2], ['birding_park_id' => $id]);
                             foreach ($animals as $animal) {
                                 $birdingparkAnimal = new BirdingParkAnimal();
-                                $birdingparkAnimal->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkAnimal->birding_park_id = $model->birding_park_model->id;
                                 $birdingparkAnimal->master_animal_id = $animal;
                                 $birdingparkAnimal->save(false);
                             }
@@ -143,10 +143,10 @@ class DefaultController extends Controller
 
                         $bonusexperience = $model->master_bonus_experience_id;
                         if ($bonusexperience) {
-                            BirdingParkBonusExperience::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            BirdingParkBonusExperience::updateAll(['status' => 2], ['birding_park_id' => $id]);
                             foreach ($bonusexperience as $bonus) {
                                 $birdingparkBonus = new BirdingParkBonusExperience();
-                                $birdingparkBonus->safari_park_id = $model->birding_park_model->id;
+                                $birdingparkBonus->birding_park_id = $model->birding_park_model->id;
                                 $birdingparkBonus->master_bonus_experience_id = $bonus;
                                 $birdingparkBonus->save(false);
                             }
@@ -241,16 +241,16 @@ class DefaultController extends Controller
     {
         $model = $this->findModel($id);
 
-        $birdingparkVehicle = BirdingParkVehicle::findAll(['safari_park_id' => $model->id]);
+        $birdingparkVehicle = BirdingParkVehicle::findAll(['birding_park_id' => $model->id]);
         if (!empty($birdingparkVehicle)) {
-            // ParkVehicle::deleteAll(['safari_park_id' => $model->id]);
+            // ParkVehicle::deleteAll(['birding_park_id' => $model->id]);
             foreach ($birdingparkVehicle as $birdingvehicle) {
                 $birdingvehicle->status = StatusInterface::STATUS_DELETE;
                 $birdingvehicle->save();
             }
         }
 
-        $birdingparkAnimal = BirdingParkAnimal::findAll(['safari_park_id' => $model->id]);
+        $birdingparkAnimal = BirdingParkAnimal::findAll(['birding_park_id' => $model->id]);
         if (!empty($birdingparkAnimal)) {
             foreach ($birdingparkAnimal as $animal) {
                 $animal->status = StatusInterface::STATUS_DELETE;
@@ -258,7 +258,7 @@ class DefaultController extends Controller
             }
         }
 
-        $birdingparkBonus = BirdingParkBonusExperience::findAll(['safari_park_id' => $model->id]);
+        $birdingparkBonus = BirdingParkBonusExperience::findAll(['birding_park_id' => $model->id]);
         if (!empty($birdingparkBonus)) {
             foreach ($birdingparkBonus as $bonus) {
                 $bonus->status = StatusInterface::STATUS_DELETE;

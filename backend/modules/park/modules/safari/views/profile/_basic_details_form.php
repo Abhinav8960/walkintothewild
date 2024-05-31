@@ -121,6 +121,8 @@ use yii\bootstrap5\ActiveForm;
         <div class="row">
 
 
+
+
             <div class="col-md-3">
                 <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
                     GeneralModel::getAllState(1),
@@ -129,9 +131,6 @@ use yii\bootstrap5\ActiveForm;
                         'onchange' => '
                 $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
                     $( "select#city" ).html( data );
-                    $("select#railway_station").html("<option value>Select Railway Station</option>");
-                    $("select#airport").html("<option value>Select Airport</option>");
-                    $("select#location").html("<option value>Select Location</option>");
                     })'
                     ]
                 ); ?>
@@ -142,16 +141,6 @@ use yii\bootstrap5\ActiveForm;
                     GeneralModel::getAllCity($model->state_id),
                     [
                         'prompt' => 'Select City',
-                        'onchange' => '
-                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getrailway?master_city_id=') . '"+$(this).val(), function(data) {
-                    $("select#railway_station").html(data);
-                });
-                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getairport?master_city_id=') . '"+$(this).val(), function(data) {
-                    $("select#airport").html(data);
-                });
-                $.get("' . Yii::$app->urlManager->createUrl('/dropdown/getlocation?master_city_id=') . '"+$(this).val(), function(data) {
-                    $("select#location").html(data);
-                });'
                     ]
                 ); ?>
 

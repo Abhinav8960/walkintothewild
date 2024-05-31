@@ -38,12 +38,15 @@ $this->params['title'] = $this->title;
                                         }
                                     ],
                                     [
-                                        'label' => 'Description',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
-                                        'format' => 'raw',
+                                        'attribute' => 'Description',
+                                        'format' => 'html',
+                                        'enableSorting' => true,
                                         'value' => function ($model) {
-                                            return $model->description;
-                                        }
+                                            return isset($model) ? substr($model->description, 0, 50) : '';
+                                        },
+                                        'contentOptions' =>  function ($model) {
+                                            return  isset($model->description) ? ['title' => $model->description, 'data-toggle' => 'tooltip'] : null;
+                                        },
                                     ],
                                     'created_at:dateTime:Created at',
                                     'updated_at:dateTime:Last Updated at',
