@@ -34,6 +34,41 @@ class MasterBird extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return 'master_bird';
     }
 
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+            'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'slug', //The attribute to be generated
+                'attribute' => 'name', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '-',
+                    'trim' => true
+                ]
+            ]
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

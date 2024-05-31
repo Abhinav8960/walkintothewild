@@ -110,7 +110,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/package")) ? "active" : "" ?>" href="/meta/package">Package</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/other-wildlife-activities")) ? "active" : "" ?>" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/animal-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/meta/bird-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/meta/bird-type")) ? "active" : "" ?>" href="/meta/bird-type">Bird Type</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/term-condition-type")) ? "active" : "" ?>" href="/meta/term-condition-type">Term & Condition Type</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/accommodation")) ? "active" : "" ?>" href="/meta/accommodation">Accommodation</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/safari-session")) ? "active" : "" ?>" href="/meta/safari-session">Safari Session</a></li>
