@@ -112330,3 +112330,7 @@ a.text-dark:focus {
 
   display: block !important;
 }
+
+.table-bordered th, .table-bordered td {
+  border: 1px solid #f0f0f8 !important;
+}
