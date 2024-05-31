@@ -50,7 +50,7 @@ use yii\bootstrap5\ActiveForm;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Nearest Railway *')  ?>
+                ])->label('Nearest Railway')  ?>
             </div>
 
             <div class="col-md-3">
@@ -65,7 +65,7 @@ use yii\bootstrap5\ActiveForm;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Airport *')  ?>
+                ])->label('Airport')  ?>
             </div>
 
             <div class="col-md-3">

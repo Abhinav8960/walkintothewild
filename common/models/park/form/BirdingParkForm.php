@@ -136,7 +136,7 @@ class BirdingParkForm extends model
         return [
             [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'create'],
             [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'update'],
-            [['nearest_airport', 'nearest_railway_station', 'nearest_airport_two', 'nearest_railway_station_two', 'module_title'], 'required', 'on' => 'howtoreach'],
+            [['nearest_airport', 'nearest_railway_station', 'module_title'], 'required', 'on' => 'howtoreach'],
 
             [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two'], 'integer'],
             [['title'], 'string', 'max' => 255],
