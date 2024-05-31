@@ -112,27 +112,6 @@ class ProfileController extends Controller
                             }
                         }
 
-                        $safarivehicles = $model->vehicle_id;
-                        if ($safarivehicles) {
-                            SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
-                            foreach ($safarivehicles as $safarivehicle) {
-                                $safariparkVehicle = new SafariParkVehicle();
-                                $safariparkVehicle->safari_park_id = $model->safari_park_model->id;
-                                $safariparkVehicle->vehicle_id = $safarivehicle;
-                                $safariparkVehicle->save(false);
-                            }
-                        }
-
-                        $animals = $model->master_animal_id;
-                        if ($animals) {
-                            SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
-                            foreach ($animals as $animal) {
-                                $safariparkAnimal = new SafariParkAnimal();
-                                $safariparkAnimal->safari_park_id = $model->safari_park_model->id;
-                                $safariparkAnimal->master_animal_id = $animal;
-                                $safariparkAnimal->save(false);
-                            }
-                        }
 
                         $bonusexperience = $model->master_bonus_experience_id;
                         if ($bonusexperience) {

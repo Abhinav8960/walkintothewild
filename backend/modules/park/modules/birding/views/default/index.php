@@ -31,22 +31,18 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
 
-                    // [
-                    //     'label' => 'State',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->state) ? $model->state->state_name : '';
-                    //     }
-                    // ],
-                    // [
-                    //     'label' => 'City',
-                    //     'contentOptions' => ['style' => 'width: 10%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         return isset($model->city) ? $model->city->city_name : '';
-                    //     }
-                    // ],
+                    [
+                        'label' => 'Safari Cost',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if (!empty($model->avg_safari_price_min) && !empty($model->avg_safari_price_max)) {
+                                return $model->avg_safari_price_min . ' - ' . $model->avg_safari_price_max;
+                            } else {
+                                return '';
+                            }
+                        }
+                    ],
 
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',

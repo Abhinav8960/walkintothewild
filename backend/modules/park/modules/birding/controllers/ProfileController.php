@@ -112,28 +112,6 @@ class ProfileController extends Controller
                             }
                         }
 
-                        $birdingvehicles = $model->vehicle_id;
-                        if ($birdingvehicles) {
-                            BirdingParkVehicle::updateAll(['status' => 2], ['birding_park_id' => $birding_park_id]);
-                            foreach ($birdingvehicles as $birdingvehicle) {
-                                $birdingparkVehicle = new BirdingParkVehicle();
-                                $birdingparkVehicle->birding_park_id = $model->birding_park_model->id;
-                                $birdingparkVehicle->vehicle_id = $birdingvehicle;
-                                $birdingparkVehicle->save(false);
-                            }
-                        }
-
-                        $animals = $model->master_animal_id;
-                        if ($animals) {
-                            BirdingParkAnimal::updateAll(['status' => 2], ['birding_park_id' => $birding_park_id]);
-                            foreach ($animals as $animal) {
-                                $birdingparkAnimal = new BirdingParkAnimal();
-                                $birdingparkAnimal->birding_park_id = $model->birding_park_model->id;
-                                $birdingparkAnimal->master_animal_id = $animal;
-                                $birdingparkAnimal->save(false);
-                            }
-                        }
-
                         $bonusexperience = $model->master_bonus_experience_id;
                         if ($bonusexperience) {
                             BirdingParkBonusExperience::updateAll(['status' => 2], ['birding_park_id' => $birding_park_id]);
