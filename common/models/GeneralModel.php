@@ -6,6 +6,7 @@ use common\models\cms\faqcategory\Faq;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
+use common\models\master\bird\MasterBird;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
 use common\models\master\email\MasterMailTemplate;
@@ -17,6 +18,7 @@ use common\models\master\state\MasterState;
 use common\models\master\vehicle\MasterVehicle;
 use common\models\meta\MetaAccommodation;
 use common\models\meta\MetaAnimalType;
+use common\models\meta\MetaBirdType;
 use common\models\meta\MetaLocation;
 use common\models\meta\MetaOperatorCategory;
 use common\models\meta\MetaOtherWildlifeActivities;
@@ -173,9 +175,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
+    public static function birdoption()
+    {
+        return ArrayHelper::map(MasterBird::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
     public static function animaltypeoption()
     {
         return ArrayHelper::map(MetaAnimalType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function birdtypeoption()
+    {
+        return ArrayHelper::map(MetaBirdType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function locationoption()

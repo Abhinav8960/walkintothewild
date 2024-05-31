@@ -27,6 +27,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<li class="slide <?= in_array($active_url, array(
 											"/master",
 											"/master/animal/index",
+											"/master/bird/index",
 											"/master/vehicle/index",
 											"/master/state/index",
 											"/master/country/index",
@@ -43,6 +44,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/meta",
 														"/master/animal/index",
+														"/master/bird/index",
 														"/master/vehicle/index",
 														"/master/country/index",
 														"/master/state/index",
@@ -58,6 +60,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/animal/index")) ? "active" : "" ?>" href="/master/animal/index">Animal</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/master/bird/index")) ? "active" : "" ?>" href="/master/bird/index">Bird</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle/index")) ? "active" : "" ?>" href="/master/vehicle/index">Vehicle</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/location/index")) ? "active" : "" ?>" href="/master/location/index">Location</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/state/index")) ? "active" : "" ?>" href="/master/state/index">State</a></li>
@@ -82,6 +85,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/meta/package",
 											"/meta/other-wildlife-activities",
 											"/meta/animal-type",
+											"/meta/bird-type",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/meta",
@@ -94,6 +98,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/meta/package",
 														"/meta/other-wildlife-activities",
 														"/meta/animal-type",
+														"/meta/bird-type",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Meta</a></li>
@@ -105,6 +110,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/package")) ? "active" : "" ?>" href="/meta/package">Package</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/other-wildlife-activities")) ? "active" : "" ?>" href="/meta/other-wildlife-activities">Other Wildlife Activities</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/animal-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/meta/bird-type")) ? "active" : "" ?>" href="/meta/animal-type">Animal Type</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/term-condition-type")) ? "active" : "" ?>" href="/meta/term-condition-type">Term & Condition Type</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/accommodation")) ? "active" : "" ?>" href="/meta/accommodation">Accommodation</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/safari-session")) ? "active" : "" ?>" href="/meta/safari-session">Safari Session</a></li>

@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $model apps\models\employee\Employee */
 
-$this->title = 'Birding Park Animal';
+$this->title = 'Birding Park Bird';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;

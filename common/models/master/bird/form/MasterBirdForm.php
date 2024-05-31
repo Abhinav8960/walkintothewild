@@ -1,11 +1,11 @@
 <?php
 
-namespace common\models\master\animal\form;
+namespace common\models\master\bird\form;
 
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\master\animal\MasterAnimal;
+use common\models\master\bird\MasterBird;
 use yii\web\UploadedFile;
 
 /**
@@ -13,7 +13,7 @@ use yii\web\UploadedFile;
  * 
  * Update and Create Holiday
  */
-class MasterAnimalForm extends model
+class MasterBirdForm extends model
 {
     public $slug;
     public $name;
@@ -23,33 +23,30 @@ class MasterAnimalForm extends model
     public $image;
     public $status;
     public $status_option = [];
-    public $animal_type_id;
-    public $animal_model;
+    public $bird_type_id;
+    public $bird_model;
 
 
 
-    public function __construct(MasterAnimal $animal_model = null)
+    public function __construct(MasterBird $bird_model = null)
     {
 
-        $this->animal_model = Yii::createObject([
-            'class' => MasterAnimal::className()
+        $this->bird_model = Yii::createObject([
+            'class' => MasterBird::className()
         ]);
 
 
 
-        if ($animal_model  != '') {
-            $this->animal_model = $animal_model;
-            $this->image = $this->animal_model->image;
-            $this->slug = $this->animal_model->slug;
-            $this->know_as = $this->animal_model->know_as;
-            $this->name = $this->animal_model->name;
-            $this->short_description = $this->animal_model->short_description;
-            $this->long_description = $this->animal_model->long_description;
-            $this->status = $this->animal_model->status;
-            $this->animal_type_id = $this->animal_model-  // 'minWidth' => 285,
-            // 'maxWidth' => 285,
-            // 'maxHeight' => 285,
-            // 'minHeight' => 285,>animal_type_id;
+        if ($bird_model  != '') {
+            $this->bird_model = $bird_model;
+            $this->image = $this->bird_model->image;
+            $this->slug = $this->bird_model->slug;
+            $this->know_as = $this->bird_model->know_as;
+            $this->name = $this->bird_model->name;
+            $this->short_description = $this->bird_model->short_description;
+            $this->long_description = $this->bird_model->long_description;
+            $this->status = $this->bird_model->status;
+            $this->bird_type_id = $this->bird_model->bird_type_id;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -62,7 +59,7 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name', 'short_description', 'animal_type_id'], 'required'],
+            [['name', 'short_description', 'bird_type_id'], 'required'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 125],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
@@ -90,7 +87,7 @@ class MasterAnimalForm extends model
             'name' => 'Name',
             'image' => 'Image  (JPEG /JPG or PNG / 350 Pixels x 350 Pixels / 100 KB)',
             'status' => 'Status',
-            'animal_type_id' => 'Animal Type'
+            'bird_type_id' => 'Bird Type'
 
         ];
     }
@@ -101,13 +98,13 @@ class MasterAnimalForm extends model
      */
     public function initializeForm()
     {
-        $this->animal_model->slug = $this->slug;
-        $this->animal_model->know_as = $this->know_as;
-        $this->animal_model->name = $this->name;
-        $this->animal_model->short_description = $this->short_description;
-        $this->animal_model->long_description = $this->long_description;
-        $this->animal_model->status = $this->status;
-        $this->animal_model->animal_type_id = $this->animal_type_id;
+        $this->bird_model->slug = $this->slug;
+        $this->bird_model->know_as = $this->know_as;
+        $this->bird_model->name = $this->name;
+        $this->bird_model->short_description = $this->short_description;
+        $this->bird_model->long_description = $this->long_description;
+        $this->bird_model->status = $this->status;
+        $this->bird_model->bird_type_id = $this->bird_type_id;
     }
 
 
@@ -115,24 +112,24 @@ class MasterAnimalForm extends model
     {
 
         if ($this->image) {
-            $storagePath = Yii::$app->params['datapath'] . '/animal';
+            $storagePath = Yii::$app->params['datapath'] . '/bird';
 
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
-            $storagePath = $storagePath . '/' . $this->animal_model->id;
+            $storagePath = $storagePath . '/' . $this->bird_model->id;
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
 
-            $fileName = 'animal' . time() . '.' . $this->image->extension;
+            $fileName = 'bird' . time() . '.' . $this->image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->image->saveAs($filePath)) {
-                $this->animal_model->image = $fileName;
-                $this->animal_model->save(false);
+                $this->bird_model->image = $fileName;
+                $this->bird_model->save(false);
             }
         }
     }

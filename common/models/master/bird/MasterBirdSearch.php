@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\master\animal;
+namespace common\models\master\bird;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\animal\MasterAnimal;
+use common\models\master\bird\MasterBird;
 
 /**
- * MasterAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
+ * MasterBirdSearch represents the model behind the search form of `common\models\master\bird\MasterBird`.
  */
-class MasterAnimalSearch extends MasterAnimal
+class MasterBirdSearch extends MasterBird
 {
     /**
      * {@inheritdoc}
@@ -19,7 +19,7 @@ class MasterAnimalSearch extends MasterAnimal
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 125],
-            [['animal_type_id'], 'safe'],
+            [['bird_type_id'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class MasterAnimalSearch extends MasterAnimal
      */
     public function search($params)
     {
-        $query = MasterAnimal::find()->where(['status' => [1, 2]]);
+        $query = MasterBird::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -60,8 +60,8 @@ class MasterAnimalSearch extends MasterAnimal
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'bird_type_id' => $this->bird_type_id,
             'slug' => $this->slug,
-            'animal_type_id' => $this->animal_type_id,
             'know_as' => $this->know_as,
             'image' => $this->image,
             'created_at' => $this->created_at,

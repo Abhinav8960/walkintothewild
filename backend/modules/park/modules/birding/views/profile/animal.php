@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 
-$this->title = 'Birding Park Animal';
+$this->title = 'Birding Park Bird';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -29,7 +29,7 @@ $this->params['title'] = $this->title;
                                 'columns' => [
                                     ['class' => 'yii\grid\SerialColumn'],
                                     [
-                                        'label' => 'Animal',
+                                        'label' => 'Bird',
                                         'contentOptions' => ['style' => 'width: 10%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {

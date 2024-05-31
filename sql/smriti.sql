@@ -75,3 +75,9 @@ new TABLE for birding
 
  ALTER TABLE `birding_park` ADD `is_published` TINYINT NOT NULL DEFAULT '1' AFTER `longitude`;
 ALTER TABLE `safari_park` ADD `is_published` TINYINT NOT NULL DEFAULT '1' AFTER `longitude`;
+
+
+new table 
+
+meta_bird_type
+master_bird

@@ -63,8 +63,8 @@ class BirdingParkAnimalForm extends model
     {
         return [
             'birding_park_id' => 'Safari Park',
-            'master_animal_id' => 'Master Animals',
-            'animal_name' => 'Animal Name',
+            'master_animal_id' => 'Master Bird',
+            'animal_name' => 'Bird Name',
             'status' => 'Status',
         ];
     }
