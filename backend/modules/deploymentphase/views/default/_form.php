@@ -14,11 +14,17 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="row">
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'version')->textInput(['maxlength' => true, 'placeholder' => 'Enter Version']) ?>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
+        <?= $form->field($model, 'commit_no')->textInput(['maxlength' => true, 'placeholder' => 'Enter Commit Number']) ?>
+    </div>
+    <div class="col-md-4">
         <?= $form->field($model, 'date')->input('date') ?>
+    </div>
+    <div class="col-md-12">
+        <?= $form->field($model, 'migration')->textarea() ?>
     </div>
     <div class="col-md-12">
         <?= $form->field($model, 'description')->widget(CKEditor::className(), [

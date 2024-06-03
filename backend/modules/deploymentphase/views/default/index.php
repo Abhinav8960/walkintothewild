@@ -29,6 +29,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'version',
+                    'commit_no',
                     [
                         'attribute' => 'Date',
                         'format' => 'html',
@@ -44,6 +45,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->description;
+                        }
+                    ],
+                    [
+                        'label' => 'Migration',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->migration;
                         }
                     ],
                     'created_at:dateTime:Created at',

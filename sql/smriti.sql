@@ -81,3 +81,9 @@ new table
 
 meta_bird_type
 master_bird
+
+
+
+3 June 2024
+
+ALTER TABLE `deployment_phase` ADD `commit_no` VARCHAR(255) NULL DEFAULT NULL AFTER `version`, ADD `migration` LONGTEXT NULL DEFAULT NULL AFTER `commit_no`;

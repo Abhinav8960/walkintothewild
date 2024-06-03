@@ -16,6 +16,8 @@ class DeploymentPhaseForm extends model
 {
     public $date;
     public $description;
+    public $commit_no;
+    public $migration;
     public $version;
     public $status;
     public $status_option = [];
@@ -36,6 +38,8 @@ class DeploymentPhaseForm extends model
             $this->date =  $this->phase_model->date;
             $this->description = $this->phase_model->description;
             $this->version = $this->phase_model->version;
+            $this->commit_no = $this->phase_model->commit_no;
+            $this->migration = $this->phase_model->migration;
             $this->status = $this->phase_model->status;
         }
 
@@ -49,10 +53,11 @@ class DeploymentPhaseForm extends model
     public function rules()
     {
         return [
-            [['version', 'description', 'date'], 'required'],
+            [['version', 'description', 'date', 'commit_no'], 'required'],
             [['status'], 'integer'],
             [['version'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
+            [['migration'], 'safe']
 
         ];
     }
@@ -79,6 +84,8 @@ class DeploymentPhaseForm extends model
         $this->phase_model->date = GeneralModel::DateFormatForDb($this->date);
         $this->phase_model->description = $this->description;
         $this->phase_model->version = $this->version;
+        $this->phase_model->commit_no = $this->commit_no;
+        $this->phase_model->migration = $this->migration;
         $this->phase_model->status = $this->status;
     }
 }

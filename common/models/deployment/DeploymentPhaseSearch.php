@@ -17,8 +17,8 @@ class DeploymentPhaseSearch extends DeploymentPhase
     public function rules()
     {
         return [
-            [['date', 'description'], 'safe'],
-            [['version'], 'string', 'max' => 255],
+            [['date', 'description', 'migration'], 'safe'],
+            [['version', 'commit_no'], 'string', 'max' => 255],
 
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];
@@ -62,6 +62,7 @@ class DeploymentPhaseSearch extends DeploymentPhase
         $query->andFilterWhere([
             'id' => $this->id,
             'date' => $this->date,
+            'commit_no' => $this->commit_no,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

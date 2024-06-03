@@ -58,8 +58,8 @@ class DeploymentPhase extends \yii\db\ActiveRecord implements \common\interfaces
     public function rules()
     {
         return [
-            [['date', 'description'], 'safe'],
-            [['version'], 'string', 'max' => 255],
+            [['date', 'description', 'migration'], 'safe'],
+            [['version', 'commit_no'], 'string', 'max' => 255],
 
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
         ];

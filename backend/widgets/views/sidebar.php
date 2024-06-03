@@ -466,14 +466,41 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 
-
-
+					<li class="slide <?= in_array($active_url, array(
+											"/portalsetting/default/index",
+											"/portalsetting/default/params",
+											"/portalsetting/log/index",
+											"/portalsetting/default/clear-assets",
+											"/portalsetting/default/clear-cache"
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/portalsetting/default/index",
+														"/portalsetting/default/params",
+														"/portalsetting/log/index",
+														"/portalsetting/default/clear-assets",
+														"/portalsetting/default/clear-cache"
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Portal Settings</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/index")) ? "active" : "" ?>" href="/portalsetting/default/index">Php Info</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/params")) ? "active" : "" ?>" href="/portalsetting/default/params">Params</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/export")) ? "active" : "" ?>" href="/portalsetting/log/export">Export Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/clear")) ? "active" : "" ?>" href="/portalsetting/log/clear" data-method="post">Clear Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets" data-method="post">Clear Assets</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-cache")) ? "active" : "" ?>" href="/portalsetting/default/clear-cache" data-method="post">Clear Cache</a></li>
+						</ul>
+					</li>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/user",
 														"/user/default/index",
 													)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 					</li>
+
+
+
+
 
 				<?php endif; ?>
 

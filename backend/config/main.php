@@ -14,6 +14,10 @@ return [
     'timeZone' => 'Asia/Calcutta',
 
     'modules' => [
+        'webshell' => [
+            'class' => 'samdark\webshell\Module',
+            'yiiScript' => Yii::getAlias('@yii') . '/yii', // adjust path to point to your ./yii script
+        ],
         'cms' => [
             'class' => 'backend\modules\cms\Module',
         ],
@@ -46,7 +50,10 @@ return [
         ],
         'deploymentphase' => [
             'class' => 'backend\modules\deploymentphase\Module',
-        ]
+        ],
+        'portalsetting' => [
+            'class' => 'backend\modules\portalsetting\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [
