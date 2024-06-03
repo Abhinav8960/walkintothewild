@@ -27,9 +27,7 @@ class RenderedContent extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content'], 'required'],
-            [['content'], 'string'],
-            [['created_at'], 'safe'],
+            [['created_at', 'url', 'title', 'action_url', 'query_params'], 'safe'],
         ];
     }
 

@@ -25,6 +25,12 @@ return [
             'site_key'   => isset($_SERVER['GOOGLE_CAPTCHA_SITE_KEY']) ? $_SERVER['GOOGLE_CAPTCHA_SITE_KEY'] : '6LdlvuYpAAAAAK2nW4xcNThJOMxVl2S6cGKqVJ9C',
             'secret_key' => isset($_SERVER['GOOGLE_CAPTCHA_SECRET_KEY']) ? $_SERVER['GOOGLE_CAPTCHA_SECRET_KEY'] : '6LdlvuYpAAAAABTlzZZ2dSAH3BhHL9WkxG7gfyUi',
         ],
+        'view' => [
+            'on afterRender' => function ($event) {
+                // Your custom logic here
+                $event->output .= "\n<!-- Rendered on " . date('Y-m-d H:i:s') . " -->";
+            },
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],

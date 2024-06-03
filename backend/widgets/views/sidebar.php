@@ -471,14 +471,16 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/portalsetting/default/params",
 											"/portalsetting/log/index",
 											"/portalsetting/default/clear-assets",
-											"/portalsetting/default/clear-cache"
+											"/portalsetting/default/clear-cache",
+											"/portalsetting/pageview/index"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/portalsetting/default/index",
 														"/portalsetting/default/params",
 														"/portalsetting/log/index",
 														"/portalsetting/default/clear-assets",
-														"/portalsetting/default/clear-cache"
+														"/portalsetting/default/clear-cache",
+														"/portalsetting/pageview/index"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Portal Settings</a></li>
@@ -489,6 +491,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/clear")) ? "active" : "" ?>" href="/portalsetting/log/clear" data-method="post">Clear Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets" data-method="post">Clear Assets</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-cache")) ? "active" : "" ?>" href="/portalsetting/default/clear-cache" data-method="post">Clear Cache</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/pageview/index")) ? "active" : "" ?>" href="/portalsetting/pageview/index">Page View</a></li>
 						</ul>
 					</li>
 					<li class="slide">
