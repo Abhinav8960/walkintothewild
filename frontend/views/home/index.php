@@ -7,8 +7,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 <section class="banner_section position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/bannerhome.webp" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/bannerhome.webp" class="d-block w-100" alt="banner">
+        <source srcset="<?= $this->params['baseurl'] ?>/img/bannerhome.png" media="(max-width:576px)" type="image/webp">
+        <img src="<?= $this->params['baseurl'] ?>/img/bannerhome.png" class="d-block w-100" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container-lg">
