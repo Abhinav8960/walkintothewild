@@ -3170,4 +3170,50 @@ figure {
     font-weight: 700;
 }
 
+.container_login{
+
+    background: url('../img/bannerhome.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.login_form{
+
+    /* background: #add740; */
+    -webkit-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 40px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+.logIn_btn{
+    padding-top: 20px;
+}
+.logIn_btn button{
+
+    padding: 8px 10px !important;
+    width: 100%;
+    background-color: #F7BF39;
+    border-color: #F7BF39;
+    color: #000000;
+    font-weight: 500;
+    font-size: 18px;
+
+
+}
+.logIn_btn button:hover{
+
+    background-color: #fabb27;
+    border-color: #fabb27;
+    color: #000000;
+}
+
 /* footer css end */

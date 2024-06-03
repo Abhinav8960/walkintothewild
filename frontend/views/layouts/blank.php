@@ -28,7 +28,7 @@ AppAsset::register($this);
     <?php $this->beginBody() ?>
 
     <main role="main">
-        <div class="container">
+        <div class="container_login">
             <?= Alert::widget() ?>
 
             <?= $content ?>
