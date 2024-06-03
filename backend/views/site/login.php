@@ -9,90 +9,122 @@ use yii\bootstrap5\Html;
 
 $this->title = 'Login';
 ?>
-<?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+
 
 <div class="container">
-    <div class="login-box">
-        <img src="/img/logo_transparent.png">
-        <h1>Walk into the Wild</h1>
-        <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
-        <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false)  ?>
-        <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
-
-        <div class="login-with">
-            <p>Or login with</p>
-            <div class="google-login-box">
-                <?= \yii\authclient\widgets\AuthChoice::widget([
-                    'baseAuthUrl' => ['site/auth'],
-                    'popupMode' => false,
-                ]) ?>
+    <div class="row justify-content-center">
+        <div class="col-lg-5">
+            <div class="login_form_admin ">
+                <div class="topheadinglogin pb-4 text-center">
+                    <img src="/img/logo_transparent.png">
+                </div>
+                <div class="row pt-5">
+                    <div class="col-lg-12">
+                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                     <div class="mb-4">
+                     <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
+                     </div>
+                     <div class="mb-4">
+                     <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false)  ?>
+                     </div>
+                     <div class="mb-4">
+                     <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block logIn_btn ', 'name' => 'login-button']) ?>
+                     </div>
+                        <div class="login-with text-center text-black">
+                            <p>Or login with</p>
+                            <div class="google-login-box d-inline-flex ">
+                                <?= \yii\authclient\widgets\AuthChoice::widget([
+                                    'baseAuthUrl' => ['site/auth'],
+                                    'popupMode' => false,
+                                ]),'Google'?>
+                            </div>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
-<?php ActiveForm::end(); ?>
+
 
 
 <style>
-    body,
-    html {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        font-family: Arial, sans-serif;
+    .container_login {
+
+        background: url('/img/bannerhome.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
         display: flex;
-        justify-content: center;
         align-items: center;
-        background: url('/img/Login.jpg') no-repeat center center/cover;
-    }
-
-    .container {
-        width: 100%;
-        height: 100%;
-        display: flex;
         justify-content: center;
-        align-items: center;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    .login-box {
-        background-color: rgba(102, 153, 0, 0.8);
-        padding: 20px;
-        border-radius: 8px;
-        text-align: center;
-        max-width: 600px;
         width: 100%;
-        box-sizing: border-box;
-        margin: 0 auto;
-        /* Centering the login-box */
     }
 
-    .login-box h1 {
+    .login_form_admin {
+
+        /* background: #add740; */
+        background: #90942287;
+        box-shadow: 0px 4px 4px 0px #00000040;
+        /* backdrop-filter: blur(8px); */
+        /* -webkit-backdrop-filter: blur(8px); */
+        padding: 40px 20px;
+        border-radius: 10px;
+        /* border: 1px solid rgba(255, 255, 255, 0.18); */
         color: #fff;
-        margin-bottom: 20px;
+      
+
+    }
+    .login_form_admin #login-form .form-control{
+
+background-color: #DCE8FF;
+padding: 8px 10px;
+
+    } 
+ 
+    .login_form_admin #login-form .form-control:focus{
+
+        box-shadow: none;
+        border-color: #DCE8FF;
+    }
+    .logIn_btn {
+        padding-top: 20px;
     }
 
-    .login-box .form-group {
-        display: flex;
-        justify-content: center;
+    button.logIn_btn {
+
+        padding: 8px 10px !important;
+        width: 100%;
+        background-color:#09422D;
+        border-color:#09422D;
+        color: #fff;
+        font-weight: 500;
+        font-size: 18px;
+
+
     }
 
-    .login-box input[type="text"],
-    .login-box input[type="password"] {
-        width: 80%;
-        /* Adjusted to fit within the form */
-        padding: 10px;
-        margin: 10px 0;
-        border: none;
-        border-radius: 4px;
-        box-sizing: border-box;
-        margin: 0 auto;
-        /* Centering input fields */
-    }
+    button.logIn_btn:hover {
 
-    .login-box button[type="submit"] {
-        width: 80%;
+        background-color: #09422D !important;
+        border-color: #09422D;
+        color: #fff;
+    }
+    .google-login-box{
+
+        background: #DCE8FF;
+        padding: 6px 24px;
+        border-radius: 0.5rem;
+        color: #000000;
+        align-items: center;
+    }
+    .auth-clients{
+
+        margin: -8px;
+        padding: 0;
+        
     }
 </style>
