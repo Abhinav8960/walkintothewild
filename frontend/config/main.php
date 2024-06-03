@@ -12,6 +12,13 @@ return [
     'bootstrap' => ['log', 'audit'],
     'defaultRoute' => '/coming-soon',
     'controllerNamespace' => 'frontend\controllers',
+
+    'modules' => [
+        'main' => [
+            'class' => 'frontend\modules\main\Module',
+        ],
+
+    ],
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
