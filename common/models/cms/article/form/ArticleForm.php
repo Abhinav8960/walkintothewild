@@ -5,6 +5,7 @@ namespace common\models\cms\article\form;
 use Yii;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleTopic;
+use common\models\GeneralModel;
 
 /**
  * This is the model class for table "master_blog".
@@ -18,14 +19,23 @@ use common\models\cms\article\ArticleTopic;
 class ArticleForm extends \yii\base\Model
 {
     public $title;
+    public $sub_title;
     public $slug;
     public $article_author_id;
+    public $author_name;
     public $description;
     public $meta_title;
     public $meta_description;
     public $meta_keywords;
+    public $view;
+    public $post_body;
+    public $comment_allowed;
+    public $approval_required;
+    public $is_schedule;
+    public $publish_date_time;
     public $status;
     public $banner_image;
+    public $feature_image;
     public $article_topics;
     public $article_model;
     public $action_url;
@@ -42,12 +52,20 @@ class ArticleForm extends \yii\base\Model
         if ($article_model != null) {
             $this->article_model = $article_model;
             $this->title = $this->article_model->title;
+            $this->sub_title = $this->article_model->sub_title;
             $this->slug = $this->article_model->slug;
             $this->description = $this->article_model->description;
             $this->article_author_id = $this->article_model->article_author_id;
+            $this->author_name = $this->article_model->author_name;
             $this->meta_title = $this->article_model->meta_title;
             $this->meta_description = $this->article_model->meta_description;
             $this->meta_keywords = $this->article_model->meta_keywords;
+            $this->view = $this->article_model->view;
+            $this->post_body = $this->article_model->post_body;
+            $this->comment_allowed = $this->article_model->comment_allowed;
+            $this->approval_required = $this->article_model->approval_required;
+            $this->is_schedule = $this->article_model->is_schedule;
+            $this->publish_date_time = $this->article_model->publish_date_time;
             $this->status = $this->article_model->status;
             $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
         }
@@ -60,13 +78,13 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'meta_title'], 'required'],
+            [['title', 'meta_title', 'slug'], 'required'],
             // [['title', 'article_author_id', 'description'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
             [['banner_image', 'article_topics'], 'safe'],
-            [['banner_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 100 * 1024],
+            [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 100 * 1024],
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
             [
@@ -76,6 +94,12 @@ class ArticleForm extends \yii\base\Model
                 'targetClass' => Article::className(), 'targetAttribute' => ['title'],
                 'message' => 'This Title has already been taken'
             ],
+
+            [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
+            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status'], 'integer'],
+            [['publish_date_time', 'banner', 'feature_image'], 'safe'],
+            [['title', 'author_name', 'meta_title'], 'string', 'max' => 255],
+            [['sub_title'], 'string', 'max' => 75],
         ];
     }
 
@@ -88,12 +112,21 @@ class ArticleForm extends \yii\base\Model
             'id' => 'ID',
             'title' => 'Title',
             'slug' => 'Slug',
-            'article_author_id' => 'Author Name',
-            'banner_image' => 'Banner Image',
-            'description' => 'Article Description',
-            'meta_title' => 'Meta Title Tag',
+            'sub_title' => 'Sub Title',
+            'description' => 'Description',
+            'banner' => 'Banner',
+            'feature_image' => 'Feature Image',
+            'article_author_id' => 'Article Author',
+            'author_name' => 'Author Name',
+            'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
             'meta_keywords' => 'Meta Keywords',
+            'view' => 'View',
+            'post_body' => 'Post Body',
+            'comment_allowed' => 'Comment Allowed',
+            'approval_required' => 'Approval Required',
+            'is_schedule' => 'Is Schedule',
+            'publish_date_time' => 'Publish Date Time',
             'status' => 'Status',
         ];
     }
@@ -106,12 +139,22 @@ class ArticleForm extends \yii\base\Model
     public function initializeForm()
     {
         $this->article_model->title = $this->title;
+        $this->article_model->sub_title = $this->sub_title;
         $this->article_model->slug = $this->slug;
         $this->article_model->description = $this->description;
         $this->article_model->article_author_id = $this->article_author_id;
+        if ($this->article_author_id) {
+            $this->article_model->author_name =  GeneralModel::authoroption()[$this->article_author_id];
+        }
         $this->article_model->meta_title = $this->meta_title;
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;
+        $this->article_model->view = $this->view;
+        $this->article_model->post_body = $this->post_body;
+        $this->article_model->comment_allowed = $this->comment_allowed;
+        $this->article_model->approval_required = $this->approval_required;
+        $this->article_model->is_schedule = $this->is_schedule;
+        $this->article_model->publish_date_time = $this->publish_date_time;
         $this->article_model->status = $this->status;
     }
 
@@ -122,20 +165,51 @@ class ArticleForm extends \yii\base\Model
      */
     public function UploadFiles()
     {
-        $article_model = $this->article_model;
-        $file_folder = \Yii::$app->params['datapath'];
 
-        if (!file_exists($file_folder)) {
-            mkdir($file_folder);
-            chmod($file_folder, 0777);
+
+
+        if ($this->banner_image) {
+            $storagePath = Yii::$app->params['datapath'] . '/article';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->article_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
+            $fileName = 'article_banner' . time() . '.' . $this->banner_image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+            if ($this->banner_image->saveAs($filePath)) {
+                $this->article_model->banner = $fileName;
+                $this->article_model->save(false);
+            }
         }
-        $fullpath = $file_folder . '/article/' . $article_model->id;
-        \yii\helpers\FileHelper::createDirectory($fullpath, $mode = 0777, $recursive = true);
-        if ($file = $this->banner_image) {
-            $uploadFileName = 'banner_' . time() . '.' .  $file->extension;
-            $file->saveAs($fullpath . '/' . $uploadFileName);
-            $article_model->banner = $uploadFileName;
-            $article_model->save(false);
+
+        if ($this->feature_image) {
+            $storagePath = Yii::$app->params['datapath'] . '/article';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->article_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
+            $fileName = 'article_feature' . time() . '.' . $this->feature_image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+            if ($this->feature_image->saveAs($filePath)) {
+                $this->article_model->feature_image = $fileName;
+                $this->article_model->save(false);
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 <?php
-// In backend/controllers/LogController.php
 
 namespace backend\modules\portalsetting\controllers;
 

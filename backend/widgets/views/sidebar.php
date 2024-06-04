@@ -279,13 +279,17 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/about",
 											"/cms/disclaimer",
 											"/cms/privacypolicy",
-											"/cms/termscondition"
+											"/cms/termscondition",
+											"/cms/faqcategory",
+											"/cms/faqs",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
 														"/cms/article-category/index",
 														"/cms/article-author/index",
 														"/cms/article-tag/index",
+														"/cms/faqcategory",
+														"/cms/faqs",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 													"/cms",
@@ -296,7 +300,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/about",
 													"/cms/disclaimer",
 													"/cms/privacypolicy",
-													"/cms/termscondition"
+													"/cms/termscondition",
+													"/cms/faqcategory",
+													"/cms/faqs",
 												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/article-category/index",
@@ -306,7 +312,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/about",
 																				"/cms/disclaimer",
 																				"/cms/privacypolicy",
-																				"/cms/termscondition"
+																				"/cms/termscondition",	"/cms/faqcategory",
+																				"/cms/faqs",
+
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -344,11 +352,19 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="sub-side-menu__item" href="#">Article</a></li>
 								</ul>
 							</li>
-							<li class="sub-slide">
+							<li class="sub-slide <?= in_array($active_url, array(
+														"/cms",
+														"/cms/faqcategory",
+														"/cms/faqs",
+													)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">FAQs</span><i class="sub-angle fe fe-chevron-right"></i></a>
-								<ul class="sub-slide-menu" style="display: none;">
-									<li><a class="sub-side-menu__item" href="/cms/faqcategory">FAQ Category</a></li>
-									<li><a class="sub-side-menu__item" href="/cms/faqs">FAQs</a></li>
+								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																"/cms",
+																"/cms/faqcategory",
+																"/cms/faqs",
+															)) ? "open" : "" ?>" style="display: none;">
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-category/index")) ? "active" : "" ?>" href="/cms/faqcategory">FAQ Category</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/faqs")) ? "active" : "" ?>" href="/cms/faqs">FAQs</a></li>
 								</ul>
 							</li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/banner")) ? "active" : "" ?>" href="#">Banners</a></li>
@@ -429,11 +445,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item" href="#"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
 					</li>
 
-
-
-					<li class="slide">
-						<a class="side-menu__item" href="#"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Reviews</span></a>
-					</li>
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
@@ -460,7 +471,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
 							<li><a class="slide-item" href="#">Report</a></li>
-							<li><a class="slide-item" href="#">Mail Log</a></li>
 							<li><a class="slide-item" href="#">Tracking</a></li>
 							<li><a class="slide-item" href="#">Ranking</a></li>
 						</ul>

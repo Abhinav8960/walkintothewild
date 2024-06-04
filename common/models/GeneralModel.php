@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\cms\article\ArticleAuthor;
 use common\models\cms\faqcategory\Faq;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
@@ -251,6 +252,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function faqoption()
     {
         return ArrayHelper::map(Faq::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
+
+
+
+    public static function authoroption()
+    {
+        return ArrayHelper::map(ArticleAuthor::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
     }
 
 

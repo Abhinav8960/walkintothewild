@@ -9,22 +9,31 @@ use Yii;
  *
  * @property int $id
  * @property string $title
+ * @property string $slug
+ * @property string|null $sub_title
  * @property string|null $description
  * @property string|null $banner
+ * @property string|null $feature_image
+ * @property int|null $article_author_id
+ * @property string|null $author_name
  * @property string $meta_title
  * @property string|null $meta_description
  * @property string|null $meta_keywords
+ * @property int $view
+ * @property resource|null $post_body
+ * @property int|null $comment_allowed
+ * @property int|null $approval_required
+ * @property int|null $is_schedule
+ * @property string|null $publish_date_time
  * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property int|null $created_at
+ * @property int|null $updated_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
  */
 class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
-
     use \common\traits\CommanRelationship;
-
     /**
      * {@inheritdoc}
      */
@@ -33,31 +42,19 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return 'article';
     }
 
-    public function behaviors()
-    {
-        return [
-            \yii\behaviors\TimestampBehavior::className(),
-            \yii\behaviors\BlameableBehavior::className(),
-            [
-                'class' => \yii\behaviors\SluggableBehavior::class,
-                'attribute' => 'title',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-                'ensureUnique' => true,
-            ],
-        ];
-    }
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['title', 'meta_title'], 'required'],
-            [['description', 'meta_description', 'meta_keywords'], 'string'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title', 'banner', 'meta_title'], 'string', 'max' => 255],
+            [['title', 'slug', 'meta_title'], 'required'],
+            [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
+            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['publish_date_time'], 'safe'],
+            [['title', 'banner', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
+            [['slug'], 'string', 'max' => 300],
+            [['sub_title'], 'string', 'max' => 75],
         ];
     }
 
@@ -69,11 +66,22 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return [
             'id' => 'ID',
             'title' => 'Title',
+            'slug' => 'Slug',
+            'sub_title' => 'Sub Title',
             'description' => 'Description',
             'banner' => 'Banner',
+            'feature_image' => 'Feature Image',
+            'article_author_id' => 'Article Author ID',
+            'author_name' => 'Author Name',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
             'meta_keywords' => 'Meta Keywords',
+            'view' => 'View',
+            'post_body' => 'Post Body',
+            'comment_allowed' => 'Comment Allowed',
+            'approval_required' => 'Approval Required',
+            'is_schedule' => 'Is Schedule',
+            'publish_date_time' => 'Publish Date Time',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
