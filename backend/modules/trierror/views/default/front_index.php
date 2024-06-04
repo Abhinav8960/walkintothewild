@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Backend Error Log';
+$this->title = 'Frontend Error Log';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] =  ['label' => 'trierror', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;

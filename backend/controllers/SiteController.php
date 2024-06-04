@@ -9,6 +9,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use backend\components\AuthHandler;
 use common\models\MailLog;
+use common\models\trierror\BackendErrorLog;
+use common\models\trierror\form\BackendErrorLogForm;
 use common\models\trierror\form\ErrorLogForm;
 use yii\web\Response;
 
@@ -147,10 +149,9 @@ class SiteController extends Controller
         $reference_url = $request->referrer;
         $method = $request->getMethod();
         $ip_address = $request->getRemoteIP();
-        $error_model = new ErrorLogForm();
+        $error_model = new BackendErrorLogForm();
         $error_model->scenario = 'create';
-        $error_model->errorlog->setAttributes([
-            'panel_type_id'         => 1,
+        $error_model->backend_errorlog->setAttributes([
             'error_type'            => $error_type,
             'request_url'           => $request_url,
             'reference_url'         => $reference_url,
@@ -159,8 +160,9 @@ class SiteController extends Controller
             'error_msg'             => $error_msg,
             'user_session_id'       => $user_session_id,
             'source'                => $source,
+            'user_agent'            => Yii::$app->request->userAgent,
         ]);
-        $error_model->errorlog->save(false);
+        $error_model->backend_errorlog->save(false);
 
         return $this->render(
             'error',

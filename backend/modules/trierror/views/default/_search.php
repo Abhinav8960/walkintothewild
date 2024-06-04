@@ -21,14 +21,6 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row">
     <div class="col-md-2">
-        <?= $form->field($model, 'panel_type_id')->dropDownList(
-            GeneralModel::paneloption(),
-            [
-                'prompt' => 'Select Panel Type',
-            ]
-        ) ?>
-    </div>
-    <div class="col-md-2">
         <?= $form->field($model, 'ip_address')->textInput(['placeholder' => 'IP Address']) ?>
     </div>
     <div class="col-md-2">
