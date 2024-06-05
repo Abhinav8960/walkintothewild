@@ -94,4 +94,18 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         return $this->hasOne(ArticleAuthor::className(), ['id' => 'article_author_id']);
     }
+
+    public function getFeatureimagepath()
+    {
+        if ($this->feature_image != '') {
+            return '/storage/article/' . $this->id . '/' . $this->feature_image;
+        }
+    }
+
+    public function getBannerimagepath()
+    {
+        if ($this->banner_image != '') {
+            return '/storage/article/' . $this->id . '/' . $this->banner_image;
+        }
+    }
 }

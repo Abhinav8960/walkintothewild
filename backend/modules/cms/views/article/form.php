@@ -54,13 +54,34 @@ $this->params['title'] = $this->title;
                     </div>
 
 
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'banner_image')->fileInput() ?>
-                    </div>
 
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'feature_image')->fileInput() ?>
-                    </div>
+                    <?php
+                    if ($model->article_model->banner_image) { ?>
+                        <div class="col-md-3">
+                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+                        </div>
+                        <div class="col-md-1">
+                            <?php echo '<img src="' . $model->article_model->bannerimagepath . '" width="75" height="75"></img>'; ?>
+                        </div>
+                    <?php } else { ?>
+                        <div class="col-md-4">
+                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+                        </div>
+                    <?php  } ?>
+
+                    <?php
+                    if ($model->article_model->feature_image) { ?>
+                        <div class="col-md-3">
+                            <?= $form->field($model, 'feature_image')->fileInput()->label('Feature Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+                        </div>
+                        <div class="col-md-1">
+                            <?php echo '<img src="' . $model->article_model->featureimagepath . '" width="75" height="75"></img>'; ?>
+                        </div>
+                    <?php } else { ?>
+                        <div class="col-md-4">
+                            <?= $form->field($model, 'feature_image')->fileInput()->label('Feature Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+                        </div>
+                    <?php  } ?>
 
                     <div class="col-md-12">
                         <?= $form->field($model, 'description')->widget(CKEditor::className(), [

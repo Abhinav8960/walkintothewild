@@ -86,13 +86,13 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'meta_title', 'slug'], 'required'],
+            [['title', 'description', 'slug', 'article_tag_id', 'banner_image', 'feature_image', 'comment_allowed', 'article_topics'], 'required'],
             // [['title', 'article_author_id', 'description'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id', 'article_tag_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
             [['article_topics'], 'safe'],
-            [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 100 * 1024],
+            [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 350 * 350],
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
             [
