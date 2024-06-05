@@ -56,8 +56,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <?= $this->render('_park_side_search', [
                 'searchModel' => $searchModel,
             ]) ?>
-            <div class="col-lg-9">
-                <div class="col-12">
+            <div class="col-lg-8 col-xxl-10 col-xl-9">
                     <div class="topfilter d-md-flex justify-content-between align-items-center w-100">
                         <div class="left_text">
                             <p class="">We found <strong><?= count($models) ?> parks</strong> for you</p>
@@ -77,7 +76,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                     <?php if ($models) {
                         foreach ($models as $model) { ?>
-                            <a href="/park/<?= $model->slug ?>">
+                            <a href="/park/<?= $model->slug ?>" class="parking_Box">
 
                                 <div class="searchSafari_wraper mb-4">
                                     <div class="row">
@@ -124,8 +123,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <?php }
                     } ?>
                 </div>
-            </div>
-
         </div>
     </div>
     </div>
