@@ -162,6 +162,55 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return $this->hasOne(MasterRailwayStation::className(), ['id' => 'nearest_railway_station']);
     }
 
+    public function getRailwaystationtwo()
+    {
+        return $this->hasOne(MasterRailwayStation::className(), ['id' => 'nearest_railway_station_two']);
+    }
+
+    public function getGallery()
+    {
+        return $this->hasMany(SafariParkGallery::className(), ['safari_park_id' => 'id']);
+    }
+
+
+
+    public function getGalleryimag()
+    {
+        return $this->hasOne(SafariParkGallery::className(), ['safari_park_id' => 'id']);
+    }
+    public function getAnimals()
+    {
+        return $this->hasMany(SafariParkAnimal::className(), ['safari_park_id' => 'id']);
+    }
+
+    public function getSessions()
+    {
+        return $this->hasMany(SafariParkSession::className(), ['safari_park_id' => 'id']);
+    }
+
+
+    public function getVehicles()
+    {
+        return $this->hasMany(SafariParkVehicle::className(), ['safari_park_id' => 'id']);
+    }
+
+
+
+    public function getBufferzones()
+    {
+        return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 2]);
+    }
+
+    public function getCorezones()
+    {
+        return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 1]);
+    }
+
+
+    public function getFlorafauns()
+    {
+        return $this->hasMany(SafariParkFloraFauna::className(), ['safari_park_id' => 'id']);
+    }
 
 
     public function getFeatureimagepath()

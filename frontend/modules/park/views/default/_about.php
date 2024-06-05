@@ -7,15 +7,11 @@
     <div class="accordion-body">
         <div class="about_content">
             <div class="safrititles py-3">
-                <h5 class="">Bandhavgarh National Park</h5>
+                <h5 class=""><?= $model->about_title ?></h5>
             </div>
-            <p>One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest densities of tigers in India. This biodiverse park is known for its large population of royal Bengal tigers, especially in the central Tala zone. Other animals include white tigers, leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of bird species, including eagles</p>
-
-            <p>One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest densities of tigers in India. This biodiverse park is known for its large population of royal Bengal tigers, especially in the central Tala zone. Other animals include white tigers, leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of bird species, including eagles. </p>
-
-            <p>One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest densities of tigers in India. This biodiverse park is known for its large population of royal Bengal tigers, especially in the central Tala zone. Other animals include white tigers, leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of bird species, including eagles. One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest densities of tigers in India. This biodiverse park is known for its large population of royal Bengal tigers, especially in the central Tala zone. Other animals include white tigers, leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of bird species, including eagles.</p>
-
-            <p>One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest densities of tigers in India. This biodiverse park is known for its large population of royal Bengal tigers, especially in the central Tala zone. Other animals include white tigers, leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of bird species, including eagles. One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest densities of tigers in India. This biodiverse park is known for its large population of royal Bengal tigers, especially in the central Tala zone. Other animals include white tigers, leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of bird species, including eagles. One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest densities of tigers in India. This biodiverse park is known for its large population of royal Bengal tigers, especially in the central Tala zone. Other animals include white tigers, leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of bird species, including eagles.</p>
+            <p>
+                <?= $model->about_description ?>
+            </p>
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-4">
-                <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
+                <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Enter short description']) ?>
             </div>
 
             <?php
