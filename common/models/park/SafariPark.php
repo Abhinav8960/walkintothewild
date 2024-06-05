@@ -212,6 +212,11 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return $this->hasMany(SafariParkFloraFauna::className(), ['safari_park_id' => 'id']);
     }
 
+    public function getMonths()
+    {
+        return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id']);
+    }
+
 
     public function getFeatureimagepath()
     {

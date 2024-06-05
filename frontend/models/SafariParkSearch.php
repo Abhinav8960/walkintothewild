@@ -46,9 +46,12 @@ class SafariParkSearch extends SafariPark
      */
     public function search($params, $pagination = true)
     {
-        $query = SafariPark::find()->where(['status' => 1]);
+        $query = SafariPark::find()->where(['safari_park.status' => 1]);
 
         // add conditions that should always apply here
+
+
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -65,15 +68,36 @@ class SafariParkSearch extends SafariPark
             return $dataProvider;
         }
 
+
+        if ($this->month_id) {
+            $query->joinwith(['months' => function ($query) {
+                $query->andFilterWhere(['safari_park_month.month_id' => $this->month_id]);
+            }]);
+        }
+
+
+        if ($this->master_animal_id) {
+            $query->joinwith(['animals' => function ($query) {
+                $query->andFilterWhere(['safari_parks_animal.master_animal_id' => $this->master_animal_id]);
+            }]);
+        }
+
+
+        if ($this->master_vehicle_id) {
+            $query->joinwith(['vehicles' => function ($query) {
+                $query->andFilterWhere(['safari_parks_vehicle.vehicle_id' => $this->master_vehicle_id]);
+            }]);
+        }
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'slug' => $this->slug,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'safari_park.slug' => $this->slug,
+            'safari_park.master_location_id' => $this->master_location_id,
+            'safari_park.created_at' => $this->created_at,
+            'safari_park.created_by' => $this->created_by,
+            'safari_park.updated_at' => $this->updated_at,
+            'safari_park.updated_by' => $this->updated_by,
+            'safari_park.status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'title', $this->title]);
 
