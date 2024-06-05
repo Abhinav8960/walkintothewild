@@ -35,110 +35,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                         <div class="tab-cont">
                             <div class="tab-pane">
-                                <div class="row gx-0">
-                                    <div class="col-lg-10 col-xl-11">
-                                        <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
-                                            <div class="select_boxes position-relative">
-                                                <select class="form-select form-select-lg" aria-label="Large select example">
-                                                    <option selected>North india, South...</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                                <div class="placeholder_select">
-                                                    <p>Location</p>
-                                                </div>
-                                                <div class="icons_select">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="select_boxes position-relative">
-                                                <select class="form-select form-select-lg " aria-label="Large select example">
-                                                    <option selected>May,june,July..</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                                <div class="placeholder_select">
-                                                    <p>Month</p>
-                                                </div>
-                                                <div class="icons_select">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="select_boxes position-relative">
-                                                <select class="form-select form-select-lg " aria-label="Large select example">
-                                                    <option selected>Tiger Elephent..</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                                <div class="placeholder_select">
-                                                    <p>Animal</p>
-                                                </div>
-                                                <div class="icons_select">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="select_boxes position-relative">
-                                                <select class="form-select form-select-lg " aria-label="Large select example">
-                                                    <option selected>Gypsy,Bus...</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
-                                                </select>
-                                                <div class="placeholder_select">
-                                                    <p>Vehicel</p>
-                                                </div>
-                                                <div class="icons_select">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="advanceSearch " id="advanceSearchBox">
-                                                <div class="d-md-flex gap-1">
-                                                    <div class="select_boxes position-relative">
-                                                        <select class="form-select form-select-lg " aria-label="Large select example">
-                                                            <option selected>Tiger Elephent..</option>
-                                                            <option value="1">One</option>
-                                                            <option value="2">Two</option>
-                                                            <option value="3">Three</option>
-                                                        </select>
-                                                        <div class="placeholder_select">
-                                                            <p>Accommodation</p>
-                                                        </div>
-                                                        <div class="icons_select">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="select_boxes position-relative">
-                                                        <select class="form-select form-select-lg " aria-label="Large select example">
-                                                            <option selected>Gypsy,Bus...</option>
-                                                            <option value="1">One</option>
-                                                            <option value="2">Two</option>
-                                                            <option value="3">Three</option>
-                                                        </select>
-                                                        <div class="placeholder_select">
-                                                            <p>Safari seasion</p>
-                                                        </div>
-                                                        <div class="icons_select">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/day-night_8776508.png" alt="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-xl-1">
-                                        <div class="search">
-                                            <div class="serch_btn">
-                                                <button>Search</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="toogle_icon mt-2">
-                                    <button id="toggleButton"><i class="fa-solid fa-chevron-down"></i> Advance Search</button>
-                                </div>
+                                <?= $this->render('_advance_search', [
+                                    'model' => $searchModel,
+                                ]) ?>
                             </div>
                             <!-- <div class="tab-pane">
                   <div class="row gx-0">
@@ -457,42 +356,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
     </div>
 </section>
-<?php
-if ($featured_parks) {    ?>
-    <section class="safariduring_sesons">
-        <div class="container-lg">
-            <div class="row justify-content-center">
-                <div class="col-12">
-                    <div class="title_web">
-                        <h2>BEST SAFARIS DURING <br>MONSOON SEASON</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="safari-carousel owl-carousel owl-theme">
-            <?php
-            foreach ($featured_parks as $featured_park) {
-            ?>
-                <div class="safari-box">
-                    <figure class="image-box">
-                        <img src="<?= isset($featured_park->feature_image) ? $featured_park->featureimagepath : $this->params['baseurl'] . '/img/Jim Corbett.jpg' ?>" alt="">
-                    </figure>
-                    <div class="content-box">
-                        <h3><a href="Selected-Safari.html"><?= $featured_park->title ?></a></h3>
-                    </div>
-                    <div class="overlay-content d-flex align-items-center justify-content-between">
-                        <div class="content_o pe-2">
-                            <h3><a href="Selected-Safari.html"><?= $featured_park->title ?></a></h3>
-                            <p><?= $featured_park->short_description ?></p>
-                        </div>
-                        <div class="link"><a href="/park/<?= $featured_park->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
-                    </div>
-                </div>
-            <?php }
-            ?>
-        </div>
-    </section>
-<?php } ?>
+<section class="safariduring_sesons">
+    <?= $this->render('park_carousel', [
+        'featured_parks' => $featured_parks,
+    ]) ?>
+</section>
 <section class="animal-wrapper pb-4">
     <div class="container-lg">
         <div class="row justify-content-center">

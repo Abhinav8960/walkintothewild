@@ -5,6 +5,19 @@
 </h2>
 <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
     <div class="accordion-body">
-        <strong>map Content</strong>
+        <?php
+
+        $latitude = $model->latitude;
+        $longitude = $model->longitude;
+
+        $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
+
+        if (!empty($latitude) && !empty($longitude)) {
+        ?>
+
+            <iframe width="100%" height="450" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
+            </iframe>
+
+        <?php } ?>
     </div>
 </div>

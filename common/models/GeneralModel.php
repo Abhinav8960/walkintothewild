@@ -148,6 +148,24 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+
+    public static function numberformat($num)
+    {
+        if ($num) {
+            $len = strlen($num);
+            $m = '';
+            $num = strrev($num);
+            for ($i = 0; $i < $len; $i++) {
+                if (($i == 3 || ($i > 3 && ($i - 1) % 2 == 0)) && $i != $len) {
+                    $m .= ',';
+                }
+                $m .= $num[$i];
+            }
+            return strrev($m);
+        }
+        return $num;
+    }
+
     /**
      * Get Panel Option List
      *

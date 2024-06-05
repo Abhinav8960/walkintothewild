@@ -5,27 +5,29 @@
     <div class="accordion-body py-4">
         <div class="row">
             <div class="col-lg-12 col-xl-3">
-                <div class="slider_safariimg owl-carousel owl-theme position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
-                </div>
+                <?php
+
+                use common\models\GeneralModel;
+
+                if ($model->gallery) { ?>
+                    <div class="slider_safariimg owl-carousel owl-theme position-relative">
+                        <?php foreach ($model->gallery as $gallery) { ?>
+                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
+                        <?php } ?>
+                    </div>
+                <?php } ?>
             </div>
             <div class="col-lg-12 col-xl-9">
                 <div class="safrititles pt-lg-0 pt-3 d-sm-flex justify-content-between align-items-center">
-                    <h5 class=""><a href="">Bandhavgarh National Park</a></h5>
+                    <h5 class=""><a href=""><?= $model->title ?></a></h5>
                     <div class="btn_wrap">
-                        <button class="intested_btn"><i class="fa-solid fa-user-group"></i> OFFICIAL WEBSITE</button>
+                        <?php if ($model->official_website) { ?>
+                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn"><i class="fa-solid fa-user-group"></i> OFFICIAL WEBSITE</a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="seelctes_text pt-3 pb-5 border_bottom2">
-                    <p>One of the most popular wildlife sanctuaries of Madhya Pradesh with one of the highest
-                        densities of tigers in India. This biodiverse park is known for its large population of royal
-                        Bengal tigers, especially in the central Tala zone. Other animals include white tigers,
-                        leopards and deer. The mix of tropical forest, Sal trees and grassland is home to scores of
-                        bird species, including eagles.</p>
+                    <p><?= $model->long_description ?></p>
                 </div>
                 <div class="row pt-3">
                     <div class="col-md-6 mb-3">
@@ -34,7 +36,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0">Madhya Pradesh, Central India</p>
+                                <p class="mb-0"><?= isset($model->state_id) ? $model->state->state_name : '' ?>, <?= isset($model->location_id) ? $model->location->title : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -44,7 +46,14 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0">Gypsy and Canter</p>
+                                <p class="mb-0">
+                                    <?php if ($model->vehicles) {
+
+                                        foreach ($model->vehicles as $vehicle) {
+                                            echo isset($vehicle->vehicle_id) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
+                                    <?php }
+                                    } ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -54,7 +63,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0">Umaria Railway Station, Katni Railway Station</p>
+                                <p class="mb-0"><?= isset($model->nearest_railway_station) ? $model->railwaystation->title . ' , ' : '' ?><?= isset($model->nearest_railway_station_two) ? $model->railwaystationtwo->title : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -64,7 +73,14 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0">Morning, Evening, Night</p>
+                                <p class="mb-0">
+                                    <?php if ($model->sessions) {
+
+                                        foreach ($model->sessions as $session) {
+                                            echo isset($session->session_id) ? $session->metasession->title . ',' : '' ?>
+                                    <?php }
+                                    } ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -74,7 +90,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0">Jabalpur Airport</p>
+                                <p class="mb-0"><?= isset($model->nearest_airport) ? $model->airport->name : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -84,7 +100,14 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0">Tiger, Leopard, Wolf, Chital, Black Buck</p>
+                                <p class="mb-0">
+                                    <?php if ($model->animals) {
+
+                                        foreach ($model->animals as $animal) {
+                                            echo $animal->animal_name . ',' ?>
+                                    <?php }
+                                    } ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -94,7 +117,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0">7,000 - 9,000 Average Safari Price</p>
+                                <p class="mb-0"><?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?> Average Safari Price</p>
                             </div>
                         </div>
                     </div>
@@ -120,21 +143,14 @@
 
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tala</td>
-                                        <td>Tala</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Magadhi</td>
-                                        <td>Magadhi</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Khitauli</td>
-                                        <td>Khitauli</td>
-
-                                    </tr>
+                                    <?php if ($model->corezones) {
+                                        foreach ($model->corezones as $corezone) { ?>
+                                            <tr>
+                                                <td><?= $corezone->zone_name ?></td>
+                                                <td><?= $corezone->entry_gate_name ?></td>
+                                            </tr>
+                                    <?php }
+                                    } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -159,21 +175,14 @@
 
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Tala</td>
-                                        <td>Tala</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Magadhi</td>
-                                        <td>Magadhi</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Khitauli</td>
-                                        <td>Khitauli</td>
-
-                                    </tr>
+                                    <?php if ($model->bufferzones) {
+                                        foreach ($model->bufferzones as $bufferzone) { ?>
+                                            <tr>
+                                                <td><?= $bufferzone->zone_name ?></td>
+                                                <td><?= $bufferzone->entry_gate_name ?></td>
+                                            </tr>
+                                    <?php }
+                                    } ?>
                                 </tbody>
                             </table>
                         </div>

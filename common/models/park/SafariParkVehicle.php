@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\models\master\vehicle\MasterVehicle;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -74,5 +75,10 @@ class SafariParkVehicle extends \yii\db\ActiveRecord implements \common\interfac
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getMastervehicle()
+    {
+        return $this->hasOne(MasterVehicle::className(), ['id' => 'vehicle_id']);
     }
 }

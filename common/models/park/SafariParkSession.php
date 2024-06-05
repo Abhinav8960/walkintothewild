@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\models\meta\MetaSafariSession;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -71,5 +72,10 @@ class SafariParkSession extends \yii\db\ActiveRecord implements \common\interfac
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getMetasession()
+    {
+        return $this->hasOne(MetaSafariSession::className(), ['id' => 'session_id']);
     }
 }

@@ -89,6 +89,7 @@ return [
             'rules' => [
                 '/park' => '/park/default/index',
                 '/park/<slug>' => '/park/default/view',
+                '/parklist' => '/park/default/parklist',
             ],
         ],
 
