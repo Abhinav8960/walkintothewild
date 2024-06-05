@@ -55,14 +55,23 @@ $this->params['title'] = $this->title;
 
 
                     <div class="col-md-4">
+                        <?= $form->field($model, 'banner_image')->fileInput() ?>
+                    </div>
+
+                    <div class="col-md-4">
                         <?= $form->field($model, 'feature_image')->fileInput() ?>
                     </div>
+
                     <div class="col-md-12">
                         <?= $form->field($model, 'description')->widget(CKEditor::className(), [
                             'options' => ['rows' => 4],
                             'preset' => 'full',
 
                         ]) ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'article_date')->input('date', ['class' => 'form-control']) ?>
                     </div>
 
 

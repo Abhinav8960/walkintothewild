@@ -2,6 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
+use common\interfaces\StatusInterface;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -46,6 +47,7 @@ class ArticleController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
 
+                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
                 $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
                     $model->initializeForm();
@@ -61,7 +63,6 @@ class ArticleController extends Controller
                                 $articleTopic->save(false);
                             }
                         }
-
 
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['/cms/article/index']);
@@ -95,11 +96,24 @@ class ArticleController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
 
+                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
                 $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->article_model->save()) {
                         $model->uploadFile();
+
+                        $articleTopics = $model->article_topics;
+                        if ($articleTopics) {
+                            ArticleTopic::deleteAll(['article_id' => $id]);
+                            foreach ($articleTopics as $articleT) {
+                                $articleTopic = new ArticleTopic();
+                                $articleTopic->article_id = $model->article_model->id;
+                                $articleTopic->master_article_topic_id = $articleT;
+                                $articleTopic->save(false);
+                            }
+                        }
+
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['/cms/article/index']);
                     }
@@ -142,6 +156,15 @@ class ArticleController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+
+        $articleTopics = ArticleTopic::findAll(['safari_park_id' => $model->id]);
+        if (!empty($articleTopics)) {
+            foreach ($articleTopics as $articleTopic) {
+                $articleTopic->status = StatusInterface::STATUS_DELETE;
+                $articleTopic->save();
+            }
+        }
+
         $model->title = $model->id . '_' . $model->title;
         $model->slug = $model->id . '_' . $model->slug;
         $model->status = Article::STATUS_DELETE;

@@ -33,6 +33,7 @@ class ArticleForm extends \yii\base\Model
     public $post_body;
     public $comment_allowed;
     public $approval_required;
+    public $article_date;
     public $is_schedule;
     public $publish_date_time;
     public $status;
@@ -65,13 +66,14 @@ class ArticleForm extends \yii\base\Model
             $this->meta_description = $this->article_model->meta_description;
             $this->meta_keywords = $this->article_model->meta_keywords;
             $this->view = $this->article_model->view;
+            $this->article_date = $this->article_model->article_date;
             $this->post_body = $this->article_model->post_body;
             $this->comment_allowed = $this->article_model->comment_allowed;
             $this->approval_required = $this->article_model->approval_required;
             $this->is_schedule = $this->article_model->is_schedule;
             $this->publish_date_time = $this->article_model->publish_date_time;
             $this->status = $this->article_model->status;
-            $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
+            $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->column();
         }
     }
 
@@ -101,7 +103,7 @@ class ArticleForm extends \yii\base\Model
 
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status'], 'integer'],
-            [['publish_date_time', 'banner', 'feature_image'], 'safe'],
+            [['publish_date_time', 'banner_image', 'feature_image', 'article_date'], 'safe'],
             [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
             [['sub_title'], 'string', 'max' => 75],
             // [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
@@ -122,6 +124,7 @@ class ArticleForm extends \yii\base\Model
             'description' => 'Description',
             'banner' => 'Banner',
             'feature_image' => 'Feature Image',
+            'banner_image' => 'Banner Image',
             'article_author_id' => 'Article Author',
             'author_name' => 'Author Name',
             'article_tag_id' => 'Article Tag',
@@ -130,6 +133,7 @@ class ArticleForm extends \yii\base\Model
             'meta_description' => 'Meta Description',
             'meta_keywords' => 'Meta Keywords',
             'view' => 'View',
+            'article_date' => 'Article Date',
             'post_body' => 'Post Body',
             'comment_allowed' => 'Comment Allowed',
             'approval_required' => 'Approval Required',
@@ -162,6 +166,7 @@ class ArticleForm extends \yii\base\Model
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;
         $this->article_model->view = $this->view;
+        $this->article_model->article_date = $this->article_date;
         $this->article_model->post_body = $this->post_body;
         $this->article_model->comment_allowed = $this->comment_allowed;
         $this->article_model->approval_required = $this->approval_required;
