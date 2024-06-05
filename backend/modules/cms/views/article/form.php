@@ -83,7 +83,21 @@ $this->params['title'] = $this->title;
                     </div>
 
                     <div class="col-md-4">
-                        <?= $form->field($model, 'article_topics')->dropDownList(GeneralModel::topicoption(), ['prompt' => '--Select Artical Topic--']) ?>
+                        <div class="formInput mb-3">
+                            <div class="d-md-flex  gap-3">
+                                <div class="checkbb mt-md-0 mt-3">
+                                    <div class="input_check d-flex gap-3 align-items-center">
+                                        <?= $form->field($model, 'article_topics')->checkboxList(
+                                            GeneralModel::topicoption(),
+                                            [
+                                                'itemOptions' => ['class' => 'checkbox_design'],
+                                            ]
+                                        ); ?>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
                 </div>

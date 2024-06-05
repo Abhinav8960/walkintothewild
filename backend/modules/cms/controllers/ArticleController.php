@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleSearch;
+use common\models\cms\article\ArticleTopic;
 use common\models\cms\article\form\ArticleForm;
 use yii\web\UploadedFile;
 
@@ -50,6 +51,18 @@ class ArticleController extends Controller
                     $model->initializeForm();
                     if ($model->article_model->save()) {
                         $model->uploadFile();
+
+                        $articleTopics = $model->article_topics;
+                        if ($articleTopics) {
+                            foreach ($articleTopics as $articleT) {
+                                $articleTopic = new ArticleTopic();
+                                $articleTopic->article_id = $model->article_model->id;
+                                $articleTopic->master_article_topic_id = $articleT;
+                                $articleTopic->save(false);
+                            }
+                        }
+
+
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['/cms/article/index']);
                     }
