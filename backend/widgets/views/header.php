@@ -18,9 +18,13 @@
 						<img src="/img/logo-white.png" class="mobile-logo dark-logo-1" alt="logo">
 					</a>
 				</div>
-
 			</div>
 			<div class="main-header-right">
+				<?php if (\Yii::$app->params['environment']) { ?>
+					<strong>
+						<span style="letter-spacing: 1.4px;font-weight: 900;font-size: 17px;text-transform: uppercase;margin-right: 20px;color: yellow;"><?= \Yii::$app->params['environment'] ?></span>
+					</strong>
+				<?php } ?>
 				<button class="navbar-toggler navresponsive-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon fe fe-more-vertical "></span>
 				</button>
@@ -34,10 +38,33 @@
 										<div class="d-flex wd-100p">
 											<div class="main-img-user"><img alt="" src="/img/Admin-Profile-Vector-PNG-Clipart.png" class=""></div>
 											<div class="ms-3 my-auto">
-												<h6 class="tx-15 font-weight-semibold mb-0">Teri Dactyl</h6><span class="dropdown-title-text subtext op-6  tx-12">Premium Member</span>
+												<?php if (Yii::$app->user->identity) {
+													$roles = [];
+													if (Yii::$app->user->identity->is_adminstrator == 1) {
+														$roles[] = "Administrator";
+													}
+													if (Yii::$app->user->identity->is_admin == 1) {
+														$roles[] = "Admin";
+													}
+													if (Yii::$app->user->identity->is_safari_operator == 1) {
+														$roles[] = "Safari Operator";
+													}
+													if (Yii::$app->user->identity->is_birding_operator == 1) {
+														$roles[] = "Birding Operator";
+													}
+													if (Yii::$app->user->identity->is_cms_manager == 1) {
+														$roles[] = "CMS Manager";
+													}
+													if (Yii::$app->user->identity->is_resort_manager == 1) {
+														$roles[] = "Resort Manager";
+													}
+												?>
+													<h6 class="tx-15 font-weight-semibold mb-0"><?= Yii::$app->user->identity->name ?></h6><span class="dropdown-title-text subtext op-6  tx-12"><?= implode(', ', $roles); ?></span>
+
+												<?php } ?>
 											</div>
 										</div>
-									</div>									
+									</div>
 									<a class="dropdown-item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"><i class="far fa-arrow-alt-circle-left"></i> Sign Out</a>
 								</div>
 							</li>
