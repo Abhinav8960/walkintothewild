@@ -92,7 +92,15 @@ class ArticleForm extends \yii\base\Model
             [['status', 'article_author_id', 'article_tag_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
             [['article_topics'], 'safe'],
-            [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 350 * 350],
+            // [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 350 * 350],
+            [
+                ['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 350,
+                'maxWidth' => 350,
+                'maxHeight' => 350,
+                'minHeight' => 350,
+                'maxSize' => 100 * 1024
+            ],
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
             [
