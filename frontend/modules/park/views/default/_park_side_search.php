@@ -1,4 +1,4 @@
-<div class="col-lg-3 mb-4">
+<div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
     <div class="filter-wrapper">
         <div class="title_top pb-4">
             <h4>Select Filters</h4>
