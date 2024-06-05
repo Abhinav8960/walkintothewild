@@ -50,12 +50,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <select class="form-select form-select-lg " aria-label="Large select example">
-                    <option selected>Gypsy,Bus...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Gypsy,Bus...', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Vehicel</p>
                 </div>
@@ -63,65 +58,14 @@ use yii\widgets\ActiveForm;
                     <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                 </div>
             </div>
-            <div class="advanceSearch " id="advanceSearchBox">
-                <div class="d-md-flex gap-1">
-                    <div class="select_boxes position-relative">
-                        <select class="form-select form-select-lg " aria-label="Large select example">
-                            <option selected>Tiger Elephent..</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <div class="placeholder_select">
-                            <p>Accommodation</p>
-                        </div>
-                        <div class="icons_select">
-                            <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="">
-                        </div>
-                    </div>
-                    <div class="select_boxes position-relative">
-                        <select class="form-select form-select-lg " aria-label="Large select example">
-                            <option selected>Gypsy,Bus...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                        <div class="placeholder_select">
-                            <p>Safari seasion</p>
-                        </div>
-                        <div class="icons_select">
-                            <img src="<?= $this->params['baseurl'] ?>/img/day-night_8776508.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="col-lg-2 col-xl-1">
         <div class="search">
             <div class="serch_btn">
-                <button>Search</button>
+                <?= Html::submitButton('Search', ['class' => 'btn']) ?>
             </div>
         </div>
     </div>
 </div>
 <?php ActiveForm::end(); ?>
-<?php
-
-$script = <<< JS
-
-
-    $('form select').on('change', function(){
-        $("#Searchform").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
-    }); 
-    $('form input[type=text]').on('keyup', function(){
-        setTimeout(() => {
-            $("#Searchform").attr("data-pjax", "true");    
-            $(this).closest('form').submit();
-        }, 1000);
-       
-    }); 
-JS;
-$this->registerJs($script);
-?>
