@@ -89,4 +89,9 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
             'updated_by' => 'Updated By',
         ];
     }
+
+    public function getArticleAuthor()
+    {
+        return $this->hasOne(ArticleAuthor::className(), ['id' => 'article_author_id']);
+    }
 }

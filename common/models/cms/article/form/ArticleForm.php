@@ -73,7 +73,9 @@ class ArticleForm extends \yii\base\Model
             $this->is_schedule = $this->article_model->is_schedule;
             $this->publish_date_time = $this->article_model->publish_date_time;
             $this->status = $this->article_model->status;
-            $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->column();
+            // $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
+
+            $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
         }
     }
 

@@ -29,6 +29,14 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                     ['class' => 'yii\grid\SerialColumn'],
                     'title',
                     [
+                        'label' => 'Author Name',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->articleAuthor) ? $model->articleAuthor->author_name : '';
+                        }
+                    ],
+                    [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -36,6 +44,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                             return $model->statuslabel;
                         }
                     ],
+
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
