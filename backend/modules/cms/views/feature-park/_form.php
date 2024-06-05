@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use common\models\GeneralModel;
 use common\models\park\SafariPark;
 use yii\helpers\Html;
@@ -22,8 +23,19 @@ use yii\web\View;
             </thead>
             <tbody>
                 <?php
+
+                $allSafariParks = SafariPark::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
+                $countAllSafariPark = count($allSafariParks);
+
+                $length = '';
+                if ($countAllSafariPark < 5) {
+                    $length = $countAllSafariPark;
+                } else {
+                    $length = 5;
+                }
+
                 $form = ActiveForm::begin(['id' => 'park-sequence-form']);
-                for ($i = 1; $i <= 5; $i++) {
+                for ($i = 1; $i <= $length; $i++) {
                     $park = SafariPark::find()->where(['sequence' => $i])->limit(1)->one();
                     $selectedParkId = isset($park) ? $park->id : null;
                 ?>

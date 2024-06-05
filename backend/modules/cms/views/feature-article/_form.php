@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\GeneralModel;
 use yii\helpers\Html;
@@ -20,8 +21,19 @@ use yii\web\View;
             </thead>
             <tbody>
                 <?php
+
+                $allArticles = Article::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
+                $countAllArticle = count($allArticles);
+
+                $length = '';
+                if ($countAllArticle < 5) {
+                    $length = $countAllArticle;
+                } else {
+                    $length = 5;
+                }
+
                 $form = ActiveForm::begin(['id' => 'article-sequence-form']);
-                for ($i = 1; $i <= 5; $i++) {
+                for ($i = 1; $i <= $length; $i++) {
                     $article = Article::find()->where(['sequence' => $i])->limit(1)->one();
                     $selectedArticleId = isset($article) ? $article->id : null;
                 ?>

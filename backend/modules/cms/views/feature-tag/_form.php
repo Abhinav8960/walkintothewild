@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use common\models\cms\article\MasterArticleTag;
 use common\models\GeneralModel;
 use yii\helpers\Html;
@@ -20,8 +21,18 @@ use yii\web\View;
             </thead>
             <tbody>
                 <?php
+                $allTags = MasterArticleTag::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
+                $countAllTag = count($allTags);
+
+                $length = '';
+                if ($countAllTag < 5) {
+                    $length = $countAllTag;
+                } else {
+                    $length = 5;
+                }
+
                 $form = ActiveForm::begin(['id' => 'tag-sequence-form']);
-                for ($i = 1; $i <= 5; $i++) {
+                for ($i = 1; $i <= $length; $i++) {
                     $tag = MasterArticleTag::find()->where(['sequence' => $i])->limit(1)->one();
                     $selectedTagId = isset($tag) ? $tag->id : null;
                 ?>
