@@ -2,6 +2,7 @@
 
 
 use common\models\GeneralModel;
+use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -41,12 +42,50 @@ $this->params['title'] = $this->title;
                     </div>
 
                     <div class="col-md-4">
-                        <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Meta Title']) ?>
+                        <?= $form->field($model, 'sub_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Sub Title']) ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'article_author_id')->dropDownList(GeneralModel::authoroption(), ['prompt' => '--Select Author Name--']) ?>
                     </div>
 
                     <div class="col-md-4">
                         <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->article_model->id) ? true : false]) ?>
                     </div>
+
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'feature_image')->fileInput() ?>
+                    </div>
+                    <div class="col-md-12">
+                        <?= $form->field($model, 'description')->widget(CKEditor::className(), [
+                            'options' => ['rows' => 4],
+                            'preset' => 'full',
+
+                        ]) ?>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'article_tag_id')->dropDownList(GeneralModel::tagoption(), ['prompt' => '--Select Artical Tag--']) ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'comment_allowed')->dropDownList(GeneralModel::yesnooption(), ['prompt' => '--Select--']) ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Title']) ?>
+                    </div>
+
+                    <div class="col-md-12">
+                        <?= $form->field($model, 'meta_description')->textarea() ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'article_topics')->dropDownList(GeneralModel::topicoption(), ['prompt' => '--Select Artical Topic--']) ?>
+                    </div>
+
                 </div>
 
 

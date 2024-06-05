@@ -8,6 +8,7 @@ use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleSearch;
 use common\models\cms\article\form\ArticleForm;
+use yii\web\UploadedFile;
 
 /**
  * Article Controller for the `blog` module
@@ -43,9 +44,12 @@ class ArticleController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->article_model->save()) {
+                        $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['/cms/article/index']);
                     }
@@ -77,9 +81,12 @@ class ArticleController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->article_model->save()) {
+                        $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['/cms/article/index']);
                     }

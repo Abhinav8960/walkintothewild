@@ -342,7 +342,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-author/index")) ? "active" : "" ?>" href="/cms/article-author/index">Artcile Author</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-tag/index")) ? "active" : "" ?>" href="/cms/article-tag/index">Article Tag</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-comment/index")) ? "active" : "" ?>" href="#">Article Comments</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article/index")) ? "active" : "" ?>" href="#">Article</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article/index")) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(

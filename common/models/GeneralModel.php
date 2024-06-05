@@ -3,6 +3,9 @@
 namespace common\models;
 
 use common\models\cms\article\ArticleAuthor;
+use common\models\cms\article\ArticleTag;
+use common\models\cms\article\MasterArticleTag;
+use common\models\cms\article\MasterArticleTopic;
 use common\models\cms\faqcategory\Faq;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
@@ -351,5 +354,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         $query = BirdingOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'birding_operator_request_id' => $birding_operator_request_id]);
         return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
+    }
+
+    public static function tagoption()
+    {
+        return ArrayHelper::map(MasterArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function topicoption()
+    {
+        return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }

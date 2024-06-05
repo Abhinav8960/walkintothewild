@@ -23,6 +23,8 @@ class ArticleForm extends \yii\base\Model
     public $slug;
     public $article_author_id;
     public $author_name;
+    public $article_tag_id;
+    public $tag_name;
     public $description;
     public $meta_title;
     public $meta_description;
@@ -57,6 +59,8 @@ class ArticleForm extends \yii\base\Model
             $this->description = $this->article_model->description;
             $this->article_author_id = $this->article_model->article_author_id;
             $this->author_name = $this->article_model->author_name;
+            $this->article_tag_id = $this->article_model->article_tag_id;
+            $this->tag_name = $this->article_model->tag_name;
             $this->meta_title = $this->article_model->meta_title;
             $this->meta_description = $this->article_model->meta_description;
             $this->meta_keywords = $this->article_model->meta_keywords;
@@ -81,7 +85,7 @@ class ArticleForm extends \yii\base\Model
             [['title', 'meta_title', 'slug'], 'required'],
             // [['title', 'article_author_id', 'description'], 'required'],
             [['status'], 'default', 'value' => 1],
-            [['status', 'article_author_id'], 'integer'],
+            [['status', 'article_author_id', 'article_tag_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
             [['banner_image', 'article_topics'], 'safe'],
             [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 100 * 1024],
@@ -98,8 +102,10 @@ class ArticleForm extends \yii\base\Model
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status'], 'integer'],
             [['publish_date_time', 'banner', 'feature_image'], 'safe'],
-            [['title', 'author_name', 'meta_title'], 'string', 'max' => 255],
+            [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
             [['sub_title'], 'string', 'max' => 75],
+            // [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
+            // ['uploadfile', 'required', 'on' => 'uploadfile'],
         ];
     }
 
@@ -118,6 +124,8 @@ class ArticleForm extends \yii\base\Model
             'feature_image' => 'Feature Image',
             'article_author_id' => 'Article Author',
             'author_name' => 'Author Name',
+            'article_tag_id' => 'Article Tag',
+            'tag_name' => 'Tag Name',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
             'meta_keywords' => 'Meta Keywords',
@@ -146,6 +154,10 @@ class ArticleForm extends \yii\base\Model
         if ($this->article_author_id) {
             $this->article_model->author_name =  GeneralModel::authoroption()[$this->article_author_id];
         }
+        $this->article_model->article_tag_id = $this->article_tag_id;
+        if ($this->article_tag_id) {
+            $this->article_model->tag_name =  GeneralModel::tagoption()[$this->article_tag_id];
+        }
         $this->article_model->meta_title = $this->meta_title;
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;
@@ -163,11 +175,8 @@ class ArticleForm extends \yii\base\Model
      *
      * @return void
      */
-    public function UploadFiles()
+    public function UploadFile()
     {
-
-
-
         if ($this->banner_image) {
             $storagePath = Yii::$app->params['datapath'] . '/article';
 
