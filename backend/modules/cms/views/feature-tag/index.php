@@ -5,8 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-
-$this->title = 'Feature Article';
+$this->title = 'Feature Tag';
 $this->params['breadcrumbs_home_url'] = '/cms/feature';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
