@@ -157,7 +157,7 @@ class ArticleController extends Controller
     {
         $model = $this->findModel($id);
 
-        $articleTopics = ArticleTopic::findAll(['safari_park_id' => $model->id]);
+        $articleTopics = ArticleTopic::findAll(['article_id' => $model->id]);
         if (!empty($articleTopics)) {
             foreach ($articleTopics as $articleTopic) {
                 $articleTopic->status = StatusInterface::STATUS_DELETE;

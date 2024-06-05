@@ -89,7 +89,7 @@ class ArticleForm extends \yii\base\Model
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id', 'article_tag_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
-            [['banner_image', 'article_topics'], 'safe'],
+            [['article_topics'], 'safe'],
             [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 100 * 1024],
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
@@ -199,7 +199,7 @@ class ArticleForm extends \yii\base\Model
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->banner_image->saveAs($filePath)) {
-                $this->article_model->banner = $fileName;
+                $this->article_model->banner_image = $fileName;
                 $this->article_model->save(false);
             }
         }

@@ -76,7 +76,7 @@ $this->params['title'] = $this->title;
 
 
                     <div class="col-md-4">
-                        <?= $form->field($model, 'article_tag_id')->dropDownList(GeneralModel::tagoption(), ['prompt' => '--Select Artical Tag--']) ?>
+                        <?= $form->field($model, 'article_tag_id')->dropDownList(GeneralModel::tagoption(), ['prompt' => '--Select Article Tag--']) ?>
                     </div>
 
                     <div class="col-md-4">
