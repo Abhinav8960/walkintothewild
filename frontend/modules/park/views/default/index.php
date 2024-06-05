@@ -457,89 +457,42 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
     </div>
 </section>
-<section class="safariduring_sesons">
-    <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="title_web">
-                    <h2>BEST SAFARIS DURING <br>MONSOON SEASON</h2>
+<?php
+if ($featured_parks) {    ?>
+    <section class="safariduring_sesons">
+        <div class="container-lg">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="title_web">
+                        <h2>BEST SAFARIS DURING <br>MONSOON SEASON</h2>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="safari-carousel owl-carousel owl-theme">
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Jim Corbett.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="Selected-Safari.html">JIM CORBETT</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="Selected-Safari.html">JIM CORBETT</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in its natural
-                        habitat.</p>
+        <div class="safari-carousel owl-carousel owl-theme">
+            <?php
+            foreach ($featured_parks as $featured_park) {
+            ?>
+                <div class="safari-box">
+                    <figure class="image-box">
+                        <img src="<?= isset($featured_park->feature_image) ? $featured_park->featureimagepath : $this->params['baseurl'] . '/img/Jim Corbett.jpg' ?>" alt="">
+                    </figure>
+                    <div class="content-box">
+                        <h3><a href="Selected-Safari.html"><?= $featured_park->title ?></a></h3>
+                    </div>
+                    <div class="overlay-content d-flex align-items-center justify-content-between">
+                        <div class="content_o pe-2">
+                            <h3><a href="Selected-Safari.html"><?= $featured_park->title ?></a></h3>
+                            <p><?= $featured_park->short_description ?></p>
+                        </div>
+                        <div class="link"><a href="/park/<?= $featured_park->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
+                    </div>
                 </div>
-                <div class="link"><a href="Selected-Safari.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
+            <?php }
+            ?>
         </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Gir.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="Selected-Safari.html">GIR NATIONAL PARK</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="Selected-Safari.html">GIR NATIONAL PARK</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="Selected-Safari.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Kanha.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="Selected-Safari.html">KANHA NATIONAL PARK</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="Selected-Safari.html">KANHA NATIONAL PARK</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="Selected-Safari.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarh.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="Selected-Safari.html">BANDHAVGARH</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="Selected-Safari.html">BANDHAVGARH</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="Selected-Safari.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Kaziranga.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="Selected-Safari.html">KAZIRANGA</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="Selected-Safari.html">KAZIRANGA</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="Selected-Safari.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-    </div>
-</section>
+    </section>
+<?php } ?>
 <section class="animal-wrapper pb-4">
     <div class="container-lg">
         <div class="row justify-content-center">

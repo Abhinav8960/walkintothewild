@@ -1,4 +1,7 @@
 <?php
+
+use yii\web\UrlNormalizer;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -12,13 +15,6 @@ return [
     'bootstrap' => ['log', 'audit'],
     'defaultRoute' => '/coming-soon',
     'controllerNamespace' => 'frontend\controllers',
-
-    'modules' => [
-        'main' => [
-            'class' => 'frontend\modules\main\Module',
-        ],
-
-    ],
     'components' => [
         'reCaptcha3' => [
             'class'      => 'kekaadrenalin\recaptcha3\ReCaptcha',
@@ -90,7 +86,17 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [],
+            'rules' => [
+                '/park' => '/park/default/index',
+                '/park/<slug>' => '/park/default/view',
+            ],
+        ],
+
+    ],
+
+    'modules' => [
+        'park' => [
+            'class' => 'frontend\modules\park\Module',
         ],
 
     ],

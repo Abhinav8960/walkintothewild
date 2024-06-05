@@ -55,10 +55,7 @@ AppAsset::register($this);
         <?= $content ?>
     </main>
     <?= \frontend\widgets\Footer::widget() ?>
-    <!-- <footer class="footer mt-auto py-3 text-muted">
-        <?= \frontend\widgets\Footer::widget() ?>
 
-    </footer> -->
 
     <?php $this->endBody() ?>
 </body>

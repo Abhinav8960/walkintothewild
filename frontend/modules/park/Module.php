@@ -1,18 +1,18 @@
 <?php
 
-namespace frontend\modules\main;
+namespace frontend\modules\park;
 
 use Yii;
 
 /**
- * main module definition class
+ * park module definition class
  */
 class Module extends \yii\base\Module
 {
     /**
      * {@inheritdoc}
      */
-    public $controllerNamespace = 'frontend\modules\main\controllers';
+    public $controllerNamespace = 'frontend\modules\park\controllers';
 
     /**
      * {@inheritdoc}
