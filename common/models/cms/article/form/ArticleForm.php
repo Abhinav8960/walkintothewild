@@ -23,6 +23,8 @@ class ArticleForm extends \yii\base\Model
     public $slug;
     public $article_author_id;
     public $author_name;
+    public $article_tag_id;
+    public $tag_name;
     public $description;
     public $meta_title;
     public $meta_description;
@@ -31,6 +33,7 @@ class ArticleForm extends \yii\base\Model
     public $post_body;
     public $comment_allowed;
     public $approval_required;
+    public $article_date;
     public $is_schedule;
     public $publish_date_time;
     public $status;
@@ -57,17 +60,22 @@ class ArticleForm extends \yii\base\Model
             $this->description = $this->article_model->description;
             $this->article_author_id = $this->article_model->article_author_id;
             $this->author_name = $this->article_model->author_name;
+            $this->article_tag_id = $this->article_model->article_tag_id;
+            $this->tag_name = $this->article_model->tag_name;
             $this->meta_title = $this->article_model->meta_title;
             $this->meta_description = $this->article_model->meta_description;
             $this->meta_keywords = $this->article_model->meta_keywords;
             $this->view = $this->article_model->view;
+            $this->article_date = $this->article_model->article_date;
             $this->post_body = $this->article_model->post_body;
             $this->comment_allowed = $this->article_model->comment_allowed;
             $this->approval_required = $this->article_model->approval_required;
             $this->is_schedule = $this->article_model->is_schedule;
             $this->publish_date_time = $this->article_model->publish_date_time;
             $this->status = $this->article_model->status;
-            $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
+            // $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
+
+            $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
         }
     }
 
@@ -78,13 +86,21 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'meta_title', 'slug'], 'required'],
+            [['title', 'description', 'slug', 'article_tag_id', 'banner_image', 'feature_image', 'comment_allowed', 'article_topics'], 'required'],
             // [['title', 'article_author_id', 'description'], 'required'],
             [['status'], 'default', 'value' => 1],
-            [['status', 'article_author_id'], 'integer'],
+            [['status', 'article_author_id', 'article_tag_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
-            [['banner_image', 'article_topics'], 'safe'],
-            [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 100 * 1024],
+            [['article_topics'], 'safe'],
+            // [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 350 * 350],
+            [
+                ['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 350,
+                'maxWidth' => 350,
+                'maxHeight' => 350,
+                'minHeight' => 350,
+                'maxSize' => 100 * 1024
+            ],
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
             [
@@ -97,9 +113,11 @@ class ArticleForm extends \yii\base\Model
 
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status'], 'integer'],
-            [['publish_date_time', 'banner', 'feature_image'], 'safe'],
-            [['title', 'author_name', 'meta_title'], 'string', 'max' => 255],
+            [['publish_date_time', 'banner_image', 'feature_image', 'article_date'], 'safe'],
+            [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
             [['sub_title'], 'string', 'max' => 75],
+            // [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
+            // ['uploadfile', 'required', 'on' => 'uploadfile'],
         ];
     }
 
@@ -116,12 +134,16 @@ class ArticleForm extends \yii\base\Model
             'description' => 'Description',
             'banner' => 'Banner',
             'feature_image' => 'Feature Image',
+            'banner_image' => 'Banner Image',
             'article_author_id' => 'Article Author',
             'author_name' => 'Author Name',
+            'article_tag_id' => 'Article Tag',
+            'tag_name' => 'Tag Name',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
             'meta_keywords' => 'Meta Keywords',
             'view' => 'View',
+            'article_date' => 'Article Date',
             'post_body' => 'Post Body',
             'comment_allowed' => 'Comment Allowed',
             'approval_required' => 'Approval Required',
@@ -146,10 +168,15 @@ class ArticleForm extends \yii\base\Model
         if ($this->article_author_id) {
             $this->article_model->author_name =  GeneralModel::authoroption()[$this->article_author_id];
         }
+        $this->article_model->article_tag_id = $this->article_tag_id;
+        if ($this->article_tag_id) {
+            $this->article_model->tag_name =  GeneralModel::tagoption()[$this->article_tag_id];
+        }
         $this->article_model->meta_title = $this->meta_title;
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;
         $this->article_model->view = $this->view;
+        $this->article_model->article_date = $this->article_date;
         $this->article_model->post_body = $this->post_body;
         $this->article_model->comment_allowed = $this->comment_allowed;
         $this->article_model->approval_required = $this->approval_required;
@@ -163,11 +190,8 @@ class ArticleForm extends \yii\base\Model
      *
      * @return void
      */
-    public function UploadFiles()
+    public function UploadFile()
     {
-
-
-
         if ($this->banner_image) {
             $storagePath = Yii::$app->params['datapath'] . '/article';
 
@@ -185,7 +209,7 @@ class ArticleForm extends \yii\base\Model
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->banner_image->saveAs($filePath)) {
-                $this->article_model->banner = $fileName;
+                $this->article_model->banner_image = $fileName;
                 $this->article_model->save(false);
             }
         }
