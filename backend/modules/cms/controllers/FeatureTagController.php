@@ -2,20 +2,20 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\models\cms\article\Article;
+use common\models\cms\article\MasterArticleTag;
 use yii\web\Response;
 use Yii;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
-class FeatureArticleController extends Controller
+class FeatureTagController extends Controller
 {
     public $enableCsrfValidation = true;
 
     public function actionIndex()
     {
         // Fetch the current sequences
-        $sequences = Article::find()->select(['sequence', 'id'])->indexBy('sequence')->column();
+        $sequences = MasterArticleTag::find()->select(['sequence', 'id'])->indexBy('sequence')->column();
 
         return $this->render('index', [
             'sequences' => $sequences,
@@ -29,20 +29,20 @@ class FeatureArticleController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
 
             $sequenceIndex = Yii::$app->request->post('sequenceIndex');
-            $articleId = Yii::$app->request->post('articleId');
+            $tagId = Yii::$app->request->post('tagId');
 
             // Debugging information
-            Yii::info('Received sequenceIndex: ' . $sequenceIndex . ', articleId: ' . $articleId);
+            Yii::info('Received sequenceIndex: ' . $sequenceIndex . ', tagId: ' . $tagId);
 
             // Find the existing record or create a new one
-            $model = Article::findOne(['id' => $articleId]);
+            $model = MasterArticleTag::findOne(['id' => $tagId]);
             if ($model === null) {
-                Yii::error('Article not found for ID: ' . $articleId);
-                return ['success' => false, 'error' => 'Article not found'];
+                Yii::error('Tag not found for ID: ' . $tagId);
+                return ['success' => false, 'error' => 'Tag not found'];
             }
 
 
-            Article::updateAll(['sequence' => NULL], ['sequence' => $sequenceIndex]);
+            MasterArticleTag::updateAll(['sequence' => NULL], ['sequence' => $sequenceIndex]);
 
             // Encode the updated sequence array back to JSON and save it
             $model->sequence = $sequenceIndex;
@@ -50,7 +50,7 @@ class FeatureArticleController extends Controller
             if ($model->save()) {
                 return ['success' => true];
             } else {
-                Yii::error('Failed to save article sequence: ' . print_r($model->getErrors(), true));
+                Yii::error('Failed to save tag sequence: ' . print_r($model->getErrors(), true));
                 return ['success' => false, 'errors' => $model->getErrors()];
             }
         }

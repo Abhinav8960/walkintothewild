@@ -1,7 +1,7 @@
 <?php
 
 use common\interfaces\StatusInterface;
-use common\models\cms\article\Article;
+use common\models\cms\article\MasterArticleTag;
 use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -16,35 +16,34 @@ use yii\web\View;
             <thead>
                 <tr>
                     <th style="width: 5%!important;">Sr. No.</th>
-                    <th style="width: 20%!important;">Article</th>
+                    <th style="width: 20%!important;">Tag</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-
-                $allArticles = Article::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
-                $countAllArticle = count($allArticles);
+                $allTags = MasterArticleTag::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
+                $countAllTag = count($allTags);
 
                 $length = '';
-                if ($countAllArticle < 5) {
-                    $length = $countAllArticle;
+                if ($countAllTag < 5) {
+                    $length = $countAllTag;
                 } else {
                     $length = 5;
                 }
 
-                $form = ActiveForm::begin(['id' => 'article-sequence-form']);
+                $form = ActiveForm::begin(['id' => 'tag-sequence-form']);
                 for ($i = 1; $i <= $length; $i++) {
-                    $article = Article::find()->where(['sequence' => $i])->limit(1)->one();
-                    $selectedArticleId = isset($article) ? $article->id : null;
+                    $tag = MasterArticleTag::find()->where(['sequence' => $i])->limit(1)->one();
+                    $selectedTagId = isset($tag) ? $tag->id : null;
                 ?>
                     <tr>
                         <td> <?= $i; ?></td>
                         <td> <?php
-                                echo Html::dropDownList("ArticleSequence[$i]", $selectedArticleId, GeneralModel::articleoption(), [
-                                    'class' => 'article-dropdown',
+                                echo Html::dropDownList("tagSequence[$i]", $selectedTagId, GeneralModel::tagoption(), [
+                                    'class' => 'tag-dropdown',
                                     'data-index' => $i,
                                     'prompt' => 'Select',
-                                    'onchange' => 'saveArticleSequence(this)',
+                                    'onchange' => 'saveTagSequence(this)',
                                 ]);
                                 ?></td>
                     </tr>
@@ -56,16 +55,16 @@ use yii\web\View;
     </div>
 </div>
 <?php
-$url = Url::to(['/cms/feature-article/save-sequence']);
+$url = Url::to(['/cms/feature-tag/save-sequence']);
 $csrfToken = Yii::$app->request->csrfToken;
 $js = <<< JS
-function saveArticleSequence(select) {
+function saveTagSequence(select) {
     var selectedIndex = select.selectedIndex;
     var selectedValue = select.options[selectedIndex].value;
     var index = select.getAttribute('data-index');
     var formData = new FormData();
     formData.append('sequenceIndex', index);
-    formData.append('articleId', selectedValue);
+    formData.append('tagId', selectedValue);
     
     fetch('$url', {
         method: 'POST',
