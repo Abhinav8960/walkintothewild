@@ -70,14 +70,10 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                             // },
 
                             'delete' => function ($url, $model) {
-                                return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
+                                if ($model->status != -1) {
+                                } else {
+                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Birding Park', 'suspend_title' => 'Birding Park']);
+                                }
                             },
                             'publish' => function ($url, $model) {
                                 return \backend\widgets\PublishUnpublishButton::widget(['model' => $model, 'published_title' => 'Safari Park', 'unpublish_title' => 'Safari Park']);

@@ -50,6 +50,17 @@ class SuspendActiveButton extends Widget implements \common\interfaces\StatusInt
                     'bs-toggle' => 'tooltip'
                 ],
             ]);
+        } elseif ($this->model->status == self::STATUS_DELETE) {
+            return Html::a($this->active_button_title, ['active', 'id' => $this->model->id], [
+                'class' => 'btn btn btn-outline-success',
+                'style' => 'color:black !important;',
+                'title' => $this->active_button_title,
+                'data' => [
+                    'confirm' => "Are You Sure you want to " . $this->active_button_title . " this " . $this->active_title . "?",
+                    'method' => 'post',
+                    'bs-toggle' => 'tooltip'
+                ],
+            ]);
         }
     }
 }

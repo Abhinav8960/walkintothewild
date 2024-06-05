@@ -223,6 +223,12 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return $this->hasMany(SafariParkAccomodation::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_accomodation.status' => 1]);
     }
 
+
+    public function getBonusexperience()
+    {
+        return $this->hasMany(SafariParkBonusExperience::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_bonus_experience.status' => 1]);
+    }
+
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {

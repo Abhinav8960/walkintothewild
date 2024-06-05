@@ -67,11 +67,13 @@ class DefaultController extends Controller
         $searchModel = new SafariParkSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
+        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
 
         return $this->render('parklist', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
+            'featured_parks' => $featured_parks,
         ]);
     }
 }

@@ -64,6 +64,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Suspend'];
     }
 
+
+    /**
+     * Get Status Active/Inactive Options List
+     *
+     * @return void
+     */
+    public static function recentstatusoption()
+    {
+        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Suspend', self::STATUS_DELETE => 'Deleted'];
+    }
+
     /**
      * Get Status Active/Inactive Options List
      *

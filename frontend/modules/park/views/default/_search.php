@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
     <div class="col-lg-2 col-xl-1">
         <div class="search">
             <div class="serch_btn">
-                <?= Html::submitButton('Search', ['class' => 'btn']) ?>
+                <?= Html::submitButton('Search') ?>
             </div>
         </div>
     </div>
