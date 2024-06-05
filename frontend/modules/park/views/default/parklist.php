@@ -77,47 +77,50 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                     <?php if ($models) {
                         foreach ($models as $model) { ?>
-                            <div class="searchSafari_wraper mb-4">
-                                <div class="row">
-                                    <div class="col-xl-3 col-lg-4">
-                                        <div class="Slider_safariimg3 h-100">
-                                            <img src="<?= isset($model->galleryimag) ? $model->galleryimag->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                            <a href="/park/<?= $model->slug ?>">
+
+                                <div class="searchSafari_wraper mb-4">
+                                    <div class="row">
+                                        <div class="col-xl-3 col-lg-4">
+                                            <div class="Slider_safariimg3 h-100">
+                                                <img src="<?= isset($model->galleryimag) ? $model->galleryimag->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-8 col-xl-9">
-                                        <div class="safariSearch_wrap">
-                                            <div class="safrititles pt-md-0 pt-3">
-                                                <h6 class=""><?= $model->title ?></h6>
-                                            </div>
-                                            <div class="seelctes_text pt-2 pb-4 ">
-                                                <p>
-                                                    <?= $model->short_description ?>
-                                                </p>
-                                            </div>
-                                            <div class="taglines">
-                                                <p>Top Safari Tour Operators</p>
-                                            </div>
-                                            <div class="touroprators">
-                                                <div class="opratios-slider owl-carousel owl-theme">
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                                                    </div>
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                                                    </div>
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                                                    </div>
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                        <div class="col-lg-8 col-xl-9">
+                                            <div class="safariSearch_wrap">
+                                                <div class="safrititles pt-md-0 pt-3">
+                                                    <h6 class=""><?= $model->title ?></h6>
+                                                </div>
+                                                <div class="seelctes_text pt-2 pb-4 ">
+                                                    <p>
+                                                        <?= $model->short_description ?>
+                                                    </p>
+                                                </div>
+                                                <div class="taglines">
+                                                    <p>Top Safari Tour Operators</p>
+                                                </div>
+                                                <div class="touroprators">
+                                                    <div class="opratios-slider owl-carousel owl-theme">
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
+                                                        </div>
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                        </div>
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
+                                                        </div>
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                     <?php }
                     } ?>
                 </div>

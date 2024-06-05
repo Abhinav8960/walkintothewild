@@ -41,12 +41,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <select class="form-select form-select-lg " aria-label="Large select example">
-                    <option selected>Tiger Elephent..</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animaloption(), ['prompt' => 'Tiger Elephent..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Animal</p>
                 </div>

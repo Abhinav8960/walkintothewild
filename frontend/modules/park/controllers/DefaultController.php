@@ -32,6 +32,8 @@ class DefaultController extends Controller
      */
     public function actionView($slug)
     {
+        $searchModel = new SafariParkSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
@@ -41,6 +43,8 @@ class DefaultController extends Controller
             [
                 'model' => $model,
                 'featured_parks' => $featured_parks,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
             ]
         );
     }

@@ -29,7 +29,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div class="tab-cont">
                             <div class="tab-pane">
                                 <?= $this->render('_search', [
-                                    'featured_parks' => $featured_parks,
+                                    'model' => $searchModel,
                                 ]) ?>
                             </div>
                         </div>
