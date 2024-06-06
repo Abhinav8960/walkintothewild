@@ -88,13 +88,13 @@ class ArticleForm extends \yii\base\Model
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
             'title', 'sub_title', 'description', 'article_tag_id', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
-            'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed', 'approval_required', 'is_schedule',
-            'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords'
+            'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
+            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
         $scenarios['update'] = [
             'title', 'sub_title', 'description', 'article_tag_id', 'tag_name', 'status', 'slug',
-            'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed', 'approval_required', 'is_schedule',
-            'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords'
+            'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
+            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
         return $scenarios;
     }
