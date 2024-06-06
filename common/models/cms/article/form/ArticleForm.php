@@ -55,6 +55,8 @@ class ArticleForm extends \yii\base\Model
         if ($article_model != null) {
             $this->article_model = $article_model;
             $this->title = $this->article_model->title;
+            $this->banner_image = $this->article_model->banner_image;
+            $this->feature_image = $this->article_model->feature_image;
             $this->sub_title = $this->article_model->sub_title;
             $this->slug = $this->article_model->slug;
             $this->description = $this->article_model->description;
@@ -86,20 +88,19 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'description', 'slug', 'article_tag_id', 'banner_image', 'feature_image', 'comment_allowed', 'article_topics'], 'required'],
-            // [['title', 'article_author_id', 'description'], 'required'],
+            [['title', 'description', 'slug', 'article_tag_id', 'comment_allowed', 'article_topics'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id', 'article_tag_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
             [['article_topics'], 'safe'],
-            // [['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'], 'maxSize' => 350 * 350],
             [
                 ['banner_image', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 350,
                 'maxWidth' => 350,
                 'maxHeight' => 350,
                 'minHeight' => 350,
-                'maxSize' => 100 * 1024
+                'maxSize' => 100 * 1024,
+                'skipOnEmpty' => true,
             ],
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
@@ -110,16 +111,14 @@ class ArticleForm extends \yii\base\Model
                 'targetClass' => Article::className(), 'targetAttribute' => ['title'],
                 'message' => 'This Title has already been taken'
             ],
-
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status'], 'integer'],
-            [['publish_date_time', 'banner_image', 'feature_image', 'article_date'], 'safe'],
+            [['publish_date_time', 'article_date'], 'safe'],
             [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
             [['sub_title'], 'string', 'max' => 75],
-            // [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
-            // ['uploadfile', 'required', 'on' => 'uploadfile'],
         ];
     }
+
 
     /**
      * {@inheritdoc}

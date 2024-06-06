@@ -107,9 +107,15 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
         }
     }
 
+    public function getBannerimagepath()
+    {
+        if ($this->banner_image != '') {
+            return '/storage/animal/' . $this->id . '/' . $this->banner_image;
+        }
+    }
+
     public function getAnimaltype()
     {
         return $this->hasOne(MetaAnimalType::className(), ['id' => 'animal_type_id']);
     }
-
 }
