@@ -3219,5 +3219,22 @@ figure {
 
     color: #212529;
 }
+.input_check .form-group > div label{
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 9px;
+
+}
+
+.single-image {
+    display: block !important;
+    width: 100%; /* Adjust based on your needs */
+}
+.single-image img {
+    display: block;
+    margin: 0 auto; /* Center the image */
+}
 
 /* footer css end */

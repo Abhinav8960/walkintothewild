@@ -52,34 +52,40 @@ $('.opratios-slider ').owlCarousel({
         }
     }
 })
-$('.slider_safariimg  ').owlCarousel({
-    loop: true,
-    margin: 10,
-    nav: true,
-    dots: true,
-    autoplay: true,
-    responsiveClass: true,
-    smartSpeed: 900,
-    navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
-    responsive: {
-        0: {
-            items: 1,
+$(document).ready(function() {
+    var $slider = $('.slider_safariimg');
+    var itemCount = $slider.children().length;
 
-        },
-        600: {
-            items: 1,
-
-        },
-        900: {
-            items: 1,
-
-        },
-        1024: {
-            items: 1,
-
-        }
+    if (itemCount > 1) {
+        $slider.owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: true,
+            autoplay: true,
+            responsiveClass: true,
+            smartSpeed: 900,
+            navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+            responsive: {
+                0: {
+                    items: 1,
+                },
+                600: {
+                    items: 1,
+                },
+                900: {
+                    items: 1,
+                },
+                1024: {
+                    items: 1,
+                }
+            }
+        });
+    } else {
+        // Show the single image without any slider functionality
+        $slider.addClass('single-image');
     }
-})
+});
 $('.slider_resorts ').owlCarousel({
     loop: true,
     margin: 0,

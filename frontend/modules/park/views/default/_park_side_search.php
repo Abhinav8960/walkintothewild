@@ -30,7 +30,6 @@ use yii\widgets\ActiveForm;
                 GeneralModel::accomodationoption(),
                 [
                     'required' => true,
-                    'separator' => '<br>',
                     'itemOptions' => ['class' => 'checkbox_design'],
                 ]
             )->label(false); ?>
@@ -43,7 +42,6 @@ use yii\widgets\ActiveForm;
                 GeneralModel::safarisessionoption(),
                 [
                     'required' => true,
-                    'separator' => '<br>',
                     'itemOptions' => ['class' => 'checkbox_design'],
                 ]
             )->label(false); ?>
@@ -56,7 +54,6 @@ use yii\widgets\ActiveForm;
                 GeneralModel::bonusexperienceoption(),
                 [
                     'required' => true,
-                    'separator' => '<br>',
                     'itemOptions' => ['class' => 'checkbox_design'],
                 ]
             )->label(false); ?>
