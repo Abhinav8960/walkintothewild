@@ -26,7 +26,7 @@
                         <?php } ?>
                     </div>
                 </div>
-                <div class="seelctes_text pt-3 pb-5 border_bottom2">
+                <div class="seelctes_text pt-3 pb-2 border_bottom2">
                     <p><?= $model->long_description ?></p>
                 </div>
                 <div class="row pt-3">
