@@ -85,7 +85,6 @@ class AnimalController extends Controller
                     $model->initializeForm();
                     if ($model->animal_model->save()) {
                         $model->uploadFile($model->animal_model->id);
-                        $model->animal_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }

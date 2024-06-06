@@ -39,10 +39,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/email/index",
 											"/master/mail-template/index",
 											"/master/operator-category/index",
+											"/master/suggestion-category/index",
 											"master/bonus-experience",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/meta",
+														"/master",
 														"/master/animal/index",
 														"/master/bird/index",
 														"/master/vehicle/index",
@@ -55,7 +56,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/bonus-experience/index",
 														"/master/email/index",
 														"/master/mail-template/index",
-														"/master/operator-category/index"
+														"/master/operator-category/index",
+														"/master/suggestion-category/index"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
@@ -70,6 +72,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/master/bonus-experience/index")) ? "active" : "/master/bonus-experience/index" ?>" href="/master/bonus-experience/index">Bonus Experience</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/mail-template/index")) ? "active" : "" ?>" href="/master/mail-template/index">Mail Template</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/operator-category/index")) ? "active" : "" ?>" href="/master/operator-category/index">Operator Category</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/master/suggestion-category/index")) ? "active" : "" ?>" href="/master/suggestion-category/index">Suggestion Category</a></li>
 						</ul>
 					</li>
 

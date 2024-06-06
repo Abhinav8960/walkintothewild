@@ -83,7 +83,6 @@ class StateController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->state_model->save()) {
-                        $model->state_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }

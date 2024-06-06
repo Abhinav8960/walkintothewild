@@ -79,7 +79,6 @@ class BonusExperienceController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->bonus_experience_model->save()) {
-                        // $model->bonus_experience_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }

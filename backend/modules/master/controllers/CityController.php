@@ -83,7 +83,6 @@ class CityController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->city_model->save()) {
-                        $model->city_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }

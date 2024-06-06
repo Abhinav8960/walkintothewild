@@ -3,26 +3,26 @@
 namespace backend\modules\master\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\master\email\form\MasterMailTemplateForm;
-use common\models\master\email\MasterMailTemplate;
-use common\models\master\email\MasterMailTemplateSearch;
-
+use common\models\master\suggetioncategory\form\MasterSuggestionCategoryForm;
+use common\models\master\suggetioncategory\MasterSuggestionCategory;
+use common\models\master\suggetioncategory\MasterSuggestionCategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * MailTemplateController.
+ * SuggestionCategoryController.
  */
-class MailTemplateController extends Controller
+class SuggestionCategoryController extends Controller
 {
     /**
-     * Lists all MasterMailTemplate models.
+     * Lists all MasterSuggestionCategory models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new MasterMailTemplateSearch();
+        $searchModel = new MasterSuggestionCategorySearch();
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -40,21 +40,21 @@ class MailTemplateController extends Controller
      */
     public function actionCreate()
     {
-        $model = new MasterMailTemplateForm();
+        $model = new MasterSuggestionCategoryForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->mail_template_model->save(false)) {
+                    if ($model->suggestion_category_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->mail_template_model->loadDefaultValues();
+            $model->suggestion_category_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -63,7 +63,7 @@ class MailTemplateController extends Controller
     }
 
     /**
-     * Updates an existing MasterMailTemplate model.
+     * Updates an existing MasterSuggestionCategory model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -71,21 +71,21 @@ class MailTemplateController extends Controller
      */
     public function actionUpdate($id)
     {
-        $mail_template_model = $this->findModel($id);
-        $model = new MasterMailTemplateForm($mail_template_model);
+        $suggestion_category_model = $this->findModel($id);
+        $model = new MasterSuggestionCategoryForm($suggestion_category_model);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->mail_template_model->save()) {
+                    if ($model->suggestion_category_model->save()) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->mail_template_model->loadDefaultValues();
+            $model->suggestion_category_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -95,10 +95,19 @@ class MailTemplateController extends Controller
 
 
 
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
 
 
     /**
-     * Deletes an existing MasterMailTemplate model.
+     * Deletes an existing MasterSuggestionCategory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -115,15 +124,15 @@ class MailTemplateController extends Controller
     }
 
     /**
-     * Finds the MasterMailTemplate model based on its primary key value.
+     * Finds the MasterSuggestionCategory model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MasterMailTemplate the loaded model
+     * @return MasterSuggestionCategory the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MasterMailTemplate::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterSuggestionCategory::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

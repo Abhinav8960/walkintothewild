@@ -85,7 +85,6 @@ class BirdController extends Controller
                     $model->initializeForm();
                     if ($model->bird_model->save()) {
                         $model->uploadFile($model->bird_model->id);
-                        $model->bird_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }

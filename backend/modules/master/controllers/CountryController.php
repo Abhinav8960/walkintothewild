@@ -79,7 +79,6 @@ class CountryController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->country_model->save()) {
-                        $model->country_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }

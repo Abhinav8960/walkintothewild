@@ -22,10 +22,10 @@ class Footer extends Widget
         $active_url = "/" . Yii::$app->requestedRoute;
 
 
-        return $this->render('initialfooter');
-        // if (in_array($active_url, array("/", "/thankyou", "/safaritour-registration", "/birdingtour-registration", "/coming-soon"))) {
-        // } else {
-        //     return $this->render('footer');
-        // }
+        if (in_array($active_url, array("/", "/thankyou", "/safaritour-registration", "/birdingtour-registration", "/coming-soon"))) {
+            return $this->render('initialfooter');
+        } else {
+            return $this->render('footer');
+        }
     }
 }

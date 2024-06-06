@@ -80,8 +80,6 @@ class EmailController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->email_model->save()) {
-                        //$model->uploadFile($model->email_model->id);
-                        $model->email_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }

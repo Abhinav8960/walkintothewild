@@ -84,7 +84,6 @@ class VehicleController extends Controller
                     $model->initializeForm();
                     if ($model->vehicle_model->save()) {
                         $model->uploadFile($model->vehicle_model->id);
-                        $model->vehicle_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
