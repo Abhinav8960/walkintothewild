@@ -425,7 +425,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
         $parks = $query->all();
         $result = ArrayHelper::map($parks, 'id', 'title');
-        // dd($query);
         return $result;
     }
 }
