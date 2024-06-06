@@ -204,7 +204,7 @@ class ArticleForm extends \yii\base\Model
                 chmod($storagePath, 0777);
             }
 
-            $fileName = 'article_banner' . time() . '.' . $this->banner_image->extension;
+            $fileName = 'article_banner' . '-' . time() . '.' . $this->banner_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->banner_image->saveAs($filePath)) {
