@@ -21,7 +21,7 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'animal_type_id', ['inputOptions' => ['id' => 'title']])->dropDownList(
             GeneralModel::animaltypeoption(),
             [
-                'prompt' => 'Select Animal Type',                
+                'prompt' => 'Select Animal Type',
             ]
         ); ?>
     </div>
@@ -30,6 +30,7 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'know_as')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
     </div>
+
     <div class="col-md-5">
         <?= $form->field($model, 'image')->fileInput() ?>
     </div>
@@ -39,6 +40,20 @@ use yii\bootstrap5\ActiveForm;
             <?php echo '<img src="' . $model->animal_model->imagepath . '" width="50" height="50"></img>'; ?>
         </div>
     <?php } ?>
+
+    <?php
+    if ($model->article_model->banner_image) { ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+        </div>
+        <div class="col-md-1">
+            <?php echo '<img src="' . $model->article_model->bannerimagepath . '" width="75" height="75"></img>'; ?>
+        </div>
+    <?php } else { ?>
+        <div class="col-md-4">
+            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+        </div>
+    <?php  } ?>
 
 
     <?php if ($model->animal_model->id) { ?>

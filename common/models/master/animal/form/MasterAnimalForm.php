@@ -21,6 +21,7 @@ class MasterAnimalForm extends model
     public $short_description;
     public $long_description;
     public $image;
+    public $banner_image;
     public $status;
     public $status_option = [];
     public $animal_type_id;
