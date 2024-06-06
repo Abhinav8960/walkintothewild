@@ -410,6 +410,22 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         // Use ArrayHelper::map to create the key-value pairs
         $result = ArrayHelper::map($parks, 'id', 'title');
         return $result;
+    }
+
+    public static function safariParkRareExoticOption()
+    {
+
+        $query = SafariPark::find()
+            ->where(['status' => Park::STATUS_ACTIVE])
+            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+
+        // Get all the models
+        $parks = $query->all();
+
+        // Use ArrayHelper::map to create the key-value pairs
+        $result = ArrayHelper::map($parks, 'id', 'title');
+        return $result;
         // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }

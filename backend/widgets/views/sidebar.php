@@ -356,7 +356,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																						)) ? "display: block;" : "display: none;" ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-park/index")) ? "active" : "" ?>" href="/cms/feature-park/index">Park</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li>
-									<li><a class="sub-side-menu__item" href="#">RARE AND EXOTIC</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-rare-exotic/index")) ? "active" : "" ?>" href="/cms/feature-rare-exotic/index">RARE AND EXOTIC</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" ?>" href="/cms/feature-tag/index">Article Tag</a></li>
 								</ul>
 							</li>
