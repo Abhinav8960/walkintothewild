@@ -42,13 +42,25 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return 'article';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+            [
+                'class' => \yii\behaviors\SluggableBehavior::class,
+                'attribute' => 'title',
+                'slugAttribute' => 'slug',
+                'immutable' => true,
+                'ensureUnique' => true,
+            ],
+        ];
+    }
+
+
     public function rules()
     {
         return [
-            [['title', 'slug', 'meta_title'], 'required'],
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['publish_date_time', 'article_date'], 'safe'],
