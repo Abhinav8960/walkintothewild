@@ -27,10 +27,12 @@ class DefaultController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+        $rare_exotics = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'animal_type_sequence', ''])->limit(5)->orderBy(['animal_type_sequence' => SORT_ASC])->all();
         return $this->render(
             'index',
             [
                 'featured_parks' => $featured_parks,
+                'rare_exotics' => $rare_exotics,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]
