@@ -112,7 +112,7 @@ $this->params['title'] = $this->title;
                         <?= $form->field($model, 'meta_description')->textarea() ?>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="formInput mb-3">
                             <div class="d-md-flex  gap-3">
                                 <div class="checkbb mt-md-0 mt-3">
