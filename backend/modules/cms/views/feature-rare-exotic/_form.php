@@ -24,12 +24,13 @@ use yii\web\View;
             <tbody>
                 <?php
 
-                $allSafariParks = SafariPark::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
-                $countAllSafariPark = count($allSafariParks);
+                $rareExoticList = GeneralModel::safariParkRareExoticOption();
+                $countRareExoticList = count($rareExoticList);
+                // dd($countRareExoticList);
 
                 $length = '';
-                if ($countAllSafariPark < 5) {
-                    $length = $countAllSafariPark;
+                if ($countRareExoticList < 5) {
+                    $length = $countRareExoticList;
                 } else {
                     $length = 5;
                 }
