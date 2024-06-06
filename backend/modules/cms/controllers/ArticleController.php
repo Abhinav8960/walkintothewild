@@ -43,6 +43,7 @@ class ArticleController extends Controller
         $model->action_url = '/cms/article/create';
         $model->action_validate_url = '/cms/article/validate';
         $model->status = Article::STATUS_ACTIVE;
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -92,6 +93,8 @@ class ArticleController extends Controller
         $model = new ArticleForm($article_model);
         $model->action_url = '/cms/article/update?id=' . $id;
         $model->action_validate_url = '/cms/article/validate?id=' . $id;
+
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

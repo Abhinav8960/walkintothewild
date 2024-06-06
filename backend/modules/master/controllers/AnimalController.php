@@ -44,6 +44,7 @@ class AnimalController extends Controller
     {
         $model = new MasterAnimalForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -78,6 +79,7 @@ class AnimalController extends Controller
     {
         $animal_model = $this->findModel($id);
         $model = new MasterAnimalForm($animal_model);
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
