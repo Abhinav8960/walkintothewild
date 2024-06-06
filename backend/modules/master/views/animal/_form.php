@@ -34,7 +34,7 @@ use yii\bootstrap5\ActiveForm;
     <?php
     if ($model->animal_model->image) { ?>
         <div class="col-md-5">
-            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 350px * 350px / 250kb)') ?>
         </div>
 
         <div class="col-md-1">
@@ -42,7 +42,7 @@ use yii\bootstrap5\ActiveForm;
         </div>
     <?php } else { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 350px * 350px / 100kb)') ?>
+            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 350px * 350px / 250kb)') ?>
         </div>
     <?php  } ?>
 
@@ -50,14 +50,14 @@ use yii\bootstrap5\ActiveForm;
     <?php
     if ($model->animal_model->banner_image) { ?>
         <div class="col-md-5">
-            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 1920px * 250px / 100kb)') ?>
+            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 1920px * 250px / 250kb)') ?>
         </div>
         <div class="col-md-1">
             <?php echo '<img src="' . $model->animal_model->bannerimagepath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 1920px * 250px / 100kb)') ?>
+            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 1920px * 250px / 250kb)') ?>
         </div>
     <?php  } ?>
 

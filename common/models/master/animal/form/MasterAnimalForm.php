@@ -53,9 +53,22 @@ class MasterAnimalForm extends model
         $this->status_option = GeneralModel::statusoption();
     }
 
-    /**
-     * {@inheritdoc}
-     */
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['uploadfile'] = ['uploadfile'];
+        $scenarios['create'] = [
+            'name', 'short_description', 'animal_type_id', 'image', 'banner_image', 'status', 'slug',
+            'know_as', 'long_description'
+        ];
+        $scenarios['update'] = [
+            'name', 'short_description', 'animal_type_id', 'status', 'slug',
+            'know_as', 'long_description'
+        ];
+        return $scenarios;
+    }
+
     public function rules()
     {
         return [
