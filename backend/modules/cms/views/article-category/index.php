@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-$this->title = 'Article Category';
+$this->title = 'Article Topics';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);

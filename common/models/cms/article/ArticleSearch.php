@@ -16,9 +16,12 @@ class ArticleSearch extends Article
     public function rules()
     {
         return [
-            [['created_at', 'created_by', 'updated_by', 'updated_at', 'status'], 'safe'],
-            [['title', 'description'], 'safe'],
-            [['slug'], 'safe'],
+            [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
+            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['publish_date_time', 'article_date'], 'safe'],
+            [['title', 'banner_image', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
+            [['slug'], 'string', 'max' => 300],
+            [['sub_title'], 'string', 'max' => 75],
         ];
     }
 
@@ -40,7 +43,7 @@ class ArticleSearch extends Article
      */
     public function search($params, $pagination = true)
     {
-        $query =  Article::find()->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND]]);
+        $query =  Article::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND]]);
 
 
         // add conditions that should always apply here

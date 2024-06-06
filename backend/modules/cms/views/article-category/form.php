@@ -7,7 +7,7 @@ use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 
-$this->title = 'Article Category';
+$this->title = 'Article Topics';
 $this->params['breadcrumbs'][] = "Create";
 if (isset($model->master_article_topic_model->id)) {
     $this->params['breadcrumbs'][] = "Update";
@@ -36,10 +36,10 @@ $this->params['title'] = $this->title;
             <div class="card-body">
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Category Name']) ?>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->master_article_topic_model->id) ? true : false]) ?>
                     </div>
                 </div>
