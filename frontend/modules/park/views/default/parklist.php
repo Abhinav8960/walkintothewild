@@ -95,7 +95,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             </div>
                                             <div class="seelctes_text pt-2 pb-4 ">
                                                 <p>
-                                                    <?= $model->short_description ?>
+                                                    <?= $model->long_description ?>
                                                 </p>
                                             </div>
                                             <div class="taglines">
