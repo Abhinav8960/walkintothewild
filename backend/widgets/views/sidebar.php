@@ -148,6 +148,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/park/safari/profile/createhowtoreach",
 											"/park/safari/profile/updatehowtoreach",
 											"/park/safari/profile/map",
+											"/park/safari/profile/suggestions",
 
 
 											"/park/birding/default/create",
@@ -196,6 +197,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/park/safari/profile/createhowtoreach",
 														"/park/safari/profile/updatehowtoreach",
 														"/park/safari/profile/map",
+														"/park/safari/profile/suggestions",
+
+
+
 
 														"/park/birding/default/create",
 
@@ -246,6 +251,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/safari/profile/createhowtoreach",
 															"/park/safari/profile/updatehowtoreach",
 															"/park/safari/profile/map",
+															"/park/safari/profile/suggestions",
 														)) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/park/birding/default/index",

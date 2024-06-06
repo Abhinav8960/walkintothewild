@@ -2,6 +2,7 @@
 
 namespace common\models\suggestions;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -19,8 +20,9 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class SafariSuggestions extends \yii\db\ActiveRecord
+class SafariSuggestions extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */

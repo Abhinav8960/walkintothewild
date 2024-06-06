@@ -24,6 +24,7 @@ use common\models\park\SafariParkVehicle;
 use common\models\park\SafariParkVehicleSearch;
 use common\models\park\SafariParkZone;
 use common\models\park\SafariParkZoneSearch;
+use common\models\suggestions\SafariSuggestionsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -621,11 +622,11 @@ class ProfileController extends Controller
      */
     public function actionSuggestions($safari_park_id)
     {
-        $searchModel = new SafariParkGallerySearch();
-        $searchModel->safari_park_id = $safari_park_id;
+        $searchModel = new SafariSuggestionsSearch();
+        $searchModel->park_id = $safari_park_id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('gallery', [
+        return $this->render('suggestions', [
             'safari_model' => $this->findModel($safari_park_id),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
