@@ -144,9 +144,9 @@ class SafariParkForm extends model
 
             [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two'], 'integer'],
             [['title'], 'string', 'max' => 255],
-            [['short_description'], 'validateMaxWords', 'params' => ['max' => 25]],
+            [['short_description'], 'validateMaxWords', 'params' => ['max' => 70]],
             [['long_description', 'meta_title', 'meta_description'], 'string'],
-            [['long_description'], 'validateMaxWords', 'params' => ['max' => 220]],
+            [['long_description'], 'validateMaxWords', 'params' => ['max' => 140]],
             [['status', 'country_id', 'is_published'], 'default', 'value' => 1],
             [[
                 'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description',
