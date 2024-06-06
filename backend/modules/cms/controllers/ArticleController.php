@@ -103,7 +103,7 @@ class ArticleController extends Controller
                 $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->article_model->save()) {
+                    if ($model->article_model->save(false)) {
                         $model->uploadFile();
 
                         $articleTopics = $model->article_topics;
