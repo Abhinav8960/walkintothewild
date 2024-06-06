@@ -48,6 +48,7 @@ class AnimalController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->image = UploadedFile::getInstance($model, 'image');
+                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->animal_model->save(false)) {
@@ -81,6 +82,8 @@ class AnimalController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->image = UploadedFile::getInstance($model, 'image');
+                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
+
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->animal_model->save()) {

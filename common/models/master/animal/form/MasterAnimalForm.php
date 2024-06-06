@@ -21,6 +21,7 @@ class MasterAnimalForm extends model
     public $short_description;
     public $long_description;
     public $image;
+    public $banner_image;
     public $status;
     public $status_option = [];
     public $animal_type_id;
@@ -39,6 +40,7 @@ class MasterAnimalForm extends model
         if ($animal_model  != '') {
             $this->animal_model = $animal_model;
             $this->image = $this->animal_model->image;
+            $this->banner_image = $this->animal_model->banner_image;
             $this->slug = $this->animal_model->slug;
             $this->know_as = $this->animal_model->know_as;
             $this->name = $this->animal_model->name;
@@ -57,7 +59,7 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name', 'short_description', 'animal_type_id'], 'required'],
+            [['name', 'short_description', 'animal_type_id','image', 'banner_image'], 'required'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 125],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
@@ -66,12 +68,20 @@ class MasterAnimalForm extends model
             [['status'], 'default', 'value' => 1],
             [['long_description'], 'safe'],
             [
-                ['image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['image',], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'minWidth' => 285,
                 // 'maxWidth' => 285,
                 // 'maxHeight' => 285,
                 // 'minHeight' => 285,
-                'maxSize' => 250 * 1024
+                'maxSize' => 100 * 1024
+            ],
+            [
+                ['banner_image',], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 1920,
+                'maxWidth' => 1920,
+                'maxHeight' => 500,
+                'minHeight' => 500,
+                'maxSize' => 100 * 1024
             ],
         ];
     }
@@ -83,7 +93,8 @@ class MasterAnimalForm extends model
     {
         return [
             'name' => 'Name',
-            'image' => 'Image  (JPEG /JPG or PNG / 350 Pixels x 350 Pixels / 100 KB)',
+            'image' => 'Image',
+            'banner' => 'Banner Image',
             'status' => 'Status',
             'animal_type_id' => 'Animal Type'
 
@@ -108,6 +119,28 @@ class MasterAnimalForm extends model
 
     public function uploadFile()
     {
+
+        if ($this->banner_image) {
+            $storagePath = Yii::$app->params['datapath'] . '/animal';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->animal_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
+            $fileName = 'animal' . time() . '.' . $this->banner_image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+            if ($this->banner_image->saveAs($filePath)) {
+                $this->animal_model->banner_image = $fileName;
+                $this->animal_model->save(false);
+            }
+        }
 
         if ($this->image) {
             $storagePath = Yii::$app->params['datapath'] . '/animal';
