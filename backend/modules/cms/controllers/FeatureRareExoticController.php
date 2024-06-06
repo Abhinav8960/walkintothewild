@@ -21,7 +21,6 @@ class FeatureRareExoticController extends Controller
         ]);
     }
 
-
     public function actionSaveSequence()
     {
         if (Yii::$app->request->isPost) {
@@ -50,7 +49,7 @@ class FeatureRareExoticController extends Controller
             if ($model->save()) {
                 return ['success' => true];
             } else {
-                Yii::error('Failed to save park sequence: ' . print_r($model->getErrors(), true));
+                Yii::error('Failed to save park animal sequence: ' . print_r($model->getErrors(), true));
                 return ['success' => false, 'errors' => $model->getErrors()];
             }
         }

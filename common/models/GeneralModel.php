@@ -422,14 +422,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function safariParkRareExoticOption()
     {
-        $query = SafariPark::find()
-            ->where(['safari_park.status' => Park::STATUS_ACTIVE])
-            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
-            ->leftJoin('safari_parks_animal', 'safari_parks_animal.safari_park_id = safari_park.id')
-            ->leftJoin('master_animal', 'safari_parks_animal.master_animal_id = master_animal.id')
-            ->where(['master_animal.animal_type_id' => 2])
-            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+        $query = SafariPark::find()->where(['safari_park.status' => Park::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC]);
 
+        $query->joinwith(['animals' => function ($query) {
+            $query->andFilterWhere(['safari_parks_animal.animal_type_id' => 2]);
+        }]);
         $parks = $query->all();
         $result = ArrayHelper::map($parks, 'id', 'title');
         return $result;

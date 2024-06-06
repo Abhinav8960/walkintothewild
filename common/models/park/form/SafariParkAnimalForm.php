@@ -5,6 +5,7 @@ namespace common\models\park\form;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
+use common\models\master\animal\MasterAnimal;
 use common\models\park\SafariParkAnimal;
 
 /**
@@ -15,6 +16,7 @@ class SafariParkAnimalForm extends model
     public $safari_park_id;
     public $master_animal_id;
     public $animal_name;
+    public $animal_type_id;
 
     public $status;
     public $status_option = [];
@@ -35,6 +37,7 @@ class SafariParkAnimalForm extends model
             $this->safari_park_id = $this->safari_park_animal_model->safari_park_id;
             $this->master_animal_id = $this->safari_park_animal_model->master_animal_id;
             $this->animal_name = $this->safari_park_animal_model->animal_name;
+            $this->animal_type_id = $this->safari_park_animal_model->animal_type_id;
             $this->status = $this->safari_park_animal_model->status;
         }
 
@@ -52,7 +55,7 @@ class SafariParkAnimalForm extends model
             [['status'], 'integer'],
             [['animal_name'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
-            [['master_animal_id', 'safari_park_id'], 'safe'],
+            [['master_animal_id', 'safari_park_id', 'animal_type_id'], 'safe'],
         ];
     }
 
@@ -79,6 +82,10 @@ class SafariParkAnimalForm extends model
         $this->safari_park_animal_model->master_animal_id = $this->master_animal_id;
         if ($this->master_animal_id) {
             $this->safari_park_animal_model->animal_name =  GeneralModel::animaloption()[$this->master_animal_id];
+            $animal = MasterAnimal::find()->where(['status' => 1, 'id' => $this->master_animal_id])->limit(1)->one();
+            if ($animal) {
+                $this->safari_park_animal_model->animal_type_id =  $animal->animal_type_id;
+            }
         }
         $this->safari_park_animal_model->status = $this->status;
     }
