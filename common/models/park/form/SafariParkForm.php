@@ -144,7 +144,7 @@ class SafariParkForm extends model
 
             [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two'], 'integer'],
             [['title'], 'string', 'max' => 255],
-            [['short_description'], 'validateMaxWords', 'params' => ['max' => 150]],
+            [['short_description'], 'validateMaxWords', 'params' => ['max' => 25]],
             [['long_description', 'meta_title', 'meta_description'], 'string'],
             [['long_description'], 'validateMaxWords', 'params' => ['max' => 220]],
             [['status', 'country_id', 'is_published'], 'default', 'value' => 1],
@@ -169,10 +169,10 @@ class SafariParkForm extends model
 
             [
                 ['logo', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                // 'minWidth' => 500,
-                // 'maxWidth' => 500,
-                // 'maxHeight' => 123,
-                // 'minHeight' => 123,
+                'minWidth' => 380,
+                'maxWidth' => 380,
+                'maxHeight' => 600,
+                'minHeight' => 600,
                 'maxSize' => 250 * 1024
             ],
         ];
@@ -233,7 +233,7 @@ class SafariParkForm extends model
             'city_name' => 'City Name',
             'about_title' => 'About Title *',
             'module_title' => 'Module Title *',
-            'feature_image' => 'Feature Image (JPEG /JPG or PNG / 250 KB) *',
+            'feature_image' => 'Feature Image (JPEG /JPG or PNG / 380 Pixels x 600 Pixels / 250 KB) *',
             'logo' => 'Logo (JPEG /JPG or PNG / 250 KB) *',
             'avg_safari_price_min' => 'Avg Safari Price',
             'nearest_railway_station' => 'Nearest Railway',

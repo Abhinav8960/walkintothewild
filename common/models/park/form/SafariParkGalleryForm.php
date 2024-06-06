@@ -56,14 +56,14 @@ class SafariParkGalleryForm extends model
             [['image_caption'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
             [['image', 'sequence', 'safari_park_id'], 'safe'],
-            // [
-            //     ['image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-            //     'minWidth' => 75,
-            //     'maxWidth' => 75,
-            //     'maxHeight' => 75,
-            //     'minHeight' => 75,
-            //     'maxSize' => 100 * 1024
-            // ],
+            [
+                ['image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 350,
+                'maxWidth' => 350,
+                'maxHeight' => 350,
+                'minHeight' => 350,
+                'maxSize' => 250 * 1024
+            ],
         ];
     }
 
@@ -84,7 +84,7 @@ class SafariParkGalleryForm extends model
     {
         return [
             'image_caption' => 'Image Caption *',
-            'image' => 'Image  (JPEG /JPG or PNG / 75 Pixels x 75 Pixels / 150 KB) *',
+            'image' => 'Image  (JPEG /JPG or PNG / 350 Pixels x 350 Pixels / 250 KB) *',
             'status' => 'Status',
         ];
     }
