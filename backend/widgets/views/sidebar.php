@@ -18,11 +18,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 		<div class="main-sidemenu">
 			<div class="slide-left disabled" id="slide-left"><img src="/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
 			<ul class="side-menu">
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
-					<li class="slide">
-						<a class="side-menu__item" href="/"><img src="/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
-					</li>
+				<li class="slide">
+					<a class="side-menu__item" href="/"><img src="/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
+				</li>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
 											"/master",
@@ -116,6 +116,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/safari-session")) ? "active" : "" ?>" href="/meta/safari-session">Safari Session</a></li>
 						</ul>
 					</li>
+
+				<?php endif; ?>
+
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
 											"/park/safari/default/index",
@@ -453,10 +457,14 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item" href="#">Safari Comments</a></li>
 						</ul>
 					</li>
+
+
+				<?php endif; ?>
+
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_resort_manager) : ?>
 					<li class="slide">
 						<a class="side-menu__item" href="#"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
 					</li>
-
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
@@ -477,9 +485,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/default/front-index")) ? "active" : "" ?>" href="/trierror/default/front-index">Frontend Error Log</a></li>
 						</ul>
 					</li>
+				<?php endif; ?>
 
 
 
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Progress Tracking</span><i class="angle fe fe-chevron-right"></i></a>
@@ -490,7 +500,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item" href="#">Ranking</a></li>
 						</ul>
 					</li>
+				<?php endif; ?>
 
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide <?= in_array($active_url, array(
 											"/portalsetting/default/index",
 											"/portalsetting/default/params",
@@ -525,11 +537,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/user/default/index",
 													)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 					</li>
-
-
-
-
-
 				<?php endif; ?>
 
 				<li class="slide">
