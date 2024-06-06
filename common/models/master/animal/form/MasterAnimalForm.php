@@ -59,7 +59,7 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name', 'short_description', 'animal_type_id','image', 'banner_image'], 'required'],
+            [['name', 'short_description', 'animal_type_id', 'image', 'banner_image'], 'required'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 125],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
@@ -79,8 +79,8 @@ class MasterAnimalForm extends model
                 ['banner_image',], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 1920,
                 'maxWidth' => 1920,
-                'maxHeight' => 500,
-                'minHeight' => 500,
+                'maxHeight' => 220,
+                'minHeight' => 220,
                 'maxSize' => 100 * 1024
             ],
         ];
@@ -94,7 +94,7 @@ class MasterAnimalForm extends model
         return [
             'name' => 'Name',
             'image' => 'Image',
-            'banner' => 'Banner Image',
+            'banner_image' => 'Banner Image',
             'status' => 'Status',
             'animal_type_id' => 'Animal Type'
 
@@ -121,6 +121,7 @@ class MasterAnimalForm extends model
     {
 
         if ($this->banner_image) {
+            // dd($this->banner_image);
             $storagePath = Yii::$app->params['datapath'] . '/animal';
 
             if (!file_exists($storagePath)) {
@@ -133,7 +134,7 @@ class MasterAnimalForm extends model
                 chmod($storagePath, 0777);
             }
 
-            $fileName = 'animal' . time() . '.' . $this->banner_image->extension;
+            $fileName = 'animal' . '-' . time() . '.' . $this->banner_image->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->banner_image->saveAs($filePath)) {
@@ -143,6 +144,8 @@ class MasterAnimalForm extends model
         }
 
         if ($this->image) {
+            // dd($this->image);
+
             $storagePath = Yii::$app->params['datapath'] . '/animal';
 
             if (!file_exists($storagePath)) {
