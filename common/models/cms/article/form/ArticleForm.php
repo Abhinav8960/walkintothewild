@@ -99,7 +99,7 @@ class ArticleForm extends \yii\base\Model
                 'maxWidth' => 350,
                 'maxHeight' => 350,
                 'minHeight' => 350,
-                'maxSize' => 100 * 1024,
+                'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
             [['title'], 'string', 'max' => 255],

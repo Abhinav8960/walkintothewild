@@ -69,11 +69,11 @@ class MasterAnimalForm extends model
             [['long_description'], 'safe'],
             [
                 ['image',], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                // 'minWidth' => 285,
-                // 'maxWidth' => 285,
-                // 'maxHeight' => 285,
-                // 'minHeight' => 285,
-                'maxSize' => 100 * 1024
+                'minWidth' => 285,
+                'maxWidth' => 285,
+                'maxHeight' => 285,
+                'minHeight' => 285,
+                'maxSize' => 250 * 1024
             ],
             [
                 ['banner_image',], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
@@ -81,7 +81,7 @@ class MasterAnimalForm extends model
                 'maxWidth' => 1920,
                 'maxHeight' => 220,
                 'minHeight' => 220,
-                'maxSize' => 100 * 1024
+                'maxSize' => 250 * 1024
             ],
         ];
     }
