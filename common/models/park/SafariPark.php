@@ -169,54 +169,59 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
 
     public function getGallery()
     {
-        return $this->hasMany(SafariParkGallery::className(), ['safari_park_id' => 'id']);
+        return $this->hasMany(SafariParkGallery::className(), ['safari_park_id' => 'id'])->andWhere(['status' => 1]);
     }
 
 
 
     public function getGalleryimag()
     {
-        return $this->hasOne(SafariParkGallery::className(), ['safari_park_id' => 'id']);
+        return $this->hasOne(SafariParkGallery::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_gallery.status' => 1]);
     }
     public function getAnimals()
     {
-        return $this->hasMany(SafariParkAnimal::className(), ['safari_park_id' => 'id']);
+        return $this->hasMany(SafariParkAnimal::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_animal.status' => 1]);
     }
 
     public function getSessions()
     {
-        return $this->hasMany(SafariParkSession::className(), ['safari_park_id' => 'id']);
+        return $this->hasMany(SafariParkSession::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_session.status' => 1]);
     }
 
 
     public function getVehicles()
     {
-        return $this->hasMany(SafariParkVehicle::className(), ['safari_park_id' => 'id']);
+        return $this->hasMany(SafariParkVehicle::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_vehicle.status' => 1]);
     }
 
 
 
     public function getBufferzones()
     {
-        return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 2]);
+        return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 2, 'safari_park_zone.status' => 1]);
     }
 
     public function getCorezones()
     {
-        return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 1]);
+        return $this->hasMany(SafariParkZone::className(), ['safari_park_id' => 'id'])->andWhere(['master_zone_type_id' => 1, 'safari_park_zone.status' => 1]);
     }
 
 
     public function getFlorafauns()
     {
-        return $this->hasMany(SafariParkFloraFauna::className(), ['safari_park_id' => 'id']);
+        return $this->hasMany(SafariParkFloraFauna::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_flora_fauna.status' => 1]);
     }
 
     public function getMonths()
     {
-        return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id']);
+        return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_month.status' => 1]);
     }
 
+
+    public function getAccomodations()
+    {
+        return $this->hasMany(SafariParkAccomodation::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_accomodation.status' => 1]);
+    }
 
     public function getFeatureimagepath()
     {

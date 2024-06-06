@@ -18,10 +18,18 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
+
+        $searchModel = new SafariParkSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
         return $this->render(
             'index',
-            ['featured_parks' => $featured_parks]
+            [
+                'featured_parks' => $featured_parks,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]
         );
     }
 
