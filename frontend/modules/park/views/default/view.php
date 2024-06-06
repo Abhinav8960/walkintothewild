@@ -142,7 +142,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 'action' => $suggestionmodel->action_url,
                 'validationUrl' => $suggestionmodel->action_validate_url,
             ]); ?>
-            <div class="modal-body ">
+            <div class="modal-body modal_form">
                 <div class="row">
                     <div class="col-12 mb-2">
                         <label for="" class="Modal_label">Select Category</label>

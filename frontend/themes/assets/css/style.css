@@ -2688,9 +2688,17 @@ figure {
 }
 
 .modal_form .form-select {
-    font-size: var(--fs-14);
+    font-size: var(--fs-14)
 
 }
+.field-suggestionsform-you_are_id{
+
+    margin-bottom: 0px !important;
+}
+/* .modal_form .form-select.form-select-lg{
+
+    font-size: var(--fs-14) !important;
+} */
 
 .btn_close {
 
