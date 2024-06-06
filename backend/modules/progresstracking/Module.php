@@ -19,9 +19,14 @@ class Module extends \yii\base\Module
      */
     public function init()
     {
-        if (!isset(Yii::$app->user->identity)) {
-            return Yii::$app->getResponse()->redirect('/site/login')->send();
-            exit;
+        if (!Yii::$app->request->isConsoleRequest) {
+            if (!Yii::$app->user->identity) {
+                \Yii::$app->response->redirect('/site/login')->send();
+            } else {
+                if (Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_cms_manager) {
+                    throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Admin or Reporting Manager can View this page.');
+                }
+            }
         }
         parent::init();
     }

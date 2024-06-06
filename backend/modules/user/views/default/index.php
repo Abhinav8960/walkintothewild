@@ -53,6 +53,9 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                             if ($model->is_resort_manager == 1) {
                                 $roles[] = "Resort Manager";
                             }
+                            if ($model->is_report_manager == 1) {
+                                $roles[] = "Report Manager";
+                            }
                             return implode(', ', $roles);
                         },
                         'format' => 'raw',

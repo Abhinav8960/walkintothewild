@@ -65,6 +65,9 @@ class UserUpdateForm extends Model
             if ($this->user_model->is_resort_manager == 1) {
                 $this->role_id[] = 6;
             }
+            if ($this->user_model->is_report_manager == 1) {
+                $this->role_id[] = 7;
+            }
         }
     }
 
@@ -137,6 +140,7 @@ class UserUpdateForm extends Model
         $this->user_model->is_birding_operator = 0;
         $this->user_model->is_cms_manager = 0;
         $this->user_model->is_resort_manager = 0;
+        $this->user_model->is_report_manager = 0;
         $this->user_model->save(false);
 
         if ($this->role_id) {
@@ -160,6 +164,9 @@ class UserUpdateForm extends Model
                 }
                 if ($role == 6) {
                     $this->user_model->is_resort_manager = 1;
+                }
+                if ($role == 7) {
+                    $this->user_model->is_report_manager = 1;
                 }
             }
         }

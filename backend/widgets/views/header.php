@@ -58,6 +58,9 @@
 													if (Yii::$app->user->identity->is_resort_manager == 1) {
 														$roles[] = "Resort Manager";
 													}
+													if (Yii::$app->user->identity->is_report_manager == 1) {
+														$roles[] = "Report Manager";
+													}
 												?>
 													<h6 class="tx-15 font-weight-semibold mb-0"><?= Yii::$app->user->identity->name ?></h6><span class="dropdown-title-text subtext op-6  tx-12"><?= implode(', ', $roles); ?></span>
 

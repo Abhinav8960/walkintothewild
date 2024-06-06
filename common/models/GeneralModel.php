@@ -146,6 +146,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             4 => 'Operator',
             5 => 'Cms Manager',
             6 => 'Resort Manager',
+            7 => 'Report Manager',
         ];
     }
 
