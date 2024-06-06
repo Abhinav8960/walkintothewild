@@ -3,19 +3,19 @@
 namespace backend\modules\cms\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\cms\about\form\AboutForm;
-use common\models\cms\about\About;
-use common\models\cms\about\form\AboutSearch;
-
+use common\models\cms\banner\Banner;
+use common\models\cms\banner\BannerSearch;
+use common\models\cms\banner\form\BannerForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
-class AboutController extends Controller
+class BannerController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new AboutSearch();
+        $searchModel = new BannerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -26,24 +26,25 @@ class AboutController extends Controller
 
     public function actionCreate()
     {
-        $model = new AboutForm();
+        $model = new BannerForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-
+        $model->scenario = 'create';
 
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->image = UploadedFile::getInstance($model, 'image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->about_model->save(false)) {
-                        //$model->uploadFile();
+                    if ($model->banner_model->save(false)) {
+                        $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->about_model->loadDefaultValues();
+            $model->banner_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -53,21 +54,24 @@ class AboutController extends Controller
 
     public function actionUpdate($id)
     {
-        $about_model = $this->findModel($id);
-        $model = new AboutForm($about_model);
+        $banner_model = $this->findModel($id);
+        $model = new BannerForm($banner_model);
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->image = UploadedFile::getInstance($model, 'image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->about_model->save()) {
+                    if ($model->banner_model->save()) {
+                        $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->about_model->loadDefaultValues();
+            $model->banner_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -97,7 +101,7 @@ class AboutController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = About::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = Banner::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

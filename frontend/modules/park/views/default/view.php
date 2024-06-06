@@ -1,5 +1,7 @@
 <?php
 
+use common\interfaces\Constants;
+use common\models\cms\banner\Banner;
 use common\models\GeneralModel;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
@@ -13,11 +15,14 @@ $this->params['title'] = $this->title;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+
+$park_constant = Constants::PARK_VIEW;
+$banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 <section class="banner_section-inner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/articlebanner.png" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/banner-share.png" class="d-block w-100 banner_search" alt="banner">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container-lg">

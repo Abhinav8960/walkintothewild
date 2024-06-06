@@ -3,19 +3,24 @@
 
 /* @var $this yii\web\View */
 
+use common\interfaces\Constants;
+use common\models\cms\banner\Banner;
+
 $this->title = 'Home';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+$park_constant = Constants::HOME;
+$banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 
 
 <section class="banner_section position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/bannerhome.png" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/bannerhome.png" class="d-block w-100" alt="banner">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/bannerhome.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/bannerhome.png' ?>" class="d-block w-100" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container-lg">

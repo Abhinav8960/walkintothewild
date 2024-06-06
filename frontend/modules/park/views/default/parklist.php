@@ -1,6 +1,9 @@
 <?php
 
 
+use common\interfaces\Constants;
+use common\models\cms\banner\Banner;
+
 /* @var $this yii\web\View */
 
 $this->title = 'Park Search Result';
@@ -9,11 +12,13 @@ $this->params['title'] = $this->title;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+$park_constant = Constants::PARK_LIST;
+$banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 <section class="banner_section-inner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/articlebanner.png" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/banner-share.png" class="d-block w-100 banner_search" alt="banner">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container-lg">
@@ -99,27 +104,27 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 </p>
                                             </div>
                                             <div class="tour_logosliders">
-                                            <div class="taglines">
-                                                <p>Top Safari Tour Operators</p>
-                                            </div>
-                                            <div class="touroprators">
-                                                <div class="opratios-slider owl-carousel owl-theme">
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                                                    </div>
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                                                    </div>
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                                                    </div>
-                                                    <div class="slidesImg">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                <div class="taglines">
+                                                    <p>Top Safari Tour Operators</p>
+                                                </div>
+                                                <div class="touroprators">
+                                                    <div class="opratios-slider owl-carousel owl-theme">
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
+                                                        </div>
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                        </div>
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
+                                                        </div>
+                                                        <div class="slidesImg">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            </div>
-                                           
+
                                         </div>
 
                                     </div>

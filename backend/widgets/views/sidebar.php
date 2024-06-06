@@ -296,6 +296,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/faqcategory",
 											"/cms/faqs",
 											"/cms/feature-park/index",
+											"/cms/banner/index",
+											"/cms/banner/create",
+											"/cms/banner/update",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
@@ -305,6 +308,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/faqcategory",
 														"/cms/feature-park/index",
 														"/cms/faqs",
+														"/cms/about/index",
+														"/cms/disclaimer/index",
+														"/cms/banner/index",
+														"/cms/banner/create",
+														"/cms/banner/update",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 													"/cms",
@@ -331,6 +339,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/termscondition",	"/cms/faqcategory",
 																				"/cms/faqs",
 																				"/cms/feature-park/index",
+																				"/cms/banner/index",
+																				"/cms/banner/create",
+																				"/cms/banner/update",
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -392,7 +403,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/faqs")) ? "active" : "" ?>" href="/cms/faqs">FAQs</a></li>
 								</ul>
 							</li>
-							<li><a class="slide-item <?= in_array($active_url, array("/cms/banner")) ? "active" : "" ?>" href="#">Banners</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/banner/index", "/cms/banner/create", "/cms/banner/update")) ? "active" : "" ?>" href="/cms/banner/index">Banners</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/about")) ? "active" : "" ?>" href="/cms/about">About</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li>
