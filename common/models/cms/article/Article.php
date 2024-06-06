@@ -42,18 +42,35 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return 'article';
     }
 
+
     public function behaviors()
     {
         return [
-            \yii\behaviors\TimestampBehavior::className(),
-            \yii\behaviors\BlameableBehavior::className(),
             [
-                'class' => \yii\behaviors\SluggableBehavior::class,
-                'attribute' => 'title',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-                'ensureUnique' => true,
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
             ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+            'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'slug', //The attribute to be generated
+                'attribute' => 'title', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '-',
+                    'trim' => true
+                ]
+            ]
         ];
     }
 
