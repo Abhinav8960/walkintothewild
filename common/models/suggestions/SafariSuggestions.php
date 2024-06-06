@@ -5,7 +5,7 @@ namespace common\models\suggestions;
 use Yii;
 
 /**
- * This is the model class for table "suggestions".
+ * This is the model class for table "safari_suggestions".
  *
  * @property int $id
  * @property int|null $park_id
@@ -19,14 +19,14 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Suggestions extends \yii\db\ActiveRecord
+class SafariSuggestions extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'suggestions';
+        return 'safari_suggestions';
     }
 
     /**

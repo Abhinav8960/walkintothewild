@@ -5,15 +5,15 @@ namespace common\models\suggestions\form;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\suggestions\Suggestions;
+use common\models\suggestions\SafariSuggestions;
 
 /**
- * Class SuggestionsForm
- * @package common\models\Suggestions\form
+ * Class SafariSuggestionsForm
+ * @package common\models\suggestions\form
  *
- * Handles the creation and updating of Suggestions models
+ * Handles the creation and updating of SafariSuggestions models
  */
-class SuggestionsForm extends Model
+class SafariSuggestionsForm extends Model
 {
     public $park_id;
     public $master_suggestion_id;
@@ -23,25 +23,25 @@ class SuggestionsForm extends Model
     public $details;
     public $status;
     public $status_option = [];
-    public $suggestion_model;
+    public $safari_suggestion_model;
     public $action_url;
     public $action_validate_url;
 
-    public function __construct(Suggestions $suggestion_model = null, $config = [])
+    public function __construct(SafariSuggestions $safari_suggestion_model = null, $config = [])
     {
         parent::__construct($config);
 
-        if ($suggestion_model === null) {
-            $this->suggestion_model = new Suggestions();
+        if ($safari_suggestion_model === null) {
+            $this->safari_suggestion_model = new SafariSuggestions();
         } else {
-            $this->suggestion_model = $suggestion_model;
-            $this->park_id = $this->suggestion_model->park_id;
-            $this->master_suggestion_id = $this->suggestion_model->master_suggestion_id;
-            $this->you_are_id = $this->suggestion_model->you_are_id;
-            $this->details = $this->suggestion_model->details;
-            $this->user_agent = $this->suggestion_model->user_agent;
-            $this->ip_address = $this->suggestion_model->ip_address;
-            $this->status = $this->suggestion_model->status;
+            $this->safari_suggestion_model = $safari_suggestion_model;
+            $this->park_id = $this->safari_suggestion_model->park_id;
+            $this->master_suggestion_id = $this->safari_suggestion_model->master_suggestion_id;
+            $this->you_are_id = $this->safari_suggestion_model->you_are_id;
+            $this->details = $this->safari_suggestion_model->details;
+            $this->user_agent = $this->safari_suggestion_model->user_agent;
+            $this->ip_address = $this->safari_suggestion_model->ip_address;
+            $this->status = $this->safari_suggestion_model->status;
         }
 
         $this->status_option = GeneralModel::statusOption();
@@ -94,12 +94,12 @@ class SuggestionsForm extends Model
      */
     public function initializeForm()
     {
-        $this->suggestion_model->park_id = $this->park_id;
-        $this->suggestion_model->master_suggestion_id = $this->master_suggestion_id;
-        $this->suggestion_model->you_are_id = $this->you_are_id;
-        $this->suggestion_model->details = $this->details;
-        $this->suggestion_model->user_agent = Yii::$app->request->userAgent;
-        $this->suggestion_model->ip_address = $this->ip_address;
-        $this->suggestion_model->status = $this->status;
+        $this->safari_suggestion_model->park_id = $this->park_id;
+        $this->safari_suggestion_model->master_suggestion_id = $this->master_suggestion_id;
+        $this->safari_suggestion_model->you_are_id = $this->you_are_id;
+        $this->safari_suggestion_model->details = $this->details;
+        $this->safari_suggestion_model->user_agent = Yii::$app->request->userAgent;
+        $this->safari_suggestion_model->ip_address = $this->ip_address;
+        $this->safari_suggestion_model->status = $this->status;
     }
 }

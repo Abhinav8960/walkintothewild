@@ -173,7 +173,7 @@ class ProfileController extends Controller
 
 
     /**
-     * Education View
+     * Gallery View
      *
      * @param [type] $safari_park_id
      * @return void
@@ -263,7 +263,7 @@ class ProfileController extends Controller
 
 
     /**
-     * Education View
+     * Zone View
      *
      * @param [type] $safari_park_id
      * @return void
@@ -350,7 +350,7 @@ class ProfileController extends Controller
 
 
     /**
-     * Education View
+     * Vehicle View
      *
      * @param [type] $safari_park_id
      * @return void
@@ -434,7 +434,7 @@ class ProfileController extends Controller
 
 
     /**
-     * Education View
+     * Map View
      *
      * @param [type] $safari_park_id
      * @return void
@@ -448,7 +448,7 @@ class ProfileController extends Controller
 
 
     /**
-     * Education View
+     * Animal View
      *
      * @param [type] $safari_park_id
      * @return void
@@ -530,7 +530,7 @@ class ProfileController extends Controller
 
 
     /**
-     * Education View
+     * FloraFauna View
      *
      * @param [type] $safari_park_id
      * @return void
@@ -611,6 +611,26 @@ class ProfileController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
 
+
+
+    /**
+     * Suggestion View
+     *
+     * @param [type] $safari_park_id
+     * @return void
+     */
+    public function actionSuggestions($safari_park_id)
+    {
+        $searchModel = new SafariParkGallerySearch();
+        $searchModel->safari_park_id = $safari_park_id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('gallery', [
+            'safari_model' => $this->findModel($safari_park_id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Finds the Employee model based on its primary key value.

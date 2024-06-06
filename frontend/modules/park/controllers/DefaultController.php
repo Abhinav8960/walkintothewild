@@ -4,7 +4,7 @@ namespace frontend\modules\park\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\park\SafariPark;
-use common\models\suggestions\form\SuggestionsForm;
+use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\SafariParkSearch;
 use Yii;
 use yii\web\Controller;
@@ -56,7 +56,7 @@ class DefaultController extends Controller
             $request = Yii::$app->request;
             $ip_address = $request->getRemoteIP();
 
-            $suggestionmodel = new SuggestionsForm();
+            $suggestionmodel = new SafariSuggestionsForm();
             $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
             $suggestionmodel->park_id = isset($model) ? $model->id : '';
             $suggestionmodel->ip_address = $ip_address;
@@ -67,7 +67,7 @@ class DefaultController extends Controller
                 if ($suggestionmodel->load($this->request->post())) {
                     if ($suggestionmodel->validate()) {
                         $suggestionmodel->initializeForm();
-                        if ($suggestionmodel->suggestion_model->save(false)) {
+                        if ($suggestionmodel->safari_suggestion_model->save(false)) {
                             \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                             return $this->redirect(['/park/' . $slug . '']);
                         }
@@ -77,7 +77,7 @@ class DefaultController extends Controller
                     }
                 }
             } else {
-                $suggestionmodel->suggestion_model->loadDefaultValues();
+                $suggestionmodel->safari_suggestion_model->loadDefaultValues();
             }
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -106,10 +106,10 @@ class DefaultController extends Controller
      */
     public function actionValidate($id = null)
     {
-        $suggestionmodel = new SuggestionsForm();
+        $suggestionmodel = new SafariSuggestionsForm();
         if ($id != null) {
             $formmodel = $this->findModel($id);
-            $suggestionmodel = new SuggestionsForm($formmodel);
+            $suggestionmodel = new SafariSuggestionsForm($formmodel);
         }
 
         if (Yii::$app->request->isAjax && $suggestionmodel->load(Yii::$app->request->post())) {
