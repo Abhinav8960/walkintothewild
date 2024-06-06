@@ -36,7 +36,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->state_id) ? $model->state->state_name : '' ?>, <?= isset($model->location_id) ? $model->location->title : '' ?></p>
+                                <p class="mb-0"><?= isset($model->state) ? $model->state->state_name : '' ?>, <?= isset($model->location) ? $model->location->title : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                                     <?php if ($model->vehicles) {
 
                                         foreach ($model->vehicles as $vehicle) {
-                                            echo isset($vehicle->vehicle_id) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
+                                            echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
                                     <?php }
                                     } ?>
                                 </p>
@@ -63,7 +63,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->nearest_railway_station) ? $model->railwaystation->title . ' , ' : '' ?><?= isset($model->nearest_railway_station_two) ? $model->railwaystationtwo->title : '' ?></p>
+                                <p class="mb-0"><?= isset($model->railwaystation) ? $model->railwaystation->title . ' , ' : '' ?><?= isset($model->railwaystationtwo) ? $model->railwaystationtwo->title : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                                     <?php if ($model->sessions) {
 
                                         foreach ($model->sessions as $session) {
-                                            echo isset($session->session_id) ? $session->metasession->title . ',' : '' ?>
+                                            echo isset($session->metasession) ? $session->metasession->title . ',' : '' ?>
                                     <?php }
                                     } ?>
                                 </p>
@@ -90,7 +90,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->nearest_airport) ? $model->airport->name : '' ?></p>
+                                <p class="mb-0"><?= isset($model->airport) ? $model->airport->name : '' ?></p>
                             </div>
                         </div>
                     </div>
