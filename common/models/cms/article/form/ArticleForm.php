@@ -102,7 +102,7 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'description', 'slug', 'article_tag_id', 'comment_allowed', 'article_topics'], 'required'],
+            [['title', 'description', 'article_tag_id', 'comment_allowed', 'article_topics'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id', 'article_tag_id'], 'integer'],
             [['description', 'meta_description'], 'string'],

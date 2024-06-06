@@ -151,6 +151,22 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+    public static function pages()
+    {
+        return [
+            1 => 'Home',
+            2 => 'Park List',
+            3 => 'Park View',
+            4 => 'Operator View',
+            5 => 'Share Safari',
+            6 => 'Join Safari',
+            7 => 'Article Listing',
+            8 => 'Article Detail',
+            9 => 'Term & Condition',
+            10 => 'Accomodation',
+        ];
+    }
+
 
 
     public static function parktype()
