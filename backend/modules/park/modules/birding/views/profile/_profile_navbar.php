@@ -4,6 +4,18 @@
             <div class="main-content-label mg-b-5">
                 <?= $birding_park->title ?>
             </div>
+            <?php
+
+            use yii\helpers\Html;
+
+            echo Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['/park/birding/default/delete', 'id' => $birding_park->id], [
+                'class' => 'btn p-0 change-menuicon  col-md-2 float-end mb-3',
+                'title' => 'Delete',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete ' . $birding_park->title . '?',
+                    'method' => 'post',
+                ],
+            ]); ?>
         </div>
     </div>
 

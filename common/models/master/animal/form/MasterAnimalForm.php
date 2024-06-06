@@ -27,7 +27,6 @@ class MasterAnimalForm extends model
     public $animal_model;
 
 
-
     public function __construct(MasterAnimal $animal_model = null)
     {
 
@@ -46,15 +45,11 @@ class MasterAnimalForm extends model
             $this->short_description = $this->animal_model->short_description;
             $this->long_description = $this->animal_model->long_description;
             $this->status = $this->animal_model->status;
-            $this->animal_type_id = $this->animal_model-  // 'minWidth' => 285,
-            // 'maxWidth' => 285,
-            // 'maxHeight' => 285,
-            // 'minHeight' => 285,>animal_type_id;
+            $this->animal_type_id = $this->animal_model->animal_type_id;
         }
 
         $this->status_option = GeneralModel::statusoption();
     }
-
 
     /**
      * {@inheritdoc}

@@ -42,7 +42,7 @@ class BirdingParkSearch extends BirdingPark
      */
     public function search($params, $pagination = true)
     {
-        $query = BirdingPark::find()->where(['status' => [1, 2]]);
+        $query = BirdingPark::find()->where(['status' => [1, 2, -1]]);
 
         // add conditions that should always apply here
 

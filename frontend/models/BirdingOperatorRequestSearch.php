@@ -44,13 +44,13 @@ class BirdingOperatorRequestSearch extends BirdingOperatorRequest
      */
     public function search($params, $pagination = true)
     {
-        $query = BirdingOperatorRequest::find();
+        $query = BirdingOperatorRequest::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 20 : $pagination],
         ]);
 
         $this->load($params);

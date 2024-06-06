@@ -50,7 +50,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 20 : $pagination],
         ]);
 
         $this->load($params);

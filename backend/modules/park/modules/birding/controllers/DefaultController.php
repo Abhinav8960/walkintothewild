@@ -32,6 +32,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new BirdingParkSearch();
+        $searchModel->status = BirdingPark::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -270,13 +271,13 @@ class DefaultController extends Controller
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-        return $this->redirect(\Yii::$app->request->referrer);
+        return $this->redirect(['/park/birding/default/index']);
     }
 
 
     public function actionPublish($id)
     {
-        $model = $this->findModel($id);
+        $model = BirdingPark::find()->where(['id' => $id])->limit(1)->one();
         $model->is_published = 1;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
@@ -291,8 +292,31 @@ class DefaultController extends Controller
      */
     public function actionUnpublish($id)
     {
-        $model = $this->findModel($id);
+        $model = BirdingPark::find()->where(['id' => $id])->limit(1)->one();
         $model->is_published = 2;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionActive($id)
+    {
+        $model = BirdingPark::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = BirdingPark::STATUS_ACTIVE;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+
+    /**
+     * Suspend Model
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionSuspend($id)
+    {
+        $model = BirdingPark::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = BirdingPark::STATUS_SUSPEND;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
     }

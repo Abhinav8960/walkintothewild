@@ -1,14 +1,13 @@
 <?php
 
 use common\interfaces\StatusInterface;
+use common\models\cms\article\MasterArticleTag;
 use common\models\GeneralModel;
-use common\models\park\SafariPark;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\web\View;
 
-// Assuming $parks is an array of park data and $sequences is the current sequence data
 
 ?>
 <div class="row">
@@ -17,36 +16,34 @@ use yii\web\View;
             <thead>
                 <tr>
                     <th style="width: 5%!important;">Sr. No.</th>
-                    <th style="width: 20%!important;">Park</th>
-
+                    <th style="width: 20%!important;">Tag</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-
-                $allSafariParks = SafariPark::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
-                $countAllSafariPark = count($allSafariParks);
+                $allTags = MasterArticleTag::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
+                $countAllTag = count($allTags);
 
                 $length = '';
-                if ($countAllSafariPark < 5) {
-                    $length = $countAllSafariPark;
+                if ($countAllTag < 5) {
+                    $length = $countAllTag;
                 } else {
                     $length = 5;
                 }
 
-                $form = ActiveForm::begin(['id' => 'park-sequence-form']);
+                $form = ActiveForm::begin(['id' => 'tag-sequence-form']);
                 for ($i = 1; $i <= $length; $i++) {
-                    $park = SafariPark::find()->where(['sequence' => $i])->limit(1)->one();
-                    $selectedParkId = isset($park) ? $park->id : null;
+                    $tag = MasterArticleTag::find()->where(['sequence' => $i])->limit(1)->one();
+                    $selectedTagId = isset($tag) ? $tag->id : null;
                 ?>
                     <tr>
                         <td> <?= $i; ?></td>
                         <td> <?php
-                                echo Html::dropDownList("ParkSequence[$i]", $selectedParkId, GeneralModel::safariparkoption(), [
-                                    'class' => 'park-dropdown',
+                                echo Html::dropDownList("tagSequence[$i]", $selectedTagId, GeneralModel::tagoption(), [
+                                    'class' => 'tag-dropdown',
                                     'data-index' => $i,
                                     'prompt' => 'Select',
-                                    'onchange' => 'saveParkSequence(this)',
+                                    'onchange' => 'saveTagSequence(this)',
                                 ]);
                                 ?></td>
                     </tr>
@@ -58,16 +55,16 @@ use yii\web\View;
     </div>
 </div>
 <?php
-$url = Url::to(['/cms/feature-park/save-sequence']);
+$url = Url::to(['/cms/feature-tag/save-sequence']);
 $csrfToken = Yii::$app->request->csrfToken;
 $js = <<< JS
-function saveParkSequence(select) {
+function saveTagSequence(select) {
     var selectedIndex = select.selectedIndex;
     var selectedValue = select.options[selectedIndex].value;
     var index = select.getAttribute('data-index');
     var formData = new FormData();
     formData.append('sequenceIndex', index);
-    formData.append('parkId', selectedValue);
+    formData.append('tagId', selectedValue);
     
     fetch('$url', {
         method: 'POST',

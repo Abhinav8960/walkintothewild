@@ -60,6 +60,7 @@ class SafariParkFloraFaunaSearch extends SafariParkFloraFauna
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'safari_park_id' => $this->safari_park_id,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
