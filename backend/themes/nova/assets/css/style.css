@@ -112334,3 +112334,27 @@ a.text-dark:focus {
 .table-bordered th, .table-bordered td {
   border: 1px solid #f0f0f8 !important;
 }
+
+#articleform-article_topics{
+
+  display: flex;
+  gap:18px;
+  align-items: center;
+}
+#articleform-article_topics .form-check{
+
+  padding-left: 0px !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#articleform-article_topics .form-check input{
+
+  width:16px;
+  height: 16px;
+}
+
+#articleform-article_topics .form-check input[type="checkbox"]{
+
+  accent-color: r#09422D;
+}
