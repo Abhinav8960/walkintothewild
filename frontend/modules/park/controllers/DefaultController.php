@@ -8,6 +8,7 @@ use common\models\suggestions\form\SuggestionsForm;
 use frontend\models\SafariParkSearch;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController.
@@ -78,6 +79,8 @@ class DefaultController extends Controller
             } else {
                 $suggestionmodel->suggestion_model->loadDefaultValues();
             }
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
         }
 
         return $this->render(
