@@ -20,13 +20,13 @@
             <div class="col-lg-12 col-xl-9">
                 <div class="safrititles pt-lg-0 pt-3 d-sm-flex justify-content-between align-items-center">
                     <h5 class=""><a href=""><?= $model->title ?></a></h5>
-                    <div class="btn_wrap">
+                    <div class="btn_wrap pt-md-0 pt-3">
                         <?php if ($model->official_website) { ?>
                             <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn"><i class="fa-solid fa-user-group"></i> OFFICIAL WEBSITE</a>
                         <?php } ?>
                     </div>
                 </div>
-                <div class="seelctes_text pt-3 pb-2 border_bottom2">
+                <div class="seelctes_text pt-3 pb-4 border_bottom2">
                     <p><?= $model->long_description ?></p>
                 </div>
                 <div class="row pt-3">
@@ -193,3 +193,4 @@
         </div>
     </div>
 </div>
+

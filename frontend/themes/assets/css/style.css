@@ -24,6 +24,7 @@
     --fs-16: 16px;
     --fs-18: 18px;
     --fs-20: 20px;
+    --fs-22: 22px;
     --fs-23: 23px;
     --fs-25: 25px;
     --fs-26: 26px;
@@ -70,6 +71,7 @@ h6 {
 p {
 
     font-family: "Roboto", sans-serif !important;
+    font-size: 14px;
 }
 
 a {
@@ -810,7 +812,7 @@ a {
 .safari-box h3 {
     position: relative;
     display: block;
-    font-size: var(--fs-23);
+    font-size: var(--fs-22);
     line-height: 40px;
     color: #fff;
     text-transform: uppercase;
@@ -846,7 +848,7 @@ figure {
 }
 
 .safari-box p {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 25px;
     color: var(--colorwhite);
     margin-bottom: 20px;
@@ -2394,13 +2396,14 @@ figure {
 
 .safrititles h6 {
 
-    font-size: var(--fs-23);
+    font-size: var(--fs-20);
+    font-weight: 700;
 }
 
 .touroprators {
 
     background-color: var(--colorwhite);
-    padding: 20px 10px;
+    padding: 16px 10px;
     border: 1px solid #0000004D;
     border-radius: 0px 10px 10px 10px;
 }
@@ -2415,7 +2418,7 @@ figure {
 
 .taglines p {
 
-    font-size: var(--fs-16);
+    font-size: var(--fs-14);
     font-weight: 500;
     margin-bottom: 0;
 }
@@ -3237,4 +3240,18 @@ figure {
     margin: 0 auto; /* Center the image */
 }
 
+.seelctes_text p{
+
+    color: #040404;
+}
+
+.btn-exclamtion{
+    background-color: transparent;
+    border: 0;
+}
+.safari_create.font_set{
+
+font-size: 18px;
+text-transform: capitalize;
+}
 /* footer css end */

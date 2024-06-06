@@ -218,7 +218,10 @@
 
         width: 174px !important;
     }
+    .Slider_safariimg3 img{
 
+        border-radius: 10px;
+    }
 }
 
 @media (max-width: 991px) {

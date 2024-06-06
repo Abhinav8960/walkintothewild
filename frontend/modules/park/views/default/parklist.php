@@ -93,11 +93,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <div class="safrititles pt-md-0 pt-3">
                                                 <h6 class=""><?= $model->title ?></h6>
                                             </div>
-                                            <div class="seelctes_text pt-2 pb-4 ">
+                                            <div class="seelctes_text  pb-4 ">
                                                 <p>
                                                     <?= $model->long_description ?>
                                                 </p>
                                             </div>
+                                            <div class="tour_logosliders">
                                             <div class="taglines">
                                                 <p>Top Safari Tour Operators</p>
                                             </div>
@@ -117,6 +118,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </div>
                                                 </div>
                                             </div>
+                                            </div>
+                                           
                                         </div>
 
                                     </div>
