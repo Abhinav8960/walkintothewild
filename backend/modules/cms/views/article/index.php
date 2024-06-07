@@ -57,7 +57,14 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->articletag) ? $model->articletag->title : '';
+                            $html = '';
+                            $tags = $model->articletags;
+                            foreach ($tags as $key => $tag) {
+                                if (isset(GeneralModel::tagoption()[$key])) {
+                                    $html .= GeneralModel::tagoption()[$key] . ', ';
+                                }
+                            }
+                            return $html;
                         }
                     ],
                     [
