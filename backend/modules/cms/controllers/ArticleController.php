@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleComment;
 use common\models\cms\article\ArticleSearch;
+use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\cms\article\form\ArticleForm;
 use yii\data\ActiveDataProvider;
@@ -67,6 +68,15 @@ class ArticleController extends Controller
                             }
                         }
 
+                        $articleTags = $model->article_tags;
+                        if ($articleTags) {
+                            foreach ($articleTags as $articleT) {
+                                $articleTag = new ArticleTag();
+                                $articleTag->article_id = $model->article_model->id;
+                                $articleTag->master_article_tag_id = $articleT;
+                                $articleTag->save(false);
+                            }
+                        }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['/cms/article/index']);
                     }
@@ -116,6 +126,17 @@ class ArticleController extends Controller
                                 $articleTopic->article_id = $model->article_model->id;
                                 $articleTopic->master_article_topic_id = $articleT;
                                 $articleTopic->save(false);
+                            }
+                        }
+
+                        $articleTags = $model->article_tags;
+                        if ($articleTags) {
+                            ArticleTag::deleteAll(['article_id' => $id]);
+                            foreach ($articleTags as $articleT) {
+                                $articleTag = new ArticleTag();
+                                $articleTag->article_id = $model->article_model->id;
+                                $articleTag->master_article_tag_id = $articleT;
+                                $articleTag->save(false);
                             }
                         }
 
