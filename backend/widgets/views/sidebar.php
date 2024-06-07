@@ -299,6 +299,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/banner/index",
 											"/cms/banner/create",
 											"/cms/banner/update",
+											"/cms/feature-article/index",
+											"/cms/feature-rare-exotic/index",
+											"/cms/feature-tag/index",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
@@ -306,13 +309,16 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/article-author/index",
 														"/cms/article-tag/index",
 														"/cms/faqcategory",
-														"/cms/feature-park/index",
 														"/cms/faqs",
 														"/cms/about/index",
 														"/cms/disclaimer/index",
 														"/cms/banner/index",
 														"/cms/banner/create",
 														"/cms/banner/update",
+														"/cms/feature-park/index",
+														"/cms/feature-article/index",
+														"/cms/feature-rare-exotic/index",
+														"/cms/feature-tag/index",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 													"/cms",
@@ -325,8 +331,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/privacypolicy",
 													"/cms/termscondition",
 													"/cms/faqcategory",
-													"/cms/feature-park/index",
 													"/cms/faqs",
+													"/cms/feature-park/index",
+													"/cms/feature-article/index",
+													"/cms/feature-rare-exotic/index",
+													"/cms/feature-tag/index",
 												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/article-category/index",
@@ -342,6 +351,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/banner/index",
 																				"/cms/banner/create",
 																				"/cms/banner/update",
+																				"/cms/feature-article/index",
+																				"/cms/feature-rare-exotic/index",
+																				"/cms/feature-tag/index",
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -370,13 +382,25 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(
+														"/cms",
 														"/cms/feature-park/index",
+														"/cms/feature-article/index",
+														"/cms/feature-rare-exotic/index",
+														"/cms/feature-tag/index",
 													)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Feature</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																"/cms",
 																"/cms/feature-park/index",
+																"/cms/feature-article/index",
+																"/cms/feature-rare-exotic/index",
+																"/cms/feature-tag/index",
 															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																							"/cms",
 																							"/cms/feature-park/index",
+																							"/cms/feature-article/index",
+																							"/cms/feature-rare-exotic/index",
+																							"/cms/feature-tag/index",
 																						)) ? "display: block;" : "display: none;" ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-park/index")) ? "active" : "" ?>" href="/cms/feature-park/index">Park</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li>
