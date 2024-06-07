@@ -62,7 +62,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
-                                ', ['/park/safari/profile', 'safari_park_id' => $model->id], [
+                                ', ['/park/safari/default/view', 'safari_park_id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
 

@@ -8,7 +8,7 @@
 
             use yii\helpers\Html;
 
-            echo Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['/park/safari/default/delete', 'id' => $safari_park->id], [
+            echo Html::a('<img src="/img/red_delete.png" alt="" width="25" height="25">', ['/park/safari/default/delete', 'id' => $safari_park->id], [
                 'class' => 'btn btn-sm p-0 change-menuicon  col-md-2 float-end mb-3',
                 'title' => 'Delete',
                 'data' => [

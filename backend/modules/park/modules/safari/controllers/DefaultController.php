@@ -205,21 +205,11 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function actionView($id)
+    public function actionView($safari_park_id)
     {
-        $model = $this->findModel($id);
-
-        // return $this->render('view', [
-        //     'model' => $model,
-        // ]);
-
-        $searchModel = new SafariParkGallerySearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $model = $this->findModel($safari_park_id);
         return $this->render('view', [
             'model' => $model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
         ]);
     }
 
