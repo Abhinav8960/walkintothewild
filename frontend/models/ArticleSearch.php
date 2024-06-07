@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
  */
 class ArticleSearch extends Article
 {
-
+    public $topic_id;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +19,7 @@ class ArticleSearch extends Article
         return [
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['publish_date_time', 'article_date'], 'safe'],
+            [['publish_date_time', 'article_date', 'topic_id', 'article_tag_id'], 'safe'],
             [['title', 'banner_image', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
             [['sub_title'], 'string', 'max' => 75],
@@ -66,6 +66,7 @@ class ArticleSearch extends Article
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'article_tag_id' => $this->article_tag_id,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
@@ -76,6 +77,28 @@ class ArticleSearch extends Article
         $query->andFilterWhere(['like', 'title', $this->title]);
         $query->andFilterWhere(['like', 'slug', $this->slug]);
         $query->andFilterWhere(['like', 'description', $this->description]);
+
+
+
+
+        if ($this->topic_id) {
+            $query->joinwith(['articletopics' => function ($articletopics_query) {
+                $articletopics_query->andWhere(['article_topic.master_article_topic_id' => $this->topic_id]);
+            }]);
+        }
+
         return $dataProvider;
+    }
+
+
+
+
+
+    public static function recentpost()
+    {
+        return Article::find()->andWhere(['article.status' => [self::STATUS_ACTIVE]])->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
+            ->orderBy('RAND()') // Order by random
+            ->limit(4)
+            ->all();
     }
 }

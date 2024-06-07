@@ -5,6 +5,7 @@
 
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
+use frontend\models\ArticleSearch;
 
 $this->title = 'Article';
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,6 +15,8 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::ARTICLE_LISTING;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
+$recentposts = ArticleSearch::recentpost();
+
 ?>
 
 <section class="banner_section-inner position-relative">
@@ -66,7 +69,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <h3><a href=""><?= $model->title ?> </a></h3>
 
                                     </div>
-                                    <div class="link"><a href=""><i class="fa-solid fa-arrow-right"></i></a></div>
+                                    <div class="link"><a href="/article/<?= $model->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
                                 </div>
                             </div>
                     <?php }
@@ -74,93 +77,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
             </div>
             <div class="col-lg-3 ">
-                <div class="recentpost_box mb-5 ">
-                    <div class="titlerescent pb-3">
-                        <h3>Recent Posts</h3>
-                    </div>
-                    <div class="recent-posts mb-4">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="postthumbnail">
-                                    <a href=""><img src="<?= $this->params['baseurl'] ?>/img/Article1.jpg" alt="" class="w-100"></a>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="posttitles">
-                                    <h6><a href="">How to Plan Your First Wildlife Safari</a></h6>
-                                </div>
-                                <ul class="artical-info p-0 justify-content-start gap-1 mb-0">
-                                    <li class="d-flex align-items-center gap-2"><i class="far fa-comments"></i><a href="">3 Comments</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recent-posts mb-4">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="postthumbnail">
-                                    <a href=""><img src="<?= $this->params['baseurl'] ?>/img/Article2.jpg" alt="" class="w-100"></a>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="posttitles">
-                                    <h6><a href="">How to Plan Your First Wildlife Safari</a></h6>
-                                </div>
-                                <ul class="artical-info p-0 justify-content-start gap-1 mb-0">
-                                    <li class="d-flex align-items-center gap-2"><i class="far fa-comments"></i><a href="">3 Comments</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recent-posts mb-4">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="postthumbnail">
-                                    <a href=""><img src="<?= $this->params['baseurl'] ?>/img/Article3.jpg" alt="" class="w-100"></a>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="posttitles">
-                                    <h6><a href="">How to Plan Your First Wildlife Safari</a></h6>
-                                </div>
-                                <ul class="artical-info p-0 justify-content-start gap-1 mb-0">
-                                    <li class="d-flex align-items-center gap-2"><i class="far fa-comments"></i><a href="">3 Comments</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="recent-posts mb-4">
-                        <div class="row">
-                            <div class="col-3">
-                                <div class="postthumbnail">
-                                    <a href=""><img src="<?= $this->params['baseurl'] ?>/img/Article4.jpg" alt="" class="w-100"></a>
-                                </div>
-                            </div>
-                            <div class="col-9">
-                                <div class="posttitles">
-                                    <h6><a href="">How to Plan Your First Wildlife Safari</a></h6>
-                                </div>
-                                <ul class="artical-info p-0 justify-content-start gap-1 mb-0">
-                                    <li class="d-flex align-items-center gap-2"><i class="far fa-comments"></i><a href="">3 Comments</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?= $this->render('recent_posts', [
+                    'recentposts' => $recentposts,
+                ]) ?>
                 <div class="topics_box">
                     <div class="titlerescent pb-3">
                         <h3>Topics</h3>
                     </div>
-                    <div class="topics_listing">
-                        <ul>
-                            <li><a href="">Wildlife <i class="fa-solid fa-chevron-right"></i></a></li>
-                            <li><a href="">Safari <i class="fa-solid fa-chevron-right"></i></a></li>
-                            <li><a href="">Animals <i class="fa-solid fa-chevron-right"></i></a></li>
-                            <li><a href="">Birds <i class="fa-solid fa-chevron-right"></i></a></li>
-                            <li><a href="">Gadgets <i class="fa-solid fa-chevron-right"></i></a></li>
-                            <li><a href="">Wildlife <i class="fa-solid fa-chevron-right"></i></a></li>
-                        </ul>
-                    </div>
+                    <?= $this->render('_topic_search') ?>
                 </div>
             </div>
 

@@ -4,9 +4,6 @@ use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\master\airport\MasterAirportSearch $model */
-/** @var yii\widgets\ActiveForm $form */
 ?>
 <?php $form = ActiveForm::begin([
     'options' => [
