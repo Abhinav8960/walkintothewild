@@ -106,6 +106,10 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-3">
+                <?= $form->field($model, 'month_note')->textInput(['maxlength' => true, 'placeholder' => 'Enter Month Note']) ?>
+            </div>
+
+            <div class="col-md-3">
                 <?= $form->field($model, 'feature_image')->fileInput() ?>
             </div>
             <?php

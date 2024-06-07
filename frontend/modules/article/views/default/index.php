@@ -58,7 +58,7 @@ $recentposts = ArticleSearch::recentpost();
                             <div class="col mb-5">
                                 <div class="artical_cards h-100">
                                     <div class="image-box">
-                                        <figure class="image"><a href=""><img src="<?= isset($model->feature_image) ? $model->featureimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                        <figure class="image"><a href="/article/<?= $model->slug ?>"><img src="<?= isset($model->feature_image) ? $model->featureimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                                         </figure>
                                     </div>
                                     <div class="lower-content">
@@ -66,7 +66,7 @@ $recentposts = ArticleSearch::recentpost();
                                             <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
                                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= count($model->articlecomments) ?> Comments</a></li>
                                         </ul>
-                                        <h3><a href=""><?= $model->title ?> </a></h3>
+                                        <h3><a href="/article/<?= $model->slug ?>"><?= $model->title ?> </a></h3>
 
                                     </div>
                                     <div class="link"><a href="/article/<?= $model->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>

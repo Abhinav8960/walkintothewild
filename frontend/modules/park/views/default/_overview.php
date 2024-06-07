@@ -36,7 +36,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->state) ? $model->state->state_name : '' ?>, <?= isset($model->location) ? $model->location->title : '' ?></p>
+                                <p class="mb-0"><?= isset($model->state) ? $model->state->state_name . ',' : '' ?> <?= isset($model->location) ? $model->location->title : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -117,7 +117,21 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?> Average Safari Price</p>
+                                <p class="mb-0">
+                                    <?php if (!empty($model->avg_safari_price_min) && !empty($model->avg_safari_price_max)) { ?>
+                                        <?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?> Average Safari Price
+
+                                    <?php } ?> </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                            <div class="iconImg">
+                                <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt="">
+                            </div>
+                            <div class="text-form">
+                                <p class="mb-0"><?= isset($first_month) ? $first_month->mastermonth->month_name . ' - ' : '' ?><?= isset($last_month) ? $last_month->mastermonth->month_name : '' ?> <?= isset($model->month_note) ? '(' . $model->month_note . ')' : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -193,4 +207,3 @@
         </div>
     </div>
 </div>
-

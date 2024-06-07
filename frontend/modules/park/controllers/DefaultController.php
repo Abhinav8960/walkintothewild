@@ -5,6 +5,7 @@ namespace frontend\modules\park\controllers;
 use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariPark;
+use common\models\park\SafariParkMonth;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\SafariParkSearch;
 use Yii;
@@ -54,6 +55,8 @@ class DefaultController extends Controller
 
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($model) {
+            $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
+            $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
             $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
 
 
@@ -93,6 +96,8 @@ class DefaultController extends Controller
             [
                 'model' => $model,
                 'featured_parks' => $featured_parks,
+                'first_month' => $first_month,
+                'last_month' => $last_month,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'suggestionmodel' => $suggestionmodel,
