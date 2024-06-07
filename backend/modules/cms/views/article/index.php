@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 
 use yii\widgets\Pjax;
@@ -37,6 +38,29 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                         }
                     ],
                     [
+                        'label' => 'Topics',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $html = '';
+                            $topics = $model->articletopics;
+                            foreach ($topics as $key => $topic) {
+                                if (isset(GeneralModel::topicoption()[$key])) {
+                                    $html .= GeneralModel::topicoption()[$key] . ', ';
+                                }
+                            }
+                            return $html;
+                        }
+                    ],
+                    [
+                        'label' => 'Tag',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->articletag) ? $model->articletag->title : '';
+                        }
+                    ],
+                    [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -71,6 +95,14 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                                 ]);
                             },
                         ]
+                    ],
+                    [
+                        'label' => 'Comment',
+                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Html::a('<img src="/img/view.png" alt="" width="25" height="25">', ['comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
+                        }
                     ],
                 ],
             ]); ?>

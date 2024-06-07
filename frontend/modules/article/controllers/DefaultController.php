@@ -6,6 +6,8 @@ use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariPark;
 use frontend\models\ArticleSearch;
+use frontend\models\CommentForm;
+use frontend\models\ReplyForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -46,7 +48,21 @@ class DefaultController extends Controller
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        $model = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+
+
+        $model = new CommentForm();
+        $replymodel = new ReplyForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($article)) {
+            Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
+            return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'comment-wrapper']);
+        }
+
+        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($article)) {
+            Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+            return $this->redirect(['/article/default/view', 'slug' => $slug, '#' => 'comment-wrapper']);
+        }
+
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
         if (empty($model)) {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -55,10 +71,12 @@ class DefaultController extends Controller
         return $this->render(
             'view',
             [
-                'model' => $model,
+                'article' => $article,
                 'featured_parks' => $featured_parks,
                 'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider
+                'dataProvider' => $dataProvider,
+                'model' => $model,
+                'replymodel' => $replymodel,
             ]
         );
     }

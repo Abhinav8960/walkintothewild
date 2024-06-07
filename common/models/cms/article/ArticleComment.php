@@ -2,6 +2,7 @@
 
 namespace common\models\cms\article;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -12,7 +13,6 @@ use Yii;
  * @property int $user_id
  * @property string $comment
  * @property string $comment_datetime
- * @property int $is_flag
  * @property int $is_approved
  * @property int $status
  * @property int $created_at
@@ -39,15 +39,14 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
             \yii\behaviors\BlameableBehavior::className(),
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['article_id', 'user_id', 'comment', 'comment_datetime', 'is_flag'], 'required'],
-            [['article_id', 'user_id', 'is_flag', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_id', 'user_id', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['comment'], 'string'],
             [['comment_datetime'], 'safe'],
         ];
@@ -64,7 +63,6 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
             'user_id' => 'User ID',
             'comment' => 'Comment',
             'comment_datetime' => 'Comment Datetime',
-            'is_flag' => 'Is Flag',
             'is_approved' => 'Is Approved',
             'status' => 'Status',
             'created_at' => 'Created At',
@@ -72,5 +70,24 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getStatusvalue()
+    {
+        if (isset($this->status)) {
+            if ($this->status == 1) {
+                return "<span class='btn-success' style='padding: inherit !important;'>" . "Approved" . "</span>";
+            } else if ($this->status == 2) {
+                return "<span class='btn-danger' style='padding: inherit !important;'>" . "Reject" . "</span>";
+            } else {
+                return "<span class='btn-info' style='padding: inherit !important;'>" . "Hold" . "</span>";
+            }
+        }
+        return $this->status;
     }
 }

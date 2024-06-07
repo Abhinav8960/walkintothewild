@@ -7,9 +7,11 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
+use common\models\cms\article\ArticleComment;
 use common\models\cms\article\ArticleSearch;
 use common\models\cms\article\ArticleTopic;
 use common\models\cms\article\form\ArticleForm;
+use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
 /**
@@ -175,6 +177,54 @@ class ArticleController extends Controller
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(Yii::$app->request->referrer);
     }
+
+
+
+
+
+
+
+
+    public function actionComment($id)
+    {
+        $query = ArticleComment::find()->where(['article_id' => $id]);
+        $dataProvider = new ActiveDataProvider(
+            [
+                'query' => $query,
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ],
+        );
+
+        return $this->render(
+            'comment',
+            [
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+
+    public function actionApproved($id)
+    {
+        $model = ArticleComment::find()->where(['id' => $id])->one();
+        $model->status = 1;
+        $model->save(false);
+        \Yii::$app->session->setFlash('success', 'Approved Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionDisapproved($id)
+    {
+        $model = ArticleComment::find()->where(['id' => $id])->one();
+        $model->status = 2;
+        $model->save(false);
+        \Yii::$app->session->setFlash('success', 'Disapproved Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+
 
     /**
      * Finds the Article model based on its primary key value.

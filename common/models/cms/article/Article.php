@@ -124,6 +124,11 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return $this->hasOne(ArticleAuthor::className(), ['id' => 'article_author_id']);
     }
 
+    public function getArticletag()
+    {
+        return $this->hasOne(MasterArticleTag::className(), ['id' => 'article_tag_id']);
+    }
+
     public function getArticletopics()
     {
         return $this->hasMany(ArticleTopic::className(), ['article_id' => 'id'])->andWhere(['article_topic.status' => 1]);

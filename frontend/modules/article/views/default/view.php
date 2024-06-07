@@ -10,7 +10,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Article  ' . $model->title;
+$this->title = 'Article  ' . $article->title;
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -33,7 +33,7 @@ $recentposts = ArticleSearch::recentpost();
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1><?= $model->title ?></h1>
+                        <h1><?= $article->title ?></h1>
                         <p></p>
                     </div>
                 </div>
@@ -58,12 +58,12 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row mb-4">
             <div class="col-lg-9">
                 <div class="aritcla-details">
-                    <h1 class="articald-title pb-3"><?= $model->title ?></h1>
+                    <h1 class="articald-title pb-3"><?= $article->title ?></h1>
                     <div class="aritcal_bigimg pb-4">
-                        <img src="<?= isset($model->banner_image) ? $model->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt="" class="w-100">
+                        <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt="" class="w-100">
                     </div>
 
-                    <p><?= $model->description ?> </p>
+                    <p><?= $article->description ?> </p>
 
 
                 </div>
@@ -74,81 +74,17 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                     <div class="author_wrapper">
                         <ul class="artical-info ">
-                            <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
-                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= count($model->articlecomments) ?> Comments</a></li>
+                            <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
+                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= count($article->articlecomments) ?> Comments</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="comment-wrapper">
-                    <div class="commentCount mb-4">
-                        <h6>4 Comments</h6>
-                    </div>
-                    <div class="comments-persons">
-                        <div class="postcomment d-flex gap-3">
-                            <div class="avatar">
-                                <img src="<?= $this->params['baseurl'] ?>/img/dpmain.png" alt="">
-                            </div>
-                            <div class="text_com">
-                                <h6 class="nameavatr">Gufran Ahmad</h6>
-                                <p>Oh, that sounds amazing! I've always wanted to experience the thrill of seeing
-                                    wild animals up close.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comments-persons">
-                        <div class="postcomment d-flex gap-3">
-                            <div class="avatar">
-                                <img src="<?= $this->params['baseurl'] ?>/img/dpmain.png" alt="">
-                            </div>
-                            <div class="text_com">
-                                <h6 class="nameavatr">Rahul Kumar</h6>
-                                <p>Count me in! Safari trips are incredible opportunities to connect with nature and
-                                    witness some of the most stunning landscapes on Earth.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comments-persons">
-                        <div class="postcomment d-flex gap-3">
-                            <div class="avatar">
-                                <img src="<?= $this->params['baseurl'] ?>/img/dpmain.png" alt="">
-                            </div>
-                            <div class="text_com">
-                                <h6 class="nameavatr">Rahul Kumar</h6>
-                                <p>Count me in! Safari trips are incredible opportunities to connect with nature and
-                                    witness some of the most stunning landscapes on Earth.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comments-persons">
-                        <div class="postcomment d-flex gap-3">
-                            <div class="avatar">
-                                <img src="<?= $this->params['baseurl'] ?>/img/dpmain.png" alt="">
-                            </div>
-                            <div class="text_com">
-                                <h6 class="nameavatr">Rahul Kumar</h6>
-                                <p>Absolutely! I've heard the sunrise safaris are especially breathtaking. Imagine
-                                    the golden hues of the savannah as the animals come to life.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comments-persons">
-                        <div class="postcomment d-flex gap-3">
-                            <div class="avatar">
-                                <img src="<?= $this->params['baseurl'] ?>/img/dpmain.png" alt="">
-                            </div>
-                            <div class="text-area">
-                                <textarea name="" class="form-control w-100" placeholder="Write a comment..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row justify-content-end comments-persons">
-                        <div class="col-6 ">
-                            <div class="comment_button float-end ">
-                                <button class="post-comment">Post Comment</button>
-                            </div>
-                        </div>
-                    </div>
+                    <?= $this->render('comment', [
+                        'model' => $model,
+                        'replymodel' => $replymodel,
+                        'article' => $article,
+                    ]) ?>
                 </div>
             </div>
             <div class="col-lg-3 mt-lg-0 mt-3">
