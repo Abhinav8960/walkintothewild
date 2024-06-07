@@ -124,6 +124,10 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return $this->hasOne(ArticleAuthor::className(), ['id' => 'article_author_id']);
     }
 
+    public function getArticlecomments()
+    {
+        return $this->hasMany(ArticleComment::className(), ['article_id' => 'id']);
+    }
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {

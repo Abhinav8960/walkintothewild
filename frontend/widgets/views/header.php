@@ -2,6 +2,8 @@
 
 	$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 	$this->params['baseurl'] = $webasset->baseUrl;
+
+	$active_url = "/" . Yii::$app->requestedRoute;
 	?>
 	<!-- main-header -->
 	<header class="header_wrapper">
@@ -29,16 +31,23 @@
 					</div>
 					<div class="offcanvas-body justify-content-end">
 						<ul class="navbar-nav menu-navbar-nav align-items-center">
-							<li class="nav-item active">
-								<a class="nav-link" href="#about"> <i class="fa-solid fa-magnifying-glass"></i> Search Safari</a>
+							<li class="nav-item <?= in_array($active_url, array(
+													"/",
+													"/park/default/index",
+													"/park/default/parklist",
+													"/park/default/view",
+												)) ? "active" : "" ?>">
+								<a class="nav-link" href="/park"> <i class="fa-solid fa-magnifying-glass"></i> Search Safari</a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="artical.html">Artical & tips</a>
+							<li class="nav-item <?= in_array($active_url, array(
+													"/article/default/index",
+													"/article/default/view",
+												)) ? "active" : "" ?>">
+								<a class="nav-link" href="/article">Artical & tips</a>
 							</li>
 
 							<a href="share-safari.html" class="sahreSafari text-lg-center">
 								<div class="card-img">
-
 									<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
 								</div>
 								<h5>Share Safari</h5>

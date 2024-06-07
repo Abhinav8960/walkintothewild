@@ -87,9 +87,12 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '/park' => '/park/default/index',
-                '/park/<slug>' => '/park/default/view',
-                '/parklist' => '/park/default/parklist',
+                '/park' => '/park/default/index', //home page url
+                '/park/<slug>' => '/park/default/view', //park view url
+                '/parklist' => '/park/default/parklist', //park listing url
+
+                '/article' => '/article/default/index', //article listing url
+                '/article/<slug>' => '/article/default/view', //article view url
             ],
         ],
 
@@ -99,7 +102,9 @@ return [
         'park' => [
             'class' => 'frontend\modules\park\Module',
         ],
-
+        'article' => [
+            'class' => 'frontend\modules\article\Module',
+        ],
     ],
     'params' => $params,
 ];
