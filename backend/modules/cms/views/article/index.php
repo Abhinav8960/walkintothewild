@@ -45,8 +45,8 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                             $html = '';
                             $topics = $model->articletopics;
                             foreach ($topics as $key => $topic) {
-                                if (isset(GeneralModel::topicoption()[$key])) {
-                                    $html .= GeneralModel::topicoption()[$key] . ', ';
+                                if (isset(GeneralModel::topicoption()[$topic->master_article_topic_id])) {
+                                    $html .= GeneralModel::topicoption()[$topic->master_article_topic_id] . ', ';
                                 }
                             }
                             return $html;
@@ -60,8 +60,8 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                             $html = '';
                             $tags = $model->articletags;
                             foreach ($tags as $key => $tag) {
-                                if (isset(GeneralModel::tagoption()[$key])) {
-                                    $html .= GeneralModel::tagoption()[$key] . ', ';
+                                if (isset(GeneralModel::tagoption()[$tag->master_article_tag_id])) {
+                                    $html .= GeneralModel::tagoption()[$tag->master_article_tag_id] . ', ';
                                 }
                             }
                             return $html;
