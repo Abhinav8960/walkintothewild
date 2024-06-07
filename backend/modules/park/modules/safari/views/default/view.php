@@ -71,6 +71,10 @@ $this->params['buttons'][] = Html::a('Edit Profile', ['/park/safari/profile', 's
                         <?php }
                                                         } ?>
                     </p>
+                    <p>
+                        <span>Month: </span><?= isset($first_month) ? $first_month->mastermonth->month_name . ' - ' : '' ?><?= isset($last_month) ? $last_month->mastermonth->month_name : '' ?> <?= isset($model->month_note) ? '(' . $model->month_note . ')' : '' ?>
+
+                    </p>
                 </div>
             </div>
         </div>

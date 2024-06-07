@@ -208,8 +208,13 @@ class DefaultController extends Controller
     public function actionView($safari_park_id)
     {
         $model = $this->findModel($safari_park_id);
+        $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
+        $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
+
         return $this->render('view', [
             'model' => $model,
+            'first_month' => $first_month,
+            'last_month' => $last_month,
         ]);
     }
 
