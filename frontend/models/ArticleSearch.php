@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 class ArticleSearch extends Article
 {
     public $topic_id;
+    public $article_tag_id;
     /**
      * {@inheritdoc}
      */
@@ -66,7 +67,6 @@ class ArticleSearch extends Article
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'article_tag_id' => $this->article_tag_id,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
@@ -87,6 +87,12 @@ class ArticleSearch extends Article
             }]);
         }
 
+
+        if ($this->article_tag_id) {
+            $query->joinwith(['articletags' => function ($articletags_query) {
+                $articletags_query->andWhere(['article_tag.master_article_tag_id' => $this->article_tag_id]);
+            }]);
+        }
         return $dataProvider;
     }
 

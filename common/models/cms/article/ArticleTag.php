@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $article_id
- * @property int $master_article_topic_id
+ * @property int $master_article_tag_id
  * @property int $status
  * @property int|null $created_at
  * @property int|null $updated_at
@@ -43,9 +43,9 @@ class ArticleTag extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     public function rules()
     {
         return [
-            [['article_id', 'master_article_topic_id'], 'required'],
-            [['article_id', 'master_article_topic_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['article_id', 'master_article_topic_id'], 'unique', 'targetAttribute' => ['article_id', 'master_article_topic_id']],
+            [['article_id', 'master_article_tag_id'], 'required'],
+            [['article_id', 'master_article_tag_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_id', 'master_article_tag_id'], 'unique', 'targetAttribute' => ['article_id', 'master_article_tag_id']],
         ];
     }
 
@@ -57,7 +57,7 @@ class ArticleTag extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return [
             'id' => 'ID',
             'article_id' => 'Article ID',
-            'master_article_topic_id' => 'Master Article Topic ID',
+            'master_article_tag_id' => 'Master Article Tag ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
