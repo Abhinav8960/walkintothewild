@@ -288,6 +288,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/article-category/index",
 											"/cms/article-author/index",
 											"/cms/article-tag/index",
+											"/cms/article/index",
+											"/cms/article/comment",
 											"/cms/banner",
 											"/cms/about",
 											"/cms/disclaimer",
@@ -308,6 +310,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/article-category/index",
 														"/cms/article-author/index",
 														"/cms/article-tag/index",
+														"/cms/article/index",
+														"/cms/article/comment",
 														"/cms/faqcategory",
 														"/cms/faqs",
 														"/cms/about/index",
@@ -325,6 +329,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/article-category/index",
 													"/cms/article-author/index",
 													"/cms/article-tag/index",
+													"/cms/article/index",
+													"/cms/article/comment",
 													"/cms/banner",
 													"/cms/about",
 													"/cms/disclaimer",
@@ -341,6 +347,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/article-category/index",
 																				"/cms/article-author/index",
 																				"/cms/article-tag/index",
+																				"/cms/article/index",
+																				"/cms/article/comment",
 																				"/cms/banner",
 																				"/cms/about",
 																				"/cms/disclaimer",
@@ -361,6 +369,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/article-category/index",
 														"/cms/article-author/index",
 														"/cms/article-tag/index",
+														"/cms/article/index",
+														"/cms/article/comment",
 													)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Article</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
@@ -368,17 +378,23 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																"/cms/article-category/index",
 																"/cms/article-author/index",
 																"/cms/article-tag/index",
+																"/cms/article/index",
+																"/cms/article/comment",
 															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																							"/cms",
 																							"/cms/article-category/index",
 																							"/cms/article-author/index",
 																							"/cms/article-tag/index",
+																							"/cms/article/index",
+																							"/cms/article/comment",
 																						)) ? "display: block;" : "display: none;" ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-category/index")) ? "active" : "" ?>" href="/cms/article-category/index">Article Topics</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-author/index")) ? "active" : "" ?>" href="/cms/article-author/index">Artcile Author</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-tag/index")) ? "active" : "" ?>" href="/cms/article-tag/index">Article Tag</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-comment/index")) ? "active" : "" ?>" href="#">Article Comments</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article/index")) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/cms/article/comment",
+																			"/cms/article/index"
+																		)) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(

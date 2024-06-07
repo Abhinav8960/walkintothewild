@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\models\master\month\MasterMonth;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -72,5 +73,10 @@ class SafariParkMonth extends \yii\db\ActiveRecord implements \common\interfaces
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getMastermonth()
+    {
+        return $this->hasOne(MasterMonth::className(), ['month' => 'month_id']);
     }
 }
