@@ -26,10 +26,10 @@ use yii\web\View;
                 $countAllArticle = count($allArticles);
 
                 $length = '';
-                if ($countAllArticle < 8) {
+                if ($countAllArticle < 5) {
                     $length = $countAllArticle;
                 } else {
-                    $length = 8;
+                    $length = 5;
                 }
 
                 $form = ActiveForm::begin(['id' => 'article-sequence-form']);
