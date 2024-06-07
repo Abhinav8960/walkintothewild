@@ -59,14 +59,14 @@ $this->params['title'] = $this->title;
                     <?php
                     if ($model->article_model->banner_image) { ?>
                         <div class="col-md-5">
-                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 12860px * 588px / 250kb)') ?>
+                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 1286px * 588px / 250kb)') ?>
                         </div>
                         <div class="col-md-1">
                             <?php echo '<img src="' . $model->article_model->bannerimagepath . '" width="75" height="75"></img>'; ?>
                         </div>
                     <?php } else { ?>
                         <div class="col-md-6">
-                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 12860px * 588px / 250kb)') ?>
+                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 1286px * 588px / 250kb)') ?>
                         </div>
                     <?php  } ?>
 
