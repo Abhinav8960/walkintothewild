@@ -4,6 +4,7 @@ namespace common\models\cms\article\form;
 
 use Yii;
 use common\models\cms\article\Article;
+use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\GeneralModel;
 
@@ -23,7 +24,7 @@ class ArticleForm extends \yii\base\Model
     public $slug;
     public $article_author_id;
     public $author_name;
-    public $article_tag_id;
+    public $article_tags;
     public $tag_name;
     public $description;
     public $meta_title;
@@ -62,8 +63,6 @@ class ArticleForm extends \yii\base\Model
             $this->description = $this->article_model->description;
             $this->article_author_id = $this->article_model->article_author_id;
             $this->author_name = $this->article_model->author_name;
-            $this->article_tag_id = $this->article_model->article_tag_id;
-            $this->tag_name = $this->article_model->tag_name;
             $this->meta_title = $this->article_model->meta_title;
             $this->meta_description = $this->article_model->meta_description;
             $this->meta_keywords = $this->article_model->meta_keywords;
@@ -78,6 +77,8 @@ class ArticleForm extends \yii\base\Model
             // $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
 
             $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
+            $this->article_tags = ArticleTag::find()->select('master_article_tag_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
+            // dd($this->article_tags);
         }
     }
 
@@ -87,12 +88,12 @@ class ArticleForm extends \yii\base\Model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'title', 'sub_title', 'description', 'article_tag_id', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
+            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
         $scenarios['update'] = [
-            'title', 'sub_title', 'description', 'article_tag_id', 'tag_name', 'status', 'slug',
+            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
@@ -102,9 +103,9 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'description', 'article_tag_id', 'comment_allowed', 'article_topics'], 'required'],
+            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics'], 'required'],
             [['status'], 'default', 'value' => 1],
-            [['status', 'article_author_id', 'article_tag_id'], 'integer'],
+            [['status', 'article_author_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
             [['article_topics'], 'safe'],
             [
@@ -160,7 +161,7 @@ class ArticleForm extends \yii\base\Model
             'banner_image' => 'Banner Image',
             'article_author_id' => 'Article Author',
             'author_name' => 'Author Name',
-            'article_tag_id' => 'Article Tag',
+            'article_tags' => 'Article Tag',
             'tag_name' => 'Tag Name',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
@@ -191,10 +192,10 @@ class ArticleForm extends \yii\base\Model
         if ($this->article_author_id) {
             $this->article_model->author_name =  GeneralModel::authoroption()[$this->article_author_id];
         }
-        $this->article_model->article_tag_id = $this->article_tag_id;
-        if ($this->article_tag_id) {
-            $this->article_model->tag_name =  GeneralModel::tagoption()[$this->article_tag_id];
-        }
+        // $this->article_model->article_tags = $this->article_tags;
+        // if ($this->article_tags) {
+        //     $this->article_model->tag_name =  GeneralModel::tagoption()[$this->article_tags];
+        // }
         $this->article_model->meta_title = $this->meta_title;
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;

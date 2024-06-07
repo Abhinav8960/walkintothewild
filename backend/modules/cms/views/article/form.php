@@ -97,8 +97,15 @@ $this->params['title'] = $this->title;
                     </div>
 
 
-                    <div class="col-md-6">
-                        <?= $form->field($model, 'article_tag_id')->dropDownList(GeneralModel::tagoption(), ['prompt' => '--Select Article Tag--']) ?>
+                    <div class="col-md-6 select_width">
+                        <?= $form->field($model, 'article_tags')->widget(\kartik\select2\Select2::classname(), [
+                            'data' => GeneralModel::tagoption(),
+                            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                            'options' => ['placeholder' => 'Select', 'multiple' => true],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ])->label('Article Tag') ?>
                     </div>
 
                     <div class="row">
