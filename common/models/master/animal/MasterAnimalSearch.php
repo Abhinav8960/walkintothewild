@@ -17,7 +17,7 @@ class MasterAnimalSearch extends MasterAnimal
     public function rules()
     {
         return [
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'is_filter', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 125],
             [['animal_type_id'], 'safe'],
         ];
@@ -64,6 +64,7 @@ class MasterAnimalSearch extends MasterAnimal
             'animal_type_id' => $this->animal_type_id,
             'know_as' => $this->know_as,
             'image' => $this->image,
+            'is_filter' => $this->is_filter,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

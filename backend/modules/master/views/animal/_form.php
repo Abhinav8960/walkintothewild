@@ -60,10 +60,12 @@ use yii\bootstrap5\ActiveForm;
             <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 1920px * 250px / 250kb)') ?>
         </div>
     <?php  } ?>
-
+    <div class="col-md-6">
+        <?= $form->field($model, 'is_filter')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select']) ?>
+    </div>
 
     <?php if ($model->animal_model->id) { ?>
-        <div class="col-md-3">
+        <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
         </div>
     <?php } ?>

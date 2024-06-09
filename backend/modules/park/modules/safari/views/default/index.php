@@ -29,7 +29,14 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'title',
+                    [
+                        'label' => 'Title',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->title;
+                        }
+                    ],
 
                     [
                         'label' => 'Safari Cost',
@@ -58,7 +65,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{publish}',
+                        'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{publish}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
@@ -78,6 +85,9 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                             },
                             'publish' => function ($url, $model) {
                                 return \backend\widgets\PublishUnpublishButton::widget(['model' => $model, 'published_title' => 'Safari Park', 'unpublish_title' => 'Safari Park']);
+                            },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
                             },
                         ]
                     ],

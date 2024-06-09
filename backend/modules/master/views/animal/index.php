@@ -40,6 +40,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         }
                     ],
                     [
+                        'label' => 'Is Filter',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->is_filter) ? GeneralModel::yesnooption()[$model->is_filter] : '';
+                        }
+                    ],
+                    [
                         'attribute' => 'image',
                         'format' => 'html',
                         'contentOptions' => ['style' => 'width: 10%;'],

@@ -22,6 +22,7 @@ class MasterAnimalForm extends model
     public $long_description;
     public $image;
     public $banner_image;
+    public $is_filter;
     public $status;
     public $status_option = [];
     public $animal_type_id;
@@ -47,6 +48,7 @@ class MasterAnimalForm extends model
             $this->short_description = $this->animal_model->short_description;
             $this->long_description = $this->animal_model->long_description;
             $this->status = $this->animal_model->status;
+            $this->is_filter = $this->animal_model->is_filter;
             $this->animal_type_id = $this->animal_model->animal_type_id;
         }
 
@@ -60,11 +62,11 @@ class MasterAnimalForm extends model
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
             'name', 'short_description', 'animal_type_id', 'image', 'banner_image', 'status', 'slug',
-            'know_as', 'long_description'
+            'know_as', 'long_description', 'is_filter'
         ];
         $scenarios['update'] = [
             'name', 'short_description', 'animal_type_id', 'status', 'slug',
-            'know_as', 'long_description'
+            'know_as', 'long_description', 'is_filter'
         ];
         return $scenarios;
     }
@@ -72,7 +74,7 @@ class MasterAnimalForm extends model
     public function rules()
     {
         return [
-            [['name', 'short_description', 'animal_type_id', 'image', 'banner_image'], 'required'],
+            [['name', 'short_description', 'animal_type_id', 'is_filter'], 'required'],
             [['status'], 'integer'],
             [['name'], 'string', 'max' => 125],
             [['name', 'slug', 'know_as'], 'string', 'max' => 125],
@@ -107,6 +109,7 @@ class MasterAnimalForm extends model
         return [
             'name' => 'Name',
             'image' => 'Image',
+            'is_filter' => 'Is Filter',
             'banner_image' => 'Banner Image',
             'status' => 'Status',
             'animal_type_id' => 'Animal Type'
@@ -126,6 +129,7 @@ class MasterAnimalForm extends model
         $this->animal_model->short_description = $this->short_description;
         $this->animal_model->long_description = $this->long_description;
         $this->animal_model->status = $this->status;
+        $this->animal_model->is_filter = $this->is_filter;
         $this->animal_model->animal_type_id = $this->animal_type_id;
     }
 

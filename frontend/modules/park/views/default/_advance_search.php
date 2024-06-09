@@ -37,7 +37,7 @@ use common\models\GeneralModel;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animaloption(), ['prompt' => 'Tiger Elephent..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animalfilteroption(), ['prompt' => 'Tiger Elephent..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Animal</p>
                 </div>
