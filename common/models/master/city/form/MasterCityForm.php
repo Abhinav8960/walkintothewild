@@ -56,7 +56,14 @@ class MasterCityForm extends model
             [['city_name', 'state_id', 'country_id'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
-
+            [
+                ['city_name'], 'unique', 'targetClass' => MasterCity::className(), 'targetAttribute' => ['city_name', 'state_id', 'country_id'],  'message' => 'The combination of City Name, State, and Country must be unique.',
+                'filter' => function ($query) {
+                    if (!$this->city_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->city_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

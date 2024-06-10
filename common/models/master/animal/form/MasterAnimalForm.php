@@ -98,6 +98,14 @@ class MasterAnimalForm extends model
                 'minHeight' => 220,
                 'maxSize' => 250 * 1024
             ],
+            [
+                ['name'], 'unique', 'targetClass' => MasterAnimal::className(), 'message' => 'This name has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->animal_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->animal_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

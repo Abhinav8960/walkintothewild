@@ -75,6 +75,14 @@ class MasterBirdForm extends model
                 // 'minHeight' => 285,
                 'maxSize' => 250 * 1024
             ],
+            [
+                ['name'], 'unique', 'targetClass' => MasterBird::className(), 'message' => 'This name has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->bird_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->bird_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

@@ -59,6 +59,14 @@ class MasterVehicleForm extends model
                 'minHeight' => 75,
                 'maxSize' => 100 * 1024
             ],
+            [
+                ['vehicle_name'], 'unique', 'targetClass' => MasterVehicle::className(), 'message' => 'This vehicle name has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->vehicle_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->vehicle_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

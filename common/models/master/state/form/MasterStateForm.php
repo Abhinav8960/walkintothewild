@@ -49,7 +49,14 @@ class MasterStateForm extends model
             [['state_name'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
-
+            [
+                ['state_name'], 'unique', 'targetClass' => MasterState::className(),  'message' => 'The State Name must be unique.',
+                'filter' => function ($query) {
+                    if (!$this->state_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->state_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

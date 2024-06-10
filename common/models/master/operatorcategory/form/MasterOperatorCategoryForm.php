@@ -54,6 +54,14 @@ class MasterOperatorCategoryForm extends model
             [['title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
+            [
+                ['title'], 'unique', 'targetClass' => MasterOperatorCategory::className(), 'message' => 'This title has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->operator_category_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->operator_category_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 
