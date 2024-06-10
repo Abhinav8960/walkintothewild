@@ -55,7 +55,7 @@ $recentposts = ArticleSearch::recentpost();
                                 <div class="images_tour">
                                     <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="">
                                 </div>
-                                <div class="slect_safricound2 d-flex justify-content-around">
+                                <div class="slect_safricound2 d-flex justify-content-around mt-4">
                                     <div class="parks_text text-center">
                                         <p><?= count($operator->park) ?></p>
                                         <p>Parks</p>
@@ -93,7 +93,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="detailsText pb-3">
-                                    <p style="font-size: 12px;"><?= GeneralModel::get_substring($operator->about_business); ?></p>
+                                    <p style="font-size: 14px;"><?= GeneralModel::get_substring($operator->about_business); ?></p>
                                 </div>
                             </div>
                         </div>

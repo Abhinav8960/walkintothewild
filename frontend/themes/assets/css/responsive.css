@@ -18,6 +18,11 @@
         bottom: -25px;
         width: 100%;
     }
+    .seelctes_text{
+
+        height: 200px !important;
+       overflow: hidden;
+    }
   
 
 }
@@ -175,14 +180,18 @@
     }
 }
 
-/* @media(min-width:1200px){
+@media(min-width:1200px){
 
-    .slider_safariimg img {
+    .images_tour{
 
-       height: 350px;
-       object-fit: cover;
+        height: 180px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
-} */
+}
 @media only screen and (min-width:992px) {
 
   
