@@ -29,10 +29,10 @@ use yii\web\View;
                 // dd($countRareExoticList);
 
                 $length = '';
-                if ($countRareExoticList < 5) {
+                if ($countRareExoticList < 10) {
                     $length = $countRareExoticList;
                 } else {
-                    $length = 5;
+                    $length = 10;
                 }
 
                 $form = ActiveForm::begin(['id' => 'park-sequence-form']);

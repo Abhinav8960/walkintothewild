@@ -28,10 +28,10 @@ use yii\web\View;
                 $countAllSafariPark = count($allSafariParks);
 
                 $length = '';
-                if ($countAllSafariPark < 5) {
+                if ($countAllSafariPark < 10) {
                     $length = $countAllSafariPark;
                 } else {
-                    $length = 5;
+                    $length = 10;
                 }
 
                 $form = ActiveForm::begin(['id' => 'park-sequence-form']);
