@@ -12,12 +12,12 @@
         height: 183px;
         object-fit: cover;
     }
-    /* .desktop_postion{
+    .desktop_postion{
 
         position: absolute;
         bottom: -25px;
         width: 100%;
-    } */
+    }
   
 
 }
@@ -175,14 +175,14 @@
     }
 }
 
-@media(min-width:1200px){
+/* @media(min-width:1200px){
 
     .slider_safariimg img {
 
        height: 350px;
        object-fit: cover;
     }
-}
+} */
 @media only screen and (min-width:992px) {
 
   
