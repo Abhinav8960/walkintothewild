@@ -24,6 +24,7 @@ class SafariParkForm extends model
     public $slug;
     public $vehicle_id;
     public $master_animal_id;
+    public $animal_text;
     public $master_bonus_experience_id;
     public $accomodation;
     public $safari_session;
@@ -120,6 +121,7 @@ class SafariParkForm extends model
             $this->module_title = $this->safari_park_model->module_title;
             $this->module_description = $this->safari_park_model->module_description;
             $this->florafauna = $this->safari_park_model->florafauna;
+            $this->animal_text = $this->safari_park_model->animal_text;
             $this->status = $this->safari_park_model->status;
             $this->vehicle_id = SafariParkVehicle::find()->select('vehicle_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->master_animal_id = SafariParkAnimal::find()->select('master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
@@ -139,15 +141,13 @@ class SafariParkForm extends model
     public function rules()
     {
         return [
-            [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'create'],
-            [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'update'],
+            [['title', 'state_id', 'city_id', 'master_location_id'], 'required', 'on' => 'create'],
+            [['title', 'state_id', 'city_id', 'master_location_id'], 'required', 'on' => 'update'],
             [['module_title'], 'required', 'on' => 'howtoreach'],
             [['florafauna'], 'required', 'on' => 'florafauna'],
+            [['meta_title', 'slug'], 'required', 'on' => 'meta'],
 
             ['pincode', 'string', 'length' => [6, 6]],
-
-            [['module_title'], 'required', 'on' => 'howtoreach'],
-
             [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['short_description'], 'validateMaxWords', 'params' => ['max' => 70]],
@@ -157,7 +157,7 @@ class SafariParkForm extends model
             [[
                 'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description',
                 'vehicle_id', 'master_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'nearest_railway_station', 'nearest_airport', 'nearest_railway_station_two', 'nearest_airport_two',
-                'about_title', 'about_description', 'meta_keywords', 'module_title', 'module_description', 'month_note'
+                'about_title', 'about_description', 'meta_keywords', 'module_title', 'module_description', 'month_note', 'animal_text'
             ], 'safe'],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
@@ -215,6 +215,10 @@ class SafariParkForm extends model
         ];
         $scenarios['media'] = ['logo', 'feature_image', 'status'];
         $scenarios['florafauna'] = ['florafauna'];
+        $scenarios['map'] = [
+            'latitude', 'longitude', 'status'
+        ];
+        $scenarios['meta'] = ['meta_title', 'meta_keywords', 'meta_description', 'status', 'slug', 'animal_text'];
         return $scenarios;
     }
 
@@ -237,9 +241,9 @@ class SafariParkForm extends model
             'park_type_id' => 'Park Type',
             'vehicle_id' => 'Vehicle',
             'master_animal_id' => 'Animal',
-            'short_description' => 'Short Description',
-            'long_description' => 'Long Description',
-            'florafauna'=>'Flora Fauna',
+            'short_description' => 'Featured Description',
+            'long_description' => 'Description',
+            'florafauna' => 'Flora Fauna',
             'official_website' => 'Official Website',
             'master_location_id' => 'Location *',
             'country_id' => 'Country',
@@ -315,6 +319,7 @@ class SafariParkForm extends model
         $this->safari_park_model->module_title = $this->module_title;
         $this->safari_park_model->module_description = $this->module_description;
         $this->safari_park_model->florafauna = $this->florafauna;
+        $this->safari_park_model->animal_text = $this->animal_text;
         $this->safari_park_model->status = $this->status;
     }
 

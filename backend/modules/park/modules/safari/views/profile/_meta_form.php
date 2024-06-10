@@ -12,24 +12,32 @@ use yii\bootstrap5\ActiveForm;
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 <div class="card">
     <div class="card-body">
-        <h5>Flora & Fauna</h5>
+        <h5>Meta</h5>
         <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Title']) ?>
+            </div>
+
+            <div class="col-md-6">
+                <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Keywords']) ?>
+            </div>
 
             <div class="col-md-12">
-                <?= $form->field($model, 'florafauna')->widget(CKEditor::className(), [
-                    'options' => ['rows' => 4],
-                    'preset' => 'full',
-
-                ]) ?>
+                <?= $form->field($model, 'meta_description')->textarea() ?>
             </div>
         </div>
         <hr>
         <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'animal_text')->textarea(['maxlength' => true, 'placeholder' => 'Enter Animals']) ?>
+            </div>
             <?php if ($model->safari_park_model->id) { ?>
+                <div class="col-md-6">
+                    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug']) ?>
+                </div>
                 <div class="col-md-6">
                     <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
                 </div>
-
             <?php } ?>
         </div>
         <hr>

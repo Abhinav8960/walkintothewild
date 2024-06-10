@@ -36,7 +36,7 @@ use yii\bootstrap5\ActiveForm;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Nearest Railway *')  ?>
+                ])->label('Nearest Railway')  ?>
             </div>
 
             <div class="col-md-3">
@@ -51,7 +51,7 @@ use yii\bootstrap5\ActiveForm;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Airport *')  ?> </div>
+                ])->label('Airport')  ?> </div>
 
             <div class="col-md-3">
                 <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
@@ -93,8 +93,6 @@ use yii\bootstrap5\ActiveForm;
                     <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

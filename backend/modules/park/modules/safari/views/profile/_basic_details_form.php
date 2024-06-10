@@ -14,12 +14,13 @@ use yii\bootstrap5\ActiveForm;
     <div class="card-body">
         <h5>Basic Detail</h5>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
             </div>
 
-            <div class="col-md-4">
-                <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Enter short description']) ?>
+
+            <div class="col-md-12">
+                <?= $form->field($model, 'short_description')->textarea(['maxlength' => true, 'placeholder' => 'Enter short description']) ?>
             </div>
 
             <div class="col-md-12">
@@ -30,11 +31,6 @@ use yii\bootstrap5\ActiveForm;
                 ]) ?>
             </div>
 
-            <?php if ($model->safari_park_model->id) { ?>
-                <div class="col-md-3">
-                    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug']) ?>
-                </div>
-            <?php } ?>
 
             <div class="col-md-3">
                 <?= $form->field($model, 'avg_safari_price_min')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price Min'])->label('Average Safri Cost (Min)') ?>
@@ -158,22 +154,6 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
             </div>
 
-        </div>
-        <hr>
-
-        <h5>Meta</h5>
-        <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Title']) ?>
-            </div>
-
-            <div class="col-md-6">
-                <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Keywords']) ?>
-            </div>
-
-            <div class="col-md-12">
-                <?= $form->field($model, 'meta_description')->textarea() ?>
-            </div>
         </div>
         <hr>
 

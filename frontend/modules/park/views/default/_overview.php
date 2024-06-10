@@ -5,23 +5,19 @@
     <div class="accordion-body py-4">
         <div class="row">
             <div class="col-lg-12 col-xl-3">
-                <?php
-
-                use common\models\GeneralModel;
-
-                if ($model->gallery) { ?>
-                    <div class="slider_safariimg owl-carousel owl-theme position-relative">
-                        <?php foreach ($model->gallery as $gallery) { ?>
-                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
-                        <?php } ?>
-                    </div>
-                <?php } ?>
+                <div class="slider_safariimg owl-carousel owl-theme position-relative">
+                    <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
+                </div>
             </div>
             <div class="col-lg-12 col-xl-9 position-relative">
                 <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
                     <h5 class=""><a href=""><?= $model->title ?></a></h5>
                     <div class="btn_wrap pt-md-0 pt-3">
-                        <?php if ($model->official_website) { ?>
+                        <?php
+
+                        use common\models\GeneralModel;
+
+                        if ($model->official_website) { ?>
                             <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn"><i class="fa-solid fa-user-group"></i> OFFICIAL WEBSITE</a>
                         <?php } ?>
                     </div>
@@ -101,11 +97,9 @@
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
-                                    <?php if ($model->animals) {
-
-                                        foreach ($model->animals as $animal) {
-                                            echo $animal->animal_name . ',' ?>
-                                    <?php }
+                                    <?php if ($model->animal_text) {
+                                        echo $model->animal_text ?>
+                                    <?php
                                     } ?>
                                 </p>
                             </div>

@@ -3,6 +3,8 @@
 namespace backend\modules\park\modules\safari\controllers;
 
 use common\interfaces\StatusInterface;
+use common\models\GeneralModel;
+use common\models\master\animal\MasterAnimal;
 use common\models\park\form\SafariParkAnimalForm;
 use common\models\park\form\SafariParkFloraFaunaForm;
 use common\models\park\form\SafariParkForm;
@@ -130,9 +132,9 @@ class ProfileController extends Controller
 
                         $vehicles = $model->vehicle_id;
                         if ($vehicles) {
-                            ParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                            SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                             foreach ($vehicles as $vehicle) {
-                                $parkVehicle = new ParkVehicle();
+                                $parkVehicle = new SafariParkVehicle();
                                 $parkVehicle->safari_park_id = $model->safari_park_model->id;
                                 $parkVehicle->vehicle_id = $vehicle;
                                 $parkVehicle->save(false);
@@ -141,11 +143,15 @@ class ProfileController extends Controller
 
                         $animals = $model->master_animal_id;
                         if ($animals) {
-                            ParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                            SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                             foreach ($animals as $animal) {
-                                $parkAnimal = new ParkAnimal();
+                                $parkAnimal = new SafariParkAnimal();
                                 $parkAnimal->safari_park_id = $model->safari_park_model->id;
                                 $parkAnimal->master_animal_id = $animal;
+                                if ($animal) {
+                                    $parkAnimal->animal_name =  GeneralModel::animaloption()[$animal];
+                                }
+
                                 $parkAnimal->save(false);
                             }
                         }
@@ -226,6 +232,8 @@ class ProfileController extends Controller
             'safari_model' => $safari_model
         ]);
     }
+
+
 
     /**
      * Update How to reach Detail
@@ -530,11 +538,57 @@ class ProfileController extends Controller
      */
     public function actionMap($safari_park_id)
     {
+        $map_safari_model = $this->findModel($safari_park_id);
+        $model = new SafariParkForm($map_safari_model);
+        $model->scenario = 'map';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_park_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['/park/safari/profile/map?safari_park_id=' . $safari_park_id . '']);
+                    }
+                }
+            }
+        }
+
         return $this->render('map', [
-            'model' => $this->findModel($safari_park_id)
+            'map_model' => $this->findModel($safari_park_id),
+            'model' => $model
         ]);
     }
 
+    /**
+     * Meta View
+     *
+     * @param [type] $safari_park_id
+     * @return void
+     */
+    public function actionMeta($safari_park_id)
+    {
+        $map_safari_model = $this->findModel($safari_park_id);
+        $model = new SafariParkForm($map_safari_model);
+        $model->scenario = 'meta';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_park_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['/park/safari/profile/meta?safari_park_id=' . $safari_park_id . '']);
+                    }
+                }
+            }
+        }
+
+        return $this->render('_meta', [
+            'meta_model' => $this->findModel($safari_park_id),
+            'model' => $model
+        ]);
+    }
 
     /**
      * Animal View

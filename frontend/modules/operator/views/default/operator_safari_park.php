@@ -7,7 +7,7 @@ if ($operator_parks) {
             <div class="row">
                 <div class="col-xl-3">
                     <div class="parksImg h-100">
-                        <img src="<?= isset($park_detail->galleryimag) ? $park_detail->galleryimag->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                        <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                     </div>
                 </div>
                 <div class="col-xl-9 ">
@@ -91,11 +91,9 @@ if ($operator_parks) {
                                     </div>
                                     <div class="text-form">
                                         <p class="mb-0">
-                                            <?php if ($park_detail->animals) {
-
-                                                foreach ($park_detail->animals as $animal) {
-                                                    echo $animal->animal_name . ',' ?>
-                                            <?php }
+                                            <?php if ($park_detail->animal_text) {
+                                                echo $park_detail->animal_text ?>
+                                            <?php
                                             } ?>
                                         </p>
                                     </div>

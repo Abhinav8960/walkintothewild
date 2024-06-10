@@ -3,6 +3,7 @@
 namespace backend\modules\park\modules\safari\controllers;
 
 use common\interfaces\StatusInterface;
+use common\models\GeneralModel;
 use common\models\park\form\SafariParkForm;
 use common\models\park\ParkAnimal;
 use common\models\park\ParkVehicle;
@@ -115,6 +116,10 @@ class DefaultController extends Controller
                                 $parkAnimal = new SafariParkAnimal();
                                 $parkAnimal->safari_park_id = $model->safari_park_model->id;
                                 $parkAnimal->master_animal_id = $animal;
+                                if ($animal) {
+                                    $parkAnimal->animal_name =  GeneralModel::animaloption()[$animal];
+                                }
+
                                 $parkAnimal->save(false);
                             }
                         }
