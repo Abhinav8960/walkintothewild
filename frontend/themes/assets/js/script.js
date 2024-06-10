@@ -118,10 +118,20 @@ $('.slider_resorts ').owlCarousel({
 document.addEventListener('DOMContentLoaded', function () {
     // Get the toggle button and the advanced search box
     const toggleButton = document.getElementById('toggleButton');
+    const toggleButtonMobile = document.getElementById('toggleButtonMobile');
+
     const advanceSearchBox = document.getElementById('advanceSearchBox');
 
     // Add click event listener to the toggle button
     toggleButton.addEventListener('click', function () {
+        // Toggle the visibility of the advanced search box
+        if (advanceSearchBox.style.display === 'none' || advanceSearchBox.style.display === '') {
+            advanceSearchBox.style.display = 'block';
+        } else {
+            advanceSearchBox.style.display = 'none';
+        }
+    });
+    toggleButtonMobile.addEventListener('click', function () {
         // Toggle the visibility of the advanced search box
         if (advanceSearchBox.style.display === 'none' || advanceSearchBox.style.display === '') {
             advanceSearchBox.style.display = 'block';

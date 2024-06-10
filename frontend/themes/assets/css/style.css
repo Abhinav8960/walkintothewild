@@ -36,11 +36,16 @@
     --bs-body-font-family: "Roboto", sans-serif !important;
      
 }
-
 body {
-
     font-family: "Roboto", sans-serif !important;
-    /* overflow-x: hidden !important; */
+    overflow-x: hidden !important;
+    /* WebKit browsers (Chrome, Safari) */
+    ::-webkit-scrollbar {
+        display: none !important;  /* Hides the scrollbar */
+    }
+}
+body::-webkit-scrollbar {
+    display: none !important;  /* Hides the scrollbar */
 }
 
 
@@ -280,27 +285,28 @@ a {
 
 .headingBnner h1 {
 
-    font-size: var(--fs-28);
+    font-size: var(--fs-25);
     text-align: center;
     color: var(--colorwhite);
 }
 
 .sharesafri {
 
-    padding-top: 50px;
+    padding-top: 100px;
+    padding-bottom: 50px;
 }
 
 .title_safari h4 {
 
     color: #ADDC2C;
-    font-size: var(--fs-20);
+    font-size: var(--fs-22);
 }
 
 .sharesafribg {
     background: url('../img/sharedsafaribanner.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 470px;
+    height: 447px;
     width: 100%;
     position: relative;
 }
@@ -514,7 +520,7 @@ a {
 .top_seats {
 
     background-color: #4B4B4B;
-    padding: 10px 20px;
+    padding: 4px 20px;
 }
 
 .titleDate {
@@ -547,7 +553,7 @@ a {
 
 .number-safari {
 
-    font-size: var(--fs-20);
+    font-size: var(--fs-16);
     font-weight: 600;
     margin-bottom: 0;
     color: var(--colorwhite);
@@ -556,8 +562,8 @@ a {
 .joinsafari a {
 
     font-family: "Roboto", sans-serif !important;
-    padding: 7px 14px;
-    font-size: var(--fs-15);
+    padding: 4px 14px;
+    font-size: var(--fs-14);
     display: block;
     background: #4B4B4B;
     text-align: center;
@@ -2574,13 +2580,14 @@ position: relative;
 
 .select_boxes .form-select {
 
-    padding: 38px 20px 10px 52px;
+    padding: 38px 20px 10px 64px;
     font-family: "Roboto", sans-serif;
     background-image: none !important;
     font-size: var(--fs-14);
     color: #707070;
     border-radius: 0;
-    width: 292px;
+    width: 265px;
+    height: 70px;
     cursor: pointer;
 
 }
@@ -2602,7 +2609,7 @@ position: relative;
 
     position: absolute;
     top: 13px;
-    left: 18%;
+    left: 24%;
 }
 
 .placeholder_select p {
@@ -2615,7 +2622,7 @@ position: relative;
 
     position: absolute;
     top: 19px;
-    left: 11px;
+    left: 17px;
 }
 
 .serch_btn button {
@@ -2643,6 +2650,15 @@ position: relative;
 }
 
 .toogle_icon button {
+
+    background-color: transparent;
+    border: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: var(--fs-18);
+    color: var(--colorwhite);
+}
+
+.toogle_icon a {
 
     background-color: transparent;
     border: 0;
@@ -2686,8 +2702,8 @@ position: relative;
     width: 130px;
     font-family: "Roboto", sans-serif;
     text-align: center;
-    padding: 10px 20px;
-    border-radius: 8px;
+    padding: 8px 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
