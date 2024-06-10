@@ -26,10 +26,10 @@
                         <?php } ?>
                     </div>
                 </div>
-                <div class="seelctes_text pt-3 pb-4 border_bottom2">
+                <div class="seelctes_text pt-3 pb-4 ">
                     <p><?= $model->long_description ?></p>
                 </div>
-                <div class="row pt-3 desktop_postion">
+                <div class="row pt-3 desktop_postion border_top2">
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
