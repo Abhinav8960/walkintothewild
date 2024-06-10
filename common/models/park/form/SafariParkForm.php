@@ -201,13 +201,13 @@ class SafariParkForm extends model
             'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
             'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
-            'vehicle_id', 'master_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'month_note'
+            'vehicle_id', 'master_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'month_note', 'animal_text'
         ];
         $scenarios['update'] = [
             'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
             'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
-            'vehicle_id', 'master_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note'
+            'vehicle_id', 'master_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'animal_text'
         ];
         $scenarios['howtoreach'] = [
             'status', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station', 'nearest_airport_distance_two', 'nearest_airport_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_two',
@@ -218,7 +218,7 @@ class SafariParkForm extends model
         $scenarios['map'] = [
             'latitude', 'longitude', 'status'
         ];
-        $scenarios['meta'] = ['meta_title', 'meta_keywords', 'meta_description', 'status', 'slug', 'animal_text'];
+        $scenarios['meta'] = ['meta_title', 'meta_keywords', 'meta_description', 'status', 'slug'];
         return $scenarios;
     }
 

@@ -110,6 +110,11 @@ use yii\bootstrap5\ActiveForm;
                     ],
                 ]) ?>
             </div>
+            <div class="col-md-3 select_width">
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'animal_text')->textarea(['maxlength' => true, 'placeholder' => 'Enter Animals']) ?>
+            </div>
         </div>
         <hr>
 

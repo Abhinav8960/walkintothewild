@@ -28,9 +28,6 @@ use yii\bootstrap5\ActiveForm;
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'animal_text')->textarea(['maxlength' => true, 'placeholder' => 'Enter Animals']) ?>
-            </div>
             <?php if ($model->safari_park_model->id) { ?>
                 <div class="col-md-6">
                     <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug']) ?>
