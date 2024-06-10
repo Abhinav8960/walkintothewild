@@ -200,13 +200,25 @@ use yii\bootstrap5\ActiveForm;
             </div>
         </div>
         <hr>
-        <?php if ($model->safari_park_model->id) { ?>
-            <div class="col-md-3">
-                <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
-            </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <?php if ($model->safari_park_model->id) { ?>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
+                </div>
 
-        <?php } ?>
+            <?php } ?>
 
+            <?php
+
+            echo Html::a('<img src="/img/red_delete.png" alt="" style="width:25px;">', ['/park/safari/default/delete', 'id' => $model->safari_park_model->id], [
+                'class' => 'btn btn-sm p-0 change-menuicon  col-md-2 float-end mb-3',
+                'title' => 'Delete',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete ' . $model->safari_park_model->title . '?',
+                    'method' => 'post',
+                ],
+            ]); ?>
+        </div>
 
 
         <hr>
@@ -216,8 +228,6 @@ use yii\bootstrap5\ActiveForm;
                     <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>

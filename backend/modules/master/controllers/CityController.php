@@ -44,6 +44,7 @@ class CityController extends Controller
     {
         $model = new MasterCityForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->country_id = 1;
         $model->scenario = 'create';
         
         if ($this->request->isPost) {

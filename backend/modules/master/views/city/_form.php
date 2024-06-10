@@ -26,7 +26,10 @@ use yii\bootstrap5\ActiveForm;
     </div>
     <div class="col-md-6">
         <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state',]])->dropDownList(
-            GeneralModel::getAllState($model->country_id)
+            GeneralModel::getAllState($model->country_id),
+            [
+                'prompt' => 'Select State'
+            ]
         ); ?>
     </div>
     <div class="col-md-6">

@@ -14,7 +14,7 @@ class SuspendActiveButton extends Widget implements \common\interfaces\StatusInt
 
     public $active_title = 'Item';
     public $suspend_title = 'Item';
-    public $suspend_button_title = 'Suspend';
+    public $suspend_button_title = 'Deactivate';
     public $active_button_title = 'Active';
 
     public $model;

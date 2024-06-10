@@ -5,6 +5,7 @@ namespace frontend\modules\operator\controllers;
 use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorPark;
 use common\models\park\SafariPark;
 use frontend\models\ArticleSearch;
 use frontend\models\CommentForm;
@@ -19,6 +20,9 @@ use yii\web\NotFoundHttpException;
  */
 class DefaultController extends Controller
 {
+    public $enableCsrfValidation = false;
+
+
     /**
      * Renders the index view for the module
      * @return string
@@ -26,8 +30,12 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $id, 'status' => 1])->all();
 
         $model = new OperatorQuoteForm();
+        $model->action_url = '/operator/' . $id . '';
+        $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
             return $this->redirect(['/operator/default/view',  'id' => $id]);
@@ -42,7 +50,30 @@ class DefaultController extends Controller
             [
                 'operator' => $operator,
                 'model' => $model,
+                'featured_parks' => $featured_parks,
+                'operator_parks' => $operator_parks,
             ]
         );
+    }
+
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidate($id = null)
+    {
+        $model = new OperatorQuoteForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $model = new OperatorQuoteForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 }

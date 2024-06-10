@@ -69,7 +69,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
      */
     public static function statusoption()
     {
-        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Suspend'];
+        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Deactivate'];
     }
 
 
@@ -80,7 +80,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
      */
     public static function recentstatusoption()
     {
-        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Suspend', self::STATUS_DELETE => 'Deleted'];
+        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Deactivate', self::STATUS_DELETE => 'Deleted'];
     }
 
     /**

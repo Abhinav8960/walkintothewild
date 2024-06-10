@@ -3,6 +3,7 @@
 namespace common\models\operator;
 
 use common\models\park\SafariPark;
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -15,8 +16,9 @@ use Yii;
  * @property int|null $created_at
  * @property int|null $created_by
  */
-class SafariOperatorPark extends \yii\db\ActiveRecord
+class SafariOperatorPark extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
