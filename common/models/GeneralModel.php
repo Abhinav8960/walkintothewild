@@ -31,6 +31,7 @@ use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\meta\MetaPackageRange;
 use common\models\meta\MetaSafariSession;
 use common\models\meta\MetaStayCategory;
+use common\models\meta\MetaTermConditionType;
 use common\models\meta\MetaZoneType;
 use common\models\operator\SafariOperatorPark;
 use common\models\park\BirdingPark;
@@ -574,5 +575,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         }
         $safariparkList =  SafariPark::find()->where(['in', 'id', $operator_safari_park]);
         return ArrayHelper::map($safariparkList->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function termconditionoption()
+    {
+        return ArrayHelper::map(MetaTermConditionType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }
