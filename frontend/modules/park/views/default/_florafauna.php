@@ -6,15 +6,11 @@
 <div id="collapseThree" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingThree" data-bs-parent="#myTabContent">
     <div class="accordion-body">
         <div class="about_content">
-            <?php if ($model->florafauns) {
-                foreach ($model->florafauns as $florafaun) { ?>
-                    <div class="safrititles py-3">
-                        <h5 class=""><?= $florafaun->title ?></h5>
-                    </div>
-                    <p>
-                        <?= $florafaun->description ?>
-                    </p>
-            <?php }
+            <?php if ($model->florafauna) { ?>
+                <p>
+                    <?= $model->florafauna ?>
+                </p>
+            <?php
             } ?>
         </div>
     </div>

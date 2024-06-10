@@ -4,6 +4,8 @@ namespace backend\modules\park\modules\safari\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\park\form\SafariParkForm;
+use common\models\park\ParkAnimal;
+use common\models\park\ParkVehicle;
 use common\models\park\SafariParkBonusExperience;
 use common\models\park\SafariPark;
 use common\models\park\SafariParkAccomodation;
@@ -93,6 +95,27 @@ class DefaultController extends Controller
                                 $safariparkBonus->safari_park_id = $model->safari_park_model->id;
                                 $safariparkBonus->master_bonus_experience_id = $bonus;
                                 $safariparkBonus->save(false);
+                            }
+                        }
+
+
+                        $vehicles = $model->vehicle_id;
+                        if ($vehicles) {
+                            foreach ($vehicles as $vehicle) {
+                                $parkVehicle = new SafariParkVehicle();
+                                $parkVehicle->safari_park_id = $model->safari_park_model->id;
+                                $parkVehicle->vehicle_id = $vehicle;
+                                $parkVehicle->save(false);
+                            }
+                        }
+
+                        $animals = $model->master_animal_id;
+                        if ($animals) {
+                            foreach ($animals as $animal) {
+                                $parkAnimal = new SafariParkAnimal();
+                                $parkAnimal->safari_park_id = $model->safari_park_model->id;
+                                $parkAnimal->master_animal_id = $animal;
+                                $parkAnimal->save(false);
                             }
                         }
 

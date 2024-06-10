@@ -20,10 +20,6 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
     </div>
 
-    <div class="col-md-4">
-        <?= $form->field($model, 'logo')->fileInput() ?>
-    </div>
-
     <div class="col-md-12">
         <?= $form->field($model, 'long_description')->widget(CKEditor::className(), [
             'options' => ['rows' => 4],
@@ -90,84 +86,100 @@ use yii\bootstrap5\ActiveForm;
             ],
         ])->label('Month') ?>
     </div>
-    <div class="col-md-3">
-        <?= $form->field($model, 'feature_image')->fileInput() ?>
+    <div class="col-md-3 select_width">
+        <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::vehicleoption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select Vehicles', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
     </div>
-</div>
-<hr>
+    <div class="col-md-3 select_width">
+        <?= $form->field($model, 'master_animal_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::animaloption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select Animal', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+    </div>
+    <hr>
 
-<h5>Address</h5>
-<div class="row">
+    <h5>Address</h5>
+    <div class="row">
 
 
 
 
-    <div class="col-md-3">
-        <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
-            GeneralModel::getAllState(1),
-            [
-                'prompt' => 'Select State',
-                'onchange' => '
+        <div class="col-md-3">
+            <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
+                GeneralModel::getAllState(1),
+                [
+                    'prompt' => 'Select State',
+                    'onchange' => '
                 $.get( "' . Yii::$app->urlManager->createUrl('/dropdown/getcity?master_state_id=') . '"+$(this).val(), function( data ) {
                     $( "select#city" ).html( data );
                     })'
-            ]
-        ); ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(
-            GeneralModel::getAllCity($model->state_id),
-            [
-                'prompt' => 'Select City',
-            ]
-        ); ?>
-
-
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'master_location_id', ['inputOptions' => ['id' => 'location']])->dropDownList(GeneralModel::getAllLocation(), ['prompt' => 'Select Location'])->label('Location') ?>
-    </div>
-    <div class="col-md-3">
-        <?= $form->field($model, 'pincode')->textInput(['maxlength' => true, 'placeholder' => 'Enter Pincode']) ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Latitude']) ?>
-    </div>
-
-    <div class="col-md-3">
-        <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
-    </div>
-
-</div>
-<hr>
-<?php if ($model->safari_park_model->id) { ?>
-    <div class="col-md-3">
-        <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
-    </div>
-
-<?php } ?>
-
-
-
-<hr>
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+                ]
+            ); ?>
         </div>
+
+        <div class="col-md-3">
+            <?= $form->field($model, 'city_id', ['inputOptions' => ['id' => 'city']])->dropDownList(
+                GeneralModel::getAllCity($model->state_id),
+                [
+                    'prompt' => 'Select City',
+                ]
+            ); ?>
+
+
+        </div>
+
+        <div class="col-md-3">
+            <?= $form->field($model, 'master_location_id', ['inputOptions' => ['id' => 'location']])->dropDownList(GeneralModel::getAllLocation(), ['prompt' => 'Select Location'])->label('Location') ?>
+        </div>
+        <div class="col-md-3">
+            <?= $form->field($model, 'pincode')->textInput(['maxlength' => true, 'placeholder' => 'Enter Pincode']) ?>
+        </div>
+
+        <div class="col-md-3">
+            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Latitude']) ?>
+        </div>
+
+        <div class="col-md-3">
+            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
+        </div>
+
+    </div>
+    <hr>
+    <?php if ($model->safari_park_model->id) { ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
+        </div>
+
+    <?php } ?>
+
+
+
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+            </div>
+        </div>
+
+
     </div>
 
+    <style>
+        .select_width .select2.select2-container {
 
-</div>
-
-<style>
-    .select_width .select2.select2-container {
-
-        width: 100% !important;
-        display: block !important;
-    }
-</style>
-<?php ActiveForm::end(); ?>
+            width: 100% !important;
+            display: block !important;
+        }
+    </style>
+    <?php ActiveForm::end(); ?>

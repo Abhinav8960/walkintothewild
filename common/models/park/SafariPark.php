@@ -207,11 +207,6 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     }
 
 
-    public function getFlorafauns()
-    {
-        return $this->hasMany(SafariParkFloraFauna::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_flora_fauna.status' => 1]);
-    }
-
     public function getMonths()
     {
         return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_month.status' => 1]);

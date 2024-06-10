@@ -9,6 +9,8 @@ use common\models\park\form\SafariParkForm;
 use common\models\park\form\SafariParkGalleryForm;
 use common\models\park\form\SafariParkVehicleForm;
 use common\models\park\form\SafariParkZoneForm;
+use common\models\park\ParkAnimal;
+use common\models\park\ParkVehicle;
 use common\models\park\SafariPark;
 use common\models\park\SafariParkAccomodation;
 use common\models\park\SafariParkAnimal;
@@ -125,6 +127,28 @@ class ProfileController extends Controller
                             }
                         }
 
+
+                        $vehicles = $model->vehicle_id;
+                        if ($vehicles) {
+                            ParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                            foreach ($vehicles as $vehicle) {
+                                $parkVehicle = new ParkVehicle();
+                                $parkVehicle->safari_park_id = $model->safari_park_model->id;
+                                $parkVehicle->vehicle_id = $vehicle;
+                                $parkVehicle->save(false);
+                            }
+                        }
+
+                        $animals = $model->master_animal_id;
+                        if ($animals) {
+                            ParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                            foreach ($animals as $animal) {
+                                $parkAnimal = new ParkAnimal();
+                                $parkAnimal->safari_park_id = $model->safari_park_model->id;
+                                $parkAnimal->master_animal_id = $animal;
+                                $parkAnimal->save(false);
+                            }
+                        }
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['/park/safari/profile?safari_park_id=' . $safari_park_id . '']);
                     }
@@ -138,6 +162,70 @@ class ProfileController extends Controller
         ]);
     }
 
+
+    /**
+     * Update Basic Detail
+     *
+     * @param [type] $safari_park_id
+     * @return void
+     */
+    public function actionMedia($safari_park_id)
+    {
+        $safari_model = $this->findModel($safari_park_id);
+        $model = new SafariParkForm($safari_model);
+        $model->scenario = 'media';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_park_model->save()) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['/park/safari/profile/media?safari_park_id=' . $safari_park_id . '']);
+                    }
+                }
+            }
+        }
+
+        return $this->render('media', [
+            'model' => $model,
+            'safari_model' => $safari_model
+        ]);
+    }
+
+    /**
+     * Update Basic Detail
+     *
+     * @param [type] $safari_park_id
+     * @return void
+     */
+    public function actionFloraFauna($safari_park_id)
+    {
+        $safari_model = $this->findModel($safari_park_id);
+        $model = new SafariParkForm($safari_model);
+        $model->scenario = 'florafauna';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_park_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['/park/safari/profile/flora-fauna?safari_park_id=' . $safari_park_id . '']);
+                    }
+                }
+            }
+        }
+
+        return $this->render('_flora_fauna', [
+            'model' => $model,
+            'safari_model' => $safari_model
+        ]);
+    }
 
     /**
      * Update How to reach Detail
@@ -522,90 +610,6 @@ class ProfileController extends Controller
     public function actionDeleteanimal($id)
     {
         $model = $this->findAnimalModel($id);
-        $model->status = StatusInterface::STATUS_DELETE;
-        $model->save();
-        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-        return $this->redirect(\Yii::$app->request->referrer);
-    }
-
-
-
-    /**
-     * FloraFauna View
-     *
-     * @param [type] $safari_park_id
-     * @return void
-     */
-    public function actionFloraFauna($safari_park_id)
-    {
-        $searchModel = new SafariParkFloraFaunaSearch();
-        $searchModel->safari_park_id = $safari_park_id;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        return $this->render('florafauna', [
-            'safari_model' => $this->findModel($safari_park_id),
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-
-
-    public function actionCreateflorafauna($safari_park_id)
-    {
-        $safari_model = $this->findModel($safari_park_id);
-
-        $model = new SafariParkFloraFaunaForm();
-        $model->safari_park_id = $safari_park_id;
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->safari_park_florafauna_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['/park/safari/profile/flora-fauna?safari_park_id=' . $safari_park_id . '']);
-                    }
-                }
-            }
-        }
-
-        return $this->render('createflorafauna', [
-            'model' => $model,
-            'safari_model' => $safari_model
-        ]);
-    }
-
-
-    public function actionUpdateflorafauna($safari_park_id, $id)
-    {
-        $safari_model = $this->findModel($safari_park_id);
-        $florafauna_model = $this->findFlorafaunaModel($id);
-
-        $model = new SafariParkFloraFaunaForm($florafauna_model);
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->safari_park_florafauna_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['/park/safari/profile/flora-fauna?safari_park_id=' . $safari_park_id . '']);
-                    }
-                }
-            }
-        }
-
-        return $this->render('createflorafauna', [
-            'model' => $model,
-            'safari_model' => $safari_model
-        ]);
-    }
-
-
-    public function actionDeleteflorafauna($id)
-    {
-        $model = $this->findFlorafaunaModel($id);
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');

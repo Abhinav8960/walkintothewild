@@ -12,6 +12,20 @@ use yii\bootstrap5\ActiveForm;
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 <div class="card">
     <div class="card-body">
+        <h5>How To Reach</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'module_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Module Title']) ?>
+            </div>
+            <div class="col-md-12">
+                <?= $form->field($model, 'module_description')->widget(CKEditor::className(), [
+                    'options' => ['rows' => 4],
+                    'preset' => 'full',
+
+                ]) ?>
+            </div>
+        </div>
+        <hr>
         <h5>Basic Detail</h5>
         <div class="row">
             <div class="col-md-3">
@@ -70,21 +84,6 @@ use yii\bootstrap5\ActiveForm;
 
             <div class="col-md-3">
                 <?= $form->field($model, 'nearest_airport_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
-            </div>
-        </div>
-        <hr>
-
-        <h5>How To Reach</h5>
-        <div class="row">
-            <div class="col-md-6">
-                <?= $form->field($model, 'module_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Module Title']) ?>
-            </div>
-            <div class="col-md-12">
-                <?= $form->field($model, 'module_description')->widget(CKEditor::className(), [
-                    'options' => ['rows' => 4],
-                    'preset' => 'full',
-
-                ]) ?>
             </div>
         </div>
         <hr>

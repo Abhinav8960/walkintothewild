@@ -50,6 +50,8 @@ class SafariParkForm extends model
     public $nearest_railway_station_distance_two;
     public $nearest_airport_two;
     public $nearest_airport_distance_two;
+    public $is_published;
+    public $florafauna;
 
 
     public $nearest_bus_station;
@@ -117,6 +119,7 @@ class SafariParkForm extends model
             $this->about_description = $this->safari_park_model->about_description;
             $this->module_title = $this->safari_park_model->module_title;
             $this->module_description = $this->safari_park_model->module_description;
+            $this->florafauna = $this->safari_park_model->florafauna;
             $this->status = $this->safari_park_model->status;
             $this->vehicle_id = SafariParkVehicle::find()->select('vehicle_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->master_animal_id = SafariParkAnimal::find()->select('master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
@@ -138,11 +141,12 @@ class SafariParkForm extends model
         return [
             [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'create'],
             [['title', 'state_id', 'city_id', 'master_location_id', 'about_title'], 'required', 'on' => 'update'],
-            [[ 'module_title'], 'required', 'on' => 'howtoreach'],
+            [['module_title'], 'required', 'on' => 'howtoreach'],
+            [['florafauna'], 'required', 'on' => 'florafauna'],
 
             ['pincode', 'string', 'length' => [6, 6]],
 
-            [[ 'module_title'], 'required', 'on' => 'howtoreach'],
+            [['module_title'], 'required', 'on' => 'howtoreach'],
 
             [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two'], 'integer'],
             [['title'], 'string', 'max' => 255],
@@ -170,11 +174,19 @@ class SafariParkForm extends model
 
 
             [
-                ['logo', 'feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                // 'minWidth' => 380,
-                // 'maxWidth' => 380,
-                // 'maxHeight' => 600,
-                // 'minHeight' => 600,
+                ['feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 380,
+                'maxWidth' => 380,
+                'maxHeight' => 600,
+                'minHeight' => 600,
+                'maxSize' => 250 * 1024
+            ],
+            [
+                ['logo'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 350,
+                'maxWidth' => 350,
+                'maxHeight' => 350,
+                'minHeight' => 350,
                 'maxSize' => 250 * 1024
             ],
         ];
@@ -201,6 +213,8 @@ class SafariParkForm extends model
             'status', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station', 'nearest_airport_distance_two', 'nearest_airport_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_two',
             'module_title', 'module_description'
         ];
+        $scenarios['media'] = ['logo', 'feature_image', 'status'];
+        $scenarios['florafauna'] = ['florafauna'];
         return $scenarios;
     }
 
@@ -225,6 +239,7 @@ class SafariParkForm extends model
             'master_animal_id' => 'Animal',
             'short_description' => 'Short Description',
             'long_description' => 'Long Description',
+            'florafauna'=>'Flora Fauna',
             'official_website' => 'Official Website',
             'master_location_id' => 'Location *',
             'country_id' => 'Country',
@@ -236,7 +251,7 @@ class SafariParkForm extends model
             'about_title' => 'About Title *',
             'module_title' => 'Module Title *',
             'feature_image' => 'Feature Image (JPEG /JPG or PNG / 380 Pixels x 600 Pixels / 250 KB) *',
-            'logo' => 'Logo (JPEG /JPG or PNG / 250 KB) *',
+            'logo' => 'Dp Image (JPEG /JPG or PNG / 350 Pixels x 350 Pixels/ 250 KB) *',
             'avg_safari_price_min' => 'Avg Safari Price',
             'nearest_railway_station' => 'Nearest Railway',
             'nearest_railway_station_distance' => 'Nearest Railway Station Distance (in km)',
@@ -299,6 +314,7 @@ class SafariParkForm extends model
         $this->safari_park_model->about_description = $this->about_description;
         $this->safari_park_model->module_title = $this->module_title;
         $this->safari_park_model->module_description = $this->module_description;
+        $this->safari_park_model->florafauna = $this->florafauna;
         $this->safari_park_model->status = $this->status;
     }
 

@@ -22,22 +22,6 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Enter short description']) ?>
             </div>
 
-            <?php
-            if ($model->safari_park_model->logo) { ?>
-                <div class="col-md-3">
-                    <?= $form->field($model, 'logo')->fileInput() ?>
-                </div>
-                <div class="col-md-1">
-                    <?php echo '<img src="' . $model->safari_park_model->logoimagepath . '" width="50" height="50"></img>'; ?>
-                </div>
-            <?php } else { ?>
-                <div class="col-md-4">
-                    <?= $form->field($model, 'logo')->fileInput() ?>
-                </div>
-            <?php  } ?>
-
-
-
             <div class="col-md-12">
                 <?= $form->field($model, 'long_description')->widget(CKEditor::className(), [
                     'options' => ['rows' => 4],
@@ -109,24 +93,32 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'month_note')->textInput(['maxlength' => true, 'placeholder' => 'Enter Month Note']) ?>
             </div>
 
-            <div class="col-md-3">
-                <?= $form->field($model, 'feature_image')->fileInput() ?>
+
+            <div class="col-md-3 select_width">
+                <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::vehicleoption(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select Vehicles', 'multiple' => true],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]) ?>
             </div>
-            <?php
-            if ($model->safari_park_model->feature_image) { ?>
-                <div class="col-md-1">
-                    <?php echo '<img src="' . $model->safari_park_model->featureimagepath . '" width="50" height="50"></img>'; ?>
-                </div>
-            <?php } ?>
+            <div class="col-md-3 select_width">
+                <?= $form->field($model, 'master_animal_id')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::animaloption(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select Animal', 'multiple' => true],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]) ?>
+            </div>
         </div>
         <hr>
 
         <h5>Address</h5>
         <div class="row">
-
-
-
-
             <div class="col-md-3">
                 <?= $form->field($model, 'state_id', ['inputOptions' => ['id' => 'state']])->dropDownList(
                     GeneralModel::getAllState(1),
