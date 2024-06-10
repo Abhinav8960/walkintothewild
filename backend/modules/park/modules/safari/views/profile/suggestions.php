@@ -46,7 +46,6 @@ $this->params['title'] = $this->title;
                                     ],
                                     'details',
                                     'created_at:dateTime:Created at',
-                                    'updated_at:dateTime:Last Updated at',
                                     [
                                         'label' => 'Status',
                                         'contentOptions' => ['style' => 'width: 5%;'],
