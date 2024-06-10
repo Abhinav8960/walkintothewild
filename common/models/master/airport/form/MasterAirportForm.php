@@ -61,7 +61,14 @@ class MasterAirportForm extends model
 
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
-
+            [
+                ['name'], 'unique', 'targetClass' => MasterAirport::className(), 'message' => 'This name has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->airport_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->airport_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

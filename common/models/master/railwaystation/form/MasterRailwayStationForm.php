@@ -61,6 +61,14 @@ class MasterRailwayStationForm extends model
             [['status'], 'default', 'value' => 1],
             [['station_code'], 'string', 'max' => 20],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
+            [
+                ['title'], 'unique', 'targetClass' => MasterRailwayStation::className(), 'message' => 'This title has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->railway_station_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->railway_station_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

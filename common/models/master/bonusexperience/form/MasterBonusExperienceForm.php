@@ -47,7 +47,14 @@ class MasterBonusExperienceForm extends model
             [['status'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
-
+            [
+                ['title'], 'unique', 'targetClass' => MasterBonusExperience::className(), 'message' => 'This title has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->bonus_experience_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->bonus_experience_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 
