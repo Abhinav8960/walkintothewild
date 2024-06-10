@@ -82,7 +82,6 @@ $recentposts = ArticleSearch::recentpost();
                 <div class="comment-wrapper">
                     <?= $this->render('comment', [
                         'model' => $model,
-                        'replymodel' => $replymodel,
                         'article' => $article,
                     ]) ?>
                 </div>

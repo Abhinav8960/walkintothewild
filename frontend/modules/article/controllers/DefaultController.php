@@ -52,15 +52,9 @@ class DefaultController extends Controller
 
 
         $model = new CommentForm();
-        $replymodel = new ReplyForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($article)) {
             Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
             return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'comment-wrapper']);
-        }
-
-        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($article)) {
-            Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
-            return $this->redirect(['/article/default/view', 'slug' => $slug, '#' => 'comment-wrapper']);
         }
 
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
@@ -76,7 +70,6 @@ class DefaultController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'model' => $model,
-                'replymodel' => $replymodel,
             ]
         );
     }

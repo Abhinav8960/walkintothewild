@@ -8,6 +8,7 @@ use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use frontend\models\ArticleSearch;
 use frontend\models\CommentForm;
+use frontend\models\OperatorQuoteForm;
 use frontend\models\ReplyForm;
 use Yii;
 use yii\web\Controller;
@@ -26,6 +27,11 @@ class DefaultController extends Controller
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
 
+        $model = new OperatorQuoteForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/view',  'id' => $id]);
+        }
 
         if (empty($operator)) {
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -35,6 +41,7 @@ class DefaultController extends Controller
             'view',
             [
                 'operator' => $operator,
+                'model' => $model,
             ]
         );
     }

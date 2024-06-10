@@ -38,7 +38,7 @@ class OperatorQuoteForm extends Model
      * @param Corporate $corporate
      * @return void
      */
-    public function comment(SafariOperator $operator)
+    public function request(SafariOperator $operator)
     {
 
         $agent = new \Jenssegers\Agent\Agent();
