@@ -64,7 +64,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 20%;'],
-                        'template' => '{delete}&nbsp;&nbsp;{publish}&nbsp;&nbsp;{suspend}',
+                        'template' => '{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             // 'view' => function ($url, $model) {
                             //     return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
@@ -80,9 +80,6 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                                 } else {
                                     return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Birding Park', 'suspend_title' => 'Birding Park']);
                                 }
-                            },
-                            'publish' => function ($url, $model) {
-                                return \backend\widgets\PublishUnpublishButton::widget(['model' => $model, 'published_title' => 'Safari Park', 'unpublish_title' => 'Safari Park']);
                             },
                             'suspend' => function ($url, $model) {
                                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Birding Tour Operator', 'suspend_title' => 'Birding Tour Operator']);

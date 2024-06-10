@@ -56,6 +56,13 @@ class MasterCityForm extends model
             [['city_name', 'state_id', 'country_id'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
+            [
+                'city_name', 'unique', 'when' => function ($model, $attribute) {
+                    return strtolower($this->city_model->$attribute) != strtolower($model->$attribute);
+                },
+                'targetClass' => MasterCity::className(), 'targetAttribute' => ['state_id', 'city_name'],
+                'message' => 'This City has already been taken'
+            ],
 
         ];
     }

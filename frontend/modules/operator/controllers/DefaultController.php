@@ -5,6 +5,7 @@ namespace frontend\modules\operator\controllers;
 use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorPark;
 use common\models\park\SafariPark;
 use frontend\models\ArticleSearch;
 use frontend\models\CommentForm;
@@ -30,6 +31,7 @@ class DefaultController extends Controller
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $id, 'status' => 1])->all();
 
         $model = new OperatorQuoteForm();
         $model->action_url = '/operator/' . $id . '';
@@ -49,6 +51,7 @@ class DefaultController extends Controller
                 'operator' => $operator,
                 'model' => $model,
                 'featured_parks' => $featured_parks,
+                'operator_parks' => $operator_parks,
             ]
         );
     }
