@@ -540,7 +540,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     }
 
 
-    public static function get_substring($text, $word_limit = 70)
+    public static function get_substring($text, $word_limit = 100)
     {
         // Split the text into an array of words
         $words = explode(' ', $text);

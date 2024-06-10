@@ -57,15 +57,15 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                                 <div class="slect_safricound2 d-flex justify-content-around mt-4">
                                     <div class="parks_text text-center">
-                                        <p>6</p>
+                                        <p><?= count($operator->park) ?></p>
                                         <p>Parks</p>
                                     </div>
                                     <div class="parks_text text-center">
-                                        <p>7</p>
+                                        <p>0</p>
                                         <p>Resorts</p>
                                     </div>
                                     <div class="parks_text text-center">
-                                        <p>15</p>
+                                        <p>0</p>
                                         <p>Shared Safari</p>
                                     </div>
                                 </div>
@@ -103,25 +103,25 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                             <div class="d-flex gap-md-5 gap-2">
                                 <div class="phone">
-                                    <a href=""><i class="fa-solid fa-phone me-2"></i> <span>Call</span></a>
+                                    <a href="tel:<?= $operator->phone_no ?>"><i class="fa-solid fa-phone me-2"></i> <span>Call</span></a>
                                 </div>
                                 <div class="phone">
-                                    <a href=""><i class="fa-solid fa-envelope me-2"></i> <span> Email</span></a>
+                                    <a href="mailto:<?= $operator->email ?>"><i class="fa-solid fa-envelope me-2"></i> <span> Email</span></a>
                                 </div>
                             </div>
                             <div class="socil-links d-flex gap-md-4 gap-2 my-3 flex-wrap">
                                 <div class="fs">
-                                    <a href=""><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="<?= $operator->facebook_url ?>"><i class="fa-brands fa-facebook-f"></i></a>
                                 </div>
                                 <div class="fs">
-                                    <a href=""> <i class="fa-brands fa-instagram"></i></a>
+                                    <a href="<?= $operator->instagram_url ?>"> <i class="fa-brands fa-instagram"></i></a>
                                 </div>
                                 <div class="fs">
-                                    <a href=""> <i class="fa-brands fa-youtube"></i></a>
+                                    <a href="<?= $operator->youtube_link ?>"> <i class="fa-brands fa-youtube"></i></a>
                                 </div>
                             </div>
                             <div class="websitebtn pt-3">
-                                <a href="">OFFICIAL WEBSITE</a>
+                                <a href="<?= $operator->website ?>">OFFICIAL WEBSITE</a>
                             </div>
 
 
