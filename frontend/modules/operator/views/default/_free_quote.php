@@ -9,14 +9,20 @@ use yii\bootstrap5\ActiveForm;
     <div class="get_free_title">
         <h4>Get a FREE quote</h4>
     </div>
-    <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-
     <div class="getquote_box">
+        <?php $form = ActiveForm::begin([
+            'id' => 'quoteform',
+            'enableAjaxValidation' => true,
+            'enableClientValidation' => false,
+            'enableClientScript' => true,
+            'action' => $model->action_url,
+            'validationUrl' => $model->action_validate_url,
+        ]); ?>
         <div class="row ">
             <div class="col-lg-3">
                 <div class="form-wrapper">
                     <label for="">Safari Park</label>
-                    <?= $form->field($model, 'safari_park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator->id), ['class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
+                    <?= $form->field($model, 'safari_park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator->id), ['prompt' => 'Select', 'class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -24,7 +30,7 @@ use yii\bootstrap5\ActiveForm;
                     <div class="input-group2 mb-3">
                         <label for="safaris">Safaris</label>
                         <div class="number-input position-relative">
-                            <input type="number" id="safaris" value="6" class="form-control">
+                            <?= $form->field($model, 'safaris')->textInput(['class' => 'form-control', 'id' => "safaris", 'value' => 0])->label(false) ?>
                             <div class="bton_updown">
                                 <button onclick="increment('safaris')"><i class="fa-solid fa-chevron-up"></i></button>
                                 <button onclick="decrement('safaris')"><i class="fa-solid fa-chevron-down"></i></button>
@@ -35,9 +41,9 @@ use yii\bootstrap5\ActiveForm;
                     <div class="input-group2">
                         <label for="travelers">Travelers</label>
                         <div class="number-input position-relative">
-                            <input type="number" id="travelers" value="6" class="form-control">
+                            <?= $form->field($model, 'travelers')->textInput(['class' => 'form-control', 'id' => "travelers", 'value' => 0])->label(false) ?>
                             <div class="bton_updown">
-                                <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
+                                <button onclick="increment('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
                                 <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
                             </div>
                         </div>
@@ -49,7 +55,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">Stay Category</label>
-                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::staycategoryoption(), ['class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
+                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::staycategoryoption(), ['prompt' => 'Select', 'class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -79,7 +85,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-3">
                 <div class="form-wrapper mb-3">
                     <label for="">Phone Number</label>
-                    <?= $form->field($model, 'phone_no')->textInput(['class' => 'form-control', 'placeholder' => '+91'])->label(false) ?>
+                    <?= $form->field($model, 'phone_no')->textInput(['class' => 'form-control', 'placeholder' => '0000000000'])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3 margi_top pt-lg-0 pb-3">
@@ -92,7 +98,7 @@ use yii\bootstrap5\ActiveForm;
                 </div>
             </div>
         </div>
+        <?php ActiveForm::end(); ?>
     </div>
-    <?php ActiveForm::end(); ?>
 
 </div>

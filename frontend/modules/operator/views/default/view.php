@@ -990,92 +990,9 @@ $recentposts = ArticleSearch::recentpost();
 
 
 <section class="safariduring_sesons innerpage">
-    <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="col-12">
-                <div class="title_web">
-                    <h2>BEST SAFARIS DURING <br>MONSOON SEASON</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="safari-carousel owl-carousel owl-theme">
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Jim Corbett.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="deer.html">JIM CORBETT</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="deer.html">JIM CORBETT</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in
-                        its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="deer.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Gir.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="deer.html">GIR NATIONAL PARK</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="deer.html">GIR NATIONAL PARK</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in
-                        its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="deer.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Kanha.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="deer.html">KANHA NATIONAL PARK</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="deer.html">KANHA NATIONAL PARK</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in
-                        its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="deer.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarh.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="deer.html">BANDHAVGARH</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="deer.html">BANDHAVGARH</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in
-                        its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="deer.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-        <div class="safari-box">
-            <figure class="image-box"><img src="<?= $this->params['baseurl'] ?>/img/Kaziranga.jpg" alt=""></figure>
-            <div class="content-box">
-                <h3><a href="deer.html">KAZIRANGA</a></h3>
-            </div>
-            <div class="overlay-content d-flex align-items-center justify-content-between">
-                <div class="content_o pe-2">
-                    <h3><a href="deer.html">KAZIRANGA</a></h3>
-                    <p>Gir National Park is the only place in the world outside Africa where a lion can be seen in
-                        its natural
-                        habitat.</p>
-                </div>
-                <div class="link"><a href="deer.html"><i class="fa-solid fa-arrow-right"></i></a></div>
-            </div>
-        </div>
-    </div>
+    <?= $this->render('park_carousel', [
+        'featured_parks' => $featured_parks,
+    ]) ?>
 </section>
 
 

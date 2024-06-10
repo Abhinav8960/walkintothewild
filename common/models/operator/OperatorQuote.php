@@ -2,6 +2,7 @@
 
 namespace common\models\operator;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -25,8 +26,9 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class OperatorQuote extends \yii\db\ActiveRecord
+class OperatorQuote extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -35,6 +37,28 @@ class OperatorQuote extends \yii\db\ActiveRecord
         return 'operator_quote';
     }
 
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+        ];
+    }
     /**
      * {@inheritdoc}
      */

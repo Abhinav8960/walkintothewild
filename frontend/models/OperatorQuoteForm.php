@@ -19,6 +19,16 @@ class OperatorQuoteForm extends Model
     public $full_name;
     public $email;
     public $phone_no;
+    public $safaris;
+    public $travelers;
+    public $status;
+    public $user_agent;
+    public $ip_address;
+    public $os;
+    public $browser;
+    public $device_type;
+    public $action_url;
+    public $action_validate_url;
 
 
     /**
@@ -27,12 +37,13 @@ class OperatorQuoteForm extends Model
     public function rules()
     {
         return [
-            [['safari_park_id'], 'required'],
+            [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'full_name', 'email', 'start_date', 'end_date', 'phone_no'], 'required'],
             [['phone_no'], 'match', 'pattern' => '/^[123456789]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['email'], 'email'],
             [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'status'], 'integer'],
             [['full_name', 'email', 'start_date', 'end_date', 'user_agent'], 'string', 'max' => 255],
             [['phone_no'], 'string', 'max' => 12],
+            [['safaris', 'travelers'], 'number', 'min' => 1],
             [['ip_address'], 'string', 'max' => 45],
         ];
     }
@@ -62,6 +73,7 @@ class OperatorQuoteForm extends Model
         $operator_quote->operator_id = $operator->id;
         $operator_quote->ip_address = Yii::$app->getRequest()->getUserIp();
         $operator_quote->device_type = $agent->device();
+        $operator_quote->user_agent =  Yii::$app->request->userAgent;
         $operator_quote->browser = $agent->browser();
         $operator_quote->os = $agent->platform();
         $operator_quote->status = 1;
