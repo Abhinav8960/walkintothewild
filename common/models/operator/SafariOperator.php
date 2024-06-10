@@ -2,6 +2,7 @@
 
 namespace common\models\operator;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -51,8 +52,9 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class SafariOperator extends \yii\db\ActiveRecord
+class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -125,5 +127,19 @@ class SafariOperator extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+
+    public function getPark()
+    {
+        return $this->hasMany(SafariOperatorPark::className(), ['safari_operator_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
+    }
+
+
+    public function getImagepath()
+    {
+        if ($this->logo != '') {
+            return '/storage/safarioperator/' . $this->safari_operator_request_id . '/' . $this->logo;
+        }
     }
 }

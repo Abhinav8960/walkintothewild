@@ -7,6 +7,7 @@ use common\models\cms\article\Article;
 use common\models\park\SafariPark;
 use common\models\park\SafariParkMonth;
 use common\models\suggestions\form\SafariSuggestionsForm;
+use frontend\models\SafariOperatorSearch;
 use frontend\models\SafariParkSearch;
 use Yii;
 use yii\web\Controller;
@@ -53,8 +54,15 @@ class DefaultController extends Controller
         $searchModel = new SafariParkSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+
+
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($model) {
+            $operatorsearchModel = new SafariOperatorSearch();
+            $operatorsearchModel->park_id = $model->id;
+            $operatordataProvider = $operatorsearchModel->search($this->request->queryParams);
+            $operators = $operatordataProvider->getModels();
+
             $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
             $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
             $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
@@ -101,6 +109,10 @@ class DefaultController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'suggestionmodel' => $suggestionmodel,
+
+                'operatorsearchModel' => $operatorsearchModel,
+                'operatordataProvider' => $operatordataProvider,
+                'operators' => $operators,
             ]
         );
     }

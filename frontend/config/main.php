@@ -93,6 +93,9 @@ return [
 
                 '/article' => '/article/default/index', //article listing url
                 '/article/<slug>' => '/article/default/view', //article view url
+
+
+                '/operator/<id>' => '/operator/default/view', //operator view url
             ],
         ],
 
@@ -104,6 +107,9 @@ return [
         ],
         'article' => [
             'class' => 'frontend\modules\article\Module',
+        ],
+        'operator' => [
+            'class' => 'frontend\modules\operator\Module',
         ],
     ],
     'params' => $params,

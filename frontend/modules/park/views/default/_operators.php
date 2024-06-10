@@ -2,6 +2,9 @@
 
 
 /* @var $this yii\web\View */
+
+use common\models\GeneralModel;
+
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
@@ -126,296 +129,61 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="gridview mt-4">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-5 g-xl-4 gx-lg-4">
-                <div class="col-lg-6 col-xl-3 mb-3">
-                    <div class="listingSafari ">
-                        <div class="higlighted">
-                            <p>Highlighted</p>
-                        </div>
-                        <div class="card-body px-2">
-                            <div class="logo_provide2  p-3 border_bottom2">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                            </div>
-                            <div class="provider_details">
-                                <h6 class="pname py-3">Pugdundee Safaris</h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-
-                                    <div class="ratings">
-                                        <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                <?php if ($operators) {
+                    foreach ($operators as $operator) {
+                ?>
+                        <div class="col-lg-6 col-xl-3 mb-3">
+                            <div class="listingSafari ">
+                                <?php if ($operator->is_highlighted) { ?>
+                                    <div class="higlighted">
+                                        <p>Highlighted</p>
                                     </div>
-                                    <div class="googlerating">
-                                        <p class="mb-0">54 Google Reviews</p>
+                                <?php } ?>
+                                <div class="card-body px-2">
+                                    <div class="logo_provide2  p-3 border_bottom2">
+                                        <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
                                     </div>
-                                </div>
+                                    <div class="provider_details">
+                                        <h6 class="pname py-3"><?= $operator->register_comapany_name ?></h6>
+                                        <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
 
-                            </div>
-                        </div>
-                        <div class="footer_provider ">
-                            <div class="slect_safricound d-flex justify-content-around">
-                                <div class="parks_text text-center">
-                                    <p>6</p>
-                                    <p>Parks</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>7</p>
-                                    <p>Resorts</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>15</p>
-                                    <p>Shared Safari</p>
-                                </div>
-                            </div>
-                            <div class="get_quote text-center">
-                                <a href="tour-oprators.html" class="get_quote_btn">GET A FREE QUOTE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-3 mb-3">
-                    <div class="listingSafari ">
-                        <div class="card-body px-2">
-                            <div class="logo_provide2  p-3 border_bottom2">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                            </div>
-                            <div class="provider_details">
-                                <h6 class="pname py-3">Pugdundee Safaris</h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
+                                            <div class="ratings">
 
-                                    <div class="ratings">
-                                        <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
-                                    </div>
-                                    <div class="googlerating">
-                                        <p class="mb-0">54 Google Reviews</p>
+                                                <p class="mb-0"><?= $operator->google_rating ?>
+                                                    <?= GeneralModel::ratiing_views($operator->google_rating); ?>
+                                                </p>
+                                            </div>
+                                            <div class="googlerating">
+                                                <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Google Reviews' : '0 Google Reviews' ?> </p>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-
-                            </div>
-                        </div>
-                        <div class="footer_provider ">
-                            <div class="slect_safricound d-flex justify-content-around">
-                                <div class="parks_text text-center">
-                                    <p>6</p>
-                                    <p>Parks</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>7</p>
-                                    <p>Resorts</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>15</p>
-                                    <p>Shared Safari</p>
-                                </div>
-                            </div>
-                            <div class="get_quote text-center">
-                                <a href="tour-oprators.html" class="get_quote_btn">GET A FREE QUOTE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-3 mb-3">
-                    <div class="listingSafari ">
-                        <div class="card-body px-2">
-                            <div class="logo_provide2  p-3 border_bottom2">
-                                <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                            </div>
-                            <div class="provider_details">
-                                <h6 class="pname py-3">Pugdundee Safaris</h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-
-                                    <div class="ratings">
-                                        <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                                <div class="footer_provider ">
+                                    <div class="slect_safricound d-flex justify-content-around">
+                                        <div class="parks_text text-center">
+                                            <p><?= count($operator->park) ?></p>
+                                            <p>Parks</p>
+                                        </div>
+                                        <div class="parks_text text-center">
+                                            <p>0</p>
+                                            <p>Resorts</p>
+                                        </div>
+                                        <div class="parks_text text-center">
+                                            <p>0</p>
+                                            <p>Shared Safari</p>
+                                        </div>
                                     </div>
-                                    <div class="googlerating">
-                                        <p class="mb-0">54 Google Reviews</p>
+                                    <div class="get_quote text-center">
+                                        <a href="/operator/<?= $operator->id ?>" class="get_quote_btn">GET A FREE QUOTE</a>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                <?php }
+                } ?>
 
-                            </div>
-                        </div>
-                        <div class="footer_provider ">
-                            <div class="slect_safricound d-flex justify-content-around">
-                                <div class="parks_text text-center">
-                                    <p>6</p>
-                                    <p>Parks</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>7</p>
-                                    <p>Resorts</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>15</p>
-                                    <p>Shared Safari</p>
-                                </div>
-                            </div>
-                            <div class="get_quote text-center">
-                                <a href="tour-oprators.html" class="get_quote_btn">GET A FREE QUOTE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-3 mb-3">
-                    <div class="listingSafari ">
-                        <div class="card-body px-2">
-                            <div class="logo_provide2  p-3 border_bottom2">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                            </div>
-                            <div class="provider_details">
-                                <h6 class="pname py-3">Pugdundee Safaris</h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-
-                                    <div class="ratings">
-                                        <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
-                                    </div>
-                                    <div class="googlerating">
-                                        <p class="mb-0">54 Google Reviews</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="footer_provider ">
-                            <div class="slect_safricound d-flex justify-content-around">
-                                <div class="parks_text text-center">
-                                    <p>6</p>
-                                    <p>Parks</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>7</p>
-                                    <p>Resorts</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>15</p>
-                                    <p>Shared Safari</p>
-                                </div>
-                            </div>
-                            <div class="get_quote text-center">
-                                <a href="tour-oprators.html" class="get_quote_btn">GET A FREE QUOTE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-3 mb-3">
-                    <div class="listingSafari ">
-                        <div class="card-body px-2">
-                            <div class="logo_provide2  p-3 border_bottom2">
-                                <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                            </div>
-                            <div class="provider_details">
-                                <h6 class="pname py-3">Pugdundee Safaris</h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-
-                                    <div class="ratings">
-                                        <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
-                                    </div>
-                                    <div class="googlerating">
-                                        <p class="mb-0">54 Google Reviews</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="footer_provider ">
-                            <div class="slect_safricound d-flex justify-content-around">
-                                <div class="parks_text text-center">
-                                    <p>6</p>
-                                    <p>Parks</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>7</p>
-                                    <p>Resorts</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>15</p>
-                                    <p>Shared Safari</p>
-                                </div>
-                            </div>
-                            <div class="get_quote text-center">
-                                <a href="tour-oprators.html" class="get_quote_btn">GET A FREE QUOTE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-3 mb-3">
-                    <div class="listingSafari ">
-                        <div class="card-body px-2">
-                            <div class="logo_provide2  p-3 border_bottom2">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                            </div>
-                            <div class="provider_details">
-                                <h6 class="pname py-3">Pugdundee Safaris</h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-
-                                    <div class="ratings">
-                                        <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
-                                    </div>
-                                    <div class="googlerating">
-                                        <p class="mb-0">54 Google Reviews</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="footer_provider ">
-                            <div class="slect_safricound d-flex justify-content-around">
-                                <div class="parks_text text-center">
-                                    <p>6</p>
-                                    <p>Parks</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>7</p>
-                                    <p>Resorts</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>15</p>
-                                    <p>Shared Safari</p>
-                                </div>
-                            </div>
-                            <div class="get_quote text-center">
-                                <a href="tour-oprators.html" class="get_quote_btn">GET A FREE QUOTE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xl-3 mb-3">
-                    <div class="listingSafari ">
-                        <div class="card-body px-2">
-                            <div class="logo_provide2  p-3 border_bottom2">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                            </div>
-                            <div class="provider_details">
-                                <h6 class="pname py-3">Pugdundee Safaris</h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-
-                                    <div class="ratings">
-                                        <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
-                                    </div>
-                                    <div class="googlerating">
-                                        <p class="mb-0">54 Google Reviews</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="footer_provider ">
-                            <div class="slect_safricound d-flex justify-content-around">
-                                <div class="parks_text text-center">
-                                    <p>6</p>
-                                    <p>Parks</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>7</p>
-                                    <p>Resorts</p>
-                                </div>
-                                <div class="parks_text text-center">
-                                    <p>15</p>
-                                    <p>Shared Safari</p>
-                                </div>
-                            </div>
-                            <div class="get_quote text-center">
-                                <a href="tour-oprators.html" class="get_quote_btn">GET A FREE QUOTE</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
