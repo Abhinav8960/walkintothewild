@@ -26,13 +26,13 @@ $this->params['title'] = $this->title;
             <div class="col-md-10">
                 <div class="text-box">
                     <p>
-                        <span>Type: </span><?= $model->type ?>
+                        <span>Type: </span><?= isset($model->termsconditiontype) ? $model->termsconditiontype->title : ''; ?>
                     </p>
-                    
+
                     <p>
                         <span>Module Description: </span><?= $model->description ?>
                     </p>
-                    
+
                 </div>
             </div>
         </div>

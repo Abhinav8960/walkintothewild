@@ -2,6 +2,7 @@
 
 namespace common\models\cms\termscondition;
 
+use common\models\meta\MetaTermConditionType;
 use common\traits\CommanRelationship;
 use Yii;
 
@@ -39,7 +40,7 @@ class Termscondition extends \yii\db\ActiveRecord implements \common\interfaces\
             [['status'], 'integer'],
             [['type'], 'string', 'max' => 251],
             [['description'], 'safe'],
-            
+
         ];
     }
 
@@ -55,4 +56,8 @@ class Termscondition extends \yii\db\ActiveRecord implements \common\interfaces\
         ];
     }
 
+    public function getTermsconditiontype()
+    {
+        return $this->hasOne(MetaTermConditionType::className(), ['id' => 'type']);
+    }
 }

@@ -46,7 +46,7 @@ class MasterVehicleForm extends model
     public function rules()
     {
         return [
-            [['vehicle_name', 'icon'], 'required'],
+            [['vehicle_name'], 'required'],
             [['status'], 'integer'],
             [['vehicle_name'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],

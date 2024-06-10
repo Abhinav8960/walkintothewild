@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
     <div class="col-lg-10 col-xl-11">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'North india, South...', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'Select Location', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Location</p>
                 </div>
@@ -29,7 +29,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'month_id')->dropDownList(GeneralModel::monthoption(), ['prompt' => 'May,june,July..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'month_id')->dropDownList(GeneralModel::monthoption(), ['prompt' => 'Select Months', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Month</p>
                 </div>
@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animalfilteroption(), ['prompt' => 'Tiger Elephent..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animalfilteroption(), ['prompt' => 'Select Animal', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Animal</p>
                 </div>
@@ -47,7 +47,7 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Gypsy,Bus...', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select Vehicel', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Vehicel</p>
                 </div>
