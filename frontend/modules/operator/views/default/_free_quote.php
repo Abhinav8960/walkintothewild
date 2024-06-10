@@ -1,5 +1,7 @@
 <?php
 
+use common\models\GeneralModel;
+use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 ?>
@@ -14,12 +16,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-3">
                 <div class="form-wrapper">
                     <label for="">Safari Park</label>
-                    <select class="form-select mb-3" aria-label="Default select example">
-                        <option selected="">Jim Corbett</option>
-                        <option value="1">January</option>
-                        <option value="2">Febraury</option>
-                        <option value="3">March</option>
-                    </select>
+                    <?= $form->field($model, 'safari_park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator->id), ['class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -52,46 +49,41 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">Stay Category</label>
-                    <select class="form-select mb-3" aria-label="Default select example">
-                        <option selected="">Standard</option>
-                        <option value="1">January</option>
-                        <option value="2">Febraury</option>
-                        <option value="3">March</option>
-                    </select>
+                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::staycategoryoption(), ['class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">Start Date</label>
-                    <input type="text" class="form-control">
+                    <?= $form->field($model, 'start_date')->textInput(['class' => 'form-control'])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">End Date</label>
-                    <input type="text" class="form-control">
+                    <?= $form->field($model, 'end_date')->textInput(['class' => 'form-control'])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="form-wrapper mb-3">
                     <label for="">Full Name</label>
-                    <input type="text" class="form-control" placeholder="Your name">
+                    <?= $form->field($model, 'full_name')->textInput(['class' => 'form-control', 'placeholder' => 'Your name'])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="form-wrapper mb-3">
                     <label for="">Email Address</label>
-                    <input type="text" class="form-control" placeholder="xyz@abc.com">
+                    <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => 'xyz@abc.com'])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="form-wrapper mb-3">
-                    <label for="">Email Address</label>
-                    <input type="text" class="form-control" placeholder="+91">
+                    <label for="">Phone Number</label>
+                    <?= $form->field($model, 'phone_no')->textInput(['class' => 'form-control', 'placeholder' => '+91'])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3 margi_top pt-lg-0 pb-3">
-                <button class="sent_btn">Send Request</button>
+                <?= Html::submitButton('Send Request', ['class' => 'sent_btn']) ?>
             </div>
             <div class="col-12">
                 <div class="text_get">

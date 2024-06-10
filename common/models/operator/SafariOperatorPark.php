@@ -2,6 +2,7 @@
 
 namespace common\models\operator;
 
+use common\models\park\SafariPark;
 use Yii;
 
 /**
@@ -69,5 +70,10 @@ class SafariOperatorPark extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'created_by' => 'Created By',
         ];
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id'])->andWhere(['safari_park.status' => 1]);
     }
 }

@@ -12,7 +12,13 @@ use yii\base\Model;
  */
 class OperatorQuoteForm extends Model
 {
-    public $comment;
+    public $safari_park_id;
+    public $stay_category_id;
+    public $start_date;
+    public $end_date;
+    public $full_name;
+    public $email;
+    public $phone_no;
 
 
     /**
@@ -24,7 +30,7 @@ class OperatorQuoteForm extends Model
             [['safari_park_id'], 'required'],
             [['phone_no'], 'match', 'pattern' => '/^[123456789]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['email'], 'email'],
-            [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['safari_park_id', 'safaris', 'travelers', 'stay_category_id', 'status'], 'integer'],
             [['full_name', 'email', 'start_date', 'end_date', 'user_agent'], 'string', 'max' => 255],
             [['phone_no'], 'string', 'max' => 12],
             [['ip_address'], 'string', 'max' => 45],

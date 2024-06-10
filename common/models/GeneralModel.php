@@ -30,7 +30,9 @@ use common\models\meta\MetaOperatorCategory;
 use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\meta\MetaPackageRange;
 use common\models\meta\MetaSafariSession;
+use common\models\meta\MetaStayCategory;
 use common\models\meta\MetaZoneType;
+use common\models\operator\SafariOperatorPark;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
 use common\models\park\SafariPark;
@@ -255,6 +257,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function safarisessionoption()
     {
         return ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+
+    public static function staycategoryoption()
+    {
+        return ArrayHelper::map(MetaStayCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function accomodationoption()
@@ -552,5 +560,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $substring = implode(' ', $limited_words);
 
         return $substring;
+    }
+
+    public static function operatorsafariparkoption($operator_id)
+    {
+        $operator_safari_park = [];
+        $operatorsafariparkData = SafariOperatorPark::find()->where(['safari_operator_id' => $operator_id, 'status' => 1])->all();
+        if (count($operatorsafariparkData) >= 1) {
+
+            foreach ($operatorsafariparkData as $operatorsafaripark) {
+                $operator_safari_park[] = $operatorsafaripark->park_id;
+            }
+        }
+        $safariparkList =  SafariPark::find()->where(['in', 'id', $operator_safari_park]);
+        return ArrayHelper::map($safariparkList->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }
