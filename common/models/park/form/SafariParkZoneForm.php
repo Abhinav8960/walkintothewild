@@ -55,7 +55,7 @@ class SafariParkZoneForm extends model
     public function rules()
     {
         return [
-            [['master_zone_type_id', 'zone_name', 'entry_gate_name', 'entry_gate_latitude', 'entry_gate_longitude'], 'required'],
+            [['master_zone_type_id', 'zone_name', 'entry_gate_name'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['safari_park_id', 'master_zone_type_id', 'status'], 'integer'],
             [['zone_name', 'entry_gate_name'], 'string', 'max' => 255],

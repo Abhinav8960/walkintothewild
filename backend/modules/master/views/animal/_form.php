@@ -34,7 +34,7 @@ use yii\bootstrap5\ActiveForm;
     <?php
     if ($model->animal_model->image) { ?>
         <div class="col-md-5">
-            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 350px * 350px / 250kb)') ?>
+            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 285px * 285px / 250kb)') ?>
         </div>
 
         <div class="col-md-1">
@@ -42,7 +42,7 @@ use yii\bootstrap5\ActiveForm;
         </div>
     <?php } else { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 350px * 350px / 250kb)') ?>
+            <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 285px * 285px / 250kb)') ?>
         </div>
     <?php  } ?>
 

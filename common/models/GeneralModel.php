@@ -30,6 +30,7 @@ use common\models\meta\MetaOperatorCategory;
 use common\models\meta\MetaOtherWildlifeActivities;
 use common\models\meta\MetaPackageRange;
 use common\models\meta\MetaSafariSession;
+use common\models\meta\MetaTermConditionType;
 use common\models\meta\MetaZoneType;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
@@ -552,5 +553,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $substring = implode(' ', $limited_words);
 
         return $substring;
+    }
+    public static function termconditionoption()
+    {
+        return ArrayHelper::map(MetaTermConditionType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 }
