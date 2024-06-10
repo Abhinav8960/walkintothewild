@@ -15,8 +15,8 @@ use common\models\GeneralModel;
         'template' => '{input}{error}',
     ],
 ]); ?>
-<div class="row gx-0">
-    <div class="col-lg-10 col-xl-11">
+<div class="row gx-0 justify-content-center">
+    <div class="col-lg-10 col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'North india, South...', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
@@ -76,6 +76,16 @@ use common\models\GeneralModel;
                     </div>
                 </div>
             </div>
+            <div class="d-lg-none d-block">
+                <div class="row gx-0 justify-content-center ">
+                    <div class="col-xl-3">
+                        <div class="toogle_icon mt-2">
+                            <a href="javascript:void(0)" id="toggleButtonMobile"><i class="fa-solid fa-chevron-down"></i> Advance Search</a>
+                        </div>
+                    </div>
+                    <div class="col-xl-8"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-lg-2 col-xl-1">
@@ -85,8 +95,17 @@ use common\models\GeneralModel;
             </div>
         </div>
     </div>
+
 </div>
+
 <?php ActiveForm::end(); ?>
-<div class="toogle_icon mt-2">
-    <button id="toggleButton"><i class="fa-solid fa-chevron-down"></i> Advance Search</button>
+<div class="d-lg-block d-none">
+    <div class="row gx-0 justify-content-center ">
+        <div class="col-xl-3">
+            <div class="toogle_icon mt-2">
+                <button id="toggleButton"><i class="fa-solid fa-chevron-down"></i> Advance Search</button>
+            </div>
+        </div>
+        <div class="col-xl-8"></div>
+    </div>
 </div>

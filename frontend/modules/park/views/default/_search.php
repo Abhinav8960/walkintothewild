@@ -16,8 +16,8 @@ use yii\widgets\ActiveForm;
         'template' => '{input}{error}',
     ],
 ]); ?>
-<div class="row gx-0">
-    <div class="col-lg-10 col-xl-11">
+<div class="row gx-0 justify-content-center">
+    <div class="col-lg-10 col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'Select Location', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>

@@ -28,10 +28,10 @@ if ($rare_exotics) {
                     <div class="safariBox">
                         <div class="container">
                             <div class="row align-items-center ">
-                                <div class="col-lg-6 col-md-5 text-center position-relative">
+                                <div class="col-lg-6 col-md-5 col-4 text-center position-relative">
                                     <img src="<?= isset($animal->image) ? $animal->imagepath : $this->params['baseurl'] . '/img/brownbear.png' ?>" alt="" class="imag_width position-relative">
                                 </div>
-                                <div class="col-lg-6 col-md-7">
+                                <div class="col-lg-6 col-md-7 col-8">
                                     <div class="safari_content">
                                         <h5><?= $animal->name ?></h5>
                                         <p><?= $animal->short_description ?></p>
