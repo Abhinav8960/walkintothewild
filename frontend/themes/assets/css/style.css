@@ -1717,7 +1717,7 @@ figure {
     -ms-flex-pack: center;
     justify-content: center;
     text-align: center;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 5px 0px 0px 5px;
 
 }
 
@@ -1728,10 +1728,44 @@ figure {
     margin-bottom: 0;
 }
 
+.tabledesigncore table td{
+
+position: relative;
+}
+
+.tabledesigncore table td:after {
+    content: "";
+    width: 1px;
+    position: absolute;
+    right: 0;
+    top: 8px;
+    bottom: 8px;
+    background-color: #eee;
+}
+
+.tabledesigncore table thead tr{
+
+    padding-top: 0px;
+    display: flex;
+    width: 100%;
+}
+.tabledesigncore table tbody tr {
+
+    padding-top: 6px;
+    display: flex;
+    width: 100%;
+}
+
+.tabledesigncore table td:last-child::after{
+
+    background-color: transparent
+}
+
 .tabledesigncore table tr th {
     background-color: var(--background-primary);
     color: var(--colorwhite);
     text-align: center;
+    width: 100%;
 }
 
 .tabledesigncore table tr td {
@@ -1739,9 +1773,18 @@ figure {
     background-color: #127729;
     color: var(--colorwhite);
     text-align: center;
-    padding: 10px 0px;
+    padding: 7px 0px;
+    width: 100%;
 }
 
+.tabledesigncore table thead tr th:last-child{
+
+    border-radius: 0px 5px 0px 0px;
+}
+.tabledesigncore table tbody tr:last-child td:last-child{
+
+    border-radius: 0px 0px 5px 0px;
+}
 .bufferzone {
     background-color: #755C30;
     padding: 30px;
@@ -1755,7 +1798,7 @@ figure {
     -ms-flex-pack: center;
     justify-content: center;
     text-align: center;
-    border-radius: 10px 0px 0px 10px;
+    border-radius: 5px 0px 0px 5px;
 }
 
 .bufferzone h3 {
@@ -1769,6 +1812,7 @@ figure {
     background-color: #755C30;
     color: var(--colorwhite);
     text-align: center;
+    width: 100%;
 }
 
 .tabledesignbuffer table tr td {
@@ -1776,8 +1820,53 @@ figure {
     background-color: #EABC74;
     color: var(--colorBlack);
     text-align: center;
-    padding: 10px 0px;
+    padding: 7px 0px;
+    width: 100%;
 }
+
+.tabledesignbuffer table thead tr{
+
+    padding-top: 0px;
+    display: flex;
+    width: 100%;
+}
+.tabledesignbuffer table tbody tr {
+
+    padding-top: 6px;
+    display: flex;
+    width: 100%;
+}
+.tabledesignbuffer table td{
+
+    position: relative;
+    }
+    
+    .tabledesignbuffer table td:after {
+        content: "";
+        width: 1px;
+        position: absolute;
+        right: 0;
+        top: 8px;
+        bottom: 8px;
+        background-color: #eee;
+    }
+
+    
+    .tabledesignbuffer table td:last-child::after{
+    
+        background-color: transparent
+    }
+
+    
+
+    .tabledesignbuffer table thead tr th:last-child{
+    
+        border-radius: 0px 5px 0px 0px;
+    }
+    .tabledesignbuffer table tbody tr:last-child td:last-child{
+    
+        border-radius: 0px 0px 5px 0px;
+    }
 
 .listingSafari {
 
@@ -3276,5 +3365,15 @@ text-transform: capitalize;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.safridetails_form .iconImg{
+
+    width: 19px;
+    /* height: 19px; */
+}
+.safridetails_form .iconImg img{
+
+    width: 100%;
+    height: 100%
 }
 /* footer css end */
