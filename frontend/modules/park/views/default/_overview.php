@@ -17,8 +17,8 @@
                     </div>
                 <?php } ?>
             </div>
-            <div class="col-lg-12 col-xl-9">
-                <div class="safrititles pt-lg-0 pt-3 d-sm-flex justify-content-between align-items-center">
+            <div class="col-lg-12 col-xl-9 position-relative">
+                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
                     <h5 class=""><a href=""><?= $model->title ?></a></h5>
                     <div class="btn_wrap pt-md-0 pt-3">
                         <?php if ($model->official_website) { ?>
@@ -29,7 +29,7 @@
                 <div class="seelctes_text pt-3 pb-4 border_bottom2">
                     <p><?= $model->long_description ?></p>
                 </div>
-                <div class="row pt-3">
+                <div class="row pt-3 desktop_postion">
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
