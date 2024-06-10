@@ -13,10 +13,13 @@ use yii\bootstrap5\ActiveForm;
 <h5>Basic Detail</h5>
 <div class="row">
     <div class="col-md-6">
-        <?= $form->field($model, 'type')->textInput(['maxlength' => true, 'placeholder' => 'Enter Type']) ?>
+        <?= $form->field($model, 'type', ['inputOptions' => ['id' => 'type']])->dropDownList(
+            GeneralModel::termconditionoption(),
+            ['prompt' => 'Select Type',]
+        ); ?>
     </div>
 
-    
+
 
     <div class="col-md-12">
         <?= $form->field($model, 'description')->widget(CKEditor::className(), [

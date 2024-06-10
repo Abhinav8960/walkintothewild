@@ -15,16 +15,17 @@ $this->params['breadcrumbs_home_url'] = '/cms/termscondition';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-//$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 
 
 ?>
 <div class="card">
 
     <div class="card-body">
-        <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php //echo $this->render('_search', ['model' => $searchModel]); 
+        ?>
         <div id="w1-button" class="mb-3"></div>
-<h6>List of TERMS & CONDITIONS</h6>
+        <h6>List of TERMS & CONDITIONS</h6>
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
@@ -35,9 +36,11 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->type;
+                            // return $model->type;
+                            return isset($model->termsconditiontype) ? $model->termsconditiontype->title : '';
                         }
                     ],
+
                     [
                         'label' => 'Module Description',
                         'contentOptions' => ['style' => 'width: 65%;'],
