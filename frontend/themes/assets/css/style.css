@@ -707,6 +707,12 @@ a {
     padding: 40px 20px;
     background: var(--colorwhite);
 }
+.seemoreBtn{
+
+    color:#F7BF39;
+    font-weight: 500;
+    font-size: 15px;
+}
 
 .images_tour img {
 
