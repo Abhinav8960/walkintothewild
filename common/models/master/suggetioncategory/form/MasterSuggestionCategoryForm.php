@@ -42,7 +42,14 @@ class MasterSuggestionCategoryForm extends model
             [['status'], 'integer'],
             [['title'], 'string', 'max' => 125],
             [['status'], 'default', 'value' => 1],
-
+            [
+                ['title'], 'unique', 'targetClass' => MasterSuggestionCategory::className(), 'message' => 'This title has already been taken.',
+                'filter' => function ($query) {
+                    if (!$this->suggestion_category_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->suggestion_category_model->id]]);
+                    }
+                }
+            ],
         ];
     }
 

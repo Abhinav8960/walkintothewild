@@ -57,13 +57,13 @@ class MasterCityForm extends model
             [['status'], 'default', 'value' => 1],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             [
-                'city_name', 'unique', 'when' => function ($model, $attribute) {
-                    return strtolower($this->city_model->$attribute) != strtolower($model->$attribute);
-                },
-                'targetClass' => MasterCity::className(), 'targetAttribute' => ['state_id', 'city_name'],
-                'message' => 'This City has already been taken'
+                ['city_name'], 'unique', 'targetClass' => MasterCity::className(), 'targetAttribute' => ['city_name', 'state_id', 'country_id'],  'message' => 'The combination of City Name, State, and Country must be unique.',
+                'filter' => function ($query) {
+                    if (!$this->city_model->isNewRecord) {
+                        $query->andWhere(['not', ['id' => $this->city_model->id]]);
+                    }
+                }
             ],
-
         ];
     }
 
