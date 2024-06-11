@@ -90,7 +90,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="row">
                                     <div class="col-xl-3 col-lg-12">
                                         <div class="Slider_safariimg3 h-100">
-                                            <img src="<?= isset($model->galleryimag) ? $model->galleryimag->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                            <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-xl-9">

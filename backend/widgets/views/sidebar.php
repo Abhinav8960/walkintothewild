@@ -26,7 +26,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 					<li class="slide <?= in_array($active_url, array(
 											"/master",
+											"/master/rare-animal/index",
+											"/master/rare-animal/create",
+											"/master/rare-animal/update",
+											"/master/rare-animal/view",
 											"/master/animal/index",
+											"/master/animal/create",
+											"/master/animal/update",
 											"/master/bird/index",
 											"/master/vehicle/index",
 											"/master/state/index",
@@ -44,7 +50,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/master",
+														"/master/rare-animal/index",
+														"/master/rare-animal/create",
+														"/master/rare-animal/update",
+														"/master/rare-animal/view",
 														"/master/animal/index",
+														"/master/animal/create",
+														"/master/animal/update",
 														"/master/bird/index",
 														"/master/vehicle/index",
 														"/master/country/index",
@@ -61,7 +73,50 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/master/animal/index")) ? "active" : "" ?>" href="/master/animal/index">Animal</a></li>
+
+							<li class="sub-slide <?= in_array($active_url, array(
+														"/cms",
+														"/master/animal/index",
+														"/master/animal/create",
+														"/master/animal/update",
+														"/master/rare-animal/index",
+														"/master/rare-animal/create",
+														"/master/rare-animal/update",
+													)) ? "is-expanded" : "" ?>">
+								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Animal</span><i class="sub-angle fe fe-chevron-right"></i></a>
+								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																"/cms",
+																"/master/animal/index",
+																"/master/animal/create",
+																"/master/animal/update",
+																"/master/rare-animal/index",
+																"/master/rare-animal/create",
+																"/master/rare-animal/update",
+															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																							"/cms",
+																							"/master/animal/index",
+																							"/master/animal/create",
+																							"/master/animal/update",
+																							"/master/rare-animal/index",
+																							"/master/rare-animal/create",
+																							"/master/rare-animal/update",
+																						)) ? "display: block;" : "display: none;" ?>">
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/master/rare-animal/index",
+																			"/master/rare-animal/create",
+																			"/master/rare-animal/update",
+																			"/master/rare-animal/view",
+																		)) ? "active" : "" ?>" href="/master/rare-animal/index">Rare and Exotic</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/master/animal/index",
+																			"/master/animal/create",
+																			"/master/animal/update",
+																		)) ? "active" : "" ?>" href="/master/animal/index">Usual</a></li>
+									<!-- <li><a class="sub-side-menu__item <?php // in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" 
+																			?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
+								</ul>
+							</li>
+
 							<li><a class="slide-item <?= in_array($active_url, array("/master/bird/index")) ? "active" : "" ?>" href="/master/bird/index">Bird</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle/index")) ? "active" : "" ?>" href="/master/vehicle/index">Vehicle</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/location/index")) ? "active" : "" ?>" href="/master/location/index">Location</a></li>
@@ -435,7 +490,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-park/index")) ? "active" : "" ?>" href="/cms/feature-park/index">Park</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-rare-exotic/index")) ? "active" : "" ?>" href="/cms/feature-rare-exotic/index">RARE AND EXOTIC</a></li>
-									<!-- <li><a class="sub-side-menu__item <?php // in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" ?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
+									<!-- <li><a class="sub-side-menu__item <?php // in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" 
+																			?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(

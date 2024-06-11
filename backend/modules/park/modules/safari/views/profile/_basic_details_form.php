@@ -20,7 +20,7 @@ use yii\bootstrap5\ActiveForm;
 
 
             <div class="col-md-12">
-                <?= $form->field($model, 'short_description')->textarea(['maxlength' => true, 'placeholder' => 'Enter short description']) ?>
+                <?= $form->field($model, 'short_description')->textarea(['maxlength' => true, 'placeholder' => 'Enter featured description']) ?>
             </div>
 
             <div class="col-md-12">
@@ -111,6 +111,14 @@ use yii\bootstrap5\ActiveForm;
                 ]) ?>
             </div>
             <div class="col-md-3 select_width">
+                <?= $form->field($model, 'master_rare_animal_id')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::rareanimaloption(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select Rare Animal', 'multiple' => true],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]) ?>
             </div>
             <div class="col-md-6">
                 <?= $form->field($model, 'animal_text')->textarea(['maxlength' => true, 'placeholder' => 'Enter Animals']) ?>

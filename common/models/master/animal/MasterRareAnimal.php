@@ -2,25 +2,25 @@
 
 namespace common\models\master\animal;
 
-use common\models\meta\MetaAnimalType;
 use common\traits\CommanRelationship;
 use Yii;
 
 /**
- * This is the model class for table "master_animal".
+ * This is the model class for table "master_rare_animal".
  *
  * @property int $id
- * @property string $name
- * @property string $slug
+ * @property string|null $animal_name
+ * @property string|null $banner
+ * @property string|null $feature_image
  * @property string|null $know_as
- * @property string|null $image
+ * @property string|null $short_description
  * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property int $created_by
- * @property int $updated_by
+ * @property int|null $created_at
+ * @property int|null $updated_at
+ * @property int|null $created_by
+ * @property int|null $updated_by
  */
-class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterRareAnimal extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
     /**
@@ -28,9 +28,8 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
      */
     public static function tableName()
     {
-        return 'master_animal';
+        return 'master_rare_animal';
     }
-
 
 
     /**
@@ -52,18 +51,6 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
                     return time();
                 },
             ],
-            'slug' => [
-                'class' => 'skeeks\yii2\slug\SlugBehavior',
-                'slugAttribute' => 'slug', //The attribute to be generated
-                'attribute' => 'name', //The attribute from which will be generated
-                'maxLength' => 255,
-                'ensureUnique' => true,
-                'slugifyOptions' => [
-                    'lowercase' => true,
-                    'separator' => '-',
-                    'trim' => true
-                ]
-            ]
         ];
     }
 
@@ -73,10 +60,9 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['status', 'is_filter', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug'], 'string', 'max' => 125],
-            [['slug'], 'unique'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['animal_name', 'banner', 'feature_image', 'know_as'], 'string', 'max' => 255],
+            [['short_description'], 'string', 'max' => 512],
         ];
     }
 
@@ -87,13 +73,30 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'slug' => 'Slug',
+            'animal_name' => 'Animal Name',
+            'banner' => 'Banner',
+            'feature_image' => 'Feature Image',
+            'know_as' => 'Know As',
+            'short_description' => 'Short Description',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getImagepath()
+    {
+        if ($this->feature_image != '') {
+            return '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
+        }
+    }
+
+    public function getBannerimagepath()
+    {
+        if ($this->banner != '') {
+            return '/storage/rareanimal/' . $this->id . '/' . $this->banner;
+        }
     }
 }

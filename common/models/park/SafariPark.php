@@ -183,6 +183,12 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return $this->hasMany(SafariParkAnimal::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_animal.status' => 1]);
     }
 
+
+    public function getRareanimals()
+    {
+        return $this->hasMany(SafariParkRareAnimal::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_rare_animal.status' => 1]);
+    }
+
     public function getSessions()
     {
         return $this->hasMany(SafariParkSession::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_session.status' => 1]);

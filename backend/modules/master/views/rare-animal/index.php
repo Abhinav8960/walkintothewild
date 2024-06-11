@@ -9,8 +9,8 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Animal';
-$this->params['breadcrumbs_home_url'] = '/master/animal';
+$this->title = 'Rare Animal';
+$this->params['breadcrumbs_home_url'] = '/master/rare-animal';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -30,15 +30,25 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 //'layout' => '{items}',
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'name',
+                    'animal_name',
                     [
-                        'label' => 'Is Filter',
+                        'label' => 'Know As',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->is_filter) ? GeneralModel::yesnooption()[$model->is_filter] : '';
+                            return $model->know_as;
                         }
                     ],
+                    [
+                        'attribute' => 'Feature Image',
+                        'format' => 'html',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Image',
+                        'value' => function ($model) {
+                            return Html::img($model->imagepath, ['alt' => 'Animal Photograph', 'style' => 'max-width:60px;']);
+                        }
+                    ],
+
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [
@@ -55,6 +65,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                ', ['view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
+
+                                ]);
+                            },
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
@@ -69,7 +87,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->animal_name . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

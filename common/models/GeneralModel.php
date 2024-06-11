@@ -11,6 +11,7 @@ use common\models\cms\faqcategory\Faq;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
+use common\models\master\animal\MasterRareAnimal;
 use common\models\master\bird\MasterBird;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
@@ -223,6 +224,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function vehicleoption()
     {
         return ArrayHelper::map(MasterVehicle::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['vehicle_name' => SORT_ASC])->all(), 'id', 'vehicle_name');
+    }
+
+    public static function rareanimaloption()
+    {
+        return ArrayHelper::map(MasterRareAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['animal_name' => SORT_ASC])->all(), 'id', 'animal_name');
     }
 
     public static function animaloption()
@@ -454,8 +460,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         $query = SafariPark::find()->where(['safari_park.status' => Park::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC]);
 
-        $query->joinwith(['animals' => function ($query) {
-            $query->andFilterWhere(['safari_parks_animal.animal_type_id' => 2]);
+        $query->joinwith(['rareanimals' => function ($query) {
+            $query->andFilterWhere(['safari_park_rare_animal.status' => 1]);
         }]);
         $parks = $query->all();
         $result = ArrayHelper::map($parks, 'id', 'title');

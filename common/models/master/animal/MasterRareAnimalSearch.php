@@ -4,12 +4,11 @@ namespace common\models\master\animal;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\animal\MasterAnimal;
 
 /**
- * MasterAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
+ * MasterRareAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterRareAnimal`.
  */
-class MasterAnimalSearch extends MasterAnimal
+class MasterRareAnimalSearch extends MasterRareAnimal
 {
     /**
      * {@inheritdoc}
@@ -17,8 +16,9 @@ class MasterAnimalSearch extends MasterAnimal
     public function rules()
     {
         return [
-            [['status', 'is_filter', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug'], 'string', 'max' => 125],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['animal_name', 'banner', 'feature_image', 'know_as'], 'string', 'max' => 255],
+            [['short_description'], 'string', 'max' => 512],
         ];
     }
 
@@ -40,7 +40,7 @@ class MasterAnimalSearch extends MasterAnimal
      */
     public function search($params)
     {
-        $query = MasterAnimal::find()->where(['status' => [1, 2]]);
+        $query = MasterRareAnimal::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -59,8 +59,9 @@ class MasterAnimalSearch extends MasterAnimal
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'slug' => $this->slug,
-            'is_filter' => $this->is_filter,
+            'know_as' => $this->know_as,
+            'feature_image' => $this->feature_image,
+            'banner' => $this->banner,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
@@ -68,7 +69,7 @@ class MasterAnimalSearch extends MasterAnimal
             'status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'animal_name', $this->animal_name]);
 
         return $dataProvider;
     }
