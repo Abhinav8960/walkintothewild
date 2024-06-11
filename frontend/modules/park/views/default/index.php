@@ -60,8 +60,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <div class="container-lg ">
      
 <div class="row justify-content-center">
-        <div class="col-xl-11">
-            <div class="sharesafribg home">
+        <div class="col-xl-11 px-md-1 px-0">
+            <div class="sharesafribg home px-lg-0 px-2">
                 <div class="safarishareBox py-3">
                     <div class="row justify-content-center">
                         <div class="col-xxl-8 col-lg-12 col-xl-8">
@@ -75,7 +75,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                     </div>
                     <div class="row pt-4 justify-content-center gx-5">
-                        <div class="col-lg-4  col-xxl-3 col-md-6 mb-4">
+                        <div class="col-lg-4  col-xxl-3 col-md-5 mb-4 px-lg-3 ">
                             <div class="sharesafri-card">
                                 <div class="flotingdate">
                                     <div class="icons text-center">
@@ -127,7 +127,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4  col-xxl-3 col-md-6 mb-4">
+                        <div class="col-lg-4  col-xxl-3 col-md-5 mb-4 px-lg-3">
                             <div class="sharesafri-card">
                                 <div class="flotingdate">
                                     <div class="icons text-center">

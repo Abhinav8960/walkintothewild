@@ -8,6 +8,11 @@ use yii\bootstrap5\ActiveForm;
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirport $model */
 /** @var yii\widgets\ActiveForm $form */
+
+if (!isset($model->country_id)) {
+    $model->country_id = 1;
+}
+
 ?>
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 

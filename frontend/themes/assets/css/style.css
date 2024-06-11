@@ -371,7 +371,7 @@ a {
 
     border: 1px solid #0000004D;
     padding: 20px;
-    background-color: var(--colorwhite);
+    background-color:#F5F5F5;
     border-radius: 4px;
     color: var(--background-primary);
 }
@@ -930,6 +930,8 @@ figure {
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
     border-radius: 10px 10px 0px 0px;
+    height: 360px;
+    object-fit: cover;
 }
 
 .artical_cards:hover .image-box .image img {
@@ -1020,7 +1022,7 @@ figure {
 .artical_cards .lower-content h3 {
     position: relative;
     display: block;
-    font-size: var(--fs-23);
+    font-size: var(--fs-20);
     padding-top: 10px;
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -1251,13 +1253,13 @@ figure {
 
 .posttitles h6 a {
 
-    font-size: var(--fs-18);
+    font-size: var(--fs-14);
     color: var(--colorBlack);
 }
 
 .recent-posts .artical-info i {
 
-    font-size: var(--fs-20);
+    font-size: var(--fs-18);
     color: var(--background-yellow);
 }
 
@@ -1265,6 +1267,7 @@ figure {
 
     color: #9C9C9C;
     font-family: "Roboto", sans-serif !important;
+    font-size: 13px;
 }
 
 .topics_box {
