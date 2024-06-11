@@ -43,7 +43,7 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
                 <div class="advertisment ">
-                    <p class="text-center">ADVERTISMENT</p>
+                    <p class="text-center">ADVERTISMENT 33</p>
                     <div class="advertisment_box">
 
                     </div>
