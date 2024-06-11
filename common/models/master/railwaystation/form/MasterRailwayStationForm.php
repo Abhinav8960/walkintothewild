@@ -62,7 +62,7 @@ class MasterRailwayStationForm extends model
             [['station_code'], 'string', 'max' => 20],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
             [
-                ['title'], 'unique', 'targetClass' => MasterRailwayStation::className(), 'message' => 'This title has already been taken.',
+                ['title'], 'unique', 'targetClass' => MasterRailwayStation::className(), 'targetAttribute' => ['title', 'city_id', 'state_id', 'country_id'],  'message' => 'The combination of Title, City, State, and Country must be unique.',
                 'filter' => function ($query) {
                     if (!$this->railway_station_model->isNewRecord) {
                         $query->andWhere(['not', ['id' => $this->railway_station_model->id]]);
