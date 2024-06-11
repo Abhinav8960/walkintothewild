@@ -91,6 +91,14 @@
         height: 280px;
      
     }
+    .artical_cards .link a{
+
+        width: 37px;
+    height: 37px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 15px;
+    }
 }
 
 
