@@ -34,6 +34,7 @@ use common\models\meta\MetaSafariSession;
 use common\models\meta\MetaStayCategory;
 use common\models\meta\MetaTermConditionType;
 use common\models\meta\MetaZoneType;
+use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
@@ -364,6 +365,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $result = ArrayHelper::map($parks, 'id', 'title');
         return $result;
         // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function safariparkoperatoroption()
+    {
+        return ArrayHelper::map(SafariOperator::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['register_comapany_name' => SORT_ASC])->all(), 'id', 'register_comapany_name');
     }
 
     public static function getAllRailwayStation()

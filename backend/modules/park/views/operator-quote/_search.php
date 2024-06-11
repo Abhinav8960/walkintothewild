@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\park\ParkGallerySearch $model */
+/** @var common\models\master\airport\MasterAirportSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -22,7 +22,13 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
-        <?= $form->field($model, 'image_caption')->textInput(['placeholder' => 'Search by Image Caption'])->label(false) ?>
+        <?= $form->field($model, 'full_name')->textInput(['placeholder' => 'Search by Full Name'])->label(false) ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'safari_park_id')->dropDownList(
+            GeneralModel::safariparkoption(),
+            ['prompt' => 'Select Safari Park']
+        ) ?>
     </div>
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
