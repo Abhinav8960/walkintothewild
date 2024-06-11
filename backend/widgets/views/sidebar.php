@@ -227,7 +227,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/park/birding/profile/how-to-reach",
 											"/park/birding/profile/createhowtoreach",
 											"/park/birding/profile/updatehowtoreach",
-											"/park/birding/profile/map"
+											"/park/birding/profile/map",
+
+											"/park/operator-quote/index",
+											"/park/operator-quote/view",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/park/safari/default/index",
@@ -279,7 +282,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/park/birding/profile/how-to-reach",
 														"/park/birding/profile/createhowtoreach",
 														"/park/birding/profile/updatehowtoreach",
-														"/park/birding/profile/map"
+														"/park/birding/profile/map",
+
+														"/park/operator-quote/index",
+														"/park/operator-quote/view",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
@@ -332,6 +338,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/birding/profile/updatehowtoreach",
 															"/park/birding/profile/map"
 														)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/park/operator-quote/index",
+															"/park/operator-quote/view",
+														)) ? "active" : "" ?>" href="/park/operator-quote/index">Operator Quotes</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
