@@ -23,6 +23,7 @@ use common\models\park\SafariParkFloraFaunaSearch;
 use common\models\park\SafariParkGallery;
 use common\models\park\SafariParkGallerySearch;
 use common\models\park\SafariParkMonth;
+use common\models\park\SafariParkRareAnimal;
 use common\models\park\SafariParkSession;
 use common\models\park\SafariParkVehicle;
 use common\models\park\SafariParkVehicleSearch;
@@ -153,6 +154,22 @@ class ProfileController extends Controller
                                 }
 
                                 $parkAnimal->save(false);
+                            }
+                        }
+
+
+                        $rare_animals = $model->master_rare_animal_id;
+                        if ($rare_animals) {
+                            SafariParkRareAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                            foreach ($rare_animals as $rare_animal) {
+                                $parkrareAnimal = new SafariParkRareAnimal();
+                                $parkrareAnimal->safari_park_id = $model->safari_park_model->id;
+                                $parkrareAnimal->master_rare_animal_id = $rare_animal;
+                                if ($rare_animal) {
+                                    $parkrareAnimal->animal_name =  GeneralModel::rareanimaloption()[$rare_animal];
+                                }
+
+                                $parkrareAnimal->save(false);
                             }
                         }
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');

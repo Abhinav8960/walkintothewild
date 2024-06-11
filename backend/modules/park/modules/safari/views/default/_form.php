@@ -16,8 +16,9 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
     </div>
 
-    <div class="col-md-4">
-        <?= $form->field($model, 'short_description')->textInput(['maxlength' => true, 'placeholder' => 'Enter Avg Safari Price']) ?>
+
+    <div class="col-md-12">
+        <?= $form->field($model, 'short_description')->textarea(['maxlength' => true, 'placeholder' => 'Enter featured description']) ?>
     </div>
 
     <div class="col-md-12">
@@ -86,6 +87,9 @@ use yii\bootstrap5\ActiveForm;
             ],
         ])->label('Month') ?>
     </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'month_note')->textInput(['maxlength' => true, 'placeholder' => 'Enter Month Note']) ?>
+    </div>
     <div class="col-md-3 select_width">
         <?= $form->field($model, 'vehicle_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::vehicleoption(),
@@ -105,6 +109,21 @@ use yii\bootstrap5\ActiveForm;
                 'allowClear' => true
             ],
         ]) ?>
+    </div>
+
+    <div class="col-md-3 select_width">
+        <?= $form->field($model, 'master_rare_animal_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::rareanimaloption(),
+            // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => ['placeholder' => 'Select Rare Animal', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+    </div>
+
+    <div class="col-md-6">
+        <?= $form->field($model, 'animal_text')->textarea(['maxlength' => true, 'placeholder' => 'Enter Animals']) ?>
     </div>
     <hr>
 

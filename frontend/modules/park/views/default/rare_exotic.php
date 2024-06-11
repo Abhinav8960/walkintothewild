@@ -1,7 +1,9 @@
 <?php
 
 use common\models\master\animal\MasterAnimal;
+use common\models\master\animal\MasterRareAnimal;
 use common\models\park\SafariParkAnimal;
+use common\models\park\SafariParkRareAnimal;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -18,9 +20,9 @@ if ($rare_exotics) {
         </div>
     </div>
     <?php foreach ($rare_exotics as $rare_exotic) {
-        $safarianimal = SafariParkAnimal::find()->where(['safari_park_id' => $rare_exotic->id, 'animal_type_id' => 2, 'status' => 1])->limit(1)->orderBy(['id' => SORT_ASC])->one();
+        $safarianimal = SafariParkRareAnimal::find()->where(['safari_park_id' => $rare_exotic->id, 'status' => 1])->limit(1)->orderBy(['id' => SORT_ASC])->one();
         if ($safarianimal) {
-            $animal = MasterAnimal::find()->where(['status' => 1, 'id' => $safarianimal->master_animal_id])->limit(1)->one();
+            $animal = MasterRareAnimal::find()->where(['status' => 1, 'id' => $safarianimal->master_rare_animal_id])->limit(1)->one();
     ?>
             <div class="animal-safari mb-4">
                 <div class="inner_animals position-relative">
@@ -33,10 +35,10 @@ if ($rare_exotics) {
                                 </div>
                                 <div class="col-lg-6 col-md-7 col-8">
                                     <div class="safari_content">
-                                        <h5><?= $animal->name ?></h5>
+                                        <h5><?= $animal->animal_name ?></h5>
                                         <p><?= $animal->short_description ?></p>
                                         <div class="knowmore">
-                                            <a href="/parklist?SafariParkSearch%5Bmaster_animal_id%5D=<?= $animal->id ?>" class="btn-knowmore">Know More</a>
+                                            <a href="/parklist?SafariParkSearch%5Bmaster_rare_animal_id%5D=<?= $animal->id ?>" class="btn-knowmore">Know More</a>
                                         </div>
                                     </div>
                                 </div>

@@ -9,10 +9,10 @@ use yii\grid\GridView;
 /** @var common\models\master\office\MasterDepartmentSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Animal';
-$this->params['breadcrumbs_home_url'] = '/master/animal';
+$this->title = 'Rare Animal';
+$this->params['breadcrumbs_home_url'] = '/master/rare-animal';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/animal'];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/master/rare-animal'];
 $this->params['breadcrumbs'][] = 'View';
 $this->params['title'] = $this->title;
 ?>
@@ -28,7 +28,7 @@ $this->params['title'] = $this->title;
             <div class="col-md-10">
                 <div class="text-box">
                     <p>
-                        <span>Name: </span><?= $model->name ?>
+                        <span>Name: </span><?= $model->animal_name ?>
                     </p>
                     <p>
                     <p>
@@ -38,9 +38,6 @@ $this->params['title'] = $this->title;
                     </p>
                     <p>
                         <span>Short Description: </span><?= $model->short_description ?>
-                    </p>
-                    <p>
-                        <span>Long Description: </span><?= $model->long_description ?>
                     </p>
                 </div>
             </div>

@@ -4,17 +4,20 @@ namespace backend\modules\master\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\master\animal\form\MasterAnimalForm;
+use common\models\master\animal\form\MasterRareAnimalForm;
 use common\models\master\animal\MasterAnimal;
-use common\models\master\animal\MasterAnimalSearch;
+use common\models\master\animal\MasterRare;
+use common\models\master\animal\MasterRareAnimal;
+use common\models\master\animal\MasterRareAnimalSearch;
 use yii\web\UploadedFile;
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * AnimalController.
+ * RareAnimalController.
  */
-class AnimalController extends Controller
+class RareAnimalController extends Controller
 {
     /**
      * Lists all MasterAnimal models.
@@ -23,7 +26,7 @@ class AnimalController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MasterAnimalSearch();
+        $searchModel = new MasterRareAnimalSearch();
         $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -42,22 +45,25 @@ class AnimalController extends Controller
      */
     public function actionCreate()
     {
-        $model = new MasterAnimalForm();
+        $model = new MasterRareAnimalForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+                $model->banner = UploadedFile::getInstance($model, 'banner');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->animal_model->save(false)) {
+                    if ($model->rare_animal_model->save(false)) {
+                        $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->animal_model->loadDefaultValues();
+            $model->rare_animal_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -74,22 +80,26 @@ class AnimalController extends Controller
      */
     public function actionUpdate($id)
     {
-        $animal_model = $this->findModel($id);
-        $model = new MasterAnimalForm($animal_model);
+        $rare_animal_model = $this->findModel($id);
+        $model = new MasterRareAnimalForm($rare_animal_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+                $model->banner = UploadedFile::getInstance($model, 'banner');
+
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->animal_model->save()) {
+                    if ($model->rare_animal_model->save()) {
+                        $model->uploadFile($model->rare_animal_model->id);
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->animal_model->loadDefaultValues();
+            $model->rare_animal_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -136,7 +146,7 @@ class AnimalController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterRareAnimal::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
