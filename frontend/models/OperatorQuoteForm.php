@@ -50,6 +50,29 @@ class OperatorQuoteForm extends Model
 
 
     /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'safari_park_id' => 'Safari Park',
+            'safaris' => 'Safaris',
+            'travelers' => 'Travelers',
+            'stay_category_id' => 'Stay Category',
+            'full_name' => 'Full Name',
+            'email' => 'Email',
+            'phone_no' => 'Phone No',
+            'start_date' => 'Start Date',
+            'end_date' => 'End Date',
+            'user_agent' => 'User Agent',
+            'ip_address' => 'Ip Address',
+            'status' => 'Status',
+        ];
+    }
+
+
+    /**
      * Save Contatc Query
      *
      * @param Corporate $corporate

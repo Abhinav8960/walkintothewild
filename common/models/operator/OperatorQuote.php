@@ -79,10 +79,10 @@ class OperatorQuote extends \yii\db\ActiveRecord implements \common\interfaces\S
     {
         return [
             'id' => 'ID',
-            'safari_park_id' => 'Safari Park ID',
+            'safari_park_id' => 'Safari Park',
             'safaris' => 'Safaris',
             'travelers' => 'Travelers',
-            'stay_category_id' => 'Stay Category ID',
+            'stay_category_id' => 'Stay Category',
             'full_name' => 'Full Name',
             'email' => 'Email',
             'phone_no' => 'Phone No',
