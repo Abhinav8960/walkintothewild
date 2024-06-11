@@ -50,7 +50,7 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
             </div>
         </div>
-        <div class="row mb-4 gx-lg-5">
+        <div class="row mb-4 ">
             <div class="col-lg-8 col-xl-9 col-xxl-9">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 pe-xl-3">
                     <?php if ($models) {
