@@ -55,8 +55,8 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
             </div>
         </div>
-        <div class="row mb-4">
-            <div class="col-lg-9 col-xl-9 col-xxl-10">
+        <div class="row mb-4 gx-lg-5">
+            <div class="col-lg-9 col-xl-9 col-xxl-10 ">
                 <div class="aritcla-details">
                     <h1 class="articald-title pb-3"><?= $article->title ?></h1>
                     <div class="aritcal_bigimg pb-4">
