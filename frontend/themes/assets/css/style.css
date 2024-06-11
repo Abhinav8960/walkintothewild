@@ -3383,6 +3383,11 @@ position: relative;
 .seelctes_text p{
 
     color: #040404;
+    font-size: 14px;
+}
+.seelctes_text p:empty{
+
+    display: none;
 }
 
 .btn-exclamtion{

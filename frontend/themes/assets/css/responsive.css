@@ -84,7 +84,14 @@
 
     .select_boxes .form-select {
 
-        width: 248px;
+        width: 228px;
+    }
+    .placeholder_select {
+        left: 29%;
+    }
+    .icons_select img{
+
+        width: 20px;
     }
     .footer_object{
 
@@ -104,7 +111,7 @@
     }
 }
 
-@media only screen and (max-width: 1250px) and (min-width: 992px) {
+@media only screen and (max-width: 1250px) and (min-width: 991px) {
 
     .registratin_text h6 br{
 
@@ -123,7 +130,7 @@
  
 }
 
-@media only screen and (min-width: 768px) and (max-width: 992px) {
+@media only screen and (min-width: 768px) and (max-width: 991px) {
     .select_boxes .form-select{
         width: 370px ;
     }
@@ -131,7 +138,17 @@
 
 @media only screen and (min-device-width: 769px) and (max-device-width: 820px) and (min-device-height: 1024px) and (max-device-height: 1180px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
     .select_boxes .form-select {
-        width: 388px;
+        width: 395px;
+    }
+}
+@media only screen and (min-device-width: 800px) and (max-device-width: 1600px) and (min-device-height: 1224px) and (max-device-height: 1680px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+    .select_boxes .form-select {
+        width: 441px;
+    }
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 991px) and (min-device-height: 800px) and (max-device-height: 1080px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+    .select_boxes .form-select {
+        width: 400px;
     }
 }
 @media only screen and (max-device-width: 1440px) and (min-device-height: 3000px) and (max-device-height: 3100px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
@@ -145,7 +162,7 @@
         left: 8%;
     }
 }
-@media only screen and (max-width: 1200px) and (min-width: 992px) {
+@media only screen and (max-width: 1200px) and (min-width: 991px) {
 
     .select_boxes .form-select {
 
@@ -204,7 +221,7 @@
         object-fit: cover;
     }
 }
-@media only screen and (min-width:992px) {
+@media only screen and (min-width:991px) {
 
   
 
@@ -290,7 +307,7 @@
     }
  
 }
-@media only screen and (max-width:992px) {
+@media only screen and (max-width:991px) {
     .safari_create{
 
         width: 100%;

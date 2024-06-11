@@ -76,18 +76,21 @@ use common\models\GeneralModel;
                     </div>
                 </div>
             </div>
-            <div class="d-lg-none d-block">
-                <div class="row gx-0 justify-content-center ">
-                    <div class="col-xl-3">
-                        <div class="toogle_icon mt-2">
-                            <a href="javascript:void(0)" id="toggleButtonMobile"><i class="fa-solid fa-chevron-down"></i> Advance Search</a>
-                        </div>
-                    </div>
-                    <div class="col-xl-8"></div>
-                </div>
-            </div>
+
+
         </div>
     </div>
+    <div class="col-12 d-lg-none d-block">
+        <div class="row gx-0 justify-content-center ">
+            <div class="col-xl-3">
+                <div class="toogle_icon mt-2">
+                    <a href="javascript:void(0)" id="toggleButtonMobile"><i class="fa-solid fa-chevron-down"></i> Advance Search</a>
+                </div>
+            </div>
+            <div class="col-xl-8"></div>
+        </div>
+    </div>
+
     <div class="col-lg-2 col-xl-1">
         <div class="search">
             <div class="serch_btn">
