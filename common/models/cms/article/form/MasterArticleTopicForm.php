@@ -69,7 +69,7 @@ class MasterArticleTopicForm extends \yii\base\Model
     {
         return [
             'id' => 'ID',
-            'title' => 'title',
+            'title' => 'Title',
             'slug' => 'Slug',
             'status' => 'Status',
         ];

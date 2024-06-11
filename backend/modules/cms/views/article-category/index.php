@@ -28,10 +28,25 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-                    'title',
+                    [
+                        'label' => 'Title',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->title;
+                        }
+                    ],
+                    [
+                        'label' => 'Slug',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->slug;
+                        }
+                    ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -40,7 +55,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 25%;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {

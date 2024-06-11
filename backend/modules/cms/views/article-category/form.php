@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
 
                 <div class="row">
                     <div class="col-md-6">
-                        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Category Name']) ?>
+                        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Topic Name']) ?>
                     </div>
                     <div class="col-md-6">
                         <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->master_article_topic_model->id) ? true : false]) ?>
