@@ -23,7 +23,14 @@
         height: 200px !important;
        overflow: hidden;
     }
-  
+    .artical_cards{
+
+        width: 400px;
+    }
+    .slider_safariimg{
+
+        height: 350px;
+    }
 
 }
 @media only screen and (min-width:1800px){
@@ -719,10 +726,10 @@
     }
     .safariBox{
 
-        top: 6%;
+        top: -2%;
     }
     .safari_content h5{
-        font-size: 16px;
+        font-size: 14px;
     }
     .safari_content p{
         font-size: 14px;
@@ -731,10 +738,24 @@
 
         font-size: 14px;
     }
+    .inner_animals>img{
 
+        height: 150px;
+    }
+    .safari_content p{
+
+        font-size: 13px;
+    }
+    .btn-knowmore{
+
+        font-size: 15px;
+    }
 }
 
 @media (max-width:420px){
+    .safariBox {
+        top: 17%;
+    }
 
     .placeholder_select{
 
