@@ -38,7 +38,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
     </div>
 
     <div class="row justify-content-end comments-persons">
-        <div class="col-6 ">
+        <div class="col-12 col-sm-8 col-md-6">
             <div class="comment_button float-end ">
                 <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
             </div>

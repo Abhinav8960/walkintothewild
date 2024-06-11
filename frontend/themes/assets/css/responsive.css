@@ -1,3 +1,6 @@
+
+
+
 @media only screen and (min-width:1600px) {
 
     .title_web h2 {
@@ -26,10 +29,10 @@
         overflow: hidden;
     }
 
-    .artical_cards {
+    /* .artical_cards {
 
-        width: 400px;
-    }
+        width: 420px;
+    } */
 
     .slider_safariimg {
 
@@ -42,12 +45,20 @@
         object-fit: cover;
     }
 
+    .top_opratorsBox .tourLogoes{
+
+        padding: 0px 13px 0px 8px;
+    }
+
 }
 
 @media only screen and (min-width:1800px) {
     .footer_object img {
 
         margin-top: -22px;
+    }
+    .artical_cards .image-box .image img{
+        height: 360px;
     }
 
 }
@@ -75,7 +86,29 @@
     }
 
 }
+@media only screen and (max-width: 1500px) and (min-width: 991px) {
+    .artical_cards .lower-content{
 
+        padding: 31px 15px 25px 15px;
+    }
+    .artical_cards .image-box .image img {
+ 
+        height: 280px;
+     
+    }
+    .artical_cards .link a{
+
+        width: 37px;
+    height: 37px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 15px;
+    }
+    .safartabs .nav-tabs .nav-link{
+
+        font-size: 15px;
+    }
+}
 
 
 @media only screen and (max-width: 1400px) and (min-width: 768px) {
@@ -99,6 +132,7 @@
 
         width: 228px;
     }
+
 
     .placeholder_select {
         left: 29%;

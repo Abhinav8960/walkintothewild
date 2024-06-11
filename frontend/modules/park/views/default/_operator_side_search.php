@@ -14,7 +14,7 @@ $form = ActiveForm::begin([
         'template' => '{input}{error}',
     ],
 ]); ?>
-<div class="filter-wrapper">
+<div class="filter-wrapper custoM-inputs">
     <div class="title_top pb-4">
         <h4>Select Filters</h4>
     </div>

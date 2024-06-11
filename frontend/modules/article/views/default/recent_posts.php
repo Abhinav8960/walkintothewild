@@ -6,7 +6,7 @@
         foreach ($recentposts as $recentpost) { ?>
             <div class="recent-posts mb-4">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-3">
                         <div class="postthumbnail">
                             <a href="/article/<?= $recentpost->slug ?>"><img src="<?= isset($recentpost->feature_image) ? $recentpost->featureimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt="" class="w-100"></a>
                         </div>

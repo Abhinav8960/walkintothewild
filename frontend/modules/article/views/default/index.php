@@ -43,16 +43,16 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
                 <div class="advertisment ">
-                    <p class="text-center">ADVERTISMENT</p>
+                    <p class="text-center">ADVERTISMENT 33</p>
                     <div class="advertisment_box">
 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mb-4 gx-lg-5">
-            <div class="col-lg-8 col-xl-9 col-xxl-10">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3  gx-xxl-5 gx-lg-4">
+        <div class="row mb-4 ">
+            <div class="col-lg-8 col-xl-9 col-xxl-9">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 ">
                     <?php if ($models) {
                         foreach ($models as $model) { ?>
                             <div class="col mb-5">
@@ -76,7 +76,7 @@ $recentposts = ArticleSearch::recentpost();
                     } ?>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3 col-xxl-2">
+            <div class="col-lg-4 col-xl-3 col-xxl-3 ps-xl-5">
                 <?= $this->render('recent_posts', [
                     'recentposts' => $recentposts,
                 ]) ?>

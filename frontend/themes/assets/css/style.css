@@ -424,8 +424,8 @@ a {
 
 .checkbox_design {
 
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     accent-color: var(--background-primary);
     border-color: var(--background-primary);
 }
@@ -930,7 +930,7 @@ figure {
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
     border-radius: 10px 10px 0px 0px;
-    height: 360px;
+    /* height: 290px; */
     object-fit: cover;
 }
 
@@ -1010,6 +1010,7 @@ figure {
     display: inline-block;
     color: #9C9C9C;
     font-family: "Roboto", sans-serif !important;
+    font-size: 12px;
 
 }
 
@@ -1259,7 +1260,7 @@ figure {
 
 .recent-posts .artical-info i {
 
-    font-size: var(--fs-18);
+    font-size: var(--fs-15);
     color: var(--background-yellow);
 }
 
@@ -1303,7 +1304,7 @@ figure {
     align-items: center;
     color: var(--colorBlack);
     font-family: "Roboto", sans-serif !important;
-    font-size: var(--fs-18);
+    font-size: var(--fs-14);
 
 }
 
@@ -1991,6 +1992,19 @@ position: relative;
     -ms-flex-pack: center;
     justify-content: center;
 
+}
+.logo_provide2 img{
+
+    height: 100%;
+}
+.custoM-inputs .title_filter .input_check .form-check{
+
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    margin-left: 0;
+    margin-bottom: 13px;
+    padding-left: 0;
 }
 
 .pname {
