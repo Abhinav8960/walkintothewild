@@ -28,7 +28,11 @@ $form = ActiveForm::begin([
                 // Generate a unique ID for each checkbox
                 $checkbox_id = 'rating_' . $ratingValue;
                 // Check if the current rating value is selected
-                $isChecked = in_array($ratingValue, $selectedRatings);
+                if ($model->google_rating) {
+                    $isChecked = in_array($ratingValue, $selectedRatings);
+                } else {
+                    $isChecked = false;
+                }
         ?>
                 <div class="input_check d-flex gap-3 align-items-center">
                     <input type="checkbox" name="SafariOperatorSearch[google_rating][]" id="<?= $checkbox_id ?>" class="checkbox_design" value="<?= $ratingValue ?>" <?= $isChecked ? 'checked' : '' ?>>

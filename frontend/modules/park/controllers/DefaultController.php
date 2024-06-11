@@ -92,8 +92,7 @@ class DefaultController extends Controller
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($model) {
             $operatorsearchModel = new SafariOperatorSearch();
-            $operatorsearchModel->park_id = $model->id;
-            $operatordataProvider = $operatorsearchModel->search($this->request->queryParams);
+            $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
             $operators = $operatordataProvider->getModels();
 
             $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
