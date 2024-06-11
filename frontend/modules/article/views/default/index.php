@@ -50,8 +50,8 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
             </div>
         </div>
-        <div class="row mb-4">
-            <div class="col-lg-9 col-xl-9 col-xxl-10">
+        <div class="row mb-4 gx-lg-5">
+            <div class="col-lg-8 col-xl-9 col-xxl-10">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3  gx-xxl-5 gx-lg-4">
                     <?php if ($models) {
                         foreach ($models as $model) { ?>
@@ -76,7 +76,7 @@ $recentposts = ArticleSearch::recentpost();
                     } ?>
                 </div>
             </div>
-            <div class="col-lg-3 col-xl-3 col-xxl-2">
+            <div class="col-lg-4 col-xl-3 col-xxl-2">
                 <?= $this->render('recent_posts', [
                     'recentposts' => $recentposts,
                 ]) ?>

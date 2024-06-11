@@ -329,6 +329,14 @@
 }
 
 @media (max-width: 991px) {
+    .safartabs .accordion-item{
+
+        border-radius: 0 !important;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid #0000004D;
+    }
     .tab-content>.tab-pane {
         display: block !important;
         opacity: 1 !important;
@@ -646,6 +654,7 @@
 }
 
 @media only screen and (max-width:576px) {
+ 
     .title_yellow.h1 {
 
         font-size: 48px;
