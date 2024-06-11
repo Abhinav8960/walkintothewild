@@ -19,7 +19,7 @@ use common\models\GeneralModel;
     <div class="col-lg-10 col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'North india, South...', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'Select Location', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Location</p>
                 </div>
@@ -28,7 +28,7 @@ use common\models\GeneralModel;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'month_id')->dropDownList(GeneralModel::monthoption(), ['prompt' => 'May,june,July..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'month_id')->dropDownList(GeneralModel::monthoption(), ['prompt' => 'Select Month', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Month</p>
                 </div>
@@ -37,7 +37,7 @@ use common\models\GeneralModel;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animalfilteroption(), ['prompt' => 'Tiger Elephent..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animalfilteroption(), ['prompt' => 'Select Animal', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Animal</p>
                 </div>
@@ -46,7 +46,7 @@ use common\models\GeneralModel;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Gypsy,Bus...', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select Vehicle', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                 <div class="placeholder_select">
                     <p>Vehicel</p>
                 </div>
@@ -57,7 +57,7 @@ use common\models\GeneralModel;
             <div class="advanceSearch " id="advanceSearchBox">
                 <div class="d-md-flex gap-1">
                     <div class="select_boxes position-relative">
-                        <?= $form->field($model, 'accomodation_id')->dropDownList(GeneralModel::accomodationoption(), ['prompt' => 'Forest Rest House..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                        <?= $form->field($model, 'accomodation_id')->dropDownList(GeneralModel::accomodationoption(), ['prompt' => 'Select Accomodation', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                         <div class="placeholder_select">
                             <p>Accommodation</p>
                         </div>
@@ -66,7 +66,7 @@ use common\models\GeneralModel;
                         </div>
                     </div>
                     <div class="select_boxes position-relative">
-                        <?= $form->field($model, 'session_id')->dropDownList(GeneralModel::safarisessionoption(), ['prompt' => 'evening,morning..', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                        <?= $form->field($model, 'session_id')->dropDownList(GeneralModel::safarisessionoption(), ['prompt' => 'Select Session', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
                         <div class="placeholder_select">
                             <p>Safari seasion</p>
                         </div>

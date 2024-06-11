@@ -104,7 +104,7 @@ class ArticleSearch extends Article
     {
         return Article::find()->andWhere(['article.status' => [self::STATUS_ACTIVE]])->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
             ->orderBy('RAND()') // Order by random
-            ->limit(4)
+            ->limit(3)
             ->all();
     }
 }

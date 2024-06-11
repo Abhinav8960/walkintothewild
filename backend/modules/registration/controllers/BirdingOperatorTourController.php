@@ -5,6 +5,7 @@ namespace backend\modules\registration\controllers;
 use backend\modules\registration\model\BirdingOperatorTourApprovalForm;
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
+use common\models\operator\BirdingOperator;
 use common\models\operator\BirdingOperatorActivities;
 use common\models\operator\BirdingOperatorPark;
 use common\models\operator\SafariOperator;
@@ -57,9 +58,9 @@ class BirdingOperatorTourController extends Controller
                     $model->initializeForm();
                     if ($model->birdingoperator_request_approval_model->save()) {
                         if ($model->is_approved == 1) {
-                            $old_birding_operator = SafariOperator::find()->where(['birding_operator_request_id' => $model->birdingoperator_request_approval_model->id, 'status' => 1])->limit(1)->one();
+                            $old_birding_operator = BirdingOperator::find()->where(['birding_operator_request_id' => $model->birdingoperator_request_approval_model->id, 'status' => 1])->limit(1)->one();
                             if (!$old_birding_operator) {
-                                $new_birding_operator = new SafariOperator();
+                                $new_birding_operator = new BirdingOperator();
                                 $birding_operator = $new_birding_operator;
                             } else {
                                 $birding_operator = $old_birding_operator;
