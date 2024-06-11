@@ -29,7 +29,10 @@ $this->params['buttons'][] = Html::a('Set Sequence', ['#'], ['class' => 'btn btn
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width: 5%;'],
+                    ],
                     [
                         'label' => 'Module Title',
                         'contentOptions' => ['style' => 'width: 20%;'],

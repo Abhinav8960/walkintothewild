@@ -27,7 +27,10 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width: 5%;'],
+                    ],
                     'title',
                     [
                         'label' => 'Status',

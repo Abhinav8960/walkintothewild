@@ -26,11 +26,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'dataProvider' => $dataProvider,
                 //'layout' => '{items}',
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width: 5%;'],
+                    ],
                     // 'title',
                     [
                         'label' => 'Content',
-                        'contentOptions' => ['style' => 'width: 80%;'],
+                        'contentOptions' => ['style' => 'width: 70%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->title;
