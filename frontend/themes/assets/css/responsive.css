@@ -1,3 +1,6 @@
+
+
+
 @media only screen and (min-width:1600px) {
 
     .title_web h2 {
@@ -26,10 +29,10 @@
         overflow: hidden;
     }
 
-    .artical_cards {
+    /* .artical_cards {
 
-        width: 400px;
-    }
+        width: 420px;
+    } */
 
     .slider_safariimg {
 
@@ -48,6 +51,9 @@
     .footer_object img {
 
         margin-top: -22px;
+    }
+    .artical_cards .image-box .image img{
+        height: 36px;
     }
 
 }
@@ -75,7 +81,17 @@
     }
 
 }
+@media only screen and (max-width: 1500px) and (min-width: 991px) {
+    .artical_cards .lower-content{
 
+        padding: 31px 15px 18px 15px;
+    }
+    .artical_cards .image-box .image img {
+ 
+        height: 280px;
+     
+    }
+}
 
 
 @media only screen and (max-width: 1400px) and (min-width: 768px) {
@@ -99,6 +115,7 @@
 
         width: 228px;
     }
+
 
     .placeholder_select {
         left: 29%;
