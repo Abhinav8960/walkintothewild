@@ -231,6 +231,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 											"/park/operator-quote/index",
 											"/park/operator-quote/view",
+											"/park/safari-suggestion/index"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/park/safari/default/index",
@@ -286,6 +287,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 														"/park/operator-quote/index",
 														"/park/operator-quote/view",
+														"/park/safari-suggestion/index"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
@@ -342,6 +344,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/operator-quote/index",
 															"/park/operator-quote/view",
 														)) ? "active" : "" ?>" href="/park/operator-quote/index">Operator Quotes</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/park/safari-suggestion/index",
+														)) ? "active" : "" ?>" href="/park/safari-suggestion/index">Safari Suggestion</a></li>
+
 						</ul>
 					</li>
 				<?php endif; ?>
@@ -573,19 +579,34 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/registration/birding-operator-tour/create",
 															"/registration/birding-operator-tour/update",
 														)) ? "active" : "" ?>" href="/registration/birding-operator-tour">Birding Tour Operator</a></li>
-							<li><a class="slide-item" href="#">Article Comments</a></li>
 						</ul>
 					</li>
 
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
-					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Safari Operator</span><i class="angle fe fe-chevron-right"></i></a>
+					<li class="slide <?= in_array($active_url, array(
+											"/operator/safari-operator/index",
+											"/operator/safari-operator/index/view",
+											"/operator/birding-operator/index",
+											"/operator/birding-operator/index/view",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/operator/safari-operator/index",
+														"/operator/safari-operator/index/view",
+														"/operator/birding-operator/index",
+														"/operator/birding-operator/index/view",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Safari Operator</a></li>
-							<li><a class="slide-item" href="#">Safari Tour Operator</a></li>
-							<li><a class="slide-item" href="#">Biriding Tour Operator</a></li>
+							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/operator/safari-operator/index",
+															"/operator/safari-operator/index/view",
+														)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/operator/birding-operator/index",
+															"/operator/birding-operator/index/view",
+														)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
 						</ul>
 					</li>

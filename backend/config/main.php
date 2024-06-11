@@ -36,6 +36,9 @@ return [
         'registration' => [
             'class' => 'backend\modules\registration\Module',
         ],
+        'operator' => [
+            'class' => 'backend\modules\operator\Module',
+        ],
         'sharesafari' => [
             'class' => 'backend\modules\sharesafari\Module',
         ],
