@@ -97,7 +97,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 px-lg-4 px-xl-5 px-2 px-1 pt-lg-0 pt-3">
+                        <div class="col-lg-3 px-lg-4 px-xl-5 px-2  pt-lg-0 pt-3">
                             <div class="contact_p">
                                 <p>Contact</p>
                             </div>

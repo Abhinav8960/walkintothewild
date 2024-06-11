@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 ?>
-<div class="col-lg-12 col-xl-9">
+<div class="col-lg-12 col-xxl-8 col-xl-10">
     <div class="get_free_title">
         <h4>Get a FREE quote</h4>
     </div>
