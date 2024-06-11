@@ -9,96 +9,10 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 <div class="col-lg-4 col-xl-3 col-xxl-2 mb-4">
-    <div class="filter-wrapper">
-        <div class="title_top pb-4">
-            <h4>Select Filters</h4>
-        </div>
-        <div class="title_filter mb-4">
-            <h6>Operator Rating</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <div class="start d-flex gap-2">
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-                </div>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <div class="start d-flex gap-2">
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-
-                </div>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <div class="start d-flex gap-2">
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-                    <label for="text" class=" text_check"><i class="fa-solid fa-star"></i></label>
-
-                </div>
-
-            </div>
-        </div>
-        <div class="title_filter mb-4">
-            <h6>Operator Credibility</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Registered Company</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Has a Website</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Offers Other Wildlife Activities</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Has Cancellation Policy</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Wildlife Photographer</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Wildlife Influencer</label>
-
-            </div>
-        </div>
-        <div class="title_filter mb-4">
-            <h6>Budget</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Premium</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Standard</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Economical</label>
-
-            </div>
-
-        </div>
-
-    </div>
+    <?= $this->render('_operator_side_search', [
+        'model' => $operatorsearchModel,
+        'safari_model' => $model
+    ]) ?>
     <div class="advertisment pt-5">
         <p class="text-center">ADVERTISMENT</p>
         <div class="advertisment_box-2">
@@ -110,7 +24,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class="col-12">
         <div class="topfilter d-md-flex justify-content-between align-items-center w-100">
             <div class="left_text">
-                <p class="">There are currently <strong>121</strong> active shared safaris created by individuals</p>
+                <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
             </div>
             <div class="right-select d-flex gap-2 align-items-center">
                 <div class="input_check pb-0">

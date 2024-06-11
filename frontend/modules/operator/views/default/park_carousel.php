@@ -22,11 +22,11 @@ if ($featured_parks) {    ?>
                     <img src="<?= isset($featured_park->feature_image) ? $featured_park->featureimagepath : $this->params['baseurl'] . '/img/Jim Corbett.jpg' ?>" alt="">
                 </figure>
                 <div class="content-box">
-                    <h3><a href="Selected-Safari.html"><?= $featured_park->title ?></a></h3>
+                    <h3><a href="/park/<?= $featured_park->slug ?>"><?= $featured_park->title ?></a></h3>
                 </div>
                 <div class="overlay-content d-flex align-items-center justify-content-between">
                     <div class="content_o pe-2">
-                        <h3><a href="Selected-Safari.html"><?= $featured_park->title ?></a></h3>
+                        <h3><a href="/park/<?= $featured_park->slug ?>"><?= $featured_park->title ?></a></h3>
                         <p><?= $featured_park->short_description ?></p>
                     </div>
                     <div class="link"><a href="/park/<?= $featured_park->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
