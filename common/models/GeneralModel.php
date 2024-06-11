@@ -182,6 +182,29 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+    public static function rating()
+    {
+        return [
+            1 => 'One',
+            2 => 'Two',
+            3 => 'Three',
+            4 => 'Four',
+            5 => 'Five',
+        ];
+    }
+
+
+    public static function operatorcredibility()
+    {
+        return [
+            1 => 'Registered Company',
+            2 => 'Has a Website',
+            3 => 'Offers Other Wildlife Activities',
+            4 => 'Has Cancellation Policy',
+            5 => 'Wildlife Photographer',
+            6 => 'Wildlife Influencer',
+        ];
+    }
 
     public static function numberformat($num)
     {
