@@ -44,10 +44,17 @@
                             <div class="text-form">
                                 <p class="mb-0">
                                     <?php if ($model->vehicles) {
-
+                                        $i = 0;
+                                        $numItems = count($model->vehicles);
                                         foreach ($model->vehicles as $vehicle) {
-                                            echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
-                                    <?php }
+                                            echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name : '';
+                                            if(++$i === $numItems) {
+                                                    echo "";
+                                                }else{
+                                                    echo ",";
+
+                                                }
+                                     }
                                     } ?>
                                 </p>
                             </div>
