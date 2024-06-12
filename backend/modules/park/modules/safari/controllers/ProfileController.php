@@ -133,7 +133,9 @@ class ProfileController extends Controller
 
                         $vehicles = $model->vehicle_id;
                         if ($vehicles) {
-                            SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                            // SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                            SafariParkVehicle::deleteAll(['safari_park_id' => $model->safari_park_model->id]);
+
                             foreach ($vehicles as $vehicle) {
                                 $parkVehicle = new SafariParkVehicle();
                                 $parkVehicle->safari_park_id = $model->safari_park_model->id;
