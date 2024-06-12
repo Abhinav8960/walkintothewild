@@ -18,7 +18,7 @@
                         use common\models\GeneralModel;
 
                         if ($model->official_website) { ?>
-                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn"><i class="fa-solid fa-user-group"></i> OFFICIAL WEBSITE</a>
+                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE</a>
                         <?php } ?>
                     </div>
                 </div>
