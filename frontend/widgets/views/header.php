@@ -46,7 +46,7 @@
 								<a class="nav-link" href="/article">Artical & tips</a>
 							</li>
 
-							<a href="share-safari.html" class="sahreSafari text-lg-center">
+							<a href="/sharedsafari" class="sahreSafari text-lg-center">
 								<div class="card-img">
 									<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
 								</div>

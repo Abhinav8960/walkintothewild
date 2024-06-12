@@ -114,6 +114,9 @@ return [
         'operator' => [
             'class' => 'frontend\modules\operator\Module',
         ],
+        'sharedsafari' => [
+            'class' => 'frontend\modules\sharedsafari\Module',
+        ],
     ],
     'params' => $params,
 ];
