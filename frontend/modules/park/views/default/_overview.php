@@ -44,17 +44,12 @@
                             <div class="text-form">
                                 <p class="mb-0">
                                     <?php if ($model->vehicles) {
-                                        $i = 0;
-                                        $numItems = count($model->vehicles);
+                                        $vehicles_arr = [];
                                         foreach ($model->vehicles as $vehicle) {
-                                            echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name : '';
-                                            if(++$i === $numItems) {
-                                                    echo "";
-                                                }else{
-                                                    echo ",";
-
-                                                }
-                                     }
+                                            $vehicles_arr[] =  isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name : '';
+                                        }
+                                        $vehicles_arr = array_filter($vehicles_arr, 'strlen');
+                                        echo  implode(",", $vehicles_arr);
                                     } ?>
                                 </p>
                             </div>
@@ -77,12 +72,16 @@
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
+                                    
                                     <?php if ($model->sessions) {
-
+                                        $sessions_arr = [];
                                         foreach ($model->sessions as $session) {
-                                            echo isset($session->metasession) ? $session->metasession->title . ', ' : '' ?>
-                                    <?php }
+                                            $sessions_arr[] =  isset($session->metasession) ? $session->metasession->title : '';
+                                        }
+                                        $sessions_arr = array_filter($sessions_arr, 'strlen');
+                                        echo  implode(",", $sessions_arr);
                                     } ?>
+
                                 </p>
                             </div>
                         </div>
