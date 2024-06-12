@@ -18,9 +18,23 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row gx-0 justify-content-center">
     <div class="col-lg-10 col-xl-10">
-        <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
+    <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_location_id')->dropDownList(GeneralModel::locationoption(), ['prompt' => 'Select Location', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <div class="dropdown-container">
+                    <div class="dropdown-toggle">North india, South...</div>
+                    <div class="dropdown custom_dropdown">
+                        <?php foreach (GeneralModel::locationoption() as $value => $label) : ?>
+                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?= $form->field($model, 'master_location_id')->dropDownList(
+                        GeneralModel::locationoption(),
+                        [
+                            'class' => "form-select form-select-lg hidden-select",
+                            'aria-label' => "Large select example"
+                        ]
+                    )->label(false) ?>
+                </div>
                 <div class="placeholder_select">
                     <p>Location</p>
                 </div>
@@ -29,7 +43,21 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'month_id')->dropDownList(GeneralModel::monthoption(), ['prompt' => 'Select Months', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <div class="dropdown-container">
+                    <div class="dropdown-toggle">May,june,July..</div>
+                    <div class="dropdown custom_dropdown">
+                        <?php foreach (GeneralModel::monthoption() as $value => $label) : ?>
+                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?= $form->field($model, 'month_id')->dropDownList(
+                        GeneralModel::monthoption(),
+                        [
+                            'class' => "form-select form-select-lg hidden-select",
+                            'aria-label' => "Large select example"
+                        ]
+                    )->label(false) ?>
+                </div>
                 <div class="placeholder_select">
                     <p>Month</p>
                 </div>
@@ -38,7 +66,23 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_animal_id')->dropDownList(GeneralModel::animalfilteroption(), ['prompt' => 'Select Animal', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <div class="dropdown-container">
+                    <div class="dropdown-toggle">Tiger Elephent..</div>
+                    <div class="dropdown custom_dropdown">
+                        <?php foreach (GeneralModel::animalfilteroption() as $value => $label) : ?>
+                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?= $form->field($model, 'master_animal_id')->dropDownList(
+                        GeneralModel::animalfilteroption(),
+                        [
+                            'class' => "form-select form-select-lg hidden-select",
+                            'aria-label' => "Large select example"
+                        ]
+                    )->label(false) ?>
+
+                </div>
+
                 <div class="placeholder_select">
                     <p>Animal</p>
                 </div>
@@ -47,7 +91,21 @@ use yii\widgets\ActiveForm;
                 </div>
             </div>
             <div class="select_boxes position-relative">
-                <?= $form->field($model, 'master_vehicle_id')->dropDownList(GeneralModel::vehicleoption(), ['prompt' => 'Select Vehicel', 'class' => "form-select form-select-lg", 'aria-label' => "Large select example"]) ?>
+                <div class="dropdown-container">
+                    <div class="dropdown-toggle">Cantar/Bus..</div>
+                    <div class="dropdown custom_dropdown">
+                        <?php foreach (GeneralModel::vehicleoption() as $value => $label) : ?>
+                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?= $form->field($model, 'master_vehicle_id')->dropDownList(
+                        GeneralModel::vehicleoption(),
+                        [
+                            'class' => "form-select form-select-lg hidden-select",
+                            'aria-label' => "Large select example"
+                        ]
+                    )->label(false) ?>
+                </div>
                 <div class="placeholder_select">
                     <p>Vehicel</p>
                 </div>
@@ -55,6 +113,9 @@ use yii\widgets\ActiveForm;
                     <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                 </div>
             </div>
+       
+
+
         </div>
     </div>
     <div class="col-lg-2 col-xl-1">
@@ -66,3 +127,44 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$script = <<< JS
+$(document).ready(function(){
+    $('.dropdown-toggle').on('click', function(e) {
+        e.stopPropagation();
+        var \$dropdown = $(this).siblings('.dropdown');
+        
+        // Close all dropdowns
+        $('.dropdown').not(\$dropdown).hide();
+        $('.dropdown-toggle').not($(this)).removeClass('open');
+        
+        // Toggle the current dropdown
+        $(this).toggleClass('open');
+        \$dropdown.toggle();
+    });
+
+    $('.dropdown-item').on('click', function() {
+        var value = $(this).data('value');
+        var label = $(this).text();
+        var \$container = $(this).closest('.dropdown-container');
+        
+        // Set the text of the dropdown toggle and update the hidden select
+        \$container.find('.dropdown-toggle').text(label);
+        \$container.find('.hidden-select').val(value);
+        
+        // Hide the dropdown
+        \$container.find('.dropdown').hide();
+        \$container.find('.dropdown-toggle').removeClass('open');
+    });
+
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.dropdown-container').length) {
+            $('.dropdown').hide();
+            $('.dropdown-toggle').removeClass('open');
+        }
+    });
+});
+JS;
+$this->registerJs($script);
+?>
