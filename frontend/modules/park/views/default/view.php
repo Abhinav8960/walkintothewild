@@ -49,7 +49,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 </section>
 <section class="articals_wrapper py-3">
     <div class="container-fluid">
-        <div class="row mb-5 pb-4 justify-content-center">
+        <div class="row mb-4  justify-content-center">
             <div class="col-lg-12 col-xl-10 safartabs">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
                     <button class="btn-exclamtion" data-bs-toggle="modal" data-bs-target="#exampleModal3"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 64 64" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">

@@ -132,6 +132,11 @@
 
         width: 228px;
     }
+    .dropdown-container .dropdown-toggle {
+
+        width: 228px;
+   
+    }
 
 
     .placeholder_select {
@@ -189,10 +194,22 @@
     .select_boxes .form-select {
         width: 370px;
     }
+    .dropdown-container .dropdown-toggle{
+
+        width: 370px;
+    }
+    .placeholder_select{
+
+        left: 17%;
+    }
 }
 
 @media only screen and (min-device-width: 769px) and (max-device-width: 820px) and (min-device-height: 1024px) and (max-device-height: 1180px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
     .select_boxes .form-select {
+        width: 395px;
+    }
+    .dropdown-container .dropdown-toggle{
+
         width: 395px;
     }
 }
@@ -201,10 +218,18 @@
     .select_boxes .form-select {
         width: 441px;
     }
+    .dropdown-container .dropdown-toggle{
+
+        width: 441px;
+    }
 }
 
 @media only screen and (min-device-width: 768px) and (max-device-width: 991px) and (min-device-height: 800px) and (max-device-height: 1080px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
     .select_boxes .form-select {
+        width: 400px;
+    }
+    .dropdown-container .dropdown-toggle{
+
         width: 400px;
     }
 }
@@ -218,13 +243,17 @@
 @media only screen and (max-width: 767px) and (min-width: 576px) {
 
     .placeholder_select {
-        left: 8%;
+        left: 11%;
     }
 }
 
 @media only screen and (max-width: 1200px) and (min-width: 991px) {
 
     .select_boxes .form-select {
+
+        width: 383px;
+    }
+    .dropdown-container .dropdown-toggle{
 
         width: 383px;
     }
@@ -240,7 +269,7 @@
     }
 
     .placeholder_select {
-        left: 14%;
+        left: 16%;
     }
 
     .parksImg img {
@@ -309,7 +338,7 @@
 
         height: 480px;
         overflow: auto;
-        
+
     }
 
 
@@ -349,6 +378,10 @@
 
 @media only screen and (max-width:1200px) {
     .select_boxes .form-select {
+
+        border-radius: 10px !important;
+    }
+    .dropdown-container .dropdown-toggle{
 
         border-radius: 10px !important;
     }
@@ -603,6 +636,10 @@
     }
 
     .select_boxes .form-select {
+
+        width: 100%;
+    }
+    .dropdown-container .dropdown-toggle{
 
         width: 100%;
     }
@@ -917,7 +954,7 @@
 
     .placeholder_select {
 
-        left: 18%;
+        left: 19%;
     }
 
     .title_yellow.h1 {
