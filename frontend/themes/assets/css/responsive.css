@@ -305,6 +305,13 @@
         padding-right: 55px !important;
     }
 
+    .height_set{
+
+        height: 480px;
+        overflow: auto;
+        
+    }
+
 
 }
 

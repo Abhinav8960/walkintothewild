@@ -4,7 +4,7 @@
     </button>
 </h2>
 <div id="collapseThree" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingThree" data-bs-parent="#myTabContent">
-    <div class="accordion-body">
+    <div class="accordion-body height_set">
         <div class="about_content">
             <?php if ($model->florafauna) { ?>
                 <p>

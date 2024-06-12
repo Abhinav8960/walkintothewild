@@ -4,9 +4,9 @@
     </button>
 </h2>
 <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-    <div class="accordion-body">
+    <div class="accordion-body height_set">
         <div class="about_content">
-            <div class="safrititles py-3">
+            <div class="safrititles pt-3 pb-0">
                 <h5 class=""><?= $model->module_title ?></h5>
             </div>
             <p>
