@@ -32,7 +32,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->state) ? $model->state->state_name . ',' : '' ?> <?= isset($model->location) ? $model->location->title : '' ?></p>
+                                <p class="mb-0"><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?> <?= isset($model->location) ? $model->location->title : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -46,7 +46,7 @@
                                     <?php if ($model->vehicles) {
 
                                         foreach ($model->vehicles as $vehicle) {
-                                            echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
+                                            echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name . ', ' : '' ?>
                                     <?php }
                                     } ?>
                                 </p>
@@ -59,7 +59,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->railwaystation) ? $model->railwaystation->title . ' , ' : '' ?><?= isset($model->railwaystationtwo) ? $model->railwaystationtwo->title : '' ?></p>
+                                <p class="mb-0"><?= isset($model->railwaystation) ? $model->railwaystation->title . ', ' : '' ?><?= isset($model->railwaystationtwo) ? $model->railwaystationtwo->title : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                                     <?php if ($model->sessions) {
 
                                         foreach ($model->sessions as $session) {
-                                            echo isset($session->metasession) ? $session->metasession->title . ',' : '' ?>
+                                            echo isset($session->metasession) ? $session->metasession->title . ', ' : '' ?>
                                     <?php }
                                     } ?>
                                 </p>
