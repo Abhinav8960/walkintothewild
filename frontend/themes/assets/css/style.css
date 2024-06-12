@@ -286,6 +286,7 @@ a {
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    z-index: 10;
 }
 
 .headingBnner h1 {
@@ -3565,7 +3566,7 @@ figure {
 
     margin-top: 4px;
     border-radius: 5px;
-    max-height: 300px;
+    max-height: 218px;
     overflow: auto;
 }
 
