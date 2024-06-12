@@ -103,7 +103,7 @@ class DefaultController extends Controller
 
                         $vehicles = $model->vehicle_id;
                         if ($vehicles) {
-                            SafariParkVehicle::deleteAll(['safari_park_id' => $model->id]);
+                            SafariParkVehicle::deleteAll(['safari_park_id' => $model->safari_park_model->id]);
 
                             foreach ($vehicles as $vehicle) {
                                 $parkVehicle = new SafariParkVehicle();
@@ -205,7 +205,7 @@ class DefaultController extends Controller
                         $safarivehicles = $model->vehicle_id;
                         if ($safarivehicles) {
                             // SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $id]);
-                            SafariParkVehicle::deleteAll(['safari_park_id' => $model->id]);
+                            SafariParkVehicle::deleteAll(['safari_park_id' => $model->safari_park_model->id]);
 
                             foreach ($safarivehicles as $safarivehicle) {
                                 $safariparkVehicle = new SafariParkVehicle();
