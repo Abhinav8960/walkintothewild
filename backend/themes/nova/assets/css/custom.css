@@ -1638,3 +1638,6 @@ g
     background-color: #F7BF39;
     border-color: #F7BF39;
 }
+.change_css .select2-container .select2-selection--single {
+    height: 40px!important;
+  }

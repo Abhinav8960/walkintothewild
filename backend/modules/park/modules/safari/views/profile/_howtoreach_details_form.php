@@ -28,7 +28,7 @@ use yii\bootstrap5\ActiveForm;
         <hr>
         <h5>Basic Detail</h5>
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 change_css">
                 <?= $form->field($model, 'nearest_railway_station')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::getAllRailwayStation(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -39,7 +39,7 @@ use yii\bootstrap5\ActiveForm;
                 ])->label('Nearest Railway')  ?>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 ">
                 <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
 
@@ -56,7 +56,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-3">
                 <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 change_css">
                 <?= $form->field($model, 'nearest_railway_station_two')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::getAllRailwayStation(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
