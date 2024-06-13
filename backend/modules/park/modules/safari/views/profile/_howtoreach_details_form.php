@@ -27,8 +27,8 @@ use yii\bootstrap5\ActiveForm;
         </div>
         <hr>
         <h5>Basic Detail</h5>
-        <div class="row">
-            <div class="col-md-3 change_css">
+        <div class="row row-cols-xl-5  row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
+            <div class="col change_css">
                 <?= $form->field($model, 'nearest_railway_station')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::getAllRailwayStation(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -36,27 +36,10 @@ use yii\bootstrap5\ActiveForm;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Nearest Railway')  ?>
+                ])->label('Nearest Railway 1')  ?>
             </div>
 
-            <div class="col-md-3 ">
-                <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
-            </div>
-
-            <div class="col-md-3 change_css">
-                <?= $form->field($model, 'nearest_airport')->widget(\kartik\select2\Select2::classname(), [
-                    'data' => GeneralModel::getAllAirport(),
-                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Select'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ])->label('Airport')  ?> </div>
-
-            <div class="col-md-3">
-                <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
-            </div>
-            <div class="col-md-3 change_css">
+            <div class="col change_css">
                 <?= $form->field($model, 'nearest_railway_station_two')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::getAllRailwayStation(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -64,14 +47,75 @@ use yii\bootstrap5\ActiveForm;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Nearest Railway')  ?>
+                ])->label('Nearest Railway 2')  ?>
             </div>
 
-            <div class="col-md-3 ">
-                <?= $form->field($model, 'nearest_railway_station_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
+            <div class="col change_css">
+                <?= $form->field($model, 'nearest_railway_station_three')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllRailwayStation(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Nearest Railway 3')  ?>
             </div>
 
-            <div class="col-md-3 change_css">
+            <div class="col change_css">
+                <?= $form->field($model, 'nearest_railway_station_four')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllRailwayStation(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Nearest Railway 4')  ?>
+            </div>
+
+            <div class="col change_css">
+                <?= $form->field($model, 'nearest_railway_station_five')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllRailwayStation(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Nearest Railway 5')  ?>
+            </div>
+
+            <div class="col">
+                <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Railway Station Distance (in km) 1') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_railway_station_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Railway Station Distance (in km) 2') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_railway_station_distance_three')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Railway Station Distance (in km) 3') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_railway_station_distance_four')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Railway Station Distance (in km) 4') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_railway_station_distance_five')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Railway Station Distance (in km) 5') ?>
+            </div>
+
+
+            <div class="col change_css">
+                <?= $form->field($model, 'nearest_airport')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllAirport(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Airport 1')  ?>
+            </div>
+
+            <div class="col change_css">
                 <?= $form->field($model, 'nearest_airport_two')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::getAllAirport(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -79,11 +123,61 @@ use yii\bootstrap5\ActiveForm;
                     'pluginOptions' => [
                         'allowClear' => true
                     ],
-                ])->label('Airport')  ?>
+                ])->label('Airport 2')  ?>
             </div>
 
-            <div class="col-md-3 ">
-                <?= $form->field($model, 'nearest_airport_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
+            <div class="col change_css">
+                <?= $form->field($model, 'nearest_airport_three')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllAirport(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Airport 3')  ?>
+            </div>
+
+            <div class="col change_css">
+                <?= $form->field($model, 'nearest_airport_four')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllAirport(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Airport 4')  ?>
+            </div>
+
+            <div class="col change_css">
+                <?= $form->field($model, 'nearest_airport_five')->widget(\kartik\select2\Select2::classname(), [
+                    'data' => GeneralModel::getAllAirport(),
+                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                    'options' => ['placeholder' => 'Select'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])->label('Airport 5')  ?>
+            </div>
+
+
+            <div class="col">
+                <?= $form->field($model, 'nearest_airport_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Airport Distance (in km) 1') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_airport_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Airport Distance (in km) 2') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_airport_distance_three')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Airport Distance (in km) 3') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_airport_distance_four')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Airport Distance (in km) 4') ?>
+            </div>
+
+            <div class="col ">
+                <?= $form->field($model, 'nearest_airport_distance_five')->textInput(['maxlength' => true, 'placeholder' => 'Enter'])->label('Nearest Airport Distance (in km) 5') ?>
             </div>
         </div>
         <hr>
