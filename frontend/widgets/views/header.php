@@ -31,13 +31,14 @@
 					</div>
 					<div class="offcanvas-body justify-content-end">
 						<ul class="navbar-nav menu-navbar-nav align-items-center">
-							<li class="nav-item <?= in_array($active_url, array(
+							<li class="nav-item 
+							<?= in_array($active_url, array(
 													"/",
 													"/park/default/index",
 													"/park/default/parklist",
 													"/park/default/view",
 												)) ? "active" : "" ?>">
-								<a class="nav-link" href="/park"> <i class="fa-solid fa-magnifying-glass"></i> Search Safari</a>
+								<a class="nav-link" href="/parklist"> <i class="fa-solid fa-magnifying-glass"></i> Search Safari</a>
 							</li>
 							<li class="nav-item <?= in_array($active_url, array(
 													"/article/default/index",

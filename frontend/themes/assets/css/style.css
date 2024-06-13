@@ -193,7 +193,7 @@ a {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 10;
+    z-index: 100;
 
 }
 
@@ -2772,6 +2772,10 @@ figure {
     text-align: center;
     padding: 8px 20px;
     border-radius: 5px;
+    /* cursor: pointer; */
+}
+.tab-block .tab-mnu li:first-child{
+
     cursor: pointer;
 }
 
@@ -2847,7 +2851,8 @@ figure {
     -webkit-box-shadow: 0px 3px 6px #00000029;
     box-shadow: 0px 3px 6px #00000029;
     /* font-family: "Roboto", sans-serif !important; */
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
+    color: var(--background-primary);
 }
 
 .modal_form .form-control::-webkit-input-placeholder {
@@ -3592,5 +3597,5 @@ figure {
 
 .advanceSearch .select_boxes .dropdown-toggle {
 
-    border-radius: 10px;
+    border-radius: 10px !important;
 }
