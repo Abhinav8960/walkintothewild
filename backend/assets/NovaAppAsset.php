@@ -24,7 +24,7 @@ class NovaAppAsset extends AssetBundle
         'plugins/datatable/responsive.bootstrap5.css',
     ];
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
     public $js = [
         'plugins/bootstrap/js/popper.min.js',
