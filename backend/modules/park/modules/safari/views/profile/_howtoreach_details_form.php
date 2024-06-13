@@ -43,7 +43,7 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'nearest_railway_station_distance')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 change_css">
                 <?= $form->field($model, 'nearest_airport')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::getAllAirport(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -67,11 +67,11 @@ use yii\bootstrap5\ActiveForm;
                 ])->label('Nearest Railway')  ?>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 ">
                 <?= $form->field($model, 'nearest_railway_station_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 change_css">
                 <?= $form->field($model, 'nearest_airport_two')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::getAllAirport(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -82,7 +82,7 @@ use yii\bootstrap5\ActiveForm;
                 ])->label('Airport')  ?>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 ">
                 <?= $form->field($model, 'nearest_airport_distance_two')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
         </div>
