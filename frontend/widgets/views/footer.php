@@ -30,9 +30,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                     <div class="footerContent">
                         <ul class="footer_listing">
-                            <li><a href="">Safari Tour Operator</a></li>
-                            <li><a href="">Birding Tour Operator</a></li>
-                            <li><a href="">Resorts / Lodge / Home Stay</a></li>
+                            <li><a href="/safaritour-registration">Safari Tour Operator</a></li>
+                            <li><a href="/birdingtour-registration">Birding Tour Operator</a></li>
+                            <li><a href="#" style="cursor: default;">Resorts / Lodge / Home Stay</a></li>
                         </ul>
                     </div>
                 </div>
