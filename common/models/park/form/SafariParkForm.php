@@ -51,8 +51,22 @@ class SafariParkForm extends model
 
     public $nearest_railway_station_two;
     public $nearest_railway_station_distance_two;
+    public $nearest_railway_station_three;
+    public $nearest_railway_station_distance_three;
+    public $nearest_railway_station_four;
+    public $nearest_railway_station_distance_four;
+    public $nearest_railway_station_five;
+    public $nearest_railway_station_distance_five;
+
     public $nearest_airport_two;
     public $nearest_airport_distance_two;
+    public $nearest_airport_three;
+    public $nearest_airport_distance_three;
+    public $nearest_airport_four;
+    public $nearest_airport_distance_four;
+    public $nearest_airport_five;
+    public $nearest_airport_distance_five;
+
     public $is_published;
     public $florafauna;
 
@@ -107,9 +121,21 @@ class SafariParkForm extends model
 
             $this->nearest_railway_station_two = $this->safari_park_model->nearest_railway_station_two;
             $this->nearest_railway_station_distance_two = $this->safari_park_model->nearest_railway_station_distance_two;
+            $this->nearest_railway_station_three = $this->safari_park_model->nearest_railway_station_three;
+            $this->nearest_railway_station_distance_three = $this->safari_park_model->nearest_railway_station_distance_three;
+            $this->nearest_railway_station_four = $this->safari_park_model->nearest_railway_station_four;
+            $this->nearest_railway_station_distance_four = $this->safari_park_model->nearest_railway_station_distance_four;
+            $this->nearest_railway_station_five = $this->safari_park_model->nearest_railway_station_five;
+            $this->nearest_railway_station_distance_five = $this->safari_park_model->nearest_railway_station_distance_five;
+
             $this->nearest_airport_two = $this->safari_park_model->nearest_airport_two;
             $this->nearest_airport_distance_two = $this->safari_park_model->nearest_airport_distance_two;
-
+            $this->nearest_airport_three = $this->safari_park_model->nearest_airport_three;
+            $this->nearest_airport_distance_three = $this->safari_park_model->nearest_airport_distance_three;
+            $this->nearest_airport_four = $this->safari_park_model->nearest_airport_four;
+            $this->nearest_airport_distance_four = $this->safari_park_model->nearest_airport_distance_four;
+            $this->nearest_airport_five = $this->safari_park_model->nearest_airport_five;
+            $this->nearest_airport_distance_five = $this->safari_park_model->nearest_airport_distance_five;
 
             $this->nearest_bus_station = $this->safari_park_model->nearest_bus_station;
             $this->meta_title = $this->safari_park_model->meta_title;
@@ -151,7 +177,7 @@ class SafariParkForm extends model
             [['meta_title', 'slug'], 'required', 'on' => 'meta'],
 
             ['pincode', 'string', 'length' => [6, 6]],
-            [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two'], 'integer'],
+            [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_distance_three', 'nearest_railway_station_distance_four', 'nearest_railway_station_distance_five', 'nearest_airport_distance_three', 'nearest_airport_distance_four', 'nearest_airport_distance_five'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['short_description'], 'validateMaxWords', 'params' => ['max' => 70]],
             [['long_description', 'meta_title', 'meta_description'], 'string'],
@@ -160,21 +186,203 @@ class SafariParkForm extends model
             [[
                 'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description',
                 'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'nearest_railway_station', 'nearest_airport', 'nearest_railway_station_two', 'nearest_airport_two',
-                'about_title', 'about_description', 'meta_keywords', 'module_title', 'module_description', 'month_note', 'animal_text'
+                'about_title', 'about_description', 'meta_keywords', 'module_title', 'module_description', 'month_note', 'animal_text', 'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'
             ], 'safe'],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
-            ['nearest_airport', function () {
-                if ($this->nearest_airport === $this->nearest_airport_two) {
-                    $this->addError('nearest_airport_two', 'Both Airport Should not match');
-                }
-            }],
+
+
+            ///////////////////////////////////   railway station validation    ///////////////////////////////////
+
             ['nearest_railway_station', function () {
                 if ($this->nearest_railway_station === $this->nearest_railway_station_two) {
-                    $this->addError('nearest_railway_station_two', 'Both Railway Station Should not match');
+                    $this->addError('nearest_railway_station_two', 'Railway Station Should not match');
+                }
+                if ($this->nearest_railway_station === $this->nearest_railway_station_three) {
+                    $this->addError('nearest_railway_station_three', 'Railway Station Should not match');
+                }
+                if ($this->nearest_railway_station === $this->nearest_railway_station_four) {
+                    $this->addError('nearest_railway_station_four', 'Railway Station Should not match');
+                }
+                if ($this->nearest_railway_station === $this->nearest_railway_station_five) {
+                    $this->addError('nearest_railway_station_five', 'Railway Station Should not match');
                 }
             }],
 
+            ['nearest_railway_station_two', function () {
+
+                if ($this->nearest_railway_station_two === $this->nearest_railway_station_three) {
+                    $this->addError('nearest_railway_station_three', 'Railway Station Should not match');
+                }
+                if ($this->nearest_railway_station_two === $this->nearest_railway_station_four) {
+                    $this->addError('nearest_railway_station_four', 'Railway Station Should not match');
+                }
+                if ($this->nearest_railway_station_two === $this->nearest_railway_station_five) {
+                    $this->addError('nearest_railway_station_five', 'Railway Station Should not match');
+                }
+            }],
+
+            ['nearest_railway_station_three', function () {
+
+                if ($this->nearest_railway_station_three === $this->nearest_railway_station_four) {
+                    $this->addError('nearest_railway_station_four', 'Railway Station Should not match');
+                }
+                if ($this->nearest_railway_station_three === $this->nearest_railway_station_five) {
+                    $this->addError('nearest_railway_station_five', 'Railway Station Should not match');
+                }
+            }],
+
+            ['nearest_railway_station_four', function () {
+
+                if ($this->nearest_railway_station_four === $this->nearest_railway_station_five) {
+                    $this->addError('nearest_railway_station_five', 'Railway Station Should not match');
+                }
+            }],
+
+            ///////////////////////////////////   railway station distance validation    ///////////////////////////////////
+
+
+            ['nearest_railway_station_distance', function () {
+                if ($this->nearest_railway_station_distance === $this->nearest_railway_station_distance_two) {
+                    $this->addError('nearest_railway_station_distance_two', 'Railway Station Distance Should not match');
+                }
+                if ($this->nearest_railway_station_distance === $this->nearest_railway_station_distance_three) {
+                    $this->addError('nearest_railway_station_distance_three', 'Railway Station Distance Should not match');
+                }
+                if ($this->nearest_railway_station_distance === $this->nearest_railway_station_distance_four) {
+                    $this->addError('nearest_railway_station_distance_four', 'Railway Station Distance Should not match');
+                }
+                if ($this->nearest_railway_station_distance === $this->nearest_railway_station_distance_five) {
+                    $this->addError('nearest_railway_station_distance_five', 'Railway Station Distance Should not match');
+                }
+            }],
+
+            ['nearest_railway_station_distance_two', function () {
+
+                if ($this->nearest_railway_station_distance_two === $this->nearest_railway_station_distance_three) {
+                    $this->addError('nearest_railway_station_distance_three', 'Railway Station Distance Should not match');
+                }
+                if ($this->nearest_railway_station_distance_two === $this->nearest_railway_station_distance_four) {
+                    $this->addError('nearest_railway_station_distance_four', 'Railway Station Distance Should not match');
+                }
+                if ($this->nearest_railway_station_distance_two === $this->nearest_railway_station_distance_five) {
+                    $this->addError('nearest_railway_station_distance_five', 'Railway Station Distance Should not match');
+                }
+            }],
+
+            ['nearest_railway_station_distance_three', function () {
+
+                if ($this->nearest_railway_station_distance_three === $this->nearest_railway_station_distance_four) {
+                    $this->addError('nearest_railway_station_distance_four', 'Railway Station Distance Should not match');
+                }
+                if ($this->nearest_railway_station_distance_three === $this->nearest_railway_station_distance_five) {
+                    $this->addError('nearest_railway_station_distance_five', 'Railway Station Distance Should not match');
+                }
+            }],
+
+            ['nearest_railway_station_distance_four', function () {
+
+                if ($this->nearest_railway_station_distance_four === $this->nearest_railway_station_distance_five) {
+                    $this->addError('nearest_railway_station_distance_five', 'Railway Station Distance Should not match');
+                }
+            }],
+
+
+
+
+            ///////////////////////////////////   airport validation    ///////////////////////////////////
+
+
+            ['nearest_airport', function () {
+                if ($this->nearest_airport === $this->nearest_airport_two) {
+                    $this->addError('nearest_airport_two', 'Airport Should not match');
+                }
+                if ($this->nearest_airport === $this->nearest_airport_three) {
+                    $this->addError('nearest_airport_three', 'Airport Should not match');
+                }
+                if ($this->nearest_airport === $this->nearest_airport_four) {
+                    $this->addError('nearest_airport_four', 'Airport Should not match');
+                }
+                if ($this->nearest_airport === $this->nearest_airport_five) {
+                    $this->addError('nearest_airport_five', 'Airport Should not match');
+                }
+            }],
+
+            ['nearest_airport_two', function () {
+                if ($this->nearest_airport_two == $this->nearest_airport_three) {
+                    $this->addError('nearest_airport_three', 'Airport Should not match');
+                }
+                if ($this->nearest_airport_two == $this->nearest_airport_four) {
+                    $this->addError('nearest_airport_four', 'Airport Should not match');
+                }
+                if ($this->nearest_airport_two == $this->nearest_airport_five) {
+                    $this->addError('nearest_airport_five', 'Airport Should not match');
+                }
+            }],
+
+            ['nearest_airport_three', function () {
+                if ($this->nearest_airport_three == $this->nearest_airport_four) {
+                    $this->addError('nearest_airport_four', 'Airport Should not match');
+                }
+                if ($this->nearest_airport_three == $this->nearest_airport_five) {
+                    $this->addError('nearest_airport_five', 'Airport Should not match');
+                }
+            }],
+
+            ['nearest_airport_four', function () {
+                if ($this->nearest_airport_four == $this->nearest_airport_five) {
+                    $this->addError('nearest_airport_five', 'Airport Should not match');
+                }
+            }],
+
+
+            ///////////////////////////////////   airport distance validation    ///////////////////////////////////
+
+
+            ['nearest_airport_distance', function () {
+                if ($this->nearest_airport_distance === $this->nearest_airport_distance_two) {
+                    $this->addError('nearest_airport_distance_two', 'Airport Distance Should not match');
+                }
+                if ($this->nearest_airport_distance === $this->nearest_airport_distance_three) {
+                    $this->addError('nearest_airport_distance_three', 'Airport Distance Should not match');
+                }
+                if ($this->nearest_airport_distance === $this->nearest_airport_distance_four) {
+                    $this->addError('nearest_airport_distance_four', 'Airport Distance Should not match');
+                }
+                if ($this->nearest_airport_distance === $this->nearest_airport_distance_five) {
+                    $this->addError('nearest_airport_distance_five', 'Airport Distance Should not match');
+                }
+            }],
+
+            ['nearest_airport_distance_two', function () {
+                if ($this->nearest_airport_distance_two == $this->nearest_airport_distance_three) {
+                    $this->addError('nearest_airport_distance_three', 'Airport Distance Should not match');
+                }
+                if ($this->nearest_airport_distance_two == $this->nearest_airport_distance_four) {
+                    $this->addError('nearest_airport_distance_four', 'Airport Distance Should not match');
+                }
+                if ($this->nearest_airport_distance_two == $this->nearest_airport_distance_five) {
+                    $this->addError('nearest_airport_distance_five', 'Airport Distance Should not match');
+                }
+            }],
+
+            ['nearest_airport_distance_three', function () {
+                if ($this->nearest_airport_distance_three == $this->nearest_airport_distance_four) {
+                    $this->addError('nearest_airport_distance_four', 'Airport Distance Should not match');
+                }
+                if ($this->nearest_airport_distance_three == $this->nearest_airport_distance_five) {
+                    $this->addError('nearest_airport_distance_five', 'Airport Distance Should not match');
+                }
+            }],
+
+            ['nearest_airport_distance_four', function () {
+                if ($this->nearest_airport_distance_four == $this->nearest_airport_distance_five) {
+                    $this->addError('nearest_airport_distance_five', 'Airport Distance Should not match');
+                }
+            }],
+
+
+            //////////////////////////////////////////////////////////////////////////////////
 
             [
                 ['feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
@@ -214,7 +422,8 @@ class SafariParkForm extends model
         ];
         $scenarios['howtoreach'] = [
             'status', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station', 'nearest_airport_distance_two', 'nearest_airport_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_two',
-            'module_title', 'module_description'
+            'module_title', 'module_description', 'nearest_railway_station_distance_three', 'nearest_railway_station_distance_four', 'nearest_railway_station_distance_five', 'nearest_airport_distance_three', 'nearest_airport_distance_four', 'nearest_airport_distance_five',
+            'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'
         ];
         $scenarios['media'] = ['logo', 'feature_image', 'status'];
         $scenarios['florafauna'] = ['florafauna'];
@@ -268,8 +477,21 @@ class SafariParkForm extends model
             'nearest_airport_distance' => 'Nearest Airport Distance  (in km)',
             'nearest_railway_station_two' => 'Nearest Railway',
             'nearest_railway_station_distance_two' => 'Nearest Railway Station Distance (in km)',
+            'nearest_railway_station_three' => 'Nearest Railway three',
+            'nearest_railway_station_distance_three' => 'Nearest Railway Station Distance three',
+            'nearest_railway_station_four' => 'Nearest Railway four',
+            'nearest_railway_station_distance_four' => 'Nearest Railway Station Distance four',
+            'nearest_railway_station_five' => 'Nearest Railway five',
+            'nearest_railway_station_distance_five' => 'Nearest Railway Station Distance five',
             'nearest_airport_two' => 'Airport',
             'nearest_airport_distance_two' => 'Nearest Airport Distance  (in km)',
+            'nearest_airport_three' => 'Airport three',
+            'nearest_airport_distance_three' => 'Nearest Airport Distance three',
+            'nearest_airport_four' => 'Airport four',
+            'nearest_airport_distance_four' => 'Nearest Airport Distance four',
+            'nearest_airport_five' => 'Airport five',
+            'nearest_airport_distance_five' => 'Nearest Airport Distance five',
+
             'nearest_bus_station' => 'Nearest Bus Station',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
@@ -309,8 +531,21 @@ class SafariParkForm extends model
 
         $this->safari_park_model->nearest_railway_station_two = $this->nearest_railway_station_two;
         $this->safari_park_model->nearest_railway_station_distance_two = $this->nearest_railway_station_distance_two;
+        $this->safari_park_model->nearest_railway_station_three = $this->nearest_railway_station_three;
+        $this->safari_park_model->nearest_railway_station_distance_three = $this->nearest_railway_station_distance_three;
+        $this->safari_park_model->nearest_railway_station_four = $this->nearest_railway_station_four;
+        $this->safari_park_model->nearest_railway_station_distance_four = $this->nearest_railway_station_distance_four;
+        $this->safari_park_model->nearest_railway_station_five = $this->nearest_railway_station_five;
+        $this->safari_park_model->nearest_railway_station_distance_five = $this->nearest_railway_station_distance_five;
+
         $this->safari_park_model->nearest_airport_two = $this->nearest_airport_two;
         $this->safari_park_model->nearest_airport_distance_two = $this->nearest_airport_distance_two;
+        $this->safari_park_model->nearest_airport_three = $this->nearest_airport_three;
+        $this->safari_park_model->nearest_airport_distance_three = $this->nearest_airport_distance_three;
+        $this->safari_park_model->nearest_airport_four = $this->nearest_airport_four;
+        $this->safari_park_model->nearest_airport_distance_four = $this->nearest_airport_distance_four;
+        $this->safari_park_model->nearest_airport_five = $this->nearest_airport_five;
+        $this->safari_park_model->nearest_airport_distance_five = $this->nearest_airport_distance_five;
 
         $this->safari_park_model->nearest_bus_station = $this->nearest_bus_station;
         $this->safari_park_model->meta_title = $this->meta_title;
