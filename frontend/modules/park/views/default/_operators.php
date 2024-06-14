@@ -56,8 +56,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <?php } ?>
                                 <div class="card-body ">
                                     <div class="logo_provide2">
-                                        <!-- <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100"> -->
-                                        <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy">
+                                        <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
+                                        <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                                     </div>
                                     <div class="provider_details  px-2">
                                         <h6 class="pname py-3 border-top"><?= $operator->register_comapany_name ?></h6>
