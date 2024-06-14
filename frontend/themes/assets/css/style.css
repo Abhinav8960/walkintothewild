@@ -2620,6 +2620,7 @@ figure {
 
     font-size: var(--fs-30);
     text-align: center;
+    color: var(--background-primary);
 }
 
 .h6 {
