@@ -53,8 +53,8 @@ $recentposts = ArticleSearch::recentpost();
                         <div class="col-lg-3">
                             <div class="tourLogoes">
                                 <div class="images_tour">
-                                    <!-- <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt=""> -->
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy">
+                                    <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="">
+                                    <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                                 </div>
                                 <div class="slect_safricound2 d-flex justify-content-around mt-4">
                                     <div class="parks_text text-center">
