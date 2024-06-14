@@ -282,7 +282,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function locationoption()
     {
-        return ArrayHelper::map(MetaLocation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterLocation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function safarisessionoption()
