@@ -456,6 +456,7 @@ class ProfileController extends Controller
     public function actionDeletezone($id)
     {
         $model = $this->findZoneModel($id);
+        $model->zone_name = $model->id . '_' . $model->zone_name;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
