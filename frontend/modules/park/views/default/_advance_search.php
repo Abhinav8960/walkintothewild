@@ -30,7 +30,8 @@ use common\models\GeneralModel;
                         GeneralModel::locationoption(),
                         [
                             'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
+                            'aria-label' => "Large select example",
+                            'prompt' => ''
                         ]
                     )->label(false) ?>
                 </div>
@@ -53,7 +54,9 @@ use common\models\GeneralModel;
                         GeneralModel::monthoption(),
                         [
                             'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
+                            'aria-label' => "Large select example",
+                            'prompt' => ''
+
                         ]
                     )->label(false) ?>
                 </div>
@@ -76,7 +79,8 @@ use common\models\GeneralModel;
                         GeneralModel::animalfilteroption(),
                         [
                             'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
+                            'aria-label' => "Large select example",
+                            'prompt' => ''
                         ]
                     )->label(false) ?>
 
@@ -101,7 +105,8 @@ use common\models\GeneralModel;
                         GeneralModel::vehicleoption(),
                         [
                             'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
+                            'aria-label' => "Large select example",
+                            'prompt' => ''
                         ]
                     )->label(false) ?>
                 </div>
@@ -126,7 +131,8 @@ use common\models\GeneralModel;
                                 GeneralModel::accomodationoption(),
                                 [
                                     'class' => "form-select form-select-lg hidden-select",
-                                    'aria-label' => "Large select example"
+                                    'aria-label' => "Large select example",
+                                    'prompt' => ''
                                 ]
                             )->label(false) ?>
                         </div>
@@ -149,7 +155,8 @@ use common\models\GeneralModel;
                                 GeneralModel::safarisessionoption(),
                                 [
                                     'class' => "form-select form-select-lg hidden-select",
-                                    'aria-label' => "Large select example"
+                                    'aria-label' => "Large select example",
+                                    'prompt' => ''
                                 ]
                             )->label(false) ?>
                         </div>

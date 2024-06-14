@@ -58,7 +58,6 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-
         $searchModel = new SafariParkSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 

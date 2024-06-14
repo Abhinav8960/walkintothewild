@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row gx-0 justify-content-center">
     <div class="col-lg-10 col-xl-10">
-    <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
+        <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">North india, South...</div>
@@ -31,7 +31,8 @@ use yii\widgets\ActiveForm;
                         GeneralModel::locationoption(),
                         [
                             'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
+                            'aria-label' => "Large select example",
+                            'prompt' => "Large select example",
                         ]
                     )->label(false) ?>
                 </div>
@@ -113,7 +114,7 @@ use yii\widgets\ActiveForm;
                     <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                 </div>
             </div>
-       
+
 
 
         </div>
