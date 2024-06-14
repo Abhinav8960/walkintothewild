@@ -19,7 +19,7 @@ if ($featured_parks) {    ?>
         ?>
             <div class="safari-box">
                 <figure class="image-box">
-                    <img src="<?= isset($featured_park->feature_image) ? $featured_park->featureimagepath : $this->params['baseurl'] . '/img/Jim Corbett.jpg' ?>" alt="">
+                    <img src="<?= isset($featured_park->feature_image) ? $featured_park->featureimagepath : $this->params['baseurl'] . '/img/Jim Corbett.jpg' ?>" alt="" loading="lazy">
                 </figure>
                 <div class="content-box">
                     <h3><a href="/park/<?= $featured_park->slug ?>"><?= $featured_park->title ?></a></h3>

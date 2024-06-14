@@ -18,7 +18,29 @@ $form = ActiveForm::begin([
     <div class="title_top pb-4">
         <h4>Select Filters</h4>
     </div>
-    <div class="title_filter mb-4">
+    <div class="title_filter mb-2">
+        <h6>Budget</h6>
+        <div class="input_check d-flex gap-3 align-items-center">
+            <?= $form->field($model, 'budget_segment')->checkboxList(
+                GeneralModel::packageoption(),
+                [
+                    'itemOptions' => ['class' => 'checkbox_design'],
+                ]
+            ); ?>
+        </div>
+    </div>
+    <div class="title_filter mb-2">
+        <h6>Operator Credibility</h6>
+        <div class="input_check d-flex gap-3 align-items-center">
+            <?= $form->field($model, 'credibility')->checkboxList(
+                GeneralModel::operatorcredibility(),
+                [
+                    'itemOptions' => ['class' => 'checkbox_design'],
+                ]
+            ); ?>
+        </div>
+    </div>
+    <div class="title_filter mb-2">
         <h6>Operator Rating</h6>
         <?php
         $ratings = GeneralModel::rating();
@@ -49,28 +71,6 @@ $form = ActiveForm::begin([
         }
         ?>
 
-    </div>
-    <div class="title_filter mb-4">
-        <h6>Operator Credibility</h6>
-        <div class="input_check d-flex gap-3 align-items-center">
-            <?= $form->field($model, 'credibility')->checkboxList(
-                GeneralModel::operatorcredibility(),
-                [
-                    'itemOptions' => ['class' => 'checkbox_design'],
-                ]
-            ); ?>
-        </div>
-    </div>
-    <div class="title_filter mb-4">
-        <h6>Budget</h6>
-        <div class="input_check d-flex gap-3 align-items-center">
-            <?= $form->field($model, 'budget_segment')->checkboxList(
-                GeneralModel::packageoption(),
-                [
-                    'itemOptions' => ['class' => 'checkbox_design'],
-                ]
-            ); ?>
-        </div>
     </div>
 
 </div>

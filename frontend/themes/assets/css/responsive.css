@@ -58,10 +58,20 @@
         transform: translate(-50%, -50%);
         z-index: 0;
     }
-
+    .listingSafari{
+        width: 300px;
+    }
 }
 
 
+
+@media(min-width:1400px){
+
+    .safartabs .nav-tabs .nav-link{
+
+        padding: 7px 56px;
+    }
+}
 @media only screen and (min-width:1800px) {
     .footer_object img {
 
@@ -398,6 +408,10 @@
         overflow: auto;
 
     }
+    .height_set::-webkit-scrollbar {
+        display: none !important;
+       
+    } 
 
 
 }
@@ -546,10 +560,10 @@
 
     }
 
-    .logo_provide2 {
+    /* .logo_provide2 {
 
         height: 100%;
-    }
+    } */
 
     .serch_btn button {
 

@@ -20,7 +20,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="banner_section main_homebanner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/bannerhome.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/bannerhome.png' ?>" class="d-block w-100" alt="banner">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/bannerhome.png' ?>" class="d-block w-100" alt="banner" >
     </picture>
     <div class="banner_searchBox">
         <div class="container-lg">
@@ -207,12 +207,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="row">
             <div class="col-lg-6 mb-5 mb-lg-4">
                 <div class="registration_img position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100">
+                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br>Safari Tour Operator</h6>
 
                         <div class="btn_r">
-                            <a href="safaritour-resgistration.html" class="btn_registrtion">Register Now</a>
+                            <a href="/safaritour-registration" class="btn_registrtion">Register Now</a>
                         </div>
 
                     </div>
@@ -220,12 +220,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
             <div class="col-lg-6 mb-5 mb-lg-4">
                 <div class="registration_img  position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100">
+                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br>Birding Tour Operator</h6>
 
                         <div class="btn_r">
-                            <a href="birding-form.html" class="btn_registrtion">Register Now</a>
+                            <a href="/birdingtour-registration" class="btn_registrtion">Register Now</a>
                         </div>
 
                     </div>

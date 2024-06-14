@@ -41,7 +41,7 @@ $this->params['title'] = $this->title;
         <div class="row pb-md-5 pb-2 gx-0 px-xl-5 px-0">
             <div class="col-lg-6 mb-5 pb-md-3 pb-3 mb-lg-4">
                 <div class="registration_img position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100">
+                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br> Safari Tour Operator <br></h6>
 
@@ -54,7 +54,7 @@ $this->params['title'] = $this->title;
             </div>
             <div class="col-lg-6 mb-3  pb-5 pb-md-3 mb-lg-5">
                 <div class="registration_img  position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100">
+                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br> Birding Tour Operator </h6>
 

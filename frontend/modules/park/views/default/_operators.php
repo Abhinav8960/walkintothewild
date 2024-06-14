@@ -20,7 +20,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
 </div>
-<div class="col-lg-8 col-xl-9 col-xxl-10">
+<div class="col-lg-8 col-xl-9 col-xxl-10 ps-lg-5">
     <div class="col-12">
         <div class="topfilter d-md-flex justify-content-between align-items-center w-100">
             <div class="left_text">
@@ -42,23 +42,25 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="gridview mt-4">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-5 g-xl-4 gx-lg-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-lg-4">
                 <?php if ($operators) {
                     foreach ($operators as $operator) {
                 ?>
-                        <div class="col-lg-6 col-xl-3 mb-3">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xl-4 col-xxl-3 mb-3">
+                            <a href="/operator/<?= $operator->id ?>" class="oprators_boxes">
                             <div class="listingSafari ">
                                 <?php if ($operator->is_highlighted) { ?>
                                     <div class="higlighted">
                                         <p>Highlighted</p>
                                     </div>
                                 <?php } ?>
-                                <div class="card-body px-2">
-                                    <div class="logo_provide2  p-3 border_bottom2">
-                                        <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
+                                <div class="card-body ">
+                                    <div class="logo_provide2">
+                                        <!-- <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100"> -->
+                                        <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy">
                                     </div>
-                                    <div class="provider_details">
-                                        <h6 class="pname py-3"><?= $operator->register_comapany_name ?></h6>
+                                    <div class="provider_details  px-2">
+                                        <h6 class="pname py-3 border-top"><?= $operator->register_comapany_name ?></h6>
                                         <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
 
                                             <div class="ratings">
@@ -94,6 +96,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     </div>
                                 </div>
                             </div>
+                            </a>
                         </div>
                 <?php }
                 } ?>

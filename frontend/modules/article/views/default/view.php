@@ -119,7 +119,7 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row">
             <div class="col-lg-6 mb-5 mb-lg-4">
                 <div class="registration_img position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100">
+                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br>Safari Tour Operator</h6>
 
@@ -132,7 +132,7 @@ $recentposts = ArticleSearch::recentpost();
             </div>
             <div class="col-lg-6 mb-5 mb-lg-4">
                 <div class="registration_img  position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100">
+                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br>Birding Tour Operator</h6>
 

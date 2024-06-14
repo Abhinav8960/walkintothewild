@@ -44,7 +44,7 @@
 													"/article/default/index",
 													"/article/default/view",
 												)) ? "active" : "" ?>">
-								<a class="nav-link" href="/article">Artical & tips</a>
+								<a class="nav-link" href="/article">	<img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1"> ARTICLES & TIPS</a>
 							</li>
 
 							<a href="/sharedsafari" class="sahreSafari text-lg-center">
