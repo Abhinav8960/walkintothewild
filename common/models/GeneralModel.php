@@ -616,4 +616,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return ArrayHelper::map(MetaTermConditionType::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
+
+
+    /**
+     * Remove Leading Character Default 0 remove from left side
+     */
+    public static function removeLeadingChar($value, $char = '0')
+    {
+        return ltrim($value, $char);
+    }
 }
