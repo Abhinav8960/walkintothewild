@@ -41,6 +41,10 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-3">
+                <?= $form->field($model, 'safri_cost_note')->textInput(['maxlength' => true, 'placeholder' => 'Enter Safari Cost Note']) ?>
+            </div>
+
+            <div class="col-md-3">
                 <?= $form->field($model, 'official_website')->textInput(['maxlength' => true, 'placeholder' => 'Enter Offical Website']) ?>
             </div>
 

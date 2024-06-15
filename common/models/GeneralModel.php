@@ -247,7 +247,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function vehicleoption()
     {
-        return ArrayHelper::map(MasterVehicle::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['vehicle_name' => SORT_ASC])->all(), 'id', 'vehicle_name');
+        return ArrayHelper::map(MasterVehicle::find()->where(['status' => self::STATUS_ACTIVE])
+            // ->orderBy(['vehicle_name' => SORT_ASC])
+            ->all(), 'id', 'vehicle_name');
     }
 
     public static function rareanimaloption()
@@ -287,7 +289,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function safarisessionoption()
     {
-        return ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MetaSafariSession::find()->where(['status' => self::STATUS_ACTIVE])
+            // ->orderBy(['title' => SORT_ASC])
+            ->all(), 'id', 'title');
     }
 
 
