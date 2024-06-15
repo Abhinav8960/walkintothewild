@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 ?>
 <div class="commentCount mb-4">
-    <h6>4 Comments</h6>
+    <h6> Comments</h6>
 </div>
 <?php
 if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1])->all()) {

@@ -75,7 +75,7 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="author_wrapper">
                         <ul class="artical-info ">
                             <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
-                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= count($article->articlecomments) ?> Comments</a></li>
+                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
                         </ul>
                     </div>
                 </div>
