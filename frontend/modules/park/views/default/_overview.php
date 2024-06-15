@@ -61,7 +61,9 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->railwaystation) ? $model->railwaystation->title . ', ' : '' ?><?= isset($model->railwaystationtwo) ? $model->railwaystationtwo->title : '' ?></p>
+                                <p class="mb-0">
+                                    <?= $model->railwaystationlist ?>
+
                             </div>
                         </div>
                     </div>
@@ -72,7 +74,7 @@
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
-                                    
+
                                     <?php if ($model->sessions) {
                                         $sessions_arr = [];
                                         foreach ($model->sessions as $session) {
@@ -92,7 +94,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->airport) ? $model->airport->name : '' ?></p>
+                                <p class="mb-0"><?= $model->airportlist ?></p>
                             </div>
                         </div>
                     </div>
