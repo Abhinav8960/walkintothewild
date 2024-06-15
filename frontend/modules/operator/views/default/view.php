@@ -111,18 +111,18 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="socil-links d-flex gap-md-4 gap-2 my-3 flex-wrap">
-                                <div class="fs">
-                                    <a href="<?= $operator->facebook_url ?>"><i class="fa-brands fa-facebook-f"></i></a>
+                                <div class="fs <?= $operator->facebook_url ? '' : 'no-link-found' ?>">
+                                    <a href="<?= $operator->facebook_url ? $operator->facebook_url : '#' ?>"><i class="fa-brands fa-facebook-f"></i></a>
                                 </div>
-                                <div class="fs">
-                                    <a href="<?= $operator->instagram_url ?>"> <i class="fa-brands fa-instagram"></i></a>
+                                <div class="fs <?= $operator->instagram_url ? '' : 'no-link-found' ?>">
+                                    <a href="<?= $operator->instagram_url ? $operator->instagram_url : '#' ?>"> <i class="fa-brands fa-instagram"></i></a>
                                 </div>
-                                <div class="fs">
-                                    <a href="<?= $operator->youtube_link ?>"> <i class="fa-brands fa-youtube"></i></a>
+                                <div class="fs <?= $operator->youtube_link ? '' : 'no-link-found' ?>">
+                                    <a href="<?= $operator->youtube_link ? $operator->youtube_link : '#' ?>"> <i class="fa-brands fa-youtube"></i></a>
                                 </div>
                             </div>
-                            <div class="websitebtn pt-3">
-                                <a href="<?= $operator->website ?>">OFFICIAL WEBSITE</a>
+                            <div class="websitebtn pt-3 <?= $operator->website ? '' : 'no-link-found' ?>">
+                                <a href="<?= $operator->website ? $operator->website : '#' ?>">OFFICIAL WEBSITE</a>
                             </div>
 
 
