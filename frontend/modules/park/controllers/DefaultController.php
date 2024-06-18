@@ -184,6 +184,10 @@ class DefaultController extends Controller
     public function actionParklist()
     {
         $searchModel = new SafariParkSearch();
+        $searchModel->master_location_id = 7;
+        $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+        $searchModel->master_animal_id = 13;
+        $searchModel->master_vehicle_id = 5;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
