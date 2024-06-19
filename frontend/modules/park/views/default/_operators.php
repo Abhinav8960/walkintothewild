@@ -48,54 +48,54 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 ?>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xl-4 col-xxl-3 mb-3">
                             <a href="/operator/<?= $operator->id ?>" class="oprators_boxes">
-                            <div class="listingSafari ">
-                                <?php if ($operator->is_highlighted) { ?>
-                                    <div class="higlighted">
-                                        <p>Highlighted</p>
-                                    </div>
-                                <?php } ?>
-                                <div class="card-body ">
-                                    <div class="logo_provide2">
-                                        <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
-                                        <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
-                                    </div>
-                                    <div class="provider_details  px-2">
-                                        <h6 class="pname py-3 border-top"><?= $operator->register_comapany_name ?></h6>
-                                        <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
+                                <div class="listingSafari ">
+                                    <?php if ($operator->is_highlighted) { ?>
+                                        <div class="higlighted">
+                                            <p>Highlighted</p>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="card-body ">
+                                        <div class="logo_provide2">
+                                            <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
+                                            <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
+                                        </div>
+                                        <div class="provider_details  px-2">
+                                            <h6 class="pname py-3 border-top"><?= $operator->register_comapany_name ?></h6>
+                                            <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
 
-                                            <div class="ratings">
+                                                <div class="ratings">
 
-                                                <p class="mb-0"><?= $operator->google_rating ?>
-                                                    <?= GeneralModel::ratiing_views($operator->google_rating); ?>
-                                                </p>
+                                                    <p class="mb-0"><?= $operator->google_rating ?>
+                                                        <?= GeneralModel::ratiing_views($operator->google_rating); ?>
+                                                    </p>
+                                                </div>
+                                                <div class="googlerating">
+                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Google Reviews' : '0 Google Reviews' ?> </p>
+                                                </div>
                                             </div>
-                                            <div class="googlerating">
-                                                <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Google Reviews' : '0 Google Reviews' ?> </p>
+
+                                        </div>
+                                    </div>
+                                    <div class="footer_provider ">
+                                        <div class="slect_safricound d-flex justify-content-around">
+                                            <div class="parks_text text-center">
+                                                <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
+                                                <p>Parks</p>
+                                            </div>
+                                            <div class="parks_text text-center">
+                                                <p>0</p>
+                                                <p>Resorts</p>
+                                            </div>
+                                            <div class="parks_text text-center">
+                                                <p>0</p>
+                                                <p>Shared Safari</p>
                                             </div>
                                         </div>
-
+                                        <div class="get_quote text-center">
+                                            <a href="/operator/<?= $operator->id ?>" class="get_quote_btn">GET A FREE QUOTE</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="footer_provider ">
-                                    <div class="slect_safricound d-flex justify-content-around">
-                                        <div class="parks_text text-center">
-                                            <p><?= count($operator->park) ?></p>
-                                            <p>Parks</p>
-                                        </div>
-                                        <div class="parks_text text-center">
-                                            <p>0</p>
-                                            <p>Resorts</p>
-                                        </div>
-                                        <div class="parks_text text-center">
-                                            <p>0</p>
-                                            <p>Shared Safari</p>
-                                        </div>
-                                    </div>
-                                    <div class="get_quote text-center">
-                                        <a href="/operator/<?= $operator->id ?>" class="get_quote_btn">GET A FREE QUOTE</a>
-                                    </div>
-                                </div>
-                            </div>
                             </a>
                         </div>
                 <?php }

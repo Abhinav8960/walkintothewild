@@ -149,16 +149,16 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="topics_listing">
                         <ul id="tabList">
                             <li><a class="tab-items active_safri" data-tab="safariParks">
-                                    <div class="numparks">Safari Parks <span>6</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items " data-tab="resort">
-                                    <div class="numparks">Resort <span>7</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items" data-tab="sharedSafari">
-                                    <div class="numparks">Shared Safari <span>17</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Shared Safari <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items " data-tab="review">
-                                    <div class="numparks">Review <span>59</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Review <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                         </ul>
                     </div>
