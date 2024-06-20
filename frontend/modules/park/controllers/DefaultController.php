@@ -100,6 +100,7 @@ class DefaultController extends Controller
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($model) {
             $operatorsearchModel = new SafariOperatorSearch();
+            $operatorsearchModel->status = 1;
             $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
             $operators = $operatordataProvider->getModels();
 
