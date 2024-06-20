@@ -148,7 +148,11 @@
 
     .safartabs .nav-tabs .nav-link {
 
-        font-size: 15px;
+        font-size: 14px;
+    }
+    .dropdown-toggle{
+
+        font-size: 14px;
     }
 
     .shareimg {
@@ -159,6 +163,19 @@
     .Modal_label {
 
         font-size: 14px;
+    }
+    .coreZone h3,
+    .bufferzone h3{
+
+        font-size: 20px;
+    }
+    .custoM-inputs .title_filter .input_check .form-check{
+
+        font-size: 14px;
+    }
+    .seelctes_text p{
+
+        font-size: 13px;
     }
  
 }
