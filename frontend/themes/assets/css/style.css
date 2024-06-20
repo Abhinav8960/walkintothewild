@@ -2721,7 +2721,7 @@ margin-right: 10px;
 .placeholder_select p {
 
     margin-bottom: 0 !important;
-    font-weight: 600;
+    color: var(--background-primary);
 }
 .placeholder_select ,.icons_select{
 
@@ -3600,8 +3600,10 @@ cursor: pointer;
     padding: 38px 20px 10px 64px;
     font-family: "Roboto", sans-serif;
     background-image: none !important;
-    font-size: var(--fs-14);
-    color: #707070;
+    font-size: 17px;
+    /* color: #707070; */
+    color: var(--background-primary);
+    font-weight: 600;
     border-radius: 0;
     width: 265px;
     height: 70px;
