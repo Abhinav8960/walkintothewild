@@ -78,6 +78,7 @@ class SafariParkForm extends model
     public $latitude;
     public $longitude;
     public $month_note;
+    public $safri_cost_note;
     public $about_title;
     public $about_description;
     public $module_title;
@@ -144,6 +145,7 @@ class SafariParkForm extends model
             $this->latitude = $this->safari_park_model->latitude;
             $this->longitude = $this->safari_park_model->longitude;
             $this->month_note = $this->safari_park_model->month_note;
+            $this->safri_cost_note = $this->safari_park_model->safri_cost_note;
             $this->about_title = $this->safari_park_model->about_title;
             $this->about_description = $this->safari_park_model->about_description;
             $this->module_title = $this->safari_park_model->module_title;
@@ -186,7 +188,7 @@ class SafariParkForm extends model
             [[
                 'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description',
                 'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'nearest_railway_station', 'nearest_airport', 'nearest_railway_station_two', 'nearest_airport_two',
-                'about_title', 'about_description', 'meta_keywords', 'module_title', 'module_description', 'month_note', 'animal_text', 'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'
+                'about_title', 'about_description', 'meta_keywords', 'module_title', 'module_description', 'month_note', 'safri_cost_note', 'animal_text', 'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'
             ], 'safe'],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
@@ -412,13 +414,13 @@ class SafariParkForm extends model
             'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
             'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
-            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'month_note', 'animal_text'
+            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'month_note', 'safri_cost_note', 'animal_text'
         ];
         $scenarios['update'] = [
             'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
             'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
-            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'animal_text'
+            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'safri_cost_note', 'animal_text'
         ];
         $scenarios['howtoreach'] = [
             'status', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station', 'nearest_airport_distance_two', 'nearest_airport_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_two',
@@ -554,6 +556,7 @@ class SafariParkForm extends model
         $this->safari_park_model->latitude = $this->latitude;
         $this->safari_park_model->longitude = $this->longitude;
         $this->safari_park_model->month_note = $this->month_note;
+        $this->safari_park_model->safri_cost_note = $this->safri_cost_note;
         $this->safari_park_model->about_title = $this->about_title;
         $this->safari_park_model->about_description = $this->about_description;
         $this->safari_park_model->module_title = $this->module_title;

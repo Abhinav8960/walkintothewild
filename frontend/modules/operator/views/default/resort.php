@@ -1,4 +1,4 @@
-<div class="searchSafari_parks mb-4">
+<!-- <div class="searchSafari_parks mb-4">
     <div class="row">
         <div class="col-lg-4">
             <div class="slider_resorts resort owl-carousel owl-theme position-relative h-100">
@@ -8,9 +8,9 @@
                 <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
                 <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
             </div>
-            <!-- <div class="parksImg h-100">
+            <div class="parksImg h-100">
                                     <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100 h-100">
-                                </div> -->
+                                </div>
         </div>
         <div class="col-lg-8 position-relative">
             <div class="parks_body">
@@ -86,4 +86,4 @@
 
         </div>
     </div>
-</div>
+</div> -->

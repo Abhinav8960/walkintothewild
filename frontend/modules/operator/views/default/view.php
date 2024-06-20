@@ -111,18 +111,18 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="socil-links d-flex gap-md-4 gap-2 my-3 flex-wrap">
-                                <div class="fs">
-                                    <a href="<?= $operator->facebook_url ?>"><i class="fa-brands fa-facebook-f"></i></a>
+                                <div class="fs <?= $operator->facebook_url ? '' : 'no-link-found' ?>">
+                                    <a href="<?= $operator->facebook_url ? $operator->facebook_url : '#' ?>"><i class="fa-brands fa-facebook-f"></i></a>
                                 </div>
-                                <div class="fs">
-                                    <a href="<?= $operator->instagram_url ?>"> <i class="fa-brands fa-instagram"></i></a>
+                                <div class="fs <?= $operator->instagram_url ? '' : 'no-link-found' ?>">
+                                    <a href="<?= $operator->instagram_url ? $operator->instagram_url : '#' ?>"> <i class="fa-brands fa-instagram"></i></a>
                                 </div>
-                                <div class="fs">
-                                    <a href="<?= $operator->youtube_link ?>"> <i class="fa-brands fa-youtube"></i></a>
+                                <div class="fs <?= $operator->youtube_link ? '' : 'no-link-found' ?>">
+                                    <a href="<?= $operator->youtube_link ? $operator->youtube_link : '#' ?>"> <i class="fa-brands fa-youtube"></i></a>
                                 </div>
                             </div>
-                            <div class="websitebtn pt-3">
-                                <a href="<?= $operator->website ?>">OFFICIAL WEBSITE</a>
+                            <div class="websitebtn pt-3 <?= $operator->website ? '' : 'no-link-found' ?>">
+                                <a href="<?= $operator->website ? $operator->website : '#' ?>">OFFICIAL WEBSITE</a>
                             </div>
 
 
@@ -149,16 +149,16 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="topics_listing">
                         <ul id="tabList">
                             <li><a class="tab-items active_safri" data-tab="safariParks">
-                                    <div class="numparks">Safari Parks <span>6</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items " data-tab="resort">
-                                    <div class="numparks">Resort <span>7</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items" data-tab="sharedSafari">
-                                    <div class="numparks">Shared Safari <span>17</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Shared Safari <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items " data-tab="review">
-                                    <div class="numparks">Review <span>59</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Review <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                         </ul>
                     </div>

@@ -24,10 +24,10 @@ class SafariParkSearch extends SafariPark
     public function rules()
     {
         return [
-            [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
-            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
-            [['latitude', 'longitude'], 'string', 'max' => 50],
+            [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'safe'],
+            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
+            [['latitude', 'longitude'], 'safe'],
             [['month_id', 'master_animal_id', 'master_rare_animal_id', 'master_vehicle_id', 'accomodation_id', 'session_id', 'bonus_experience_id'], 'safe']
         ];
     }

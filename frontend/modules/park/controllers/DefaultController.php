@@ -2,17 +2,18 @@
 
 namespace frontend\modules\park\controllers;
 
-use common\interfaces\StatusInterface;
-use common\models\cms\article\Article;
-use common\models\park\SafariPark;
-use common\models\park\SafariParkMonth;
-use common\models\RenderedContent;
-use common\models\suggestions\form\SafariSuggestionsForm;
-use frontend\models\SafariOperatorSearch;
-use frontend\models\SafariParkSearch;
 use Yii;
 use yii\web\Controller;
+use common\models\GeneralModel;
+use common\models\park\SafariPark;
+use common\models\RenderedContent;
 use yii\web\NotFoundHttpException;
+use frontend\models\SafariParkSearch;
+use common\interfaces\StatusInterface;
+use common\models\cms\article\Article;
+use common\models\park\SafariParkMonth;
+use frontend\models\SafariOperatorSearch;
+use common\models\suggestions\form\SafariSuggestionsForm;
 
 /**
  * DefaultController.
@@ -59,6 +60,10 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new SafariParkSearch();
+        $searchModel->master_location_id = 7;
+        $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+        $searchModel->master_animal_id = 13;
+        $searchModel->master_vehicle_id = 5;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
@@ -179,6 +184,10 @@ class DefaultController extends Controller
     public function actionParklist()
     {
         $searchModel = new SafariParkSearch();
+        $searchModel->master_location_id = 7;
+        $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+        $searchModel->master_animal_id = 13;
+        $searchModel->master_vehicle_id = 5;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();

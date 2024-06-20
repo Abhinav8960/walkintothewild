@@ -15,20 +15,30 @@ use yii\widgets\ActiveForm;
     'fieldConfig' => [
         'template' => '{input}{error}',
     ],
-]); ?>
+]);
+
+$locationoption = GeneralModel::getAllLocation();
+$monthoption = GeneralModel::monthoption();
+$animalfilteroption = GeneralModel::animalfilteroption();
+$vehicleoption = GeneralModel::vehicleoption();
+?>
 <div class="row gx-0 justify-content-center">
     <div class="col-lg-10 col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
-                    <div class="dropdown-toggle">North india, South...</div>
+                    <div class="dropdown-toggle">
+
+                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'North india, South...' ?>
+
+                    </div>
                     <div class="dropdown custom_dropdown">
-                        <?php foreach (GeneralModel::locationoption() as $value => $label) : ?>
+                        <?php foreach ($locationoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
                     <?= $form->field($model, 'master_location_id')->dropDownList(
-                        GeneralModel::locationoption(),
+                        $locationoption,
                         [
                             'class' => "form-select form-select-lg hidden-select",
                             'aria-label' => "Large select example",
@@ -45,14 +55,16 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
-                    <div class="dropdown-toggle">May,june,July..</div>
+                    <div class="dropdown-toggle">
+                        <?= isset($monthoption[$model->month_id]) ? $monthoption[$model->month_id] : 'May,june,July..' ?>
+                    </div>
                     <div class="dropdown custom_dropdown">
-                        <?php foreach (GeneralModel::monthoption() as $value => $label) : ?>
+                        <?php foreach ($monthoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
                     <?= $form->field($model, 'month_id')->dropDownList(
-                        GeneralModel::monthoption(),
+                        $monthoption,
                         [
                             'class' => "form-select form-select-lg hidden-select",
                             'aria-label' => "Large select example"
@@ -68,14 +80,16 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
-                    <div class="dropdown-toggle">Tiger Elephent..</div>
+                    <div class="dropdown-toggle">
+                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Tiger Elephent..' ?>
+                    </div>
                     <div class="dropdown custom_dropdown">
-                        <?php foreach (GeneralModel::animalfilteroption() as $value => $label) : ?>
+                        <?php foreach ($animalfilteroption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
                     <?= $form->field($model, 'master_animal_id')->dropDownList(
-                        GeneralModel::animalfilteroption(),
+                        $animalfilteroption,
                         [
                             'class' => "form-select form-select-lg hidden-select",
                             'aria-label' => "Large select example"
@@ -93,14 +107,16 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
-                    <div class="dropdown-toggle">Cantar/Bus..</div>
+                    <div class="dropdown-toggle">
+                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Cantar/Bus..' ?>
+                    </div>
                     <div class="dropdown custom_dropdown">
-                        <?php foreach (GeneralModel::vehicleoption() as $value => $label) : ?>
+                        <?php foreach ($vehicleoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
                     <?= $form->field($model, 'master_vehicle_id')->dropDownList(
-                        GeneralModel::vehicleoption(),
+                        $vehicleoption,
                         [
                             'class' => "form-select form-select-lg hidden-select",
                             'aria-label' => "Large select example"

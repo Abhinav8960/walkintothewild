@@ -49,7 +49,7 @@
                                             $vehicles_arr[] =  isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name : '';
                                         }
                                         $vehicles_arr = array_filter($vehicles_arr, 'strlen');
-                                        echo  implode(",", $vehicles_arr);
+                                        echo  implode(", ", $vehicles_arr);
                                     } ?>
                                 </p>
                             </div>
@@ -61,7 +61,9 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->railwaystation) ? $model->railwaystation->title . ', ' : '' ?><?= isset($model->railwaystationtwo) ? $model->railwaystationtwo->title : '' ?></p>
+                                <p class="mb-0">
+                                    <?= $model->railwaystationlist ?>
+
                             </div>
                         </div>
                     </div>
@@ -72,14 +74,14 @@
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
-                                    
+
                                     <?php if ($model->sessions) {
                                         $sessions_arr = [];
                                         foreach ($model->sessions as $session) {
                                             $sessions_arr[] =  isset($session->metasession) ? $session->metasession->title : '';
                                         }
                                         $sessions_arr = array_filter($sessions_arr, 'strlen');
-                                        echo  implode(",", $sessions_arr);
+                                        echo  implode(", ", $sessions_arr);
                                     } ?>
 
                                 </p>
@@ -92,7 +94,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($model->airport) ? $model->airport->name : '' ?></p>
+                                <p class="mb-0"><?= $model->airportlist ?></p>
                             </div>
                         </div>
                     </div>
@@ -119,7 +121,7 @@
                             <div class="text-form">
                                 <p class="mb-0">
                                     <?php if (!empty($model->avg_safari_price_min) && !empty($model->avg_safari_price_max)) { ?>
-                                        <?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?> Average Safari Price
+                                        <?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?> Average Safari Price <?= isset($model->safri_cost_note) && $model->safri_cost_note <> '' ? '(' . $model->safri_cost_note . ')' : '' ?>
 
                                     <?php } ?> </p>
                             </div>
@@ -131,7 +133,7 @@
                                 <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($first_month) ? $first_month->mastermonth->month_name . ' - ' : '' ?><?= isset($last_month) ? $last_month->mastermonth->month_name : '' ?> <?= isset($model->month_note) ? '(' . $model->month_note . ')' : '' ?></p>
+                                <p class="mb-0"><?= isset($first_month) ? $first_month->mastermonth->month_name . ' - ' : '' ?><?= isset($last_month) ? $last_month->mastermonth->month_name : '' ?> <?= isset($model->month_note) && $model->month_note <> '' ? '(' . $model->month_note . ')' : '' ?></p>
                             </div>
                         </div>
                     </div>

@@ -157,6 +157,45 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     {
         return $this->hasOne(MasterAirport::className(), ['id' => 'nearest_airport']);
     }
+
+    public function getAirportdata($column_key = 'nearest_airport')
+    {
+        return $this->hasOne(MasterAirport::className(), ['id' => $column_key]);
+    }
+
+
+    public function getAirportlist()
+    {
+        $text = '';
+        $first = $this->airportdata;
+        $second = $this->getAirportdata('nearest_airport_two')->one();
+        $third = $this->getAirportdata('nearest_airport_three')->one();
+        $fourth = $this->getAirportdata('nearest_airport_four')->one();
+        $fifth = $this->getAirportdata('nearest_airport_five')->one();
+
+        if ($first) {
+            $text .= $first->name . ', ';
+        }
+
+        if ($second) {
+            $text .= $second->name . ', ';
+        }
+
+        if ($third) {
+            $text .= $third->name . ', ';
+        }
+
+        if ($fourth) {
+            $text .= $fourth->name . ', ';
+        }
+
+        if ($fifth) {
+            $text .= $fifth->name . ', ';
+        }
+        return substr($text, 0, -2);
+    }
+
+
     public function getRailwaystation()
     {
         return $this->hasOne(MasterRailwayStation::className(), ['id' => 'nearest_railway_station']);
@@ -166,6 +205,44 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     {
         return $this->hasOne(MasterRailwayStation::className(), ['id' => 'nearest_railway_station_two']);
     }
+
+    public function getRailwaystationdata($column_key = 'nearest_railway_station')
+    {
+        return $this->hasOne(MasterRailwayStation::className(), ['id' => $column_key]);
+    }
+
+
+    public function getRailwaystationlist()
+    {
+        $text = '';
+        $first = $this->railwaystationdata;
+        $second = $this->getRailwaystationdata('nearest_railway_station_two')->one();
+        $third = $this->getRailwaystationdata('nearest_railway_station_three')->one();
+        $fourth = $this->getRailwaystationdata('nearest_railway_station_four')->one();
+        $fifth = $this->getRailwaystationdata('nearest_railway_station_five')->one();
+
+        if ($first) {
+            $text .= $first->title . ', ';
+        }
+
+        if ($second) {
+            $text .= $second->title . ', ';
+        }
+
+        if ($third) {
+            $text .= $third->title . ', ';
+        }
+
+        if ($fourth) {
+            $text .= $fourth->title . ', ';
+        }
+
+        if ($fifth) {
+            $text .= $fifth->title . ', ';
+        }
+        return substr($text, 0, -2);
+    }
+
 
     public function getGallery()
     {
