@@ -5,6 +5,7 @@
     box-sizing: border-box;
 }
 
+
 :root {
 
     --background-primary: #09422D;
@@ -1490,9 +1491,9 @@ figure {
     background-color: var(--background-primary);
     color: var(--colorwhite);
     font-weight: 500;
-    font-size: var(--fs-18);
+    font-size: var(--fs-15);
     font-family: "Roboto", sans-serif !important;
-    padding: 8px 28px;
+    padding: 6px 28px;
     border: 0;
     border-radius: 20px;
 
@@ -1567,8 +1568,8 @@ figure {
 
     background-color: var(--background-orange);
     border: 0;
-    padding: 10px 25px;
-    font-size: var(--fs-18);
+    padding: 7px 25px;
+    font-size: var(--fs-16);
     color: var(--colorwhite);
     font-family: "Roboto", sans-serif;
     font-weight: 500;
@@ -1589,8 +1590,8 @@ figure {
 .join_btn {
     background-color: var(--background-yellow);
     border: 0;
-    padding: 10px 35px;
-    font-size: var(--fs-18);
+    padding: 7px 35px;
+    font-size: var(--fs-15);
     color: var(--colorBlack);
     font-family: "Roboto", sans-serif;
     font-weight: 500;
@@ -1600,7 +1601,7 @@ figure {
 .social-share p {
 
     margin-bottom: 0;
-    font-size: var(--fs-18);
+    font-size: var(--fs-16);
 }
 
 .sociel_icons ul {
@@ -1620,9 +1621,9 @@ figure {
 .iconSize i {
 
     color: var(--colorwhite);
-    font-size: var(--fs-18);
-    width: 35px;
-    height: 35px;
+    font-size: var(--fs-16);
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -1670,7 +1671,7 @@ figure {
 
 .commentsOther {
 
-    padding: 10px 30px 10px 50px;
+    padding: 10px 30px 21px 50px;
     border-bottom: 1px solid #0000004D;
 }
 
@@ -1694,8 +1695,8 @@ figure {
 
 .profileavtar img {
 
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 
 .safartabs {
