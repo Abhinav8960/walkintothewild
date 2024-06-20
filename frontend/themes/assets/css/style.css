@@ -3521,6 +3521,7 @@ cursor: pointer;
 
     color: #040404;
     font-size: 14px;
+    line-height: 19px;
 }
 
 .seelctes_text p:empty {

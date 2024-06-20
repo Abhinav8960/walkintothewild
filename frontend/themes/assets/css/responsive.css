@@ -58,23 +58,64 @@
         transform: translate(-50%, -50%);
         z-index: 0;
     }
-    .listingSafari{
+
+    .listingSafari {
         width: 300px;
     }
-    .padding_right{
+
+    .padding_right {
         padding-right: 3rem;
     }
 }
 
 
+@media(min-width:1500px){
 
-@media(min-width:1400px){
+    .searchSafari_parks .row .col-xl-3 {
 
-    .safartabs .nav-tabs .nav-link{
+        width: auto !important;
+    }
+
+    .searchSafari_parks .parksImg {
+
+        height: 265px !important;
+        width: 265px;
+    }
+    .searchSafari_parks .parksImg img{
+
+        object-fit: cover;
+    }
+
+    .searchSafari_parks .parks_body {
+
+        padding-bottom: 0;
+    }
+
+    .searchSafari_parks .parks_body .row {
+
+        margin-top: 9px;
+    }
+
+    .searchSafari_parks .parks_body .seelctes_text {
+
+        height: 120px !important;
+        overflow: visible;
+    }
+    .searchSafari_parks .parks_body .seelctes_text p{
+line-height: 19px;
+    }
+}
+
+@media(min-width:1400px) {
+
+    .safartabs .nav-tabs .nav-link {
 
         padding: 7px 56px;
     }
+
+
 }
+
 @media only screen and (min-width:1800px) {
     .footer_object img {
 
@@ -110,6 +151,7 @@
     }
 
 }
+
 @media only screen and (max-width: 1599px) and (min-width: 991px) {
 
     .main_homebanner .banner_searchBox {
@@ -145,12 +187,17 @@
         text-align: center;
         font-size: 15px;
     }
+    .text-form p{
+
+        font-size: 12px !important;
+    }
 
     .safartabs .nav-tabs .nav-link {
 
         font-size: 14px;
     }
-    .dropdown-toggle{
+
+    .dropdown-toggle {
 
         font-size: 14px;
     }
@@ -164,20 +211,23 @@
 
         font-size: 14px;
     }
+
     .coreZone h3,
-    .bufferzone h3{
+    .bufferzone h3 {
 
         font-size: 20px;
     }
-    .custoM-inputs .title_filter .input_check .form-check{
+
+    .custoM-inputs .title_filter .input_check .form-check {
 
         font-size: 14px;
     }
-    .seelctes_text p{
+
+    .seelctes_text p {
 
         font-size: 13px;
     }
- 
+
 }
 
 
@@ -275,6 +325,7 @@
 
         left: 17%;
     }
+
     .main_homebanner .banner_searchBox {
         position: absolute;
         top: 69.5%;
@@ -428,10 +479,11 @@
         overflow: auto;
 
     }
+
     .height_set::-webkit-scrollbar {
         display: none !important;
-       
-    } 
+
+    }
 
 
 }
@@ -816,6 +868,7 @@
 
         padding-left: 0px;
     }
+
     .main_homebanner .banner_searchBox {
         position: absolute;
         top: 63%;
@@ -838,7 +891,7 @@
 }
 
 @media only screen and (max-width:576px) {
-    .main_homebanner .banner_searchBox{
+    .main_homebanner .banner_searchBox {
         position: absolute;
         top: 59%;
         height: 100%;
@@ -1076,6 +1129,7 @@
         transform: translate(-50%, -50%);
         z-index: 0;
     }
+
     .safariBox {
         top: 17%;
     }
