@@ -55,7 +55,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     </div>
                                 <?php } ?>
                                 <div class="card-body ">
-                                    <div class="logo_provide2">
+                                    <div class="logo_provide2 mb-2">
                                         <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
                                         <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                                     </div>

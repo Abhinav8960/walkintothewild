@@ -2063,11 +2063,16 @@ figure {
 .custoM-inputs .title_filter .input_check .form-check {
 
     display: flex;
-    gap: 9px;
+    /* gap: 9px; */
     align-items: center;
     margin-left: 0;
     margin-bottom: 13px;
     padding-left: 0;
+}
+
+.custoM-inputs .title_filter .input_check .form-check .checkbox_design{
+
+margin-right: 10px;
 }
 
 .pname {
