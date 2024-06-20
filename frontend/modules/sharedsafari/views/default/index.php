@@ -197,7 +197,7 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                 </div>
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
-                    <div class="col mb-4">
+                    <div class="col mb-4 padding_right">
                         <div class="sharesafri-card">
                             <div class="flotingdate">
                                 <div class="icons text-center">
@@ -206,7 +206,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="shareimg">
-                                <a href="share-safari.html"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
+                                <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
                             </div>
                             <div class="card_body">
                                 <div class="top_seats">
@@ -222,7 +222,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="share-safari.html">Bandhavgarh Tiger Reserve</a></h6>
+                                    <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong>Dhawal Bharija</strong></p>
                                     </div>
@@ -241,7 +241,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="col-6">
                                         <div class="safari text-center">
                                             <div class="joinsafari">
-                                                <a href="share-safari.html">Join Safari</a>
+                                                <a href="/sharesafari">Join Safari</a>
                                             </div>
                                         </div>
                                     </div>
@@ -249,7 +249,7 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                         </div>
                     </div>
-                    <div class="col mb-4">
+                    <div class="col mb-4 padding_right">
                         <div class="sharesafri-card">
                             <div class="flotingdate">
                                 <div class="icons text-center">
@@ -258,7 +258,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="shareimg">
-                                <a href="share-safari.html"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
+                                <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
                             </div>
                             <div class="card_body">
                                 <div class="top_seats">
@@ -274,7 +274,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="share-safari.html">Bandhavgarh Tiger Reserve</a></h6>
+                                    <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong>Dhawal Bharija</strong></p>
                                     </div>
@@ -293,7 +293,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="col-6">
                                         <div class="safari text-center">
                                             <div class="joinsafari">
-                                                <a href="share-safari.html">Join Safari</a>
+                                                <a href="/sharesafari">Join Safari</a>
                                             </div>
                                         </div>
                                     </div>
@@ -301,7 +301,7 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                         </div>
                     </div>
-                    <div class="col mb-4">
+                    <div class="col mb-4 padding_right">
                         <div class="sharesafri-card">
                             <div class="flotingdate">
                                 <div class="icons text-center">
@@ -310,7 +310,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="shareimg">
-                                <a href="share-safari.html"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
+                                <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
                             </div>
                             <div class="card_body">
                                 <div class="top_seats">
@@ -326,7 +326,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="share-safari.html">Bandhavgarh Tiger Reserve</a></h6>
+                                    <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong>Dhawal Bharija</strong></p>
                                     </div>
@@ -345,7 +345,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="col-6">
                                         <div class="safari text-center">
                                             <div class="joinsafari">
-                                                <a href="share-safari.html">Join Safari</a>
+                                                <a href="/sharesafari">Join Safari</a>
                                             </div>
                                         </div>
                                     </div>
@@ -353,7 +353,7 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                         </div>
                     </div>
-                    <div class="col mb-4">
+                    <div class="col mb-4 padding_right">
                         <div class="sharesafri-card">
                             <div class="flotingdate">
                                 <div class="icons text-center">
@@ -362,7 +362,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="shareimg">
-                                <a href="share-safari.html"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
+                                <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
                             </div>
                             <div class="card_body">
                                 <div class="top_seats">
@@ -378,7 +378,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="share-safari.html">Bandhavgarh Tiger Reserve</a></h6>
+                                    <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong>Dhawal Bharija</strong></p>
                                     </div>
@@ -397,7 +397,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="col-6">
                                         <div class="safari text-center">
                                             <div class="joinsafari">
-                                                <a href="share-safari.html">Join Safari</a>
+                                                <a href="/sharesafari">Join Safari</a>
                                             </div>
                                         </div>
                                     </div>
@@ -405,7 +405,7 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                         </div>
                     </div>
-                    <div class="col mb-4">
+                    <div class="col mb-4 padding_right">
                         <div class="sharesafri-card">
                             <div class="flotingdate">
                                 <div class="icons text-center">
@@ -414,7 +414,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="shareimg">
-                                <a href="share-safari.html"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
+                                <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
                             </div>
                             <div class="card_body">
                                 <div class="top_seats">
@@ -430,7 +430,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="share-safari.html">Bandhavgarh Tiger Reserve</a></h6>
+                                    <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong>Dhawal Bharija</strong></p>
                                     </div>
@@ -449,7 +449,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="col-6">
                                         <div class="safari text-center">
                                             <div class="joinsafari">
-                                                <a href="share-safari.html">Join Safari</a>
+                                                <a href="/sharesafari">Join Safari</a>
                                             </div>
                                         </div>
                                     </div>
@@ -457,7 +457,7 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                         </div>
                     </div>
-                    <div class="col mb-4">
+                    <div class="col mb-4 padding_right">
                         <div class="sharesafri-card">
                             <div class="flotingdate">
                                 <div class="icons text-center">
@@ -466,7 +466,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="shareimg">
-                                <a href="share-safari.html"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
+                                <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
                             </div>
                             <div class="card_body">
                                 <div class="top_seats">
@@ -482,7 +482,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="share-safari.html">Bandhavgarh Tiger Reserve</a></h6>
+                                    <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong>Dhawal Bharija</strong></p>
                                     </div>
@@ -501,7 +501,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="col-6">
                                         <div class="safari text-center">
                                             <div class="joinsafari">
-                                                <a href="share-safari.html">Join Safari</a>
+                                                <a href="/sharesafari">Join Safari</a>
                                             </div>
                                         </div>
                                     </div>

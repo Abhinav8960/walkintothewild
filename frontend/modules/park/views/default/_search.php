@@ -45,13 +45,14 @@ $vehicleoption = GeneralModel::vehicleoption();
                             'prompt' => "Large select example",
                         ]
                     )->label(false) ?>
+                    <div class="placeholder_select">
+                        <p>Location</p>
+                    </div>
+                    <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
+                    </div>
                 </div>
-                <div class="placeholder_select">
-                    <p>Location</p>
-                </div>
-                <div class="icons_select">
-                    <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
-                </div>
+
             </div>
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
@@ -70,13 +71,14 @@ $vehicleoption = GeneralModel::vehicleoption();
                             'aria-label' => "Large select example"
                         ]
                     )->label(false) ?>
+                    <div class="placeholder_select">
+                        <p>Month</p>
+                    </div>
+                    <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
+                    </div>
                 </div>
-                <div class="placeholder_select">
-                    <p>Month</p>
-                </div>
-                <div class="icons_select">
-                    <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
-                </div>
+
             </div>
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
@@ -95,15 +97,15 @@ $vehicleoption = GeneralModel::vehicleoption();
                             'aria-label' => "Large select example"
                         ]
                     )->label(false) ?>
-
+                    <div class="placeholder_select">
+                        <p>Animal</p>
+                    </div>
+                    <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
+                    </div>
                 </div>
 
-                <div class="placeholder_select">
-                    <p>Animal</p>
-                </div>
-                <div class="icons_select">
-                    <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
-                </div>
+
             </div>
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
@@ -122,17 +124,15 @@ $vehicleoption = GeneralModel::vehicleoption();
                             'aria-label' => "Large select example"
                         ]
                     )->label(false) ?>
-                </div>
-                <div class="placeholder_select">
+                      <div class="placeholder_select">
                     <p>Vehicel</p>
                 </div>
                 <div class="icons_select">
                     <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                 </div>
+                </div>
+              
             </div>
-
-
-
         </div>
     </div>
     <div class="col-lg-2 col-xl-1">
@@ -148,20 +148,27 @@ $vehicleoption = GeneralModel::vehicleoption();
 <?php
 $script = <<< JS
 $(document).ready(function(){
-    $('.dropdown-toggle').on('click', function(e) {
-        e.stopPropagation();
-        var \$dropdown = $(this).siblings('.dropdown');
+    function toggleDropdown(container) {
+        var \$dropdown = container.find('.dropdown');
         
         // Close all dropdowns
         $('.dropdown').not(\$dropdown).hide();
-        $('.dropdown-toggle').not($(this)).removeClass('open');
+        $('.dropdown-toggle').not(container.find('.dropdown-toggle')).removeClass('open');
         
         // Toggle the current dropdown
-        $(this).toggleClass('open');
+        container.find('.dropdown-toggle').toggleClass('open');
         \$dropdown.toggle();
+    }
+
+    // Bind click events to .dropdown-toggle, .placeholder_select, and .icons_select
+    $(document).on('click', '.dropdown-toggle, .placeholder_select, .icons_select', function(e) {
+        e.stopPropagation();
+        var \$container = $(this).closest('.dropdown-container');
+        toggleDropdown(\$container);
     });
 
-    $('.dropdown-item').on('click', function() {
+    // Bind click event to .dropdown-item
+    $(document).on('click', '.dropdown-item', function() {
         var value = $(this).data('value');
         var label = $(this).text();
         var \$container = $(this).closest('.dropdown-container');
@@ -175,6 +182,7 @@ $(document).ready(function(){
         \$container.find('.dropdown-toggle').removeClass('open');
     });
 
+    // Close dropdown when clicking outside
     $(document).on('click', function(e) {
         if (!$(e.target).closest('.dropdown-container').length) {
             $('.dropdown').hide();

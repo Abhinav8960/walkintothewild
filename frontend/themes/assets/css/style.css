@@ -2162,6 +2162,18 @@ margin-right: 10px;
     border-radius: 20px;
 
 }
+.no-link-found a{
+
+    cursor: default;
+    background-color: gray;
+    color: #cbcbcb;
+}
+
+.no-link-found  i{
+
+    background-color: gray;
+    color: #cbcbcb;
+}
 
 .websitebtn2 a {
 
@@ -2709,6 +2721,10 @@ margin-right: 10px;
 
     margin-bottom: 0 !important;
     font-weight: 600;
+}
+.placeholder_select ,.icons_select{
+
+cursor: pointer;
 }
 
 .icons_select {
