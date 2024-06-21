@@ -26,6 +26,11 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
 } ?>
 <?php if (Yii::$app->user->id) {  ?>
     <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+    <?php if (Yii::$app->session->hasFlash('success')) : ?>
+        <div class="alert alert-primary" id="info">
+            <?= Yii::$app->session->getFlash('success') ?>
+        </div>
+    <?php endif; ?>
     <div class="comments-persons">
         <div class="postcomment d-flex gap-3">
             <div class="avatar">
@@ -46,3 +51,20 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
     </div>
     <?php ActiveForm::end(); ?>
 <?php } ?>
+
+<?php
+$script = <<< JS
+    $(document).ready(function(){
+        setTimeout(function() {
+    $('#info').fadeOut('fast');
+}, 3000);
+});
+JS;
+$this->registerJs($script);
+?>
+
+<style>
+    .alert-success {
+        display: none !important;
+    }
+</style>

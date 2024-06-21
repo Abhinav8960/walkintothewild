@@ -5,6 +5,11 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 ?>
+<?php if (Yii::$app->session->hasFlash('success')) : ?>
+    <div class="alert alert-primary" id="info">
+        <?= Yii::$app->session->getFlash('success') ?>
+    </div>
+<?php endif; ?>
 <div class="col-lg-12 col-xxl-8 col-xl-10">
     <div class="get_free_title">
         <h4>Get a FREE quote</h4>
@@ -60,16 +65,17 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <div class="col-lg-2">
                 <div class="form-wrapper">
-                    <label for="">Start Date</label>
-                    <?= $form->field($model, 'start_date')->textInput(['class' => 'form-control'])->label(false) ?>
+                    <label for="start-date">Start Date</label>
+                    <?= $form->field($model, 'start_date')->input('date', ['class' => 'form-control'])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-wrapper">
-                    <label for="">End Date</label>
-                    <?= $form->field($model, 'end_date')->textInput(['class' => 'form-control'])->label(false) ?>
+                    <label for="end-date">End Date</label>
+                    <?= $form->field($model, 'end_date')->input('date', ['class' => 'form-control'])->label(false) ?>
                 </div>
             </div>
+
             <div class="col-lg-3">
                 <div class="form-wrapper mb-3">
                     <label for="">Full Name</label>
@@ -102,3 +108,20 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
 </div>
+
+<?php
+$script = <<< JS
+    $(document).ready(function(){
+        setTimeout(function() {
+    $('#info').fadeOut('fast');
+}, 3000);
+});
+JS;
+$this->registerJs($script);
+?>
+
+<style>
+    .alert-success {
+        display: none !important;
+    }
+</style>

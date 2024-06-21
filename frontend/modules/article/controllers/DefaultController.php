@@ -88,7 +88,7 @@ class DefaultController extends Controller
         $model = new CommentForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($article)) {
             Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
-            return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'comment-wrapper']);
+            return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
         }
 
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
