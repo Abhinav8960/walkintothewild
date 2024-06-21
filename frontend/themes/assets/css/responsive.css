@@ -227,6 +227,17 @@ line-height: 19px;
 
         font-size: 13px;
     }
+    .pname{
+
+        font-size: 15px;
+    }
+    .googlerating p {
+        font-size: 11px;
+    }
+    .ratings p{
+
+        font-size: 11px;
+    }
 
 }
 
@@ -456,6 +467,10 @@ line-height: 19px;
         height: 683px;
         object-fit: cover;
     }
+    .main_footer .terms{
+
+        float: right;
+    }
 }
 
 @media only screen and (min-width:991px) {
@@ -544,6 +559,10 @@ line-height: 19px;
     .Slider_safariimg3 img {
 
         border-radius: 10px;
+    }
+    .websitebtn a{
+
+        padding: 10px 22px;
     }
 }
 

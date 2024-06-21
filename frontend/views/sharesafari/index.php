@@ -128,7 +128,7 @@ $this->params['title'] = $this->title;
                             <div class="btn_wrap">
                                 <button class="intested_btn"><i class="fa-solid fa-user-group"></i> 12
                                     Interested</button>
-                                <button class="join_btn sm-ms-3 sm-mt-0 mt-2"> Join Safari</button>
+                                <button class="join_btn ms-sm-3 mt-sm-0 mt-2"> Join Safari</button>
                             </div>
 
                         </div>
