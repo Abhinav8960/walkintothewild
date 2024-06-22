@@ -74,10 +74,10 @@ $recentposts = ArticleSearch::recentpost();
                         </div>
                         <div class="col-lg-6  border-right  border_bottom_mobile pt-lg-0 pt-3">
                             <div class="provider_details">
-                                <div class="title_tours d-flex align-items-center gap-md-3">
+                                <div class="title_tours d-flex flex-wrap align-items-center gap-md-2 gap-xxl-3">
                                     <h3><?= $operator->register_comapany_name ?></h3>
                                     <!-- <span class="d-sm-block d-none">|</span> -->
-                                    <div class="follow">
+                                    <div class="follow mb-lg-2 mb-xxl-0 mb-2">
                                         <button class="follow_btn"><i class="fa-regular fa-heart me-1"></i> FOLLOW</button>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 px-lg-4 px-xl-5 px-2  pt-lg-0 pt-3">
+                        <div class="col-lg-3 px-lg-4 px-xl-3 px-xxl-5 px-2  pt-lg-0 pt-3">
                             <div class="contact_p">
                                 <p>Contact</p>
                             </div>
