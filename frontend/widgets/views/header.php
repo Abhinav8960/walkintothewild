@@ -38,13 +38,13 @@
 													"/park/default/parklist",
 													"/park/default/view",
 												)) ? "active" : "" ?>">
-								<a class="nav-link" href="/parklist"> <i class="fa-solid fa-magnifying-glass"></i> Search Safari</a>
+								<a class="nav-link" href="/parklist"> <i class="fa-solid fa-magnifying-glass d-lg-inline-flex d-none"></i> Search Safari</a>
 							</li>
 							<li class="nav-item <?= in_array($active_url, array(
 													"/article/default/index",
 													"/article/default/view",
 												)) ? "active" : "" ?>">
-								<a class="nav-link" href="/article">	<img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1"> ARTICLES & TIPS</a>
+								<a class="nav-link" href="/article">	<img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> ARTICLES & TIPS</a>
 							</li>
 
 							<a href="/sharedsafari" class="sahreSafari text-lg-center">

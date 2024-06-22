@@ -350,6 +350,7 @@ line-height: 19px;
     }
 }
 
+
 @media only screen and (min-device-width: 769px) and (max-device-width: 820px) and (min-device-height: 1024px) and (max-device-height: 1180px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
     .select_boxes .form-select {
         width: 395px;
@@ -567,6 +568,10 @@ line-height: 19px;
 }
 
 @media (max-width: 991px) {
+    .sahreSafari{
+
+        box-shadow: none;
+    }
     .safartabs .accordion-item {
 
         border-radius: 0 !important;
@@ -1185,5 +1190,16 @@ line-height: 19px;
     .footer_object img {
 
         margin-top: 28px;
+    }
+}
+
+@media only screen and (min-device-width: 799.99px) and (max-device-width: 991px) and (min-device-height: 1224px) and (max-device-height: 1680px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+    /* .select_boxes .form-select {
+        width: 386px;
+    } */
+
+    .dropdown-container .dropdown-toggle {
+
+        width: 386px!important;
     }
 }
