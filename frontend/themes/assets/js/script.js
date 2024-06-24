@@ -228,6 +228,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+document.getElementById('mobileSearchDiv').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent the default behavior of the select element
+    document.getElementById('targetDiv').style.display = 
+        document.getElementById('targetDiv').style.display === 'none' ? 'block' : 'none';
+});
+
+// Prevent the select element from being opened
+document.querySelector('.form-select').addEventListener('mousedown', function(event) {
+    event.preventDefault();
+});
+
+
 
 // document.addEventListener("DOMContentLoaded", function() {
 //     const toggleViewBtn = document.getElementById('toggleViewBtn');

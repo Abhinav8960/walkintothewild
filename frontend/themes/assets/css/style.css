@@ -444,6 +444,71 @@ a {
 
 
 } */
+.top_mobilefilter{
+
+    background-color: #fff;
+    box-shadow: 0px 3px 6px #00000029;
+    padding: 10px 15px;
+
+}
+#targetDiv {
+    background-color: #faf7f3;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: 10;
+    left: 0px;
+
+}
+.searchwrap{
+
+    background-color: #fff;
+    box-shadow: 0px 3px 6px #00000029;
+    padding: 6px 4px 6px 10px; 
+}
+.top_filterwrap{
+
+     padding: 10px 15px;
+     background: #faf7f3;
+}
+.filter_searchbox{
+
+    border: 1px solid #babcbf;
+    border-radius: 4px;
+    width: 80px;
+    padding: 4px 10px;
+    cursor: pointer;
+    
+}
+.filterPhone .searchwrap .form-check{
+
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-left: 0;
+}
+.btn_apply{
+
+    border-radius: 4px;
+    width: 80px;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: var(--colorBlack);
+    font-weight: 500;
+    background-color: var(--background-yellow);
+    border: 0;
+
+}
+.filter_searchbox span{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.filter_searchbox i{
+
+    font-size: 12px;
+}
 
 .left_text p {
 
@@ -459,7 +524,6 @@ a {
 .input_check .form-select:focus {
 
     -webkit-box-shadow: none;
-
     box-shadow: none;
     border-color: #09422D;
 
@@ -477,7 +541,6 @@ a {
 .left_search .form-control:focus {
 
     -webkit-box-shadow: none;
-
     box-shadow: none;
     border-color: #0000004D;
 }
@@ -2596,15 +2659,15 @@ margin-right: 10px;
     background-color: #F5F5F5;
     border: 1px solid #0000004D;
     border-radius: 10px;
+    /* -webkit-box-shadow: 0px 5px 10px #00000029;
+    box-shadow: 0px 5px 10px #00000029; */
 }
 
-.searchSafari_wraper:hover {
+/* .searchSafari_wraper:hover {
 
-    -webkit-box-shadow: 0px 5px 10px #00000029;
 
-    box-shadow: 0px 5px 10px #00000029;
     border-color: #F5F5F5;
-}
+} */
 
 .Slider_safariimg3 img {
 
@@ -2812,8 +2875,11 @@ cursor: pointer;
     width: 130px;
     font-family: "Roboto", sans-serif;
     text-align: center;
-    padding: 8px 20px;
+    /* padding: 4px 6px; */
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* cursor: pointer; */
 }
 .tab-block .tab-mnu li:first-child{
@@ -2827,8 +2893,9 @@ cursor: pointer;
 
 .tab-block .tab-mnu .active {
     background-color: #fff;
-    color: #596165;
+    color: var(--background-primary);
     cursor: default;
+    font-weight: 600;
 }
 
 .modal-header {
@@ -3633,7 +3700,7 @@ cursor: pointer;
 
 .dropdown.custom_dropdown::-webkit-scrollbar
 {
-	width: 5px;
+	width: 8px;
 	background-color: #F5F5F5 !important;
 }
 
