@@ -2710,7 +2710,12 @@ margin-right: 10px;
     font-weight: 500;
     margin-bottom: 0;
 }
+.alert-primary{
 
+    --bs-alert-bg:var(--background-primary) !important;
+    --bs-alert-color:#fff !important;
+    --bs-alert-border-color:var(--background-primary) !important;
+}
 .terms_wrapper {
 
     background-color: #EFF8F5;
