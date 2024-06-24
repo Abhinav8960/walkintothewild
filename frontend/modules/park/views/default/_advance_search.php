@@ -26,9 +26,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'North india, South...' ?>
+                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
+                        <div class="dropdown-item" data-value="">All India</div>
                         <?php foreach ($locationoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -82,9 +83,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Tiger Elephent..' ?>
+                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
+                    <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($animalfilteroption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -125,14 +127,14 @@ $vehicleoption = GeneralModel::vehicleoption();
                             'prompt' => ''
                         ]
                     )->label(false) ?>
-                       <div class="placeholder_select">
-                    <p>Vehicel</p>
+                    <div class="placeholder_select">
+                        <p>Vehicle</p>
+                    </div>
+                    <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
+                    </div>
                 </div>
-                <div class="icons_select">
-                    <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
-                </div>
-                </div>
-             
+
             </div>
             <div class="advanceSearch " id="advanceSearchBox">
                 <div class="d-md-flex gap-1">
@@ -152,18 +154,18 @@ $vehicleoption = GeneralModel::vehicleoption();
                                     'prompt' => ''
                                 ]
                             )->label(false) ?>
-                              <div class="placeholder_select">
-                            <p>Accommodation</p>
+                            <div class="placeholder_select">
+                                <p>Accommodation</p>
+                            </div>
+                            <div class="icons_select">
+                                <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="">
+                            </div>
                         </div>
-                        <div class="icons_select">
-                            <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="">
-                        </div>
-                        </div>
-                      
+
                     </div>
                     <div class="select_boxes position-relative">
                         <div class="dropdown-container">
-                            <div class="dropdown-toggle">evening,morning..</div>
+                            <div class="dropdown-toggle">Morning,Evening..</div>
                             <div class="dropdown custom_dropdown">
                                 <?php foreach (GeneralModel::safarisessionoption() as $value => $label) : ?>
                                     <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
@@ -177,14 +179,14 @@ $vehicleoption = GeneralModel::vehicleoption();
                                     'prompt' => ''
                                 ]
                             )->label(false) ?>
-                              <div class="placeholder_select">
-                            <p>Safari seasion</p>
+                            <div class="placeholder_select">
+                                <p>Safari seasion</p>
+                            </div>
+                            <div class="icons_select">
+                                <img src="<?= $this->params['baseurl'] ?>/img/day-night_8776508.png" alt="">
+                            </div>
                         </div>
-                        <div class="icons_select">
-                            <img src="<?= $this->params['baseurl'] ?>/img/day-night_8776508.png" alt="">
-                        </div>
-                        </div>
-                      
+
                     </div>
                 </div>
             </div>

@@ -26,12 +26,12 @@ if ($rare_exotics) {
     ?>
             <div class="animal-safari mb-4">
                 <div class="inner_animals position-relative">
-                    <img src="<?= isset($animal->banner_image) ? $animal->bannerimagepath : $this->params['baseurl'] . '/img/brownbearbg.jpg' ?>" alt="" class="position-relative w-100">
-                    <div class="safariBox">
+                    <img src="<?= isset($animal->banner) ? $animal->bannerimagepath : $this->params['baseurl'] . '/img/brownbearbg.jpg' ?>" alt="" class="position-relative w-100">
+                    <div class="safariBox"> 
                         <div class="container">
                             <div class="row align-items-center ">
                                 <div class="col-lg-6 col-md-5 col-4 text-center position-relative">
-                                    <img src="<?= isset($animal->image) ? $animal->imagepath : $this->params['baseurl'] . '/img/brownbear.png' ?>" alt="" class="imag_width position-relative">
+                                    <img src="<?= isset($animal->feature_image) ? $animal->imagepath : $this->params['baseurl'] . '/img/brownbear.png' ?>" alt="" class="imag_width position-relative">
                                 </div>
                                 <div class="col-lg-6 col-md-7 col-8">
                                     <div class="safari_content">
