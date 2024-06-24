@@ -42,10 +42,10 @@ $this->params['title'] = $this->title;
                             foreach ($rareparkanimals as $rareparkanimal) {
                                 if ($safaripark = $rareparkanimal->safaripark) {
 
-                                    $park_names .= $safaripark->title;
+                                    $park_names .= $safaripark->title . ', ';
                                 }
                             }
-                            $park_names = substr($park_names, 0, -1);
+                            $park_names = substr($park_names, 0, -2);
                         }
                         echo $park_names;
                         ?>

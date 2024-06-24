@@ -29,7 +29,7 @@ if ($rare_exotics) {
                                     <h5><?= $animal->animal_name ?></h5>
                                     <p><?= $animal->short_description ?></p>
                                     <div class="knowmore">
-                                        <a href="/parklist?SafariParkSearch%5Bmaster_rare_animal_id%5D=<?= $animal->id ?>" class="btn-knowmore">Know More</a>
+                                        <a href="/parklist?SafariParkSearch[master_rare_animal_id]=<?= $animal->id ?>&SafariParkSearch[master_location_id]=&SafariParkSearch[month_id]=&SafariParkSearch[master_animal_id]=&SafariParkSearch[master_vehicle_id]=" class="btn-knowmore">Know More</a>
                                     </div>
                                 </div>
                             </div>

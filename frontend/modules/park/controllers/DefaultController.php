@@ -65,7 +65,7 @@ class DefaultController extends Controller
         $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
         $searchModel->master_animal_id = 13;
         $searchModel->master_vehicle_id = 5;
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, false);
 
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
         $featured_articles = Article::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
@@ -194,7 +194,7 @@ class DefaultController extends Controller
         $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
         $searchModel->master_animal_id = 13;
         $searchModel->master_vehicle_id = 5;
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, false);
         $models = $dataProvider->getModels();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
 
