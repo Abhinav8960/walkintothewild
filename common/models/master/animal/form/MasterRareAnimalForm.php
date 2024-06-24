@@ -4,10 +4,11 @@ namespace common\models\master\animal\form;
 
 use Yii;
 use yii\base\Model;
+use yii\web\UploadedFile;
 use common\models\GeneralModel;
+use common\models\park\SafariParkRareAnimal;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\animal\MasterRareAnimal;
-use yii\web\UploadedFile;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
@@ -24,7 +25,7 @@ class MasterRareAnimalForm extends model
     public $status;
     public $status_option = [];
     public $rare_animal_model;
-
+    public $assigned_park;
 
     public function __construct(MasterRareAnimal $rare_animal_model = null)
     {
@@ -43,6 +44,8 @@ class MasterRareAnimalForm extends model
             $this->animal_name = $this->rare_animal_model->animal_name;
             $this->short_description = $this->rare_animal_model->short_description;
             $this->status = $this->rare_animal_model->status;
+
+            $this->assigned_park = SafariParkRareAnimal::find()->select('safari_park_id')->where(['master_rare_animal_id' => $this->rare_animal_model->id, 'status' => 1])->column();
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -55,11 +58,11 @@ class MasterRareAnimalForm extends model
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
             'animal_name', 'short_description', 'feature_image', 'banner', 'status',
-            'know_as'
+            'know_as', 'assigned_park'
         ];
         $scenarios['update'] = [
             'animal_name', 'short_description', 'status',
-            'know_as', 'feature_image', 'banner'
+            'know_as', 'feature_image', 'banner', 'assigned_park'
         ];
         return $scenarios;
     }
@@ -69,6 +72,7 @@ class MasterRareAnimalForm extends model
         return [
             [['animal_name', 'short_description'], 'required'],
             [['status'], 'integer'],
+            ['assigned_park', 'safe'],
             [['animal_name'], 'string', 'max' => 125],
             [['animal_name', 'know_as'], 'string', 'max' => 125],
             [['short_description'], 'string', 'max' => 255],
@@ -112,6 +116,7 @@ class MasterRareAnimalForm extends model
             'know_as' => 'Know As',
             'short_description' => 'Short Description',
             'status' => 'Status',
+            'assigned_park' => 'Assigned Park',
         ];
     }
     /**
@@ -125,6 +130,26 @@ class MasterRareAnimalForm extends model
         $this->rare_animal_model->animal_name = $this->animal_name;
         $this->rare_animal_model->short_description = $this->short_description;
         $this->rare_animal_model->status = $this->status;
+    }
+
+
+    /**
+     * Assigned Park
+     */
+    public function assignedpark()
+    {
+        SafariParkRareAnimal::updateAll(['status' => 2], ['master_rare_animal_id' => $this->rare_animal_model->id]);
+        $assigned_park = $this->assigned_park;
+        if ($assigned_park) {
+            foreach ($assigned_park as $park_id) {
+                $parkrareAnimal = new SafariParkRareAnimal();
+                $parkrareAnimal->safari_park_id = $park_id;
+                $parkrareAnimal->master_rare_animal_id = $this->rare_animal_model->id;
+                $parkrareAnimal->animal_name =  $this->rare_animal_model->animal_name;
+                $parkrareAnimal->status = 1;
+                $parkrareAnimal->save(false);
+            }
+        }
     }
 
 

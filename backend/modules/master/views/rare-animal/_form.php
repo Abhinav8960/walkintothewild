@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use common\models\GeneralModel;
 
 /** @var yii\web\View $this */
 /** @var common\models\master\animal\MasterRareAnimal $model */
@@ -49,15 +50,27 @@ use yii\bootstrap5\ActiveForm;
         </div>
     <?php  } ?>
 
+    <div class="col-md-12">
+        <?= $form->field($model, 'short_description')->textarea() ?>
+    </div>
+
+    <div class="col-md-12">
+        <?= $form->field($model, 'assigned_park')->widget(\kartik\select2\Select2::classname(), [
+            'data' => GeneralModel::safariparkoption(),
+            'options' => ['placeholder' => 'Select Safari Park', 'multiple' => true],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]) ?>
+    </div>
+
     <?php if ($model->rare_animal_model->id) { ?>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
         </div>
     <?php } ?>
 
-    <div class="col-md-12">
-        <?= $form->field($model, 'short_description')->textarea() ?>
-    </div>
+
 
     <hr>
     <div class="col-md-12">
