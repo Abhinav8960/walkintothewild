@@ -11,99 +11,100 @@ if ($operator_parks) {
                     </div>
                 </div>
                 <div class="col-xl-9 ">
-                    <div class="parks_body">
-                        <div class="safrititles pt-md-0 pt-3">
-                            <h6 class=""><?= $park_detail->title ?></h6>
+                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
+                        <div class="parks_body">
+                            <div class="safrititles pt-md-0 pt-3">
+                                <h6 class=""><?= $park_detail->title ?></h6>
+                            </div>
+                            <div class="seelctes_text pt-2 pb-3 ">
+                                <p><?= $park_detail->long_description ?></p>
+                            </div>
+                            <div class="row ">
+                                <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0"><?= isset($park_detail->state) ? $park_detail->state->state_name . ',' : '' ?> <?= isset($park_detail->location) ? $park_detail->location->title : '' ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0">
+                                                <?php if ($park_detail->vehicles) {
+
+                                                    foreach ($park_detail->vehicles as $vehicle) {
+                                                        echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
+                                                <?php }
+                                                } ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0"><?= isset($park_detail->railwaystation) ? $park_detail->railwaystation->title . ' , ' : '' ?><?= isset($park_detail->railwaystationtwo) ? $park_detail->railwaystationtwo->title : '' ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0">
+                                                <?php if ($park_detail->sessions) {
+
+                                                    foreach ($park_detail->sessions as $session) {
+                                                        echo isset($session->metasession) ? $session->metasession->title . ',' : '' ?>
+                                                <?php }
+                                                } ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0"><?= isset($park_detail->airport) ? $park_detail->airport->name : '' ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt="">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0">
+                                                <?php if ($park_detail->animal_text) {
+                                                    echo $park_detail->animal_text ?>
+                                                <?php
+                                                } ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                        <div class="seelctes_text pt-2 pb-3 ">
-                            <!-- <p><?= $park_detail->long_description ?></p> -->
-                            <p>Kanha National Park, nestled in the heart of Madhya Pradesh, India, is a sanctuary of unparalleled biodiversity and natural splendor. Spread across nearly 940 square kilometers of dense forests, lush meadows, and winding streams, it's renowned as one of Asia's premier tiger reserves, home to the majestic Royal Bengal Tiger. Its diverse ecosystem harbors a myriad of wildlife, including leopards, sloth bears, Indian wild dogs, and over 300 species of birds. Kanha's picturesque landscapes, with its sal forests and vast grasslands, provide a serene backdrop for unforgettable wildlife safaris, where visitors can immerse themselves in the enchanting wilderness and witness nature's grandeur in all its glory.</p>
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
-                                <div class="safridetails_form d-flex gap-3 align-items-center">
-                                    <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="">
-                                    </div>
-                                    <div class="text-form">
-                                        <p class="mb-0"><?= isset($park_detail->state) ? $park_detail->state->state_name . ',' : '' ?> <?= isset($park_detail->location) ? $park_detail->location->title : '' ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
-                                <div class="safridetails_form d-flex gap-3 align-items-center">
-                                    <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="">
-                                    </div>
-                                    <div class="text-form">
-                                        <p class="mb-0">
-                                            <?php if ($park_detail->vehicles) {
 
-                                                foreach ($park_detail->vehicles as $vehicle) {
-                                                    echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
-                                            <?php }
-                                            } ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
-                                <div class="safridetails_form d-flex gap-3 align-items-center">
-                                    <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
-                                    </div>
-                                    <div class="text-form">
-                                        <p class="mb-0"><?= isset($park_detail->railwaystation) ? $park_detail->railwaystation->title . ' , ' : '' ?><?= isset($park_detail->railwaystationtwo) ? $park_detail->railwaystationtwo->title : '' ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
-                                <div class="safridetails_form d-flex gap-3 align-items-center">
-                                    <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="">
-                                    </div>
-                                    <div class="text-form">
-                                        <p class="mb-0">
-                                            <?php if ($park_detail->sessions) {
-
-                                                foreach ($park_detail->sessions as $session) {
-                                                    echo isset($session->metasession) ? $session->metasession->title . ',' : '' ?>
-                                            <?php }
-                                            } ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
-                                <div class="safridetails_form d-flex gap-3 align-items-center">
-                                    <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="">
-                                    </div>
-                                    <div class="text-form">
-                                        <p class="mb-0"><?= isset($park_detail->airport) ? $park_detail->airport->name : '' ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
-                                <div class="safridetails_form d-flex gap-3 align-items-center">
-                                    <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt="">
-                                    </div>
-                                    <div class="text-form">
-                                        <p class="mb-0">
-                                            <?php if ($park_detail->animal_text) {
-                                                echo $park_detail->animal_text ?>
-                                            <?php
-                                            } ?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
+                    </a>
                 </div>
             </div>
         </div>
