@@ -98,7 +98,7 @@ foreach ($park as $key => $role) {
                 <div class="text-box">
 
                     <p>
-                        <span>Google Rating: </span><?= $model->safarioperator_request_approval_model->google_rating ?>
+                        <span>Rating: </span><?= $model->safarioperator_request_approval_model->google_rating ?>
                     </p>
                     <p>
                         <span>Cancellation: </span><?= isset($model->safarioperator_request_approval_model->has_cancellation_policy) ? GeneralModel::yesnooption()[$model->safarioperator_request_approval_model->has_cancellation_policy] : '' ?>

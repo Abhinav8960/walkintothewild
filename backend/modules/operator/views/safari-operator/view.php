@@ -106,7 +106,7 @@ foreach ($park as $key => $role) {
                 <div class="text-box">
 
                     <p>
-                        <span>Google Rating: </span><?= $model->google_rating ?>
+                        <span>Rating: </span><?= $model->google_rating ?>
                     </p>
                     <p>
                         <span>Cancellation: </span><?= isset($model->has_cancellation_policy) ? GeneralModel::yesnooption()[$model->has_cancellation_policy] : '' ?>

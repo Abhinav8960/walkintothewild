@@ -229,7 +229,7 @@ $this->params['title'] = $this->title;
                                 </div>
                                 <div class="formInput  mb-3">
                                     <div class="d-flex align-items-center justify-content-between div_remove slect_remove gap-3">
-                                        <label for="">Google Rating</label>
+                                        <label for="">Rating</label>
                                         <?= $form->field($model, 'google_rating')->widget(\yii\widgets\MaskedInput::class, [
                                             'mask' => '9.9',
                                             'options' => [

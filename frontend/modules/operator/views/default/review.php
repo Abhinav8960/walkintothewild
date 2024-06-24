@@ -10,7 +10,7 @@
                                 <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
                             </div>
                             <div class="googlerating">
-                                <p class="mb-0">54 Google Reviews</p>
+                                <p class="mb-0">54 Reviews</p>
                             </div>
                         </div>
                     </div>
