@@ -3,6 +3,7 @@
 namespace common\models\park;
 
 use Yii;
+use common\models\master\animal\MasterRareAnimal;
 
 /**
  * This is the model class for table "safari_park_rare_animal".
@@ -54,5 +55,16 @@ class SafariParkRareAnimal extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+
+    public function getRareanimal()
+    {
+        return $this->hasOne(MasterRareAnimal::className(), ['id' => 'master_rare_animal_id']);
+    }
+
+    public function getSafaripark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
     }
 }

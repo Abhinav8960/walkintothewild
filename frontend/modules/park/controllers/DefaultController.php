@@ -13,6 +13,7 @@ use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariParkMonth;
 use frontend\models\SafariOperatorSearch;
+use common\models\master\animal\MasterRareAnimal;
 use common\models\suggestions\form\SafariSuggestionsForm;
 
 /**
@@ -68,7 +69,7 @@ class DefaultController extends Controller
 
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
         $featured_articles = Article::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
-        $rare_exotics = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'animal_type_sequence', ''])->limit(5)->orderBy(['animal_type_sequence' => SORT_ASC])->all();
+        $rare_exotics = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->all();
         return $this->render(
             'index',
             [

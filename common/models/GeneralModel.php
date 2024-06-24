@@ -502,6 +502,22 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     }
 
 
+    public static function safariAnimalRareExoticOption($ids = null)
+    {
+        $query = MasterRareAnimal::find()->select(['master_rare_animal.id', 'master_rare_animal.animal_name'])->where(['master_rare_animal.status' => MasterRareAnimal::STATUS_ACTIVE])->orderBy(['master_rare_animal.animal_name' => SORT_ASC]);
+        if ($ids) {
+            $query->andWhere("master_rare_animal.id NOT IN ($ids)");
+        }
+        $query->joinwith(['rareparkanimals' => function ($query) {
+            $query->andFilterWhere(['safari_park_rare_animal.status' => 1]);
+        }]);
+        $parks = $query->asarray()->all();
+        $result = ArrayHelper::map($parks, 'id', 'animal_name');
+        return $result;
+    }
+
+
+
 
 
     public static function ratiing_views($rating)

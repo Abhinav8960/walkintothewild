@@ -1,57 +1,47 @@
 <?php
 
-use common\interfaces\StatusInterface;
-use common\models\GeneralModel;
-use common\models\park\SafariPark;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
 use yii\web\View;
-
-// Assuming $parks is an array of park data and $sequences is the current sequence data
-
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use common\models\GeneralModel;
+use common\models\master\animal\MasterRareAnimal;
 ?>
+<div id="repository-container-header"></div>
 <div class="row">
     <div class="col-md-12 table-responsive">
         <table class="table table-striped table-bordered table_design">
             <thead>
                 <tr>
                     <th style="width: 5%!important;">Sr. No.</th>
-                    <th >Park</th>
+                    <th>Park</th>
 
                 </tr>
             </thead>
             <tbody>
                 <?php
-
-                $rareExoticList = GeneralModel::safariParkRareExoticOption();
-                $countRareExoticList = count($rareExoticList);
-                // dd($countRareExoticList);
-
-                $length = '';
-                if ($countRareExoticList < 10) {
-                    $length = $countRareExoticList;
-                } else {
-                    $length = 10;
-                }
-
                 $form = ActiveForm::begin(['id' => 'park-sequence-form']);
-                for ($i = 1; $i <= $length; $i++) {
-                    $park = SafariPark::find()->where(['animal_type_sequence' => $i])->limit(1)->one();
-                    $selectedParkId = isset($park) ? $park->id : null;
+                $rare_ids = '0';
+                for ($i = 1; $i <= 10; $i++) {
+                    $rare_animal = MasterRareAnimal::find()->where(['is_feature_sequence' => $i])->limit(1)->one();
+                    $selectedParkId = isset($rare_animal) ? $rare_animal->id : null;
+
                 ?>
                     <tr>
                         <td> <?= $i; ?></td>
                         <td> <?php
-                                echo Html::dropDownList("ParkSequence[$i]", $selectedParkId, GeneralModel::safariParkRareExoticOption(), [
+                                echo Html::dropDownList("AnimalSequence[$i]", $selectedParkId, GeneralModel::safariAnimalRareExoticOption($rare_ids), [
                                     'class' => 'park-dropdown',
                                     'data-index' => $i,
-                                    'prompt' => 'Select',
+                                    'prompt' => 'Select Animal',
                                     'onchange' => 'saveParkSequence(this)',
                                 ]);
                                 ?></td>
                     </tr>
-                <?php }
+                <?php if ($selectedParkId) {
+                        $rare_ids .= "," . $selectedParkId;
+                    }
+                }
                 ActiveForm::end();
                 ?>
             </tbody>
@@ -60,38 +50,18 @@ use yii\web\View;
 </div>
 <?php
 $url = Url::to(['/cms/feature-rare-exotic/save-sequence']);
-$csrfToken = Yii::$app->request->csrfToken;
 $js = <<< JS
-function saveParkSequence(select) {
-    var selectedIndex = select.selectedIndex;
-    var selectedValue = select.options[selectedIndex].value;
-    var index = select.getAttribute('data-index');
-    var formData = new FormData();
-    formData.append('sequenceIndex', index);
-    formData.append('parkId', selectedValue);
-    
-    fetch('$url', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRF-Token': '$csrfToken' // Include CSRF token in the request headers
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Sequence saved successfully:', data);
-        // You can perform any UI updates or show a success message here
-    })
-    .catch(error => {
-        console.error('There was a problem saving the sequence:', error);
-        // Handle errors or show an error message
+function saveParkSequence(select) {    
+    $.ajax({
+        type: 'POST',
+        url: '{$url}',
+        data:$("#park-sequence-form").serialize(),
+        success:function(data){
+            location.reload();
+        },
+        dataType:'html'
     });
 }
 JS;
-$this->registerJs($js, View::POS_END); // Ensure script is placed at the end of the page
+$this->registerJs($js, View::POS_END);
 ?>

@@ -2,8 +2,9 @@
 
 namespace common\models\master\animal;
 
-use common\traits\CommanRelationship;
 use Yii;
+use common\traits\CommanRelationship;
+use common\models\park\SafariParkRareAnimal;
 
 /**
  * This is the model class for table "master_rare_animal".
@@ -60,7 +61,7 @@ class MasterRareAnimal extends \yii\db\ActiveRecord implements \common\interface
     public function rules()
     {
         return [
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_feature_sequence'], 'integer'],
             [['animal_name', 'banner', 'feature_image', 'know_as'], 'string', 'max' => 255],
             [['short_description'], 'string', 'max' => 512],
         ];
@@ -99,4 +100,10 @@ class MasterRareAnimal extends \yii\db\ActiveRecord implements \common\interface
             return '/storage/rareanimal/' . $this->id . '/' . $this->banner;
         }
     }
+
+
+    public function getRareparkanimals()
+    {
+        return $this->hasMany(SafariParkRareAnimal::className(), ['master_rare_animal_id' => 'id'])->andWhere(['safari_park_rare_animal.status' => 1]);
+    } 
 }
