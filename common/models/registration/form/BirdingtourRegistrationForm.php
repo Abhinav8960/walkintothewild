@@ -209,7 +209,7 @@ class BirdingtourRegistrationForm extends model
             'park_id' => 'Park',
             'logo' => 'Logo',
             'is_highlighted' => 'Is Highlighted',
-            'google_rating' => 'Google Rating',
+            'google_rating' => 'Rating',
             'google_review_count' => 'Google Review Count',
             'google_business_url' => 'Google Business Url',
             'google_business_name' => 'Google Business Name',

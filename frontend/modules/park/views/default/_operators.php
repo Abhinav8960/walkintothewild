@@ -89,7 +89,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </p>
                                                 </div>
                                                 <div class="googlerating">
-                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Google Reviews' : '0 Google Reviews' ?> </p>
+                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Reviews' : '0 Reviews' ?> </p>
                                                 </div>
                                             </div>
 

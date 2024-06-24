@@ -187,7 +187,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                                 <div class="formInput  mb-3">
                                     <div class="d-flex align-items-center justify-content-between  gap-3">
-                                        <label for="">Google Rating</label>
+                                        <label for="">Rating</label>
                                         <input type="text" class="form-control w-50 text-center" placeholder="4.5">
                                     </div>
 

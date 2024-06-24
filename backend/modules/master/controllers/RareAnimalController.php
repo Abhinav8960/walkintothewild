@@ -57,6 +57,7 @@ class RareAnimalController extends Controller
                     $model->initializeForm();
                     if ($model->rare_animal_model->save(false)) {
                         $model->uploadFile();
+                        $model->assignedpark();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
@@ -93,6 +94,7 @@ class RareAnimalController extends Controller
                     $model->initializeForm();
                     if ($model->rare_animal_model->save()) {
                         $model->uploadFile($model->rare_animal_model->id);
+                        $model->assignedpark();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
@@ -138,10 +140,10 @@ class RareAnimalController extends Controller
     }
 
     /**
-     * Finds the MasterAnimal model based on its primary key value.
+     * Finds the MasterRareAnimal model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MasterAnimal the loaded model
+     * @return MasterRareAnimal the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

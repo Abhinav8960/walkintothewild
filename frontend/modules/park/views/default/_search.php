@@ -24,125 +24,137 @@ $vehicleoption = GeneralModel::vehicleoption();
 ?>
 <div class="row gx-0 justify-content-center">
     <div class="col-lg-10 col-xl-10">
-        <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
-            <div class="select_boxes position-relative">
-                <div class="dropdown-container">
-                    <div class="dropdown-toggle">
+        <?php if ($model->master_rare_animal_id == '') { ?>
+            <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
+                <div class="select_boxes position-relative">
+                    <div class="dropdown-container">
+                        <div class="dropdown-toggle">
 
-                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'North india, South...' ?>
+                            <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?>
 
+                        </div>
+                        <div class="dropdown custom_dropdown">
+                            <div class="dropdown-item" data-value="">All India</div>
+                            <?php foreach ($locationoption as $value => $label) : ?>
+                                <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?= $form->field($model, 'master_location_id')->dropDownList(
+                            $locationoption,
+                            [
+                                'class' => "form-select form-select-lg hidden-select",
+                                'aria-label' => "Large select example",
+                                'prompt' => "Large select example",
+                            ]
+                        )->label(false) ?>
+                        <div class="placeholder_select">
+                            <p>Location</p>
+                        </div>
+                        <div class="icons_select">
+                            <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
+                        </div>
                     </div>
-                    <div class="dropdown custom_dropdown">
-                        <?php foreach ($locationoption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?= $form->field($model, 'master_location_id')->dropDownList(
-                        $locationoption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example",
-                            'prompt' => "Large select example",
-                        ]
-                    )->label(false) ?>
-                    <div class="placeholder_select">
-                        <p>Location</p>
-                    </div>
-                    <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
-                    </div>
+
                 </div>
+                <div class="select_boxes position-relative">
+                    <div class="dropdown-container">
+                        <div class="dropdown-toggle">
+                            <?= isset($monthoption[$model->month_id]) ? $monthoption[$model->month_id] : 'May,june,July..' ?>
+                        </div>
+                        <div class="dropdown custom_dropdown">
+                            <?php foreach ($monthoption as $value => $label) : ?>
+                                <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?= $form->field($model, 'month_id')->dropDownList(
+                            $monthoption,
+                            [
+                                'class' => "form-select form-select-lg hidden-select",
+                                'aria-label' => "Large select example",
+                                'prompt' => "Select Month",
+                            ]
+                        )->label(false) ?>
+                        <div class="placeholder_select">
+                            <p>Month</p>
+                        </div>
+                        <div class="icons_select">
+                            <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
+                        </div>
+                    </div>
 
+                </div>
+                <div class="select_boxes position-relative">
+                    <div class="dropdown-container">
+                        <div class="dropdown-toggle">
+                            <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?>
+                        </div>
+                        <div class="dropdown custom_dropdown">
+                            <div class="dropdown-item" data-value="">Any / All</div>
+                            <?php foreach ($animalfilteroption as $value => $label) : ?>
+                                <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?= $form->field($model, 'master_animal_id')->dropDownList(
+                            $animalfilteroption,
+                            [
+                                'class' => "form-select form-select-lg hidden-select",
+                                'aria-label' => "Large select example",
+                                'prompt' => "Select Animal",
+                            ]
+                        )->label(false) ?>
+                        <div class="placeholder_select">
+                            <p>Animal</p>
+                        </div>
+                        <div class="icons_select">
+                            <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="select_boxes position-relative">
+                    <div class="dropdown-container">
+                        <div class="dropdown-toggle">
+                            <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Cantar/Bus..' ?>
+                        </div>
+                        <div class="dropdown custom_dropdown">
+                            <?php foreach ($vehicleoption as $value => $label) : ?>
+                                <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <?php endforeach; ?>
+                        </div>
+                        <?= $form->field($model, 'master_vehicle_id')->dropDownList(
+                            $vehicleoption,
+                            [
+                                'class' => "form-select form-select-lg hidden-select",
+                                'aria-label' => "Large select example",
+                                'prompt' => "Select Vehicle",
+                            ]
+                        )->label(false) ?>
+                        <div class="placeholder_select">
+                            <p>Vehicle</p>
+                        </div>
+                        <div class="icons_select">
+                            <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="select_boxes position-relative">
-                <div class="dropdown-container">
-                    <div class="dropdown-toggle">
-                        <?= isset($monthoption[$model->month_id]) ? $monthoption[$model->month_id] : 'May,june,July..' ?>
-                    </div>
-                    <div class="dropdown custom_dropdown">
-                        <?php foreach ($monthoption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?= $form->field($model, 'month_id')->dropDownList(
-                        $monthoption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
-                        ]
-                    )->label(false) ?>
-                    <div class="placeholder_select">
-                        <p>Month</p>
-                    </div>
-                    <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
-                    </div>
-                </div>
-
-            </div>
-            <div class="select_boxes position-relative">
-                <div class="dropdown-container">
-                    <div class="dropdown-toggle">
-                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Tiger Elephent..' ?>
-                    </div>
-                    <div class="dropdown custom_dropdown">
-                        <?php foreach ($animalfilteroption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?= $form->field($model, 'master_animal_id')->dropDownList(
-                        $animalfilteroption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
-                        ]
-                    )->label(false) ?>
-                    <div class="placeholder_select">
-                        <p>Animal</p>
-                    </div>
-                    <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="select_boxes position-relative">
-                <div class="dropdown-container">
-                    <div class="dropdown-toggle">
-                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Cantar/Bus..' ?>
-                    </div>
-                    <div class="dropdown custom_dropdown">
-                        <?php foreach ($vehicleoption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?= $form->field($model, 'master_vehicle_id')->dropDownList(
-                        $vehicleoption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example"
-                        ]
-                    )->label(false) ?>
-                      <div class="placeholder_select">
-                    <p>Vehicel</p>
-                </div>
-                <div class="icons_select">
-                    <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
-                </div>
-                </div>
-              
-            </div>
-        </div>
+        <?php } ?>
     </div>
     <div class="col-lg-2 col-xl-1">
-        <div class="search">
-            <div class="serch_btn">
-                <?= Html::submitButton('Search') ?>
+        <?php if ($model->master_rare_animal_id == '') { ?>
+
+            <div class="search">
+                <div class="serch_btn">
+                    <?= Html::submitButton('Search') ?>
+                </div>
             </div>
-        </div>
+        <?php } ?>
     </div>
 </div>
+<?= $form->field($model, 'master_rare_animal_id')->hiddenInput()->label(false) ?>
+
 <?php ActiveForm::end(); ?>
 
 <?php

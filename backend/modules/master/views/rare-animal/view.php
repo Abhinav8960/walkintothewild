@@ -28,16 +28,27 @@ $this->params['title'] = $this->title;
             <div class="col-md-10">
                 <div class="text-box">
                     <p>
-                        <span>Name: </span><?= $model->animal_name ?>
+                        <span class="font-weight-bold">Animal Name: </span><?= $model->animal_name ?>
                     </p>
                     <p>
-                    <p>
-                        <span>Animal Type: </span><?= isset($model->animal_type_id) ? $model->animaltype->title : ''; ?>
+                        <span class="font-weight-bold">Short Description: </span><?= $model->short_description ?>
                     </p>
 
-                    </p>
                     <p>
-                        <span>Short Description: </span><?= $model->short_description ?>
+                        <span class="font-weight-bold">Assigned Park:</span>
+                        <?php $rareparkanimals = $model->getRareparkanimals()->where(['status' => 1])->all();
+                        $park_names = '';
+                        if ($rareparkanimals) {
+                            foreach ($rareparkanimals as $rareparkanimal) {
+                                if ($safaripark = $rareparkanimal->safaripark) {
+
+                                    $park_names .= $safaripark->title . ', ';
+                                }
+                            }
+                            $park_names = substr($park_names, 0, -2);
+                        }
+                        echo $park_names;
+                        ?>
                     </p>
                 </div>
             </div>
