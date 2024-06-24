@@ -3,6 +3,7 @@ if ($operator_parks) {
     foreach ($operator_parks as $operator_park) {
         $park_detail = $operator_park->park;
 ?>
+<a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
         <div class="searchSafari_parks mb-4">
             <div class="row">
                 <div class="col-xl-3">
@@ -11,7 +12,7 @@ if ($operator_parks) {
                     </div>
                 </div>
                 <div class="col-xl-9 ">
-                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
+                    
                         <div class="parks_body">
                             <div class="safrititles pt-md-0 pt-3">
                                 <h6 class=""><?= $park_detail->title ?></h6>
@@ -104,9 +105,10 @@ if ($operator_parks) {
                             </div>
                         </div>
 
-                    </a>
+                  
                 </div>
             </div>
         </div>
+        </a>
 <?php }
 } ?>
