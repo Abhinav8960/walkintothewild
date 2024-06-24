@@ -152,7 +152,7 @@ class BirdingtourRegistrationForm extends model
             [['is_agree'], 'required', 'requiredValue' => 1, 'message' => 'You must agree to the terms and conditions.'],
             [['business_name', 'phone_no', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment'], 'required'],
             [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'common\models\registration\SafariOperatorRequest', 'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
-            [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^[123456789]\d{9}$/', 'message' => 'Invalid Phone number.'],
+            [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^[1234567890]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['facebook_url', 'instagram_url', 'youtube_link'], 'url'],
             [['operator_email', 'email'], 'email'],
             [['google_rating', 'starting_price'], 'number'],
