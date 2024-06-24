@@ -70,4 +70,13 @@ class SafariOperatorRequestPark extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
         ];
     }
+
+
+    /**
+     * Parks List
+     */
+    public function getParks()
+    {
+        return $this->hasMany(SafariOperatorRequestPark::className(), ['safari_operator_request_id' => 'id']);
+    }
 }

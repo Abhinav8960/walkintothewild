@@ -12,6 +12,7 @@ use common\models\registration\SafariOperatorRequest;
 class SafariOperatorRequestSearch extends SafariOperatorRequest
 {
     public $budget_segment;
+    public $park_id;
 
     /**
      * {@inheritdoc}
@@ -22,7 +23,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
             [['id', 'safari_operator_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'about_business', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'safe'],
             [['google_rating', 'starting_price'], 'number'],
-            [['budget_segment'], 'safe']
+            [['budget_segment', 'park_id'], 'safe']
         ];
     }
 
@@ -112,6 +113,12 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
             $query->andFilterWhere(['is_offer_standard_budget' => 1]);
         } elseif ($this->budget_segment == 3) {
             $query->andFilterWhere(['is_offer_economical_budget' => 1]);
+        }
+
+        if ($this->park_id) {
+            $query->joinwith(['parkrequests' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
         }
         return $dataProvider;
     }

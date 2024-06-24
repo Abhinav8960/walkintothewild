@@ -1,8 +1,9 @@
 <?php
 
-use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\models\GeneralModel;
+use common\models\registration\SafariOperatorRequestPark;
 
 /** @var yii\web\View $this */
 /** @var common\models\master\animal\MasterAnimalSearch $model */
@@ -48,6 +49,14 @@ use yii\widgets\ActiveForm;
             GeneralModel::statusoption(),
             [
                 'prompt' => 'Select Status',
+            ]
+        ) ?>
+    </div>
+    <div class="col-md-2">
+        <?= $form->field($model, 'park_id')->dropDownList(
+            \yii\helpers\ArrayHelper::map(SafariOperatorRequestPark::find()->joinwith(['park'])->where(['safari_operator_request_park.status' => 1])->orderby(['safari_park.title' => SORT_ASC])->all(), 'park_id', 'park.title'),
+            [
+                'prompt' => 'Select Park',
             ]
         ) ?>
     </div>

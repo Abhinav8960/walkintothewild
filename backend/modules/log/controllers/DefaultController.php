@@ -3,7 +3,7 @@
 namespace backend\modules\log\controllers;
 
 use common\models\MailLogSearch;
-use yii\base\Controller;
+use yii\web\Controller;
 
 /**
  * DefaultController.

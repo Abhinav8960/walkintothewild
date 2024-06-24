@@ -147,4 +147,13 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
             return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
         }
     }
+
+
+    /**
+     * Parks List
+     */
+    public function getParkrequests()
+    {
+        return $this->hasMany(SafariOperatorRequestPark::className(), ['safari_operator_request_id' => 'id']);
+    }
 }

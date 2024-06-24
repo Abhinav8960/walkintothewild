@@ -3,6 +3,7 @@
 namespace common\models\registration;
 
 use Yii;
+use common\models\park\SafariPark;
 
 /**
  * This is the model class for table "safari_operator_request_park".
@@ -69,5 +70,13 @@ class SafariOperatorRequestPark extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'created_by' => 'Created By',
         ];
+    }
+
+    /**
+     * Parks List
+     */
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 }

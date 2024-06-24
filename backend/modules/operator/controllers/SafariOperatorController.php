@@ -5,7 +5,7 @@ namespace backend\modules\operator\controllers;
 use common\interfaces\StatusInterface;
 use common\models\registration\SafariOperatorRequest;
 use common\models\SafariOperatorRequestSearch;
-use yii\base\Controller;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -29,6 +29,15 @@ class SafariOperatorController extends Controller
         ]);
     }
 
+    /**
+     * View Operator
+     */
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('view', ['model' => $model]);
+    }
 
 
     /**

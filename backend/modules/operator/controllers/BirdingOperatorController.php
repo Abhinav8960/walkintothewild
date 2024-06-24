@@ -5,7 +5,7 @@ namespace backend\modules\operator\controllers;
 use common\interfaces\StatusInterface;
 use common\models\registration\BirdingOperatorRequest;
 use frontend\models\BirdingOperatorRequestSearch;
-use yii\base\Controller;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**

@@ -77,7 +77,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Status',
+                        'label' => 'Approved Status',
                         'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {

@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use yii\base\Controller;
+use yii\web\Controller;
 
 /**
  * DefaultController.

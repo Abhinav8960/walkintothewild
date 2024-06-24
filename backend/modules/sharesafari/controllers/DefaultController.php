@@ -2,7 +2,7 @@
 
 namespace backend\modules\sharesafari\controllers;
 
-use yii\base\Controller;
+use yii\web\Controller;
 
 /**
  * DefaultController.

@@ -345,10 +345,10 @@ class SafariOperatorTourController extends Controller
     }
 
     /**
-     * Finds the MasterAnimal model based on its primary key value.
+     * Finds the SafariOperatorRequest model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MasterAnimal the loaded model
+     * @return SafariOperatorRequest the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
