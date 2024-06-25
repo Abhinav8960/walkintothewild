@@ -2,22 +2,23 @@
 
 namespace frontend\controllers;
 
-use frontend\models\ResendVerificationEmailForm;
-use frontend\models\VerifyEmailForm;
 use Yii;
-use yii\base\InvalidArgumentException;
-use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use common\models\LoginForm;
-use common\models\RenderedContent;
-use common\models\trierror\form\ErrorLogForm;
-use common\models\trierror\form\FrontendErrorLogForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
+use yii\filters\AccessControl;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\RenderedContent;
+use frontend\components\AuthHandler;
+use frontend\models\VerifyEmailForm;
+use yii\web\BadRequestHttpException;
+use frontend\models\ResetPasswordForm;
+use yii\base\InvalidArgumentException;
+use common\models\trierror\form\ErrorLogForm;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResendVerificationEmailForm;
+use common\models\trierror\form\FrontendErrorLogForm;
 
 /**
  * Site controller
@@ -32,15 +33,15 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'auth'],
                 'rules' => [
                     [
-                        'actions' => ['signup', 'error'],
+                        'actions' => ['signup', 'error', 'auth'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'auth'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -61,6 +62,10 @@ class SiteController extends Controller
     public function actions()
     {
         return [
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
             // 'error' => [
             //     'class' => \yii\web\ErrorAction::class,
             // ],
@@ -295,6 +300,12 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+
+    public function onAuthSuccess($client)
+    {
+        (new AuthHandler($client))->handle();
     }
 
 

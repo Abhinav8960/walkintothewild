@@ -35,6 +35,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         <?php ActiveForm::end(); ?>
                     </div>
+                    <div class="col-lg-12">
+                        <p class="text-center mt-4">Or login with</p>
+                        <div class="google-login-box  text-center">
+                            <div class="d-inline-flex">
+                                <?= \yii\authclient\widgets\AuthChoice::widget([
+                                    'baseAuthUrl' => ['site/auth'],
+                                    'popupMode' => false,
+                                ]), 'Google' ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -33,18 +33,18 @@
 						<ul class="navbar-nav menu-navbar-nav align-items-center">
 							<li class="nav-item 
 							<?= in_array($active_url, array(
-													"/",
-													"/park/default/index",
-													"/park/default/parklist",
-													"/park/default/view",
-												)) ? "active" : "" ?>">
+								"/",
+								"/park/default/index",
+								"/park/default/parklist",
+								"/park/default/view",
+							)) ? "active" : "" ?>">
 								<a class="nav-link" href="/parklist"> <i class="fa-solid fa-magnifying-glass d-lg-inline-flex d-none"></i> Search Safari</a>
 							</li>
 							<li class="nav-item <?= in_array($active_url, array(
 													"/article/default/index",
 													"/article/default/view",
 												)) ? "active" : "" ?>">
-								<a class="nav-link" href="/article">	<img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> ARTICLES & TIPS</a>
+								<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> ARTICLES & TIPS</a>
 							</li>
 
 							<a href="/sharedsafari" class="sahreSafari text-lg-center">
@@ -53,6 +53,18 @@
 								</div>
 								<h5>Shared Safari</h5>
 							</a>
+							<?php if (!Yii::$app->user->identity) { ?>
+								<li class="nav-item">
+									<a class="nav-link" href="/site/auth?authclient=google"> Sign In</a>
+								</li>
+							<?php } else { ?>
+								<li class="nav-item">
+									<a class="nav-link" href="/site/logout">
+										<img src="<?= Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="" class="me-1 d-lg-inline-flex d-none rounded" style="height:25px;">
+										Log Out</a>
+								</li>
+							<?php } ?>
+
 						</ul>
 					</div>
 				</div>

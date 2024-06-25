@@ -20,23 +20,23 @@ $this->title = 'Login';
                 </div>
                 <div class="row pt-5">
                     <div class="col-lg-12">
-                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-                     <div class="mb-4">
-                     <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
-                     </div>
-                     <div class="mb-4">
-                     <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false)  ?>
-                     </div>
-                     <div class="mb-4">
-                     <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block logIn_btn ', 'name' => 'login-button']) ?>
-                     </div>
+                        <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+                        <div class="mb-4">
+                            <?= $form->field($model, 'username')->textInput(['autofocus' => true, 'placeholder' => 'Username'])->label(false) ?>
+                        </div>
+                        <div class="mb-4">
+                            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Password'])->label(false)  ?>
+                        </div>
+                        <div class="mb-4">
+                            <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block logIn_btn ', 'name' => 'login-button']) ?>
+                        </div>
                         <div class="login-with text-center text-black">
                             <p>Or login with</p>
                             <div class="google-login-box d-inline-flex ">
                                 <?= \yii\authclient\widgets\AuthChoice::widget([
                                     'baseAuthUrl' => ['site/auth'],
                                     'popupMode' => false,
-                                ]),'Google'?>
+                                ]), 'Google' ?>
                             </div>
                         </div>
                         <?php ActiveForm::end(); ?>
@@ -75,21 +75,23 @@ $this->title = 'Login';
         border-radius: 10px;
         /* border: 1px solid rgba(255, 255, 255, 0.18); */
         color: #fff;
-      
+
 
     }
-    .login_form_admin #login-form .form-control{
 
-background-color: #DCE8FF;
-padding: 8px 10px;
+    .login_form_admin #login-form .form-control {
 
-    } 
- 
-    .login_form_admin #login-form .form-control:focus{
+        background-color: #DCE8FF;
+        padding: 8px 10px;
+
+    }
+
+    .login_form_admin #login-form .form-control:focus {
 
         box-shadow: none;
         border-color: #DCE8FF;
     }
+
     .logIn_btn {
         padding-top: 20px;
     }
@@ -98,8 +100,8 @@ padding: 8px 10px;
 
         padding: 8px 10px !important;
         width: 100%;
-        background-color:#09422D;
-        border-color:#09422D;
+        background-color: #09422D;
+        border-color: #09422D;
         color: #fff;
         font-weight: 500;
         font-size: 18px;
@@ -113,7 +115,8 @@ padding: 8px 10px;
         border-color: #09422D;
         color: #fff;
     }
-    .google-login-box{
+
+    .google-login-box {
 
         background: #DCE8FF;
         padding: 6px 24px;
@@ -121,10 +124,11 @@ padding: 8px 10px;
         color: #000000;
         align-items: center;
     }
-    .auth-clients{
+
+    .auth-clients {
 
         margin: -8px;
         padding: 0;
-        
+
     }
 </style>
