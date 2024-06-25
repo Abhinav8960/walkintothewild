@@ -34,9 +34,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="input_check pb-0">
 
                     <select class="form-select mb-2" aria-label="Default select example">
-                        <option selected>Sort By: Relevant</option>
-                        <option value="1">Most Demanding</option>
-                        <option value="2">Shared Safari</option>
+                        <option selected>Sort By: Popularity</option>
+                        <option value="1">Popularity</option>
+                        <option value="2">Rating</option>
                     </select>
                 </div>
                 <!-- <div class="gridListview">
