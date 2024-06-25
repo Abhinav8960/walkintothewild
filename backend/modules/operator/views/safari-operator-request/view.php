@@ -2,9 +2,9 @@
 
 use common\models\GeneralModel;
 
-$this->title = 'Safari Tour Operator';
-$this->params['breadcrumbs_home_url'] = '/operator/safari-operator';
-$this->params['breadcrumbs'][] =  ['label' => 'Operator', 'url' => '#'];
+$this->title = 'Safari Operator Tour Registrations';
+$this->params['breadcrumbs_home_url'] = '/registration/safari-operator-tour';
+$this->params['breadcrumbs'][] =  ['label' => 'Registration', 'url' => '#'];
 $this->params['breadcrumbs'][] = 'View';
 $this->params['title'] = $this->title;
 
@@ -118,6 +118,9 @@ foreach ($park as $key => $role) {
                         <span>Offers Other Wildlife Activities: </span><?= substr($html, 0, -2) ?>
                     </p>
 
+                    <p>
+                        <span>Agree to the terms and conditions.: </span><?= ($model->is_agree == 1) ? 'Yes' : 'No' ?>
+                    </p>
                     <p>
                         <span>Operates in Parks : </span><?= substr($html_park, 0, -2) ?>
                     </p>

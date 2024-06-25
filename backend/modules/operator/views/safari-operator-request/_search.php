@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\models\GeneralModel;
-use common\models\operator\SafariOperatorPark;
 use common\models\registration\SafariOperatorRequestPark;
 
 /** @var yii\web\View $this */
@@ -55,23 +54,14 @@ use common\models\registration\SafariOperatorRequestPark;
     </div>
     <div class="col-md-2">
         <?= $form->field($model, 'park_id')->dropDownList(
-            \yii\helpers\ArrayHelper::map(SafariOperatorPark::find()->joinwith(['park'])->where(['safari_operator_park.status' => 1])->orderby(['safari_park.title' => SORT_ASC])->all(), 'park_id', 'park.title'),
+            \yii\helpers\ArrayHelper::map(SafariOperatorRequestPark::find()->joinwith(['park'])->where(['safari_operator_request_park.status' => 1])->orderby(['safari_park.title' => SORT_ASC])->all(), 'park_id', 'park.title'),
             [
                 'prompt' => 'Select Park',
             ]
         ) ?>
     </div>
-    <!-- <div class="col-md-2">
+    <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
-    </div> -->
+    </div>
 </div>
 <?php ActiveForm::end(); ?>
-
-<?php
-$js = <<<JS
-    $('form') . on('change', function() {
-        $(this) . closest('form') . submit();
-    });  
-JS;
-$this->registerJs($js);
-?>

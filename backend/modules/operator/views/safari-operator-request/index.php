@@ -5,9 +5,9 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 
-$this->title = 'Safari Tour Operator';
-// $this->params['breadcrumbs_home_url'] = '/registration/safari-operator-tour';
-$this->params['breadcrumbs'][] =  ['label' => 'Operator', 'url' => '#'];
+$this->title = 'Safari Operator Tour Registrations';
+$this->params['breadcrumbs_home_url'] = '/registration/safari-operator-tour';
+$this->params['breadcrumbs'][] =  ['label' => 'Registration', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -76,23 +76,23 @@ $this->params['title'] = $this->title;
                             return implode(', ', $budget);
                         }
                     ],
-                    // [
-                    //     'label' => 'Approved Status',
-                    //     'contentOptions' => ['style' => 'width: 5%;'],
-                    //     'format' => 'raw',
-                    //     'value' => function ($model) {
-                    //         if ($model->is_approved) {
-                    //             return isset(GeneralModel::yesnooption()[$model->is_approved]) ? GeneralModel::yesnooption()[$model->is_approved] : '';
-                    //         } else {
-                    //             return 'No';
-                    //         }
-                    //     }
-                    // ],
+                    [
+                        'label' => 'Approved Status',
+                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->is_approved) {
+                                return isset(GeneralModel::yesnooption()[$model->is_approved]) ? GeneralModel::yesnooption()[$model->is_approved] : '';
+                            } else {
+                                return 'No';
+                            }
+                        }
+                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp{suspend}',
+                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'template' => '{view}&nbsp',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
@@ -114,9 +114,9 @@ $this->params['title'] = $this->title;
                             //         ]);
                             //     }
                             // },
-                            'suspend' => function ($url, $model) {
-                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
-                            },
+                            // 'suspend' => function ($url, $model) {
+                            //     return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
+                            // },
 
                         ]
                     ],

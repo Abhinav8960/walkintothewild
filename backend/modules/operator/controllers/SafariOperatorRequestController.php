@@ -2,16 +2,16 @@
 
 namespace backend\modules\operator\controllers;
 
+use common\interfaces\StatusInterface;
+use common\models\registration\SafariOperatorRequest;
+use common\models\SafariOperatorRequestSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\interfaces\StatusInterface;
-use common\models\operator\SafariOperator;
-use common\models\operator\SafariOperatorSearch;
 
 /**
- * SafariOperatorController.
+ * SafariOperatorRequestController.
  */
-class SafariOperatorController extends Controller
+class SafariOperatorRequestController extends Controller
 {
 
     /**
@@ -20,7 +20,7 @@ class SafariOperatorController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SafariOperatorSearch();
+        $searchModel = new SafariOperatorRequestSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -65,7 +65,7 @@ class SafariOperatorController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SafariOperator::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = SafariOperatorRequest::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
