@@ -8,11 +8,14 @@ use common\models\GeneralModel;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
-<div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 d-lg-block d-none">
-    <?= $this->render('_operator_side_search', [
+<div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 position-relative">
+<div id="targetDiv" >
+<?= $this->render('_operator_side_search', [
         'model' => $operatorsearchModel,
         'safari_model' => $model
     ]) ?>
+</div>
+   
     <div class="advertisment pt-5">
         <p class="text-center">ADVERTISMENT</p>
         <div class="advertisment_box-2">
@@ -22,12 +25,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 </div>
 <div class="col-lg-8 col-xl-9 col-xxl-10 ps-lg-5 position-relative">
     <div class="col-12">
-    <div id="targetDiv" style="display:none;" class="d-lg-none">
-    <?= $this->render('_operator_side_search', [
-        'model' => $operatorsearchModel,
-        'safari_model' => $model
-    ]) ?>
-                </div>
         <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
             <div class="left_text">
                 <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>

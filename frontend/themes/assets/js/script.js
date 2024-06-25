@@ -229,16 +229,15 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 document.getElementById('mobileSearchDiv').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent the default behavior of the select element
+    event.stopPropagation(); // Prevent the default behavior
     document.getElementById('targetDiv').style.display = 
-        document.getElementById('targetDiv').style.display === 'none' ? 'block' : 'none';
+        document.getElementById('targetDiv').style.display === 'none' ? 'block' : 'block';
 });
 
-// Prevent the select element from being opened
-document.querySelector('.form-select').addEventListener('mousedown', function(event) {
-    event.preventDefault();
+// Optional: Prevent click events on the select element
+document.querySelector('.form-select').addEventListener('click', function(event) {
+    event.stopPropagation();
 });
-
 
 
 // document.addEventListener("DOMContentLoaded", function() {

@@ -641,6 +641,16 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:991px) {
+    #targetDiv {
+        background-color: #faf7f3;
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        z-index: 10;
+        left: 0px;
+        display: none;
+    
+    }
     .safari_create {
 
         width: 100%;

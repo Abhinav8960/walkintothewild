@@ -451,15 +451,7 @@ a {
     padding: 10px 15px;
 
 }
-#targetDiv {
-    background-color: #faf7f3;
-    position: absolute;
-    top: 0px;
-    width: 100%;
-    z-index: 10;
-    left: 0px;
 
-}
 .searchwrap{
 
     background-color: #fff;

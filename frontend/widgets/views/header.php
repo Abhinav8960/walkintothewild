@@ -51,7 +51,7 @@
 								<div class="card-img">
 									<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
 								</div>
-								<h5>Share Safari</h5>
+								<h5>Shared Safari</h5>
 							</a>
 						</ul>
 					</div>

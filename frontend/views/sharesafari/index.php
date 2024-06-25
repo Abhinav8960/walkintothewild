@@ -323,7 +323,7 @@ $this->params['title'] = $this->title;
             <div class="col-12">
                 <div class="col-12">
                     <div class="title_web">
-                        <h2>SHARING SAFARIS <br>YOU MIGHT BE INTERESTED</h2>
+                        <h2>Shared safaris <br>you might be interested </h2>
                     </div>
                 </div>
             </div>
