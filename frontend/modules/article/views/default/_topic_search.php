@@ -1,6 +1,7 @@
 <?php
 
 use common\models\cms\article\MasterArticleTopic;
+use yii\helpers\Url;
 
 $topics = MasterArticleTopic::find()->where(['status' => MasterArticleTopic::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all();
 ?>
@@ -9,7 +10,7 @@ $topics = MasterArticleTopic::find()->where(['status' => MasterArticleTopic::STA
         <?php if ($topics) {
             foreach ($topics as $topic) {
         ?>
-                <li><a href="/article?ArticleSearch%5Btopic_id%5D=&ArticleSearch%5Btopic_id%5D%5B%5D=<?= $topic->id ?>"><?= $topic->title ?> <i class="fa-solid fa-chevron-right"></i></a></li>
+                <li><a href="<?= Url::toRoute(['/article/topic', 'topic_id' => $topic->id]) ?>"><?= $topic->title ?> <i class="fa-solid fa-chevron-right"></i></a></li>
 
         <?php }
         } ?>

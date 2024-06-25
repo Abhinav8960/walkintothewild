@@ -107,4 +107,20 @@ class DefaultController extends Controller
             ]
         );
     }
+
+
+    public function actionTopic($topic_id = null)
+    {
+        $searchModel = new ArticleSearch();
+        $searchModel->topic_id = $topic_id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $models = $dataProvider->getModels();
+        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+        return $this->render('index', [
+            'featured_parks' => $featured_parks,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'models' => $models,
+        ]);
+    }
 }

@@ -92,6 +92,12 @@ return [
                 '/parklist' => '/park/default/parklist', //park listing url
 
                 '/article' => '/article/default/index', //article listing url
+                '/article/topic/<topic_id>' => '/article/default/topic',
+                [
+                    'pattern' => '/article/topic/<topic_id:\w+>',
+                    'route' => '/article/default/topic',
+                    'defaults' => ['topic_id' => '']
+                ],
                 '/article/<slug>' => '/article/default/view', //article view url
 
 

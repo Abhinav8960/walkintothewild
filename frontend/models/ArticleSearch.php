@@ -66,19 +66,17 @@ class ArticleSearch extends Article
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
-            'created_by' => $this->created_by,
-            'updated_by' => $this->updated_by,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'article.id' => $this->id,
+            'article.status' => $this->status,
+            'article.created_by' => $this->created_by,
+            'article.updated_by' => $this->updated_by,
+            'article.created_at' => $this->created_at,
+            'article.updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
-        $query->andFilterWhere(['like', 'slug', $this->slug]);
-        $query->andFilterWhere(['like', 'description', $this->description]);
-
-
+        $query->andFilterWhere(['like', 'article.title', $this->title]);
+        $query->andFilterWhere(['like', 'article.slug', $this->slug]);
+        $query->andFilterWhere(['like', 'article.description', $this->description]);
 
 
         if ($this->topic_id) {
