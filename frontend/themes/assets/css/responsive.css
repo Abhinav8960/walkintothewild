@@ -651,6 +651,11 @@ line-height: 19px;
         display: none;
     
     }
+    .filter-wrapper {
+
+        opacity: 0 !important; /* Make the div transparent */
+        pointer-events: none !important; /* Disable pointer events */
+    }
     .safari_create {
 
         width: 100%;
