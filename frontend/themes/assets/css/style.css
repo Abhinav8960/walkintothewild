@@ -3729,3 +3729,20 @@ cursor: pointer;
 
     border-radius: 10px !important;
 }
+/* .errorPage{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+} */
+.errorPage .title{
+
+    font-size: 146px;
+    color: var(--background-primary);
+}
+.errorPage h3{
+
+    color: var(--background-primary);  
+    font-size: 30px;
+}

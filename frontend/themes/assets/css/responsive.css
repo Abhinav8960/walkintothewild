@@ -164,6 +164,11 @@ line-height: 19px;
     .artical_cards .image-box .image img {
         height: 350px;
     }
+    .imgsbox img{
+
+        height: 600px;
+        padding-bottom: 40px;
+    }
 
 }
 
@@ -172,6 +177,11 @@ line-height: 19px;
     .inner_animals>img {
 
         height: 210px;
+    }
+    .imgsbox img{
+
+        height: 600px;
+        padding-bottom: 40px;
     }
 }
 
@@ -188,11 +198,16 @@ line-height: 19px;
         height: 500px;
 
     }
-
+ 
+  
 }
 
 @media only screen and (max-width: 1599px) and (min-width: 991px) {
+    .imgsbox img{
 
+        height: 600px;
+      
+    }
     .main_homebanner .banner_searchBox {
         position: absolute;
         top: 75.5%;
@@ -293,6 +308,7 @@ line-height: 19px;
 
         left: 20%;
     }
+   
 }
 
 
@@ -605,6 +621,14 @@ line-height: 19px;
 }
 
 @media (max-width: 991px) {
+    .errorPage{
+
+        height: 100vh;
+    }
+    .imgsbox img{
+
+        height: 100vh;
+    }
     .sahreSafari{
 
         box-shadow: none;
