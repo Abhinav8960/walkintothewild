@@ -3,16 +3,15 @@ if ($operator_parks) {
     foreach ($operator_parks as $operator_park) {
         $park_detail = $operator_park->park;
 ?>
-<a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
-        <div class="searchSafari_parks mb-4">
-            <div class="row">
-                <div class="col-xl-3">
-                    <div class="parksImg h-100">
-                        <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+        <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
+            <div class="searchSafari_parks mb-4">
+                <div class="row">
+                    <div class="col-xl-3">
+                        <div class="parksImg h-100">
+                            <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                        </div>
                     </div>
-                </div>
-                <div class="col-xl-9 ">
-                    
+                    <div class="col-xl-9 ">
                         <div class="parks_body">
                             <div class="safrititles pt-md-0 pt-3">
                                 <h6 class=""><?= $park_detail->title ?></h6>
@@ -39,10 +38,13 @@ if ($operator_parks) {
                                         <div class="text-form">
                                             <p class="mb-0">
                                                 <?php if ($park_detail->vehicles) {
-
+                                                    $vehicle_name = '';
                                                     foreach ($park_detail->vehicles as $vehicle) {
-                                                        echo isset($vehicle->mastervehicle) ? $vehicle->mastervehicle->vehicle_name . ' ,' : '' ?>
-                                                <?php }
+                                                        if ($vehicle->mastervehicle) {
+                                                            $vehicle_name .= $vehicle->mastervehicle->vehicle_name . ', ';
+                                                        }
+                                                    }
+                                                    echo substr($vehicle_name, 0, -2);
                                                 } ?>
                                             </p>
                                         </div>
@@ -68,9 +70,13 @@ if ($operator_parks) {
                                             <p class="mb-0">
                                                 <?php if ($park_detail->sessions) {
 
+                                                    $metasession_title = '';
                                                     foreach ($park_detail->sessions as $session) {
-                                                        echo isset($session->metasession) ? $session->metasession->title . ',' : '' ?>
-                                                <?php }
+                                                        if ($session->metasession) {
+                                                            $metasession_title .= $session->metasession->title . ', ';
+                                                        }
+                                                    }
+                                                    echo substr($metasession_title, 0, -2);
                                                 } ?>
                                             </p>
                                         </div>
@@ -101,14 +107,11 @@ if ($operator_parks) {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-
-                  
+                    </div>
                 </div>
             </div>
-        </div>
         </a>
 <?php }
 } ?>

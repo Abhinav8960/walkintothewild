@@ -10,7 +10,7 @@ $topics = MasterArticleTopic::find()->where(['status' => MasterArticleTopic::STA
         <?php if ($topics) {
             foreach ($topics as $topic) {
         ?>
-                <li><a href="<?= Url::toRoute(['/article/topic', 'topic_id' => $topic->id]) ?>"><?= $topic->title ?> <i class="fa-solid fa-chevron-right"></i></a></li>
+                <li><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->slug]) ?>"><?= $topic->title ?> <i class="fa-solid fa-chevron-right"></i></a></li>
 
         <?php }
         } ?>
