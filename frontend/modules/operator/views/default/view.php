@@ -167,27 +167,27 @@ $recentposts = ArticleSearch::recentpost();
             <div class="col-lg-8 col-xxl-10 col-xl-9">
                 <div class="tab-content_tour active " id="safariParks">
                     <!-- Safari Parks content goes here -->
-                    <?= $this->render('operator_safari_park', [
+                    <?= $this->render('_operator_safari_park', [
                         'featured_parks' => $featured_parks,
                         'operator_parks' => $operator_parks,
                     ]) ?>
                 </div>
 
                 <div class="tab-content_tour " id="resort">
-                    <?= $this->render('resort', [
+                    <?= $this->render('_resort', [
                         'featured_parks' => $featured_parks,
                     ]) ?>
                 </div>
 
                 <div class="tab-content_tour" id="sharedSafari">
                     <!-- Shared Safari content goes here -->
-                    <?= $this->render('shared_safari', [
+                    <?= $this->render('_shared_safari', [
                         'featured_parks' => $featured_parks,
                     ]) ?>
                 </div>
 
                 <div class="tab-content_tour mb-4" id="review">
-                    <?= $this->render('review', [
+                    <?= $this->render('_review', [
                         'featured_parks' => $featured_parks,
                     ]) ?>
                 </div>
@@ -198,7 +198,7 @@ $recentposts = ArticleSearch::recentpost();
 
 
 <section class="safariduring_sesons innerpage">
-    <?= $this->render('park_carousel', [
+    <?= $this->render('_park_carousel', [
         'featured_parks' => $featured_parks,
     ]) ?>
 </section>
