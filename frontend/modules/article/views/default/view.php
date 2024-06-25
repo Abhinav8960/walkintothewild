@@ -6,7 +6,7 @@ use common\models\GeneralModel;
 use frontend\models\ArticleSearch;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
-
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 
@@ -67,6 +67,20 @@ $recentposts = ArticleSearch::recentpost();
 
 
                 </div>
+
+                <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
+                    <div class="author_wrapper">
+                        <ul class="artical-info ">
+                            <?php if ($topics = $article->articletopics) {
+                                foreach ($topics as $topic) { ?>
+                                    <li><i class="fa fa-list-alt" aria-hidden="true" style="color:#f7bf39"></i><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->articlename->slug]) ?>"><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></a></li>
+                            <?php }
+                            } ?>
+
+
+                        </ul>
+                    </div>
+                </div>
                 <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
                     <div class="d-flex align-items-center">
                         <h3 class="me-4 mb-0">Tags</h3>
@@ -76,11 +90,7 @@ $recentposts = ArticleSearch::recentpost();
                         <ul class="artical-info ">
                             <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
-                            <?php if ($topics = $article->articletopics) {
-                                foreach ($topics as $topic) { ?>
-                                    <li><i class="fa fa-list-alt" aria-hidden="true" style="color:#f7bf39"></i><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></li>
-                            <?php }
-                            } ?>
+
 
                         </ul>
                     </div>

@@ -109,10 +109,25 @@ class DefaultController extends Controller
     }
 
 
-    public function actionTopic($topic_id = null)
+    public function actionTopic($slug)
     {
         $searchModel = new ArticleSearch();
-        $searchModel->topic_id = $topic_id;
+        $searchModel->topic_slug = $slug;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $models = $dataProvider->getModels();
+        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+        return $this->render('index', [
+            'featured_parks' => $featured_parks,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'models' => $models,
+        ]);
+    }
+
+    public function actionTag($slug)
+    {
+        $searchModel = new ArticleSearch();
+        $searchModel->tag_slug = $slug;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();

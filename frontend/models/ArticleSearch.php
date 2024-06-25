@@ -10,8 +10,8 @@ use yii\data\ActiveDataProvider;
  */
 class ArticleSearch extends Article
 {
-    public $topic_id;
-    public $article_tag_id;
+    public $topic_slug;
+    public $tag_slug;
     /**
      * {@inheritdoc}
      */
@@ -20,7 +20,7 @@ class ArticleSearch extends Article
         return [
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['publish_date_time', 'article_date', 'topic_id', 'article_tag_id'], 'safe'],
+            [['publish_date_time', 'article_date', 'topic_slug', 'tag_slug'], 'safe'],
             [['title', 'banner_image', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
             [['sub_title'], 'string', 'max' => 75],
@@ -79,16 +79,20 @@ class ArticleSearch extends Article
         $query->andFilterWhere(['like', 'article.description', $this->description]);
 
 
-        if ($this->topic_id) {
+        if ($this->topic_slug) {
             $query->joinwith(['articletopics' => function ($articletopics_query) {
-                $articletopics_query->andWhere(['article_topic.master_article_topic_id' => $this->topic_id]);
+                $articletopics_query->joinwith(['articlename' => function ($additional_query) {
+                    $additional_query->andWhere(['like', 'master_article_topic.slug', $this->topic_slug]);
+                }]);
             }]);
         }
 
 
-        if ($this->article_tag_id) {
+        if ($this->tag_slug) {
             $query->joinwith(['articletags' => function ($articletags_query) {
-                $articletags_query->andWhere(['article_tag.master_article_tag_id' => $this->article_tag_id]);
+                $articletags_query->joinwith(['articletag' => function ($additional_query) {
+                    $additional_query->andWhere(['like', 'master_article_tag.slug', $this->tag_slug]);
+                }]);
             }]);
         }
         return $dataProvider;

@@ -65,4 +65,9 @@ class ArticleTag extends \yii\db\ActiveRecord implements \common\interfaces\Stat
             'updated_by' => 'Updated By',
         ];
     }
+
+    public function getArticletag()
+    {
+        return $this->hasOne(MasterArticleTag::className(), ['id' => 'master_article_tag_id']);
+    }
 }

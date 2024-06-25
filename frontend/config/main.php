@@ -91,12 +91,18 @@ return [
                 '/park/<slug>' => '/park/default/view', //park view url
                 '/parklist' => '/park/default/parklist', //park listing url
 
-                '/article' => '/article/default/index', //article listing url
-                '/article/topic/<topic_id>' => '/article/default/topic',
+                '/article' => '/article/default/index',
+                '/article/tag/<slug>' => '/article/default/tag',
                 [
-                    'pattern' => '/article/topic/<topic_id:\w+>',
+                    'pattern' => '/article/tag/<slug:\w+>',
+                    'route' => '/article/default/tag',
+                    'defaults' => ['slug' => '']
+                ],
+                '/article/topic/<slug>' => '/article/default/topic',
+                [
+                    'pattern' => '/article/topic/<slug:\w+>',
                     'route' => '/article/default/topic',
-                    'defaults' => ['topic_id' => '']
+                    'defaults' => ['slug' => '']
                 ],
                 '/article/<slug>' => '/article/default/view', //article view url
 
