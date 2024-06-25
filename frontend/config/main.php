@@ -12,7 +12,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'audit'],
+    'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
     'defaultRoute' => '/coming-soon',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
@@ -92,6 +92,12 @@ return [
                 '/parklist' => '/park/default/parklist', //park listing url
 
                 '/article' => '/article/default/index', //article listing url
+                '/article/topic/<topic_id>' => '/article/default/topic',
+                [
+                    'pattern' => '/article/topic/<topic_id:\w+>',
+                    'route' => '/article/default/topic',
+                    'defaults' => ['topic_id' => '']
+                ],
                 '/article/<slug>' => '/article/default/view', //article view url
 
 
@@ -101,7 +107,9 @@ return [
                 '/operator/review/<id>' => '/operator/default/review', //operator view url
             ],
         ],
-
+        'mobileDetect' => [
+            'class' => '\skeeks\yii2\mobiledetect\MobileDetect'
+        ],
     ],
 
     'modules' => [

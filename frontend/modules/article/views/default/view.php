@@ -76,6 +76,12 @@ $recentposts = ArticleSearch::recentpost();
                         <ul class="artical-info ">
                             <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
+                            <?php if ($topics = $article->articletopics) {
+                                foreach ($topics as $topic) { ?>
+                                    <li><i class="fa fa-list-alt" aria-hidden="true" style="color:#f7bf39"></i><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></li>
+                            <?php }
+                            } ?>
+
                         </ul>
                     </div>
                 </div>

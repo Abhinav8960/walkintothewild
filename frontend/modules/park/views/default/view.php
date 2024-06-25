@@ -121,7 +121,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             <?= $this->render('_operators', [
                 'operators' => $operators,
                 'model' => $model,
-                'operatorsearchModel' => $operatorsearchModel
+                'operatorsearchModel' => $operatorsearchModel,
+                'device' => $device
             ]) ?>
         </div>
     </div>

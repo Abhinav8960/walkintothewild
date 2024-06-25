@@ -59,9 +59,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
         <div class="row mb-4 mt-2 position-relative">
             <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 ">
-                <div id="targetDiv" >
+                <div id="targetDiv">
                     <?= $this->render('_park_side_search', [
                         'model' => $searchModel,
+                        'device' => $device,
                     ]) ?>
                 </div>
             </div>

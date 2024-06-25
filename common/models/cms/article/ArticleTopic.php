@@ -35,7 +35,7 @@ class ArticleTopic extends \yii\db\ActiveRecord implements \common\interfaces\St
             \yii\behaviors\BlameableBehavior::className(),
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -63,5 +63,10 @@ class ArticleTopic extends \yii\db\ActiveRecord implements \common\interfaces\St
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getArticlename()
+    {
+        return $this->hasOne(MasterArticleTopic::class, ['id' => 'master_article_topic_id']);
     }
 }
