@@ -75,6 +75,13 @@
         width: 303px;
     }
 }
+@media only screen and (min-width: 1500px) and (max-width: 1580px){
+
+    .searchSafari_wraper .Slider_safariimg3{
+        height: 300px !important;
+        width: 270px !important;
+    }
+}
 @media(min-width:1700px){
 
     .searchSafari_wraper .Slider_safariimg3{
