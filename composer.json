@@ -34,7 +34,9 @@
         "yiisoft/yii2-bootstrap4": "^2.0",
         "samdark/yii2-webshell": "~2.0",
         "bizley/migration": "^4.4",
-        "kartik-v/yii2-widget-datetimepicker": "dev-master"
+        "kartik-v/yii2-widget-datetimepicker": "dev-master",
+        "jenssegers/agent": "^2.6",
+        "skeeks/yii2-mobile-detect": "^1.0.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

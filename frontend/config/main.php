@@ -12,7 +12,7 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log', 'audit'],
+    'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
     'defaultRoute' => '/coming-soon',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
@@ -101,7 +101,9 @@ return [
                 '/operator/review/<id>' => '/operator/default/review', //operator view url
             ],
         ],
-
+        'mobileDetect' => [
+            'class' => '\skeeks\yii2\mobiledetect\MobileDetect'
+        ],
     ],
 
     'modules' => [

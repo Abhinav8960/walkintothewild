@@ -9,13 +9,14 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 <div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 position-relative">
-<div id="targetDiv" >
-<?= $this->render('_operator_side_search', [
-        'model' => $operatorsearchModel,
-        'safari_model' => $model
-    ]) ?>
-</div>
-   
+    <div id="targetDiv">
+        <?= $this->render('_operator_side_search', [
+            'model' => $operatorsearchModel,
+            'safari_model' => $model,
+            'device' => $device,
+        ]) ?>
+    </div>
+
     <div class="advertisment pt-5">
         <p class="text-center">ADVERTISMENT</p>
         <div class="advertisment_box-2">

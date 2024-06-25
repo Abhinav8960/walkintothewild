@@ -54,6 +54,12 @@ class DefaultController extends Controller
             }
         });
     }
+
+    public function device()
+    {
+        return (\Yii::$app->mobileDetect->isMobile()) ? 'mobile' : 'desktop';
+    }
+
     /**
      * Renders the index view for the module
      * @return string
@@ -155,6 +161,7 @@ class DefaultController extends Controller
                 'operatorsearchModel' => $operatorsearchModel,
                 'operatordataProvider' => $operatordataProvider,
                 'operators' => $operators,
+                'device' => $this->device(),
             ]
         );
     }
@@ -203,6 +210,7 @@ class DefaultController extends Controller
             'dataProvider' => $dataProvider,
             'models' => $models,
             'featured_parks' => $featured_parks,
+            'device' => $this->device(),
         ]);
     }
 }

@@ -21,7 +21,8 @@ class SafariOperatorSearch extends SafariOperator
     {
         return [
             [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['google_rating', 'starting_price'], 'number'],
+            [['starting_price'], 'number'],
+            [['google_rating'], 'safe'],
             [['about_business'], 'string'],
             [['budget_segment', 'credibility'], 'safe'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
@@ -46,7 +47,7 @@ class SafariOperatorSearch extends SafariOperator
      */
     public function search($params, $park_id)
     {
-        $query = SafariOperator::find()->where(['safari_operator.status' => [1, 2]]);
+        $query = SafariOperator::find()->where(['safari_operator.status' => 1]);
 
         // add conditions that should always apply here
 
@@ -76,13 +77,34 @@ class SafariOperatorSearch extends SafariOperator
         $query->andFilterWhere([
             'id' => $this->id,
             'safari_operator_request_id' => $this->safari_operator_request_id,
-            'google_rating' => $this->google_rating,
+            // 'google_rating' => $this->google_rating,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'safari_operator.status' => $this->status,
         ]);
+
+        if ($this->google_rating) {
+            $rating_query = "";
+            foreach ((array)$this->google_rating as $google_rating) {
+                if ($google_rating == 1) {
+                    $rating_query .= "google_rating between 0 and 1 OR ";
+                } else if ($google_rating == 2) {
+                    $rating_query .= "google_rating between 2 and 2.99 OR ";
+                } else if ($google_rating == 3) {
+                    $rating_query .= "google_rating between 3 and 3.99 OR ";
+                } else if ($google_rating == 4) {
+                    $rating_query .= "google_rating between 4 and 4.99 OR ";
+                } else if ($google_rating == 5) {
+                    $rating_query .= "google_rating between 5 and 5.99 OR ";
+                }
+            }
+            if ($rating_query <> '') {
+                $rating_query = substr($rating_query, 0, -3);
+                $query->andWhere($rating_query);
+            }
+        }
 
         if ($this->budget_segment) {
             foreach ($this->budget_segment as $segment) {
