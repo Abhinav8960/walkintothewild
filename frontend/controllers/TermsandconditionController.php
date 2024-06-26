@@ -2,13 +2,11 @@
 
 namespace frontend\controllers;
 
-use Yii;
-use yii\web\Controller;
 
 /**
  * DefaultController.
  */
-class TermsandconditionController extends Controller
+class TermsandconditionController extends FrontendBaseController
 {
     /**
      * Renders the index view for the module

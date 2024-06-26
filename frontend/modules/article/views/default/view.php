@@ -125,9 +125,7 @@ $recentposts = ArticleSearch::recentpost();
     </div>
 </section>
 <section class="safariduring_sesons">
-    <?= $this->render('_park_carousel', [
-        'featured_parks' => $featured_parks,
-    ]) ?>
+    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 
 <section class="bg_sky">

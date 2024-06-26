@@ -23,8 +23,10 @@ use common\models\trierror\form\FrontendErrorLogForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends FrontendBaseController
 {
+    public $action_ids = ['login', 'logout', 'auth'];
+
     /**
      * {@inheritdoc}
      */
@@ -94,39 +96,39 @@ class SiteController extends Controller
     }
 
 
-    public function init()
-    {
-        parent::init();
-        Yii::$app->view->on(\yii\web\View::EVENT_AFTER_RENDER, function ($event) {
-            // Save rendered content and other details to the database
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $renderedContent = new RenderedContent();
-                $renderedContent->created_at = date('Y-m-d H:i:s');
-                $renderedContent->url = Yii::$app->request->absoluteUrl;
-                $renderedContent->title = Yii::$app->view->title;
-                $renderedContent->action_url = Yii::$app->request->url;
+    // public function init()
+    // {
+    //     parent::init();
+    //     Yii::$app->view->on(\yii\web\View::EVENT_AFTER_RENDER, function ($event) {
+    //         // Save rendered content and other details to the database
+    //         $transaction = Yii::$app->db->beginTransaction();
+    //         try {
+    //             $renderedContent = new RenderedContent();
+    //             $renderedContent->created_at = date('Y-m-d H:i:s');
+    //             $renderedContent->url = Yii::$app->request->absoluteUrl;
+    //             $renderedContent->title = Yii::$app->view->title;
+    //             $renderedContent->action_url = Yii::$app->request->url;
 
-                // Save query parameters to a separate column
-                $queryParams = Yii::$app->request->getQueryParams();
-                $renderedContent->query_params = json_encode($queryParams); // Save query parameters as JSON
+    //             // Save query parameters to a separate column
+    //             $queryParams = Yii::$app->request->getQueryParams();
+    //             $renderedContent->query_params = json_encode($queryParams); // Save query parameters as JSON
 
-                // Add device info and IP address
-                $renderedContent->user_agent = Yii::$app->request->userAgent;
-                $renderedContent->ip_address = Yii::$app->request->userIP;
+    //             // Add device info and IP address
+    //             $renderedContent->user_agent = Yii::$app->request->userAgent;
+    //             $renderedContent->ip_address = Yii::$app->request->userIP;
 
-                if ($renderedContent->save()) {
-                    $transaction->commit();
-                } else {
-                    Yii::error('Failed to save rendered content: ' . json_encode($renderedContent->errors));
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $e) {
-                Yii::error('Exception occurred while saving rendered content: ' . $e->getMessage());
-                $transaction->rollBack();
-            }
-        });
-    }
+    //             if ($renderedContent->save()) {
+    //                 $transaction->commit();
+    //             } else {
+    //                 Yii::error('Failed to save rendered content: ' . json_encode($renderedContent->errors));
+    //                 $transaction->rollBack();
+    //             }
+    //         } catch (\Exception $e) {
+    //             Yii::error('Exception occurred while saving rendered content: ' . $e->getMessage());
+    //             $transaction->rollBack();
+    //         }
+    //     });
+    // }
 
     /**
      * Displays homepage.
@@ -135,6 +137,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        return $this->redirect('/');
         return $this->render('index');
     }
 
@@ -183,42 +186,42 @@ class SiteController extends Controller
      * @throws BadRequestHttpException
      * @return yii\web\Response
      */
-    public function actionVerifyEmail($token)
-    {
-        try {
-            $model = new VerifyEmailForm($token);
-        } catch (InvalidArgumentException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-        if (($user = $model->verifyEmail()) && Yii::$app->user->login($user)) {
-            Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
-            return $this->goHome();
-        }
+    // public function actionVerifyEmail($token)
+    // {
+    //     try {
+    //         $model = new VerifyEmailForm($token);
+    //     } catch (InvalidArgumentException $e) {
+    //         throw new BadRequestHttpException($e->getMessage());
+    //     }
+    //     if (($user = $model->verifyEmail()) && Yii::$app->user->login($user)) {
+    //         Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+    //         return $this->goHome();
+    //     }
 
-        Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
-        return $this->goHome();
-    }
+    //     Yii::$app->session->setFlash('error', 'Sorry, we are unable to verify your account with provided token.');
+    //     return $this->goHome();
+    // }
 
     /**
      * Resend verification email
      *
      * @return mixed
      */
-    public function actionResendVerificationEmail()
-    {
-        $model = new ResendVerificationEmailForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-                return $this->goHome();
-            }
-            Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
-        }
+    // public function actionResendVerificationEmail()
+    // {
+    //     $model = new ResendVerificationEmailForm();
+    //     if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+    //         if ($model->sendEmail()) {
+    //             Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+    //             return $this->goHome();
+    //         }
+    //         Yii::$app->session->setFlash('error', 'Sorry, we are unable to resend verification email for the provided email address.');
+    //     }
 
-        return $this->render('resendVerificationEmail', [
-            'model' => $model
-        ]);
-    }
+    //     return $this->render('resendVerificationEmail', [
+    //         'model' => $model
+    //     ]);
+    // }
 
 
     public function onAuthSuccess($client)

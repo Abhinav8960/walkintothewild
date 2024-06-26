@@ -3,62 +3,24 @@
 namespace frontend\modules\park\controllers;
 
 use Yii;
-use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use common\models\GeneralModel;
 use common\models\park\SafariPark;
-use common\models\RenderedContent;
-use yii\web\NotFoundHttpException;
-use frontend\models\SafariParkSearch;
 use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariParkMonth;
-use frontend\models\SafariOperatorSearch;
 use common\models\master\animal\MasterRareAnimal;
 use common\models\suggestions\form\SafariSuggestionsForm;
+use frontend\models\SafariParkSearch;
+use frontend\models\SafariOperatorSearch;
+use frontend\controllers\FrontendBaseController;
 
 /**
  * DefaultController.
  */
-class DefaultController extends Controller
+class DefaultController extends FrontendBaseController
 {
-    public function init()
-    {
-        parent::init();
-        Yii::$app->view->on(\yii\web\View::EVENT_AFTER_RENDER, function ($event) {
-            // Save rendered content and other details to the database
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $renderedContent = new RenderedContent();
-                $renderedContent->created_at = date('Y-m-d H:i:s');
-                $renderedContent->url = Yii::$app->request->absoluteUrl;
-                $renderedContent->title = Yii::$app->view->title;
-                $renderedContent->action_url = Yii::$app->request->url;
-
-                // Save query parameters to a separate column
-                $queryParams = Yii::$app->request->getQueryParams();
-                $renderedContent->query_params = json_encode($queryParams); // Save query parameters as JSON
-
-                // Add device info and IP address
-                $renderedContent->user_agent = Yii::$app->request->userAgent;
-                $renderedContent->ip_address = Yii::$app->request->userIP;
-
-                if ($renderedContent->save()) {
-                    $transaction->commit();
-                } else {
-                    Yii::error('Failed to save rendered content: ' . json_encode($renderedContent->errors));
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $e) {
-                Yii::error('Exception occurred while saving rendered content: ' . $e->getMessage());
-                $transaction->rollBack();
-            }
-        });
-    }
-
-    public function device()
-    {
-        return (\Yii::$app->mobileDetect->isMobile()) ? 'mobile' : 'desktop';
-    }
+    public $action_ids = ['index', 'view', 'parklist'];
 
     /**
      * Renders the index view for the module
@@ -73,13 +35,13 @@ class DefaultController extends Controller
         $searchModel->master_vehicle_id = 5;
         $dataProvider = $searchModel->search($this->request->queryParams, false);
 
-        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+
         $featured_articles = Article::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
         $rare_exotics = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->all();
         return $this->render(
             'index',
             [
-                'featured_parks' => $featured_parks,
+
                 'featured_articles' => $featured_articles,
                 'rare_exotics' => $rare_exotics,
                 'searchModel' => $searchModel,
@@ -113,7 +75,7 @@ class DefaultController extends Controller
 
             $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
             $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
-            $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+
 
 
 
@@ -151,7 +113,6 @@ class DefaultController extends Controller
             'view',
             [
                 'model' => $model,
-                'featured_parks' => $featured_parks,
                 'first_month' => $first_month,
                 'last_month' => $last_month,
                 'searchModel' => $searchModel,
@@ -215,13 +176,11 @@ class DefaultController extends Controller
         }
         $dataProvider = $searchModel->search($this->request->queryParams, false);
         $models = $dataProvider->getModels();
-        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
 
         return $this->render('parklist', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
-            'featured_parks' => $featured_parks,
             'device' => $this->device(),
         ]);
     }

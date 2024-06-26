@@ -93,7 +93,5 @@ $recentposts = ArticleSearch::recentpost();
     </div>
 </section>
 <section class="safariduring_sesons innerpage">
-    <?= $this->render('_park_carousel', [
-        'featured_parks' => $featured_parks,
-    ]) ?>
+    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>

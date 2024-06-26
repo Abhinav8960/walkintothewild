@@ -3,60 +3,21 @@
 namespace frontend\modules\operator\controllers;
 
 use Yii;
-use yii\web\Controller;
-use frontend\models\ReplyForm;
-use frontend\models\CommentForm;
-use common\models\park\SafariPark;
-use common\models\RenderedContent;
-use frontend\models\ArticleSearch;
 use yii\web\NotFoundHttpException;
-use common\interfaces\StatusInterface;
-use common\models\cms\article\Article;
-use frontend\models\OperatorQuoteForm;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
+use frontend\models\OperatorQuoteForm;
+use frontend\controllers\FrontendBaseController;
 
 /**
  * DefaultController.
  */
-class DefaultController extends Controller
+class DefaultController extends FrontendBaseController
 {
     public $enableCsrfValidation = false;
 
-    public function init()
-    {
-        parent::init();
-        Yii::$app->view->on(\yii\web\View::EVENT_AFTER_RENDER, function ($event) {
-            // Save rendered content and other details to the database
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $renderedContent = new RenderedContent();
-                $renderedContent->created_at = date('Y-m-d H:i:s');
-                $renderedContent->url = Yii::$app->request->absoluteUrl;
-                $renderedContent->title = Yii::$app->view->title;
-                $renderedContent->action_url = Yii::$app->request->url;
-
-                // Save query parameters to a separate column
-                $queryParams = Yii::$app->request->getQueryParams();
-                $renderedContent->query_params = json_encode($queryParams); // Save query parameters as JSON
-
-                // Add device info and IP address
-                $renderedContent->user_agent = Yii::$app->request->userAgent;
-                $renderedContent->ip_address = Yii::$app->request->userIP;
-
-                if ($renderedContent->save()) {
-                    $transaction->commit();
-                } else {
-                    Yii::error('Failed to save rendered content: ' . json_encode($renderedContent->errors));
-                    $transaction->rollBack();
-                }
-            } catch (\Exception $e) {
-                Yii::error('Exception occurred while saving rendered content: ' . $e->getMessage());
-                $transaction->rollBack();
-            }
-        });
-    }
+    public $action_ids = ['view', 'follow', 'unfollow'];
 
     /**
      * Renders the index view for the module
@@ -65,9 +26,11 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
-        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
-        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $id, 'status' => 1])->all();
+        if (empty($operator)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
 
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $id, 'status' => 1])->all();
         $model = new OperatorQuoteForm();
         $model->action_url = '/operator/' . $id . '';
         $model->action_validate_url = '/operator/default/validate';
@@ -76,16 +39,12 @@ class DefaultController extends Controller
             return $this->redirect(['/operator/default/view',  'id' => $id]);
         }
 
-        if (empty($operator)) {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
 
         return $this->render(
             'view',
             [
                 'operator' => $operator,
                 'model' => $model,
-                'featured_parks' => $featured_parks,
                 'operator_parks' => $operator_parks,
             ]
         );

@@ -9,7 +9,7 @@ use frontend\models\ContactForm;
 /**
  * Contact controller
  */
-class ContactController extends Controller
+class ContactController extends FrontendBaseController
 {
     public function actionIndex()
     {
