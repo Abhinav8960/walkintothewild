@@ -37,9 +37,9 @@ class FrontendBaseController extends Controller
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
         $renderedContent = new RenderedContent();
-        $renderedContent->url = Yii::$app->request->absoluteUrl;
-        $renderedContent->title = Yii::$app->view->title;
-        $renderedContent->action_url = Yii::$app->request->url;
+        $renderedContent->url = substr(Yii::$app->request->absoluteUrl, 0, 1024);
+        $renderedContent->title = substr(Yii::$app->view->title, 0, 512);
+        $renderedContent->action_url = substr(Yii::$app->request->url, 0, 512);
         $queryParams = Yii::$app->request->getQueryParams();
         $renderedContent->query_params = json_encode($queryParams);
         $renderedContent->user_agent = Yii::$app->request->userAgent;

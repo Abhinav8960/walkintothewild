@@ -42,4 +42,9 @@ class RenderedContent extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
 }
