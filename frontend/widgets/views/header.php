@@ -53,6 +53,13 @@
 								</div>
 								<h5>Shared Safari</h5>
 							</a>
+
+							<li class="nav-item <?= in_array($active_url, array(
+													"/contact",
+												)) ? "active" : "" ?>">
+								<a class="nav-link" href="/contact"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> Contact Us</a>
+							</li>
+
 							<?php if (!Yii::$app->user->identity) { ?>
 								<li class="nav-item">
 									<a class="nav-link" href="/site/auth?authclient=google"> Sign In</a>

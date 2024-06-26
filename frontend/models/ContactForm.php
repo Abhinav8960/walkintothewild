@@ -4,6 +4,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
+use common\models\ContactForm as Contact;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -12,9 +13,9 @@ class ContactForm extends Model
 {
     public $name;
     public $email;
-    public $subject;
-    public $body;
-    public $verifyCode;
+    public $message;
+    public $phone;
+    public $reCaptcha;
 
 
     /**
@@ -23,13 +24,15 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
-            // email has to be a valid email address
+            [['name', 'email'], 'required'],
             ['email', 'email'],
-            // verifyCode needs to be entered correctly
-            ['verifyCode', 'captcha'],
+            ['message', 'string', 'max' => 255],
+            ['phone', 'required', 'message' => 'This  Mobile number cannot be blank.'],
+            ['phone', 'match', 'pattern' => "/^[0-9]{3}[0-9]{3}[0-9]{2}[0-9]{2}$/", 'message' => ' Mobile number should have 10 digits.'],
         ];
+        if (\Yii::$app->params['isGoogleV3CaptchaValidateNeeded'] == true) {
+            $rule[] = [['reCaptcha'], \kekaadrenalin\recaptcha3\ReCaptchaValidator::className(), 'acceptance_score' => 0];
+        }
     }
 
     /**
@@ -43,19 +46,30 @@ class ContactForm extends Model
     }
 
     /**
-     * Sends an email to the specified email address using the information collected by this model.
+     * Save Contatc Query
      *
-     * @param string $email the target email address
-     * @return bool whether the email was sent
+     * @return void
      */
-    public function sendEmail($email)
+    public function contactquery()
     {
-        return Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-            ->setReplyTo([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
-            ->send();
+        $agent = new \Jenssegers\Agent\Agent();
+        $agent->setUserAgent(Yii::$app->request->userAgent);
+        $contact = new Contact();
+        $contact->name = $this->name;
+        $contact->email = $this->email;
+        $contact->message = $this->message;
+        $contact->phone = $this->phone;
+        $contact->status = 1;
+        $contact->user_ip_address = Yii::$app->getRequest()->getUserIp();
+        $contact->user_agent =  Yii::$app->request->userAgent;
+        $contact->user_device  = $agent->device();
+        $contact->user_platform = $agent->platform();
+        $contact->user_platform_version = $agent->version($contact->user_platform);
+        $contact->user_browser = $agent->browser();
+        $contact->user_browser_version = $agent->version($contact->user_browser);
+        if (Yii::$app->user->identity) {
+            $contact->user_id = Yii::$app->user->identity->id;
+        }
+        $contact->save(false);
     }
 }
