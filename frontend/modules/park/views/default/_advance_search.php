@@ -86,7 +86,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                    <div class="dropdown-item" data-value="">Any / All</div>
+                        <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($animalfilteroption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -208,7 +208,7 @@ $vehicleoption = GeneralModel::vehicleoption();
     <div class="col-lg-2 col-xl-1">
         <div class="search">
             <div class="serch_btn">
-                <?= Html::submitButton('Search') ?>
+                <?= Html::Button('Search', ['id' => 'search_submit_btn']) ?>
             </div>
         </div>
     </div>
@@ -271,6 +271,19 @@ $(document).ready(function(){
             $('.dropdown').hide();
             $('.dropdown-toggle').removeClass('open');
         }
+    });
+});
+
+$('#search_submit_btn').click(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/park/default/geturl',
+        data:$("#Searchform").serialize(),
+        success:function(data){
+            // console.log(data);
+            window.location.href = data;
+        },
+        dataType:'html'
     });
 });
 JS;

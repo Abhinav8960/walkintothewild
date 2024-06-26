@@ -38,7 +38,7 @@
 								"/park/default/parklist",
 								"/park/default/view",
 							)) ? "active" : "" ?>">
-								<a class="nav-link" href="/parklist"> <i class="fa-solid fa-magnifying-glass d-lg-inline-flex d-none"></i> Search Safari</a>
+								<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>"> <i class="fa-solid fa-magnifying-glass d-lg-inline-flex d-none"></i> Search Safari</a>
 							</li>
 							<li class="nav-item <?= in_array($active_url, array(
 													"/article/default/index",

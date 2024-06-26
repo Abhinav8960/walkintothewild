@@ -100,6 +100,8 @@ return [
             'rules' => [
                 '/park' => '/park/default/index', //home page url
                 '/park/<slug>' => '/park/default/view', //park view url
+                
+                '/parklist/<master_location_id:\w+>/<month_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',
                 '/parklist' => '/park/default/parklist', //park listing url
 
                 '/article' => '/article/default/index',

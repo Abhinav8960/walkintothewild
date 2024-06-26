@@ -147,7 +147,7 @@ $vehicleoption = GeneralModel::vehicleoption();
 
             <div class="search">
                 <div class="serch_btn">
-                    <?= Html::submitButton('Search') ?>
+                <?= Html::Button('Search', ['id' => 'search_submit_btn']) ?>
                 </div>
             </div>
         <?php } ?>
@@ -200,6 +200,23 @@ $(document).ready(function(){
             $('.dropdown').hide();
             $('.dropdown-toggle').removeClass('open');
         }
+    });
+});
+$('#search_submit_btn').click(function(){
+
+
+    // console.log($("#Searchform,#sideSearchform").serialize());
+    // console.log($("#sideSearchform").serialize());
+
+    $.ajax({
+        type: 'POST',
+        url: '/park/default/geturl',
+        data:$("#Searchform,#sideSearchform").serialize(),
+        success:function(data){
+            // console.log(data);
+            window.location.href = data;
+        },
+        dataType:'html'
     });
 });
 JS;

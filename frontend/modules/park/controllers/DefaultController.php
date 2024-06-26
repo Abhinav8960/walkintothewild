@@ -194,13 +194,17 @@ class DefaultController extends Controller
      * Renders the index view for the module
      * @return string
      */
-    public function actionParklist()
+    public function actionParklist($master_location_id = 7, $month_id = null, $master_animal_id = 13, $master_vehicle_id = 5)
     {
         $searchModel = new SafariParkSearch();
-        $searchModel->master_location_id = 7;
-        $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
-        $searchModel->master_animal_id = 13;
-        $searchModel->master_vehicle_id = 5;
+        $searchModel->master_location_id = $master_location_id;
+        if ($month_id != '') {
+            $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+        } else {
+            $searchModel->month_id = $month_id;
+        }
+        $searchModel->master_animal_id = $master_animal_id;
+        $searchModel->master_vehicle_id = $master_vehicle_id;
         $dataProvider = $searchModel->search($this->request->queryParams, false);
         $models = $dataProvider->getModels();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
@@ -212,5 +216,28 @@ class DefaultController extends Controller
             'featured_parks' => $featured_parks,
             'device' => $this->device(),
         ]);
+    }
+
+
+    /**
+     * Get Redirect URL
+     */
+    public function actionGeturl()
+    {
+        if (Yii::$app->request->isPost) {
+            $url = ['/park/default/parklist'];
+            if (isset(Yii::$app->request->bodyParams['SafariParkSearch'])) {
+                foreach (Yii::$app->request->bodyParams['SafariParkSearch'] as $key => $value) {
+                    if (in_array($key, ['master_location_id', 'month_id', 'master_animal_id', 'master_vehicle_id'])) {
+                        $url[$key] = $value;
+                    } else {
+                        if($value){
+                            $url['SafariParkSearch[' . $key . ']'] = $value;
+                        }
+                    }
+                }
+            }
+            return \yii\helpers\Url::toRoute($url);
+        }
     }
 }

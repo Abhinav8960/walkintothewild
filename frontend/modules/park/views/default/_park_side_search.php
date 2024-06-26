@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
-        'id' => 'Searchform'
+        'id' => 'sideSearchform'
     ],
     'action' => ['parklist'],
     'method' => 'get',
@@ -178,8 +178,18 @@ use yii\widgets\ActiveForm;
 <?php
 $script = <<< JS
     $('form input[type=checkbox]').on('change', function(){
-        $("#Searchform").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
+        // $("#Searchform").attr("data-pjax", "true");    
+        // $(this).closest('form').submit();
+        $.ajax({
+            type: 'POST',
+            url: '/park/default/geturl',
+            data:$("#Searchform,#sideSearchform").serialize(),
+            success:function(data){
+                console.log(data);
+                window.location.href = data;
+            },
+            dataType:'html'
+        });
     });
 JS;
 $this->registerJs($script);
