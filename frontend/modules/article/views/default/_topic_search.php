@@ -37,5 +37,12 @@ $this->registerJs($script);
         color: white !important;
         border-radius: 5px !important;
         margin: auto !important;
+        padding: 7px 8px;
+
     }
+    .link.active i{
+
+        color: #fff;
+    }
+    
 </style>

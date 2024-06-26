@@ -621,6 +621,15 @@ line-height: 19px;
 }
 
 @media (max-width: 991px) {
+    .sahreSafari h5{
+
+        padding-bottom: 6px;
+    }
+    .sahreSafari{
+
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
     .errorPage{
 
         height: 100vh;
