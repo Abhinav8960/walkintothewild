@@ -130,7 +130,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 
 <section class="safariduring_sesons innerpage">
-    <?= $this->render('park_carousel', [
+    <?= $this->render('_park_carousel', [
         'featured_parks' => $featured_parks,
     ]) ?>
 </section>

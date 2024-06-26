@@ -193,12 +193,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 </section>
 <section class="safariduring_sesons">
-    <?= $this->render('park_carousel', [
+    <?= $this->render('_park_carousel', [
         'featured_parks' => $featured_parks,
     ]) ?>
 </section>
 <section class="animal-wrapper pb-4">
-    <?= $this->render('rare_exotic', [
+    <?= $this->render('_rare_exotic', [
         'rare_exotics' => $rare_exotics,
     ]) ?>
 </section>

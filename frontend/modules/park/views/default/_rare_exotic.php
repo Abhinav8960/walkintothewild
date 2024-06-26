@@ -29,7 +29,7 @@ if ($rare_exotics) {
                                     <h5><?= $animal->animal_name ?></h5>
                                     <p><?= $animal->short_description ?></p>
                                     <div class="knowmore">
-                                        <a href="/parklist?SafariParkSearch[master_rare_animal_id]=<?= $animal->id ?>&SafariParkSearch[master_location_id]=&SafariParkSearch[month_id]=&SafariParkSearch[master_animal_id]=&SafariParkSearch[master_vehicle_id]=" class="btn-knowmore">Know More</a>
+                                        <a href="<?= \yii\helpers\Url::toRoute(['/park/default/parklist', 'master_location_id' => '0', 'month_id' => '0', 'master_animal_id' => '0', 'master_vehicle_id' => '0', 'SafariParkSearch[master_rare_animal_id]' => $animal->id]) ?>" class="btn-knowmore">Know More</a>
                                     </div>
                                 </div>
                             </div>

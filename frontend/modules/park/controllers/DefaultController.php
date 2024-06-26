@@ -197,14 +197,22 @@ class DefaultController extends Controller
     public function actionParklist($master_location_id = 7, $month_id = null, $master_animal_id = 13, $master_vehicle_id = 5)
     {
         $searchModel = new SafariParkSearch();
-        $searchModel->master_location_id = $master_location_id;
-        if ($month_id != '') {
-            $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
-        } else {
-            $searchModel->month_id = $month_id;
+        if ($master_location_id) {
+            $searchModel->master_location_id = $master_location_id;
         }
-        $searchModel->master_animal_id = $master_animal_id;
-        $searchModel->master_vehicle_id = $master_vehicle_id;
+        if ($month_id <> 0) {
+            if ($month_id) {
+                $searchModel->month_id = $month_id;
+            } else {
+                $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+            }
+        }
+        if ($master_animal_id) {
+            $searchModel->master_animal_id = $master_animal_id;
+        }
+        if ($master_vehicle_id) {
+            $searchModel->master_vehicle_id = $master_vehicle_id;
+        }
         $dataProvider = $searchModel->search($this->request->queryParams, false);
         $models = $dataProvider->getModels();
         $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
@@ -229,9 +237,13 @@ class DefaultController extends Controller
             if (isset(Yii::$app->request->bodyParams['SafariParkSearch'])) {
                 foreach (Yii::$app->request->bodyParams['SafariParkSearch'] as $key => $value) {
                     if (in_array($key, ['master_location_id', 'month_id', 'master_animal_id', 'master_vehicle_id'])) {
-                        $url[$key] = $value;
+                        if ($value) {
+                            $url[$key] = $value;
+                        } else {
+                            $url[$key] = 0;
+                        }
                     } else {
-                        if($value){
+                        if ($value) {
                             $url['SafariParkSearch[' . $key . ']'] = $value;
                         }
                     }
