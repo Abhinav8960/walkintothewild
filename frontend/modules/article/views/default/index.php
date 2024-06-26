@@ -77,7 +77,7 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
             </div>
             <div class="col-lg-4 col-xl-3 col-xxl-3 ps-xl-5">
-                <?= $this->render('recent_posts', [
+                <?= $this->render('_recent_posts', [
                     'recentposts' => $recentposts,
                 ]) ?>
                 <div class="topics_box">
@@ -93,7 +93,7 @@ $recentposts = ArticleSearch::recentpost();
     </div>
 </section>
 <section class="safariduring_sesons innerpage">
-    <?= $this->render('park_carousel', [
+    <?= $this->render('_park_carousel', [
         'featured_parks' => $featured_parks,
     ]) ?>
 </section>

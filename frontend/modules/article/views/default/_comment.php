@@ -50,7 +50,9 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-<?php } ?>
+<?php }else{
+    echo 'Please <a href="/site/auth?authclient=google">Sign in</a> for start Comment';
+} ?>
 
 <?php
 $script = <<< JS

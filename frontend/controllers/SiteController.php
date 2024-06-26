@@ -59,6 +59,23 @@ class SiteController extends Controller
     /**
      * {@inheritdoc}
      */
+    public function beforeAction($action)
+    {
+        if ($action->id == 'auth') {
+            Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'user_login_redirect',
+                'value' => Yii::$app->request->referrer,
+                'expire' => time() + 86400 * 365 * 365,
+            ]));
+        }
+
+        return parent::beforeAction($action);
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
     public function actions()
     {
         return [
@@ -305,7 +322,13 @@ class SiteController extends Controller
 
     public function onAuthSuccess($client)
     {
-        (new AuthHandler($client))->handle();
+        $cookies = Yii::$app->request->cookies;
+        if ($cookies->has('user_login_redirect')) {
+            $referrer = $cookies->get('user_login_redirect')->value;
+        } else {
+            $referrer = Yii::$app->request->referrer;
+        }
+        (new AuthHandler($client, $referrer))->handle();
     }
 
 

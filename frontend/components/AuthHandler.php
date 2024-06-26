@@ -13,14 +13,17 @@ use yii\helpers\ArrayHelper;
  */
 class AuthHandler
 {
+    public $redirect_url;
+
     /**
      * @var ClientInterface
      */
     private $client;
 
-    public function __construct(ClientInterface $client)
+    public function __construct(ClientInterface $client, $redirect_url = '')
     {
         $this->client = $client;
+        $this->redirect_url = $redirect_url;
     }
 
     public function handle()
@@ -45,7 +48,7 @@ class AuthHandler
 
                 /* @var User $user */
                 $this->loginUser($auth->user);
-                return Yii::$app->response->redirect('/park');
+                return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
             }
             // else{
 
@@ -74,7 +77,7 @@ class AuthHandler
                     $auth->save();
                     $this->updateUserInfo($auth->user);
                     $this->loginUser($auth->user);
-                    return Yii::$app->response->redirect('/park');
+                    return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
                 } else {
 
 
@@ -110,7 +113,7 @@ class AuthHandler
                         if ($auth->save()) {
                             $transaction->commit();
                             $this->loginUser($user);
-                            return Yii::$app->response->redirect('/park');
+                            return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
                         } else {
                             Yii::$app->getSession()->setFlash('error', [
                                 Yii::t('app', 'Unable to save {client} account: {errors}', [
