@@ -200,10 +200,10 @@ class DefaultController extends Controller
         if ($master_location_id) {
             $searchModel->master_location_id = $master_location_id;
         }
-        if ($month_id <> 0) {
-            if ($month_id) {
-                $searchModel->month_id = $month_id;
-            } else {
+        if ($month_id) {
+            $searchModel->month_id = $month_id;
+        } else {
+            if ($month_id == NULL) {
                 $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
             }
         }
