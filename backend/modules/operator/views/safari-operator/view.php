@@ -2,7 +2,7 @@
 
 use common\models\GeneralModel;
 
-$this->title = 'Safari Tour Operator';
+$this->title = 'Safari Tour Operator : ' . $model->business_name;
 $this->params['breadcrumbs_home_url'] = '/operator/safari-operator';
 $this->params['breadcrumbs'][] =  ['label' => 'Operator', 'url' => '#'];
 $this->params['breadcrumbs'][] = 'View';
@@ -88,13 +88,13 @@ foreach ($park as $key => $role) {
             <div class="col-md-3">
                 <div class="text-box">
                     <p>
-                        <span>Instagram Link: </span><a href="<?= $model->instagram_url ?>"><?= $model->instagram_url ?></a>
+                        <span>Instagram Link: </span><a href="<?= $model->instagram_url ?>" target="_blank"><?= $model->instagram_url ?></a>
                     </p>
                     <p>
-                        <span>Facebook Link: </span><a href="<?= $model->facebook_url ?>"><?= $model->facebook_url ?></a>
+                        <span>Facebook Link: </span><a href="<?= $model->facebook_url ?>" target="_blank"><?= $model->facebook_url ?></a>
                     </p>
                     <p>
-                        <span>Youtube Link: </span><a href="<?= $model->youtube_link ?>"><?= $model->youtube_link ?></a>
+                        <span>Youtube Link: </span><a href="<?= $model->youtube_link ?>" target="_blank"><?= $model->youtube_link ?></a>
                     </p>
 
                     <p>
@@ -124,13 +124,49 @@ foreach ($park as $key => $role) {
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 mt-3">
             <div class="text-box">
                 <p>
                     <span>About Business: </span><?= $model->about_business ?>
                 </p>
             </div>
         </div>
+
+        <?php
+        $followerlist = $model->getFollowerlist()->where(['status' => 1])->all();
+        if ($followerlist) {
+        ?>
+            <div class="col-md-12 mt-4">
+                <h3>Follower List</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>User Profile</th>
+                                <th>Follow Datetime</th>
+                                <th>IP Address</th>
+                                <th>Device</th>
+                                <th>Platform/OS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($followerlist as $follower) {
+                                if ($user = $follower->user) {
+                            ?>
+                                    <tr>
+                                        <td><img src="<?= $follower->user->avatar != '' ? $follower->user->avatar : '/img/dpmain.png' ?>" class="rounded profile-picture" style="width:28px;"> <?= $user->name ?></td>
+                                        <td><?= $follower->follow_datetime ?></td>
+                                        <td><?= $follower->user_ip_address ?></td>
+                                        <td><?= $follower->user_device ?></td>
+                                        <td><?= $follower->user_platform ?></td>
+                                    </tr>
+                            <?php }
+                            } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <?php } ?>
 
     </div>
 

@@ -2,19 +2,20 @@
 
 namespace frontend\modules\operator\controllers;
 
-use common\interfaces\StatusInterface;
-use common\models\cms\article\Article;
-use common\models\operator\SafariOperator;
-use common\models\operator\SafariOperatorPark;
+use Yii;
+use yii\web\Controller;
+use frontend\models\ReplyForm;
+use frontend\models\CommentForm;
 use common\models\park\SafariPark;
 use common\models\RenderedContent;
 use frontend\models\ArticleSearch;
-use frontend\models\CommentForm;
-use frontend\models\OperatorQuoteForm;
-use frontend\models\ReplyForm;
-use Yii;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\interfaces\StatusInterface;
+use common\models\cms\article\Article;
+use frontend\models\OperatorQuoteForm;
+use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorPark;
+use common\models\operator\SafariOperatorFollow;
 
 /**
  * DefaultController.
@@ -109,5 +110,78 @@ class DefaultController extends Controller
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+
+    /**
+     * Follow Operator
+     */
+    public function actionFollow($id)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        if ($operator) {
+            if (Yii::$app->user->identity) {
+                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $id])->one();
+                if (!$operator_follow) {
+                    $operator_follow = new SafariOperatorFollow();
+                }
+                $agent = new \Jenssegers\Agent\Agent();
+                $agent->setUserAgent(Yii::$app->request->userAgent);
+                $operator_follow->user_ip_address = Yii::$app->getRequest()->getUserIp();
+                $operator_follow->user_agent =  Yii::$app->request->userAgent;
+                $operator_follow->user_device  = $agent->device();
+                $operator_follow->user_platform = $agent->platform();
+                $operator_follow->user_platform_version = $agent->version($operator_follow->user_platform);
+                $operator_follow->user_browser = $agent->browser();
+                $operator_follow->user_browser_version = $agent->version($operator_follow->user_browser);
+                $operator_follow->safari_operator_id = $id;
+                $operator_follow->user_id = Yii::$app->user->identity->id;
+                $operator_follow->status = 1;
+                $operator_follow->follow_datetime = date('Y-m-d h:i:s');
+                if ($operator_follow->save()) {
+                    Yii::$app->session->setFlash('success', 'Operator is Followed!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'You can not follow this operator currently!');
+                }
+            }
+        }
+
+        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'id' => $id]));
+    }
+
+
+    /**
+     * Follow Operator
+     */
+    public function actionUnfollow($id)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        if ($operator) {
+            if (Yii::$app->user->identity) {
+                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $id])->one();
+                if ($operator_follow) {
+                    $agent = new \Jenssegers\Agent\Agent();
+                    $agent->setUserAgent(Yii::$app->request->userAgent);
+                    $operator_follow->user_ip_address = Yii::$app->getRequest()->getUserIp();
+                    $operator_follow->user_agent =  Yii::$app->request->userAgent;
+                    $operator_follow->user_device  = $agent->device();
+                    $operator_follow->user_platform = $agent->platform();
+                    $operator_follow->user_platform_version = $agent->version($operator_follow->user_platform);
+                    $operator_follow->user_browser = $agent->browser();
+                    $operator_follow->user_browser_version = $agent->version($operator_follow->user_browser);
+                    $operator_follow->safari_operator_id = $id;
+                    $operator_follow->user_id = Yii::$app->user->identity->id;
+                    $operator_follow->status = 0; //UNfollow
+                    $operator_follow->unfollow_datetime = date('Y-m-d h:i:s');
+                    if ($operator_follow->save()) {
+                        Yii::$app->session->setFlash('success', 'Operator is UnFollowed!');
+                    } else {
+                        Yii::$app->session->setFlash('error', 'You can not unfollow this operator currently!');
+                    }
+                }
+            }
+        }
+
+        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'id' => $id]));
     }
 }

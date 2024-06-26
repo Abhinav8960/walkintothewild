@@ -63,6 +63,14 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return 'safari_operator';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -135,6 +143,11 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return $this->hasMany(SafariOperatorPark::className(), ['safari_operator_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
     }
 
+
+    public function getFollowerlist()
+    {
+        return $this->hasMany(SafariOperatorFollow::className(), ['safari_operator_id' => 'id']);
+    }
 
     public function getImagepath()
     {

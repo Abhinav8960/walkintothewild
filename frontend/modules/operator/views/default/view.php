@@ -1,11 +1,12 @@
 <?php
 
-use common\interfaces\Constants;
-use common\models\cms\banner\Banner;
-use common\models\GeneralModel;
-use frontend\models\ArticleSearch;
-use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
+use yii\bootstrap5\ActiveForm;
+use common\models\GeneralModel;
+use common\interfaces\Constants;
+use frontend\models\ArticleSearch;
+use common\models\cms\banner\Banner;
+use common\models\operator\SafariOperatorFollow;
 
 
 /* @var $this yii\web\View */
@@ -78,7 +79,17 @@ $recentposts = ArticleSearch::recentpost();
                                     <h3><?= $operator->register_comapany_name ?></h3>
                                     <!-- <span class="d-sm-block d-none">|</span> -->
                                     <div class="follow mb-lg-2 mb-xxl-0 mb-2">
-                                        <button class="follow_btn"><i class="fa-regular fa-heart me-1"></i> FOLLOW</button>
+
+                                        <?php if (Yii::$app->user->identity) {
+                                            $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id, 'status' => 1])->limit(1)->one();
+                                            if ($operator_follow) { ?>
+                                                <a class="follow_btn" href="/operator/default/unfollow?id=<?= $operator->id ?>"><i class="fa fa-heart me-1"></i> UNFOLLOW</a>
+                                            <?php } else { ?>
+                                                <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"><i class="fa-regular fa-heart me-1"></i> FOLLOW</a>
+                                            <?php  }
+                                        } else { ?>
+                                            <a class="follow_btn" href="/site/auth?authclient=google"><i class="fa-regular fa-heart me-1"></i> FOLLOW</a>
+                                        <?php } ?>
                                     </div>
                                 </div>
                                 <div class="title_tours">

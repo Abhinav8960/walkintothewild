@@ -29,7 +29,7 @@ class AuthHandler
 
         $email = ArrayHelper::getValue($attributes, 'email');
         $id = ArrayHelper::getValue($attributes, 'id');
-        $nickname = ArrayHelper::getValue($attributes, 'login');
+        $nickname = ArrayHelper::getValue($attributes, 'name');
 
 
         /* @var Auth $auth */
@@ -173,15 +173,18 @@ class AuthHandler
     {
         $attributes = $this->client->getUserAttributes();
         $picture = $attributes['picture'];
+        $google_source_id = $attributes['id'];
+        $name = $attributes['name'];
+        $user->name = $name;
+        $user->google_source_id = $google_source_id;
         $gmail = true;
         if ($user->avatar != $picture) {
             $user->avatar = $picture;
-            $user->save(false);
         }
         if ($user->gmail == false && $gmail) {
             $user->gmail = $gmail;
-            $user->save(false);
         }
+        $user->save(false);
     }
 
     private function loginUser($user)
