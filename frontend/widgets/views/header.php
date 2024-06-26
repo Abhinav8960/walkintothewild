@@ -7,7 +7,7 @@
 	?>
 	<!-- main-header -->
 	<header class="header_wrapper">
-		<nav class="navbar navbar-expand-lg p-0">
+		<nav class="navbar navbar-expand-xl p-0">
 			<div class="container-fluid">
 				<a href="/park">
 					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="210px" class="logo">
@@ -38,27 +38,27 @@
 								"/park/default/parklist",
 								"/park/default/view",
 							)) ? "active" : "" ?>">
-								<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>"> <i class="fa-solid fa-magnifying-glass d-lg-inline-flex d-none"></i> Search Safari</a>
+								<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>"> <i class="fa-solid fa-magnifying-glass d-xl-inline-flex d-none"></i> Search Safari</a>
 							</li>
 							<li class="nav-item <?= in_array($active_url, array(
 													"/article/default/index",
 													"/article/default/view",
 												)) ? "active" : "" ?>">
-								<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> ARTICLES & TIPS</a>
+								<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-xl-inline-flex d-none"> ARTICLES & TIPS</a>
 							</li>
-
-							<a href="/sharedsafari" class="sahreSafari text-lg-center">
+							<li class="nav-item <?= in_array($active_url, array(
+													"/contact",
+												)) ? "active" : "" ?>">
+								<a class="nav-link" href="/contact"> <img src="<?= $this->params['baseurl'] ?>/img/contact-us.png" alt="" class="me-1 d-xl-inline-flex d-none" width="25"> Contact Us</a>
+							</li>
+							<a href="/sharedsafari" class="sahreSafari text-xl-center">
 								<div class="card-img">
 									<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
 								</div>
 								<h5>Shared Safari</h5>
 							</a>
 
-							<li class="nav-item <?= in_array($active_url, array(
-													"/contact",
-												)) ? "active" : "" ?>">
-								<a class="nav-link" href="/contact"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> Contact Us</a>
-							</li>
+							
 
 							<?php if (!Yii::$app->user->identity) { ?>
 								<li class="nav-item">
@@ -67,7 +67,7 @@
 							<?php } else { ?>
 								<li class="nav-item">
 									<a class="nav-link" href="/site/logout">
-										<img src="<?= Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="" class="me-1 d-lg-inline-flex d-none rounded" style="height:25px;">
+										<img src="<?= Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="" class="me-1 d-xl-inline-flex d-none rounded" style="height:25px;">
 										Log Out</a>
 								</li>
 							<?php } ?>

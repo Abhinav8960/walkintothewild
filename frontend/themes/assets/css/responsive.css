@@ -308,6 +308,10 @@ line-height: 19px;
 
         left: 20%;
     }
+
+    
+
+
    
 }
 
@@ -319,7 +323,10 @@ line-height: 19px;
         width: 228px;
     }
 
+    .menu-navbar-nav .nav-item .nav-link{
 
+        font-size: 12px;
+    }
 
     .icons_select img {
 
@@ -462,10 +469,10 @@ line-height: 19px;
 
 @media only screen and (max-width: 1200px) and (min-width: 991px) {
 
-    .serch_btn button {
+    /* .serch_btn button {
 
         width: 100%;
-    }
+    } */
 
     .footer_object {
 
@@ -505,6 +512,10 @@ line-height: 19px;
 }
 
 @media(min-width:1200px) {
+    .navbar-nav {
+
+        gap: 32px;
+    }
 
     .images_tour {
 
@@ -529,17 +540,10 @@ line-height: 19px;
 
 @media only screen and (min-width:991px) {
 
-
-
-    .navbar-nav {
-
-        gap: 32px;
-    }
-
     .container-fluid {
 
-        padding-left: 55px !important;
-        padding-right: 55px !important;
+        padding-left: 55px ;
+        padding-right: 55px ;
     }
 
     .height_set {
@@ -589,6 +593,84 @@ line-height: 19px;
 
 }
 
+@media(max-width:1199px){
+    .navbar-nav.menu-navbar-nav {
+
+        align-items: flex-start !important;
+    }
+
+    .sahreSafari {
+
+        margin-left: 0 !important;
+        padding-left: 0;
+        height: auto;
+        padding-top: 12px;
+    }
+
+    .offcanvas-header {
+        background-color: #09422D;
+    }
+
+    .sahreSafari {
+        box-shadow: none;
+    }
+    .sahreSafari {
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+    .navbar-toggler {
+
+        border: 0 !important;
+    }
+
+    .navbar-toggler:focus {
+
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .navbar-toggler i {
+
+        color: var(--colorwhite);
+        font-size: 30px;
+    }
+
+    .menu-navbar-nav .nav-item.active::after {
+
+        bottom: -2px;
+    }
+
+    .menu-navbar-nav .nav-item {
+
+        line-height: 43px;
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+
+    .menu-navbar-nav .nav-item .nav-link {
+
+        color: #09422D;
+        padding: 0 !important;
+
+    }
+    .header_wrapper {
+
+        line-height: 70px;
+    }
+    .safari_create {
+
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .creat-safri {
+        padding-bottom: 20px;
+    }
+
+    .card-img {
+        display: none;
+    }
+}
 @media only screen and (max-width:1200px) {
     .select_boxes .form-select {
 
@@ -618,6 +700,28 @@ line-height: 19px;
 
         padding: 10px 22px;
     }
+
+   
+
+   
+
+    /* .logo_provide2 {
+
+        height: 100%;
+    } */
+
+    /* .serch_btn button {
+
+        margin-top: 10px;
+    } */
+
+    .Slider_safariimg3 img {
+
+        border-radius: 10px 10px 0px 0px;
+    }
+
+
+    
 }
 
 @media (max-width: 991px) {
@@ -670,8 +774,13 @@ line-height: 19px;
 
         background-color: transparent;
     }
+    .serch_btn button {
+
+        margin-top: 10px;
+    }
 
 }
+
 
 @media only screen and (max-width:991px) {
     #targetDiv {
@@ -689,90 +798,7 @@ line-height: 19px;
         opacity: 0 !important; /* Make the div transparent */
         pointer-events: none !important; /* Disable pointer events */
     }
-    .safari_create {
 
-        width: 100%;
-        margin-top: 15px;
-    }
-
-    .creat-safri {
-        padding-bottom: 20px;
-    }
-
-    .header_wrapper {
-
-        line-height: 70px;
-    }
-
-
-    .navbar-toggler {
-
-        border: 0 !important;
-    }
-
-    .navbar-toggler:focus {
-
-        outline: none !important;
-        box-shadow: none !important;
-    }
-
-    .navbar-toggler i {
-
-        color: var(--colorwhite);
-        font-size: 30px;
-    }
-
-    .menu-navbar-nav .nav-item.active::after {
-
-        bottom: -2px;
-    }
-
-    .menu-navbar-nav .nav-item {
-
-        line-height: 43px;
-        border-bottom: 1px solid #09422D;
-        width: 100%;
-    }
-
-    .menu-navbar-nav .nav-item .nav-link {
-
-        color: #09422D;
-        padding: 0 !important;
-
-    }
-
-    /* .logo_provide2 {
-
-        height: 100%;
-    } */
-
-    .serch_btn button {
-
-        margin-top: 10px;
-    }
-
-    .Slider_safariimg3 img {
-
-        border-radius: 10px 10px 0px 0px;
-    }
-
-
-    .navbar-nav.menu-navbar-nav {
-
-        align-items: flex-start !important;
-    }
-
-    .sahreSafari {
-
-        margin-left: 0 !important;
-        padding-left: 0;
-        height: auto;
-        padding-top: 12px;
-    }
-
-    .offcanvas-header {
-        background-color: #09422D;
-    }
 
     .nav-link {
 
