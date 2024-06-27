@@ -15,7 +15,7 @@ use frontend\models\registration\SafariOperatorRequestPark;
  */
 class SafaritourRegistrationController extends FrontendBaseController
 {
-    
+
     /**
      * Displays Safari tour form Page.
      *
@@ -23,7 +23,9 @@ class SafaritourRegistrationController extends FrontendBaseController
      */
     public function actionIndex()
     {
-
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['/site/auth?authclient=google']);
+        }
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->action_url = '/safaritour-registration';

@@ -48,6 +48,7 @@ class DefaultController extends FrontendBaseController
 
         $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (empty($article)) {
+            return $this->redirect(['/article']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 

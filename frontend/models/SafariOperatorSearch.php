@@ -45,7 +45,7 @@ class SafariOperatorSearch extends SafariOperator
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $park_id)
+    public function search($params, $park_id = null)
     {
         $query = SafariOperator::find()->where(['safari_operator.status' => 1]);
 

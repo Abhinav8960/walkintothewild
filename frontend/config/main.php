@@ -26,9 +26,13 @@ return [
             'clients' => [
                 'google' => [
                     'class' => 'yii\authclient\clients\Google',
-                    'clientId' => '500526108747-sat0quehomhc59pogk8mm50ch2id5kp7.apps.googleusercontent.com',
-                    'clientSecret' => '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',
-                    'returnUrl' => 'http://admin.walkintothewild.io/site/auth?authclient=google',
+                    // 'clientId' => '500526108747-sat0quehomhc59pogk8mm50ch2id5kp7.apps.googleusercontent.com',
+                    // 'clientSecret' => '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',
+                    // 'returnUrl' => 'http://admin.walkintothewild.io/site/auth?authclient=google',
+
+                    'clientId' => '631766851704-lbmn5e7lqhp6gnhf1jnumdrelbg5b00k.apps.googleusercontent.com',
+                    'clientSecret' => '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',
+                    'returnUrl' => 'https://staging.walkintothewild.in/site/auth?authclient=google',
                 ],
             ],
         ],
@@ -100,7 +104,7 @@ return [
             'rules' => [
                 '/park' => '/park/default/index', //home page url
                 '/park/<slug>' => '/park/default/view', //park view url
-                
+
                 '/parklist/<master_location_id:\w+>/<month_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',
                 '/parklist' => '/park/default/parklist', //park listing url
 

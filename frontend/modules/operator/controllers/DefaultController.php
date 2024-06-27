@@ -3,11 +3,14 @@
 namespace frontend\modules\operator\controllers;
 
 use Yii;
+use common\models\GeneralModel;
 use yii\web\NotFoundHttpException;
+use frontend\models\SafariParkSearch;
+use frontend\models\OperatorQuoteForm;
+use frontend\models\SafariOperatorSearch;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
-use frontend\models\OperatorQuoteForm;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -17,7 +20,37 @@ class DefaultController extends FrontendBaseController
 {
     public $enableCsrfValidation = false;
 
-    public $action_ids = ['view', 'follow', 'unfollow'];
+    public $action_ids = ['index', 'view', 'follow', 'unfollow'];
+
+
+    /**
+     * All Operator List
+     */
+    public function actionIndex()
+    {
+        $searchModel = new SafariParkSearch();
+        $searchModel->master_location_id = 7;
+        $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+        $searchModel->master_animal_id = 13;
+        $searchModel->master_vehicle_id = 5;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+
+        $operatorsearchModel = new SafariOperatorSearch();
+        $operatorsearchModel->status = 1;
+        $operatordataProvider = $operatorsearchModel->search($this->request->queryParams);
+        $operators = $operatordataProvider->getModels();
+
+        return $this->render('index', [
+            'operatorsearchModel' => $operatorsearchModel,
+            'operatordataProvider' => $operatordataProvider,
+            'operators' => $operators,
+            'device' => $this->device(),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
     /**
      * Renders the index view for the module

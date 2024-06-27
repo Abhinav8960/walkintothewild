@@ -105,7 +105,11 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="detailsText pb-3">
-                                    <p style="font-size: 14px;"><?= GeneralModel::get_substring($operator->about_business); ?> <a href="" data-bs-toggle="modal" data-bs-target="#modalSeeMore" class="seemoreBtn">See more</a></p>
+                                    <p style="font-size: 14px;"><?= GeneralModel::get_substring($operator->about_business); ?>
+                                        <?php if (str_word_count($operator->about_business) >= 99) { ?>
+                                            <a href="" data-bs-toggle="modal" data-bs-target="#modalSeeMore" class="seemoreBtn">See more</a>
+                                        <?php } ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -155,7 +159,7 @@ $recentposts = ArticleSearch::recentpost();
             <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                 <div class="safri_tour">
                     <div class="titlerescent ">
-                        <h3>Pugdundee Safaris</h3>
+                        <h3><?= $operator->register_comapany_name ?></h3>
                     </div>
                     <div class="topics_listing">
                         <ul id="tabList">

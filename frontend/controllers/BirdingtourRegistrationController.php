@@ -22,6 +22,9 @@ class BirdingtourRegistrationController extends FrontendBaseController
      */
     public function actionIndex()
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['/site/auth?authclient=google']);
+        }
         $model = new BirdingtourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->action_url = '/birdingtour-registration';

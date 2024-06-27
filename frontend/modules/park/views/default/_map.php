@@ -10,7 +10,7 @@
         $latitude = $model->latitude;
         $longitude = $model->longitude;
 
-        $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
+        $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es&z=13&output=embed";
 
         if (!empty($latitude) && !empty($longitude)) {
         ?>
