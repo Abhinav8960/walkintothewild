@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+?>
 <div class="row">
     <div class="col-12">
         <div class="comments_safari operator_comment">
@@ -15,7 +20,7 @@
                         </div>
                     </div>
                     <div class="whiteReview">
-                        <button class="btn_review" data-bs-toggle="modal" data-bs-target="#exampleModal2">+ Write a Review</button>
+                        <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>" data-bs-toggle="modal" data-bs-target="#exampleModal2">+ Write a Review</button>
                     </div>
                 </div>
                 <div class="sort_wrapper py-3">
@@ -113,3 +118,36 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade _standard-text order--modal" id="review-write-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Write a Review</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<?php
+$script = <<< JS
+function writeareviewfunction() {
+	$('.writeAReviewBtn').on('click', function () {
+        $('#review-write-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+
+writeareviewfunction();
+             
+JS;
+$this->registerJs($script);
+?>

@@ -197,7 +197,7 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
 
                 <div class="tab-content_tour mb-4" id="review">
-                    <?= $this->render('_review') ?>
+                    <?= $this->render('_review', ['operator' => $operator]) ?>
                 </div>
             </div>
         </div>
@@ -223,52 +223,6 @@ $recentposts = ArticleSearch::recentpost();
                     <p>
                         <?= $operator->about_business ?>
                     </p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Write a Review</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body modal_form">
-                <div class="row">
-                    <div class="col-12 mb-2">
-                        <label for="" class="label_modal">Where did you go?</label>
-                        <select class="form-select form-select-lg" aria-label="Large select example">
-                            <option selected>Select a Safari park</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                    <div class="col-12 my-4">
-                        <div class="stars d-flex gap-4 justify-content-center">
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 mb-2 ">
-                        <div class="textarea">
-                            <textarea name="" id="" class="form-control" placeholder="Write your review about Pugdundee Safaris"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-12 py-2">
-                        <div class="submir_review">
-                            <button>Submit Review</button>
-                        </div>
-                    </div>
                 </div>
             </div>
 
