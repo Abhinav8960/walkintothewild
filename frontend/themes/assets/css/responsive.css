@@ -151,8 +151,17 @@ line-height: 19px;
 
         padding: 7px 56px;
     }
+    .fixedbanner{
 
+        position: fixed !important;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+    }
+    .articals_wrapper.margin-setposi{
 
+        margin-top: 330px !important;
+    }
 }
 
 @media only screen and (min-width:1800px) {
@@ -894,8 +903,14 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
-   
+    .banner_section-inner{
 
+        margin-top: 60px !important;
+    }
+    .banner_section{
+
+        margin-top: 60px !important;
+    }
     .title_white.h4 {
 
         font-size: 20px;
