@@ -707,7 +707,10 @@ line-height: 19px;
     .menuprofile ul{
         line-height: 40px;
     }
+    .menu-navbar-nav .nav-item:hover::after{
 
+        bottom: -2px;
+    }
    
 
     /* .logo_provide2 {
