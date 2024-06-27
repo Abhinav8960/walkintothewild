@@ -15,7 +15,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::PARK_LIST;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
-<section class="banner_section-inner position-relative">
+<div class="fixedbanner">
+<section class="banner_section-inner  position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
         <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
@@ -45,7 +46,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div>
 </section>
-<section class="articals_wrapper py-3">
+</div>
+
+<section class="articals_wrapper py-3 margin-setposi">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">

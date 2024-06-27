@@ -188,6 +188,10 @@ a {
     -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     height: 70px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 .fixed_top {
@@ -1296,6 +1300,25 @@ figure {
     object-fit: cover;
 
 }
+.banner_section-inner{
+
+    margin-top: 70px;
+}
+.banner_section{
+
+    margin-top: 70px;
+}
+.fixedbanner{
+
+    position: fixed !important;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+}
+.articals_wrapper.margin-setposi{
+
+    margin-top: 330px !important;
+}
 
 .banner_section-inner .banner_search {
 
@@ -1629,7 +1652,7 @@ figure {
 
     background-color: var(--background-orange);
     border: 0;
-    padding: 7px 25px;
+    padding: 9px 25px;
     font-size: var(--fs-16);
     color: var(--colorwhite);
     font-family: "Roboto", sans-serif;
@@ -3918,3 +3941,5 @@ cursor: pointer;
 
     font-size: 1.2rem;
 }
+
+

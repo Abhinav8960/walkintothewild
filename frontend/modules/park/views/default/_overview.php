@@ -1,3 +1,10 @@
+<?php 
+use common\models\GeneralModel;
+
+
+?>
+
+
 <h2 class="accordion-header d-lg-none" id="headingOne">
     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Overview</button>
 </h2>
@@ -10,19 +17,8 @@
                 </div>
             </div>
             <div class="col-lg-12 col-xl-9 position-relative">
-                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
-                    <h5 class=""><a href=""><?= $model->title ?></a></h5>
-                    <div class="btn_wrap pt-md-0 pt-3">
-                        <?php
-
-                        use common\models\GeneralModel;
-
-                        if ($model->official_website) { ?>
-                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE</a>
-                        <?php } ?>
-                    </div>
-                </div>
-                <div class="seelctes_text pt-3 pb-4 ">
+          
+                <div class="seelctes_text pb-4 ">
                     <p><?= $model->long_description ?></p>
                 </div>
                 <div class="row pt-3 desktop_postion border_top2">

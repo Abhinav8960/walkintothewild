@@ -50,6 +50,18 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="articals_wrapper py-3">
     <div class="container-fluid">
         <div class="row mb-4  justify-content-center mt-4">
+            <div class="col-lg-12 col-xl-10 pb-4 safartabs">
+            <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
+                    <h5 class=""><a href=""><?= $model->title ?></a></h5>
+                    <div class="btn_wrap pt-md-0 pt-3">
+                        <?php
+
+                        if ($model->official_website) { ?>
+                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE</a>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-12 col-xl-10 safartabs">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
                     <button class="btn-exclamtion" data-bs-toggle="modal" data-bs-target="#exampleModal3"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 64 64" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
