@@ -70,7 +70,7 @@
 					<div class="proilewrapper">
 						<div class="profile">
 							<div class="img-box2">
-								<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="40" height="40">
+								<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="25" height="25">
 							</div>
 						</div>
 						<div class="menuprofile">

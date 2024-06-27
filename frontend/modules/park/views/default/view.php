@@ -57,7 +57,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         <?php
 
                         if ($model->official_website) { ?>
-                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE</a>
+                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE <i class="fa-solid fa-up-right-from-square ms-2"></i></a>
                         <?php } ?>
                     </div>
                 </div>
