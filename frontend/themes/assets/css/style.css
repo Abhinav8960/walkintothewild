@@ -3871,9 +3871,9 @@ cursor: pointer;
 
 .menuprofile {
     position: absolute;
-    top: calc(100% + 24px);
+    top: calc(100% + -21px);
     right: 45px;
-    width: 200px;
+    width: 280px;
     /* min-height: 100px; */
     background: #fff;
     box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
@@ -3884,7 +3884,7 @@ cursor: pointer;
     border-radius: 4px;
 }
 
-.menuprofile::before {
+/* .menuprofile::before {
     content: '';
     position: absolute;
     top: -10px;
@@ -3894,7 +3894,7 @@ cursor: pointer;
     background: #fff;
     transform: rotate(45deg);
     z-index: -1;
-}
+} */
 
 .menuprofile.active {
     opacity: 1 !important;
