@@ -121,6 +121,12 @@ return [
                     'route' => '/article/default/topic',
                     'defaults' => ['slug' => '']
                 ],
+                '/article/author/<slug>' => '/article/default/author',
+                [
+                    'pattern' => '/article/author/<slug:\w+>',
+                    'route' => '/article/default/author',
+                    'defaults' => ['slug' => '']
+                ],
                 '/article/<slug>' => '/article/default/view', //article view url
 
 

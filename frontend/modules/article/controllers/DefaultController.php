@@ -3,11 +3,12 @@
 namespace frontend\modules\article\controllers;
 
 use Yii;
+use frontend\models\CommentForm;
+use common\models\park\SafariPark;
+use frontend\models\ArticleSearch;
 use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
-use common\models\park\SafariPark;
-use frontend\models\CommentForm;
-use frontend\models\ArticleSearch;
+use common\models\cms\article\ArticleAuthor;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -18,7 +19,7 @@ class DefaultController extends FrontendBaseController
     /**
      * Actions ids for Save Page Views
      */
-    public $action_ids = ['index', 'view', 'topic', 'tag'];
+    public $action_ids = ['index', 'view', 'topic', 'tag', 'author'];
 
     /**
      * Renders the index view for the module
@@ -79,9 +80,8 @@ class DefaultController extends FrontendBaseController
         $searchModel->topic_slug = $slug;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
-        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+
         return $this->render('index', [
-            'featured_parks' => $featured_parks,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
@@ -97,9 +97,30 @@ class DefaultController extends FrontendBaseController
         $searchModel->tag_slug = $slug;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
-        $featured_parks = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(5)->orderBy(['sequence' => SORT_ASC])->all();
+
         return $this->render('index', [
-            'featured_parks' => $featured_parks,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'models' => $models,
+        ]);
+    }
+
+    /**
+     * Articles by Author
+     */
+    public function actionAuthor($slug)
+    {
+        $article_author = ArticleAuthor::find()->where(['slug' => $slug])->limit(1)->one();
+        if (empty($article_author)) {
+            return $this->redirect(['/article']);
+        }
+
+        $searchModel = new ArticleSearch();
+        $searchModel->article_author_id = $article_author->id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $models = $dataProvider->getModels();
+
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
