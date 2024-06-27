@@ -31,8 +31,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="tab-block" id="tab-block">
                         <ul class="tab-mnu">
                             <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="" width="29" class="me-2">Birding</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="" width="29" class="me-2"> Resort</li>
+                            <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
+                            <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
                         </ul>
 
                         <div class="tab-cont">
