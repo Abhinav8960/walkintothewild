@@ -192,6 +192,14 @@ use yii\bootstrap5\ActiveForm;
         <div class="d-flex justify-content-between align-items-center">
             <?php if ($model->safari_park_model->id) { ?>
                 <div class="col-md-3">
+                    <?= $form->field($model, 'is_most_demanding')->dropDownList([1 => 'Yes', 0 => 'No'], ['prompt' => 'Select Most Demanding']) ?>
+                </div>
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'is_shared_safari')->dropDownList([1 => 'Yes', 0 => 'No'], ['prompt' => 'Select Park Has Shared Safari']) ?>
+                </div>
+
+                <div class="col-md-3">
                     <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
                 </div>
 

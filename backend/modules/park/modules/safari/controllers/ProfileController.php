@@ -715,7 +715,7 @@ class ProfileController extends Controller
      * Finds the Employee model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $safari_park_id ID
-     * @return Employee the loaded model
+     * @return SafariPark the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($safari_park_id)

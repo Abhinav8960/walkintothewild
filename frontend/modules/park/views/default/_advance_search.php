@@ -55,9 +55,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($safarisessionoption[$model->session_id]) ? $safarisessionoption[$model->session_id] : 'Morning,Evening..' ?>
+                        <?= isset($safarisessionoption[$model->session_id]) ? $safarisessionoption[$model->session_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
+                        <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($safarisessionoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -112,9 +113,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Cantar/Bus..' ?>
+                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
+                        <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($vehicleoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -200,7 +202,7 @@ $('#search_submit_btn').click(function(){
     $.ajax({
         type: 'POST',
         url: '/park/default/geturl',
-        data:$("#Searchform").serialize(),
+        data:$("#Searchform,#sideSearchform,#custom_sort_by_form").serialize(),
         success:function(data){
             // console.log(data);
             window.location.href = data;

@@ -38,18 +38,6 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
         <div class="title_filter mb-4">
-            <h6>Safari Session</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($model, 'session_id')->checkboxList(
-                    GeneralModel::safarisessionoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
-        </div>
-        <div class="title_filter mb-4">
             <h6>Bonus Experience</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'bonus_experience_id')->checkboxList(
@@ -128,29 +116,6 @@ use yii\widgets\ActiveForm;
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
-                        <h6>Safari Session</h6>
-                    </div>
-                </div>
-                <div class="col-7">
-                    <div class="title_filter">
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <?= $form->field($model, 'session_id')->checkboxList(
-                                GeneralModel::safarisessionoption(),
-                                [
-                                    'required' => true,
-                                    'itemOptions' => ['class' => 'checkbox_design'],
-                                ]
-                            )->label(false); ?>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <div class="searchwrap mb-3">
-            <div class="row align-items-center">
-                <div class="col-5">
-                    <div class="title_filter">
                         <h6>Bonus Experience</h6>
                     </div>
                 </div>
@@ -183,7 +148,23 @@ $script = <<< JS
         $.ajax({
             type: 'POST',
             url: '/park/default/geturl',
-            data:$("#Searchform,#sideSearchform").serialize(),
+            data:$("#Searchform,#sideSearchform, #custom_sort_by_form").serialize(),
+            success:function(data){
+                console.log(data);
+                window.location.href = data;
+            },
+            dataType:'html'
+        });
+    });
+
+
+    $('#safariparksearch-custom_sort_by').on('change', function(){
+        // $("#Searchform").attr("data-pjax", "true");    
+        // $(this).closest('form').submit();
+        $.ajax({
+            type: 'POST',
+            url: '/park/default/geturl',
+            data:$("#Searchform,#sideSearchform, #custom_sort_by_form").serialize(),
             success:function(data){
                 console.log(data);
                 window.location.href = data;
