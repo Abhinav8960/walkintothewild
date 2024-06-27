@@ -130,7 +130,7 @@ return [
                 '/article/<slug>' => '/article/default/view', //article view url
 
 
-                '/operator/<id>' => '/operator/default/view', //operator view url
+                '/operator/<slug>' => '/operator/default/view', //operator view url
                 '/operator/resort/<id>' => '/operator/default/resort', //operator view url
                 '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
                 '/operator/review/<id>' => '/operator/default/review', //operator view url

@@ -123,18 +123,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 </div>
                                                 <div class="touroprators">
                                                     <div class="opratios-slider owl-carousel owl-theme">
-                                                        <div class="slidesImg">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                                                        </div>
-                                                        <div class="slidesImg">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                                                        </div>
-                                                        <div class="slidesImg">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/asian-adventures.jpg" alt="" class="w-100">
-                                                        </div>
-                                                        <div class="slidesImg">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                                                        </div>
+                                                        <?php if ($operator_list = $model->getSafarioperatorlist()->joinwith(['operator' => function ($operator_park_query) {
+                                                            $operator_park_query->where(['safari_operator.status' => 1]);
+                                                        }])->where(['safari_operator_park.status' => 1])->all()) {
+                                                            foreach ($operator_list as $operator_park) { ?>
+                                                                <div class="slidesImg">
+                                                                    <img src="<?= isset($operator_park->operator->logo) ? $operator_park->operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
+                                                                </div>
+                                                            <?php  }
+                                                            ?>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div>

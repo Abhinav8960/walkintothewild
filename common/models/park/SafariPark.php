@@ -2,14 +2,15 @@
 
 namespace common\models\park;
 
-use common\models\master\airport\MasterAirport;
+use Yii;
+use common\traits\CommanRelationship;
 use common\models\master\city\MasterCity;
+use common\models\master\state\MasterState;
+use common\models\operator\SafariOperatorPark;
+use common\models\master\airport\MasterAirport;
 use common\models\master\country\MasterCountry;
 use common\models\master\location\MasterLocation;
 use common\models\master\railwaystation\MasterRailwayStation;
-use common\models\master\state\MasterState;
-use common\traits\CommanRelationship;
-use Yii;
 
 /**
  * This is the model class for table "park".
@@ -250,6 +251,10 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     }
 
 
+    public function getSafarioperatorlist()
+    {
+        return $this->hasMany(SafariOperatorPark::className(), ['park_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
+    }
 
     public function getGalleryimag()
     {

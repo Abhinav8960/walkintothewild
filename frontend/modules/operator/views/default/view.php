@@ -11,7 +11,7 @@ use common\models\operator\SafariOperatorFollow;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Operator  ' . $operator->register_comapany_name;
+$this->title = 'Safari Operator  | ' . $operator->register_comapany_name;
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 

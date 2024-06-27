@@ -78,4 +78,9 @@ class SafariOperatorPark extends \yii\db\ActiveRecord implements \common\interfa
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id'])->andWhere(['safari_park.status' => 1]);
     }
+
+    public function getOperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'safari_operator_id'])->andWhere(['safari_operator.status' => 1]);
+    }
 }

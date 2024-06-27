@@ -3,6 +3,7 @@
 namespace frontend\modules\operator\controllers;
 
 use Yii;
+use yii\helpers\Url;
 use common\models\GeneralModel;
 use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;
@@ -56,20 +57,21 @@ class DefaultController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionView($id)
+    public function actionView($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (empty($operator)) {
+            return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $id, 'status' => 1])->all();
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         $model = new OperatorQuoteForm();
-        $model->action_url = '/operator/' . $id . '';
+        $model->action_url = Url::toRoute(['/operator/default/view', 'slug' => $slug]);
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/view',  'id' => $id]);
+            return $this->redirect(['/operator/default/view',  'id' => $slug]);
         }
 
 

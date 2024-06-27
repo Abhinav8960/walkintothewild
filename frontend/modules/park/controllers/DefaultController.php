@@ -57,6 +57,11 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/parklist']);
+            // throw new NotFoundHttpException('The requested page does not exist.');
+        }
         $searchModel = new SafariParkSearch();
         $searchModel->master_location_id = 7;
         $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
@@ -65,49 +70,44 @@ class DefaultController extends FrontendBaseController
         $dataProvider = $searchModel->search($this->request->queryParams);
 
 
+        $operatorsearchModel = new SafariOperatorSearch();
+        $operatorsearchModel->status = 1;
+        $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
+        $operators = $operatordataProvider->getModels();
 
-        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if ($model) {
-            $operatorsearchModel = new SafariOperatorSearch();
-            $operatorsearchModel->status = 1;
-            $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
-            $operators = $operatordataProvider->getModels();
-
-            $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
-            $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
+        $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
+        $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
 
 
 
 
-            $request = Yii::$app->request;
-            $ip_address = $request->getRemoteIP();
+        $request = Yii::$app->request;
+        $ip_address = $request->getRemoteIP();
 
-            $suggestionmodel = new SafariSuggestionsForm();
-            $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
-            $suggestionmodel->park_id = isset($model) ? $model->id : '';
-            $suggestionmodel->ip_address = $ip_address;
-            $suggestionmodel->action_url = '/park/' . $slug . '';
-            $suggestionmodel->action_validate_url = '/park/default/validate';
+        $suggestionmodel = new SafariSuggestionsForm();
+        $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
+        $suggestionmodel->park_id = isset($model) ? $model->id : '';
+        $suggestionmodel->ip_address = $ip_address;
+        $suggestionmodel->action_url = '/park/' . $slug . '';
+        $suggestionmodel->action_validate_url = '/park/default/validate';
 
-            if ($this->request->isPost) {
-                if ($suggestionmodel->load($this->request->post())) {
-                    if ($suggestionmodel->validate()) {
-                        $suggestionmodel->initializeForm();
-                        if ($suggestionmodel->safari_suggestion_model->save(false)) {
-                            \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                            return $this->redirect(['/park/' . $slug . '']);
-                        }
-                    } else {
-                        print_r($suggestionmodel->errors);
-                        exit;
+        if ($this->request->isPost) {
+            if ($suggestionmodel->load($this->request->post())) {
+                if ($suggestionmodel->validate()) {
+                    $suggestionmodel->initializeForm();
+                    if ($suggestionmodel->safari_suggestion_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['/park/' . $slug . '']);
                     }
+                } else {
+                    print_r($suggestionmodel->errors);
+                    exit;
                 }
-            } else {
-                $suggestionmodel->safari_suggestion_model->loadDefaultValues();
             }
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            $suggestionmodel->safari_suggestion_model->loadDefaultValues();
         }
+
 
         return $this->render(
             'view',

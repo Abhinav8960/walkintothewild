@@ -1,8 +1,9 @@
 <?php
 
+use yii\helpers\Url;
+use common\models\GeneralModel;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
-use common\models\GeneralModel;
 
 /* @var $this yii\web\View */
 
@@ -13,37 +14,29 @@ $this->params['title'] = $this->title;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$park_constant = Constants::PARK_VIEW;
+$park_constant = Constants::OPERATOR_VIEW;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 <section class="banner_section-inner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 " alt="banner">
     </picture>
     <div class="banner_searchBox">
-        <div class="container-lg">
+        <div class="container">
             <div class="row">
-                <div class="col-12 ">
-                    <div class="tab-block" id="tab-block">
-                        <ul class="tab-mnu">
-                            <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="" width="29" class="me-2">Birding</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="" width="29" class="me-2"> Resort</li>
-                        </ul>
-
-                        <div class="tab-cont">
-                            <div class="tab-pane">
-                                <?= $this->render('@frontend/modules/park/views/default/_search', [
-                                    'model' => $searchModel,
-                                ]) ?>
-                            </div>
-                        </div>
+                <div class="col-12">
+                    <div class="headingBnner_inner">
+                        <h1>Safari Tour Operator</h1>
+                        <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
+                            Their Adventures</p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
+
 <section class="articals_wrapper py-3">
     <div class="container-fluid">
 
@@ -112,7 +105,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 foreach ($operators as $operator) {
                             ?>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xl-4 col-xxl-3 mb-3">
-                                        <a href="/operator/<?= $operator->id ?>" class="oprators_boxes">
+                                        <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="oprators_boxes">
                                             <div class="listingSafari ">
                                                 <?php if ($operator->is_highlighted) { ?>
                                                     <div class="higlighted">
@@ -157,7 +150,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         </div>
                                                     </div>
                                                     <div class="get_quote text-center">
-                                                        <a href="/operator/<?= $operator->id ?>" class="get_quote_btn">GET A FREE QUOTE</a>
+                                                        <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="get_quote_btn">GET A FREE QUOTE</a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -68,6 +68,18 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return [
             \yii\behaviors\TimestampBehavior::className(),
             \yii\behaviors\BlameableBehavior::className(),
+            'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'slug', //The attribute to be generated
+                'attribute' => 'business_name', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '-',
+                    'trim' => true
+                ]
+            ]
         ];
     }
 
