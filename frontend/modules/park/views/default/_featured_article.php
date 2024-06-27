@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Url;
+
+?>
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-12">
@@ -17,13 +22,13 @@
                         </div>
                         <div class="lower-content">
                             <ul class="artical-info ">
-                                <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($featured_article->articleAuthor) ? $featured_article->articleAuthor->author_name : '' ?></a></li>
-                                <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= count($featured_article->articlecomments) ?> Comments</a></li>
+                                <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $featured_article->articleAuthor ? $featured_article->articleAuthor->slug : '']) ?>"><?= isset($featured_article->articleAuthor) ? $featured_article->articleAuthor->author_name : '' ?></a></li>
+                                <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $featured_article->slug, '#' => 'comment-wrapper-section']) ?>"><?= $featured_article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
                             </ul>
-                            <h3><a href="/article/<?= $featured_article->slug ?>"><?= $featured_article->title ?> </a></h3>
+                            <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $featured_article->slug]) ?>"><?= $featured_article->title ?> </a></h3>
 
                         </div>
-                        <div class="link"><a href="/article/<?= $featured_article->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
+                        <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $featured_article->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
                     </div>
                 </div>
         <?php  }

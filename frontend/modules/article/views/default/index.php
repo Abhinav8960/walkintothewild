@@ -3,9 +3,10 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Url;
 use common\interfaces\Constants;
-use common\models\cms\banner\Banner;
 use frontend\models\ArticleSearch;
+use common\models\cms\banner\Banner;
 
 $this->title = 'Article';
 $this->params['breadcrumbs'][] = $this->title;
@@ -63,13 +64,13 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                     <div class="lower-content">
                                         <ul class="artical-info ">
-                                            <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href=""><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
-                                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= count($model->articlecomments) ?> Comments</a></li>
+                                            <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $model->articleAuthor ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
+                                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug, '#' => 'comment-wrapper-section']) ?>"><?= $model->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
                                         </ul>
-                                        <h3><a href="/article/<?= $model->slug ?>"><?= $model->title ?> </a></h3>
+                                        <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>
 
                                     </div>
-                                    <div class="link"><a href="/article/<?= $model->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
+                                    <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
                                 </div>
                             </div>
                     <?php }

@@ -95,7 +95,7 @@ $recentposts = ArticleSearch::recentpost();
                         </ul>
                     </div>
                 </div>
-                <div class="comment-wrapper">
+                <div class="comment-wrapper" id="comment-wrapper-section">
                     <?= $this->render('_comment', [
                         'model' => $model,
                         'article' => $article,
