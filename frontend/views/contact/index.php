@@ -22,7 +22,7 @@ $this->title = 'Contact';
             <div class="col-12">
                 <div class="row gy-4">
                     <div class="col-md-6 col-lg-4 ">
-                        <div class="bg-light rounded p-3">
+                        <div class="bg-light rounded p-xl-3">
                             <div class="d-flex align-items-center bg-white rounded p-3 icon-wrap">
                                 <div class="icon me-3">
                                     <i class="fa fa-map-marker-alt "></i>
@@ -32,7 +32,7 @@ $this->title = 'Contact';
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 ">
-                        <div class="bg-light rounded p-3">
+                        <div class="bg-light rounded p-xl-3">
                             <div class="d-flex align-items-center bg-white rounded p-3 icon-wrap">
                                 <div class="icon me-3">
                                     <i class="fa fa-envelope-open "></i>
@@ -42,7 +42,7 @@ $this->title = 'Contact';
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-4 ">
-                        <div class="bg-light rounded p-3">
+                        <div class="bg-light rounded p-xl-3">
                             <div class="d-flex align-items-center bg-white rounded p-3 icon-wrap">
                                 <div class="icon me-3">
                                     <i class="fa fa-phone-alt "></i>
