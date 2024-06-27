@@ -12,6 +12,8 @@
 				<a href="/park">
 					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="210px" class="logo">
 				</a>
+			
+				<div class="d-flex align-items-center">
 				<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 					<i class="fa-solid fa-bars"></i>
 				</button>
@@ -58,16 +60,31 @@
 								<h5>Shared Safari</h5>
 							</a>
 
-							
+							<li>
 
+							</li>
+
+						</ul>
+					</div>
+				</div>
+				<div class="proilewrapper">
+					<div class="profile">
+						<div class="img-box2">
+						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35" x="0" y="0" viewBox="0 0 45.532 45.532" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M22.766.001C10.194.001 0 10.193 0 22.766s10.193 22.765 22.766 22.765c12.574 0 22.766-10.192 22.766-22.765S35.34.001 22.766.001zm0 6.807a7.53 7.53 0 1 1 .001 15.06 7.53 7.53 0 0 1-.001-15.06zm-.005 32.771a16.708 16.708 0 0 1-10.88-4.012 3.209 3.209 0 0 1-1.126-2.439c0-4.217 3.413-7.592 7.631-7.592h8.762c4.219 0 7.619 3.375 7.619 7.592a3.2 3.2 0 0 1-1.125 2.438 16.702 16.702 0 0 1-10.881 4.013z" fill="#ffffff" opacity="1" data-original="#000000" class=""></path></g></svg>
+							<!-- <img src="<?= $this->params['baseurl'] ?>/img/user.png" alt="some user image"> -->
+						</div>
+					</div>
+					<div class="menuprofile">
+						<ul>
 							<?php if (!Yii::$app->user->identity) { ?>
-								<li class="nav-item">
-									<a class="nav-link" href="/site/auth?authclient=google"> Sign In</a>
+								<li>
+									<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 								</li>
 							<?php } else { ?>
-								<li class="nav-item">
-									<a class="nav-link" href="/site/logout">
-										<img src="<?= Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="" class="me-1 d-xl-inline-flex d-none rounded" style="height:25px;">
+								<li>
+									<a class="" href="/site/logout">
+										<i class="fa-solid fa-arrow-right-from-bracket"></i>
+										<!-- <img src="<?= Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="" class="me-1 d-xl-inline-flex d-none rounded" style="height:25px;"> -->
 										Log Out</a>
 								</li>
 							<?php } ?>
@@ -75,7 +92,8 @@
 						</ul>
 					</div>
 				</div>
-
+				</div>
+				
 			</div>
 
 		</nav>

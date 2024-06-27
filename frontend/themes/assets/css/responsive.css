@@ -701,7 +701,12 @@ line-height: 19px;
         padding: 10px 22px;
     }
 
-   
+    .menuprofile ul li a{
+        padding: 4px 10px;
+    }
+    .menuprofile ul{
+        line-height: 40px;
+    }
 
    
 
@@ -725,6 +730,10 @@ line-height: 19px;
 }
 
 @media (max-width: 991px) {
+    .menuprofile{
+
+        right: 10px;
+    }
     .sahreSafari h5{
 
         padding-bottom: 6px;
@@ -1039,6 +1048,11 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:576px) {
+    .img-box2 svg{
+
+        width: 28px;
+        height: 28px;
+    }
   
     .main_homebanner .banner_searchBox {
         position: absolute;

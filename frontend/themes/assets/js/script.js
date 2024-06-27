@@ -114,6 +114,23 @@ $('.slider_resorts ').owlCarousel({
         }
     }
 })
+document.addEventListener('DOMContentLoaded', function () {
+    let profile = document.querySelector('.profile');
+    let menu = document.querySelector('.menuprofile');
+
+    profile.onclick = function (event) {
+        menu.classList.toggle('active');
+        event.stopPropagation();
+    }
+
+    document.addEventListener('click', function (event) {
+        if (!profile.contains(event.target) && !menu.contains(event.target)) {
+            menu.classList.remove('active');
+        }
+    });
+});
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
     // Get the toggle button and the advanced search box
@@ -492,7 +509,5 @@ fileUpload.addEventListener('change', function () {
         uploadText.style.display = 'none';
     }
 });
-
-
 
 
