@@ -7,7 +7,7 @@
     <div class="accordion-body height_set">
         <div class="about_content">
             <div class="safrititles pt-3 pb-0">
-                <h5 class=""><?= $model->module_title ?></h5>
+                <h5 class="">How to Reach <?= $model->title ?></h5>
             </div>
             <p>
                 <?= $model->module_description ?>

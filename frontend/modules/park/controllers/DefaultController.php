@@ -30,7 +30,7 @@ class DefaultController extends FrontendBaseController
     {
         $searchModel = new SafariParkSearch();
         $searchModel->master_location_id = 7;
-        $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+        $searchModel->session_id = 1;
         $searchModel->master_animal_id = 13;
         $searchModel->master_vehicle_id = 5;
         $dataProvider = $searchModel->search($this->request->queryParams, false);
@@ -64,7 +64,7 @@ class DefaultController extends FrontendBaseController
         }
         $searchModel = new SafariParkSearch();
         $searchModel->master_location_id = 7;
-        $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
+        $searchModel->session_id = 1;
         $searchModel->master_animal_id = 13;
         $searchModel->master_vehicle_id = 5;
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -155,18 +155,14 @@ class DefaultController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionParklist($master_location_id = 7, $month_id = null, $master_animal_id = 13, $master_vehicle_id = 5)
+    public function actionParklist($master_location_id = 7, $session_id = 3, $master_animal_id = 13, $master_vehicle_id = 5)
     {
         $searchModel = new SafariParkSearch();
         if ($master_location_id) {
             $searchModel->master_location_id = $master_location_id;
         }
-        if ($month_id) {
-            $searchModel->month_id = $month_id;
-        } else {
-            if ($month_id == NULL) {
-                $searchModel->month_id = GeneralModel::removeLeadingChar(date('m'));
-            }
+        if ($session_id) {
+            $searchModel->session_id = $session_id;
         }
         if ($master_animal_id) {
             $searchModel->master_animal_id = $master_animal_id;

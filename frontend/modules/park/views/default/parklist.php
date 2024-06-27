@@ -35,7 +35,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         <div class="tab-cont">
                             <div class="tab-pane">
                                 <div class="row gx-0">
-                                    <?= $this->render('_search', [
+                                    <?= $this->render('_advance_search', [
                                         'model' => $searchModel,
                                     ]) ?>
                                 </div>
