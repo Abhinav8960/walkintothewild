@@ -48,11 +48,11 @@
 												)) ? "active" : "" ?>">
 								<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-xl-inline-flex d-none"> ARTICLES & TIPS</a>
 							</li>
-							<li class="nav-item <?= in_array($active_url, array(
+							<!-- <li class="nav-item <?= in_array($active_url, array(
 													"/contact",
 												)) ? "active" : "" ?>">
 								<a class="nav-link" href="/contact"> <img src="<?= $this->params['baseurl'] ?>/img/contact-us.png" alt="" class="me-1 d-xl-inline-flex d-none" width="25"> Contact Us</a>
-							</li>
+							</li> -->
 							<a href="/sharedsafari" class="sahreSafari text-xl-center">
 								<div class="card-img">
 									<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
