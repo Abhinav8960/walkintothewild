@@ -1792,8 +1792,10 @@ figure {
 
 .safartabs .intested_btn {
 
-    border-radius: 20px !important;
     font-size: var(--fs-15);
+    padding: 7px 25px;
+    display: inline-block;
+    border-radius: 0.375rem 0.375rem 0px 0px;
 }
 .safartabs .intested_btn:hover{
 
