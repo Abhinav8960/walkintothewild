@@ -3876,12 +3876,14 @@ cursor: pointer;
     width: 280px;
     /* min-height: 100px; */
     background: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+    /* box-shadow: 0 10px 20px rgba(0, 0, 0, .2); */
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.2);
     opacity: 0;
     transform: translateY(-10px);
     visibility: hidden;
     transition: 300ms;
     border-radius: 4px;
+
 }
 
 /* .menuprofile::before {
@@ -3912,6 +3914,7 @@ cursor: pointer;
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
+    
   
 }
 
@@ -3926,14 +3929,16 @@ cursor: pointer;
     display: flex;
     font-weight: 700;
     align-items: center;
-    font-size: var(--fs-18);
-    padding: 10px;
-    gap: 6px;
+    font-size: var(--fs-16);
+    padding: 10px 16px;
+    gap: 16px;
+    align-items: center;
     font-family: "Roboto", sans-serif !important;
 }
 .menuprofile ul li a i{
 
     font-size: 1.2rem;
+    color: #9c999f;
 }
 
 
