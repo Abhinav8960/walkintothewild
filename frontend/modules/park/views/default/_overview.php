@@ -1,5 +1,10 @@
-<?php 
+<?php
+
 use common\models\GeneralModel;
+use common\models\park\SafariParkMonth;
+
+
+$locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->orderBy(['month_id' => SORT_ASC])->all(), 'month_id', 'mastermonth.month_name');
 
 
 ?>
@@ -17,7 +22,7 @@ use common\models\GeneralModel;
                 </div>
             </div>
             <div class="col-lg-12 col-xl-9 position-relative">
-          
+
                 <div class="seelctes_text pb-4 ">
                     <p><?= $model->long_description ?></p>
                 </div>
@@ -129,7 +134,14 @@ use common\models\GeneralModel;
                                 <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt="">
                             </div>
                             <div class="text-form">
-                                <p class="mb-0"><?= isset($first_month) ? $first_month->mastermonth->month_name . ' - ' : '' ?><?= isset($last_month) ? $last_month->mastermonth->month_name : '' ?> <?= isset($model->month_note) && $model->month_note <> '' ? '(' . $model->month_note . ')' : '' ?></p>
+                                <p class="mb-0">
+                                    <?php
+                                    if ($locked_months) {
+                                        echo implode(", ", array_values($locked_months));
+                                    }
+                                    ?>
+                                    <?= isset($model->month_note) && $model->month_note <> '' ? '(' . $model->month_note . ')' : '' ?>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -138,7 +150,7 @@ use common\models\GeneralModel;
         </div>
         <div class="row pt-4">
             <div class="col-lg-12 col-xl-6 mb-3 mb-lg-0">
-                <div class="row gx-2">
+                <div class="row gx-2 <?= in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
                     <div class="col-sm-3 mb-sm-0 mb-3 ">
                         <div class="coreZone h-100">
                             <h3>CORE ZONE</h3>

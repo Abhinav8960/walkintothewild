@@ -74,7 +74,7 @@ $form = ActiveForm::begin([
             ?>
 
         </div>
-
+        <?= $form->field($model, 'custom_sort_by')->hiddenInput(); ?>
     </div>
 <?php } else { ?>
 
@@ -96,12 +96,14 @@ $form = ActiveForm::begin([
                 </div>
                 <div class="col-7">
                     <div class="input_check pb-0">
-                        <select class="form-select " aria-label="Default select example">
-                            <option selected>Relevant</option>
-                            <option value="1">January</option>
-                            <option value="2">Febraury</option>
-                            <option value="3">March</option>
-                        </select>
+                        <form id="custom_sort_by_form">
+                            <select class="form-select mb-2" aria-label="Default select example" id="custom_sort_by">
+                                <option value="name_az" <?= $model->custom_sort_by == 'name_az' || $model->custom_sort_by == '' ? 'selected' : '' ?>>Name A-Z</option>
+                                <option value="name_za" <?= $model->custom_sort_by == 'name_za' ? 'selected' : '' ?>>Name Z-A</option>
+                                <option value="rating_high" <?= $model->custom_sort_by == 'rating_high' ? 'selected' : '' ?>>Rating High</option>
+                                <option value="rating_low" <?= $model->custom_sort_by == 'rating_low' ? 'selected' : '' ?>>Rating Low</option>
+                            </select>
+                        </form>
                     </div>
 
                 </div>
@@ -191,6 +193,7 @@ $form = ActiveForm::begin([
                 </div>
             </div>
         </div>
+        <?= $form->field($model, 'custom_sort_by')->hiddenInput(); ?>
     </div>
 <?php } ?>
 
@@ -201,7 +204,7 @@ $form = ActiveForm::begin([
 $script = <<< JS
     $('form input[type=checkbox]').on('change', function(){
         $("#Searchform").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
+        $('#Searchform').submit();
     });
 JS;
 $this->registerJs($script);

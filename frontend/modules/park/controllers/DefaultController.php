@@ -75,8 +75,8 @@ class DefaultController extends FrontendBaseController
         $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
         $operators = $operatordataProvider->getModels();
 
-        $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
-        $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
+        // $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
+        // $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
 
 
 
@@ -113,8 +113,8 @@ class DefaultController extends FrontendBaseController
             'view',
             [
                 'model' => $model,
-                'first_month' => $first_month,
-                'last_month' => $last_month,
+                // 'first_month' => $first_month,
+                // 'last_month' => $last_month,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'suggestionmodel' => $suggestionmodel,
@@ -170,7 +170,7 @@ class DefaultController extends FrontendBaseController
         if ($master_vehicle_id) {
             $searchModel->master_vehicle_id = $master_vehicle_id;
         }
-        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
 
         return $this->render('parklist', [

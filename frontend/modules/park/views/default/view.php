@@ -20,40 +20,40 @@ $park_constant = Constants::PARK_VIEW;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 <div class="fixedbanner">
-<section class="banner_section-inner ee position-relative">
-    <picture class="position-relative">
-        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
-    </picture>
-    <div class="banner_searchBox">
-        <div class="container-lg">
-            <div class="row">
-                <div class="col-12 ">
-                    <div class="tab-block" id="tab-block">
-                        <ul class="tab-mnu">
-                            <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
-                        </ul>
+    <section class="banner_section-inner ee position-relative">
+        <picture class="position-relative">
+            <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
+            <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
+        </picture>
+        <div class="banner_searchBox">
+            <div class="container-lg">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="tab-block" id="tab-block">
+                            <ul class="tab-mnu">
+                                <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
+                                <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
+                                <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
+                            </ul>
 
-                        <div class="tab-cont">
-                            <div class="tab-pane">
-                                <?= $this->render('_advance_search', [
-                                    'model' => $searchModel,
-                                ]) ?>
+                            <div class="tab-cont">
+                                <div class="tab-pane">
+                                    <?= $this->render('_advance_search', [
+                                        'model' => $searchModel
+                                    ]) ?>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-</section>
+    </section>
 </div>
 <section class="articals_wrapper py-3 margin-setposi">
     <div class="container-fluid">
         <div class="row mb-4  justify-content-center mt-4">
             <div class="col-lg-12 col-xl-10 pb-4 safartabs">
-            <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
+                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
                     <h5 class=""><a href=""><?= $model->title ?></a></h5>
                     <div class="btn_wrap pt-md-0 pt-3">
                         <?php
@@ -94,8 +94,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                         <?= $this->render('_overview', [
                             'model' => $model,
-                            'first_month' => $first_month,
-                            'last_month' => $last_month,
+                            // 'first_month' => $first_month,
+                            // 'last_month' => $last_month,
                         ]) ?>
                     </div>
                     <div class="tab-pane fade accordion-item" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
@@ -166,6 +166,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             ]); ?>
             <div class="modal-body modal_form">
                 <div class="row">
+                    <div class="col-12">
+                        <h6 class="text-center"><?= $model->title ?></h6>
+                    </div>
                     <div class="col-12 mb-2">
                         <label for="" class="Modal_label">Select Category</label>
                         <?= $form->field($suggestionmodel, 'master_suggestion_id')->dropDownList(GeneralModel::suggestioncategory(), ['prompt' => 'Select', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
@@ -181,7 +184,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div class="row mt-2 pe-0">
                     <div class="col-lg-8">
                         <label for="" class="Modal_label">You Are?</label>
-                        <?= $form->field($suggestionmodel, 'you_are_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Safari tour Oprator', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
+                        <?= $form->field($suggestionmodel, 'you_are_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Who You Are?', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
                     </div>
                     <div class="col-lg-4">
                         <div class="creat-safri">

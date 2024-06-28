@@ -6,7 +6,7 @@ use yii\bootstrap5\ActiveForm;
 $form = ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
-        'id' => 'Searchform'
+        'id' => 'safarioperatorsearch'
     ],
     'action' => ['/park/' . $safari_model->slug . ''],
     'method' => 'get',
@@ -18,10 +18,10 @@ $form = ActiveForm::begin([
 <?php if ($device == 'desktop') { ?>
     <div class="filter-wrapper custoM-inputs d-lg-block d-none">
         <div class="title_top pb-4">
-            <h4>Select Filters</h4>
+            <h4>Select Operator</h4>
         </div>
         <div class="title_filter mb-2">
-            <h6>Budget</h6>
+            <h6>Operator Budget</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'budget_segment')->checkboxList(
                     GeneralModel::packageoption(),
@@ -74,6 +74,7 @@ $form = ActiveForm::begin([
             ?>
 
         </div>
+        <?= $form->field($model, 'custom_sort_by')->hiddenInput(); ?>
 
     </div>
 <?php } else { ?>
@@ -96,14 +97,13 @@ $form = ActiveForm::begin([
                 </div>
                 <div class="col-7">
                     <div class="input_check pb-0">
-                        <select class="form-select " aria-label="Default select example">
-                            <option selected>Relevant</option>
-                            <option value="1">January</option>
-                            <option value="2">Febraury</option>
-                            <option value="3">March</option>
+                        <select class="form-select mb-2" aria-label="Default select example" id="custom_sort_by">
+                            <option value="name_az" <?= $model->custom_sort_by == 'name_az' || $model->custom_sort_by == '' ? 'selected' : '' ?>>Name A-Z</option>
+                            <option value="name_za" <?= $model->custom_sort_by == 'name_za' ? 'selected' : '' ?>>Name Z-A</option>
+                            <option value="rating_high" <?= $model->custom_sort_by == 'rating_high' ? 'selected' : '' ?>>Rating High</option>
+                            <option value="rating_low" <?= $model->custom_sort_by == 'rating_low' ? 'selected' : '' ?>>Rating Low</option>
                         </select>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -191,6 +191,7 @@ $form = ActiveForm::begin([
                 </div>
             </div>
         </div>
+        <?= $form->field($model, 'custom_sort_by')->hiddenInput(); ?>
     </div>
 <?php } ?>
 
@@ -200,8 +201,7 @@ $form = ActiveForm::begin([
 <?php
 $script = <<< JS
     $('form input[type=checkbox]').on('change', function(){
-        $("#Searchform").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
+        $('#safarioperatorsearch').submit();
     });
 JS;
 $this->registerJs($script);

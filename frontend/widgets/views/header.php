@@ -38,7 +38,7 @@
 								"/",
 								"/park/default/index",
 								"/park/default/parklist",
-								"/park/default/view",
+								// "/park/default/view",
 							)) ? "active" : "" ?>">
 									<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>"> <i class="fa-solid fa-magnifying-glass d-xl-inline-flex d-none"></i> Search Safari</a>
 								</li>
@@ -80,6 +80,13 @@
 										<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 									</li>
 								<?php } else { ?>
+									<?php if (isset(Yii::$app->params['back_end_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
+										<li>
+											<a class="" target="_blank" href="<?= Yii::$app->params['back_end_url'] ?>">
+												<i class="fa-solid fa-cog"></i>
+												Manage</a>
+										</li>
+									<?php } ?>
 									<li>
 										<a class="" href="/site/logout">
 											<i class="fa-solid fa-arrow-right-from-bracket"></i>
