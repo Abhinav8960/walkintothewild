@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorRating;
 
 /**
  * Safari controller for the `operatordashboard` module
@@ -77,8 +78,18 @@ class SafariController extends Controller
     public function actionReview()
     {
         $safari_operator = $this->findModel();
+        $query = SafariOperatorRating::find()->where(['safari_operator_id' => $safari_operator->id]);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
 
-        return $this->render('review', ['safari_operator' => $safari_operator]);
+        return $this->render('review', [
+            'safari_operator' => $safari_operator,
+            'dataProvider' => $dataProvider
+        ]);
     }
 
     /**

@@ -22,7 +22,7 @@ $this->params['title'] = $this->title;
                                 'class' => 'yii\grid\SerialColumn',
                                 'contentOptions' => ['style' => 'width: 2%;'],
                             ],
-                            'park.title',
+                            'park.title:raw:Park Name',
                             [
                                 'label' => 'Name',
                                 'contentOptions' => ['style' => 'width: 10%;'],
