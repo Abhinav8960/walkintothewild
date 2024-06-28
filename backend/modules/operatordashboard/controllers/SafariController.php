@@ -5,6 +5,7 @@ namespace backend\modules\operatordashboard\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 
 /**
@@ -43,7 +44,18 @@ class SafariController extends Controller
     {
         $safari_operator = $this->findModel();
 
-        return $this->render('quote', ['safari_operator' => $safari_operator]);
+        $query = OperatorQuote::find()->where(['operator_id' => $safari_operator->id]);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('quote', [
+            'safari_operator' => $safari_operator,
+            'dataProvider' => $dataProvider
+        ]);
     }
 
     /**
@@ -55,6 +67,18 @@ class SafariController extends Controller
         $safari_operator = $this->findModel();
 
         return $this->render('sharedsafari', ['safari_operator' => $safari_operator]);
+    }
+
+
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionReview()
+    {
+        $safari_operator = $this->findModel();
+
+        return $this->render('review', ['safari_operator' => $safari_operator]);
     }
 
     /**

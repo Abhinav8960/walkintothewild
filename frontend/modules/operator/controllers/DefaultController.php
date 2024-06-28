@@ -73,7 +73,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/view',  'id' => $slug]);
+            return $this->redirect(['/operator/default/view',  'slug' => $slug]);
         }
 
 

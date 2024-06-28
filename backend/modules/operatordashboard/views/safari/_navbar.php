@@ -16,6 +16,7 @@
                 <li><a href="/operatordashboard/safari/parklist" class="nav-link <?= $active_navbar == 'parklist' ? 'active' : '' ?>">Park List</a></li>
                 <li><a href="/operatordashboard/safari/quote" class="nav-link <?= $active_navbar == 'quote' ? 'active' : '' ?>">Get a Free Quote</a></li>
                 <li><a href="/operatordashboard/safari/sharedsafari" class="nav-link <?= $active_navbar == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a></li>
+                <li><a href="/operatordashboard/safari/review" class="nav-link <?= $active_navbar == 'review' ? 'active' : '' ?>">User Review</a></li>
             </ul>
         </div>
     </div>

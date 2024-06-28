@@ -2,8 +2,10 @@
 
 namespace common\models\operator;
 
-use common\traits\CommanRelationship;
 use Yii;
+use common\models\park\SafariPark;
+use common\traits\CommanRelationship;
+use common\models\meta\MetaStayCategory;
 
 /**
  * This is the model class for table "operator_quote".
@@ -96,5 +98,17 @@ class OperatorQuote extends \yii\db\ActiveRecord implements \common\interfaces\S
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
+    }
+
+
+    public function getStaycatgory()
+    {
+        return $this->hasOne(MetaStayCategory::className(), ['id' => 'stay_category_id']);
     }
 }

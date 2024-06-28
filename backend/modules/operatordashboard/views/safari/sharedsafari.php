@@ -12,9 +12,7 @@ $this->params['title'] = $this->title;
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
             <div class="tab-pane active">
-                <?= $this->render('_overview', [
-                    'safari_operator' => $safari_operator,
-                ]) ?>
+                No Shared Safari Created!
             </div>
         </div>
     </div>
