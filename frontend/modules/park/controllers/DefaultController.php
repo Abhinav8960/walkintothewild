@@ -170,7 +170,7 @@ class DefaultController extends FrontendBaseController
         if ($master_vehicle_id) {
             $searchModel->master_vehicle_id = $master_vehicle_id;
         }
-        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
 
         return $this->render('parklist', [
