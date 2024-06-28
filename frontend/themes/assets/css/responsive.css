@@ -171,7 +171,7 @@ line-height: 19px;
     }
 
     .artical_cards .image-box .image img {
-        height: 350px;
+        height: 310px;
     }
     .imgsbox img{
 
@@ -531,6 +531,10 @@ line-height: 19px;
 }
 
 @media(min-width:1200px) {
+    .paddingset_desktop{
+
+        padding-right: 74px;
+    }
     .navbar-nav {
 
         gap: 32px;

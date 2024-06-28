@@ -741,6 +741,7 @@ a {
 
     background-color: #F5F5F5;
     padding: 5px 0px 180px 0px;
+    position: relative;
 }
 
 /* homeshrecard */
@@ -1299,7 +1300,7 @@ figure {
 }
 
 .banner_section-inner picture img {
-    height: 250px;
+    height: 200px;
     -o-object-fit: cover;
     object-fit: cover;
 
@@ -3946,8 +3947,11 @@ cursor: pointer;
 }
 
 .sticky-panel {
-    position: fixed;
-    top: 300px;
-    
-  }
+
+        position: -webkit-sticky;
+        position: sticky;
+        top: 300px;
+        bottom: 1em;
+      }
+
 
