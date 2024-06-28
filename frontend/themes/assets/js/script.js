@@ -30,27 +30,50 @@ if ($('.safari-carousel').length) {
     });
 }
 
-if ($('.opratios-slider').length) {
-    $('.opratios-slider').owlCarousel({
-        loop: true,
-        margin: 10,
-        nav: false,
-        dots: false,
-        autoplay: true,
-        responsiveClass: true,
-        responsive: {
-            0: {
-                items: 2
-            },
-            600: {
-                items: 3
-            },
-            1000: {
-                items: 6
-            }
+// if ($('.opratios-slider').length) {
+//     $('.opratios-slider').owlCarousel({
+//         loop: true,
+//         margin: 10,
+//         nav: false,
+//         dots: false,
+//         autoplay: true,
+//         responsiveClass: true,
+//         responsive: {
+//             0: {
+//                 items: 2
+//             },
+//             600: {
+//                 items: 3
+//             },
+//             1000: {
+//                 items: 6
+//             }
+//         }
+//     });
+// }
+
+var owl = $(".opratios-slider");
+var itemCount = owl.children().length;
+owl.owlCarousel({
+    items: itemCount >= 6 ? 6 : itemCount,
+    loop: false,
+    margin: 10,
+    dots: false,
+    smartSpeed: 900,
+    autoplay: true,
+    nav:false,
+    responsive: {
+        0: {
+            items: itemCount >= 2 ? 2 : itemCount
+        },
+        1000: {
+            items: itemCount >= 3 ? 3 : itemCount
+        },
+        1000: {
+            items: itemCount >= 6 ? 6 : itemCount
         }
-    });
-}
+    }
+});
 
 $(document).ready(function() {
     var $slider = $('.slider_safariimg');
@@ -322,3 +345,19 @@ document.addEventListener('DOMContentLoaded', function() {
         showStep(currentStep);
     }
 });
+
+window.onscroll = function (e) {  
+
+    var constantY = 100;
+      var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
+    var sidebars = document.getElementsByClassName("sidebar");
+    if (scrollTop > constantY) {
+    sidebars[0].classList.add("sticky-panel");
+    
+    }
+    else {
+    sidebars[0].classList.remove("sticky-panel");
+    }
+    
+      //console.log(window.pageYOffset || (document.documentElement || document.body.parentNode ||document.body).scrollTop);
+    }

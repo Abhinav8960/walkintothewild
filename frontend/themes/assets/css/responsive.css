@@ -47,7 +47,7 @@
         padding: 0px 13px 0px 8px;
     }
 
-    .main_homebanner .banner_searchBox {
+    /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 79.5%;
         height: 100%;
@@ -57,7 +57,7 @@
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         z-index: 0;
-    }
+    } */
 
     .listingSafari {
         width: 300px;
@@ -217,7 +217,7 @@ line-height: 19px;
         height: 600px;
       
     }
-    .main_homebanner .banner_searchBox {
+    /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 75.5%;
         height: 100%;
@@ -227,7 +227,7 @@ line-height: 19px;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         z-index: 0;
-    }
+    } */
 }
 
 @media only screen and (max-width: 1500px) and (min-width: 991px) {
@@ -309,7 +309,7 @@ line-height: 19px;
 
     .banner_section picture img {
 
-        height: 750px;
+        height: 600px;
         object-fit: cover;
     }
 
@@ -318,7 +318,17 @@ line-height: 19px;
         left: 20%;
     }
 
-    
+
+   
+}
+@media only screen and (max-width: 986px) and (min-width: 874px) {
+
+
+
+    .placeholder_select {
+
+        left: 15%;
+    }
 
 
    
@@ -449,7 +459,7 @@ line-height: 19px;
         left: 17%;
     } */
 
-    .main_homebanner .banner_searchBox {
+    /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 69.5%;
         height: 100%;
@@ -459,7 +469,7 @@ line-height: 19px;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         z-index: 0;
-    }
+    } */
 }
 
 
@@ -536,11 +546,11 @@ line-height: 19px;
         width: 100%;
     }
 
-    .banner_section picture img {
+    /* .banner_section picture img {
 
-        height: 683px;
+        height: 527px;
         object-fit: cover;
-    }
+    } */
     .main_footer .terms{
 
         float: right;
@@ -720,7 +730,6 @@ line-height: 19px;
 
         bottom: -2px;
     }
-   
 
     /* .logo_provide2 {
 
@@ -736,12 +745,34 @@ line-height: 19px;
 
         border-radius: 10px 10px 0px 0px;
     }
+    .dropdown-toggle{
 
+        height: 60px;
+        line-height: 9px;
+    }
+    .placeholder_select{
 
+        top: 8px;
+    }
+    .padding_ic img{
+        padding: 3px;
+    }
+    .serch_btn button{
+        padding: 17px 31px;
+    }
+    .offcanvas-header svg{
+
+        width: 34px;
+        height: 24px
+    }
     
 }
 
 @media (max-width: 991px) {
+    .banner_searchBox{
+
+        top: 50%;
+    }
     .menuprofile{
 
         right: 10px;
@@ -903,14 +934,16 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
+
+
     .banner_section-inner{
 
         margin-top: 60px !important;
     }
-    .banner_section{
+    /* .banner_section{
 
         margin-top: 60px !important;
-    }
+    } */
     .title_white.h4 {
 
         font-size: 20px;
@@ -961,7 +994,7 @@ line-height: 19px;
 
     .banner_section picture img {
 
-        height: 900px;
+        height: 700px;
         object-fit: cover;
     }
 
@@ -1032,7 +1065,7 @@ line-height: 19px;
         padding-left: 0px;
     }
 
-    .main_homebanner .banner_searchBox {
+    /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 63%;
         height: 100%;
@@ -1042,7 +1075,7 @@ line-height: 19px;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         z-index: 0;
-    }
+    } */
 }
 @media only screen and (max-width: 768px) and (min-width: 576px){
 
@@ -1066,13 +1099,24 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:576px) {
+    .sharesafri {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+    .navbar-toggler i{
+
+        font-size: 25px;
+    }
+    .dropdown-toggle{
+        font-size: 14px;
+    }
     .img-box2 svg{
 
         width: 28px;
         height: 28px;
     }
   
-    .main_homebanner .banner_searchBox {
+    /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 59%;
         height: 100%;
@@ -1082,7 +1126,7 @@ line-height: 19px;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         z-index: 0;
-    }
+    } */
 
     .title_yellow.h1 {
 
@@ -1303,7 +1347,7 @@ font-size: 15px;
 }
 
 @media (max-width:420px) {
-    .main_homebanner .banner_searchBox {
+    /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 56%;
         height: 100%;
@@ -1313,7 +1357,7 @@ font-size: 15px;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         z-index: 0;
-    }
+    } */
 
     .safariBox {
         top: 17%;
@@ -1363,7 +1407,7 @@ font-size: 15px;
 
     .placeholder_select {
 
-        left: 18%;
+        left: 16%;
     }
 }
 @media (max-width:340px){
