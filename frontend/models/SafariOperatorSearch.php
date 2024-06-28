@@ -13,6 +13,7 @@ class SafariOperatorSearch extends SafariOperator
 {
     public $budget_segment;
     public $credibility;
+    public $custom_sort_by;
 
     /**
      * {@inheritdoc}
@@ -22,7 +23,7 @@ class SafariOperatorSearch extends SafariOperator
         return [
             [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['starting_price'], 'number'],
-            [['google_rating'], 'safe'],
+            [['google_rating', 'custom_sort_by'], 'safe'],
             [['about_business'], 'string'],
             [['budget_segment', 'credibility'], 'safe'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
@@ -56,6 +57,9 @@ class SafariOperatorSearch extends SafariOperator
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['register_comapany_name' => SORT_ASC]
+            ]
         ]);
 
         $this->load($params);
@@ -66,6 +70,26 @@ class SafariOperatorSearch extends SafariOperator
             return $dataProvider;
         }
 
+
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == 'name_az') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['register_comapany_name' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == 'name_za') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['register_comapany_name' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == 'rating_high') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['google_rating' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == 'rating_low') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['google_rating' => SORT_ASC]
+                ];
+            }
+        }
 
         if ($park_id) {
             $query->joinwith(['park' => function ($query) use ($park_id) {

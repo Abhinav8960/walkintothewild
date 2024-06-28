@@ -74,12 +74,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         </div>
                         <div class="right-select d-flex gap-2 align-items-center">
                             <div class="input_check pb-0">
-
-                                <select class="form-select mb-2" aria-label="Default select example">
-                                    <option selected>Sort By: Popularity</option>
-                                    <option value="1">Popularity</option>
-                                    <option value="2">Rating</option>
-                                </select>
+                                <?php if ($device == 'desktop') {  ?>
+                                    <form id="custom_sort_by_form">
+                                        <select class="form-select mb-2" aria-label="Default select example" id="custom_sort_by">
+                                            <option value="name_az" <?= $operatorsearchModel->custom_sort_by == 'name_az' || $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Sort By: Name A-Z</option>
+                                            <option value="name_za" <?= $operatorsearchModel->custom_sort_by == 'name_za' ? 'selected' : '' ?>>Name Z-A</option>
+                                            <option value="rating_high" <?= $operatorsearchModel->custom_sort_by == 'rating_high' ? 'selected' : '' ?>>Rating High</option>
+                                            <option value="rating_low" <?= $operatorsearchModel->custom_sort_by == 'rating_low' ? 'selected' : '' ?>>Rating Low</option>
+                                        </select>
+                                    </form>
+                                <?php  } ?>
                             </div>
                             <!-- <div class="gridListview">
                   <a href="#" id="toggleViewBtn"><i class="fas fa-list"></i></a>
@@ -170,3 +174,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="safariduring_sesons innerpage">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
+
+
+<?php
+$script = <<< JS
+    $('#custom_sort_by').on('change', function(){
+        $('#safarioperatorsearch-custom_sort_by').val(this.value);
+        $("#Searchform").attr("data-pjax", "true");    
+        $('#Searchform').submit();
+    });
+JS;
+$this->registerJs($script);
+?>
