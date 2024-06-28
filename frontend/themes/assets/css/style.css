@@ -1599,6 +1599,9 @@ figure {
 
     color: var(--background-primary);
 }
+.titleSafri{
+    color: var(--background-primary); 
+}
 
 .safrititles p {
 
@@ -1872,12 +1875,28 @@ figure {
     border-radius: 5px 0px 0px 5px;
 
 }
+.inactive_core_zone .coreZone{
+
+    background-color: gray;
+   
+}
+.inactive_core_zone .coreZone h3{
+    color: #cbcbcb;
+}
 
 .coreZone h3 {
 
     font-size: var(--fs-25);
     color: var(--colorwhite);
     margin-bottom: 0;
+}
+.inactive_core_zone .tabledesigncore table tr th{
+    background-color: gray;
+    color: #cbcbcb;
+}
+.inactive_core_zone .tabledesigncore table tr td{
+    background-color: gray;
+    color: #cbcbcb;
 }
 
 .tabledesigncore table td {

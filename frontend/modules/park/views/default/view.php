@@ -52,16 +52,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="articals_wrapper py-3 margin-setposi">
     <div class="container-fluid">
         <div class="row mb-4  justify-content-center mt-4">
-            <div class="col-lg-12 col-xl-10 pb-4 safartabs">
-                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
-                    <h5 class=""><a href=""><?= $model->title ?></a></h5>
-                    <div class="btn_wrap pt-md-0 pt-3">
+            <div class="col-lg-12 col-xl-10 pb-sm-4 safartabs">
+                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-center align-items-center">
+                    <h1 class="titleSafri fs-2 text-center"><?= $model->title ?></h1>
+                    <!-- <div class="btn_wrap pt-md-0 pt-3">
                         <?php
 
                         if ($model->official_website) { ?>
                             <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE <i class="fa-solid fa-up-right-from-square ms-2"></i></a>
                         <?php } ?>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-12 col-xl-10 safartabs">
