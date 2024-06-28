@@ -94,8 +94,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                         <?= $this->render('_overview', [
                             'model' => $model,
-                            'first_month' => $first_month,
-                            'last_month' => $last_month,
+                            // 'first_month' => $first_month,
+                            // 'last_month' => $last_month,
                         ]) ?>
                     </div>
                     <div class="tab-pane fade accordion-item" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
