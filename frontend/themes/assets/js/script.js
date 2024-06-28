@@ -345,19 +345,23 @@ document.addEventListener('DOMContentLoaded', function() {
         showStep(currentStep);
     }
 });
+// (function($){
+//     $('document').ready(function() {
+//       $('.sidebar,.main').stick_in_parent();
+//     });
+//   })(jQuery);
+// window.onscroll = function (e) {  
 
-window.onscroll = function (e) {  
-
-    var constantY = 100;
-      var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
-    var sidebars = document.getElementsByClassName("sidebar");
-    if (scrollTop > constantY) {
-    sidebars[0].classList.add("sticky-panel");
+//     var constantY = 100;
+//       var scrollTop = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop;
+//     var sidebars = document.getElementsByClassName("sidebar");
+//     if (scrollTop > constantY) {
+//     sidebars[0].classList.add("sticky-panel");
     
-    }
-    else {
-    sidebars[0].classList.remove("sticky-panel");
-    }
+//     }
+//     else {
+//     sidebars[0].classList.remove("sticky-panel");
+//     }
     
-      //console.log(window.pageYOffset || (document.documentElement || document.body.parentNode ||document.body).scrollTop);
-    }
+//       //console.log(window.pageYOffset || (document.documentElement || document.body.parentNode ||document.body).scrollTop);
+//     }

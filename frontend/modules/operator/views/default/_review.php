@@ -17,7 +17,7 @@ use yii\helpers\Url;
                                 <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
                                 if ($avg) { ?>
                                     <p class="mb-0">
-                                        <?= $avg ?>
+                                        <?= round($avg, 1) ?>
                                         <?= GeneralModel::ratiing_views($avg); ?>
                                     </p>
                                 <?php } ?>

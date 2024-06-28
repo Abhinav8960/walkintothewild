@@ -61,15 +61,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div> -->
         <div class="row mb-4  position-relative">
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 ">
-                <div id="targetDiv" class="sidebar">
+            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 sidebar">
+                <div id="targetDiv">
                     <?= $this->render('_park_side_search', [
                         'model' => $searchModel,
                         'device' => $device,
                     ]) ?>
                 </div>
             </div>
-            <div class="col-lg-8 col-xxl-10 col-xl-9 pe-xl-5 ">
+            <div class="col-lg-8 col-xxl-10 col-xl-9 paddingset_desktop ">
                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                     <div class="left_text">
                         <p class="">We found <strong><?= count($models) ?> parks</strong> for you</p>
