@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use common\models\operator\SafariOperatorRating;
+use common\models\park\SafariPark;
 use Yii;
 
 

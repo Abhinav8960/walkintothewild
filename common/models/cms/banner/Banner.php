@@ -28,6 +28,14 @@ class Banner extends \yii\db\ActiveRecord implements \common\interfaces\StatusIn
         return 'banner';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

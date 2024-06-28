@@ -35,6 +35,11 @@ class BannerController extends Controller
             if ($model->load($this->request->post())) {
                 $model->image = UploadedFile::getInstance($model, 'image');
                 if ($model->validate()) {
+                    $banner_model = $this->findModelbyPageId($model->page_id);
+                    if ($banner_model) {
+                        $model->banner_model = $banner_model;
+                    }
+
                     $model->initializeForm();
                     if ($model->banner_model->save(false)) {
                         $model->uploadFile();
@@ -100,7 +105,17 @@ class BannerController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Banner::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = Banner::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    protected function findModelbyPageId($id)
+    {
+        if (($model = Banner::findOne(['page_id' => $id])) !== null) {
             return $model;
         }
 

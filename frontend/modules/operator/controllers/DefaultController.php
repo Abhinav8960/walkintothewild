@@ -73,7 +73,7 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/view',  'id' => $slug]);
+            return $this->redirect(['/operator/default/view',  'slug' => $slug]);
         }
 
 
@@ -208,6 +208,7 @@ class DefaultController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_review_form', [
                 'model' => $model,
+                'operator_id' => $operator_id,
             ]);
         }
     }
