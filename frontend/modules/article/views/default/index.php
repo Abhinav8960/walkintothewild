@@ -51,9 +51,9 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
             </div>
         </div>
-        <div class="row mb-4 ">
-            <div class="col-lg-8 col-xl-9 col-xxl-9">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 ">
+        <div class="row mb-4 justify-content-center">
+            <div class="col-lg-8 col-xl-8 col-xxl-9">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 pe-xl-4">
                     <?php if ($models) {
                         foreach ($models as $model) { ?>
                             <div class="col mb-5">
@@ -69,6 +69,14 @@ $recentposts = ArticleSearch::recentpost();
                                         </ul>
                                         <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>
 
+                                        <ul class="artical-info ">
+                                            <?php if ($topics = $model->getArticletopics()->where(['status' => 1])->orderby('RAND()')->limit(3)->all()) {
+                                                foreach ($topics as $topic) { ?>
+                                                    <li><i class="fa fa-list-alt" aria-hidden="true" style="color:#f7bf39"></i><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->articlename->slug]) ?>"><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></a></li>
+                                            <?php }
+                                            } ?>
+                                        </ul>
+
                                     </div>
                                     <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
                                 </div>
@@ -77,7 +85,7 @@ $recentposts = ArticleSearch::recentpost();
                     } ?>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3 col-xxl-3 ps-xl-5">
+            <div class="col-lg-4 col-xl-3 col-xxl-2 pe-md-0">
                 <?= $this->render('_recent_posts', [
                     'recentposts' => $recentposts,
                 ]) ?>

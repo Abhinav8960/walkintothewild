@@ -1,10 +1,11 @@
 <?php
 
+use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\bootstrap5\ActiveForm;
+use common\models\GeneralModel;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
-use common\models\GeneralModel;
-use yii\bootstrap5\ActiveForm;
-use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
@@ -52,26 +53,28 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="articals_wrapper py-3 margin-setposi">
     <div class="container-fluid">
         <div class="row mb-4  justify-content-center mt-4">
-            <div class="col-lg-12 col-xl-10 pb-4 safartabs">
-                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-between align-items-center">
-                    <h5 class=""><a href=""><?= $model->title ?></a></h5>
-                    <div class="btn_wrap pt-md-0 pt-3">
+            <div class="col-lg-12 col-xl-10 pb-sm-4 safartabs">
+                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-center align-items-center">
+                    <h1 class="titleSafri fs-2 text-center"><?= $model->title ?></h1>
+                    <!-- <div class="btn_wrap pt-md-0 pt-3">
                         <?php
 
                         if ($model->official_website) { ?>
                             <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE <i class="fa-solid fa-up-right-from-square ms-2"></i></a>
                         <?php } ?>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="col-lg-12 col-xl-10 safartabs">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
-                    <button class="btn-exclamtion" data-bs-toggle="modal" data-bs-target="#exampleModal3"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 64 64" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                    <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" x="0" y="0" viewBox="0 0 64 64" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
                             <g>
                                 <path d="m58.353 29.197-5.682-3.051a1.168 1.168 0 0 1-.5-1.551l2.79-5.813a3.178 3.178 0 0 0-3.29-4.532l-6.393.87a1.177 1.177 0 0 1-1.32-.96l-1.141-6.342a3.181 3.181 0 0 0-5.333-1.731l-4.652 4.462a1.184 1.184 0 0 1-1.64 0L26.54 6.087a3.181 3.181 0 0 0-5.333 1.73l-1.14 6.343a1.188 1.188 0 0 1-1.32.96l-6.393-.87a3.198 3.198 0 0 0-3.292 4.533l2.801 5.812a1.181 1.181 0 0 1-.51 1.55l-5.682 3.052a3.184 3.184 0 0 0 0 5.602l5.682 3.052a1.168 1.168 0 0 1 .5 1.55l-2.79 5.813a3.2 3.2 0 0 0 3.29 4.532l6.393-.87a1.177 1.177 0 0 1 1.32.96l1.141 6.342a3.181 3.181 0 0 0 5.333 1.731l4.652-4.462a1.184 1.184 0 0 1 1.64 0l4.652 4.462a3.203 3.203 0 0 0 5.333-1.73l1.14-6.343a1.182 1.182 0 0 1 1.32-.96l6.393.87a3.198 3.198 0 0 0 3.292-4.532L52.16 39.4a1.181 1.181 0 0 1 .51-1.55l5.682-3.052a3.206 3.206 0 0 0 0-5.602zM32.012 45.004a2.516 2.516 0 0 1 0-5.033 2.516 2.516 0 0 1 0 5.033zm3.401-22.09-1.01 13.416a2.41 2.41 0 0 1-4.772.07L28.6 22.854a3.41 3.41 0 0 1 .81-2.671 3.45 3.45 0 0 1 6.002 2.731z" fill="#09422d" opacity="1" data-original="#000000" class=""></path>
                                 <path d="M30.921 21.494a1.427 1.427 0 0 0-.33 1.14l1.03 13.546a.406.406 0 0 0 .791-.06l1.02-13.416a1.45 1.45 0 0 0-2.51-1.21zM31.492 42.482a.52.52 0 0 0 1.04 0 .52.52 0 0 0-1.04 0z" fill="#09422d" opacity="1" data-original="#000000" class=""></path>
                             </g>
-                        </svg></button>
+                        </svg>
+                    </button>
+
                 </div>
                 <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -149,52 +152,31 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="suggestion-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Suggest Correction</h1>
-                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <?php $form = ActiveForm::begin([
-                'id' => 'safariform',
-                'enableAjaxValidation' => true,
-                'enableClientValidation' => false,
-                'enableClientScript' => true,
-                'action' => $suggestionmodel->action_url,
-                'validationUrl' => $suggestionmodel->action_validate_url,
-            ]); ?>
-            <div class="modal-body modal_form">
-                <div class="row">
-                    <div class="col-12">
-                        <h6 class="text-center"><?= $model->title ?></h6>
-                    </div>
-                    <div class="col-12 mb-2">
-                        <label for="" class="Modal_label">Select Category</label>
-                        <?= $form->field($suggestionmodel, 'master_suggestion_id')->dropDownList(GeneralModel::suggestioncategory(), ['prompt' => 'Select', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
-                    </div>
-
-                    <div class="col-lg-12 mb-2 mt-2">
-                        <div class="textarea">
-                            <?= $form->field($suggestionmodel, 'details')->textarea(['class' => "form-control", 'placeholder' => "Write about your plan"])->label(false) ?>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row mt-2 pe-0">
-                    <div class="col-lg-8">
-                        <label for="" class="Modal_label">You Are?</label>
-                        <?= $form->field($suggestionmodel, 'you_are_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Who You Are?', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="creat-safri">
-                            <?= Html::submitButton('Submit', ['class' => 'safari_create font_set']) ?>
-                        </div>
-                    </div>
-                </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
             </div>
-            <?php ActiveForm::end(); ?>
-
         </div>
     </div>
 </div>
+
+<?php
+$script = <<< JS
+function writesuggestionfunction() {
+	$('.writeSuggestionBtn').on('click', function () {
+        $('#suggestion-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+writesuggestionfunction();
+             
+JS;
+$this->registerJs($script);
+?>

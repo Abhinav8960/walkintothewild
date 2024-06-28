@@ -315,7 +315,7 @@ a {
 .sharesafri {
 
     padding-top: 70px;
-    padding-bottom: 50px;
+    padding-bottom: 7px;
 }
 
 .title_safari h4 {
@@ -741,6 +741,7 @@ a {
 
     background-color: #F5F5F5;
     padding: 5px 0px 180px 0px;
+    position: relative;
 }
 
 /* homeshrecard */
@@ -1299,7 +1300,7 @@ figure {
 }
 
 .banner_section-inner picture img {
-    height: 250px;
+    height: 200px;
     -o-object-fit: cover;
     object-fit: cover;
 
@@ -1598,6 +1599,9 @@ figure {
 
     color: var(--background-primary);
 }
+.titleSafri{
+    color: var(--background-primary); 
+}
 
 .safrititles p {
 
@@ -1871,12 +1875,28 @@ figure {
     border-radius: 5px 0px 0px 5px;
 
 }
+.inactive_core_zone .coreZone{
+
+    background-color: gray;
+   
+}
+.inactive_core_zone .coreZone h3{
+    color: #cbcbcb;
+}
 
 .coreZone h3 {
 
     font-size: var(--fs-25);
     color: var(--colorwhite);
     margin-bottom: 0;
+}
+.inactive_core_zone .tabledesigncore table tr th{
+    background-color: gray;
+    color: #cbcbcb;
+}
+.inactive_core_zone .tabledesigncore table tr td{
+    background-color: gray;
+    color: #cbcbcb;
 }
 
 .tabledesigncore table td {
@@ -3946,8 +3966,11 @@ cursor: pointer;
 }
 
 .sticky-panel {
-    position: fixed;
-    top: 300px;
-    
-  }
+
+        position: -webkit-sticky;
+        position: sticky;
+        top: 300px;
+        bottom: 1em;
+      }
+
 

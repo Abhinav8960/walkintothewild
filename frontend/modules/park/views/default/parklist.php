@@ -15,40 +15,61 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::PARK_LIST;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
-<div class="fixedbanner">
-    <section class="banner_section-inner  position-relative">
-        <picture class="position-relative">
-            <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
-            <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
-        </picture>
-        <div class="banner_searchBox">
-            <div class="container-lg">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="tab-block" id="tab-block">
-                            <ul class="tab-mnu">
-                                <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
-                                <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
-                                <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
-                            </ul>
 
-                            <div class="tab-cont">
-                                <div class="tab-pane">
-                                    <div class="row gx-0">
-                                        <?= $this->render('_advance_search', [
-                                            'model' => $searchModel,
-                                        ]) ?>
+<?php if ($searchModel->master_rare_animal_id == '') { ?>
+
+    <div class="fixedbanner">
+        <section class="banner_section-inner  position-relative">
+            <picture class="position-relative">
+                <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
+                <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
+            </picture>
+            <div class="banner_searchBox">
+                <div class="container-lg">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="tab-block" id="tab-block">
+                                <ul class="tab-mnu">
+                                    <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
+                                    <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
+                                    <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
+                                </ul>
+
+                                <div class="tab-cont">
+                                    <div class="tab-pane">
+                                        <div class="row gx-0">
+                                            <?= $this->render('_advance_search', [
+                                                'model' => $searchModel,
+                                            ]) ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+        </section>
+    </div>
+<?php } else { ?>
+    <section class="banner_section-inner position-relative">
+        <picture class="position-relative">
+            <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
+            <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 " alt="banner">
+        </picture>
+        <div class="banner_searchBox">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="headingBnner_inner">
+                            <h1>Rare and Exotic Animal Safaris</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
     </section>
-</div>
-
-<section class="articals_wrapper py-3 margin-setposi">
+<?php } ?>
+<section class="articals_wrapper py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
     <div class="container-fluid">
         <!-- <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
@@ -61,15 +82,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div> -->
         <div class="row mb-4  position-relative">
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 ">
-                <div id="targetDiv" class="sidebar">
+            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 sidebar">
+                <div id="targetDiv">
                     <?= $this->render('_park_side_search', [
                         'model' => $searchModel,
                         'device' => $device,
                     ]) ?>
                 </div>
             </div>
-            <div class="col-lg-8 col-xxl-10 col-xl-9 pe-xl-5 ">
+            <div class="col-lg-8 col-xxl-10 col-xl-9 paddingset_desktop ">
                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                     <div class="left_text">
                         <p class="">We found <strong><?= count($models) ?> parks</strong> for you</p>

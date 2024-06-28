@@ -138,6 +138,14 @@ use yii\widgets\ActiveForm;
     </div>
 <?php } ?>
 
+<?php if ($model->master_rare_animal_id <> '') { ?>
+    <?= $form->field($model, 'master_rare_animal_id')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'master_location_id')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'session_id')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'master_animal_id')->hiddenInput()->label(false) ?>
+    <?= $form->field($model, 'master_vehicle_id')->hiddenInput()->label(false) ?>
+<?php } ?>
+
 <?php ActiveForm::end(); ?>
 
 <?php

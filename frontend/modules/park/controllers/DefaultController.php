@@ -128,6 +128,40 @@ class DefaultController extends FrontendBaseController
     }
 
 
+    /**
+     * Suggestion Model
+     */
+    public function actionSuggestion($park_id)
+    {
+        $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'id' => $park_id])->limit(1)->one();
+        $model = new SafariSuggestionsForm();
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->park_id = $park_id;
+        $model->ip_address = Yii::$app->request->getRemoteIP();
+        $model->action_url = '/park/default/suggestion?park_id=' . $safari_park->id . '';
+        $model->action_validate_url = '/park/default/validate';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_suggestion_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['/park/' . $safari_park->slug . '']);
+                    }
+                }
+            }
+        } else {
+            $model->safari_suggestion_model->loadDefaultValues();
+        }
+
+
+        return $this->renderAjax('_suggestion_form', [
+            'model' => $model,
+            'safari_park' => $safari_park,
+        ]);
+    }
+
 
 
     /**
