@@ -140,9 +140,9 @@ class DefaultController extends FrontendBaseController
                     Yii::$app->session->setFlash('error', 'You can not follow this operator currently!');
                 }
             }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
         }
-
-        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'id' => $id]));
+        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/index']));
     }
 
 
@@ -176,9 +176,9 @@ class DefaultController extends FrontendBaseController
                     }
                 }
             }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
         }
-
-        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'id' => $id]));
+        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/index']));
     }
 
     public function actionReview($operator_id)
