@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use common\models\park\SafariPark;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -11,7 +12,7 @@ use yii\helpers\Html;
     <div class="row">
         <div class="col-12 mb-2">
             <label for="" class="label_modal">Where did you go?</label>
-            <?= $form->field($model, 'park_id')->dropDownList(ArrayHelper::map(SafariPark::find()->where(['status' => 1])->all(), 'id', 'title'), ['prompt' => 'Select a Safari park', 'class' => 'form-select form-select-lg'])->label(false) ?>
+            <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator_id), ['prompt' => 'Select a Safari park', 'class' => 'form-select form-select-lg'])->label(false) ?>
         </div>
         <div class="col-12 my-4">
             <div class="stars d-flex gap-4 justify-content-center">
@@ -45,31 +46,31 @@ $script = <<<JS
     $(document).ready(function() {  
         $(".star_icon_1").click(function() { 
             $(".fa-star").css("color", "black"); 
-            $(".star_icon_1").css("color", "#09422d");  
+            $(".star_icon_1").css("color", "yellow");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_2").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2").css("color", "#09422d");  
+            $(".star_icon_1,.star_icon_2").css("color", "yellow");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_3").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3").css("color", "#09422d");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3").css("color", "yellow");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });   
         $(".star_icon_4").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4").css("color", "#09422d");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4").css("color", "yellow");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_5").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4,.star_icon_5").css("color", "#09422d");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4,.star_icon_5").css("color", "yellow");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  

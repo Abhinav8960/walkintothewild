@@ -208,6 +208,7 @@ class DefaultController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('_review_form', [
                 'model' => $model,
+                'operator_id' => $operator_id,
             ]);
         }
     }
