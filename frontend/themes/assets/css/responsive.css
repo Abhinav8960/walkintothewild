@@ -849,11 +849,11 @@ line-height: 19px;
         display: none;
     
     }
-    .filter-wrapper {
+    /* .filter-wrapper {
 
-        opacity: 0 !important; /* Make the div transparent */
-        pointer-events: none !important; /* Disable pointer events */
-    }
+        opacity: 0 !important; 
+        pointer-events: none !important;
+    } */
 
 
     .nav-link {
