@@ -158,8 +158,8 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row pt-5">
             <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                 <div class="safri_tour">
-                    <div class="titlerescent ">
-                        <h3><?= $operator->register_comapany_name ?></h3>
+                    <div class="titlerescent" style="justify-content:left !important;">
+                        <h3 style="text-align:left !important;">Select</h3>
                     </div>
                     <div class="topics_listing">
                         <ul id="tabList">

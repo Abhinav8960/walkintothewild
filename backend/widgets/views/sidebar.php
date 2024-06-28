@@ -177,7 +177,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
 											"/park/safari/default/index",
@@ -638,9 +638,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 
-				<?php endif; ?>
-
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
 					<li class="slide <?= in_array($active_url, array(
 											"/operator/safari-operator/index",
 											"/operator/safari-operator/index/view",
@@ -663,6 +660,19 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/operator/birding-operator/index",
 															"/operator/birding-operator/index/view",
 														)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
+							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
+						</ul>
+					</li>
+
+				<?php endif; ?>
+
+				<?php if (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
+					<li class="slide <?= str_starts_with($active_url, '/operatordashboard') ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= str_starts_with($active_url, '/operatordashboard') ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
+							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari') ? "active" : "" ?>" href="/operatordashboard/safari/index">Safari Tour Operator</a></li>
+							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/birding') ? "active" : "" ?>" href="/operatordashboard/birding/index">Biriding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
 						</ul>
 					</li>

@@ -166,6 +166,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             ]); ?>
             <div class="modal-body modal_form">
                 <div class="row">
+                    <div class="col-12">
+                        <h6 class="text-center"><?= $model->title ?></h6>
+                    </div>
                     <div class="col-12 mb-2">
                         <label for="" class="Modal_label">Select Category</label>
                         <?= $form->field($suggestionmodel, 'master_suggestion_id')->dropDownList(GeneralModel::suggestioncategory(), ['prompt' => 'Select', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
@@ -181,7 +184,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div class="row mt-2 pe-0">
                     <div class="col-lg-8">
                         <label for="" class="Modal_label">You Are?</label>
-                        <?= $form->field($suggestionmodel, 'you_are_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Safari tour Oprator', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
+                        <?= $form->field($suggestionmodel, 'you_are_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Who You Are?', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
                     </div>
                     <div class="col-lg-4">
                         <div class="creat-safri">

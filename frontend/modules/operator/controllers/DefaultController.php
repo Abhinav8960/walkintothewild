@@ -12,7 +12,9 @@ use frontend\models\SafariOperatorSearch;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
+use common\models\operator\SafariOperatorRating;
 use frontend\controllers\FrontendBaseController;
+use frontend\models\SafariOperatorReviewForm;
 
 /**
  * DefaultController.
@@ -138,9 +140,9 @@ class DefaultController extends FrontendBaseController
                     Yii::$app->session->setFlash('error', 'You can not follow this operator currently!');
                 }
             }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
         }
-
-        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'id' => $id]));
+        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/index']));
     }
 
 
@@ -174,8 +176,61 @@ class DefaultController extends FrontendBaseController
                     }
                 }
             }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
+        }
+        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/index']));
+    }
+
+    public function actionReview($operator_id)
+    {
+        $model = new SafariOperatorReviewForm();
+        $model->safari_operator_id = $operator_id;
+
+        $model->action_url = '/operator/default';
+        $model->action_validate_url = '/operator/default/validatereview';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->rating_model->save(false)) {
+                        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+                        $slug = $operator->slug;
+                        return $this->redirect([
+                            '/operator/default/view',
+                            'slug' => $slug,
+                        ]);
+                    }
+                }
+            }
+        } else {
+            $model->rating_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_review_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionValidatereview($id = null)
+    {
+        $model = new SafariOperatorReviewForm();
+        if ($id != null) {
+            $rating_model = $this->findModel($id);
+            $model = new SafariOperatorReviewForm($rating_model);
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
+    public function findModel($id)
+    {
+        if (($model = SafariOperatorRating::find(['id' => $id, 'status' => 1])->one()) !== null) {
+            return $model;
         }
 
-        return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'id' => $id]));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

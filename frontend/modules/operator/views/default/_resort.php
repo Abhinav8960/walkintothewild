@@ -1,4 +1,14 @@
-<!-- <div class="searchSafari_parks mb-4">
+ <div class="searchSafari_parks mb-4">
+     <div class="row">
+         <div class="col-lg-12">
+             <div class="parks_body">
+                 <h6>No Data Found</h6>
+             </div>
+         </div>
+     </div>
+ </div>
+
+ <!-- <div class="searchSafari_parks mb-4">
     <div class="row">
         <div class="col-lg-4">
             <div class="slider_resorts resort owl-carousel owl-theme position-relative h-100">
