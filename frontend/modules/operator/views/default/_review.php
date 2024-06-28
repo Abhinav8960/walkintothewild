@@ -65,7 +65,7 @@ use yii\helpers\Url;
                                     </div>
 
                                     <div class="googlerating">
-                                        <p class="mb-0"><?= $review->user->username ?></p>
+                                        <p class="mb-0"><?= $review->user->name ?></p>
                                     </div>
                                 </div>
                                 <p><?= $review->review ?></p>
