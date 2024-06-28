@@ -21,7 +21,12 @@ use yii\helpers\Url;
                         </div>
                     </div>
                     <div class="whiteReview">
-                        <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
+                        <?php if (Yii::$app->user->identity) { ?>
+                            <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
+                        <?php } else { ?>
+                            <button class="btn_review" value="#">Please Login to Review</button>
+                        <?php } ?>
+
                     </div>
                 </div>
                 <div class="sort_wrapper py-3">
