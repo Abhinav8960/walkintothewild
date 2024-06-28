@@ -87,6 +87,8 @@ class SafariParkForm extends model
     public $status_option = [];
     public $safari_park_model;
     public $uploadfile;
+    public $is_most_demanding;
+    public $is_shared_safari;
 
 
 
@@ -152,6 +154,8 @@ class SafariParkForm extends model
             $this->module_description = $this->safari_park_model->module_description;
             $this->florafauna = $this->safari_park_model->florafauna;
             $this->animal_text = $this->safari_park_model->animal_text;
+            $this->is_most_demanding = $this->safari_park_model->is_most_demanding;
+            $this->is_shared_safari = $this->safari_park_model->is_shared_safari;
             $this->status = $this->safari_park_model->status;
             $this->vehicle_id = SafariParkVehicle::find()->select('vehicle_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->master_animal_id = SafariParkAnimal::find()->select('master_animal_id', 'master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
@@ -179,7 +183,7 @@ class SafariParkForm extends model
             [['meta_title', 'slug'], 'required', 'on' => 'meta'],
 
             ['pincode', 'string', 'length' => [6, 6]],
-            [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_distance_three', 'nearest_railway_station_distance_four', 'nearest_railway_station_distance_five', 'nearest_airport_distance_three', 'nearest_airport_distance_four', 'nearest_airport_distance_five'], 'integer'],
+            [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_distance_three', 'nearest_railway_station_distance_four', 'nearest_railway_station_distance_five', 'nearest_airport_distance_three', 'nearest_airport_distance_four', 'nearest_airport_distance_five', 'is_most_demanding', 'is_shared_safari'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['short_description'], 'validateMaxWords', 'params' => ['max' => 70]],
             [['long_description', 'meta_title', 'meta_description'], 'string'],
@@ -420,7 +424,7 @@ class SafariParkForm extends model
             'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
             'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
-            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'safri_cost_note', 'animal_text'
+            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'safri_cost_note', 'animal_text', 'is_most_demanding', 'is_shared_safari'
         ];
         $scenarios['howtoreach'] = [
             'status', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station', 'nearest_airport_distance_two', 'nearest_airport_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_two',
@@ -563,6 +567,8 @@ class SafariParkForm extends model
         $this->safari_park_model->module_description = $this->module_description;
         $this->safari_park_model->florafauna = $this->florafauna;
         $this->safari_park_model->animal_text = $this->animal_text;
+        $this->safari_park_model->is_most_demanding = $this->is_most_demanding;
+        $this->safari_park_model->is_shared_safari = $this->is_shared_safari;
         $this->safari_park_model->status = $this->status;
     }
 

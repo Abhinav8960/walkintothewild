@@ -155,7 +155,7 @@ class DefaultController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionParklist($master_location_id = 7, $session_id = 3, $master_animal_id = 13, $master_vehicle_id = 5)
+    public function actionParklist($master_location_id = 7, $session_id = 1, $master_animal_id = 13, $master_vehicle_id = 5)
     {
         $searchModel = new SafariParkSearch();
         if ($master_location_id) {
@@ -191,7 +191,7 @@ class DefaultController extends FrontendBaseController
             $url = ['/park/default/parklist'];
             if (isset(Yii::$app->request->bodyParams['SafariParkSearch'])) {
                 foreach (Yii::$app->request->bodyParams['SafariParkSearch'] as $key => $value) {
-                    if (in_array($key, ['master_location_id', 'month_id', 'master_animal_id', 'master_vehicle_id'])) {
+                    if (in_array($key, ['master_location_id', 'session_id', 'master_animal_id', 'master_vehicle_id'])) {
                         if ($value) {
                             $url[$key] = $value;
                         } else {

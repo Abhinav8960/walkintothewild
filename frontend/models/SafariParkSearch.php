@@ -18,6 +18,9 @@ class SafariParkSearch extends SafariPark
     public $accomodation_id;
     public $session_id;
     public $bonus_experience_id;
+    public $custom_sort_by;
+
+
     /**
      * {@inheritdoc}
      */
@@ -27,7 +30,7 @@ class SafariParkSearch extends SafariPark
             [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'safe'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
-            [['latitude', 'longitude'], 'safe'],
+            [['latitude', 'longitude', 'custom_sort_by'], 'safe'],
             [['month_id', 'master_animal_id', 'master_rare_animal_id', 'master_vehicle_id', 'accomodation_id', 'session_id', 'bonus_experience_id'], 'safe']
         ];
     }
@@ -130,6 +133,13 @@ class SafariParkSearch extends SafariPark
             'safari_park.status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'title', $this->title]);
+
+
+        if ($this->custom_sort_by == 'most-demanding') {
+            $query->andWhere(['is_most_demanding' => 1]);
+        } else if ($this->custom_sort_by == 'shared-safari') {
+            $query->andWhere(['is_shared_safari' => 1]);
+        }
 
         return $dataProvider;
     }

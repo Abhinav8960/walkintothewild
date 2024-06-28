@@ -16,36 +16,36 @@ $park_constant = Constants::PARK_LIST;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 <div class="fixedbanner">
-<section class="banner_section-inner  position-relative">
-    <picture class="position-relative">
-        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
-    </picture>
-    <div class="banner_searchBox">
-        <div class="container-lg">
-            <div class="row">
-                <div class="col-12 ">
-                    <div class="tab-block" id="tab-block">
-                        <ul class="tab-mnu">
-                            <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
-                            <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
-                        </ul>
+    <section class="banner_section-inner  position-relative">
+        <picture class="position-relative">
+            <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
+            <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
+        </picture>
+        <div class="banner_searchBox">
+            <div class="container-lg">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="tab-block" id="tab-block">
+                            <ul class="tab-mnu">
+                                <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
+                                <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
+                                <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
+                            </ul>
 
-                        <div class="tab-cont">
-                            <div class="tab-pane">
-                                <div class="row gx-0">
-                                    <?= $this->render('_advance_search', [
-                                        'model' => $searchModel,
-                                    ]) ?>
+                            <div class="tab-cont">
+                                <div class="tab-pane">
+                                    <div class="row gx-0">
+                                        <?= $this->render('_advance_search', [
+                                            'model' => $searchModel,
+                                        ]) ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-</section>
+    </section>
 </div>
 
 <section class="articals_wrapper py-3 margin-setposi">
@@ -77,11 +77,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="right-select mb-md-0 mb-4">
                         <div class="input_check pb-0">
 
-                            <select class="form-select mb-2" aria-label="Default select example">
-                                <option selected>Sort By: Relevant</option>
-                                <option value="1">Most Demanding</option>
-                                <option value="2">Shared Safari</option>
-                            </select>
+                            <form id="custom_sort_by_form">
+                                <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
+                                    <option value="" <?= !in_array($searchModel->custom_sort_by, ['most-demanding', 'shared-safari']) ? 'selected' : '' ?>>Sort By: Relevant</option>
+                                    <option value="most-demanding" <?= $searchModel->custom_sort_by == 'most-demanding' ? 'selected' : '' ?>>Most Demanding</option>
+                                    <option value="shared-safari" <?= $searchModel->custom_sort_by == 'shared-safari' ? 'selected' : '' ?>>Shared Safari</option>
+                                </select>
+                            </form>
                         </div>
 
                     </div>
