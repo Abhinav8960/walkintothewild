@@ -536,6 +536,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																			"/cms/article/update",
 																			"/cms/article/create"
 																		)) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
+
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -590,6 +591,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li>
+							<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																	"/cms/flag-reason",
+																)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
