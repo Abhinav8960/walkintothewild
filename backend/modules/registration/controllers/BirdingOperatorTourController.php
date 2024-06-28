@@ -125,14 +125,18 @@ class BirdingOperatorTourController extends Controller
                                 }
 
                                 if (!$old_birding_operator) {
-                                    $user = new User();
-                                    $user->username = $birding_operator->email;
-                                    $user->generateAuthKey();
-                                    $user->generateEmailVerificationToken();
-                                    $user->email = $birding_operator->email;
-                                    $user->mobile_no = $birding_operator->phone_no;
-                                    $user->name = $birding_operator->business_name;
-                                    $user->setPassword($birding_operator->phone_no);
+                                    $user = User::find()->where(['email' => $birding_operator->email])->limit(1)->one();
+                                    if (!$user) {
+                                        $user = new User();
+                                        $user->username = $birding_operator->email;
+                                        $user->generateAuthKey();
+                                        $user->generateEmailVerificationToken();
+                                        $user->email = $birding_operator->email;
+                                        $user->mobile_no = $birding_operator->phone_no;
+                                        $user->name = $birding_operator->business_name;
+                                        $user->setPassword($birding_operator->phone_no);
+                                    }
+
                                     $user->is_birding_operator = 1;
                                     $user->status = 10;
                                     // $user->setUpd($model->phone);
@@ -353,10 +357,10 @@ class BirdingOperatorTourController extends Controller
         return $this->redirect(\Yii::$app->request->referrer);
     }
     /**
-     * Finds the MasterAnimal model based on its primary key value.
+     * Finds the BirdingOperatorRequest model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MasterAnimal the loaded model
+     * @return BirdingOperatorRequest the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

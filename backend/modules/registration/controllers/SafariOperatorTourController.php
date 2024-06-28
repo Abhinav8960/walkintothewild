@@ -124,16 +124,22 @@ class SafariOperatorTourController extends Controller
                                 }
 
                                 if (!$old_safari_operator) {
-                                    $user = new User();
-                                    $user->username = $safari_operator->email;
-                                    $user->generateAuthKey();
-                                    $user->generateEmailVerificationToken();
-                                    $user->email = $safari_operator->email;
-                                    $user->mobile_no = $safari_operator->phone_no;
-                                    $user->name = $safari_operator->business_name;
-                                    $user->setPassword($safari_operator->phone_no);
+
+                                    $user = User::find()->where(['email' => $safari_operator->email])->limit(1)->one();
+                                    if (!$user) {
+                                        $user = new User();
+                                        $user->username = $safari_operator->email;
+                                        $user->generateAuthKey();
+                                        $user->generateEmailVerificationToken();
+                                        $user->email = $safari_operator->email;
+                                        $user->mobile_no = $safari_operator->phone_no;
+                                        $user->name = $safari_operator->business_name;
+                                        $user->setPassword($safari_operator->phone_no);
+                                    }
                                     $user->is_safari_operator = 1;
                                     $user->status = 10;
+
+
                                     // $user->setUpd($model->phone);
 
                                     if ($user->save(false)) {
