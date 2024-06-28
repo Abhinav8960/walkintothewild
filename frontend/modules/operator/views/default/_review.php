@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use common\models\operator\SafariOperatorRating;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -10,14 +11,24 @@ use yii\helpers\Url;
             <div class="commentsOther  position-relative">
                 <div class=" d-flex justify-content-between flex-wrap">
                     <div class="userRatingTitle">
-                        <h6 class="nameRating">Avarage User Rating</h6>
+                        <h6 class="nameRating">Average User Rating</h6>
                         <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
                             <div class="ratings">
-                                <p class="mb-0">4.8 <i class="fa-solid fa-star ms-2"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></p>
+                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
+                                if ($avg) { ?>
+                                    <p class="mb-0">
+                                        <?= $avg ?>
+                                        <?= GeneralModel::ratiing_views($avg); ?>
+                                    </p>
+                                <?php } ?>
                             </div>
-                            <div class="googlerating">
-                                <p class="mb-0">54 Reviews</p>
-                            </div>
+                            <?php $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->count(); {
+                                if ($count) { ?>
+                                    <div class="googlerating">
+                                        <p class="mb-0"><?= $count . " " ?>Reviews</p>
+                                    </div>
+                            <?php }
+                            } ?>
                         </div>
                     </div>
                     <div class="whiteReview">
