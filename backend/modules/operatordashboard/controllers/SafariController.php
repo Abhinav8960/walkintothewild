@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 
 /**
@@ -91,6 +92,32 @@ class SafariController extends Controller
             'dataProvider' => $dataProvider
         ]);
     }
+
+
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionFollower()
+    {
+        $safari_operator = $this->findModel();
+        $query = SafariOperatorFollow::find()->where([
+            'safari_operator_id' => $safari_operator->id,
+            'status' => 1
+        ]);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        return $this->render('follower', [
+            'safari_operator' => $safari_operator,
+            'dataProvider' => $dataProvider
+        ]);
+    }
+
 
     /**
      * Find Model of Operator
