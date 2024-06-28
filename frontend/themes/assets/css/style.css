@@ -1316,8 +1316,9 @@ figure {
 
 .opratios-slider .slidesImg img {
     aspect-ratio: 14/3;
-    object-fit: cover;
+    object-fit: contain;
 }
+
 
 .banner_section-inner .banner_search {
 
