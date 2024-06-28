@@ -21,6 +21,9 @@ class SafariSuggestionsForm extends Model
     public $user_agent;
     public $ip_address;
     public $details;
+    public $email;
+    public $phone;
+    public $name;
     public $status;
     public $status_option = [];
     public $safari_suggestion_model;
@@ -41,6 +44,9 @@ class SafariSuggestionsForm extends Model
             $this->details = $this->safari_suggestion_model->details;
             $this->user_agent = $this->safari_suggestion_model->user_agent;
             $this->ip_address = $this->safari_suggestion_model->ip_address;
+            $this->email = $this->safari_suggestion_model->email;
+            $this->phone = $this->safari_suggestion_model->phone;
+            $this->name = $this->safari_suggestion_model->name;
             $this->status = $this->safari_suggestion_model->status;
         }
 
@@ -59,8 +65,10 @@ class SafariSuggestionsForm extends Model
             [['details'], 'validateMaxWords', 'params' => ['max' => 500]],
             [['status'], 'default', 'value' => 1],
             [['details'], 'safe'],
-            [['user_agent'], 'string', 'max' => 255],
+            [['user_agent', 'email', 'name'], 'string', 'max' => 255],
             [['ip_address'], 'string', 'max' => 45],
+            [['phone'], 'string', 'max' => 10],
+            [['phone'], 'match', 'pattern' => '/^[1234567890]\d{9}$/', 'message' => 'Invalid Phone number.'],
         ];
     }
 
@@ -100,6 +108,9 @@ class SafariSuggestionsForm extends Model
         $this->safari_suggestion_model->details = $this->details;
         $this->safari_suggestion_model->user_agent = Yii::$app->request->userAgent;
         $this->safari_suggestion_model->ip_address = $this->ip_address;
+        $this->safari_suggestion_model->email = $this->email;
+        $this->safari_suggestion_model->phone = $this->phone;
+        $this->safari_suggestion_model->name = $this->name;
         $this->safari_suggestion_model->status = $this->status;
     }
 }
