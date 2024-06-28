@@ -18,10 +18,10 @@ $form = ActiveForm::begin([
 <?php if ($device == 'desktop') { ?>
     <div class="filter-wrapper custoM-inputs d-lg-block d-none">
         <div class="title_top pb-4">
-            <h4>Select Filters</h4>
+            <h4>Select Operator</h4>
         </div>
         <div class="title_filter mb-2">
-            <h6>Budget</h6>
+            <h6>Operator Budget</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'budget_segment')->checkboxList(
                     GeneralModel::packageoption(),

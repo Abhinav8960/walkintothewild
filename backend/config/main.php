@@ -57,6 +57,9 @@ return [
         'portalsetting' => [
             'class' => 'backend\modules\portalsetting\Module',
         ],
+        'operatordashboard' => [
+            'class' => 'backend\modules\operatordashboard\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [
