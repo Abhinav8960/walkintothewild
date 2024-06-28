@@ -3871,9 +3871,9 @@ cursor: pointer;
 
 .menuprofile {
     position: absolute;
-    top: calc(100% + -16px);
+    top: calc(100% + -5px);
     right: 45px;
-    width: 280px;
+    width: 153px;
     /* min-height: 100px; */
     background: #fff;
     /* box-shadow: 0 10px 20px rgba(0, 0, 0, .2); */
