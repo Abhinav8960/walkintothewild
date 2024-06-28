@@ -69,6 +69,14 @@ $recentposts = ArticleSearch::recentpost();
                                         </ul>
                                         <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>
 
+                                        <ul class="artical-info ">
+                                            <?php if ($topics = $model->getArticletopics()->where(['status' => 1])->orderby('RAND()')->limit(3)->all()) {
+                                                foreach ($topics as $topic) { ?>
+                                                    <li><i class="fa fa-list-alt" aria-hidden="true" style="color:#f7bf39"></i><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->articlename->slug]) ?>"><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></a></li>
+                                            <?php }
+                                            } ?>
+                                        </ul>
+
                                     </div>
                                     <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
                                 </div>
