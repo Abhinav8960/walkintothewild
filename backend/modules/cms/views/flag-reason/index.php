@@ -6,12 +6,12 @@ use yii\widgets\Pjax;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\master\office\MasterDepartmentSearch $searchModel */
+/** @var common\models\cms\flagreason\FlagReason $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Animal';
-$this->params['breadcrumbs_home_url'] = '/master/animal';
-$this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
+$this->title = 'Reason';
+$this->params['breadcrumbs_home_url'] = '/cms/flag-reason';
+$this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
@@ -27,20 +27,12 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
-                //'layout' => '{items}',
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-                    'name',
                     [
-                        'label' => 'Is Filter',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->is_filter) ? GeneralModel::yesnooption()[$model->is_filter] : '';
-                        }
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width: 5%;'],
                     ],
-                    'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
+                    'reason',
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -69,7 +61,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->reason . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

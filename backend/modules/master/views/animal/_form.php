@@ -16,9 +16,14 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-3">
         <?= $form->field($model, 'is_filter')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select']) ?>
     </div>
+
+    <div class="col-md-3 is_filter_sequence" style="<?= $model->is_filter == 1 ? 'display:block;' : 'display:none;' ?>">
+        <?= $form->field($model, 'is_filter_sequence')->textInput(['maxlength' => true, 'placeholder' => 'Filter Sequence']) ?>
+    </div>
+
     <?php if ($model->animal_model->id) { ?>
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
@@ -38,3 +43,19 @@ use yii\bootstrap5\ActiveForm;
 
 </div>
 <?php ActiveForm::end(); ?>
+
+
+
+
+<?php
+$script = <<< JS
+    $('#masteranimalform-is_filter').on('change', function(){
+        if($(this).val()==1){
+            $('.is_filter_sequence').css('display','block');
+        }else{
+            $('.is_filter_sequence').css('display','none');
+        }
+    });
+JS;
+$this->registerJs($script);
+?>
