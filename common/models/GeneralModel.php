@@ -264,7 +264,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function animalfilteroption()
     {
-        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE, 'is_filter' => 1])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE, 'is_filter' => 1])->orderBy(['is_filter_sequence' => SORT_ASC, 'name' => SORT_ASC])->all(), 'id', 'name');
     }
 
     public static function birdoption()

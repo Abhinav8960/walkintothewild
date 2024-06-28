@@ -53,7 +53,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">

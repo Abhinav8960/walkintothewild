@@ -19,6 +19,7 @@ class MasterAnimalForm extends model
     public $name;
     public $short_description;
     public $is_filter;
+    public $is_filter_sequence;
     public $status;
     public $status_option = [];
     public $animal_model;
@@ -40,6 +41,7 @@ class MasterAnimalForm extends model
             $this->short_description = $this->animal_model->short_description;
             $this->status = $this->animal_model->status;
             $this->is_filter = $this->animal_model->is_filter;
+            $this->is_filter_sequence = $this->animal_model->is_filter_sequence;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -52,11 +54,11 @@ class MasterAnimalForm extends model
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
             'name', 'short_description', 'status', 'slug',
-            'is_filter'
+            'is_filter', 'is_filter_sequence'
         ];
         $scenarios['update'] = [
             'name', 'short_description', 'status', 'slug',
-            'is_filter'
+            'is_filter', 'is_filter_sequence'
         ];
         return $scenarios;
     }
@@ -65,7 +67,7 @@ class MasterAnimalForm extends model
     {
         return [
             [['name', 'short_description', 'is_filter'], 'required'],
-            [['status'], 'integer'],
+            [['status', 'is_filter_sequence'], 'integer'],
             [['name'], 'string', 'max' => 125],
             [['name', 'slug'], 'string', 'max' => 125],
             [['short_description'], 'string', 'max' => 255],
@@ -105,5 +107,6 @@ class MasterAnimalForm extends model
         $this->animal_model->short_description = $this->short_description;
         $this->animal_model->status = $this->status;
         $this->animal_model->is_filter = $this->is_filter;
+        $this->animal_model->is_filter_sequence = $this->is_filter_sequence;
     }
 }
