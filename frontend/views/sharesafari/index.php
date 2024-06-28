@@ -659,7 +659,7 @@ $this->params['title'] = $this->title;
                         </select>
                     </div>
                     <div class="col-lg-6 mb-2">
-                        <label for="" class="Modal_label">Estimate Price</label>
+                        <label for="" class="Modal_label">Estimate Price Per Person</label>
                         <div class="d-flex  gap-3 align-items-center ">
                             <input type="number" class="form-control w-50 pe-1" placeholder="1000">
                             -

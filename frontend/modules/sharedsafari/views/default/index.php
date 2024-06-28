@@ -57,7 +57,19 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="title_top pb-4">
                         <h4>Select Filters</h4>
                     </div>
-                    <div class="title_filter mb-4">
+                    <div class="title_filter ">
+                        <h6>Park</h6>
+                        <div class="input_check ">
+
+                            <select class="form-select mb-3" aria-label="Default select example">
+                                <option selected>Jawai Leopard Safari</option>
+                                <option value="1">Jawai Leopard Safari</option>
+                                <option value="2">Bandhavgarh Tiger Reserve </option>
+                                <option value="3">Bandhavgarh Tiger Reserve </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="title_filter mb-3">
                         <h6>Month</h6>
                         <div class="input_check ">
 
@@ -70,10 +82,33 @@ $recentposts = ArticleSearch::recentpost();
                         </div>
                     </div>
                     <div class="title_filter mb-4">
+                        <h6>Estimate Price Per Person</h6>
+                        <div class="input_check d-flex gap-3 align-items-center">
+                            <input type="checkbox" name="" id="text" class="checkbox_design">
+                            <label for="text" class=" text_check">1000 - 3000</label>
+
+                        </div>
+                        <div class="input_check d-flex gap-3 align-items-center">
+                            <input type="checkbox" name="" id="text" class="checkbox_design">
+                            <label for="text" class=" text_check">3000 - 6000</label>
+
+                        </div>
+                        <div class="input_check d-flex gap-3 align-items-center">
+                            <input type="checkbox" name="" id="text" class="checkbox_design">
+                            <label for="text" class=" text_check">6000 - 10000</label>
+
+                        </div>
+                        <div class="input_check d-flex gap-3 align-items-center">
+                            <input type="checkbox" name="" id="text" class="checkbox_design">
+                            <label for="text" class=" text_check">10000 +</label>
+
+                        </div>
+                    </div>
+                    <div class="title_filter mb-4">
                         <h6>No. Of Safaris</h6>
                         <div class="input_check d-flex gap-3 align-items-center">
                             <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">2</label>
+                            <label for="text" class=" text_check">1+</label>
 
                         </div>
                         <div class="input_check d-flex gap-3 align-items-center">
@@ -585,7 +620,7 @@ $recentposts = ArticleSearch::recentpost();
                         </select>
                     </div>
                     <div class="col-lg-6 mb-2">
-                        <label for="" class="Modal_label">Estimate Price</label>
+                        <label for="" class="Modal_label">Estimate Price Per Person</label>
                         <div class="d-flex  gap-3 align-items-center ">
                             <input type="number" class="form-control w-50 pe-1" placeholder="1000">
                             -

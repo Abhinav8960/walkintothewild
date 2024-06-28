@@ -46,7 +46,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <div class="placeholder_select">
                         <p>Location</p>
                     </div>
-                    <div class="icons_select">
+                    <div class="icons_select padding_ic">
                         <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
                     </div>
                 </div>
@@ -75,8 +75,8 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <div class="placeholder_select">
                         <p>Safari seasion</p>
                     </div>
-                    <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
+                    <div class="icons_select padding_ic">
+                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="" >
                     </div>
                 </div>
 

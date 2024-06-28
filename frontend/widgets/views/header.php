@@ -21,7 +21,7 @@
 						<div class="offcanvas-header ps-1">
 							<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
 								<a href="/park">
-									<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="">
+									<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" class="logo">
 								</a>
 							</h5>
 

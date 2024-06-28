@@ -19,14 +19,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 <section class="banner_section main_homebanner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/bannerhome.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/bannerhome.png' ?>" class="d-block w-100" alt="banner">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBannerhome-min.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBannerhome-min.png' ?>" class="d-block w-100" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container-lg">
             <div class="row">
                 <div class="col-12">
-                    <div class="headingBnner pb-4">
+                    <div class="headingBnner pb-1">
                         <h1>All Wildlife Safari Info, Multiple Operators, One Convenient Spot!</h1>
                     </div>
                 </div>
@@ -58,7 +58,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 <section class="sharesafri">
     <div class="container-lg ">
-
         <div class="row justify-content-center">
             <div class="col-xl-11 px-md-1 px-0">
                 <div class="sharesafribg home px-lg-0 px-2">
