@@ -238,10 +238,13 @@ line-height: 19px;
 
     .artical_cards .image-box .image img {
 
-        height: 280px;
+        height: 260px;
 
     }
 
+    .artical_cards .lower-content h3{
+        font-size: 18px;
+    }
     .artical_cards .link a {
 
         width: 37px;
@@ -568,6 +571,12 @@ line-height: 19px;
         padding-left: 55px ;
         padding-right: 55px ;
     }
+    .padding-setDes{
+
+        padding: 0px 63px !important;
+    }
+
+
 
     .height_set {
 
@@ -1197,7 +1206,7 @@ line-height: 19px;
 
     .artical_cards .lower-content {
 
-        padding: 31px 12px 0px 12px;
+        padding: 31px 12px 37px 12px;
     }
 
     .headingBnner h1 {
