@@ -338,6 +338,10 @@ line-height: 19px;
 
         width: 228px;
     }
+    .articals_wrapper.margin-setposi{
+
+        margin-top: 330px !important;
+    }
 
     .menu-navbar-nav .nav-item .nav-link{
 
@@ -450,7 +454,10 @@ line-height: 19px;
     .select_boxes .form-select {
         width: 370px;
     }
+    .articals_wrapper.margin-setposi{
 
+        margin-top: 500px !important;
+    }
     /* .placeholder_select {
 
         left: 17%;
@@ -489,6 +496,10 @@ line-height: 19px;
 
         width: 100%;
     } */
+    .articals_wrapper.margin-setposi{
+
+        margin-top: 330px !important;
+    }
 
     .footer_object {
 
@@ -612,7 +623,7 @@ line-height: 19px;
     } */
     .banner_section-inner .banner_search {
 
-        height: 350px;
+        height: 250px;
         object-fit: cover;
     }
 

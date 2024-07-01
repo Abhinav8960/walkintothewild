@@ -53,7 +53,8 @@
 															)) ? "active" : "" ?>">
 								<a class="nav-link" href="/contact"> <img src="<?= $this->params['baseurl'] ?>/img/contact-us.png" alt="" class="me-1 d-xl-inline-flex d-none" width="25"> Contact Us</a>
 							</li> -->
-								<a href="/sharedsafari" class="sahreSafari text-xl-center">
+							
+								<a href="/sharedsafari" class="sahreSafari text-xl-center <?= in_array($active_url, array("/sharedsafari","/sharesafari")) ? "active" : "" ?>">
 									<div class="card-img">
 										<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
 									</div>
