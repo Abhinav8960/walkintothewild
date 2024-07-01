@@ -7,6 +7,7 @@ use common\interfaces\Constants;
 use frontend\models\ArticleSearch;
 use common\models\cms\banner\Banner;
 use common\models\operator\SafariOperatorFollow;
+use common\models\operator\SafariOperatorRating;
 
 
 /* @var $this yii\web\View */
@@ -21,6 +22,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::OPERATOR_VIEW;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 $recentposts = ArticleSearch::recentpost();
+$reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operator->id])->all();
 
 ?>
 
@@ -173,7 +175,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="numparks">Shared Safari <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items " data-tab="review">
-                                    <div class="numparks">Review <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Review <span><?= count($reviews) ?></span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                         </ul>
                     </div>
@@ -197,7 +199,10 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
 
                 <div class="tab-content_tour mb-4" id="review">
-                    <?= $this->render('_review', ['operator' => $operator]) ?>
+                    <?= $this->render('_review', [
+                        'operator' => $operator,
+                        'reviews' => $reviews
+                    ]) ?>
                 </div>
             </div>
         </div>

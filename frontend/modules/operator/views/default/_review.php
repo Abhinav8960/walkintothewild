@@ -48,7 +48,6 @@ use yii\helpers\Url;
                 </div>
             </div>
             <?php
-            $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operator->id])->all();
             if ($reviews) {
                 foreach ($reviews as $review) {  ?>
                     <div class="commentsOther  position-relative">
