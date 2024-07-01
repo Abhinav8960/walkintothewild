@@ -41,16 +41,17 @@ use common\models\GeneralModel;
             <?= $form->field($model, 'name')->textinput(['placeholder' => 'Name'])->label(false) ?>
         </div>
 
+        <div class="col-lg-8 mt-2">
+            <label for="" class="Modal_label">Phone Number</label>
+            <?= $form->field($model, 'phone')->textinput(['placeholder' => 'Phone Number'])->label(false) ?>
+        </div>
         <div class="col-6 mt-2">
             <label for="" class="Modal_label">Email</label>
             <?= $form->field($model, 'email')->textinput(['placeholder' => 'Email'])->label(false) ?>
         </div>
 
 
-        <div class="col-lg-8 mt-2">
-            <label for="" class="Modal_label">Phone Number</label>
-            <?= $form->field($model, 'phone')->textinput(['placeholder' => 'Phone Number'])->label(false) ?>
-        </div>
+
         <div class="col-lg-4 mt-2">
             <div class="creat-safri">
                 <?= Html::submitButton('Submit', ['class' => 'safari_create font_set']) ?>
