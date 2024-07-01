@@ -8,7 +8,7 @@ if ($featured_parks) {    ?>
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="title_web">
-                    <h2>BEST SAFARIS DURING <br>MONSOON SEASON</h2>
+                    <h2> <?= $section_title ?></h2>
                 </div>
             </div>
         </div>

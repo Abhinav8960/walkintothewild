@@ -2,6 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
+use common\models\cms\banner\Banner;
 use common\models\cms\banner\form\UpdateFeaturePageTitleForm;
 use yii\web\Response;
 use common\models\park\Park;
@@ -66,9 +67,8 @@ class FeatureParkController extends Controller
 
     public function actionFeatureParkTitle()
     {
-        // $feature_page_model = $this->findfeatureparkTitle();
-        $model = new UpdateFeaturePageTitleForm();
-
+        $feature_page_model = Banner::find()->where(['page_id' => 1])->limit(1)->one();
+        $model = new UpdateFeaturePageTitleForm($feature_page_model);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
