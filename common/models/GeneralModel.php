@@ -508,9 +508,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         if ($ids) {
             $query->andWhere("master_rare_animal.id NOT IN ($ids)");
         }
-        $query->joinwith(['rareparkanimals' => function ($query) {
-            $query->andFilterWhere(['safari_park_rare_animal.status' => 1]);
-        }]);
+        // $query->joinwith(['rareparkanimals' => function ($query) {
+        //     $query->andFilterWhere(['safari_park_rare_animal.status' => 1]);
+        // }]);
         $parks = $query->asarray()->all();
         $result = ArrayHelper::map($parks, 'id', 'animal_name');
         return $result;

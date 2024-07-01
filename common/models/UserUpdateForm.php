@@ -129,7 +129,7 @@ class UserUpdateForm extends Model
         if (isset($this->password) && $this->password != null && $this->password != '') {
             $this->user_model->auth_key = \Yii::$app->security->generateRandomString();
             $this->user_model->password_hash = \Yii::$app->getSecurity()->generatePasswordHash($this->password);
-            $this->user_model->password_update_at = time();
+            $this->user_model->password_updated_at = time();
         }
         $this->user_model->username = $this->username;
         $this->user_model->email = $this->email;
