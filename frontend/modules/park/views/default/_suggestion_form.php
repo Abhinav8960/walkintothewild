@@ -17,7 +17,7 @@ use common\models\GeneralModel;
 <div class="modal-body modal_form">
     <div class="row">
         <div class="col-12">
-            <h6 class="text-center"><?= $safari_park->title ?></h6>
+            <h6 class="text-center" style="font-weight:bolder;"><?= $safari_park->title ?></h6>
         </div>
         <div class="col-12 mb-2">
             <label for="" class="Modal_label">Select Category</label>
