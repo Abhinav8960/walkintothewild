@@ -221,7 +221,7 @@ $this->params['title'] = $this->title;
                                     </div>
 
                                 </div>
-                                <div class="formInput  mb-3">
+                                <!-- <div class="formInput  mb-3">
                                     <div class="d-flex align-items-center justify-content-between div_remove slect_remove gap-3">
                                         <label for="">Rating</label>
                                         <?= $form->field($model, 'google_rating')->widget(\yii\widgets\MaskedInput::class, [
@@ -232,7 +232,7 @@ $this->params['title'] = $this->title;
                                             ],
                                         ])->label(false) ?>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-xl-6 mt-3">
                                 <div class="formInput mb-3">

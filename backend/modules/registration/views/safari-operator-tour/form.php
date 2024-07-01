@@ -96,15 +96,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
         ) ?>
     </div>
 
-    <div class="col-md-6">
-        <?= $form->field($model, 'google_rating')->widget(\yii\widgets\MaskedInput::class, [
-            'mask' => '9.9',
-            'options' => [
-                'class' => 'form-control',
-                'placeholder' => 'Enter rating (e.g., 4.50)',
-            ],
-        ]) ?>
-    </div>
+    <!-- <div class="col-md-6">
+        <?php 
+        //  $form->field($model, 'google_rating')->widget(\yii\widgets\MaskedInput::class, [
+        //     'mask' => '9.9',
+        //     'options' => [
+        //         'class' => 'form-control',
+        //         'placeholder' => 'Enter rating (e.g., 4.50)',
+        //     ],
+        // ]);
+         ?>
+    </div> -->
 
 
 </div>

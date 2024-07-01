@@ -63,7 +63,7 @@ class SafariOperatorForm extends model
     public $action_url;
     public $action_validate_url;
 
-    public function __construct(SafariOperator $safarioperator_model = null)
+    public function __construct(SafariOperator $safarioperator_model)
     {
 
         $this->safarioperator_model = Yii::createObject([
