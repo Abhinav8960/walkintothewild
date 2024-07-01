@@ -179,7 +179,7 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-xxl-10 col-xl-9">
+            <div class="col-lg-8 col-xxl-10 col-xl-9 paddingset_desktop">
                 <div class="tab-content_tour active " id="safariParks">
                     <!-- Safari Parks content goes here -->
                     <?= $this->render('_operator_safari_park', [
