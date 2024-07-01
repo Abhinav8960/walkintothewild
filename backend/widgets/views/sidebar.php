@@ -699,7 +699,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/sharedsafari') ? "active" : "" ?>" href="/operatordashboard/safari/sharedsafari">Shared Safari</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/review') ? "active" : "" ?>" href="/operatordashboard/safari/review">User Review</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/follower') ? "active" : "" ?>" href="/operatordashboard/safari/follower">Follower</a></li>
-									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/update') ? "active" : "" ?>" href="/operatordashboard/safari/update">Update</a></li>
+									
 								</ul>
 							</li>
 							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/birding') ? "active" : "" ?>" href="/operatordashboard/birding/index">Biriding Tour Operator</a></li>
