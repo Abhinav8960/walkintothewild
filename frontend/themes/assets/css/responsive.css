@@ -776,6 +776,10 @@ line-height: 19px;
 }
 
 @media (max-width: 991px) {
+    .banner_section-inner picture img{
+
+        height: 230px;
+    }
     .banner_searchBox{
 
         top: 50%;
@@ -944,7 +948,7 @@ line-height: 19px;
 
     .articals_wrapper.margin-setposi{
 
-        margin-top: 168px !important;
+        margin-top: 180px !important;
     }
     .fixedbanner .banner_section-inner picture{
 
