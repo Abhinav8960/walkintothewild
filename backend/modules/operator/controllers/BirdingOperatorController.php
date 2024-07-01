@@ -21,6 +21,7 @@ class BirdingOperatorController extends Controller
     public function actionIndex()
     {
         $searchModel = new BirdingOperatorRequestSearch();
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

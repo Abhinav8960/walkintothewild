@@ -26,6 +26,7 @@ class SafariOperatorController extends Controller
     public function actionIndex()
     {
         $searchModel = new SafariOperatorSearch();
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
