@@ -18,7 +18,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
         <div class="row">
             <div class="col-lg-12 col-xl-3">
                 <div class="slider_safariimg owl-carousel owl-theme position-relative">
-                    <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
+                    <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 mb-xl-0 mb-3">
                 </div>
             </div>
             <div class="col-lg-12 col-xl-9 position-relative">

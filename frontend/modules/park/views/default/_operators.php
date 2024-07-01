@@ -25,13 +25,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
 </div>
-<div class="col-lg-8 col-xl-9 col-xxl-10 ps-lg-5 position-relative">
-    <div class="col-12">
-        <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
+<div class="col-lg-8 col-xl-9 col-xxl-10 position-relative">
+   
+        <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 pe-xl-5">
             <div class="left_text">
                 <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
             </div>
-            <div class="right-select d-flex gap-2 align-items-center">
+            <div class="right-select d-flex gap-2 align-items-center pe-xl-2">
                 <div class="input_check pb-0">
                     <?php if ($device == 'desktop') {  ?>
                         <select class="form-select mb-2" aria-label="Default select example" id="custom_sort_by">
@@ -122,7 +122,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
             </div>
         </div>
-    </div>
+  
 </div>
 
 
