@@ -40,7 +40,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                         <div class="tab-cont">
                             <div class="tab-pane">
-                                <?= $this->render('_advance_search', [
+                                <?= $this->render('_search', [
                                     'model' => $searchModel,
                                 ]) ?>
                             </div>
