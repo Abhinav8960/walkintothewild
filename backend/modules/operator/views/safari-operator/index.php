@@ -103,17 +103,15 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
                             'update' => function ($url, $model) {
-                                if (Yii::$app->user->identity->getCheck('is_safari_operator')) {
-                                    return Html::a(
-                                        '<img src="/img/update.png" alt="" width="25" height="25">',
-                                        ['update', 'id' => $model->id],
-                                        [
-                                            'class' => 'btn p-0 change-menuicon',
-                                            'title' => 'Update',
-                                        ]
-                                    );
-                                }
-                                return '';
+
+                                return Html::a(
+                                    '<img src="/img/update.png" alt="" width="25" height="25">',
+                                    ['update', 'id' => $model->id],
+                                    [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'Update',
+                                    ]
+                                );
                             },
                             'suspend' => function ($url, $model) {
                                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
