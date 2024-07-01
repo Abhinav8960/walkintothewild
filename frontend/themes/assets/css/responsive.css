@@ -46,6 +46,9 @@
 
         padding: 0px 13px 0px 8px;
     }
+    .searchSafari_wraper .row .col-xl-3 {
+        width: auto !important;
+    }
 
     /* .main_homebanner .banner_searchBox {
         position: absolute;
@@ -121,9 +124,7 @@
     .searchSafari_wraper .safariSearch_wrap .taglines {
         margin-top: 17px;
     }
-    .searchSafari_wraper .row .col-xl-3 {
-        width: auto !important;
-    }
+ 
 
     .searchSafari_parks .parks_body {
 
@@ -156,6 +157,11 @@ line-height: 19px;
 
         margin-top: 290px !important;
     }
+    /* Sticky sidebar styles */
+.sticky-sidebar {
+    position: fixed;
+   width: 14%;
+ }
 }
 
 @media only screen and (min-width:1800px) {
@@ -338,6 +344,10 @@ line-height: 19px;
 
         width: 228px;
     }
+    .sticky-sidebar {
+        position: fixed;
+       width: 21%;
+     }
     .articals_wrapper.margin-setposi{
 
         margin-top: 330px !important;
@@ -456,7 +466,7 @@ line-height: 19px;
     }
     .articals_wrapper.margin-setposi{
 
-        margin-top: 500px !important;
+        margin-top: 510px !important;
     }
     /* .placeholder_select {
 
@@ -490,6 +500,7 @@ line-height: 19px;
     }
 }
 
+
 @media only screen and (max-width: 1200px) and (min-width: 991px) {
 
     /* .serch_btn button {
@@ -515,7 +526,13 @@ line-height: 19px;
         border-radius: 10px 10px 0px 0px;
     }
 }
+@media only screen and (max-width: 991px) and (min-width: 990.98px){
 
+    .articals_wrapper.margin-setposi{
+
+        margin-top: 510px!important;
+    }
+}
 @media only screen and (max-width: 1200px) and (min-width: 576px) {
     .mobile_width {
 

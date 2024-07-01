@@ -81,8 +81,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
             </div>
         </div> -->
-        <div class="row mb-4  position-relative">
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 sidebar">
+        <div class="row mb-4 sticky_set position-relative">
+            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 ">
                 <div id="targetDiv">
                     <?= $this->render('_park_side_search', [
                         'model' => $searchModel,
@@ -136,7 +136,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="col-lg-12 col-xl-9">
                                         <div class="safariSearch_wrap">
                                             <div class="safrititles pt-md-0 pt-3">
-                                                <h6 class=""><?= $model->title ?></h6>
+                                                <h6 class=""><?= $model->title ?> | <span>Madhya Pradesh, Central India</span></h6>
                                             </div>
                                             <div class="seelctes_text  pb-4 ">
                                                 <p>
