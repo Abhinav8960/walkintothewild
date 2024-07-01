@@ -67,7 +67,7 @@ class FeatureParkController extends Controller
 
     public function actionFeatureParkTitle()
     {
-        $feature_page_model = Banner::find()->where(['page_id' => 1])->limit(1)->one();
+        $feature_page_model = Banner::find()->where(['page_id' => 1, 'status' => [1, 2]])->limit(1)->one();
         $model = new UpdateFeaturePageTitleForm($feature_page_model);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

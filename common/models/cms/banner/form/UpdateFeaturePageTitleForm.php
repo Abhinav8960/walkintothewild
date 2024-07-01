@@ -13,7 +13,7 @@ class UpdateFeaturePageTitleForm extends model
     public $feature_page_model;
 
 
-    public function __construct(Banner $feature_page_model = null)
+    public function __construct(Banner $feature_page_model)
     {
 
         $this->feature_page_model = Yii::createObject([
