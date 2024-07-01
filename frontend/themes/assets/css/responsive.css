@@ -97,7 +97,10 @@
 
         width: auto !important;
     }
+    .margin-added{
 
+        margin-left: 77px !important;
+    }
     .searchSafari_parks .parksImg {
 
         height: 265px !important;
@@ -162,6 +165,10 @@ line-height: 19px;
     position: fixed;
    width: 14%;
  }
+ .margin-added{
+
+    margin-left: 46px;
+}
 }
 
 @media only screen and (min-width:1800px) {
@@ -595,7 +602,7 @@ line-height: 19px;
     }
     .padding-setDes{
 
-        padding: 0px 63px !important;
+        padding: 0px 63px 0px 3px !important;
     }
 
 
@@ -1003,7 +1010,7 @@ line-height: 19px;
         padding: 10px 12px 10px 13px;
         cursor: pointer;
         background-color: #fff;
-        height: 60px;
+        height: 50px;
         border-radius: 10px;
         }
         .mobile_searchBox .select_boxes{
