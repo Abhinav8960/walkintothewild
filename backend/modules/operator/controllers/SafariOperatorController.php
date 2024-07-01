@@ -2,9 +2,14 @@
 
 namespace backend\modules\operator\controllers;
 
+
+use Yii;
+use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
+use common\models\MailLog;
+use common\models\operator\form\SafariOperatorForm;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorSearch;
 
@@ -70,5 +75,59 @@ class SafariOperatorController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUpdate($id)
+    {
+        $safarioperator_model = $this->findModel($id);
+        $model = new SafariOperatorForm($safarioperator_model);
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->action_url = '/operator/safari-operator/update?id=' . $id . '';
+        $model->action_validate_url = '/operator/safari-operator/validate?id=' . $id . '';
+
+        $model->referrer_url = \Yii::$app->request->referrer;
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safarioperator_model->save(false)) {
+                        $model->uploadFile();
+
+                        $to_mail = $model->safarioperator_model->email;
+                        $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        $req = ['username' => $model->safarioperator_model->business_name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        \Yii::$app->session->setFlash('success', 'Safari Operator Update Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->safarioperator_model->loadDefaultValues();
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+
+
+    public function actionValidate($id = null)
+    {
+        $model = new SafariOperatorForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $model = new SafariOperatorForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 }
