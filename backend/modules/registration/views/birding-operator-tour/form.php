@@ -50,20 +50,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <?= $form->field($model, 'website')->textInput(['maxlength' => true, 'placeholder' => 'This website will be visible to clients']) ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'phone_no')->widget(\yii\widgets\MaskedInput::class, [
-            'mask' => '9999999999',
-            'options' => [
-                'placeholder' => '0000000000',
-            ],
-        ]) ?>
+        <?= $form->field($model, 'phone_no')->textInput() ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'operator_phone_no')->widget(\yii\widgets\MaskedInput::class, [
-            'mask' => '9999999999',
-            'options' => [
-                'placeholder' => '0000000000',
-            ],
-        ]) ?>
+        <?= $form->field($model, 'operator_phone_no')->textInput() ?>
     </div>
     <div class="col-md-6">
         <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'placeholder' => 'yourbusiness@domain.com']) ?>
