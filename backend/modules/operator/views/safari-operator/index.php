@@ -92,7 +92,7 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp{suspend}',
+                        'template' => '{view}&nbsp{update}&nbsp{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
@@ -102,18 +102,19 @@ $this->params['title'] = $this->title;
 
                                 ]);
                             },
-                            // 'delete' => function ($url, $model) {
-                            //     if ($model->status == 2) {
-                            //         return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                            //             'class' => 'btn p-0 change-menuicon',
-                            //             'title' => 'Delete',
-                            //             'data' => [
-                            //                 'confirm' => 'Are you sure you want to delete  ' . $model->business_name . '?',
-                            //                 'method' => 'post',
-                            //             ],
-                            //         ]);
-                            //     }
-                            // },
+                            'update' => function ($url, $model) {
+                                if (Yii::$app->user->identity->getCheck('is_safari_operator')) {
+                                    return Html::a(
+                                        '<img src="/img/update.png" alt="" width="25" height="25">',
+                                        ['update', 'id' => $model->id],
+                                        [
+                                            'class' => 'btn p-0 change-menuicon',
+                                            'title' => 'Update',
+                                        ]
+                                    );
+                                }
+                                return '';
+                            },
                             'suspend' => function ($url, $model) {
                                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
                             },

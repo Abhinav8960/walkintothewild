@@ -311,4 +311,15 @@ class User extends ActiveRecord implements IdentityInterface
     // {
     //     return $this->hasMany(User::className(), ['user_id' => 'id']);
     // }
+
+
+    public function getCheck($attribute)
+    {
+
+        if ($this->$attribute == 1) {
+            return true;
+        }
+
+        return false;
+    }
 }
