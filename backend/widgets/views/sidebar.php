@@ -675,7 +675,32 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= str_starts_with($active_url, '/operatordashboard') ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
-							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari') ? "active" : "" ?>" href="/operatordashboard/safari/index">Safari Tour Operator</a></li>
+							<li class="sub-slide <?= in_array($active_url, array(
+														"/operatordashboard/safari"
+													)) ? "is-expanded" : "" ?>">
+								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Safari Tour Operator</span><i class="sub-angle fe fe-chevron-right"></i></a>
+								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																'/operatordashboard/safari',
+																'/operatordashboard/safari/index',
+																'/operatordashboard/safari/quote',
+																'/operatordashboard/safari/sharedsafari',
+																'/operatordashboard/safari/review',
+																'/operatordashboard/safari/follower',
+															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																							'/operatordashboard/safari',
+																							'/operatordashboard/safari/index',
+																							'/operatordashboard/safari/quote',
+																							'/operatordashboard/safari/sharedsafari',
+																							'/operatordashboard/safari/review',
+																							'/operatordashboard/safari/follower',
+																						)) ? "display: block;" :  "display: none;"  ?>">
+									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/index') ? "active" : "" ?>" href="/operatordashboard/safari/index">Overview</a></li>
+									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/quote') ? "active" : "" ?>" href="/operatordashboard/safari/quote">Get a Free Quote</a></li>
+									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/sharedsafari') ? "active" : "" ?>" href="/operatordashboard/safari/sharedsafari">Shared Safari</a></li>
+									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/review') ? "active" : "" ?>" href="/operatordashboard/safari/review">User Review</a></li>
+									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/follower') ? "active" : "" ?>" href="/operatordashboard/safari/follower">Follower</a></li>
+								</ul>
+							</li>
 							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/birding') ? "active" : "" ?>" href="/operatordashboard/birding/index">Biriding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
 						</ul>
