@@ -183,6 +183,11 @@ class DefaultController extends FrontendBaseController
 
     public function actionReview($operator_id)
     {
+        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        if (!$operator) {
+            return $this->redirect(['/operator']);
+        }
+
         $model = new SafariOperatorReviewForm();
         $model->safari_operator_id = $operator_id;
 
@@ -193,11 +198,10 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->rating_model->save(false)) {
-                        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
-                        $slug = $operator->slug;
+                        $model->updateRatingintoTable($operator);
                         return $this->redirect([
                             '/operator/default/view',
-                            'slug' => $slug,
+                            'slug' => $operator->slug,
                         ]);
                     }
                 }

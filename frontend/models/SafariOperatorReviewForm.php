@@ -76,4 +76,16 @@ class SafariOperatorReviewForm extends \yii\base\Model
         $this->rating_model->user_browser_version = $agent->version($this->rating_model->user_browser);
         $this->rating_model->status = 1;
     }
+
+    /**
+     * Update Rating into Table
+     */
+    public function updateRatingintoTable($operator)
+    {
+        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
+        $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->count();
+        $operator->google_rating = $avg;
+        $operator->google_review_count = $count;
+        $operator->save(false);
+    }
 }

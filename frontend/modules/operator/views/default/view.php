@@ -103,7 +103,7 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
                                         <p class="mb-0"><?= $operator->google_rating ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
                                     </div>
                                     <div class="googlerating">
-                                        <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Reviews' : '0 Reviews' ?></p>
+                                        <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?></p>
                                     </div>
                                 </div>
                                 <div class="detailsText pb-3">
