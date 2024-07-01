@@ -91,7 +91,7 @@ class UserUpdateForm extends Model
                 },  'targetClass' => \common\models\User::className(),
                 'message' => 'This username has already been taken'
             ],
-            ['username', 'string', 'min' => 3, 'max' => 20],
+            ['username', 'string', 'min' => 3, 'max' => 50],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
