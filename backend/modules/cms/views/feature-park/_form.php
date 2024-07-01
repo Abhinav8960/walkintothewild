@@ -12,12 +12,15 @@ use yii\web\View;
 
 ?>
 <div class="row">
+    <div class="card col-2">
+        <?= Html::button('<i class="fa fa-edit" style="font-size:24px"></i> Update', ['value' => Url::toRoute(['/cms/feature-park/feature-park-title']), 'class' => 'popupButton btn-sm btn-warning', 'title' => 'Update Page Title']); ?>
+    </div>
     <div class="col-md-12 table-responsive">
         <table class="table table-striped table-bordered table_design">
             <thead>
                 <tr>
                     <th style="width: 5%!important;">Sr. No.</th>
-                    <th >Park</th>
+                    <th>Park</th>
 
                 </tr>
             </thead>
@@ -49,6 +52,7 @@ use yii\web\View;
                                     'onchange' => 'saveParkSequence(this)',
                                 ]);
                                 ?></td>
+
                     </tr>
                 <?php }
                 ActiveForm::end();

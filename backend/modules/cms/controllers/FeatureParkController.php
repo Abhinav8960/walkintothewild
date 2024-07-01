@@ -2,6 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
+use common\models\cms\banner\form\UpdateFeaturePageTitleForm;
 use yii\web\Response;
 use common\models\park\Park;
 use common\models\park\SafariPark;
@@ -61,5 +62,29 @@ class FeatureParkController extends Controller
 
         Yii::error('Invalid AJAX request');
         throw new BadRequestHttpException('Invalid request');
+    }
+
+    public function actionFeatureParkTitle()
+    {
+        // $feature_page_model = $this->findfeatureparkTitle();
+        $model = new UpdateFeaturePageTitleForm();
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->feature_page_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->feature_page_model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('update', [
+            'model' => $model,
+        ]);
     }
 }
