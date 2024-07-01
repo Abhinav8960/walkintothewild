@@ -11,7 +11,7 @@ $this->params['title'] = $this->title;
 ?>
 
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('_navbar', ['safari_operator' => $safari_operator, 'active_navbar' => 'follower']) ?>
+    
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
             <div class="tab-pane active">
