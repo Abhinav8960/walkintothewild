@@ -37,7 +37,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 50%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->page_id) ? GeneralModel::pages()[$model->page_id] : '';
+                            return isset(GeneralModel::pages()[$model->page_id]) ? GeneralModel::pages()[$model->page_id] : '';
                         }
                     ],
                     [
@@ -76,7 +76,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . isset(GeneralModel::pages()[$model->page_id]) ? GeneralModel::pages()[$model->page_id] : '' . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . (isset(GeneralModel::pages()[$model->page_id]) ? GeneralModel::pages()[$model->page_id] : '') . '?',
                                         'method' => 'post',
                                     ],
                                 ]);

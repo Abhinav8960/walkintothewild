@@ -192,7 +192,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 </section>
 <section class="safariduring_sesons">
-    <?= \frontend\widgets\FeatureParkWidget::widget(['section_title' => $banner->feature_park_title]) ?>
+    <?= \frontend\widgets\FeatureParkWidget::widget(['section_title' => $banner ? $banner->feature_park_title : '']) ?>
 </section>
 <section class="animal-wrapper pb-4">
     <?= $this->render('_rare_exotic', [
