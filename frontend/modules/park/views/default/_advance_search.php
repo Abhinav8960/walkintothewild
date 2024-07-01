@@ -156,23 +156,20 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-
                 <div class="select_boxes">
-                    <h6 class="fs-5" >Morning</h6>
+                    <h6 class="fs-5" > <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?></h6>
                 </div>
-
-
             <i class="fa-solid fa-chevron-right"></i>
             <div class="select_boxes">
-                <h6 class="fs-5">Morning</h6>
+                <h6 class="fs-5"> <?= isset($safarisessionoption[$model->session_id]) ? $safarisessionoption[$model->session_id] : 'Any / All' ?></h6>
             </div>
             <i class="fa-solid fa-chevron-right"></i>
             <div class="select_boxes">
-                <h6 class="fs-5">Tiger</h6>
+                <h6 class="fs-5"><?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?></h6>
             </div>
             <i class="fa-solid fa-chevron-right"></i>
             <div class="select_boxes">
-                <h6 class="fs-5">Gypsy / jeep</h6>
+                <h6 class="fs-5"><?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Any / All' ?></h6>
             </div>
         </div>
     </div>
