@@ -1319,7 +1319,13 @@ figure {
     object-fit: contain;
 }
 
+.fixedbanner{
 
+    position: fixed !important;
+    width: 100%;
+    top: 0;
+    z-index: 99;
+}
 .banner_section-inner .banner_search {
 
     height: 200px;

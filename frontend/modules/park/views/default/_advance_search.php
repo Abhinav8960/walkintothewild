@@ -20,7 +20,7 @@ $safarisessionoption = GeneralModel::safarisessionoption();
 $animalfilteroption = GeneralModel::animalfilteroption();
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
-<div class="row gx-0 justify-content-center">
+<div class="row gx-0 justify-content-center d-md-flex d-none desktop_search" id="desktop_search">
     <div class="col-lg-10 col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
@@ -46,7 +46,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <div class="placeholder_select">
                         <p>Location</p>
                     </div>
-                    <div class="icons_select padding_ic">
+                    <div class="icons_select">
                         <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
                     </div>
                 </div>
@@ -75,8 +75,8 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <div class="placeholder_select">
                         <p>Safari seasion</p>
                     </div>
-                    <div class="icons_select padding_ic">
-                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="" >
+                    <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
                     </div>
                 </div>
 
@@ -139,7 +139,6 @@ $vehicleoption = GeneralModel::vehicleoption();
             </div>
         </div>
     </div>
-
     <div class="col-lg-2 col-xl-1">
         <div class="search">
             <div class="serch_btn">
@@ -149,11 +148,45 @@ $vehicleoption = GeneralModel::vehicleoption();
     </div>
 
 </div>
+<div class="row gx-0 justify-content-center d-md-none  d-block mobile_search" id="mobile_search">
+    <div class="col-lg-10 col-xl-12">
+        <div class="mobile_searchBox d-flex justify-content-between align-items-center">
+            <div class="select_boxes">
+                <div class="icomns">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
 
+                <div class="select_boxes">
+                    <h6 class="fs-5" >Morning</h6>
+                </div>
+
+
+            <i class="fa-solid fa-chevron-right"></i>
+            <div class="select_boxes">
+                <h6 class="fs-5">Morning</h6>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+            <div class="select_boxes">
+                <h6 class="fs-5">Tiger</h6>
+            </div>
+            <i class="fa-solid fa-chevron-right"></i>
+            <div class="select_boxes">
+                <h6 class="fs-5">Gypsy / jeep</h6>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 <?php ActiveForm::end(); ?>
 
 <?php
 $script = <<< JS
+document.getElementById('mobile_search').addEventListener('click', function() {
+    document.getElementById('desktop_search').style.setProperty('display', 'block', 'important');
+        document.getElementById('mobile_search').style.setProperty('display', 'none', 'important');
+});
 $(document).ready(function(){
     function toggleDropdown(container) {
         var \$dropdown = container.find('.dropdown');
@@ -210,6 +243,7 @@ $('#search_submit_btn').click(function(){
         dataType:'html'
     });
 });
+
 JS;
 $this->registerJs($script);
 ?>

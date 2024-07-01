@@ -345,6 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showStep(currentStep);
     }
 });
+
 // (function($){
 //     $('document').ready(function() {
 //       $('.sidebar,.main').stick_in_parent();

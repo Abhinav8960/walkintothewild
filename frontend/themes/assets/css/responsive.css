@@ -151,13 +151,7 @@ line-height: 19px;
 
         padding: 7px 56px;
     }
-    .fixedbanner{
-
-        position: fixed !important;
-        width: 100%;
-        top: 0;
-        z-index: 99;
-    }
+ 
     .articals_wrapper.margin-setposi{
 
         margin-top: 270px !important;
@@ -948,7 +942,56 @@ line-height: 19px;
 
 @media only screen and (max-width:767px) {
 
+    .articals_wrapper.margin-setposi{
 
+        margin-top: 168px !important;
+    }
+    .fixedbanner .banner_section-inner picture{
+
+        display: none;
+    }
+
+    .fixedbanner .banner_section-inner {
+
+        background: #09422D;
+        height: 130px;
+
+    }
+    .desktop_search{
+
+        background-color: #09422D;
+        padding: 10px 10px 30px 10px;
+        position: absolute;
+        left: 0;
+        top: -51px;
+        width: 100%;
+    }
+    .mobile_searchBox{
+
+        padding: 10px 12px 10px 13px;
+        cursor: pointer;
+        background-color: #fff;
+        height: 60px;
+        border-radius: 10px;
+        }
+        .mobile_searchBox .select_boxes{
+
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .mobile_searchBox .select_boxes h6{
+        margin-bottom: 0;
+     
+        }
+        .mobile_searchBox .select_boxes .icomns i{
+        
+        font-size: 20px;
+        line-height: 40px;
+        }
+        .mobile_searchBox .select_boxes  .fs-5{
+        
+        font-size: 14px !important;
+        }
     .banner_section-inner{
 
         margin-top: 60px !important;
@@ -1448,3 +1491,6 @@ font-size: 15px;
         width: 386px!important;
     }
 }
+
+
+
