@@ -55,7 +55,6 @@ class ShareSafari extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['host_user_id'], 'required'],
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['safari_plan'], 'string'],
