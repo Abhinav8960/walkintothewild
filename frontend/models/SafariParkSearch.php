@@ -141,6 +141,11 @@ class SafariParkSearch extends SafariPark
             $query->andWhere(['is_shared_safari' => 1]);
         }
 
+        // If Rare EXOTIC ANIMAL Selected
+        if ($this->master_rare_animal_id == '') {
+            $query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_park_rare_animal WHERE status=1)");
+        }
+
         return $dataProvider;
     }
 }

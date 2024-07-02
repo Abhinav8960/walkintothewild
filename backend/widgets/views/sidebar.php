@@ -686,6 +686,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																'/operatordashboard/safari/sharedsafari',
 																'/operatordashboard/safari/review',
 																'/operatordashboard/safari/follower',
+
 															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																							'/operatordashboard/safari',
 																							'/operatordashboard/safari/index',
@@ -693,13 +694,15 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																							'/operatordashboard/safari/sharedsafari',
 																							'/operatordashboard/safari/review',
 																							'/operatordashboard/safari/follower',
+
 																						)) ? "display: block;" :  "display: none;"  ?>">
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/index') ? "active" : "" ?>" href="/operatordashboard/safari/index">Overview</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/quote') ? "active" : "" ?>" href="/operatordashboard/safari/quote">Get a Free Quote</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/sharedsafari') ? "active" : "" ?>" href="/operatordashboard/safari/sharedsafari">Shared Safari</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/review') ? "active" : "" ?>" href="/operatordashboard/safari/review">User Review</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/follower') ? "active" : "" ?>" href="/operatordashboard/safari/follower">Follower</a></li>
-									
+
+
 								</ul>
 							</li>
 							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/birding') ? "active" : "" ?>" href="/operatordashboard/birding/index">Biriding Tour Operator</a></li>
