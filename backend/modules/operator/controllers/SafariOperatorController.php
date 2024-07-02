@@ -10,9 +10,13 @@ use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
 use common\models\operator\form\SafariOperatorForm;
+use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
+use common\models\operator\SafariOperatorFollowSearch;
 use common\models\operator\SafariOperatorPark;
+use common\models\operator\SafariOperatorRatingReportSearch;
+use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\SafariOperatorSearch;
 
 /**
@@ -45,6 +49,90 @@ class SafariOperatorController extends Controller
         $model = $this->findModel($id);
 
         return $this->render('view', ['model' => $model]);
+    }
+
+    /**
+     * View Operator
+     */
+    public function actionQuote($id)
+    {
+        $model = $this->findModel($id);
+        $searchModel = new OperatorQuoteSearch();
+        $searchModel->operator_id = $id;
+        $searchModel->status = 1;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        return $this->render('free_quote', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * View Operator
+     */
+    public function actionSharedsafari($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('shared_safari', ['model' => $model]);
+    }
+
+    /**
+     * View Operator
+     */
+    public function actionReview($id)
+    {
+        $model = $this->findModel($id);
+
+        $searchModel = new SafariOperatorRatingSearch();
+        $searchModel->safari_operator_id = $id;
+        $searchModel->status = 1;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        return $this->render('user_review', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    /**
+     * View Operator
+     */
+    public function actionFlagview($id, $safari_operator_id)
+    {
+
+        $searchModel = new SafariOperatorRatingReportSearch();
+        $searchModel->safari_operator_rating_id = $id;
+        $searchModel->status = 1;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $model = $this->findModel($safari_operator_id);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('flag_review', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'model' => $model,
+            ]);
+        }
+    }
+    /**
+     * View Operator
+     */
+    public function actionFollower($id)
+    {
+        $searchModel = new SafariOperatorFollowSearch();
+        $searchModel->safari_operator_id = $id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $model = $this->findModel($id);
+
+        return $this->render('follower', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 

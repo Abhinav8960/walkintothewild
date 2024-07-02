@@ -4,23 +4,23 @@ namespace common\models\operator;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\operator\OperatorQuote;
 
 /**
- * OperatorQuoteSearch represents the model behind the search form of `common\models\operator\OperatorQuote`.
+ * SafariOperatorRatingSearch represents the model behind the search form of `common\models\operator\SafariOperatorRating`.
  */
-class OperatorQuoteSearch extends OperatorQuote
+class SafariOperatorRatingSearch extends SafariOperatorRating
 {
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['safari_park_id', 'operator_id', 'safaris', 'travelers', 'stay_category_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['full_name', 'email', 'start_date', 'end_date', 'user_agent'], 'string', 'max' => 255],
-            [['phone_no'], 'string', 'max' => 12],
-            [['ip_address'], 'string', 'max' => 45],
+            [['safari_operator_id', 'user_id', 'park_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['rating'], 'number'],
+            [['review', 'user_agent'], 'string', 'max' => 512],
+            [['user_device', 'user_platform', 'user_platform_version', 'user_browser'], 'string', 'max' => 50],
         ];
     }
 
@@ -42,9 +42,12 @@ class OperatorQuoteSearch extends OperatorQuote
      */
     public function search($params)
     {
-        $query = OperatorQuote::find()->where(['status' => [1, 2]]);
+        $query = SafariOperatorRating::find()->where(['safari_operator_rating.status' => [1, 2]]);
 
         // add conditions that should always apply here
+
+
+
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -58,25 +61,21 @@ class OperatorQuoteSearch extends OperatorQuote
             return $dataProvider;
         }
 
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'safari_park_id' => $this->safari_park_id,
-            'phone_no' => $this->phone_no,
-            'operator_id' => $this->operator_id,
-            'email' => $this->email,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'safaris' => $this->safaris,
-            'travelers' => $this->travelers,
-            'stay_category_id' => $this->stay_category_id,
+            'safari_operator_id' => $this->safari_operator_id,
+            'rating' => $this->rating,
+            'review' => $this->review,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'safari_operator_rating.status' => $this->status,
         ]);
-        $query->andFilterWhere(['like', 'full_name', $this->full_name]);
+
+     
 
         return $dataProvider;
     }

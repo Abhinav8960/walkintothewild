@@ -12,6 +12,7 @@ use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
+use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
@@ -137,6 +138,29 @@ class SafariController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+     /**
+     * View Operator
+     */
+    public function actionFlagview($id, $safari_operator_id)
+    {
+
+        $searchModel = new SafariOperatorRatingReportSearch();
+        $searchModel->safari_operator_rating_id = $id;
+        $searchModel->status = 1;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $model = $this->findModel($safari_operator_id);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('flag_review', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'model' => $model,
+            ]);
+        }
     }
 
     // /**

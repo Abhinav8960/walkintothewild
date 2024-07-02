@@ -13,6 +13,7 @@ use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
+use common\models\operator\SafariOperatorRatingReport;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorReviewForm;
@@ -252,6 +253,9 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->flag_model->save(false)) {
+                        $rating = SafariOperatorRating::find()->where(['id' => $safari_operator_rating_id])->limit(1)->one();
+                        $rating->flaged = 1;
+                        $rating->save(false);
                         Yii::$app->session->setFlash('success', 'Flag added successfully!');
                         return $this->redirect([
                             '/operator/default/view',
