@@ -257,27 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    const $arrow = $("#arrow");
-    const $section02 = $("#section02");
-    const $section01 = $("#section01");
-
-    if ($arrow && $section02 && $section01) {
-        $arrow.click(function() {
-            $("html, body").animate({ scrollTop: $section02.offset().top }, "smooth");
-        });
-
-        $(window).scroll(function() {
-            const section02Top = $section02.offset().top - $(window).scrollTop();
-            const windowHeight = $(window).height();
-            const section01Bottom = $section01.offset().top + $section01.outerHeight() - $(window).scrollTop();
-
-            if (section02Top <= windowHeight / 2) {
-                $arrow.addClass("hidden");
-            } else if (section01Bottom > windowHeight / 2) {
-                $arrow.removeClass("hidden");
-            }
-        });
-    }
+    
 
     let navbar = document.querySelector('.header_wrapper');
 
@@ -294,55 +274,140 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const textarea = document.getElementById('about_business');
 
+  
     const forms = document.querySelectorAll('.form');
     const dots = document.querySelectorAll('.dot');
     const nextButton = document.querySelector('.next-btn');
     const submitButton = document.querySelector('.submit-btn');
     const termCondition = document.querySelector('.term-condition');
 
-    if (forms.length && dots.length && nextButton && submitButton && termCondition) {
-        let currentStep = 0;
+    let currentFormIndex = 0;
 
-        function showStep(step) {
-            forms.forEach((form, index) => {
-                form.classList.toggle('active', index === step);
-            });
-
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === step);
-            });
-
-            nextButton.style.display = step === forms.length - 1 ? 'none' : 'block';
-            submitButton.style.display = step === forms.length - 1 ? 'block' : 'none';
-            termCondition.style.display = step === forms.length - 1 ? 'block' : 'none';
+    function updateButtonVisibility() {
+        if (currentFormIndex === forms.length - 1) {
+            nextButton.style.display = 'none';
+            submitButton.style.display = 'block';
+            termCondition.classList.add('active');
+        } else {
+            nextButton.style.display = 'block';
+            submitButton.style.display = 'none';
+            termCondition.classList.remove('active');
         }
+    }
 
-        nextButton.addEventListener('click', function() {
-            if (currentStep < forms.length - 1) {
-                currentStep++;
-                showStep(currentStep);
-            }
-        });
+    function validateForm1() {
+        const form1 = forms[0];
+        const requiredDivs = form1.querySelectorAll('.required');
+        let isValid = true;
 
-        submitButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            if (validateForm()) {
-                document.querySelector('.multistep-form').submit();
-            }
-        });
+        requiredDivs.forEach(div => {
+            const inputs = div.querySelectorAll('input, textarea, select');
+            let divValid = false;
 
-        function validateForm() {
-            let isValid = true;
-            const inputs = forms[currentStep].querySelectorAll('input[required], textarea[required]');
             inputs.forEach(input => {
-                if (!input.checkValidity()) {
-                    isValid = false;
+                const feedback = input.nextElementSibling;
+
+                if (input.classList.contains('is-valid')) {
+                    divValid = true;
+                    if (feedback && feedback.classList.contains('invalid-feedback')) {
+                        feedback.style.display = 'none';
+                    }
+                } else {
+                    input.classList.add('is-invalid');
+                    input.setAttribute('aria-required', 'true');
+                    input.setAttribute('aria-invalid', 'true');
+                    if (feedback && feedback.classList.contains('invalid-feedback')) {
+                        const label = input.getAttribute('data-label'); // Get attribute label from data-label attribute
+                        feedback.textContent = `${label} cannot be blank`; // Update error message with label
+                        feedback.style.display = 'block';
+                    }
                 }
             });
-            return isValid;
+
+            if (!divValid) {
+                isValid = false;
+            }
+        });
+
+        return isValid;
+    }
+
+    nextButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        // Validate form1
+        if (currentFormIndex === 0 && validateForm1()) {
+            // If form1 is valid, proceed to the next form
+            if (currentFormIndex < forms.length - 1) {
+                forms[currentFormIndex].classList.remove('active');
+                dots[currentFormIndex].classList.remove('active');
+                currentFormIndex++;
+                forms[currentFormIndex].classList.add('active');
+                dots[currentFormIndex].classList.add('active');
+                updateButtonVisibility();
+            }
+        }
+    });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function () {
+            const index = parseInt(this.getAttribute('data-index'));
+            if (index <= currentFormIndex) {
+                if (index === 0 || validateForm1()) {
+                    forms[currentFormIndex].classList.remove('active');
+                    dots[currentFormIndex].classList.remove('active');
+                    currentFormIndex = index;
+                    forms[currentFormIndex].classList.add('active');
+                    dots[currentFormIndex].classList.add('active');
+                    updateButtonVisibility();
+                }
+            }
+        });
+    });
+
+    // Prevent form submission on Enter key press
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && currentFormIndex < forms.length - 1) {
+            event.preventDefault();
+        }
+    });
+
+    // Validate form1 when any input changes
+    forms[0].addEventListener('input', function () {
+        validateForm1();
+    });
+
+
+
+});
+
+
+const fileUpload = document.getElementById('fileupload');
+const uploadText = document.getElementById('uploadText');
+const browslogow3 = document.getElementById('browslogow3');
+
+fileUpload.addEventListener('change', function () {
+    if (fileUpload.files.length > 0) {
+        const file = fileUpload.files[0];
+
+        const img = document.createElement('img');
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = '100%';
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+
+        // Clear any existing images before appending the new one
+        const existingImg = browslogow3.querySelector('img');
+        if (existingImg) {
+            browslogow3.removeChild(existingImg);
         }
 
-        showStep(currentStep);
+        browslogow3.appendChild(img);
+        // Hide the uploadText when an image is uploaded
+        uploadText.style.display = 'none';
     }
 });
 

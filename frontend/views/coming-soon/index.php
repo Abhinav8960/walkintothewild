@@ -69,3 +69,45 @@ $this->params['title'] = $this->title;
 
     </div>
 </section>
+
+<?php
+// Define the maximum length constant
+define('MAX_JS_LENGTH', 10000); // Example: Set the maximum length as per your requirement
+
+// Define the JavaScript code as a string using heredoc syntax
+$script = <<< JS
+document.addEventListener("DOMContentLoaded", function() {
+    const arrow = document.querySelector("#arrow");
+    const section02 = document.querySelector("#section02");
+    const section01 = document.querySelector("#section01");
+
+    if (arrow && section02 && section01) {
+        arrow.addEventListener("click", function() {
+            document.documentElement.scrollTop = section02.offsetTop;
+        });
+
+        window.addEventListener("scroll", function() {
+            const section02Top = section02.offsetTop - window.scrollY;
+            const windowHeight = window.innerHeight;
+            const section01Bottom = section01.offsetTop + section01.offsetHeight - window.scrollY;
+
+            if (section02Top <= windowHeight / 2) {
+                arrow.classList.add("hidden");
+            } else if (section01Bottom > windowHeight / 2) {
+                arrow.classList.remove("hidden");
+            }
+        });
+    }
+
+});
+JS;
+
+// Check the length of $script and truncate if necessary
+if (strlen($script) > MAX_JS_LENGTH) {
+    // Handle the case where the script exceeds the maximum length
+    throw new Exception('JavaScript code exceeds maximum length limit.');
+}
+
+// Register the JavaScript code using Yii2's registerJs() method
+$this->registerJs($script);
+?>
