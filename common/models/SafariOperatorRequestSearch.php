@@ -45,7 +45,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
      */
     public function search($params, $pagination = true)
     {
-        $query = SafariOperatorRequest::find();
+        $query = SafariOperatorRequest::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 

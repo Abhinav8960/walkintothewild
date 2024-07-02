@@ -166,8 +166,8 @@ class SafariController extends Controller
 
 
 
-        $safari_operator_request_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
-        $model = new SafariOperatorRequestForm($safari_operator_request_model);
+        $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
+        $model = new SafariOperatorRequestForm($safari_operator_model);
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->action_url = '/operatordashboard/safari/edit-request?safari_operator_id=' . $safari_operator_id . '';
         $model->action_validate_url = '/operatordashboard/safari/validate?safari_operator_id=' . $safari_operator_id . '';
@@ -178,6 +178,10 @@ class SafariController extends Controller
                 $model->logo = UploadedFile::getInstance($model, 'logo');
                 if ($model->validate()) {
                     $model->initializeForm();
+
+                    // Revome All Previouse Request if ANy Pending for Approval
+                    SafariOperatorRequest::updateAll(['status' => StatusInterface::STATUS_DELETE], ['safari_operator_id' => $safari_operator_model->id, 'status' => 1, 'is_approved' => 0]);
+
                     if ($model->safari_operator_request_model->save(false)) {
                         $model->uploadFile();
                         $parks = $model->park_id;
@@ -209,7 +213,7 @@ class SafariController extends Controller
                         $req = ['username' => $model->safari_operator_request_model->business_name];
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        \Yii::$app->session->setFlash('success', 'Safari Operator Update Successfully');
+                        \Yii::$app->session->setFlash('success', 'Safari Operator Update Request Sent Successfully, Please Wait Until Approval');
                         return $this->redirect(['index']);
                     }
                 }
