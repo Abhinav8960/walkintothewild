@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorActivities;
+use common\models\operator\SafariOperatorPark;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
@@ -122,8 +124,8 @@ class SafariOperatorRequestForm extends model
             $this->status                                         =  $this->safari_operator_model->status;
             // $this->is_agree                                       =  $this->safari_operator_model->is_agree;
             // $this->registration_platform                          =  $this->safari_operator_model->registration_platform;
-            $this->park_id                                        = SafariOperatorRequestPark::find()->select('park_id')->where(['safari_operator_request_id' => $this->safari_operator_model->id, 'status' => 1])->column();
-            $this->offers_other_wildlifeactivities                = SafariOperatorRequestActivities::find()->select('wildlife_activity_id')->where(['safari_operator_request_id' => $this->safari_operator_model->id, 'status' => 1])->column();
+            $this->park_id                                        = SafariOperatorPark::find()->select('park_id')->where(['safari_operator_id' => $this->safari_operator_model->id, 'status' => 1])->column();
+            $this->offers_other_wildlifeactivities                = SafariOperatorActivities::find()->select('wildlife_activity_id')->where(['safari_operator_id' => $this->safari_operator_model->id, 'status' => 1])->column();
 
             if ($this->safari_operator_model->is_offer_premium_budget == true && $this->safari_operator_model->is_offer_standard_budget == true && $this->safari_operator_model->is_offer_economical_budget == true) {
                 $this->budget_segment = [1, 2, 3];

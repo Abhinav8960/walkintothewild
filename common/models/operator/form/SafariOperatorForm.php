@@ -6,6 +6,8 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorActivities;
+use common\models\operator\SafariOperatorPark;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
 
@@ -110,8 +112,8 @@ class SafariOperatorForm extends model
             $this->operator_phone_no                              =  $this->safarioperator_model->operator_phone_no;
             $this->operator_email                                 =  $this->safarioperator_model->operator_email;
             $this->is_highlighted                                 =  $this->safarioperator_model->is_highlighted;
-            $this->offers_other_wildlifeactivities                = SafariOperatorRequestActivities::find()->select('wildlife_activity_id')->where(['safari_operator_request_id' => $this->safarioperator_model->id, 'status' => 1])->column();
-            $this->park_id                                        = SafariOperatorRequestPark::find()->select('park_id')->where(['safari_operator_request_id' => $this->safarioperator_model->id, 'status' => 1])->column();
+            $this->offers_other_wildlifeactivities                = SafariOperatorActivities::find()->select('wildlife_activity_id')->where(['safari_operator_id' => $this->safarioperator_model->id, 'status' => 1])->column();
+            $this->park_id                                        = SafariOperatorPark::find()->select('park_id')->where(['safari_operator_id' => $this->safarioperator_model->id, 'status' => 1])->column();
 
             $this->status                                         =  $this->safarioperator_model->status;
 
