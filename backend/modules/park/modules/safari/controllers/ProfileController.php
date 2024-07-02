@@ -85,8 +85,8 @@ class ProfileController extends Controller
                     if ($model->safari_park_model->save()) {
                         $model->uploadFile();
                         $safariaccomodation = $model->accomodation;
+                        SafariParkAccomodation::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                         if ($safariaccomodation) {
-                            SafariParkAccomodation::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                             foreach ($safariaccomodation as $safari_accomodation) {
                                 $safariparkAccomodation = new SafariParkAccomodation();
                                 $safariparkAccomodation->safari_park_id = $model->safari_park_model->id;
@@ -96,8 +96,8 @@ class ProfileController extends Controller
                         }
 
                         $sessions = $model->safari_session;
+                        SafariParkSession::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                         if ($sessions) {
-                            SafariParkSession::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                             foreach ($sessions as $session) {
                                 $safariparkSession = new SafariParkSession();
                                 $safariparkSession->safari_park_id = $model->safari_park_model->id;
@@ -107,8 +107,8 @@ class ProfileController extends Controller
                         }
 
                         $months = $model->month;
+                        SafariParkMonth::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                         if ($months) {
-                            SafariParkMonth::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
 
                             foreach ($months as $safari_month) {
                                 $safariparkMonth = new SafariParkMonth();
@@ -120,8 +120,8 @@ class ProfileController extends Controller
 
 
                         $bonusexperience = $model->master_bonus_experience_id;
+                        SafariParkBonusExperience::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                         if ($bonusexperience) {
-                            SafariParkBonusExperience::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                             foreach ($bonusexperience as $bonus) {
                                 $safariparkBonus = new SafariParkBonusExperience();
                                 $safariparkBonus->safari_park_id = $model->safari_park_model->id;
@@ -132,9 +132,9 @@ class ProfileController extends Controller
 
 
                         $vehicles = $model->vehicle_id;
+                        SafariParkVehicle::deleteAll(['safari_park_id' => $model->safari_park_model->id]);
                         if ($vehicles) {
                             // SafariParkVehicle::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
-                            SafariParkVehicle::deleteAll(['safari_park_id' => $model->safari_park_model->id]);
 
                             foreach ($vehicles as $vehicle) {
                                 $parkVehicle = new SafariParkVehicle();
@@ -145,8 +145,8 @@ class ProfileController extends Controller
                         }
 
                         $animals = $model->master_animal_id;
+                        SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                         if ($animals) {
-                            SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                             foreach ($animals as $animal) {
                                 $parkAnimal = new SafariParkAnimal();
                                 $parkAnimal->safari_park_id = $model->safari_park_model->id;
@@ -161,8 +161,8 @@ class ProfileController extends Controller
 
 
                         $rare_animals = $model->master_rare_animal_id;
+                        SafariParkRareAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                         if ($rare_animals) {
-                            SafariParkRareAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                             foreach ($rare_animals as $rare_animal) {
                                 $parkrareAnimal = new SafariParkRareAnimal();
                                 $parkrareAnimal->safari_park_id = $model->safari_park_model->id;

@@ -31,6 +31,7 @@ $recentposts = ArticleSearch::recentpost();
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1>Articles & Tips</h1>
+                        <p class="text-center text-white"><?= isset($slug) ? strtoupper($slug) : '' ?></p>
                     </div>
                 </div>
             </div>
