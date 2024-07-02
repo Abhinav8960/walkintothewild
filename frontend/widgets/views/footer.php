@@ -8,7 +8,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <img src="<?= $this->params['baseurl'] ?>/img/footermobile.png" alt="" class="d-md-none d-block">
     </div>
     <div class="container-fluid">
-        <div class="row justify-content-between border_bottom">
+        <div class="row justify-content-between border_bottom px-lg-5">
             <div class="col-lg-5">
                 <div class="footer_text">
                     <div class="heading-footer">
