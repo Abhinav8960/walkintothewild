@@ -77,46 +77,23 @@ use yii\grid\GridView;
                             }
                         }
                     ],
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'contentOptions' => ['style' => 'width: 5%;'],
-                    //     'template' => '{view}&nbsp',
-                    //     'buttons' => [
-                    //         'view' => function ($url, $model) {
-                    //             return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
-                    //             ', ['viewrequest', 'safari_operator_id' => $model->safari_operator_id], [
-                    //                 'class' => 'btn p-0 change-menuicon',
-                    //                 'title' => 'View',
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'template' => '{view}&nbsp',
+                        'buttons' => [
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                ', ['viewrequest', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
 
-                    //             ]);
-                    //         },
-                    //         'update' => function ($url, $model) {
-                    //             return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
-                    //             ', ['edit-request', 'safari_operator_id' => $model->safari_operator_id], [
-                    //                 'class' => 'btn p-0 change-menuicon',
-                    //                 'title' => 'Update',
+                                ]);
+                            },
 
-                    //             ]);
-                    //         },
-                    //         'delete' => function ($url, $model) {
-                    //             if ($model->status == 2) {
-                    //                 return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                    //                     'class' => 'btn p-0 change-menuicon',
-                    //                     'title' => 'Delete',
-                    //                     'data' => [
-                    //                         'confirm' => 'Are you sure you want to delete  ' . $model->business_name . '?',
-                    //                         'method' => 'post',
-                    //                     ],
-                    //                 ]);
-                    //             }
-                    //         },
-                    //         'suspend' => function ($url, $model) {
-                    //             return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
-                    //         },
-
-                    //     ]
-                    // ],
+                        ]
+                    ],
                 ],
             ]); ?>
         </div>

@@ -186,7 +186,7 @@ class SafariController extends Controller
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         \Yii::$app->session->setFlash('success', 'Safari Operator Update Successfully');
-                        return $this->redirect(['update-request']);
+                        return $this->redirect(['index']);
                     }
                 }
             }
@@ -217,8 +217,9 @@ class SafariController extends Controller
     }
 
 
-    public function actionViewRequest($safari_operator_id)
+    public function actionViewrequest($id)
     {
-        return $this->render('viewrequest', []);
+        $model = SafariOperatorRequest::find()->where(['id' => $id])->limit(1)->one();
+        return $this->render('viewrequest', ['model' => $model]);
     }
 }
