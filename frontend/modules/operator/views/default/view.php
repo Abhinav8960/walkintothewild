@@ -168,9 +168,9 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
                             <li><a class="tab-items active_safri" data-tab="safariParks">
                                     <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
-                            <li><a class="tab-items " data-tab="resort">
+                            <!-- <li><a class="tab-items " data-tab="resort">
                                     <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
-                                </a></li>
+                                </a></li> -->
                             <li><a class="tab-items" data-tab="sharedSafari">
                                     <div class="numparks">Shared Safari <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
