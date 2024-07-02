@@ -11,6 +11,8 @@ use common\interfaces\StatusInterface;
 use common\models\MailLog;
 use common\models\operator\form\SafariOperatorForm;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorActivities;
+use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorSearch;
 
 /**
@@ -95,6 +97,26 @@ class SafariOperatorController extends Controller
                     $model->initializeForm();
                     if ($model->safarioperator_model->save(false)) {
                         $model->uploadFile();
+                        $parks = $model->park_id;
+                        if ($parks) {
+                            SafariOperatorPark::updateAll(['status' => 2], ['safari_operator_id' => $model->safarioperator_model->id]);
+                            foreach ($parks as $park) {
+                                $safarioperatorpark = new SafariOperatorPark();
+                                $safarioperatorpark->safari_operator_id = $model->safarioperator_model->id;
+                                $safarioperatorpark->park_id = $park;
+                                $safarioperatorpark->save(false);
+                            }
+                        }
+                        $activities = $model->offers_other_wildlifeactivities;
+                        if ($activities) {
+                            SafariOperatorActivities::updateAll(['status' => 2], ['safari_operator_id' => $model->safarioperator_model->id]);
+                            foreach ($activities as $activity) {
+                                $safarioperatoractivity = new SafariOperatorActivities();
+                                $safarioperatoractivity->safari_operator_id = $model->safarioperator_model->id;
+                                $safarioperatoractivity->wildlife_activity_id = $activity;
+                                $safarioperatoractivity->save(false);
+                            }
+                        }
 
                         $to_mail = $model->safarioperator_model->email;
                         $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';

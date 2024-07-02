@@ -20,45 +20,29 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::PARK_VIEW;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
-<div class="fixedbanner">
+
     <section class="banner_section-inner ee position-relative">
         <picture class="position-relative">
             <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
             <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
         </picture>
         <div class="banner_searchBox">
-            <div class="container-lg">
-                <div class="row">
-                    <div class="col-12 ">
-                        <div class="tab-block" id="tab-block">
-                            <ul class="tab-mnu d-md-flex d-none">
-                                <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="" width="" class="me-2">Safari</li>
-                                <li> <img src="<?= $this->params['baseurl'] ?>/img/birdingicon.png" alt="" width="29" class="me-2">Birding</li>
-                                <li> <img src="<?= $this->params['baseurl'] ?>/img/resorticon.png" alt="" width="29" class="me-2"> Resort</li>
-                            </ul>
-
-                            <div class="tab-cont">
-                                <div class="tab-pane">
-                                    <?= $this->render('_advance_search', [
-                                        'model' => $searchModel
-                                    ]) ?>
-                                </div>
-                            </div>
-                        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="headingBnner_inner">
+                        <h1><?= $model->title ?></h1>
                     </div>
                 </div>
             </div>
+        </div>
+
+    </div>
     </section>
-</div>
-<section class="articals_wrapper py-3 margin-setposi">
+
+<section class="articals_wrapper py-3 ">
     <div class="container-fluid">
         <div class="row mb-4  justify-content-center mt-4">
-            <div class="col-lg-12 col-xl-10 pb-sm-4 safartabs">
-                <div class="safrititles pt-xl-0 pt-3 d-sm-flex justify-content-center align-items-center">
-                    <h1 class="titleSafri fs-2 text-center"><?= $model->title ?></h1>
-                   
-                </div>
-            </div>
             <div class="col-lg-12 col-xl-10 safartabs">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
                     <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion pe-1 writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="30" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M501.362 383.95 320.497 51.474c-29.059-48.921-99.896-48.986-128.994 0L10.647 383.95c-29.706 49.989 6.259 113.291 64.482 113.291h361.736c58.174 0 94.203-63.251 64.497-113.291zM256 437.241c-16.538 0-30-13.462-30-30s13.462-30 30-30 30 13.462 30 30-13.462 30-30 30zm30-120c0 16.538-13.462 30-30 30s-30-13.462-30-30v-150c0-16.538 13.462-30 30-30s30 13.462 30 30v150z" fill="#09422d" opacity="1" data-original="#000000" class=""></path></g></svg>

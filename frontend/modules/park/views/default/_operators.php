@@ -123,8 +123,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="padding_right">
             <div class="backgroud_oprator">
-                <div class="title_safari JoinPadding d-flex justify-content-between align-items-center flex-wrap">
-                    <h4>Join Shared Safaris in Bandhavgarh Tiger Reserve</h4>
+                <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
+                    <h4 class="text-center">Join Shared Safaris in Bandhavgarh Tiger Reserve</h4>
                     <div class="joinshareView mt-xl-0 mt-3">
                         <a href="" class="btn_shareView">View All</a>
                     </div>
