@@ -397,6 +397,30 @@ a {
     border-radius: 4px;
     color: var(--background-primary);
 }
+.backgroud_oprator{
+
+    background-color: var(--background-primary);
+    border-radius: 10px;
+    padding: 20px 14px 25px 14px;
+}
+.JoinPadding {
+
+    padding-bottom: 19px;
+  
+}
+.JoinPadding  h4{
+
+    margin-bottom: 0;
+}
+.joinshareView .btn_shareView{
+
+    background-color: var(--background-yellow);
+    color: #000000;
+    font-weight: 500;
+    font-size: 18px;
+    padding: 8px 10px;
+    border-radius: 20px;
+}
 
 .title_top h4 {
 
