@@ -1,6 +1,7 @@
 <?php
 
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 $this->title = 'Safari Tour - User Review';
 $this->params['breadcrumbs_home_url'] = '/operatordashboard';
@@ -10,7 +11,7 @@ $this->params['title'] = $this->title;
 ?>
 
 <div class="panel panel-primary tabs-style-2">
-    
+
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
             <div class="tab-pane active">
@@ -78,6 +79,18 @@ $this->params['title'] = $this->title;
                                 'value' => function ($model) {
                                     return $model->created_at;
                                 }
+                            ],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'header' => "Actions",
+                                'contentOptions' => ['style' => 'width: 15%;'],
+                                'template' => '{view}&nbsp{update}&nbsp{suspend}',
+                                'buttons' => [
+                                    'view' => function ($url, $model) {
+                                        return   Html::Button('<img src="/img/view.png" alt="" width="25" height="25">', ['value' => "/operatordashboard/safari/flagview?id=$model->id&safari_operator_id=$model->safari_operator_id", 'class' => 'btn popupButton', 'title' => 'View Flages']);
+                                    },
+
+                                ]
                             ],
                         ],
                     ]); ?>

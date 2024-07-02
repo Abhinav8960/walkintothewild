@@ -38,6 +38,7 @@ use common\models\meta\MetaZoneType;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
+use common\models\operator\SafariOperatorRating;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
 use common\models\park\SafariPark;
@@ -234,7 +235,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return [1 => 'Backend', 2 => 'Frontend'];
     }
-
+    public static function users()
+    {
+        return ArrayHelper::map(User::find()->where(['status' => 10])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+    }
     public static function stateoption()
     {
         return ArrayHelper::map(MasterState::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['state_name' => SORT_ASC])->all(), 'id', 'state_name');
@@ -664,5 +668,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function removeLeadingChar($value, $char = '0')
     {
         return ltrim($value, $char);
+    }
+
+
+    public static function safarirating()
+    {
+        return ArrayHelper::map(SafariOperatorRating::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['rating' => SORT_ASC])->all(), 'id', 'review');
     }
 }

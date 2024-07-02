@@ -30,7 +30,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Location">
                             
                             </div>
                             <div class="text-form">
@@ -41,7 +41,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -60,7 +60,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -72,7 +72,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -93,7 +93,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0"><?= $model->airportlist ?></p>
@@ -103,7 +103,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Animals">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -118,7 +118,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cost">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -132,7 +132,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 align-items-center">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">
+                                <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Month when park is closed">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
