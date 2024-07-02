@@ -64,10 +64,10 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'safari_operator_id' => 'Safari Operator ID',
-            'park_id' => 'Park ID',
-            'safari_operator_rating_id' => 'Safari Operator Rating ID',
-            'report_reason_id' => 'Report Reason ID',
+            'safari_operator_id' => 'Safari Operator',
+            'park_id' => 'Park',
+            'safari_operator_rating_id' => 'Safari Operator Rating',
+            'report_reason_id' => 'Report Reason',
             'report_detail' => 'Report Detail',
             'user_device' => 'User Device',
             'user_agent' => 'User Agent',

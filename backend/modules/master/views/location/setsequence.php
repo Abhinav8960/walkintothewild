@@ -1,6 +1,6 @@
 <?php
 
-$this->title = 'Update Sequence of Suggestion Category';
+$this->title = 'Update Sequence of Location';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
@@ -11,8 +11,8 @@ $this->params['title'] = $this->title;
                 <div class="col-md-12">
                     <div class="col-md-12">
                         <h4 class="text-center"><?= $this->title ?></h4>
-                        <a href="javascript:void(0);" class="reorder_link btn btn-info" id="saveReorder">Click to Update category Sequence</a>
-                        <div id="reorderHelper" class="light_box" style="display:none;">1. Drag Suggestion Category to update sequence.<br>2. Click 'Save Updated Sequence' when finished.</div>
+                        <a href="javascript:void(0);" class="reorder_link btn btn-info" id="saveReorder">Click to Update location Sequence</a>
+                        <div id="reorderHelper" class="light_box" style="display:none;">1. Drag Location to update sequence.<br>2. Click 'Save Updated Sequence' when finished.</div>
                         <div class="gallery">
                             <ul class="reorder_ul reorder-privacy-list" style="list-style: none; padding-left:0rem;">
                                 <?php
@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <?php
-$form_validate_url = \yii\helpers\Url::toRoute(["/master/suggestion-category/savesequence"]);
+$form_validate_url = \yii\helpers\Url::toRoute(["/master/location/savesequence"]);
 $script = <<< JS
     $(document).ready(function() {
         $('.reorder_link').on('click', function() {
@@ -53,7 +53,7 @@ $script = <<< JS
                 if (!$("#saveReorder i").length) {
                     $(this).html('').prepend('<i class="fa fa-refresh"></i>');
                     $("ul.reorder-privacy-list").sortable('destroy');
-                    $("#reorderHelper").html("Updating Category Sequence - This could take a moment. Please don't navigate away from this page.").removeClass('light_box').addClass('notice notice_error');
+                    $("#reorderHelper").html("Updating Location Sequence - This could take a moment. Please don't navigate away from this page.").removeClass('light_box').addClass('notice notice_error');
                     var h = [];
                     $("ul.reorder-privacy-list li").each(function() {
                         h.push($(this).attr('id'));

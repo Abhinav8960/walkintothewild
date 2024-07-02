@@ -14,6 +14,7 @@ use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 use frontend\controllers\FrontendBaseController;
+use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorReviewForm;
 
 /**
@@ -229,6 +230,60 @@ class DefaultController extends FrontendBaseController
             return \yii\widgets\ActiveForm::validate($model);
         }
     }
+
+
+
+    public function actionFlag($operator_id, $park_id, $safari_operator_rating_id)
+    {
+        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        if (!$operator) {
+            return $this->redirect(['/operator']);
+        }
+
+        $model = new SafariOperatorRatingReportForm();
+        $model->safari_operator_id = $operator_id;
+        $model->park_id = $park_id;
+        $model->safari_operator_rating_id = $safari_operator_rating_id;
+
+        $model->action_url = '/operator/default';
+        $model->action_validate_url = '/operator/default/validateflag';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->flag_model->save(false)) {
+                        Yii::$app->session->setFlash('success', 'Flag added successfully!');
+                        return $this->redirect([
+                            '/operator/default/view',
+                            'slug' => $operator->slug,
+                        ]);
+                    }
+                }
+            }
+        } else {
+            $model->flag_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_flag_form', [
+                'model' => $model,
+                'operator_id' => $operator_id,
+            ]);
+        }
+    }
+
+    public function actionValidateflag($id = null)
+    {
+        $model = new SafariOperatorRatingReportForm();
+        if ($id != null) {
+            $flag_model = $this->findModel($id);
+            $model = new SafariOperatorRatingReportForm($flag_model);
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
 
     public function findModel($id)
     {

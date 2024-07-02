@@ -4,6 +4,8 @@ use common\models\GeneralModel;
 use common\models\operator\SafariOperatorRating;
 use yii\helpers\Html;
 use yii\helpers\Url;
+
+use yii\bootstrap5\ActiveForm;
 ?>
 <div class="row">
     <div class="col-12">
@@ -52,7 +54,11 @@ use yii\helpers\Url;
                 foreach ($reviews as $review) {  ?>
                     <div class="commentsOther  position-relative">
                         <div class="objec-flgs">
-                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="">
+                            <?php if (Yii::$app->user->id) {  ?>
+                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/operator/default/flag', 'operator_id' => $operator->id, 'park_id' => $review->park_id, 'safari_operator_rating_id' => $review->id]) ?>">
+                            <?php } else {
+                                echo 'Please <a href="/site/auth?authclient=google">Sign in</a> for start Comment';
+                            } ?>
                         </div>
                         <div class="postcomment  pt-3">
                             <div class="text_com">
@@ -106,11 +112,38 @@ use yii\helpers\Url;
     </div>
 </div>
 
+
+
+<div class="modal fade" id="modalFlag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Report Content
+                    <br>
+                    <p>Please report inappropriate members and/or content to help our Trust & Safety team keep our Community safe for everyone.</p>
+                </h6>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt=""></button>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <?php
 $script = <<< JS
 function writeareviewfunction() {
 	$('.writeAReviewBtn').on('click', function () {
         $('#review-write-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+    $('.flagBtn').on('click', function () {
+        $('#modalFlag').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});
