@@ -1,0 +1,92 @@
+<?php
+
+namespace frontend\models;
+
+use yii\base\Model;
+use yii\data\ActiveDataProvider;
+use common\models\sharesafari\ShareSafari;
+
+/**
+ * ShareSafariSearch represents the model behind the search form of `common\models\sharesafari\ShareSafari`.
+ */
+class ShareSafariSearch extends ShareSafari
+{
+    public $month_id;
+    public $custom_sort_by;
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['start_date', 'end_date'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by'], 'safe'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function search($params, $pagination = true)
+    {
+        $query = ShareSafari::find()->where(['share_safari.status' => 1]);
+
+        // add conditions that should always apply here
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.host_type' => $this->host_type,
+            'share_safari.park_id' => $this->park_id,
+            'share_safari.share_safari_agenda_id' => $this->share_safari_agenda_id,
+            'share_safari.no_of_safari' => $this->no_of_safari,
+            'share_safari.start_date' => $this->start_date,
+            'share_safari.end_date' => $this->end_date,
+            'share_safari.stay_category_id' => $this->stay_category_id,
+            'share_safari.total_seat' => $this->total_seat,
+            'share_safari.share_seat' => $this->share_seat,
+            'share_safari.created_at' => $this->created_at,
+            'share_safari.created_by' => $this->created_by,
+            'share_safari.updated_at' => $this->updated_at,
+            'share_safari.updated_by' => $this->updated_by,
+            'share_safari.status' => $this->status,
+        ]);
+        $query->andFilterWhere(['like', 'safari_plan', $this->safari_plan]);
+
+
+        return $dataProvider;
+    }
+}

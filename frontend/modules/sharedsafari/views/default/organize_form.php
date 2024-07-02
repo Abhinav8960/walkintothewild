@@ -25,13 +25,13 @@ use yii\helpers\Html;
         </div>
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Agenda</label>
-            <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 
         </div>
 
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->dropDownList(['1' => 'One', '2' => 'Two', '3' => 'Three'], ['prompt' => 'No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->dropDownList([1, 2, 3, 4], ['prompt' => 'Select No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
 
         <div class="col-md-12 mb-2">
@@ -54,9 +54,9 @@ use yii\helpers\Html;
         <div class="col-lg-6 mb-2">
             <label for="" class="Modal_label">Estimate Price Per Person</label>
             <div class="d-flex gap-3 align-items-center">
-                <?= $form->field($model, 'estimate_price_min')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control'])->label(false) ?>
+                <?= $form->field($model, 'estimate_price_min')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control', 'placeholder' => 1000])->label(false) ?>
                 <span>-</span>
-                <?= $form->field($model, 'estimate_price_max')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control'])->label(false) ?>
+                <?= $form->field($model, 'estimate_price_max')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control', 'placeholder' => 2000])->label(false) ?>
             </div>
 
         </div>
@@ -71,16 +71,16 @@ use yii\helpers\Html;
     <div class="row mt-2 pe-0">
         <div class="col-lg-8">
             <label for="" class="Modal_label">You Are?</label>
-            <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer', '4' => 'Safari Tour Operator'], ['prompt' => 'No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer', '4' => 'Safari Tour Operator'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Total Seat</label>
-                    <?= $form->field($model, 'total_seat')->dropDownList(['6' => 6, '7' => 7, '8' => 8, '10' => 10], ['prompt' => 'Total Seat', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'total_seat')->dropDownList([6, 7, 8, 9, 10], ['prompt' => 'Total Seat', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Share Seats</label>
-                    <?= $form->field($model, 'share_seat')->dropDownList(['2' => 2, '4' => 4, '6' => 6, '8' => 8], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'share_seat')->dropDownList([3, 4, 6, 8], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                 </div>
             </div>
         </div>

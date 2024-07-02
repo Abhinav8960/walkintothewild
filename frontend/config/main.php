@@ -130,6 +130,17 @@ return [
                 '/article/<slug>' => '/article/default/view', //article view url
 
 
+
+                // Shared Safari URLs
+                '/sharedsafari' => '/sharedsafari/default/index',
+                '/sharedsafari/default/validate' => '/sharedsafari/default/validate',
+                '/sharedsafari/default/update' => '/sharedsafari/default/update',
+                '/sharedsafari/default/join' => '/sharedsafari/default/join',
+                '/sharedsafari/default/unjoin' => '/sharedsafari/default/unjoin',
+                '/sharedsafari/default/organize-safari' => '/sharedsafari/default/organize-safari',
+                '/sharedsafari/<slug>' => '/sharedsafari/default/view',
+
+
                 '/operator/<slug>' => '/operator/default/view', //operator view url
                 '/operator/resort/<id>' => '/operator/default/resort', //operator view url
                 '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url

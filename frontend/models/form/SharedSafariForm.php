@@ -1,10 +1,11 @@
 <?php
 
-namespace frontend\models;
+namespace frontend\models\form;
 
+use Yii;
 use common\interfaces\StatusInterface;
 use common\models\sharesafari\ShareSafari;
-use Yii;
+use common\models\sharesafari\ShareSafariHistory;
 
 
 class SharedSafariForm extends \yii\base\Model
@@ -39,7 +40,7 @@ class SharedSafariForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required'],
+            [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['safari_plan'], 'string'],
@@ -93,5 +94,22 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->total_seat = $this->total_seat;
         $this->shared_safari_model->share_seat = $this->share_seat;
         $this->shared_safari_model->status = $this->status;
+
+        if ($this->shared_safari_model->slug == '') {
+            $slug = $this->shared_safari_model->park->slug  . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_model->host_user_id . time() . '-shared-safari';
+            $this->shared_safari_model->slug = $slug;
+        }
+    }
+
+
+    /**
+     * Safari History
+     */
+    public function safariHistory()
+    {
+        $history = new ShareSafariHistory();
+        $history->parent_id = $this->shared_safari_model->id;
+        $history->setAttributes($this->shared_safari_model->attributes, false);
+        $history->save(false);
     }
 }

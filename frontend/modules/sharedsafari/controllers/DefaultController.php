@@ -2,12 +2,14 @@
 
 namespace frontend\modules\sharedsafari\controllers;
 
-use common\interfaces\StatusInterface;
-use common\models\sharesafari\ShareSafari;
-use frontend\controllers\FrontendBaseController;
-use frontend\models\SharedSafariForm;
 use Yii;
 use yii\web\NotFoundHttpException;
+use common\interfaces\StatusInterface;
+use frontend\models\ShareSafariSearch;
+use common\models\sharesafari\ShareSafari;
+use frontend\models\form\SharedSafariForm;
+use frontend\controllers\FrontendBaseController;
+use common\models\sharesafari\ShareSafariIntrested;
 
 /**
  * DefaultController.
@@ -21,9 +23,13 @@ class DefaultController extends FrontendBaseController
      */
     public function actionIndex()
     {
-        $shared_safari = ShareSafari::find()->where(['status' => 1])->all();
+        $searchModel = new ShareSafariSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+
         return $this->render('index', [
-            'shared_safari' => $shared_safari
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider
         ]);
     }
 
@@ -33,13 +39,14 @@ class DefaultController extends FrontendBaseController
         $model = new SharedSafariForm();
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/sharedsafari/default';
+        $model->action_url = '/sharedsafari/default/organize-safari';
         $model->action_validate_url = '/sharedsafari/default/validate';
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_model->save(false)) {
+                        $model->safariHistory();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
@@ -62,5 +69,108 @@ class DefaultController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+
+    /**
+     * Update Safari
+     */
+    public function actionUpdate()
+    {
+    }
+
+
+    /**
+     * Shared Safari Detail View
+     */
+    public function actionView($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return $this->redirect(['index']);
+        }
+
+        return $this->render('view', [
+            'share_safari' => $share_safari
+        ]);
+    }
+
+
+    /**
+     * Join Safari
+     */
+    public function actionJoin($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if ($share_safari) {
+            if (Yii::$app->user->identity) {
+                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id])->one();
+                if (!$share_safari_intrested) {
+                    $share_safari_intrested = new ShareSafariIntrested();
+                }
+                $agent = new \Jenssegers\Agent\Agent();
+                $agent->setUserAgent(Yii::$app->request->userAgent);
+                $share_safari_intrested->user_ip_address = Yii::$app->getRequest()->getUserIp();
+                $share_safari_intrested->user_agent =  Yii::$app->request->userAgent;
+                $share_safari_intrested->user_device  = $agent->device();
+                $share_safari_intrested->user_platform = $agent->platform();
+                $share_safari_intrested->user_browser = $agent->browser();
+                $share_safari_intrested->park_id = $share_safari->park_id;
+                $share_safari_intrested->share_safari_id = $share_safari->id;
+                $share_safari_intrested->user_id = Yii::$app->user->identity->id;
+                $share_safari_intrested->status = 1;
+                $share_safari_intrested->intrested_at = time();
+                if ($share_safari_intrested->save()) {
+                    Yii::$app->session->setFlash('success', 'You Just Join the Shared Safari!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'You can not Join this Shared Safari currently!');
+                }
+            }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
+        }
+        return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+    }
+
+
+    /**
+     * Un Join Safari
+     */
+    public function actionUnjoin($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if ($share_safari) {
+            if (Yii::$app->user->identity) {
+                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id])->one();
+                if ($share_safari_intrested) {
+                    $agent = new \Jenssegers\Agent\Agent();
+                    $agent->setUserAgent(Yii::$app->request->userAgent);
+                    $share_safari_intrested->user_ip_address = Yii::$app->getRequest()->getUserIp();
+                    $share_safari_intrested->user_agent =  Yii::$app->request->userAgent;
+                    $share_safari_intrested->user_device  = $agent->device();
+                    $share_safari_intrested->user_platform = $agent->platform();
+                    $share_safari_intrested->user_browser = $agent->browser();
+                    $share_safari_intrested->park_id = $share_safari->park_id;
+                    $share_safari_intrested->share_safari_id = $share_safari->id;
+                    $share_safari_intrested->user_id = Yii::$app->user->identity->id;
+                    $share_safari_intrested->status = 0; //UNfollow
+                    $share_safari_intrested->unintrested_at = time();
+                    if ($share_safari_intrested->save()) {
+                        Yii::$app->session->setFlash('success', 'You are not part of this Shared Safari!');
+                    } else {
+                        Yii::$app->session->setFlash('error', 'You can not unfollow this Shared Safari currently!');
+                    }
+                }
+            }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
+        }
+        return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+    }
+
+
+    /**
+     * Show Safari List by user or host
+     */
+    public function actionSafaribyuser($user_id)
+    {
     }
 }

@@ -3,6 +3,7 @@
 namespace common\models\sharesafari;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "share_safari_intrested".
@@ -80,5 +81,11 @@ class ShareSafariIntrested extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'status' => 'Status',
         ];
+    }
+
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
