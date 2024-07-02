@@ -35,7 +35,7 @@ use yii\helpers\Url;
                         <?php if (Yii::$app->user->identity) { ?>
                             <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
                         <?php } else { ?>
-                            <button class="btn_review" value="#">Please Login to Review</button>
+                            <a class="btn_review" href="/site/auth?authclient=google">Please Login to Review</a>
                         <?php } ?>
 
                     </div>

@@ -50,7 +50,7 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['safari_operator_id', 'park_id', 'safari_operator_rating_id', 'report_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['user_id', 'safari_operator_id', 'park_id', 'safari_operator_rating_id', 'report_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['report_detail', 'user_agent'], 'string', 'max' => 512],
             [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
             [['user_ip_address'], 'string', 'max' => 20],
