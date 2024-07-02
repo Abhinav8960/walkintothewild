@@ -2,6 +2,9 @@
 
 namespace backend\modules\operatordashboard\controllers;
 
+use common\interfaces\StatusInterface;
+use common\models\MailLog;
+use common\models\operator\form\SafariOperatorRequestForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -9,6 +12,9 @@ use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
+use common\models\registration\SafariOperatorRequest;
+use common\models\SafariOperatorRequestSearch;
+use yii\web\UploadedFile;
 
 /**
  * Safari controller for the `operatordashboard` module
@@ -129,5 +135,90 @@ class SafariController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    // /**
+    //  * Renders the index view for the module
+    //  * @return string
+    //  */
+    // public function actionUpdateRequest()
+    // {
+
+    //     $safari_operator = $this->findModel();
+    //     $searchModel = new SafariOperatorRequestSearch();
+    //     $searchModel->safari_operator_id = $safari_operator->id;
+    //     $dataProvider = $searchModel->search($this->request->queryParams);
+
+    //     return $this->render('update', [
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //         'safari_operator_id' => $safari_operator->id,
+    //     ]);
+    // }
+
+    public function actionEditRequest($safari_operator_id)
+    {
+        $searchModel = new SafariOperatorRequestSearch();
+        $searchModel->safari_operator_id = $safari_operator_id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+
+
+        $safari_operator_request_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
+        $model = new SafariOperatorRequestForm($safari_operator_request_model);
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->action_url = '/operatordashboard/safari/edit-request?safari_operator_id=' . $safari_operator_id . '';
+        $model->action_validate_url = '/operatordashboard/safari/validate?safari_operator_id=' . $safari_operator_id . '';
+        $model->referrer_url = \Yii::$app->request->referrer;
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->logo = UploadedFile::getInstance($model, 'logo');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_operator_request_model->save(false)) {
+                        $model->uploadFile();
+
+                        $to_mail = $model->safari_operator_request_model->email;
+                        $subject = 'Information Update Successfully!';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        $req = ['username' => $model->safari_operator_request_model->business_name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        \Yii::$app->session->setFlash('success', 'Safari Operator Update Successfully');
+                        return $this->redirect(['update-request']);
+                    }
+                }
+            }
+        } else {
+            $model->safari_operator_request_model->loadDefaultValues();
+        }
+
+        return $this->render('edit', [
+            'model' => $model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    public function actionValidate($safari_operator_id = null)
+    {
+
+        if ($safari_operator_id != null) {
+            $safari_operator_request_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
+            $model = new SafariOperatorRequestForm($safari_operator_request_model);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
+
+    public function actionViewRequest($safari_operator_id)
+    {
+        return $this->render('viewrequest', []);
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
 use common\models\GeneralModel;
+use yii\helpers\Html;
 
 $this->title = 'Safari Tour - Overview';
 $this->params['breadcrumbs_home_url'] = '/operatordashboard';
 $this->params['breadcrumbs'][] =  ['label' => 'Operator', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-
+$this->params['buttons'][] = Html::a('+ Edit', ['/operatordashboard/safari/edit-request', 'safari_operator_id' => $safari_operator->id], ['class' => 'btn btn-orange ', 'title' => 'update']);
 
 $budget = [];
 if ($safari_operator->is_offer_premium_budget == 1) {
@@ -38,7 +39,7 @@ foreach ($park as $key => $role) {
 ?>
 
 <div class="panel panel-primary tabs-style-2">
-   
+
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
             <div class="tab-pane active">

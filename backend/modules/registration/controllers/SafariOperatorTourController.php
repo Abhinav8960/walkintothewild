@@ -100,6 +100,8 @@ class SafariOperatorTourController extends Controller
                             $safari_operator->status                          =  $model->safarioperator_request_approval_model->status;
                             if ($safari_operator->save(false)) {
 
+                                $model->safarioperator_request_approval_model->safari_operator_id = $safari_operator->id;
+                                $model->safarioperator_request_approval_model->save(false);
                                 $parks = SafariOperatorRequestPark::find()->where(['safari_operator_request_id' => $model->safarioperator_request_approval_model->id, 'status' => 1])->all();
 
                                 if ($parks) {
@@ -235,9 +237,6 @@ class SafariOperatorTourController extends Controller
     public function actionUpdate($id)
     {
         $request_model = $this->findModel($id);
-        // echo '<pre>';
-        // print_r($request_model);
-        // die();
         $model = new SafaritourRegistrationForm($request_model);
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->action_url = '/registration/safari-operator-tour/update?id=' . $id . '';
