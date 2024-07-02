@@ -6,6 +6,7 @@ use common\interfaces\StatusInterface;
 use common\models\master\suggetioncategory\form\MasterSuggestionCategoryForm;
 use common\models\master\suggetioncategory\MasterSuggestionCategory;
 use common\models\master\suggetioncategory\MasterSuggestionCategorySearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -103,6 +104,47 @@ class SuggestionCategoryController extends Controller
         return $this->render('view', [
             'model' => $model,
         ]);
+    }
+
+
+
+    /**
+     * Set Sequence of Privacy Policy
+     *
+     * @return void
+     */
+    public function actionSetsequence()
+    {
+        $searchModel = new MasterSuggestionCategorySearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('setsequence', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            return $this->render('setsequence', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider
+            ]);
+        }
+    }
+    /**
+     * Save Sequence
+     *
+     * @return void
+     */
+    public function actionSavesequence()
+    {
+        $id_array = explode(",", Yii::$app->request->post('ids'));
+        $count = 1;
+        foreach ($id_array as $id) {
+            MasterSuggestionCategory::updateAll([
+                'sequence' => $count
+            ], ['id' => $id]);
+            $count++;
+        }
+        return true;
     }
 
 

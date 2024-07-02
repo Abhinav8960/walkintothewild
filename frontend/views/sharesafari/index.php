@@ -172,7 +172,7 @@ $this->params['title'] = $this->title;
                     </div>
                     <div class="commentsOther  position-relative">
                         <div class="objec-flgs">
-                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="">
+                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" data-bs-toggle="modal" data-bs-target="#modalFlag">
                         </div>
                         <div class="postcomment d-flex gap-2 pt-3">
                             <div class="avatar">
@@ -710,6 +710,49 @@ $this->params['title'] = $this->title;
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalFlag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Report Content
+                    <br>
+                    <p>Please report inappropriate members and/or content to help our Trust & Safety team keep our Community safe for everyone.</p>
+                </h6>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt=""></button>
+            </div>
+            <div class="modal-body modal_form">
+              <div class="row">
+                <div class="col-12">
+                            <div class="selects w-100 d-flex align-items-center gap-3">
+                                <label for="" class="Modal_label">Reason</label>
+                                <select class="form-select form-select-lg" aria-label="Large select example">
+                                    <option selected>6</option>
+                                    <option value="1">7</option>
+                                    <option value="2">8</option>
+                                    <option value="3">10</option>
+                                </select>
+                            </div>
+                </div>
+                <div class="col-lg-12 mb-2 mt-2">
+                <label for="" class="Modal_label">Details</label>
+                        <div class="textarea">
+                            <textarea name="" id="" class="form-control" placeholder="Write about your plan"></textarea>
+                        </div>
+                </div>
+                <div class="col-12">
+                    <div class="btn_report float-end">
+                       <div class="btn_report_cance">
+                         <button data-bs-dismiss="modal" aria-label="Close" class="close_btns ">Cancel</button>
+                         <button type="submit" class="btns_submit ">Report</button>
+                       </div>
+                    </div>
+                </div>
+              </div>
             </div>
         </div>
     </div>

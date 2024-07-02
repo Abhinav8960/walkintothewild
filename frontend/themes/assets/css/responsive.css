@@ -605,6 +605,10 @@ line-height: 19px;
         padding: 0px 63px 0px 3px !important;
     }
 
+    .padding_left{
+
+        padding-left: 63px !important;
+    }
 
 
     .height_set {
@@ -1190,6 +1194,21 @@ line-height: 19px;
     .title_white br {
 
         display: none;
+    }
+    .inner_animals:hover::after {
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .inner_animals:hover .imag_width {
+    
+        -webkit-transform: scale(1.1);
+    
+        -ms-transform: scale(1.1);
+    
+        transform: scale(1.1);
+        -webkit-transition: all 0.5;
+        -o-transition: all 0.5;
+        transition: all 0.5;
     }
 }
 

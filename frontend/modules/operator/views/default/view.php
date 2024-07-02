@@ -121,11 +121,26 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
                             </div>
                             <div class="d-flex gap-md-5 gap-2">
                                 <div class="phone">
-                                    <a href="tel:<?= $operator->phone_no ?>"><i class="fa-solid fa-phone me-2"></i> <span>Call</span></a>
+                                    <a href="tel:<?= $operator->phone_no ?>">
+                                        <i class="fa-solid fa-phone me-2"></i>
+                                        <span>Call</span>
+                                        <div class="phone-numbers">
+                                            <a href="tel:<?= $operator->phone_no ?>"><?= $operator->phone_no ?></a>
+                                            <a href="tel:<?= $operator->operator_phone_no ?>"><?= $operator->operator_phone_no ?></a>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="phone">
-                                    <a href="mailto:<?= $operator->email ?>"><i class="fa-solid fa-envelope me-2"></i> <span> Email</span></a>
+                                <div class="phone email">
+                                    <a href="mailto:<?= $operator->email ?>">
+                                        <i class="fa-solid fa-envelope me-2"></i>
+                                        <span>Email</span>
+                                        <div class="email-addresses">
+                                            <a href="mailto:<?= $operator->email ?>"><?= $operator->email ?></a>
+                                            <a href="mailto:<?= $operator->operator_email ?>"><?= $operator->operator_email ?></a>
+                                        </div>
+                                    </a>
                                 </div>
+
                             </div>
                             <div class="socil-links d-flex gap-md-4 gap-2 my-3 flex-wrap">
                                 <div class="fs <?= $operator->facebook_url ? '' : 'no-link-found' ?>">
@@ -168,9 +183,9 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
                             <li><a class="tab-items active_safri" data-tab="safariParks">
                                     <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
-                            <li><a class="tab-items " data-tab="resort">
+                            <!-- <li><a class="tab-items " data-tab="resort">
                                     <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
-                                </a></li>
+                                </a></li> -->
                             <li><a class="tab-items" data-tab="sharedSafari">
                                     <div class="numparks">Shared Safari <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
@@ -234,3 +249,90 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
         </div>
     </div>
 </div>
+<style>
+    /* Flex container styles */
+    .d-flex {
+        display: flex;
+    }
+
+    /* Gap between items on medium and larger screens */
+    .gap-md-5 {
+        gap: 20px;
+        /* Adjust as needed */
+    }
+
+    /* Gap between items on smaller screens */
+    .gap-2 {
+        gap: 5px;
+        /* Adjust as needed */
+    }
+
+    /* Phone and email container styles */
+    .phone,
+    .email {
+        position: relative;
+    }
+
+    /* Styling for links (Call and Email) */
+    .phone a,
+    .email a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Hover effect for links */
+    .phone a:hover,
+    .email a:hover {
+        background-color: #f0f0f0;
+        /* Change background color on hover */
+    }
+
+    /* Styling for icons */
+    .phone i,
+    .email i {
+        font-size: 1.2rem;
+        /* Adjust icon size */
+        margin-right: 8px;
+        /* Space between icon and text */
+    }
+
+    /* Styling for dropdowns (phone numbers and email addresses) */
+    .phone .phone-numbers,
+    .email .email-addresses {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+    /* Show dropdowns on hover */
+    .phone:hover .phone-numbers,
+    .email:hover .email-addresses {
+        display: block;
+    }
+
+    /* Styling for links inside dropdowns */
+    .phone .phone-numbers a,
+    .email .email-addresses a {
+        display: block;
+        color: #333;
+        text-decoration: none;
+        margin-top: 5px;
+        transition: color 0.3s ease;
+    }
+
+    /* Hover effect for links inside dropdowns */
+    .phone .phone-numbers a:hover,
+    .email .email-addresses a:hover {
+        color: #007bff;
+        /* Change color on hover */
+    }
+</style>
