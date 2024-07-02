@@ -228,13 +228,11 @@ class SafariOperatorController extends Controller
 
 
 
-    public function actionValidate($id = null)
+    public function actionValidate($id)
     {
-        $model = new SafariOperatorForm();
-        if ($id != null) {
-            $formmodel = $this->findModel($id);
-            $model = new SafariOperatorForm($formmodel);
-        }
+        $formmodel = $this->findModel($id);
+        $model = new SafariOperatorForm($formmodel);
+        
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;

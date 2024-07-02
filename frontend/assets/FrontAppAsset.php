@@ -11,7 +11,7 @@ class FrontAppAsset extends AssetBundle
 {
     public $sourcePath = '@frontend/themes/assets/';
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $css = [
         'css/style.css',
@@ -27,7 +27,8 @@ class FrontAppAsset extends AssetBundle
         // 'https://code.jquery.com/jquery-3.7.1.js',
         'https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js',
         'js/script.js',
-        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js'
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js',
+        'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js'
 
 
     ];
