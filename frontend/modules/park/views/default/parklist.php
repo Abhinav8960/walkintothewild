@@ -136,7 +136,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="col-md-9 col-sm-8 col-xl-9">
                                         <div class="safariSearch_wrap">
                                             <div class="safrititles pt-md-0 pt-3">
-                                                <h6 class=""><?= $model->title ?> | <span>Madhya Pradesh, Central India</span></h6>
+                                                <h6 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?>, <?= isset($model->location) ? $model->location->title : '' ?></span></h6>
                                             </div>
                                             <div class="seelctes_text  pb-4 ">
                                                 <p>

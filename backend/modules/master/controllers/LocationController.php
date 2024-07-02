@@ -118,6 +118,47 @@ class LocationController extends Controller
     }
 
 
+        /**
+     * Set Sequence of Privacy Policy
+     *
+     * @return void
+     */
+    public function actionSetsequence()
+    {
+        $searchModel = new MasterLocationSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('setsequence', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            return $this->render('setsequence', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider
+            ]);
+        }
+    }
+    /**
+     * Save Sequence
+     *
+     * @return void
+     */
+    public function actionSavesequence()
+    {
+        $id_array = explode(",", Yii::$app->request->post('ids'));
+        $count = 1;
+        foreach ($id_array as $id) {
+            MasterLocation::updateAll([
+                'sequence' => $count
+            ], ['id' => $id]);
+            $count++;
+        }
+        return true;
+    }
+
+
+
     /**
      * Deletes an existing MasterLocation model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
