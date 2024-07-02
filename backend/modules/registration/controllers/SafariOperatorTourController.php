@@ -57,13 +57,10 @@ class SafariOperatorTourController extends Controller
                     $model->initializeForm();
                     if ($model->safarioperator_request_approval_model->save()) {
                         if ($model->is_approved == 1) {
-                            $old_safari_operator = SafariOperator::find()->where(['safari_operator_request_id' => $model->safarioperator_request_approval_model->id, 'status' => 1])->limit(1)->one();
-                            if (!$old_safari_operator) {
-                                $new_safari_operator = new SafariOperator();
-                                $safari_operator = $new_safari_operator;
-                            } else {
-                                $safari_operator = $old_safari_operator;
-                            }
+                            $safari_operator = SafariOperator::find()->where(['id' => $model->safarioperator_request_approval_model->safari_operator_id])->limit(1)->one();
+                            if (!$safari_operator) {
+                                $safari_operator = new SafariOperator();
+                            } 
                             $safari_operator->category_id                     =  $model->safarioperator_request_approval_model->category_id;
                             $safari_operator->safari_operator_request_id      =  $model->safarioperator_request_approval_model->id;
                             $safari_operator->business_name                   =  $model->safarioperator_request_approval_model->business_name;
@@ -125,7 +122,7 @@ class SafariOperatorTourController extends Controller
                                     }
                                 }
 
-                                if (!$old_safari_operator) {
+                                if ($safari_operator) {
 
                                     $user = User::find()->where(['email' => $safari_operator->email])->limit(1)->one();
                                     if (!$user) {
@@ -155,6 +152,9 @@ class SafariOperatorTourController extends Controller
                                 }
                             }
                         }
+                    }else{
+                        // print_r($model->safarioperator_request_approval_model);
+                        // exit;
                     }
                 }
             }

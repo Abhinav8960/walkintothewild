@@ -13,6 +13,8 @@ use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 use common\models\registration\SafariOperatorRequest;
+use common\models\registration\SafariOperatorRequestActivities;
+use common\models\registration\SafariOperatorRequestPark;
 use common\models\SafariOperatorRequestSearch;
 use yii\web\UploadedFile;
 
@@ -178,6 +180,28 @@ class SafariController extends Controller
                     $model->initializeForm();
                     if ($model->safari_operator_request_model->save(false)) {
                         $model->uploadFile();
+                        $parks = $model->park_id;
+                        if ($parks) {
+                            SafariOperatorRequestPark::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
+                            foreach ($parks as $park) {
+                                $safarioperatorrequestpark = new SafariOperatorRequestPark();
+                                $safarioperatorrequestpark->safari_operator_request_id = $model->safari_operator_request_model->id;
+                                $safarioperatorrequestpark->park_id = $park;
+                                $safarioperatorrequestpark->save(false);
+                            }
+                        }
+
+
+                        $activities = $model->offers_other_wildlifeactivities;
+                        if ($activities) {
+                            SafariOperatorRequestActivities::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
+                            foreach ($activities as $activity) {
+                                $safarioperatorrequestactivity = new SafariOperatorRequestActivities();
+                                $safarioperatorrequestactivity->safari_operator_request_id = $model->safari_operator_request_model->id;
+                                $safarioperatorrequestactivity->wildlife_activity_id = $activity;
+                                $safarioperatorrequestactivity->save(false);
+                            }
+                        }
 
                         $to_mail = $model->safari_operator_request_model->email;
                         $subject = 'Information Update Successfully!';
