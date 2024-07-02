@@ -285,12 +285,12 @@ class SafariOperatorRequestForm extends model
         }
 
         $this->safari_operator_request_model->starting_price                  =  $this->starting_price;
-        $this->safari_operator_request_model->is_approved                     =  $this->is_approved;
+        // $this->safari_operator_request_model->is_approved                     =  $this->is_approved;
         $this->safari_operator_request_model->operator_name                   =  $this->operator_name;
         $this->safari_operator_request_model->operator_phone_no               =  $this->operator_phone_no;
         $this->safari_operator_request_model->operator_email                  =  $this->operator_email;
         $this->safari_operator_request_model->is_highlighted                  =  $this->is_highlighted;
-        $this->safari_operator_request_model->status                          =  $this->status;
+        $this->safari_operator_request_model->status                          =  1; //$this->status;
         // $this->safari_operator_request_model->is_agree                        =  $this->is_agree;
         $this->safari_operator_request_model->registration_platform           =  1;
     }

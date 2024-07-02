@@ -22,7 +22,7 @@ if ($safari_operator->is_offer_economical_budget == 1) {
 }
 
 $html = '';
-$activies = GeneralModel::operatorresquestactivties($safari_operator->id);
+$activies = GeneralModel::operatoractivties($safari_operator->id);
 foreach ($activies as $key => $role) {
     if (isset(GeneralModel::wildlifeactivities()[$key])) {
         $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
@@ -30,7 +30,7 @@ foreach ($activies as $key => $role) {
 }
 
 $html_park = '';
-$park = GeneralModel::operatorresquestpark($safari_operator->id);
+$park = GeneralModel::operatorpark($safari_operator->id);
 foreach ($park as $key => $role) {
     if (isset(GeneralModel::safariparkoption()[$key])) {
         $html_park .= GeneralModel::safariparkoption()[$key] . ', ';

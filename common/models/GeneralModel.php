@@ -35,6 +35,7 @@ use common\models\meta\MetaStayCategory;
 use common\models\meta\MetaTermConditionType;
 use common\models\meta\MetaZoneType;
 use common\models\operator\SafariOperator;
+use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
@@ -451,9 +452,21 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
     }
 
+    public static function operatoractivties($safari_operator_id)
+    {
+        $query = SafariOperatorActivities::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_id' => $safari_operator_id]);
+        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'wildlife_activity_id', 'wildlife_activity_id');
+    }
+
     public static function operatorresquestpark($safari_operator_request_id)
     {
         $query = SafariOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
+        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
+    }
+
+    public static function operatorpark($safari_operator_id)
+    {
+        $query = SafariOperatorPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_id' => $safari_operator_id]);
         return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
     }
 

@@ -51,6 +51,7 @@ class SafariOperatorRequestSearch extends SafariOperatorRequest
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 20 : $pagination],
         ]);
 
