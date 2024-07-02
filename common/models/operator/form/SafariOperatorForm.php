@@ -105,7 +105,7 @@ class SafariOperatorForm extends model
             $this->is_offer_standard_budget                       =  $this->safarioperator_model->is_offer_standard_budget;
             $this->is_offer_economical_budget                     =  $this->safarioperator_model->is_offer_economical_budget;
             $this->starting_price                                 =  $this->safarioperator_model->starting_price;
-            $this->is_approved                                    =  0;
+            $this->is_approved                                    =  $this->safarioperator_model->is_approved;
             $this->operator_name                                  =  $this->safarioperator_model->operator_name;
             $this->operator_phone_no                              =  $this->safarioperator_model->operator_phone_no;
             $this->operator_email                                 =  $this->safarioperator_model->operator_email;
