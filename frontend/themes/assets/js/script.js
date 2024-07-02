@@ -69,7 +69,7 @@ owl.owlCarousel({
         1000: {
             items: itemCount >= 3 ? 3 : itemCount
         },
-        1000: {
+        1400: {
             items: itemCount >= 6 ? 6 : itemCount
         }
     }
@@ -135,7 +135,25 @@ if ($('.slider_resorts').length) {
         }
     });
 }
+document.addEventListener('DOMContentLoaded', function () {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
 
+let flashMessageTimeout;
+window.addEventListener('scroll', function() {
+    const flashMessage = document.getElementById('flashMessage');
+    flashMessage.style.display = 'block';
+    
+    if (flashMessageTimeout) {
+        clearTimeout(flashMessageTimeout);
+    }
+    flashMessageTimeout = setTimeout(function() {
+        flashMessage.style.display = 'none';
+    }, 2000);
+});
 document.addEventListener('DOMContentLoaded', function() {
     let profile = document.querySelector('.profile');
     let menu = document.querySelector('.menuprofile');

@@ -82,7 +82,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div> -->
         <div class="row mb-4 sticky_set position-relative">
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3 ">
+            <div class="col-lg-3 col-xl-2 col-xxl-2  mb-lg-0 mb-3 ">
                 <div id="targetDiv">
                     <?= $this->render('_park_side_search', [
                         'model' => $searchModel,
@@ -90,7 +90,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     ]) ?>
                 </div>
             </div>
-            <div class="col-lg-8 col-xxl-10 col-xl-9 paddingset_desktop ">
+            <div class="col-lg-9 col-xxl-10 col-xl-10 paddingset_desktop ">
                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                     <div class="left_text">
                         <p class="">We found <strong><?= count($models) ?> parks</strong> for you</p>
@@ -128,12 +128,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                             <div class="searchSafari_wraper mb-4">
                                 <div class="row">
-                                    <div class="col-xl-3 col-lg-12">
+                                    <div class="col-xl-3 col-sm-4 col-md-3">
                                         <div class="Slider_safariimg3 h-100">
                                             <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-xl-9">
+                                    <div class="col-md-9 col-sm-8 col-xl-9">
                                         <div class="safariSearch_wrap">
                                             <div class="safrititles pt-md-0 pt-3">
                                                 <h6 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?>, <?= isset($model->location) ? $model->location->title : '' ?></span></h6>
