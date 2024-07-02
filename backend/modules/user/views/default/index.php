@@ -18,21 +18,32 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
 <div class="card">
 
     <div class="card-body">
+
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
-                'tableOptions' => ['class' => 'table table-vcenter text-nowrap table-bordered border-bottom dataTable no-footer'],
                 'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'class' => 'yii\grid\SerialColumn',
-                        'header' => 'S.No.'
+                        'label' => 'Login ID',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->username;
+                        }
                     ],
-                    'username:raw:Login ID',
-                    'name:raw:Full Name',
-                    'email:raw:Email',
-                    // 'rolelabel:raw:Role',
+                    [
+                        'label' => 'Full Name',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->name;
+                        }
+                    ],
                     [
                         'label' => 'Role',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
                         'value' => function ($model) {
                             $roles = [];
                             if ($model->is_adminstrator == 1) {
@@ -57,13 +68,10 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                                 $roles[] = "Report Manager";
                             }
                             return implode(', ', $roles);
-                        },
-                        'format' => 'raw',
-                        'visible' => $isvisible,
+                        }
                     ],
-
-                    'created_at:datetime:Created At',
-                    'password_update_at:relativeTime:Last Password Update',
+                    'created_at:dateTime:Created at',
+                    'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Update',
                         'value' => function ($model) {
@@ -97,20 +105,8 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                         'headerOptions' => ['style' => 'width:5%;'],
                         'contentOptions' => ['style' => 'width:5%;'],
                     ],
-
-                    // [
-                    //     'label' => 'Switch',
-                    //     'value' => function ($model) {
-                    //         return Html::a(' <i class="mdi mdi-account-switch text-white"></i>', ['/user/default/switchidentity?id=' . $model->id], ['class' => 'btn btn-info btn-secondary']);
-                    //     },
-                    //     'format' => 'raw',
-                    //     'headerOptions' => ['style' => 'width:5%;'],
-                    //     'contentOptions' => ['style' => 'width:5%;'],
-                    //     'visible' => $isvisible,
-                    // ],
                 ],
-            ]);  ?>
-
+            ]); ?>
         </div>
     </div>
 </div>

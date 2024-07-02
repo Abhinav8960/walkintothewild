@@ -44,10 +44,11 @@ class MasterSuggestionCategorySearch extends MasterSuggestionCategory
 
         // add conditions that should always apply here
 
+      
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['sequence' => SORT_ASC]],
         ]);
-
         $this->load($params);
 
         if (!$this->validate()) {
