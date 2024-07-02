@@ -8,6 +8,7 @@ use common\models\cms\article\ArticleTag;
 use common\models\cms\article\MasterArticleTag;
 use common\models\cms\article\MasterArticleTopic;
 use common\models\cms\faqcategory\Faq;
+use common\models\cms\flagreason\Flagreason;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
@@ -412,7 +413,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function getAllLocation()
     {
-        return ArrayHelper::map(MasterLocation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterLocation::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['sequence' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function wildlifeactivities()
@@ -445,6 +446,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterMailTemplate::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
+
+
+    public static function getFlagreasons()
+    {
+        return ArrayHelper::map(Flagreason::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['id' => SORT_ASC])->all(), 'id', 'reason');
+    }
 
     public static function operatorresquestactivties($safari_operator_request_id)
     {
