@@ -168,7 +168,7 @@ class SafariOperatorForm extends model
                 // 'minHeight' => 123,
                 'maxSize' => 250 * 1024
             ],
-            ['about_business', \common\validators\Word500Validator::className()],
+            ['about_business', \common\validators\Word120Validator::className()],
             ['phone_no', function () {
                 if ($this->phone_no === $this->operator_phone_no) {
                     $this->addError('operator_phone_no', 'Phone Number Should not match');
