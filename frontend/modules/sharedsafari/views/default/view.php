@@ -313,7 +313,7 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
                 <div class="right_button py-lg-5 py-3">
-                    <?php if ($share_safari->host_user_id == Yii::$app->user->identity->id) { ?>
+                    <?php if ($share_safari->host_user_id) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>">+ Update
                             Safari</button>
                     <?php } ?>

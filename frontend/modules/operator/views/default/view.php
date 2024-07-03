@@ -22,7 +22,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::OPERATOR_VIEW;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 $recentposts = ArticleSearch::recentpost();
-$reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operator->id])->all();
+// $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operator->id])->all();
 
 ?>
 
@@ -176,7 +176,7 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
             <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                 <div class="safri_tour">
                     <div class="titlerescent" style="justify-content:left !important;">
-                        <h3 style="text-align:left !important;">Select</h3>
+                        <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
                     </div>
                     <div class="topics_listing">
                         <ul id="tabList">
@@ -187,7 +187,7 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
                                     <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li> -->
                             <li><a class="tab-items" data-tab="sharedSafari">
-                                    <div class="numparks">Shared Safari <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
+                                    <div class="numparks">Shared Safari <span><?= count($shared_safaries) ?></span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li>
                             <li><a class="tab-items " data-tab="review">
                                     <div class="numparks">Review <span><?= count($reviews) ?></span></div><i class="fa-solid fa-chevron-right"></i>
@@ -210,13 +210,16 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
 
                 <div class="tab-content_tour" id="sharedSafari">
                     <!-- Shared Safari content goes here -->
-                    <?= $this->render('_shared_safari') ?>
+                    <?= $this->render('_shared_safari', [
+                        'shared_safaries' => $shared_safaries,
+                    ]) ?>
                 </div>
 
                 <div class="tab-content_tour mb-4" id="review">
                     <?= $this->render('_review', [
                         'operator' => $operator,
-                        'reviews' => $reviews
+                        'reviews' => $reviews,
+                        'ratingsearchModel' => $ratingsearchModel
                     ]) ?>
                 </div>
             </div>

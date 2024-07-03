@@ -44,9 +44,9 @@ use yii\bootstrap5\ActiveForm;
                 </div>
                 <div class="sort_wrapper py-3">
                     <div class="sortBy">Sort by</div>
-                    <button class="btn_sort active">Newest</button>
-                    <button class="btn_sort">Highest</button>
-                    <button class="btn_sort">Lowest</button>
+                    <a class="btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="/operator/new1?SafariOperatorRatingSearch%5Bcustom_sort_by%5D=newest">Newest</a>
+                    <a class="btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="/operator/new1?SafariOperatorRatingSearch%5Bcustom_sort_by%5D=highest">Highest</a>
+                    <a class="btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="/operator/new1?SafariOperatorRatingSearch%5Bcustom_sort_by%5D=lowest">Lowest</a>
                 </div>
             </div>
             <?php
