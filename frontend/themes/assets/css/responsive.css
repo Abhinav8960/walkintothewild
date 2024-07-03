@@ -84,6 +84,7 @@
         height: 300px !important;
         /* width: 270px !important; */
     }
+  
 }
 @media(min-width:1700px){
 
@@ -150,10 +151,19 @@ line-height: 19px;
 }
 
 @media(min-width:1400px) {
+    .single-image img{
+
+        height: 89% !important;
+    }
+    .slider_safariimg{
+
+
+        height: 100% !important;
+    }
 
     .safartabs .nav-tabs .nav-link {
 
-        padding: 7px 56px;
+        padding: 7px 42px;
     }
  
     .articals_wrapper.margin-setposi{
@@ -170,6 +180,7 @@ line-height: 19px;
 
     margin-left: 46px;
 }
+
 }
 
 @media only screen and (min-width:1800px) {
@@ -926,10 +937,11 @@ line-height: 19px;
 @media only screen and (max-width:991px) {
     #targetDiv {
         background-color: #faf7f3;
-        position: absolute;
+        position: fixed;
         top: 0px;
+        height: 100%;
         width: 100%;
-        z-index: 10;
+        z-index: 1000;
         left: 0px;
         display: none;
     
@@ -1050,7 +1062,7 @@ line-height: 19px;
     }
     .mobile_searchBox{
 
-        padding: 10px 12px 10px 13px;
+        padding: 10px 17px 10px 13px;
         cursor: pointer;
         background-color: #fff;
         height: 50px;

@@ -51,7 +51,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div>
         <div class="row my-4">
-            <div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 position-relative">
+            <div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 ">
                 <div id="targetDiv">
                     <?= $this->render('_operator_side_search', [
                         'model' => $operatorsearchModel,
