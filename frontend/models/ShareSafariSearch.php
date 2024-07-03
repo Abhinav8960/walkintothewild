@@ -13,6 +13,8 @@ class ShareSafariSearch extends ShareSafari
 {
     public $month_id;
     public $custom_sort_by;
+    public $estimated_price_filter;
+    public $month_filter;
 
 
     /**
@@ -22,7 +24,7 @@ class ShareSafariSearch extends ShareSafari
     {
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
-            [['start_date', 'end_date'], 'safe'],
+            [['start_date', 'end_date', 'month_filter'], 'safe'],
             [['safari_plan', 'month_id', 'custom_sort_by'], 'safe'],
         ];
     }
@@ -85,6 +87,7 @@ class ShareSafariSearch extends ShareSafari
             'share_safari.status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'safari_plan', $this->safari_plan]);
+        
 
 
         return $dataProvider;
