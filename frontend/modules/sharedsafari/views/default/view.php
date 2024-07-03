@@ -169,6 +169,8 @@ $this->params['title'] = $this->title;
                                         </li>
                                         <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter" ></i></a>
                                         </li>
+                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
+                                        </li>
 
                                     </ul>
                                 </div>
