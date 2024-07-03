@@ -3,6 +3,8 @@
 
 /* @var $this yii\web\View */
 
+use yii\helpers\Url;
+use common\models\GeneralModel;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
 
@@ -55,142 +57,93 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
     </div>
 </section>
+<?php if ($shared_safaries) { ?>
 
-<section class="sharesafri">
-    <div class="container-lg ">
-        <div class="row justify-content-center">
-            <div class="col-xl-11 px-md-1 px-0">
-                <div class="sharesafribg home px-lg-0 px-2">
-                    <div class="safarishareBox py-3">
-                        <div class="row justify-content-center">
-                            <div class="col-xxl-8 col-lg-12 col-xl-8">
-                                <div class="title_safari text-center pt-3">
-                                    <h4>Discover and Join 100+ Shared Safaris</h4>
-                                    <!-- <div class="joinshare">
+    <section class="sharesafri">
+        <div class="container-lg ">
+            <div class="row justify-content-center">
+                <div class="col-xl-11 px-md-1 px-0">
+                    <div class="sharesafribg home px-lg-0 px-2">
+                        <div class="safarishareBox py-3">
+                            <div class="row justify-content-center">
+                                <div class="col-xxl-8 col-lg-12 col-xl-8">
+                                    <div class="title_safari text-center pt-3">
+                                        <h4>Discover and Join 100+ Shared Safaris</h4>
+                                        <!-- <div class="joinshare">
                   <a href="" class="btn_share">JOIN SHARED SAFARI</a>
                 </div> -->
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row pt-4 justify-content-center gx-5">
-                            <div class="col-lg-4  col-xxl-3 col-md-5 mb-4 px-lg-3 ">
-                                <div class="sharesafri-card">
-                                    <div class="flotingdate">
-                                        <div class="icons text-center">
-                                            <p class="mb-0">OCT</p>
-                                            <p class="mb-0">3</p>
-                                        </div>
-                                    </div>
-                                    <div class="shareimg">
-                                        <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
-                                    </div>
-                                    <div class="card_body">
-                                        <div class="top_seats">
-                                            <div class="safari d-flex justify-content-between ">
-                                                <div class="safarinum d-flex gap-2 align-items-center ">
-                                                    <p class="text_safari">SAFARI</p>
-                                                    <h6 class="number-safari">5</h6>
-                                                </div>
-                                                <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                    <p class="text_safari">SEATS</p>
-                                                    <h6 class="number-safari">5</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="titleDate">
-                                            <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
-                                            <div class="orgnizer">
-                                                <p>Organized by: <strong>Dhawal Bharija</strong></p>
-                                            </div>
-                                        </div>
-                                        <div class="footer_card row pb-2 px-2 align-items-center">
-                                            <div class="col-6">
-                                                <div class="users">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <div class="roundes_countuser">
-                                                        15+
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="safari text-center">
-                                                    <div class="joinsafari">
-                                                        <a href="/sharesafari">Join Safari</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-                            <div class="col-lg-4  col-xxl-3 col-md-5 mb-4 px-lg-3">
-                                <div class="sharesafri-card">
-                                    <div class="flotingdate">
-                                        <div class="icons text-center">
-                                            <p class="mb-0">OCT</p>
-                                            <p class="mb-0">3</p>
-                                        </div>
-                                    </div>
-                                    <div class="shareimg">
-                                        <a href="/sharesafari"><img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhsmall.jpg" alt=""></a>
-                                    </div>
-                                    <div class="card_body">
-                                        <div class="top_seats">
-                                            <div class="safari d-flex justify-content-between ">
-                                                <div class="safarinum d-flex gap-2 align-items-center ">
-                                                    <p class="text_safari">SAFARI</p>
-                                                    <h6 class="number-safari">5</h6>
-                                                </div>
-                                                <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                    <p class="text_safari">SEATS</p>
-                                                    <h6 class="number-safari">5</h6>
+                            <div class="row pt-4 justify-content-center gx-5">
+                                <?php foreach ($shared_safaries as $share_safari) { ?>
+                                    <div class="col-lg-4  col-xxl-3 col-md-5 mb-4 px-lg-3 ">
+                                        <div class="sharesafri-card">
+                                            <div class="flotingdate">
+                                                <div class="icons text-center">
+                                                    <p class="mb-0"><?= date('M', strtotime($share_safari->start_date)) ?></p>
+                                                    <p class="mb-0"><?= date('d', strtotime($share_safari->start_date)) ?></p>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="titleDate">
-                                            <h6><a href="/sharesafari">Bandhavgarh Tiger Reserve</a></h6>
-                                            <div class="orgnizer">
-                                                <p>Organized by: <strong>Dhawal Bharija</strong></p>
+                                            <div class="shareimg">
+                                                <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhsmall.jpg' ?>" alt=""></a>
                                             </div>
-                                        </div>
-                                        <div class="footer_card row pb-2 px-2 align-items-center">
-                                            <div class="col-6">
-                                                <div class="users">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <div class="roundes_countuser">
-                                                        15+
+                                            <div class="card_body">
+                                                <div class="top_seats">
+                                                    <div class="safari d-flex justify-content-between ">
+                                                        <div class="safarinum d-flex gap-2 align-items-center ">
+                                                            <p class="text_safari">SAFARI</p>
+                                                            <h6 class="number-safari"><?= $share_safari->no_of_safari ?></h6>
+                                                        </div>
+                                                        <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
+                                                            <p class="text_safari">SEATS</p>
+                                                            <h6 class="number-safari"><?= $share_safari->total_seat ?></h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="titleDate">
+                                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= isset($share_safari->park_id) ? GeneralModel::safariparkoption()[$share_safari->park_id] : '' ?></a></h6>
+                                                    <div class="orgnizer">
+                                                        <p>Organized by: <strong><?= isset($share_safari->user) ? $share_safari->user->name : '' ?></strong></p>
+                                                    </div>
+                                                </div>
+                                                <div class="footer_card row pb-2 px-2 align-items-center">
+                                                    <div class="col-6">
+                                                        <div class="users">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+                                                            <div class="roundes_countuser">
+                                                                15+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="safari text-center">
+                                                            <div class="joinsafari">
+                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-6">
-                                                <div class="safari text-center">
-                                                    <div class="joinsafari">
-                                                        <a href="/sharesafari">Join Safari</a>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                             </div>
-
-
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
+
         </div>
 
-    </div>
 
+    </section>
+<?php } ?>
 
-</section>
 <section class="safariduring_sesons">
     <?= \frontend\widgets\FeatureParkWidget::widget(['section_title' => $banner ? $banner->feature_park_title : '']) ?>
 </section>
