@@ -7,6 +7,7 @@ use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariHistory;
 use frontend\models\form\SharedSafariForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariIntrested;
@@ -126,6 +127,7 @@ class DefaultController extends FrontendBaseController
         }
 
         return $this->render('view', [
+
             'share_safari' => $share_safari
         ]);
     }
@@ -216,5 +218,15 @@ class DefaultController extends FrontendBaseController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionHistory($slug)
+    {
+        $history_model = ShareSafariHistory::find()->where(['slug' => $slug, 'status' => StatusInterface::STATUS_ACTIVE])->all();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('history_view', [
+                'history_model' => $history_model
+            ]);
+        }
     }
 }

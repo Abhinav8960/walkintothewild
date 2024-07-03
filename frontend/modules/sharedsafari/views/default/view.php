@@ -67,6 +67,8 @@ $this->params['title'] = $this->title;
                                         </div>
                                         <p class="mb-0 pt-2">Organized by <strong><?= $share_safari->user->name ?> (Wildlife
                                                 Influencer)</strong></p>
+                                        <button class="intested_btn history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-history"></i></i>
+                                            View History</button>
                                     </div>
 
                                 </div>
@@ -149,6 +151,7 @@ $this->params['title'] = $this->title;
                                 } else { ?>
                                     <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
                                 <?php } ?>
+
                             </div>
 
                         </div>
@@ -160,11 +163,11 @@ $this->params['title'] = $this->title;
                                     $shared_url = urlencode(Url::to('', true));
                                     ?>
                                     <ul>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
+                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
                                         </li>
-                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
+                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
                                         </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" class="iconSize"><i class="fa-brands fa-x-twitter" style="color: black;"></i></a>
+                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter" style="color: black;"></i></a>
                                         </li>
 
                                     </ul>
@@ -415,6 +418,20 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
+<div class="modal fade _standard-text" id="history-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">History</h1>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 function organizefunction() {
@@ -425,6 +442,15 @@ function organizefunction() {
 	});
 }
 organizefunction();
+
+function historyfucntion() {
+	$('.history_btn').on('click', function () {
+        $('#history-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+historyfucntion();
              
 JS;
 $this->registerJs($script);
