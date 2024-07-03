@@ -126,6 +126,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 'operators' => $operators,
                 'model' => $model,
                 'operatorsearchModel' => $operatorsearchModel,
+                'shared_safaries' => $shared_safaries,
                 'device' => $device
             ]) ?>
         </div>
