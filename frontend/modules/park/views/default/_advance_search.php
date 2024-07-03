@@ -22,7 +22,7 @@ $vehicleoption = GeneralModel::vehicleoption();
 ?>
 <div class="row gx-0 justify-content-center d-md-flex d-none desktop_search" id="desktop_search">
     <div class="close_button" id="desktop_close_button"><i class="fa-solid fa-xmark"></i></div>
-    <div class="col-lg-10 col-xl-10">
+    <div class="col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
@@ -140,7 +140,7 @@ $vehicleoption = GeneralModel::vehicleoption();
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-xl-1">
+    <div class=" col-xl-1">
         <div class="search">
             <div class="serch_btn">
                 <?= Html::Button('Search', ['id' => 'search_submit_btn']) ?>
