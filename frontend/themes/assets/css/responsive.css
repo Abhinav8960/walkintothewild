@@ -470,7 +470,13 @@ line-height: 19px;
  
 
 }
+@media only screen and (min-width: 768px) {
 
+    .close_button{
+
+        display: none;
+    }
+}
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .touroprators{
@@ -1039,7 +1045,7 @@ line-height: 19px;
         padding: 10px 10px 30px 10px;
         position: absolute;
         left: 0;
-        top: -51px;
+        top: -31px;
         width: 100%;
     }
     .mobile_searchBox{

@@ -23,7 +23,7 @@ if ($operator_parks) {
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Location">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset($park_detail->state) ? $park_detail->state->state_name . ',' : '' ?> <?= isset($park_detail->location) ? $park_detail->location->title : '' ?></p>
@@ -33,7 +33,7 @@ if ($operator_parks) {
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">
@@ -53,7 +53,7 @@ if ($operator_parks) {
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset($park_detail->railwaystation) ? $park_detail->railwaystation->title . ' , ' : '' ?><?= isset($park_detail->railwaystationtwo) ? $park_detail->railwaystationtwo->title : '' ?>
@@ -64,7 +64,7 @@ if ($operator_parks) {
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">
@@ -85,7 +85,7 @@ if ($operator_parks) {
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport"> 
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset($park_detail->airport) ? $park_detail->airport->name : '' ?></p>
@@ -95,7 +95,7 @@ if ($operator_parks) {
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Animals">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">

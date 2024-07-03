@@ -3810,12 +3810,27 @@ figure {
 #flashMessage {
     display: none;
     position: absolute;
-    top: -7px;
-    right: 14px;
-    background-color: #A2D22B;
+    top: -48px;
+    right: -141px;
+    background-color: var(--background-yellow);
     color: #000;
     padding: 10px;
     border-radius: 5px;
+    z-index: 10;
+}
+
+.close_button{
+
+    position: absolute;
+    right: -93%;
+    top: -22px;
+    width: 100%;
+}
+
+.close_button i{
+
+    font-size: 30px;
+    color: #fff;
 }
 
 .offcanvas.offcanvas-end.header_canvas{
