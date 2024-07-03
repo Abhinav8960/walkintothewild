@@ -1154,7 +1154,7 @@ figure {
     display: inline-block;
     color: #9C9C9C;
     font-family: "Roboto", sans-serif !important;
-    font-size: 12px;
+    font-size: 14px;
 
 }
 
@@ -1824,6 +1824,12 @@ figure {
 .iconSize i.fa-x-twitter{
 
     color: #fff !important;
+}
+.iconSize .fa-instagram{
+
+    background: #d6249f;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+
 }
 
 .comments_safari {
