@@ -35,6 +35,24 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model = Yii::createObject([
             'class' => ShareSafari::className()
         ]);
+        if ($shared_safari_model  != '') {
+            $this->shared_safari_model = $shared_safari_model;
+
+            $this->host_user_id =  $this->shared_safari_model->host_user_id;
+            $this->host_type =  $this->shared_safari_model->host_type;
+            $this->park_id =  $this->shared_safari_model->park_id;
+            $this->share_safari_agenda_id =  $this->shared_safari_model->share_safari_agenda_id;
+            $this->no_of_safari =  $this->shared_safari_model->no_of_safari;
+            $this->start_date =  $this->shared_safari_model->start_date;
+            $this->end_date =  $this->shared_safari_model->end_date;
+            $this->stay_category_id =  $this->shared_safari_model->stay_category_id;
+            $this->estimate_price_min =  $this->shared_safari_model->estimate_price_min;
+            $this->estimate_price_max =  $this->shared_safari_model->estimate_price_max;
+            $this->safari_plan =  $this->shared_safari_model->safari_plan;
+            $this->total_seat =  $this->shared_safari_model->total_seat;
+            $this->share_seat =  $this->shared_safari_model->share_seat;
+            $this->status =  $this->shared_safari_model->status;
+        }
     }
 
     public function rules()
