@@ -31,7 +31,7 @@ use yii\helpers\Html;
 
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->dropDownList([1, 2, 3, 4, 5, 6], ['prompt' => 'Select No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->dropDownList(['1' => 'One', '2' => 'Two', '3' => 'Three', '4' => 'Four', '5' => 'Five', '6' => 'Six'], ['prompt' => 'Select No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
 
         <div class="col-md-12 mb-2">

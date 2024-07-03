@@ -21,19 +21,21 @@ use yii\widgets\ActiveForm;
 
 <div class="filter-wrapper ">
     <div class="title_top pb-4">
-        <h4>Select Filters</h4>
+        <h4>Select</h4>
     </div>
     <div class="title_filter ">
         <h6>Park</h6>
         <div class="input_check ">
-            <?= $form->field($searchModel, 'park_id')->dropDownlist(GeneralModel::safariparkoption())->label(false) ?>
+            <?= $form->field($searchModel, 'park_id')->dropDownlist(GeneralModel::safariparkoption(), ['prompt' => 'Select Park'])->label(false) ?>
         </div>
     </div>
     <div class="title_filter mb-3">
         <h6>Month</h6>
         <div class="input_check ">
-            <?= $form->field($searchModel, 'month_filter')->dropDownlist(
-                GeneralModel::monthoption()
+            <?= $form->field($searchModel, 'month_id')->dropDownlist(
+                GeneralModel::monthoption(),
+                ['prompt' => 'Select Month']
+
             )->label(false); ?>
         </div>
     </div>

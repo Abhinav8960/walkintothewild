@@ -14,7 +14,8 @@ class ShareSafariSearch extends ShareSafari
     public $month_id;
     public $custom_sort_by;
     public $estimated_price_filter;
-    public $month_filter;
+
+
 
 
     /**
@@ -24,8 +25,8 @@ class ShareSafariSearch extends ShareSafari
     {
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
-            [['start_date', 'end_date', 'month_filter'], 'safe'],
-            [['safari_plan', 'month_id', 'custom_sort_by'], 'safe'],
+            [['start_date', 'end_date', 'estimated_price_filter'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari'], 'safe'],
         ];
     }
 
@@ -74,7 +75,6 @@ class ShareSafariSearch extends ShareSafari
             'share_safari.host_type' => $this->host_type,
             'share_safari.park_id' => $this->park_id,
             'share_safari.share_safari_agenda_id' => $this->share_safari_agenda_id,
-            'share_safari.no_of_safari' => $this->no_of_safari,
             'share_safari.start_date' => $this->start_date,
             'share_safari.end_date' => $this->end_date,
             'share_safari.stay_category_id' => $this->stay_category_id,
@@ -87,8 +87,48 @@ class ShareSafariSearch extends ShareSafari
             'share_safari.status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'safari_plan', $this->safari_plan]);
-        
 
+        if ($this->month_id) {
+            $query->andWhere("MONTH(start_date)=" . $this->month_id);
+            // $query->andWhere("MONTH(start_date)=" . $this->month_id . " OR MONTH(end_date)=" . $this->month_id);
+        }
+
+        if ($this->no_of_safari) {
+            $safari_query = "";
+            foreach ((array)$this->no_of_safari as $no_of_safari) {
+                if ($no_of_safari == 1) {
+                    $safari_query .= "no_of_safari between 1 and 2 OR ";
+                } else if ($no_of_safari == 2) {
+                    $safari_query .= "no_of_safari between 3 and 4 OR ";
+                } else if ($no_of_safari == 3) {
+                    $safari_query .= "no_of_safari between 5 and 6 OR ";
+                }
+            }
+            if ($safari_query <> '') {
+                $safari_query = substr($safari_query, 0, -3);
+                $query->andWhere($safari_query);
+            }
+        }
+
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == '1') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['created_at' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '2') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '3') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '4') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['estimate_price_min' => SORT_DESC]
+                ];
+            }
+        }
 
         return $dataProvider;
     }
