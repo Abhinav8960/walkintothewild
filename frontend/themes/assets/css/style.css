@@ -405,7 +405,7 @@ a {
 .filter-wrapper {
 
     border: 1px solid #0000004D;
-    padding: 20px;
+    padding: 20px 10px;
     /* background-color: #F5F5F5; */
     border-radius: 4px;
     color: var(--background-primary);
@@ -1126,9 +1126,20 @@ figure {
     display: -ms-flexbox;
     display: flex;
     gap: 10px;
+    
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+}
+.artical-info li {
+
+    color: #9C9C9C;
+}
+
+.artical-info li i{
+
+    color: var(--background-yellow) !important;
+ 
 }
 
 .artical_cards .lower-content .artical-info {
@@ -1353,7 +1364,12 @@ figure {
     aspect-ratio: 14/3;
     object-fit: contain;
 }
+.slidesImg{
 
+    background-color: #f5f5f5;
+    padding: 4px 0px;
+    border-radius: 5px;
+}
 .fixedbanner {
 
     position: fixed !important;
@@ -1480,14 +1496,33 @@ figure {
 
     font-size: var(--fs-18);
 }
+.aritcla-details h1,
+.aritcla-details h2,
+.aritcla-details h3,
+.aritcla-details h5,
+.aritcla-details h6,
+.aritcla-details h4{
+
+    font-size: 24px;
+
+}
+
+.tags-title{
+
+    font-size: 24px; 
+}
+
+
+
 
 .tags-button {
 
     background-color: var(--background-yellow);
-    padding: 10px 20px;
-    width: 120px;
+    padding: 5px 18px;
+    /* width: 120px; */
     text-align: center;
     border: 0;
+    font-size: 13px;
     font-family: "Roboto", sans-serif !important;
     border-radius: 5px;
 }
@@ -1515,6 +1550,7 @@ figure {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    font-size: 15px;
 }
 
 .comment-wrapper {
@@ -1704,7 +1740,7 @@ figure {
     background-color: var(--background-orange);
     border: 0;
     padding: 9px 25px;
-    font-size: var(--fs-16);
+    font-size: var(--fs-15);
     color: var(--colorwhite);
     font-family: "Roboto", sans-serif;
     font-weight: 500;
@@ -1725,7 +1761,7 @@ figure {
 .join_btn {
     background-color: var(--background-yellow);
     border: 0;
-    padding: 7px 35px;
+    padding: 9px 35px;
     font-size: var(--fs-15);
     color: var(--colorBlack);
     font-family: "Roboto", sans-serif;
@@ -1781,9 +1817,13 @@ figure {
     background-color: #00B456;
 }
 
-.iconSize .fa-twitter {
+.iconSize .fa-x-twitter {
 
-    background-color: #00A9FF;
+    background-color: #000000;
+}
+.iconSize i.fa-x-twitter{
+
+    color: #fff !important;
 }
 
 .comments_safari {
@@ -2567,12 +2607,13 @@ figure {
     border-radius: 20px;
     padding: 6px 30px;
     margin: 8px 10px 0px 0px;
+    color: #000000 !important;
 }
 
 .btn_sort.active {
 
     background-color: var(--background-primary);
-    color: var(--colorwhite);
+    color: var(--colorwhite) !important;
     display: inline-block;
 
 }
@@ -2798,7 +2839,7 @@ figure {
 .touroprators {
 
     background-color: var(--colorwhite);
-    padding: 16px 10px;
+    padding: 12px 10px;
     border: 1px solid #0000004D;
     border-radius: 0px 10px 10px 10px;
 }

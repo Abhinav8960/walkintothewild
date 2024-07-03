@@ -171,11 +171,7 @@ line-height: 19px;
         margin-top: 290px !important;
     }
     /* Sticky sidebar styles */
-.sticky-sidebar {
-    position: fixed;
-   width: 11%;
-   left: 5%;
- }
+
  .margin-added{
 
     margin-left: 46px;
@@ -260,6 +256,29 @@ line-height: 19px;
         height: 260px;
 
     }
+    .aritcla-details p{
+
+        font-size: 15px;
+    }
+    .aritcla-details h1,
+.aritcla-details h2,
+.aritcla-details h3,
+.aritcla-details h5,
+.aritcla-details h6,
+.aritcla-details h4{
+
+    font-size: 22px;
+
+}
+.author_wrapper .artical-info li{
+
+    font-size: 13px;
+}
+
+.tags-title{
+
+    font-size: 22px; 
+}
 
     .artical_cards .lower-content h3{
         font-size: 18px;
@@ -363,10 +382,10 @@ line-height: 19px;
 
         width: 228px;
     }
-    .sticky-sidebar {
+    /* .sticky-sidebar {
         position: fixed;
        width: 14%;
-     }
+     } */
     .articals_wrapper.margin-setposi{
 
         margin-top: 330px !important;
@@ -490,6 +509,11 @@ line-height: 19px;
 
         display: none;
     }
+    /* .sticky-sidebar {
+        position: fixed;
+       width: 13%;
+       left: 5%;
+     } */
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -660,6 +684,11 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:1400px) {
+    .author_wrapper{
+
+        padding-top: 10px;
+    }
+  
     .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -807,6 +836,7 @@ line-height: 19px;
     }
 }
 @media only screen and (max-width:1200px) {
+
  
     .select_boxes .form-select {
 
@@ -953,6 +983,7 @@ line-height: 19px;
 
 
 @media only screen and (max-width:991px) {
+  
     #targetDiv {
         background-color: #faf7f3;
         position: fixed;

@@ -58,6 +58,7 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row mb-4 justify-content-center">
             <div class="col-lg-8 col-xl-8 col-xxl-9 pe-xl-5">
                 <div class="aritcla-details">
+                    <!-- <h1 class="articald-title pb-3"><?= $article->title ?></h1> -->
                     <div class="aritcal_bigimg pb-4">
                         <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt="" class="w-100">
                     </div>
@@ -72,7 +73,7 @@ $recentposts = ArticleSearch::recentpost();
                         <ul class="artical-info ">
                             <?php if ($topics = $article->articletopics) {
                                 foreach ($topics as $topic) { ?>
-                                    <li><i class="fa fa-list-alt" aria-hidden="true" style="color:#f7bf39"></i><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->articlename->slug]) ?>"><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></a></li>
+                                    <li><i class="fa-solid fa-tag" style="color:#f7bf39"></i><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->articlename->slug]) ?>"><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></a></li>
                             <?php }
                             } ?>
 
@@ -82,14 +83,14 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
                 <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
                     <div class="d-flex align-items-center">
-                        <h3 class="me-4 mb-0">Tags</h3>
+                        <h3 class="me-4 mb-0 tags-title">Tags</h3>
                         <?= $this->render('_tag_search') ?>
                     </div>
                     <div class="author_wrapper">
                         <ul class="artical-info ">
                             <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $article->articleAuthor ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
-
+                            <li><i class="fa-solid fa-calendar-days"></i><a href="">July 21, 2024</a></li>
 
                         </ul>
                     </div>

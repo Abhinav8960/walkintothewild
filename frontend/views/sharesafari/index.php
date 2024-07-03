@@ -141,7 +141,7 @@ $this->params['title'] = $this->title;
                                         </li>
                                         <li><a href="" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
                                         </li>
-                                        <li><a href="" class="iconSize"><i class="fa-brands fa-twitter"></i></a>
+                                        <li><a href="" class="iconSize"><i class="fa-brands fa-x-twitter" ></i></a>
                                         </li>
 
                                     </ul>
