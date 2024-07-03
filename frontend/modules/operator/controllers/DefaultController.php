@@ -14,6 +14,8 @@ use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 use common\models\operator\SafariOperatorRatingReport;
+use common\models\operator\SafariOperatorRatingSearch;
+use common\models\sharesafari\ShareSafari;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorReviewForm;
@@ -68,6 +70,13 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
+
+
+        $ratingsearchModel = new SafariOperatorRatingSearch();
+        $ratingsearchModel->safari_operator_id = $operator->id;
+        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
+        $reviews = $ratingdataProvider->getModels();
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         $model = new OperatorQuoteForm();
@@ -85,6 +94,10 @@ class DefaultController extends FrontendBaseController
                 'operator' => $operator,
                 'model' => $model,
                 'operator_parks' => $operator_parks,
+                'shared_safaries' => $shared_safaries,
+                'reviews' => $reviews,
+                'ratingsearchModel' => $ratingsearchModel,
+                'ratingdataProvider' => $ratingdataProvider,
             ]
         );
     }

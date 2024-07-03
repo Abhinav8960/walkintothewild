@@ -10,7 +10,7 @@ use yii\data\ActiveDataProvider;
  */
 class SafariOperatorRatingSearch extends SafariOperatorRating
 {
-
+    public $custom_sort_by;
     /**
      * {@inheritdoc}
      */
@@ -21,6 +21,7 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
             [['rating'], 'number'],
             [['review', 'user_agent'], 'string', 'max' => 512],
             [['user_device', 'user_platform', 'user_platform_version', 'user_browser'], 'string', 'max' => 50],
+            [['custom_sort_by'], 'safe']
         ];
     }
 
@@ -61,6 +62,23 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
             return $dataProvider;
         }
 
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == 'newest') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['created_at' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == 'highest') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['rating' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == 'lowest') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['rating' => SORT_ASC]
+                ];
+            }
+        }
+
+
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -75,7 +93,7 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
             'safari_operator_rating.status' => $this->status,
         ]);
 
-     
+
 
         return $dataProvider;
     }
