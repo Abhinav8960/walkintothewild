@@ -693,7 +693,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $return = [
             '1' => '2',
             '2' => '4',
-            '3' => '6+'
+            '3' => '6'
         ];
         return $return;
     }
@@ -702,7 +702,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         $return = [
             '1' => 'Photography',
-            '2' => 'Vloggin',
+            '2' => 'Vlogging',
             '3' => 'Safari Experience'
         ];
         return $return;
@@ -725,6 +725,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '1' => 'Premium',
             '2' => 'Standard',
             '3' => 'Economical',
+
+        ];
+        return $return;
+    }
+
+    public static function relevantoption()
+    {
+        $return = [
+            '1' => 'Created Recently',
+            '2' => 'Less Safaris',
+            '3' => 'More Safaris',
+            '4' => 'cheapest',
+
 
         ];
         return $return;

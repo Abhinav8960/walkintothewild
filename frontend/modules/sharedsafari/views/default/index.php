@@ -91,17 +91,7 @@ $recentposts = ArticleSearch::recentpost();
                             <div class="left_text">
                                 <p>There are currently <strong>121</strong> active shared safaris created by individuals</p>
                             </div>
-                            <div class="right-select">
-                                <div class="input_check pb-0">
-
-                                    <select class="form-select mb-3" aria-label="Default select example">
-                                        <option selected>Sort By: Created Recently</option>
-                                        <option value="1">January</option>
-                                        <option value="2">Febraury</option>
-                                        <option value="3">March</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
                         </div>
                     </div>
                 </div>
@@ -110,7 +100,6 @@ $recentposts = ArticleSearch::recentpost();
                     <?php if ($models = $dataProvider->models) {
                         foreach ($models as $share_safari) {
                     ?>
-
                             <div class="col mb-4 padding_right">
                                 <div class="sharesafri-card">
                                     <div class="flotingdate">
