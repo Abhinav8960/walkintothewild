@@ -5,6 +5,7 @@
 
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
+use common\models\GeneralModel;
 use frontend\models\ArticleSearch;
 use yii\helpers\Url;
 
@@ -17,6 +18,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::SHARE_SAFARI;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 $recentposts = ArticleSearch::recentpost();
+
 
 ?>
 
@@ -54,136 +56,7 @@ $recentposts = ArticleSearch::recentpost();
         </div>
         <div class="row my-4">
             <div class="col-lg-4 col-xl-3 col-xxl-2  mb-4">
-                <div class="filter-wrapper ">
-                    <div class="title_top pb-4">
-                        <h4>Select Filters</h4>
-                    </div>
-                    <div class="title_filter ">
-                        <h6>Park</h6>
-                        <div class="input_check ">
-
-                            <select class="form-select mb-3" aria-label="Default select example">
-                                <option selected>Jawai Leopard Safari</option>
-                                <option value="1">Jawai Leopard Safari</option>
-                                <option value="2">Bandhavgarh Tiger Reserve </option>
-                                <option value="3">Bandhavgarh Tiger Reserve </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="title_filter mb-3">
-                        <h6>Month</h6>
-                        <div class="input_check ">
-
-                            <select class="form-select mb-3" aria-label="Default select example">
-                                <option selected>October</option>
-                                <option value="1">January</option>
-                                <option value="2">Febraury</option>
-                                <option value="3">March</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="title_filter mb-4">
-                        <h6>Estimate Price Per Person</h6>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">1000 - 3000</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">3000 - 6000</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">6000 - 10000</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">10000 +</label>
-
-                        </div>
-                    </div>
-                    <div class="title_filter mb-4">
-                        <h6>No. Of Safaris</h6>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">1+</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">4</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">6+</label>
-
-                        </div>
-                    </div>
-                    <div class="title_filter mb-4">
-                        <h6>Agenda</h6>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Photography</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Vlogging</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Safari Experience</label>
-
-                        </div>
-                    </div>
-                    <div class="title_filter mb-4">
-                        <h6>Host</h6>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Individual</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Wildlife Photographer</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Wildlife Influencer</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Safari Tour Operator</label>
-
-                        </div>
-                    </div>
-                    <div class="title_filter mb-4">
-                        <h6>Budget</h6>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Premium</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Standard</label>
-
-                        </div>
-                        <div class="input_check d-flex gap-3 align-items-center">
-                            <input type="checkbox" name="" id="text" class="checkbox_design">
-                            <label for="text" class=" text_check">Economical</label>
-
-                        </div>
-
-                    </div>
-                </div>
+                <?= $this->render('filter_search', ['searchModel' => $searchModel]) ?>
                 <div class="advertisment pt-5 ">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box-2">

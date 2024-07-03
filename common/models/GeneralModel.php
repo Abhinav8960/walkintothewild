@@ -675,4 +675,58 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return ArrayHelper::map(SafariOperatorRating::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['rating' => SORT_ASC])->all(), 'id', 'review');
     }
+
+    public static function estimatedpriceoption()
+    {
+        $return = [
+            '1' => '₹0 - ₹1000',
+            '2' => '₹1000 - ₹3000',
+            '3' => '₹3000 - ₹5000',
+            '4' => '₹5000 - ₹10000',
+            '5' => '₹10000+'
+        ];
+        return $return;
+    }
+
+    public static function noofsafarioption()
+    {
+        $return = [
+            '1' => '2',
+            '2' => '4',
+            '3' => '6+'
+        ];
+        return $return;
+    }
+
+    public static function agendaoption()
+    {
+        $return = [
+            '1' => 'Photography',
+            '2' => 'Vloggin',
+            '3' => 'Safari Experience'
+        ];
+        return $return;
+    }
+
+    public static function hostoption()
+    {
+        $return = [
+            '1' => 'Individual',
+            '2' => 'Wildlife Photographer',
+            '3' => 'Wildlife Influencer',
+            '4' => 'Safari Tour Operator'
+        ];
+        return $return;
+    }
+
+    public static function budgetoption()
+    {
+        $return = [
+            '1' => 'Premium',
+            '2' => 'Standard',
+            '3' => 'Economical',
+
+        ];
+        return $return;
+    }
 }
