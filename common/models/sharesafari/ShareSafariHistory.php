@@ -5,10 +5,9 @@ namespace common\models\sharesafari;
 use Yii;
 use common\models\User;
 use common\models\park\SafariPark;
-use common\traits\CommanRelationship;
 
 /**
- * This is the model class for table "share_safari".
+ * This is the model class for table "share_safari_history".
  *
  * @property int $id
  * @property int $host_user_id
@@ -30,16 +29,14 @@ use common\traits\CommanRelationship;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ShareSafariHistory extends \yii\db\ActiveRecord
 {
-    use CommanRelationship;
-
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'share_safari';
+        return 'share_safari_history';
     }
 
 
@@ -71,6 +68,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     {
         return [
             'id' => 'ID',
+            'parent_id' => 'Parent ID',
             'host_user_id' => 'Host User ID',
             'host_type' => 'Host Type',
             'park_id' => 'Park ID',

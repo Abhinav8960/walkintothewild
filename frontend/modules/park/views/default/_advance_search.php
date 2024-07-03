@@ -21,6 +21,7 @@ $animalfilteroption = GeneralModel::animalfilteroption();
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
 <div class="row gx-0 justify-content-center d-md-flex d-none desktop_search" id="desktop_search">
+    <div class="close_button" id="desktop_close_button"><i class="fa-solid fa-xmark"></i></div>
     <div class="col-lg-10 col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
@@ -182,8 +183,14 @@ $vehicleoption = GeneralModel::vehicleoption();
 $script = <<< JS
 document.getElementById('mobile_search').addEventListener('click', function() {
     document.getElementById('desktop_search').style.setProperty('display', 'block', 'important');
-        document.getElementById('mobile_search').style.setProperty('display', 'none', 'important');
+    document.getElementById('mobile_search').style.setProperty('display', 'none', 'important');
 });
+
+document.getElementById('desktop_close_button').addEventListener('click', function() {
+    document.getElementById('desktop_search').style.setProperty('display', 'none', 'important');
+    document.getElementById('mobile_search').style.setProperty('display', 'block', 'important');
+});
+
 $(document).ready(function(){
     function toggleDropdown(container) {
         var \$dropdown = container.find('.dropdown');
