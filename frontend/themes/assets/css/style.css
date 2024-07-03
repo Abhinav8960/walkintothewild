@@ -405,7 +405,7 @@ a {
 .filter-wrapper {
 
     border: 1px solid #0000004D;
-    padding: 20px;
+    padding: 20px 10px;
     /* background-color: #F5F5F5; */
     border-radius: 4px;
     color: var(--background-primary);
@@ -2571,12 +2571,13 @@ figure {
     border-radius: 20px;
     padding: 6px 30px;
     margin: 8px 10px 0px 0px;
+    color: #000000 !important;
 }
 
 .btn_sort.active {
 
     background-color: var(--background-primary);
-    color: var(--colorwhite);
+    color: var(--colorwhite) !important;
     display: inline-block;
 
 }

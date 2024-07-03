@@ -171,11 +171,7 @@ line-height: 19px;
         margin-top: 290px !important;
     }
     /* Sticky sidebar styles */
-.sticky-sidebar {
-    position: fixed;
-   width: 11%;
-   left: 5%;
- }
+
  .margin-added{
 
     margin-left: 46px;
@@ -363,10 +359,10 @@ line-height: 19px;
 
         width: 228px;
     }
-    .sticky-sidebar {
+    /* .sticky-sidebar {
         position: fixed;
        width: 14%;
-     }
+     } */
     .articals_wrapper.margin-setposi{
 
         margin-top: 330px !important;
@@ -490,6 +486,11 @@ line-height: 19px;
 
         display: none;
     }
+    /* .sticky-sidebar {
+        position: fixed;
+       width: 13%;
+       left: 5%;
+     } */
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
