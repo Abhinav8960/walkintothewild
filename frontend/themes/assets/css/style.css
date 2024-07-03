@@ -1364,7 +1364,12 @@ figure {
     aspect-ratio: 14/3;
     object-fit: contain;
 }
+.slidesImg{
 
+    background-color: #f5f5f5;
+    padding: 4px 0px;
+    border-radius: 5px;
+}
 .fixedbanner {
 
     position: fixed !important;
@@ -1735,7 +1740,7 @@ figure {
     background-color: var(--background-orange);
     border: 0;
     padding: 9px 25px;
-    font-size: var(--fs-16);
+    font-size: var(--fs-15);
     color: var(--colorwhite);
     font-family: "Roboto", sans-serif;
     font-weight: 500;
@@ -1756,7 +1761,7 @@ figure {
 .join_btn {
     background-color: var(--background-yellow);
     border: 0;
-    padding: 7px 35px;
+    padding: 9px 35px;
     font-size: var(--fs-15);
     color: var(--colorBlack);
     font-family: "Roboto", sans-serif;
@@ -2834,7 +2839,7 @@ figure {
 .touroprators {
 
     background-color: var(--colorwhite);
-    padding: 16px 10px;
+    padding: 12px 10px;
     border: 1px solid #0000004D;
     border-radius: 0px 10px 10px 10px;
 }

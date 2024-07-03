@@ -684,6 +684,10 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:1400px) {
+    .author_wrapper{
+
+        padding-top: 10px;
+    }
   
     .seelctes_text p {
         overflow: hidden;
@@ -832,6 +836,7 @@ line-height: 19px;
     }
 }
 @media only screen and (max-width:1200px) {
+
  
     .select_boxes .form-select {
 
@@ -978,6 +983,7 @@ line-height: 19px;
 
 
 @media only screen and (max-width:991px) {
+  
     #targetDiv {
         background-color: #faf7f3;
         position: fixed;
