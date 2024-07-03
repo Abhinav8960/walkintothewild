@@ -21,7 +21,7 @@ $animalfilteroption = GeneralModel::animalfilteroption();
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
 <div class="row gx-0 justify-content-center " >
-    <div class="col-lg-10 col-xl-10">
+    <div class=" col-xl-10">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
@@ -139,7 +139,7 @@ $vehicleoption = GeneralModel::vehicleoption();
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-xl-1">
+    <div class=" col-xl-1">
         <div class="search">
             <div class="serch_btn">
                 <?= Html::Button('Search', ['id' => 'search_submit_btn']) ?>

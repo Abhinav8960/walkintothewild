@@ -6,6 +6,7 @@ use Yii;
 use yii\web\UploadedFile;
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
+use common\models\operator\SafariOperator;
 use frontend\models\registration\form\SafaritourRegistrationForm;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
@@ -25,6 +26,11 @@ class SafaritourRegistrationController extends FrontendBaseController
     {
         if (!Yii::$app->user->identity) {
             return $this->redirect(['/site/auth?authclient=google']);
+        }
+        if (Yii::$app->user->identity) {
+            if (($model = SafariOperator::findOne(['user_id' => Yii::$app->user->identity->id])) !== null) {
+                return $this->redirect([Yii::$app->params['backend_url']]);
+            }
         }
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;

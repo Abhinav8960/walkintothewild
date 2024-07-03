@@ -274,7 +274,7 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
     }
 
     /* Styling for links (Call and Email) */
-    .phone a,
+    /* .phone a,
     .email a {
         display: flex;
         align-items: center;
@@ -283,7 +283,7 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
         padding: 10px;
         border-radius: 5px;
         transition: background-color 0.3s ease, color 0.3s ease;
-    }
+    } */
 
     /* Hover effect for links */
     .phone a:hover,

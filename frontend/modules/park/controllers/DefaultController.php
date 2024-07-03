@@ -10,6 +10,7 @@ use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariParkMonth;
 use common\models\master\animal\MasterRareAnimal;
+use common\models\sharesafari\ShareSafari;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\SafariParkSearch;
 use frontend\models\SafariOperatorSearch;
@@ -38,6 +39,8 @@ class DefaultController extends FrontendBaseController
 
         $featured_articles = Article::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
         $rare_exotics = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->all();
+        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE])->limit(2)->all();
+
         return $this->render(
             'index',
             [
@@ -46,6 +49,7 @@ class DefaultController extends FrontendBaseController
                 'rare_exotics' => $rare_exotics,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'shared_safaries' => $shared_safaries,
             ]
         );
     }
@@ -77,6 +81,7 @@ class DefaultController extends FrontendBaseController
 
         // $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
         // $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
+        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
 
 
 
@@ -122,6 +127,7 @@ class DefaultController extends FrontendBaseController
                 'operatorsearchModel' => $operatorsearchModel,
                 'operatordataProvider' => $operatordataProvider,
                 'operators' => $operators,
+                'shared_safaries' => $shared_safaries,
                 'device' => $this->device(),
             ]
         );
