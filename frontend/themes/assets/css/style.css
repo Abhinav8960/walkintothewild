@@ -1781,9 +1781,13 @@ figure {
     background-color: #00B456;
 }
 
-.iconSize .fa-twitter {
+.iconSize .fa-x-twitter {
 
-    background-color: #00A9FF;
+    background-color: #000000;
+}
+.iconSize i.fa-x-twitter{
+
+    color: #fff !important;
 }
 
 .comments_safari {
