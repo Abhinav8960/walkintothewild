@@ -31,7 +31,7 @@ use yii\helpers\Html;
 
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->dropDownList([1, 2, 3, 4], ['prompt' => 'Select No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->dropDownList([1, 2, 3, 4, 5, 6], ['prompt' => 'Select No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
 
         <div class="col-md-12 mb-2">
@@ -49,7 +49,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Stay Category</label>
-            <?= $form->field($model, 'stay_category_id')->dropDownList(ArrayHelper::map(MetaStayCategory::find()->where(['status' => StatusInterface::STATUS_ACTIVE])->all(), 'id', 'title'), ['prompt' => 'Stay Category', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => 'Premium', '2' => 'Budget', '3' => 'Economical'], ['prompt' => 'Stay Category', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
         <div class="col-lg-6 mb-2">
             <label for="" class="Modal_label">Estimate Price Per Person</label>
@@ -76,11 +76,11 @@ use yii\helpers\Html;
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Total Seat</label>
-                    <?= $form->field($model, 'total_seat')->dropDownList([6, 7, 8, 9, 10], ['prompt' => 'Total Seat', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'total_seat')->dropDownList([2, 3, 4, 5, 6], ['prompt' => 'Total Seat', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Share Seats</label>
-                    <?= $form->field($model, 'share_seat')->dropDownList([3, 4, 6, 8], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'share_seat')->dropDownList([1, 2, 3, 4, 5], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                 </div>
             </div>
         </div>

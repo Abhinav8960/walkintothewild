@@ -322,8 +322,12 @@ a {
 
 .title_safari h4 {
 
-    color: var(--background-primary);
+    color: #ADDC2C;;
     font-size: var(--fs-22);
+}
+.backgroud_oprator  .title_safari h4{
+
+    color: var(--background-primary) !important;
 }
 
 .sharesafribg {
@@ -381,6 +385,11 @@ a {
     box-shadow: 0px 3px 6px #00000029; */
     border-radius:10px;
     border: 1px solid #0000004D;
+
+}
+.sharesafri-card:hover{
+   -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029;
 
 }
 
@@ -3804,7 +3813,8 @@ figure {
 
     margin-top: 4px;
     border-radius: 5px;
-    max-height: 218px;
+    min-height:265px;
+    max-height: 265px;
     overflow: auto; 
     box-shadow: 0px 3px 6px #00000029;
 }
