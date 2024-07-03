@@ -51,7 +51,7 @@ class SafariParkFloraFaunaForm extends model
         return [
             [['description', 'title'], 'required'],
             [['status'], 'integer'],
-            ['description', \common\validators\Word500Validator::className()],
+            ['description', \common\validators\Word120Validator::className()],
             [['status'], 'default', 'value' => 1],
             [['title', 'safari_park_id'], 'safe'],
         ];
