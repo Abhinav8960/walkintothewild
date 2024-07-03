@@ -58,7 +58,6 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row mb-4 justify-content-center">
             <div class="col-lg-8 col-xl-8 col-xxl-9 pe-xl-5">
                 <div class="aritcla-details">
-                    <h1 class="articald-title pb-3"><?= $article->title ?></h1>
                     <div class="aritcal_bigimg pb-4">
                         <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt="" class="w-100">
                     </div>
