@@ -3818,6 +3818,24 @@ figure {
     border-radius: 5px;
 }
 
+.offcanvas.offcanvas-end.header_canvas{
+
+
+        max-width: 100% !important;
+        width: 100%!important;
+
+
+}
+.offcanvas, .offcanvas-xxl, .offcanvas-xl, .offcanvas-lg, .offcanvas-md, .offcanvas-sm{
+
+
+        max-width: 100% !important;
+        width: 100%!important;
+ 
+
+}
+
+
 
 .dropdown.custom_dropdown::-webkit-scrollbar-track {
     border-radius: 5px;
