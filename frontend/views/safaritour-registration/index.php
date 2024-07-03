@@ -111,10 +111,10 @@ $this->params['title'] = $this->title;
                                 <div class="formInput">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <label for="">About Business</label>
-                                        <p class="mb-0">500 words max.</p>
+                                        <p class="mb-0">120 words max.</p>
                                     </div>
                                     <?= $form->field($model, 'about_business')->textarea()->label(false) ?>
-                                    <p id="wordCount" class="mb-0 text-end">0/500</p>
+                                    <p id="wordCount" class="mb-0 text-end">0/120</p>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@ $this->params['title'] = $this->title;
                                 <div class="formInput mb-3">
                                     <div class="d-flex flex-wrap align-items-center justify-content-between gap-1">
                                         <div class="mobile_width div_remove">
-                                            <label for="">Phone Number <span>*</span></label>
+                                            <label for="">Phone Number</label>
                                             <?= $form->field($model, 'phone_no')->widget(\yii\widgets\MaskedInput::class, [
                                                 'mask' => '9999999999',
                                                 'options' => [
@@ -287,44 +287,3 @@ $this->params['title'] = $this->title;
         </div>
 
 </section>
-
-
-<?php
-// Define $maxLength with a constant value or retrieve dynamically
-$maxLength = 500; // Example: maximum allowed words
-
-// Define the JavaScript code as a string using heredoc syntax
-$script = <<< JS
-document.addEventListener("DOMContentLoaded", function() {
-    const textarea = document.getElementById('safaritourregistrationform-about_business');
-    const wordCount = document.getElementById('wordCount');
-    const maxLength = $maxLength; // Maximum allowed words
-
-    function updateWordCount() {
-        const wordsArray = textarea.value.trim().split(/\s+/);
-        const wordsLength = wordsArray.filter(word => word).length; // Filter out any empty strings
-
-        if (wordsLength > maxLength) {
-            wordCount.textContent = maxLength + '/' + maxLength;
-            wordCount.style.color = 'red'; // Set color to red if words exceed the limit
-        } else {
-            wordCount.textContent = wordsLength + '/' + maxLength;
-            wordCount.style.color = ''; // Reset color if words are within the limit
-        }
-    }
-
-    textarea.addEventListener('input', function(event) {
-        updateWordCount();
-    });
-
-    updateWordCount(); // Call the function initially to ensure the count is displayed correctly
-
-    // Display initial count
-    wordCount.textContent = '0/' + maxLength;
-    
-});
-JS;
-
-// Register the JavaScript code using Yii2's registerJs() method
-$this->registerJs($script);
-?>

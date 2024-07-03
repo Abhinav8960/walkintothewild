@@ -78,7 +78,7 @@ $reviews = SafariOperatorRating::find()->where(['safari_operator_id' => $operato
                         <div class="col-lg-6  border-right  border_bottom_mobile pt-lg-0 pt-3">
                             <div class="provider_details">
                                 <div class="title_tours d-flex flex-wrap align-items-center gap-md-2 gap-xxl-3">
-                                    <h3><?= $operator->register_comapany_name ?></h3>
+                                    <h3><?= $operator->business_name ?></h3>
                                     <!-- <span class="d-sm-block d-none">|</span> -->
                                     <div class="follow mb-lg-2 mb-xxl-0 mb-2">
 
