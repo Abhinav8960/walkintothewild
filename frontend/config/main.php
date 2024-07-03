@@ -107,6 +107,7 @@ return [
 
                 '/parklist/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',
                 '/parklist' => '/park/default/parklist', //park listing url
+                '/rareanimal/<slug>' => '/park/default/rareanimal', //park listing url
 
                 '/article' => '/article/default/index',
                 '/article/tag/<slug>' => '/article/default/tag',

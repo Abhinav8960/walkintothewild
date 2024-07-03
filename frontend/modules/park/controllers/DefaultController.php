@@ -221,6 +221,29 @@ class DefaultController extends FrontendBaseController
         ]);
     }
 
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionRareanimal($slug)
+    {
+        $rare_animal = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $searchModel = new SafariParkSearch();
+        if ($rare_animal) {
+            $searchModel->master_rare_animal_id = $rare_animal->id;
+        }
+
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $models = $dataProvider->getModels();
+
+        return $this->render('rareanimal', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'models' => $models,
+            'device' => $this->device(),
+            'slug' => $slug,
+        ]);
+    }
 
     /**
      * Get Redirect URL
