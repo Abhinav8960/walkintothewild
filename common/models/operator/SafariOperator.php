@@ -164,7 +164,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
     public function getImagepath()
     {
         if ($this->logo != '') {
-            return '/storage/safarioperator/' . $this->safari_operator_request_id . '/' . $this->logo;
+            return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
         }
     }
 }

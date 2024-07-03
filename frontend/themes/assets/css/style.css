@@ -267,7 +267,7 @@ a {
     /* border-radius: 0px 0px 10px 10px; */
     color: var(--colorBlack);
     text-decoration: none;
-    box-shadow: 0px 3px 6px #00000029;
+    /* box-shadow: 0px 3px 6px #00000029; */
 }
 
 .sahreSafari:hover {
@@ -377,9 +377,10 @@ a {
 .sharesafri-card {
 
     position: relative;
-    -webkit-box-shadow: 0px 3px 6px #00000029;
-    box-shadow: 0px 3px 6px #00000029;
+    /* -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029; */
     border-radius: 0px 0px 10px 10px;
+    border: 1px solid #0000004D;
 
 }
 
@@ -387,7 +388,8 @@ a {
 
 .sharesafri-card .card_body {
 
-    background: #F5F5F5;
+    /* background: #F5F5F5; */
+    background-color: #fff;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -1017,8 +1019,8 @@ figure {
     display: block;
     background: #FAF7F3;
     border-radius: 10px;
-    -webkit-box-shadow: 0px 3px 6px #00000029;
-    box-shadow: 0px 3px 6px #00000029;
+    /* -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029; */
 
 
 }
