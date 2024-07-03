@@ -31,7 +31,7 @@ $recentposts = ArticleSearch::recentpost();
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1>Articles & Tips</h1>
-                        <p class="text-center text-white"><?= isset($slug) ? strtoupper($slug) : '' ?></p>
+                        
                     </div>
                 </div>
             </div>
@@ -54,6 +54,9 @@ $recentposts = ArticleSearch::recentpost();
         </div>
         <div class="row mb-4 ">
             <div class="col-lg-8 col-xl-8 col-xxl-9">
+                <div class="topics_tags">
+                <h4 class="fs-4"><?= isset($slug) ? strtoupper($slug) : '' ?></h4>
+                </div>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 ">
                     <?php if ($models) {
                         foreach ($models as $model) { ?>
@@ -67,13 +70,14 @@ $recentposts = ArticleSearch::recentpost();
                                         <ul class="artical-info ">
                                             <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $model->articleAuthor ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
                                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug, '#' => 'comment-wrapper-section']) ?>"><?= $model->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
+                                            
                                         </ul>
                                         <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>
 
                                         <ul class="artical-info ">
                                             <?php if ($topics = $model->getArticletopics()->where(['status' => 1])->orderby('RAND()')->limit(3)->all()) {
                                                 foreach ($topics as $topic) { ?>
-                                                    <li><i class="fa fa-list-alt" aria-hidden="true" style="color:#f7bf39"></i><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->articlename->slug]) ?>"><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></a></li>
+                                                    <li><i class="fa-solid fa-tag" style="color:#f7bf39"></i><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->articlename->slug]) ?>"><?= isset($topic->articlename->title) ? $topic->articlename->title : ''; ?></a></li>
                                             <?php }
                                             } ?>
                                         </ul>

@@ -256,6 +256,29 @@ line-height: 19px;
         height: 260px;
 
     }
+    .aritcla-details p{
+
+        font-size: 15px;
+    }
+    .aritcla-details h1,
+.aritcla-details h2,
+.aritcla-details h3,
+.aritcla-details h5,
+.aritcla-details h6,
+.aritcla-details h4{
+
+    font-size: 22px;
+
+}
+.author_wrapper .artical-info li{
+
+    font-size: 13px;
+}
+
+.tags-title{
+
+    font-size: 22px; 
+}
 
     .artical_cards .lower-content h3{
         font-size: 18px;
@@ -661,6 +684,7 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:1400px) {
+  
     .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;

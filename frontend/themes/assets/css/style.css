@@ -1126,9 +1126,20 @@ figure {
     display: -ms-flexbox;
     display: flex;
     gap: 10px;
+    
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+}
+.artical-info li {
+
+    color: #9C9C9C;
+}
+
+.artical-info li i{
+
+    color: var(--background-yellow) !important;
+ 
 }
 
 .artical_cards .lower-content .artical-info {
@@ -1480,14 +1491,33 @@ figure {
 
     font-size: var(--fs-18);
 }
+.aritcla-details h1,
+.aritcla-details h2,
+.aritcla-details h3,
+.aritcla-details h5,
+.aritcla-details h6,
+.aritcla-details h4{
+
+    font-size: 24px;
+
+}
+
+.tags-title{
+
+    font-size: 24px; 
+}
+
+
+
 
 .tags-button {
 
     background-color: var(--background-yellow);
-    padding: 10px 20px;
-    width: 120px;
+    padding: 5px 18px;
+    /* width: 120px; */
     text-align: center;
     border: 0;
+    font-size: 13px;
     font-family: "Roboto", sans-serif !important;
     border-radius: 5px;
 }
@@ -1515,6 +1545,7 @@ figure {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
+    font-size: 15px;
 }
 
 .comment-wrapper {
