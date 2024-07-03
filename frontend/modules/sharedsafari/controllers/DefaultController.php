@@ -75,8 +75,43 @@ class DefaultController extends FrontendBaseController
     /**
      * Update Safari
      */
-    public function actionUpdate()
+    public function actionUpdate($slug)
     {
+        $shared_safari_model = $this->findModel($slug);
+        $model = new SharedSafariForm($shared_safari_model);
+        $model->action_url = '/sharedsafari/default/update?slug=' . $slug . '';
+        $model->action_validate_url = '/sharedsafari/default/updatevalidate?slug=' . $slug . '';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->shared_safari_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug]));
+                    }
+                }
+            }
+        } else {
+            $model->shared_safari_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('organize_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionUpdatevalidate($slug)
+    {
+        $formmodel = $this->findModel($slug);
+        $model = new SharedSafariForm($formmodel);
+
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 
 
@@ -172,5 +207,14 @@ class DefaultController extends FrontendBaseController
      */
     public function actionSafaribyuser($user_id)
     {
+    }
+
+    protected function findModel($slug)
+    {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => StatusInterface::STATUS_ACTIVE])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
