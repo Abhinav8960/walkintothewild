@@ -187,57 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    const textarea1 = document.getElementById('safaritourregistrationform-about_business');
-    const wordCount1 = document.getElementById('wordCount');
-    const maxLength = 500; // Maximum allowed words
-
-    function updateWordCount(textarea, wordCount) {
-        const wordsArray = textarea.value.trim().split(/\s+/);
-        const wordsLength = wordsArray.filter(word => word).length; // Filter out any empty strings
-
-        if (wordsLength > maxLength) {
-            wordCount.textContent = `${maxLength}/${maxLength}`;
-            wordCount.style.color = 'red'; // Set color to red if words exceed the limit
-        } else {
-            wordCount.textContent = `${wordsLength}/${maxLength}`;
-            wordCount.style.color = ''; // Reset color if words are within the limit
-        }
-    }
-
-    if (textarea1 && wordCount1) {
-        textarea1.addEventListener('input', function() {
-            updateWordCount(textarea1, wordCount1);
-        });
-
-        updateWordCount(textarea1, wordCount1); // Call the function initially to ensure the count is displayed correctly
-        wordCount1.textContent = `0/${maxLength}`;
-    }
-
-    const textarea2 = document.getElementById('birdingtourregistrationform-about_business');
-    const wordCount2 = document.getElementById('wordCount');
-
-    if (textarea2 && wordCount2) {
-        textarea2.addEventListener('input', function() {
-            updateWordCount(textarea2, wordCount2);
-        });
-
-        updateWordCount(textarea2, wordCount2); // Call the function initially to ensure the count is displayed correctly
-        wordCount2.textContent = `0/${maxLength}`;
-    }
-
-    function increment(id) {
-        let input = document.getElementById(id);
-        if (input) {
-            input.value = parseInt(input.value) + 1;
-        }
-    }
-
-    function decrement(id) {
-        let input = document.getElementById(id);
-        if (input && parseInt(input.value) > 0) {
-            input.value = parseInt(input.value) - 1;
-        }
-    }
+    
 
     const tabs = document.querySelectorAll('.tab-items');
     const contents = document.querySelectorAll('.tab-content_tour');
@@ -429,6 +379,79 @@ fileUpload.addEventListener('change', function () {
     }
 });
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    const textarea = document.getElementById('safaritourregistrationform-about_business');
+    const wordCount = document.getElementById('wordCount');
+    const maxLength = 120; // Maximum allowed words
+
+    function updateWordCount() {
+        // Regular expression to match alphanumeric sequences and common symbols in words
+        const wordsArray = textarea.value.match(/[\w'-]+/g) || []; 
+
+        const wordsLength = wordsArray.length;
+        if (wordsLength > maxLength) {
+            wordCount.textContent = `${maxLength}/${maxLength}`;
+            wordCount.style.color = 'red'; // Set color to red if words exceed the limit
+        } else {
+            wordCount.textContent = `${wordsLength}/${maxLength}`;
+            wordCount.style.color = ''; // Reset color if words are within the limit
+        }
+    }
+
+    textarea.addEventListener('input', function(event) {
+        updateWordCount();
+    });
+
+    updateWordCount(); // Call the function initially to ensure the count is displayed correctly
+
+    // Display initial count
+    wordCount.textContent = `0/${maxLength}`;
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const textarea = document.getElementById('birdingtourregistrationform-about_business');
+    const wordCount = document.getElementById('wordCount');
+    const maxLength = 120; // Maximum allowed words
+
+    function updateWordCount() {
+        // Regular expression to match alphanumeric sequences and common symbols in words
+        const wordsArray = textarea.value.match(/[\w'-]+/g) || []; 
+
+        const wordsLength = wordsArray.length;
+        if (wordsLength > maxLength) {
+            wordCount.textContent = `${maxLength}/${maxLength}`;
+            wordCount.style.color = 'red'; // Set color to red if words exceed the limit
+        } else {
+            wordCount.textContent = `${wordsLength}/${maxLength}`;
+            wordCount.style.color = ''; // Reset color if words are within the limit
+        }
+    }
+
+    textarea.addEventListener('input', function(event) {
+        updateWordCount();
+    });
+
+    updateWordCount(); // Call the function initially to ensure the count is displayed correctly
+
+    // Display initial count
+    wordCount.textContent = `0/${maxLength}`;
+});
+
+
+
+function increment(id) {
+    let input = document.getElementById(id);
+    input.value = parseInt(input.value) + 1;
+}
+
+function decrement(id) {
+    let input = document.getElementById(id);
+    if (parseInt(input.value) > 0) {
+        input.value = parseInt(input.value) - 1;
+    }
+}
 // (function($){
 //     $('document').ready(function() {
 //       $('.sidebar,.main').stick_in_parent();

@@ -5,10 +5,12 @@
 
 use backend\assets\AppAsset;
 use backend\assets\NovaAppAsset;
+use common\assets\NotifyAsset;
 use common\widgets\Alert;
 
 NovaAppAsset::register($this);
 AppAsset::register($this);
+NotifyAsset::register($this);
 
 ?>
 <?php $this->beginPage() ?>
@@ -70,9 +72,6 @@ AppAsset::register($this);
 
             <!-- container -->
             <div class="main-container container-fluid">
-
-                <?= Alert::widget() ?>
-
                 <?= \backend\widgets\PageHeader::widget([
                     'title' => isset($this->params['title']) ? $this->params['title'] : '',
                     'buttons' => isset($this->params['buttons']) ? $this->params['buttons'] : []
@@ -89,6 +88,8 @@ AppAsset::register($this);
 
         <!-- BEGIN Setting -->
         <?= \backend\widgets\Setting::widget() ?>
+        <?= \common\widgets\NotifyAlert::widget() ?>
+
         <!-- END Setting -->
     </div>
     <!-- END #app -->

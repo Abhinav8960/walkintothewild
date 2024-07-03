@@ -141,7 +141,7 @@ class SafariController extends Controller
     }
 
 
-     /**
+    /**
      * View Operator
      */
     public function actionFlagview($id, $safari_operator_id)
@@ -209,8 +209,8 @@ class SafariController extends Controller
                     if ($model->safari_operator_request_model->save(false)) {
                         $model->uploadFile();
                         $parks = $model->park_id;
+                        SafariOperatorRequestPark::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
                         if ($parks) {
-                            SafariOperatorRequestPark::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
                             foreach ($parks as $park) {
                                 $safarioperatorrequestpark = new SafariOperatorRequestPark();
                                 $safarioperatorrequestpark->safari_operator_request_id = $model->safari_operator_request_model->id;
@@ -221,8 +221,8 @@ class SafariController extends Controller
 
 
                         $activities = $model->offers_other_wildlifeactivities;
+                        SafariOperatorRequestActivities::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
                         if ($activities) {
-                            SafariOperatorRequestActivities::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
                             foreach ($activities as $activity) {
                                 $safarioperatorrequestactivity = new SafariOperatorRequestActivities();
                                 $safarioperatorrequestactivity->safari_operator_request_id = $model->safari_operator_request_model->id;

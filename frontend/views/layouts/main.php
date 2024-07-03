@@ -3,6 +3,7 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
+use common\assets\NotifyAsset;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
@@ -13,6 +14,8 @@ use yii\bootstrap5\NavBar;
 
 FrontAppAsset::register($this);
 AppAsset::register($this);
+NotifyAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -51,9 +54,10 @@ AppAsset::register($this);
 
     <main role="main" class="flex-shrink-0">
 
-        <?= Alert::widget() ?>
         <?= $content ?>
     </main>
+    <?= \common\widgets\NotifyAlert::widget() ?>
+
     <?= \frontend\widgets\Footer::widget() ?>
 
 
