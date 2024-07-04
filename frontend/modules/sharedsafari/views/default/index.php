@@ -65,7 +65,7 @@ $recentposts = ArticleSearch::recentpost();
                     ]) ?>
 
                 </div>
-                <?= $this->render('filter_search', ['searchModel' => $searchModel]) ?>
+
                 <div class="advertisment pt-5 ">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box-2">
