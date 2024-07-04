@@ -110,7 +110,7 @@
     .searchSafari_parks .parksImg {
 
         height: 265px !important;
-        width: 265px;
+        /* width: 265px; */
     }
     .searchSafari_parks .parksImg img{
 

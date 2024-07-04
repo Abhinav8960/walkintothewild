@@ -2583,9 +2583,25 @@ figure {
     background-color: var(--background-yellow);
     color: var(--colorBlack);
     font-weight: 600;
-    font-size: var(--fs-18);
+    font-size: var(--fs-16);
     border-radius: 8px;
     border: 0;
+}
+.btn_set{
+
+    margin-top: -45px;
+}
+.history_btn{
+
+    background: var(--background-primary);
+    border: 0;
+    padding: 3px 6px;
+    border-radius: 4px;
+
+}
+.history_btn i{
+
+    color: #fff;
 }
 
 .ratings p {

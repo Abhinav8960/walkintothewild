@@ -39,7 +39,7 @@ $this->params['title'] = $this->title;
 <section class="safari_wrapper py-3">
     <div class="container-lg">
         <div class="row justify-content-center">
-            <div class="col-lg-7 mb-4">
+            <div class="col-lg-7 mb-4 pb-lg-0 pb-2">
                 <div class="advertisment ">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box">
@@ -50,6 +50,11 @@ $this->params['title'] = $this->title;
         </div>
         <div class="row my-4">
             <div class="col-12">
+                <div class="btn_set float-end">
+
+                <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
+                </div>
+              
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 border-right">
@@ -67,8 +72,7 @@ $this->params['title'] = $this->title;
                                         </div>
                                         <p class="mb-0 pt-2">Organized by <strong><?= $share_safari->user->name ?> (Wildlife
                                                 Influencer)</strong></p>
-                                        <button class="intested_btn history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-history"></i></i>
-                                            View History</button>
+
                                     </div>
 
                                 </div>
@@ -167,7 +171,7 @@ $this->params['title'] = $this->title;
                                         </li>
                                         <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
                                         </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter" ></i></a>
+                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
                                         </li>
                                         <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
                                         </li>
