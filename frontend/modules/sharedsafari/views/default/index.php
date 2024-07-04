@@ -67,7 +67,7 @@ $recentposts = ArticleSearch::recentpost();
 
                 </div>
 
-                <div class="advertisment pt-5 ">
+                <div class="advertisment pt-md-5 ">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box-2">
 
