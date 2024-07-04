@@ -132,8 +132,9 @@ class SharedSafariForm extends \yii\base\Model
     public function safariHistory()
     {
         $history = new ShareSafariHistory();
-        $history->parent_id = $this->shared_safari_model->id;
         $history->setAttributes($this->shared_safari_model->attributes, false);
+        $history->parent_id = $this->shared_safari_model->id;
+        $history->id = NULL;
         $history->save(false);
     }
 

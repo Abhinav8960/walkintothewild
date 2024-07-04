@@ -6,7 +6,7 @@
                 <th scope="col">S.No</th>
                 <th scope="col">Avatar</th>
                 <th scope="col">Name</th>
-                <th scope="col">Email</th>
+                <th scope="col">Join At</th>
             </tr>
         </thead>
         <?php if ($interest_model) {
@@ -22,7 +22,7 @@
                             </div>
                         </td>
                         <td><?= $model->user->name ?></td>
-                        <td><?= $model->user->username ?></td>
+                        <td><?= date('Y-m-d', $model->intrested_at) ?></td>
                 </tbody>
         <?php $srn++;
             }
