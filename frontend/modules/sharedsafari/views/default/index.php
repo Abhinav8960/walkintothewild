@@ -62,11 +62,11 @@ $recentposts = ArticleSearch::recentpost();
                     <?= $this->render('filter_search', [
                         'searchModel' => $searchModel,
                         'device' => $device,
+                        
                     ]) ?>
 
                 </div>
-                <?= $this->render('filter_search', ['searchModel' => $searchModel]) ?>
-                <div class="advertisment pt-5 ">
+                <div class="advertisment pt-md-5 ">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box-2">
 
@@ -80,7 +80,7 @@ $recentposts = ArticleSearch::recentpost();
                             <div class="col-md-5">
                                 <?= $this->render('_date_search', ['searchModel' => $searchModel]) ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mt-md-0 mt-3">
                                 <div class="right_button float-md-end">
                                     <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                                         Safari</button>

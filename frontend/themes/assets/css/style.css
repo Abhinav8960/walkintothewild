@@ -552,6 +552,18 @@ a {
     padding-left: 0;
 }
 
+.filterPhone{
+
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.top_filterwrap {
+
+    position: fixed;
+    width: 100%;
+}
+
 .btn_apply {
 
     border-radius: 4px;
