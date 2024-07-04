@@ -62,7 +62,7 @@
 							</li> -->
 
 
-								<a href="/sharedsafari" class="sahreSafari desktop text-lg-center  <?= in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) ? "active" : "" ?>">
+								<a href="/sharedsafari" class="sahreSafari desktop text-lg-center  <?= (in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) || str_starts_with($active_url, "/sharedsafari")) ? "active" : "" ?>">
 									<div class="card-img">
 										<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
 									</div>
