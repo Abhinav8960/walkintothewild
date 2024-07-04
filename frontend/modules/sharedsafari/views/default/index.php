@@ -66,7 +66,8 @@ $recentposts = ArticleSearch::recentpost();
                     ]) ?>
 
                 </div>
-                <div class="advertisment pt-md-5 ">
+
+                <div class="advertisment pt-5 ">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box-2">
 
@@ -82,8 +83,13 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                             <div class="col-md-6 mt-md-0 mt-3">
                                 <div class="right_button float-md-end">
-                                    <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
-                                        Safari</button>
+                                    <?php if (Yii::$app->user->identity) { ?>
+                                        <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                                            Safari</button>
+                                    <?php } else {  ?>
+                                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
+                                            Safari</a>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -159,6 +165,8 @@ $recentposts = ArticleSearch::recentpost();
                                                         <?php
                                                         }
                                                     };
+                                                    $count = $share_safari->getIntrested()->count();
+                                                    $avatar_count = 3;
                                                     $data = $count - $avatar_count;
                                                     if ($data > 3) {  ?>
                                                         <div class="roundes_countuser">

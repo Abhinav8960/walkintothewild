@@ -5,6 +5,7 @@ namespace frontend\modules\sharedsafari\controllers;
 use Yii;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
+use common\models\park\SafariPark;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariHistory;
@@ -243,5 +244,13 @@ class DefaultController extends FrontendBaseController
                 'interest_model' => $interest_model
             ]);
         }
+    }
+
+    public function actionGetparkimage($id)
+    {
+        $model = SafariPark::find()->where(['id' => $id])->limit(1)->one();
+        $image = $model->featureimagepath;
+
+        return $image;
     }
 }

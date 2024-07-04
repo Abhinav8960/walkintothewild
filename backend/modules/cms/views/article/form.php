@@ -141,6 +141,11 @@ $this->params['title'] = $this->title;
                         <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Title']) ?>
                     </div>
 
+                    <div class="col-md-6">
+                        <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Keyword']) ?>
+                    </div>
+
+
                     <div class="col-md-12">
                         <?= $form->field($model, 'meta_description')->textarea() ?>
                     </div>
