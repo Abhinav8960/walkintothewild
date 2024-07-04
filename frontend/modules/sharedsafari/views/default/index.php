@@ -125,7 +125,7 @@ $recentposts = ArticleSearch::recentpost();
                             <?php if ($models = $dataProvider->models) {
                                 foreach ($models as $share_safari) {
                             ?>
-                                    <div class="col mb-4 padding_right">
+                                    <div class="col mb-4 padding_righ">
                                         <div class="sharesafri-card">
                                             <div class="flotingdate">
                                                 <div class="icons text-center">
