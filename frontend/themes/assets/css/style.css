@@ -628,7 +628,7 @@ a {
 
     background-color: var(--background-yellow);
     padding: 10px 20px;
-    font-size: var(--fs-18);
+    font-size: var(--fs-16);
     font-weight: 600;
     font-family: "Roboto", sans-serif !important;
     color: #152F1B;
@@ -1775,7 +1775,7 @@ figure {
 .join_btn {
     background-color: var(--background-yellow);
     border: 0;
-    padding: 9px 35px;
+    padding: 11px 35px;
     font-size: var(--fs-15);
     color: var(--colorBlack);
     font-family: "Roboto", sans-serif;

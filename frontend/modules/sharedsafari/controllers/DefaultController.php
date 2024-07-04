@@ -30,7 +30,8 @@ class DefaultController extends FrontendBaseController
 
         return $this->render('index', [
             'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            'device' => $this->device(),
         ]);
     }
 
