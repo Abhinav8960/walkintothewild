@@ -48,7 +48,7 @@ use yii\helpers\Html;
 
         <?php
         if ($model->shared_safari_model->image) { ?>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
             </div>
 
@@ -67,11 +67,11 @@ use yii\helpers\Html;
                     <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
                 </div>
             <?php } else { ?>
-                <div class="col-md-6">
-                    <img src="" id="park_image" alt="" width="100px" height="100px">
+                <div class="col-3 mb-2">
+                    <img src="" id="park_image" alt="" width="100%" height="100px">
                 </div>
             <?php } ?>
-            <div class="col-6 mb-2">
+            <div class="col-9 mb-2">
                 <label for="" class="Modal_label">Image</label>
                 <div class="col-md-12">
                     <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
@@ -148,7 +148,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-lg-4 pt-4">
             <div class="creat-safri">
-                <?= Html::submitButton('Submit', ['class' => 'safari_create font_set']) ?>
+                <?= Html::submitButton('Create Safari', ['class' => 'safari_create font_set']) ?>
             </div>
         </div>
     </div>
@@ -156,11 +156,11 @@ use yii\helpers\Html;
 </div>
 <?php ActiveForm::end() ?>
 <style>
-    .creat-safri .safari_create {
+    /* .creat-safri .safari_create {
         height: 33% !important;
     }
 
     button.safari_create {
         margin-top: 80px !important;
-    }
+    } */
 </style>

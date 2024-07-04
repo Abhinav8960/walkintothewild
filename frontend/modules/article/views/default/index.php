@@ -61,7 +61,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
         <div class="row mb-4  justify-content-center">
             <div class="col-xl-12 col-lg-12">
                <div class="row justify-content-center gx-lg-5">
-               <div class="col-lg-8 col-xl-8 col-xxl-9">
+               <div class="col-lg-8 col-xl-8 col-xxl-9 ps-lg-0">
                 <div class="topics_tags">
                     <h4 class="fs-4"><?= isset($slug) ? strtoupper($slug) : '' ?></h4>
                 </div>

@@ -54,7 +54,7 @@ $recentposts = ArticleSearch::recentpost();
                 <div class="top_opratorsBox">
                     <div class="row">
                         <div class="col-lg-3">
-                            <div class="tourLogoes pe-lg-5">
+                            <div class="tourLogoes pe-xl-5">
                                 <div class="images_tour">
                                     <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="">
                                     <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->

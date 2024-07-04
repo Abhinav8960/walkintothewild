@@ -938,6 +938,10 @@ line-height: 19px;
     }
 }
 @media (max-width: 991px) {
+    .images_tour{
+
+        height: 250px;
+    }
     .logoutBox{
         position: fixed;
         padding: 4px 10px;

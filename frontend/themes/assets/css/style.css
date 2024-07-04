@@ -862,8 +862,11 @@ a {
 
     border: 1px solid #09422D4D;
     border-radius: 10px;
-    height: 150px;
+    /* height: 150px; */
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     /* padding: 40px 20px; */
     background: var(--colorwhite);
@@ -880,7 +883,7 @@ a {
 .images_tour img {
 
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     object-fit: fill;
 
 }
