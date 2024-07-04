@@ -52,8 +52,10 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
             </div>
         </div>
-        <div class="row mb-4 ">
-            <div class="col-lg-8 col-xl-8 col-xxl-9">
+        <div class="row mb-4  justify-content-center">
+            <div class="col-xl-12 col-lg-12">
+               <div class="row justify-content-center gx-lg-5">
+               <div class="col-lg-8 col-xl-8 col-xxl-9">
                 <div class="topics_tags">
                 <h4 class="fs-4"><?= isset($slug) ? strtoupper($slug) : '' ?></h4>
                 </div>
@@ -90,7 +92,7 @@ $recentposts = ArticleSearch::recentpost();
                     } ?>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3 col-xxl-2 pe-md-0 margin-added">
+            <div class="col-lg-4 col-xl-3 col-xxl-2 pe-xl-0 ">
                 <?= $this->render('_recent_posts', [
                     'recentposts' => $recentposts,
                 ]) ?>
@@ -108,6 +110,9 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                 </div>
             </div>
+               </div>
+            </div>
+           
 
         </div>
     </div>

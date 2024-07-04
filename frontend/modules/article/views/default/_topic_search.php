@@ -7,13 +7,19 @@ $topics = MasterArticleTopic::find()->where(['status' => MasterArticleTopic::STA
 ?>
 <div class="topics_listing">
     <ul>
+        <div class="row gx-lg-0 gx-sm-5">
         <?php if ($topics) {
             foreach ($topics as $topic) {
         ?>
-                <li><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->slug]) ?>" class="link"><?= $topic->title ?> <i class="fa-solid fa-chevron-right"></i></a></li>
+        <div class="col-lg-12 col-sm-6">
+        <li><a href="<?= Url::toRoute(['/article/default/topic', 'slug' => $topic->slug]) ?>" class="link"><?= $topic->title ?> <i class="fa-solid fa-chevron-right"></i></a></li>
+        </div>
+                
 
         <?php }
         } ?>
+        </div>
+     
     </ul>
 </div>
 
