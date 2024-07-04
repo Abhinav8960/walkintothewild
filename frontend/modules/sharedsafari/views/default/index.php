@@ -6,6 +6,8 @@
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
 use common\models\GeneralModel;
+use common\models\park\SafariPark;
+use common\models\sharesafari\ShareSafari;
 use frontend\models\ArticleSearch;
 use yii\helpers\Url;
 
@@ -89,7 +91,7 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-12">
                         <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100">
                             <div class="left_text">
-                                <p>There are currently <strong>121</strong> active shared safaris created by individuals</p>
+                                <p>There are currently <strong><?= ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->count(); ?></strong> active shared safaris created by individuals</p>
                             </div>
                             <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
                         </div>
@@ -109,7 +111,7 @@ $recentposts = ArticleSearch::recentpost();
                                         </div>
                                     </div>
                                     <div class="shareimg">
-                                        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                                        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                     </div>
                                     <div class="card_body">
                                         <div class="top_seats">

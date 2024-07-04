@@ -93,6 +93,27 @@ class ShareSafariSearch extends ShareSafari
             // $query->andWhere("MONTH(start_date)=" . $this->month_id . " OR MONTH(end_date)=" . $this->month_id);
         }
 
+        if ($this->estimated_price_filter) {
+            $price_query = "";
+            foreach ((array)$this->estimated_price_filter as $price_filter) {
+                if ($price_filter == 1) {
+                    $price_query .= "estimate_price_min >= 0 AND estimate_price_min <= 1000 OR estimate_price_max >= 0 AND estimate_price_max <= 1000 OR ";
+                } else if ($price_filter == 2) {
+                    $price_query .= "estimate_price_min >= 1000 AND estimate_price_min <= 3000 OR estimate_price_max >= 1000 AND estimate_price_max <= 3000 OR ";
+                } else if ($price_filter == 3) {
+                    $price_query .= "estimate_price_min >= 3000 AND estimate_price_min <= 5000 OR estimate_price_max >= 3000 AND estimate_price_max <= 5000 OR ";
+                } else if ($price_filter == 4) {
+                    $price_query .= "estimate_price_min >= 5000 AND estimate_price_min <= 10000 OR estimate_price_max >= 5000 AND estimate_price_max <= 10000 OR ";
+                } else if ($price_filter == 5) {
+                    $price_query .= "estimate_price_min >= 10000 OR estimate_price_max >= 10000  OR ";
+                }
+            }
+            if ($price_query <> '') {
+                $price_query = substr($price_query, 0, -3);
+                $query->andWhere($price_query);
+            }
+        }
+
         if ($this->no_of_safari) {
             $safari_query = "";
             foreach ((array)$this->no_of_safari as $no_of_safari) {
