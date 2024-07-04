@@ -75,7 +75,6 @@ class SafariParkForm extends model
     public $meta_title;
     public $meta_description;
     public $meta_keywords;
-    public $meta_author;
     public $latitude;
     public $longitude;
     public $month_note;
@@ -145,7 +144,6 @@ class SafariParkForm extends model
             $this->meta_title = $this->safari_park_model->meta_title;
             $this->meta_description = $this->safari_park_model->meta_description;
             $this->meta_keywords = $this->safari_park_model->meta_keywords;
-            $this->meta_author = $this->safari_park_model->meta_author;
             $this->latitude = $this->safari_park_model->latitude;
             $this->longitude = $this->safari_park_model->longitude;
             $this->month_note = $this->safari_park_model->month_note;
@@ -188,7 +186,7 @@ class SafariParkForm extends model
             [['status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_railway_station_distance', 'nearest_airport_distance_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_distance_three', 'nearest_railway_station_distance_four', 'nearest_railway_station_distance_five', 'nearest_airport_distance_three', 'nearest_airport_distance_four', 'nearest_airport_distance_five', 'is_most_demanding', 'is_shared_safari'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['short_description'], 'validateMaxWords', 'params' => ['max' => 70]],
-            [['long_description', 'meta_title', 'meta_description', 'meta_author'], 'string'],
+            [['long_description', 'meta_title', 'meta_description'], 'string'],
             [['long_description'], 'validateMaxWords', 'params' => ['max' => 140]],
             [['status', 'country_id', 'is_published'], 'default', 'value' => 1],
             [[
@@ -418,13 +416,13 @@ class SafariParkForm extends model
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
             'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
-            'long_description', 'meta_title', 'meta_description', 'meta_author', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
+            'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
             'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'month_note', 'safri_cost_note', 'animal_text'
         ];
         $scenarios['update'] = [
             'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
-            'long_description', 'meta_title', 'meta_description', 'meta_author', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
+            'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
             'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'safri_cost_note', 'animal_text', 'is_most_demanding', 'is_shared_safari'
         ];
@@ -438,7 +436,7 @@ class SafariParkForm extends model
         $scenarios['map'] = [
             'latitude', 'longitude', 'status'
         ];
-        $scenarios['meta'] = ['meta_title', 'meta_keywords', 'meta_description', 'meta_author', 'status', 'slug'];
+        $scenarios['meta'] = ['meta_title', 'meta_keywords', 'meta_description', 'status', 'slug'];
         return $scenarios;
     }
 
@@ -559,7 +557,6 @@ class SafariParkForm extends model
         $this->safari_park_model->meta_title = $this->meta_title;
         $this->safari_park_model->meta_description = $this->meta_description;
         $this->safari_park_model->meta_keywords = $this->meta_keywords;
-        $this->safari_park_model->meta_author = $this->meta_author;
         $this->safari_park_model->latitude = $this->latitude;
         $this->safari_park_model->longitude = $this->longitude;
         $this->safari_park_model->month_note = $this->month_note;

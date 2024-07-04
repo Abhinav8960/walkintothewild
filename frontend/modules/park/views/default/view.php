@@ -23,10 +23,6 @@ if ($model->meta_description != '') {
     $this->params['meta_description'] = $model->meta_description;
 }
 
-if ($model->meta_author != '') {
-    $this->params['meta_author'] = $model->meta_author;
-}
-
 if ($model->meta_keywords != '') {
     $this->params['meta_keywords'] = $model->meta_keywords;
 }
