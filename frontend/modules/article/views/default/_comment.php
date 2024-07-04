@@ -26,11 +26,6 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
 } ?>
 <?php if (Yii::$app->user->id) {  ?>
     <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-    <?php if (Yii::$app->session->hasFlash('success')) : ?>
-        <div class="alert alert-primary" id="info">
-            <?= Yii::$app->session->getFlash('success') ?>
-        </div>
-    <?php endif; ?>
     <div class="comments-persons">
         <div class="postcomment d-flex gap-3">
             <div class="avatar">
@@ -50,7 +45,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
         </div>
     </div>
     <?php ActiveForm::end(); ?>
-<?php }else{
+<?php } else {
     echo 'Please <a href="/site/auth?authclient=google">Sign in</a> for start Comment';
 } ?>
 
