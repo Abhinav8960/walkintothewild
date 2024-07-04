@@ -18,7 +18,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="row">
                                 <div class="col-sm-2">
                                     <div class="safritimg">
-                                        <img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
+                                        <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
                                 <div class="col-sm-10 pt-sm-0 pt-3">

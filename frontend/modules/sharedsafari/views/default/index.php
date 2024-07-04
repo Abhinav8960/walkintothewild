@@ -71,16 +71,11 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-12  mb-xl-5 mb-3">
                         <div class="row justify-content-between">
                             <div class="col-md-5">
-                                <div class="left_search position-relative">
-                                    <input type="text" class="form-control" placeholder="Search by name, date...">
-                                    <div class="icons-serch">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </div>
-                                </div>
+                                <?= $this->render('_date_search', ['searchModel' => $searchModel]) ?>
                             </div>
-                            <div class="col-md-6 mt-md-0 mt-3">
+                            <div class="col-md-6">
                                 <div class="right_button float-md-end">
-                                    <button class="btn_newsafari organizeBtn" value="<?= Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                                    <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                                         Safari</button>
                                 </div>
                             </div>

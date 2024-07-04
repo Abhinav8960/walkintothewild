@@ -58,6 +58,7 @@ class ShareSafariHistory extends \yii\db\ActiveRecord
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['start_date', 'end_date', 'slug'], 'safe'],
             [['safari_plan'], 'string'],
+            [['image'], 'string'],
         ];
     }
 
@@ -105,5 +106,11 @@ class ShareSafariHistory extends \yii\db\ActiveRecord
     public function getIntrested()
     {
         return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id']);
+    }
+
+    public function getSharedimagepath()
+    {
+
+        return isset($this->image) ? ('/storage/Shared_Image/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 }
