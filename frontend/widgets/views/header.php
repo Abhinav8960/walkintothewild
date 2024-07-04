@@ -9,7 +9,7 @@
 	<header class="header_wrapper">
 		<nav class="navbar navbar-expand-lg p-0">
 			<div class="container-fluid">
-				<a href="/park">
+				<a href="/">
 					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="210px" class="logo">
 				</a>
 				<div class="d-flex align-items-center">
