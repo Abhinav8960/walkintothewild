@@ -22,6 +22,7 @@ class CommentForm extends Model
     {
         return [
             [['comment'], 'required'],
+            ['comment', \common\validators\Word120Validator::className()],
         ];
     }
 

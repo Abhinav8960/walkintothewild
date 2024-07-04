@@ -28,10 +28,13 @@ class BirdingtourRegistrationController extends FrontendBaseController
         }
 
         if (Yii::$app->user->identity) {
-            if (($model = BirdingOperator::findOne(['user_id' => Yii::$app->user->identity->id])) !== null) {
-                return $this->redirect([Yii::$app->params['backend_url']]);
+            $model = BirdingOperator::findOne(['user_id' => Yii::$app->user->identity->id]);
+            if ($model !== null) {
+                Yii::$app->getResponse()->redirect(Yii::$app->params['backend_url'])->send();
+                Yii::$app->end();
             }
         }
+        
         $model = new BirdingtourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->action_url = '/birdingtour-registration';

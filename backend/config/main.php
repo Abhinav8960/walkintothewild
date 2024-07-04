@@ -60,6 +60,9 @@ return [
         'operatordashboard' => [
             'class' => 'backend\modules\operatordashboard\Module',
         ],
+        'pendingapproval' => [
+            'class' => 'backend\modules\pendingapproval\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [
