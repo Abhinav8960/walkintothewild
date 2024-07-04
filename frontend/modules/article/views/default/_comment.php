@@ -14,7 +14,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
         <div class="comments-persons">
             <div class="postcomment d-flex gap-3">
                 <div class="avatar">
-                    <img src="<?= $this->params['baseurl'] ?>/img/dpmain.png" alt="">
+                    <img src="<?= $article_comment->user && $article_comment->user->avatar <> '' ? $article_comment->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                 </div>
                 <div class="text_com">
                     <h6 class="nameavatr"><?= $article_comment->user->name ?></h6>
@@ -29,7 +29,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
     <div class="comments-persons">
         <div class="postcomment d-flex gap-3">
             <div class="avatar">
-                <img src="<?= $this->params['baseurl'] ?>/img/dpmain.png" alt="">
+                <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
             </div>
             <div class="text-area">
                 <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>

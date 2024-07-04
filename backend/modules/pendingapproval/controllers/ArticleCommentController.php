@@ -65,7 +65,7 @@ class ArticleCommentController extends Controller
         $model->status = 1;
         $model->save(false);
         \Yii::$app->session->setFlash('success', 'Approved Successfully');
-        return $this->redirect(\Yii::$app->request->referrer);
+        return $this->redirect(['/pendingapproval/article-comment/index']);
     }
 
     public function actionDisapproved($id)
@@ -74,6 +74,6 @@ class ArticleCommentController extends Controller
         $model->status = 2;
         $model->save(false);
         \Yii::$app->session->setFlash('success', 'Disapproved Successfully');
-        return $this->redirect(\Yii::$app->request->referrer);
+        return $this->redirect(['/pendingapproval/article-comment/index']);
     }
 }
