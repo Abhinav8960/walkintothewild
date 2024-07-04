@@ -25,6 +25,7 @@ class SharedSafariForm extends \yii\base\Model
     public $total_seat;
     public $share_seat;
     public $status;
+    public $shared_safari_image;
 
     public $action_url;
     public $action_validate_url;
@@ -62,6 +63,9 @@ class SharedSafariForm extends \yii\base\Model
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['safari_plan'], 'string'],
+            [
+                ['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],
+            ],
         ];
     }
 
@@ -131,5 +135,29 @@ class SharedSafariForm extends \yii\base\Model
         $history->parent_id = $this->shared_safari_model->id;
         $history->setAttributes($this->shared_safari_model->attributes, false);
         $history->save(false);
+    }
+
+    public function UploadFiles($id)
+    {
+        if ($this->shared_safari_image) {
+            $storagePath = Yii::$app->params['datapath'] . '/Shared_Image';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->shared_safari_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $fileName = 'shared_safari_image' . time() . '.' . $this->shared_safari_image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+            if ($this->shared_safari_image->saveAs($filePath)) {
+                $this->shared_safari_model->image = $fileName;
+                $this->shared_safari_model->save(false);
+            }
+        }
     }
 }

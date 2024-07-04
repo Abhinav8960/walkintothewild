@@ -44,9 +44,11 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/sharedsafari/default/validate';
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_model->id);
                         $model->safariHistory();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
@@ -85,6 +87,7 @@ class DefaultController extends FrontendBaseController
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_model->save()) {

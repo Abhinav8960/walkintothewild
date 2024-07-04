@@ -111,7 +111,7 @@ $recentposts = ArticleSearch::recentpost();
                                         </div>
                                     </div>
                                     <div class="shareimg">
-                                        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                                        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                     </div>
                                     <div class="card_body">
                                         <div class="top_seats">
