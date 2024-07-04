@@ -56,7 +56,9 @@ $recentposts = ArticleSearch::recentpost();
             </div>
         </div>
         <div class="row mb-4 justify-content-center">
-            <div class="col-lg-8 col-xl-8 col-xxl-9 pe-xl-5">
+            <div class="col-lg-12 col-xl-12 pe-lg-0">
+            <div class="row justify-content-center gx-xl-5 gx-lg-2">
+            <div class="col-lg-8 col-xl-8 col-xxl-9 ">
                 <div class="aritcla-details">
                     <!-- <h1 class="articald-title pb-3"><?= $article->title ?></h1> -->
                     <div class="aritcal_bigimg pb-4">
@@ -102,7 +104,7 @@ $recentposts = ArticleSearch::recentpost();
                     ]) ?>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mt-lg-0 mt-3">
+            <div class="col-lg-4 col-xl-3 col-xxl-2  mt-lg-0 mt-3 ps-lg-0 ">
                 <?= $this->render('_recent_posts', [
                     'recentposts' => $recentposts,
                 ]) ?>
@@ -119,6 +121,9 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                 </div>
             </div>
+            </div>
+            </div>
+           
 
         </div>
     </div>

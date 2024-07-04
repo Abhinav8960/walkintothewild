@@ -95,8 +95,8 @@
 @media(min-width:1500px){
     .container-fluid {
 
-        padding-left: 55px ;
-        padding-right: 55px ;
+        padding-left: 55px !important;
+        padding-right: 55px !important;
     }
 
     /* .searchSafari_parks .row .col-xl-3 {
@@ -539,6 +539,10 @@ line-height: 19px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .artical_cards .image-box .image img{
+
+        height: 270px !important;
+    }
     .touroprators{
 
         padding: 9px 10px;
@@ -1378,6 +1382,10 @@ line-height: 19px;
     .Slider_safariimg3 img{
 
         border-radius: 10px 10px 0px 0px !important;
+    }
+    .artical_cards .image-box .image img{
+
+        height: 275px !important;
     }
     .sharesafri {
         padding-top: 50px;
