@@ -39,7 +39,7 @@ $this->params['title'] = $this->title;
 <section class="safari_wrapper py-3">
     <div class="container-lg">
         <div class="row justify-content-center">
-            <div class="col-lg-7 mb-4">
+            <div class="col-lg-7 mb-4 pb-lg-0 pb-2">
                 <div class="advertisment ">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box">
@@ -50,13 +50,18 @@ $this->params['title'] = $this->title;
         </div>
         <div class="row my-4">
             <div class="col-12">
+                <div class="btn_set float-end">
+
+                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
+                </div>
+
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 border-right">
                             <div class="row">
                                 <div class="col-sm-2">
                                     <div class="safritimg">
-                                        <a href=""><img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100"></a>
+                                        <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
                                 <div class="col-sm-10 pt-sm-0 pt-3">
@@ -67,8 +72,7 @@ $this->params['title'] = $this->title;
                                         </div>
                                         <p class="mb-0 pt-2">Organized by <strong><?= $share_safari->user->name ?> (Wildlife
                                                 Influencer)</strong></p>
-                                        <button class="intested_btn history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-history"></i></i>
-                                            View History</button>
+
                                     </div>
 
                                 </div>
@@ -139,7 +143,7 @@ $this->params['title'] = $this->title;
                     <div class="row pt-4 align-items-center gx-4">
                         <div class="col-lg-6">
                             <div class="btn_wrap">
-                                <button class="intested_btn"><i class="fa-solid fa-user-group"></i> <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?>
+                                <button class="intested_btn interestBtn" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i> <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?>
                                     Interested</button>
                                 <?php if (Yii::$app->user->identity) {
                                     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
@@ -167,7 +171,7 @@ $this->params['title'] = $this->title;
                                         </li>
                                         <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
                                         </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter" ></i></a>
+                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
                                         </li>
                                         <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
                                         </li>
@@ -316,7 +320,7 @@ $this->params['title'] = $this->title;
                 </div>
                 <div class="right_button py-lg-5 py-3">
                     <?php if ($share_safari->host_user_id) { ?>
-                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>">+ Update
+                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit"></i>Update
                             Safari</button>
                     <?php } ?>
                 </div>
@@ -434,6 +438,20 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
+<div class="modal fade _standard-text" id="interest-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Interest</h1>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 function organizefunction() {
@@ -453,6 +471,15 @@ function historyfucntion() {
 	});
 }
 historyfucntion();
+
+function interestfucntion() {
+	$('.intested_btn').on('click', function () {
+        $('#interest-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+interestfucntion();
              
 JS;
 $this->registerJs($script);

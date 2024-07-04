@@ -19,14 +19,12 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 
-<div class="right-select">
-    <div class="input_check pb-0 mb-2">
-        <?= $form->field($searchModel, 'custom_sort_by')->dropDownlist(
-            GeneralModel::relevantoption(),
-            ['prompt' => 'Sort By: Created Recently']
-        )->label(false); ?>
-    </div>
+
+
+<div class="left_search position-relative">
+    <input type="date" name="ShareSafariSearch[date_filter]" placeholder="YYYY-MM-DD" value="<?= $searchModel->date_filter ?>" class="form-control" placeholder="Search by name, date...">
 </div>
+
 <?php ActiveForm::end(); ?>
 
 <?php

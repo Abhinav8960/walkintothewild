@@ -19,9 +19,22 @@ use yii\helpers\Html;
 <div class="modal-body modal_form">
 
     <div class="row">
+
         <div class="col-12 mb-2">
             <label for="" class="Modal_label">Select a Safari Park</label>
             <?= $form->field($model, 'park_id')->dropDownList(ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'Select a Safari Park', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+        </div>
+        <?php
+        if ($model->shared_safari_model->image) { ?>
+            <div class="col-md-1">
+                <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="50" height="50"></img>'; ?>
+            </div>
+        <?php } ?>
+        <div class="col-12 mb-2">
+            <label for="" class="Modal_label">Image</label>
+            <div class="col-md-12">
+                <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
+            </div>
         </div>
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Agenda</label>

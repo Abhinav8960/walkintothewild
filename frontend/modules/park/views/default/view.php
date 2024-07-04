@@ -43,7 +43,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="articals_wrapper py-3 ">
     <div class="container-fluid">
         <div class="row mb-4  justify-content-center mt-4">
-            <div class="col-lg-12 col-xl-10 safartabs position-relative">
+            <div class="col-lg-12 col-xl-11 safartabs position-relative">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
                     <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion pe-1 writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="30" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
                             <g>
@@ -72,11 +72,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false">MAP</button>
                     </li>
-                    <div class="btn_wrap pt-md-0 pt-3">
+                    <div class="btn_wrap pt-md-0 pt-3 d-lg-block d-none">
                         <?php
 
                         if ($model->official_website) { ?>
-                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE <i class="fa-solid fa-up-right-from-square ms-2"></i></a>
+                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE </i></a>
                         <?php } ?>
                     </div>
                 </ul>
@@ -121,7 +121,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
             </div>
         </div>
-        <div class="row my-4">
+        <div class="row my-4 justify-content-center">
+            <div class="col-lg-12 col-xl-11">
             <?= $this->render('_operators', [
                 'operators' => $operators,
                 'model' => $model,
@@ -129,6 +130,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 'shared_safaries' => $shared_safaries,
                 'device' => $device
             ]) ?>
+            </div>
+          
         </div>
     </div>
 </section>

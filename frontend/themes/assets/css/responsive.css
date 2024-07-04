@@ -62,9 +62,9 @@
         z-index: 0;
     } */
 
-    .listingSafari {
+    /* .listingSafari {
         width: 300px;
-    }
+    } */
 
     .padding_right {
         padding-right: 3rem;
@@ -93,11 +93,16 @@
     } */
 }
 @media(min-width:1500px){
+    .container-fluid {
 
-    .searchSafari_parks .row .col-xl-3 {
+        padding-left: 55px !important;
+        padding-right: 55px !important;
+    }
+
+    /* .searchSafari_parks .row .col-xl-3 {
 
         width: auto !important;
-    }
+    } */
     .margin-added{
 
         margin-left: 77px !important;
@@ -105,7 +110,7 @@
     .searchSafari_parks .parksImg {
 
         height: 265px !important;
-        width: 265px;
+        /* width: 265px; */
     }
     .searchSafari_parks .parksImg img{
 
@@ -154,6 +159,7 @@ line-height: 19px;
     .single-image img{
 
         height: 89% !important;
+        object-fit: cover;
     }
     .slider_safariimg{
 
@@ -249,6 +255,22 @@ line-height: 19px;
     .artical_cards .lower-content {
 
         padding: 31px 15px 25px 15px;
+    }
+    .safri_tour .titlerescent h3{
+
+        font-size: 14px;
+    }
+    .parks_text p{
+
+        font-size: 13px;
+    }
+    .logo_provide2{
+
+        height: 120px;
+    }
+    .get_quote_btn{
+
+        font-size: 13px;
     }
 
     .artical_cards .image-box .image img {
@@ -391,10 +413,10 @@ line-height: 19px;
         margin-top: 330px !important;
     }
 
-    .menu-navbar-nav .nav-item .nav-link{
+    /* .menu-navbar-nav .nav-item .nav-link{
 
         font-size: 12px;
-    }
+    } */
 
     .icons_select img {
 
@@ -517,6 +539,25 @@ line-height: 19px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+
+    .sahreSafari.desktop{
+
+        display: none;
+            }
+    .sahreSafari.mobile{
+
+        display: block !important;
+        margin-right: 20px !important;
+    }
+
+    .sahreSafari.mobile .card-img{
+
+        display: block !important;
+    }
+    .artical_cards .image-box .image img{
+
+        height: 270px !important;
+    }
     .touroprators{
 
         padding: 9px 10px;
@@ -526,7 +567,7 @@ line-height: 19px;
     }
     .articals_wrapper.margin-setposi{
 
-        margin-top: 510px !important;
+        margin-top: 400px !important;
     }
     /* .placeholder_select {
 
@@ -573,7 +614,7 @@ line-height: 19px;
     } */
     .articals_wrapper.margin-setposi{
 
-        margin-top: 330px !important;
+        margin-top: 381px !important;
     }
 
     .footer_object {
@@ -624,10 +665,7 @@ line-height: 19px;
 
         padding-right: 74px;
     }
-    .navbar-nav {
-
-        gap: 32px;
-    }
+ 
 
     .images_tour {
 
@@ -654,8 +692,23 @@ line-height: 19px;
 
     .container-fluid {
 
-        padding-left: 55px ;
-        padding-right: 55px ;
+        padding-left: 25px ;
+        padding-right: 25px ;
+    }
+
+    .sahreSafari.mobile{
+
+        display: none!important;
+        margin-right: 20px !important;
+    }
+
+    .sahreSafari.mobile .card-img{
+
+        display: none !important;
+    }
+    .navbar-nav {
+
+        gap: 32px;
     }
     .padding-setDes{
 
@@ -689,7 +742,7 @@ line-height: 19px;
         padding-top: 10px;
     }
   
-    .seelctes_text p {
+   .searchSafari_wraper .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -732,7 +785,11 @@ line-height: 19px;
 }
 
 @media(max-width:1199px){
-    .seelctes_text p {
+    .banner_section-inner .banner_search{
+
+        height: 300px;
+    }
+    .searchSafari_wraper .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -746,69 +803,7 @@ line-height: 19px;
         width: 100%;
         padding: 15px 31px;
     }
-    .navbar-nav.menu-navbar-nav {
-
-        align-items: flex-start !important;
-    }
-
-    .sahreSafari {
-
-        margin-left: 0 !important;
-        padding-left: 0;
-        height: auto;
-        padding-top: 12px;
-    }
-
-    .offcanvas-header {
-        background-color: #09422D;
-    }
-
-    .sahreSafari {
-        box-shadow: none;
-    }
-    .sahreSafari {
-        border-bottom: 1px solid #09422D;
-        width: 100%;
-    }
-    .navbar-toggler {
-
-        border: 0 !important;
-    }
-
-    .navbar-toggler:focus {
-
-        outline: none !important;
-        box-shadow: none !important;
-    }
-
-    .navbar-toggler i {
-
-        color: var(--colorwhite);
-        font-size: 30px;
-    }
-
-    .menu-navbar-nav .nav-item.active::after {
-
-        bottom: -2px;
-    }
-
-    .menu-navbar-nav .nav-item {
-
-        line-height: 43px;
-        border-bottom: 1px solid #09422D;
-        width: 100%;
-    }
-
-    .menu-navbar-nav .nav-item .nav-link {
-
-        color: #09422D;
-        padding: 0 !important;
-
-    }
-    .header_wrapper {
-
-        line-height: 70px;
-    }
+  
     .safari_create {
 
         width: 100%;
@@ -819,9 +814,7 @@ line-height: 19px;
         padding-bottom: 20px;
     }
 
-    .card-img {
-        display: none;
-    }
+   
 }
 @media only screen and (max-width:1199px){
 
@@ -914,8 +907,154 @@ line-height: 19px;
     }
     
 }
+@media only screen and (max-width: 1399px) and (min-width: 768px){
 
+    .safartabs .nav-tabs .nav-link{
+
+        padding: 7px 20px;
+    }
+    .safartabs .nav-tabs .nav-link{
+
+        font-size: 12px;
+    }
+    .safartabs .intested_btn{
+
+        font-size: 12px;
+    }
+    .seelctes_text p{
+
+        font-size: 14px;
+    }
+    .single-image img {
+        height: 89% !important;
+        object-fit: cover;
+    }
+    .slider_safariimg {
+        height: 100% !important;
+    }
+    .text-form p{
+
+        font-size: 13px;
+    }
+}
 @media (max-width: 991px) {
+    .logoutBox{
+        position: fixed;
+        padding: 4px 10px;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        width: 100%;
+        border-top: 1px solid #0000004D;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+    .menuprofilemobile ul{
+    
+        margin-bottom: 0;
+        padding-left: 0;
+    }
+    
+    .menuprofilemobile ul li{
+    
+        list-style: none;
+    }
+    .menuprofilemobile ul li a {
+        text-decoration: none;
+        color: var(--background-primary);
+        display: block;
+        font-weight: 700;
+        align-items: center;
+        font-size: var(--fs-18);
+        gap: 16px;
+        align-items: center;
+        font-family: "Roboto", sans-serif !important;
+    }
+    
+    .menuprofilemobile ul li a i {
+        font-size: 1.2rem;
+        color: #9c999f;
+        padding-right: 10px;
+    }
+    .navbar-nav.menu-navbar-nav {
+
+        align-items: flex-start !important;
+    }
+    .card-img {
+        display: none;
+    }
+    .proilewrapper{
+
+        display: none;
+    }
+    .sahreSafari {
+
+        margin-left: 0 !important;
+        padding-left: 0;
+        height: auto;
+        padding-top: 12px;
+    }
+
+    .offcanvas-header {
+        background-color: #09422D;
+    }
+
+    .sahreSafari {
+        box-shadow: none;
+    }
+    .sahreSafari {
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+    .navbar-toggler {
+
+        border: 0 !important;
+    }
+
+    .navbar-toggler:focus {
+
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .navbar-toggler i {
+
+        color: var(--colorwhite);
+        font-size: 30px;
+    }
+
+    .menu-navbar-nav .nav-item.active::after {
+
+        bottom: -2px;
+    }
+
+    .menu-navbar-nav .nav-item {
+
+        line-height: 43px;
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+
+    .menu-navbar-nav .nav-item .nav-link {
+
+        color: #09422D;
+        padding: 0 !important;
+
+    }
+    .header_wrapper {
+
+        line-height: 70px;
+    }
+    .flex-set{
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .contact_p p{
+
+        margin-bottom: 0;
+    }
     .banner_section-inner picture img{
 
         height: 230px;
@@ -1061,7 +1200,7 @@ line-height: 19px;
     } */
     .banner_section-inner .banner_search {
 
-        height: 450px;
+        height: 330px;
         object-fit: cover;
     }
 
@@ -1080,6 +1219,18 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
+    .sahreSafari.desktop{
+
+display: block;
+    }
+    .sahreSafari.mobile{
+
+        display: none !important;
+    }
+    .sahreSafari.mobile .card-img{
+
+        display: none !important;
+    }
 
     .articals_wrapper.margin-setposi{
 
@@ -1312,6 +1463,10 @@ line-height: 19px;
     .Slider_safariimg3 img{
 
         border-radius: 10px 10px 0px 0px !important;
+    }
+    .artical_cards .image-box .image img{
+
+        height: 275px !important;
     }
     .sharesafri {
         padding-top: 50px;
@@ -1608,6 +1763,18 @@ font-size: 15px;
     .placeholder_select {
 
         left: 12%;
+    }
+  
+}
+@media only screen and (max-width: 991px) and (min-width: 577px){
+
+    .banner_section-inner .headingBnner_inner h1{
+
+        font-size: 32px;
+    }
+    .banner_section-inner .headingBnner_inner p{
+
+        font-size: 20px;
     }
 }
 @media only screen and (max-width: 576px) and (min-width: 427px){

@@ -50,11 +50,11 @@ $recentposts = ArticleSearch::recentpost();
 <section class="touroprator_section">
     <div class="container-fluid">
         <div class="row justify-content-center">
-            <div class="col-xl-10 col-lg-12">
+            <div class="col-xl-11 col-lg-12">
                 <div class="top_opratorsBox">
                     <div class="row">
                         <div class="col-lg-3">
-                            <div class="tourLogoes">
+                            <div class="tourLogoes pe-lg-5">
                                 <div class="images_tour">
                                     <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="">
                                     <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
@@ -115,7 +115,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 px-lg-4 px-xl-3 px-xxl-5 px-2  pt-lg-0 pt-3">
+                        <div class="col-lg-3 px-lg-4 px-xl-3 px-xxl-5 px-2  pt-lg-0 pt-3 flex-set ">
                             <div class="contact_p">
                                 <p>Contact</p>
                             </div>
@@ -153,7 +153,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <a href="<?= $operator->youtube_link ? $operator->youtube_link : '#' ?>"> <i class="fa-brands fa-youtube"></i></a>
                                 </div>
                             </div>
-                            <div class="websitebtn pt-3 <?= $operator->website ? '' : 'no-link-found' ?>">
+                            <div class="websitebtn pt-lg-3 <?= $operator->website ? '' : 'no-link-found' ?>">
                                 <a href="<?= $operator->website ? $operator->website : '#' ?>">OFFICIAL WEBSITE</a>
                             </div>
 
@@ -172,8 +172,10 @@ $recentposts = ArticleSearch::recentpost();
 
     </div>
     <div class="container-fluid">
-        <div class="row pt-5">
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+        <div class="row justify-content-center">
+            <div class="col-xl-11 col-lg-12">
+            <div class="row pt-5">
+            <div class="col-lg-4 col-md-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                 <div class="safri_tour">
                     <div class="titlerescent" style="justify-content:left !important;">
                         <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
@@ -196,7 +198,7 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-xxl-10 col-xl-9 paddingset_desktop">
+            <div class="col-lg-8 col-md-8 col-xxl-10 col-xl-9 ">
                 <div class="tab-content_tour active " id="safariParks">
                     <!-- Safari Parks content goes here -->
                     <?= $this->render('_operator_safari_park', [
@@ -224,6 +226,9 @@ $recentposts = ArticleSearch::recentpost();
                 </div>
             </div>
         </div>
+            </div>
+        </div>
+     
     </div>
 </section>
 

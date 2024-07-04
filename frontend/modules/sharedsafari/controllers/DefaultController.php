@@ -44,9 +44,11 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/sharedsafari/default/validate';
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_model->id);
                         $model->safariHistory();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
@@ -85,9 +87,11 @@ class DefaultController extends FrontendBaseController
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+                $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_model->save()) {
+                    if ($model->shared_safari_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_model->id);
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug]));
                     }
@@ -226,6 +230,16 @@ class DefaultController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_view', [
                 'history_model' => $history_model
+            ]);
+        }
+    }
+
+    public function actionInterestview($share_safari_id)
+    {
+        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => StatusInterface::STATUS_ACTIVE])->all();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('interest_view', [
+                'interest_model' => $interest_model
             ]);
         }
     }

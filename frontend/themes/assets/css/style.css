@@ -257,6 +257,17 @@ a {
     -o-transition: all 0.5;
     transition: all 0.5;
 }
+.sahreSafari.mobile{
+    background: var(--colorwhite) !important;
+    padding: 5px 20px;
+    height: 70px !important;
+    line-height: 41px;
+    /* margin-left: 32px; */
+    /* border-radius: 0px 0px 10px 10px; */
+    color: var(--colorBlack);
+    text-decoration: none;
+    /* box-shadow: 0px 3px 6px #00000029; */
+}
 
 .sahreSafari {
 
@@ -278,6 +289,9 @@ a {
 .sahreSafari.active {
 
     background: #A2D22B;
+}
+.sahreSafari.mobile.active{
+    background: #A2D22B !important;
 }
 
 .sahreSafari h5 {
@@ -1569,7 +1583,7 @@ figure {
 
 .comments-persons {
 
-    padding: 8px 30px;
+    padding: 8px 6px;
 }
 
 .request_btn {
@@ -2583,9 +2597,25 @@ figure {
     background-color: var(--background-yellow);
     color: var(--colorBlack);
     font-weight: 600;
-    font-size: var(--fs-18);
+    font-size: var(--fs-16);
     border-radius: 8px;
     border: 0;
+}
+.btn_set{
+
+    margin-top: -45px;
+}
+.history_btn{
+
+    background: var(--background-primary);
+    border: 0;
+    padding: 3px 6px;
+    border-radius: 4px;
+
+}
+.history_btn i{
+
+    color: #fff;
 }
 
 .ratings p {
@@ -2831,6 +2861,19 @@ figure {
     font-size: var(--fs-20);
     font-weight: 700;
     color: #040404;
+}
+
+.safrititles.tite_parklist h4{
+
+    font-family: "Roboto", sans-serif !important;
+    font-size: var(--fs-20);
+    font-weight: 700;
+    color: #040404;
+}
+.safrititles.tite_parklist h4 span{
+    font-style: italic;
+    font-size: var(--fs-15);
+
 }
 
 .safrititles h6 span {
@@ -3795,7 +3838,7 @@ figure {
 .safridetails_form .iconImg img {
 
     width: 100%;
-    height: 100%
+    /* height: 100% */
 }
 
 /* footer css end */
@@ -3870,7 +3913,7 @@ figure {
     display: none;
     position: absolute;
     top: -48px;
-    right: -141px;
+    right: -10px;
     background-color: var(--background-yellow);
     color: #000;
     padding: 10px;
@@ -4199,4 +4242,22 @@ figure {
     color: #000;
     border: 0;
     outline: none;
+}
+
+.mobile .intested_btn{
+
+    border-radius: 8px !important;
+}
+
+
+.offcanvas.offcanvas-end{
+
+    border-left: 0 !important;
+}
+.footer_card .users img{
+
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+
 }

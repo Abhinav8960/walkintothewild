@@ -6,6 +6,8 @@
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
 use common\models\GeneralModel;
+use common\models\park\SafariPark;
+use common\models\sharesafari\ShareSafari;
 use frontend\models\ArticleSearch;
 use yii\helpers\Url;
 
@@ -55,7 +57,7 @@ $recentposts = ArticleSearch::recentpost();
             </div>
         </div>
         <div class="row my-4">
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-4">
+            <div class="col-lg-3 col-xl-3 col-xxl-2  mb-4">
                 <?= $this->render('filter_search', ['searchModel' => $searchModel]) ?>
                 <div class="advertisment pt-5 ">
                     <p class="text-center">ADVERTISMENT</p>
@@ -64,21 +66,16 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-xl-9 col-xxl-10">
+            <div class="col-lg-9 col-xl-9 col-xxl-10">
                 <div class="row ">
                     <div class="col-12  mb-xl-5 mb-3">
                         <div class="row justify-content-between">
                             <div class="col-md-5">
-                                <div class="left_search position-relative">
-                                    <input type="text" class="form-control" placeholder="Search by name, date...">
-                                    <div class="icons-serch">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                    </div>
-                                </div>
+                                <?= $this->render('_date_search', ['searchModel' => $searchModel]) ?>
                             </div>
-                            <div class="col-md-6 mt-md-0 mt-3">
+                            <div class="col-md-6">
                                 <div class="right_button float-md-end">
-                                    <button class="btn_newsafari organizeBtn" value="<?= Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                                    <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                                         Safari</button>
                                 </div>
                             </div>
@@ -89,7 +86,7 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-12">
                         <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100">
                             <div class="left_text">
-                                <p>There are currently <strong>121</strong> active shared safaris created by individuals</p>
+                                <p>There are currently <strong><?= ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->count(); ?></strong> active shared safaris created by individuals</p>
                             </div>
                             <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
                         </div>
@@ -109,7 +106,7 @@ $recentposts = ArticleSearch::recentpost();
                                         </div>
                                     </div>
                                     <div class="shareimg">
-                                        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                                        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                     </div>
                                     <div class="card_body">
                                         <div class="top_seats">
@@ -133,12 +130,21 @@ $recentposts = ArticleSearch::recentpost();
                                         <div class="footer_card row pb-2 px-2 align-items-center">
                                             <div class="col-6">
                                                 <div class="users">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                    <div class="roundes_countuser">
-                                                        15+
-                                                    </div>
+                                                    <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                                                        $count = $share_safari->getIntrested()->count();
+                                                        $avatar_count = 3;
+                                                        foreach ($interests as $interest) {
+                                                    ?>
+                                                            <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                                                        <?php
+                                                        }
+                                                    };
+                                                    $data = $count - $avatar_count;
+                                                    if ($data > 3) {  ?>
+                                                        <div class="roundes_countuser">
+                                                            <?= $data ?>+
+                                                        </div>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                             <div class="col-6">
