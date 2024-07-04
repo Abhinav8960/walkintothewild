@@ -103,11 +103,25 @@ class ArticleSearch extends Article
 
 
 
-    public static function recentpost()
+    public static function recentpost($slug = null)
     {
-        return Article::find()->andWhere(['article.status' => [self::STATUS_ACTIVE]])->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
-            ->orderBy('RAND()') // Order by random
-            ->limit(3)
-            ->all();
+        if ($slug) {
+            return Article::find()
+                ->joinWith(['articletopics' => function ($articletopics_query) use ($slug) {
+                    $articletopics_query->joinWith(['articlename' => function ($additional_query) use ($slug) {
+                        $additional_query->andWhere(['like', 'master_article_topic.slug', $slug]);
+                    }]);
+                }])
+                ->andWhere(['article.status' => self::STATUS_ACTIVE]) // Filters by active status
+                ->andWhere("is_schedule = 0 OR DATE(publish_date_time) <= '" . date('Y-m-d') . "'") // Filters by publication date
+                ->orderBy('RAND()') // Orders the results randomly
+                ->limit(3) // Limits the number of results to 3
+                ->all(); // Retrieves all matching records
+        } else {
+            return Article::find()->andWhere(['article.status' => [self::STATUS_ACTIVE]])->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
+                ->orderBy('RAND()') // Order by random
+                ->limit(3)
+                ->all();
+        }
     }
 }

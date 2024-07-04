@@ -112362,3 +112362,168 @@ a.text-dark:focus {
   height: 40px!important;
 }
 
+
+
+
+.titlerescent h3 {
+
+    font-size: var(--fs-20);
+}
+
+.posttitles h6 a {
+
+    font-size: var(--fs-14);
+    color: var(--colorBlack);
+}
+
+.recent-posts .artical-info i {
+
+    font-size: var(--fs-15);
+    color: var(--background-yellow);
+}
+
+.recent-posts .artical-info li a {
+
+    color: #9C9C9C;
+    font-family: "Roboto", sans-serif !important;
+    font-size: 13px;
+}
+
+.topics_box {
+    background-color: #faf7f3;
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+
+.topics_listing ul {
+
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.topics_listing ul li {
+
+    padding-bottom: 17px;
+}
+
+.topics_listing ul li a {
+
+    display: -webkit-box;
+
+    display: -ms-flexbox;
+
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: var(--colorBlack);
+    font-family: "Roboto", sans-serif !important;
+    font-size: var(--fs-14);
+
+}
+
+.topics_listing ul li a i {
+
+    color: #152F1B;
+}
+
+.advertisment_box {
+
+    border: 1px solid var(--colorBlack);
+    height: 100px;
+}
+
+.advertisment_box-2 {
+
+    border: 1px solid var(--colorBlack);
+    height: 200px;
+}
+
+.articald-title {
+
+    font-size: var(--fs-25);
+}
+
+.aritcla-details p {
+
+    font-size: var(--fs-18);
+}
+.aritcla-details h1,
+.aritcla-details h2,
+.aritcla-details h3,
+.aritcla-details h5,
+.aritcla-details h6,
+.aritcla-details h4{
+
+    font-size: 24px;
+
+}
+
+.tags-title{
+
+    font-size: 24px; 
+}
+
+
+
+
+.tags-button {
+
+    background-color: var(--background-yellow);
+    padding: 5px 18px;
+    /* width: 120px; */
+    text-align: center;
+    border: 0;
+    font-size: 13px;
+    font-family: "Roboto", sans-serif !important;
+    border-radius: 5px;
+}
+
+.author_wrapper .artical-info {
+
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.author_wrapper .artical-info li a {
+    display: inline-block;
+    color: #9C9C9C;
+    font-family: "Roboto", sans-serif !important;
+}
+
+.author_wrapper .artical-info li {
+
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 10px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 15px;
+}
+
+.comment-wrapper {
+
+    margin-top: 50px;
+    border: 1px solid #0000004D;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.commentCount h6 {
+
+    font-size: var(--fs-25);
+    font-weight: 600;
+}
+
+.comments-persons {
+
+    padding: 8px 30px;
+}

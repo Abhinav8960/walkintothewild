@@ -13,7 +13,7 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
-    'defaultRoute' => '/coming-soon',
+    'defaultRoute' => '/park',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'reCaptcha3' => [
