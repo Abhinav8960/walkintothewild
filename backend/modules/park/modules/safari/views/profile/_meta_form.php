@@ -21,6 +21,9 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-6">
                 <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Keywords']) ?>
             </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'meta_author')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Author']) ?>
+            </div>
 
             <div class="col-md-12">
                 <?= $form->field($model, 'meta_description')->textarea() ?>

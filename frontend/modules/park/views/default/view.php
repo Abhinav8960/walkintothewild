@@ -10,7 +10,6 @@ use common\models\cms\banner\Banner;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Safari ' . $model->title;
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -19,6 +18,23 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $park_constant = Constants::PARK_VIEW;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
+
+if ($model->meta_description != '') {
+    $this->params['meta_description'] = $model->meta_description;
+}
+
+if ($model->meta_author != '') {
+    $this->params['meta_author'] = $model->meta_author;
+}
+
+if ($model->meta_keywords != '') {
+    $this->params['meta_keywords'] = $model->meta_keywords;
+}
+if ($model->meta_title != '') {
+    $this->title = $model->meta_title;
+} else {
+    $this->title = 'Safari ' . $model->title;
+}
 ?>
 
 <section class="banner_section-inner ee position-relative">
@@ -53,8 +69,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     </button>
 
                 </div>
-                <div id="flashMessage" >
-                submit correction if found wrong information!
+                <div id="flashMessage">
+                    submit correction if found wrong information!
                 </div>
                 <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -123,15 +139,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
         <div class="row my-4 justify-content-center">
             <div class="col-lg-12 col-xl-11">
-            <?= $this->render('_operators', [
-                'operators' => $operators,
-                'model' => $model,
-                'operatorsearchModel' => $operatorsearchModel,
-                'shared_safaries' => $shared_safaries,
-                'device' => $device
-            ]) ?>
+                <?= $this->render('_operators', [
+                    'operators' => $operators,
+                    'model' => $model,
+                    'operatorsearchModel' => $operatorsearchModel,
+                    'shared_safaries' => $shared_safaries,
+                    'device' => $device
+                ]) ?>
             </div>
-          
+
         </div>
     </div>
 </section>
