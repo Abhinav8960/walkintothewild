@@ -30,6 +30,7 @@ class ArticleForm extends \yii\base\Model
     public $meta_title;
     public $meta_description;
     public $meta_keywords;
+    public $meta_author;
     public $view;
     public $post_body;
     public $comment_allowed;
@@ -66,6 +67,7 @@ class ArticleForm extends \yii\base\Model
             $this->meta_title = $this->article_model->meta_title;
             $this->meta_description = $this->article_model->meta_description;
             $this->meta_keywords = $this->article_model->meta_keywords;
+            $this->meta_author = $this->article_model->meta_author;
             $this->view = $this->article_model->view;
             $this->article_date = $this->article_model->article_date;
             $this->post_body = $this->article_model->post_body;
@@ -90,12 +92,12 @@ class ArticleForm extends \yii\base\Model
         $scenarios['create'] = [
             'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
-            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'meta_author', 'article_topics'
         ];
         $scenarios['update'] = [
             'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
-            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'meta_author', 'article_topics'
         ];
         return $scenarios;
     }
@@ -136,7 +138,7 @@ class ArticleForm extends \yii\base\Model
                 'targetClass' => Article::className(), 'targetAttribute' => ['title'],
                 'message' => 'This Title has already been taken'
             ],
-            [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
+            [['description', 'meta_description', 'meta_keywords', 'meta_author', 'post_body'], 'string'],
             [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status'], 'integer'],
             [['publish_date_time', 'article_date'], 'safe'],
             [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
@@ -199,6 +201,7 @@ class ArticleForm extends \yii\base\Model
         $this->article_model->meta_title = $this->meta_title;
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;
+        $this->article_model->meta_author = $this->meta_author;
         $this->article_model->view = $this->view;
         $this->article_model->article_date = $this->article_date;
         $this->article_model->post_body = $this->post_body;

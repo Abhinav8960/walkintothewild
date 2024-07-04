@@ -10,7 +10,6 @@ use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Article  ' . $article->title;
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -21,6 +20,24 @@ $park_constant = Constants::ARTICLE_DETAIL;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 $recentposts = ArticleSearch::recentpost();
 
+
+
+if ($article->meta_description != '') {
+    $this->params['meta_description'] = $article->meta_description;
+}
+
+if ($article->meta_author != '') {
+    $this->params['meta_author'] = $article->meta_author;
+}
+
+if ($article->meta_keywords != '') {
+    $this->params['meta_keywords'] = $article->meta_keywords;
+}
+if ($article->meta_title != '') {
+    $this->title = $article->meta_title;
+} else {
+    $this->title = 'Article ' . $article->title;
+}
 ?>
 
 <section class="banner_section-inner position-relative">
