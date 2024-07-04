@@ -16,19 +16,19 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
 <div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
     <div class="accordion-body p-3">
         <div class="row">
-            <div class="col-lg-12 col-xl-3">
+            <div class="col-lg-4 col-md-4 col-xl-3">
                 <div class="slider_safariimg owl-carousel owl-theme position-relative">
                     <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 mb-xl-0 mb-3">
                 </div>
             </div>
-            <div class="col-lg-12 col-xl-9 position-relative">
+            <div class="col-lg-8 col-md-8 col-xl-9 position-relative">
 
                 <div class="seelctes_text pb-4 ">
                     <p><?= $model->long_description ?></p>
                 </div>
                 <div class="row pt-3 desktop_postion border_top2">
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Location">
                             
@@ -39,7 +39,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                             </div>
@@ -58,7 +58,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
                             </div>
@@ -70,7 +70,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
                             </div>
@@ -91,7 +91,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport">
                             </div>
@@ -101,7 +101,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Animals">
                             </div>
@@ -116,7 +116,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cost">
                             </div>
@@ -130,7 +130,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                        <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
                                 <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Month when park is closed">
                             </div>
@@ -146,11 +146,20 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 d-lg-none mobile">
+                    <div class="btn_wrap pt-md-0 ">
+                        <?php
+
+                        if ($model->official_website) { ?>
+                            <a href="<?= $model->official_website ?>" target="_blank" class="intested_btn">OFFICIAL WEBSITE </i></a>
+                        <?php } ?>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row ">
-            <div class="col-lg-12 col-xl-6 mb-3 mb-lg-0">
+            <div class="col-lg-12 col-xl-6 mb-3 mb-xl-0">
                 <div class="row gx-2 <?= in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
                     <div class="col-sm-3 mb-sm-0 mb-3 ">
                         <div class="coreZone h-100">

@@ -21,7 +21,7 @@ if ($operator_parks) {
                             </div>
                             <div class="row ">
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                    <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Location">
                                         </div>
@@ -31,7 +31,7 @@ if ($operator_parks) {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                    <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
@@ -51,7 +51,7 @@ if ($operator_parks) {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                    <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
                                         </div>
@@ -62,7 +62,7 @@ if ($operator_parks) {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                    <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
                                         </div>
@@ -83,7 +83,7 @@ if ($operator_parks) {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                    <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport"> 
                                         </div>
@@ -93,7 +93,7 @@ if ($operator_parks) {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                    <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt=""  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Animals">
                                         </div>
