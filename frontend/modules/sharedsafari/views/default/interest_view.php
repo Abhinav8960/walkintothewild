@@ -1,3 +1,12 @@
+<?php
+
+use yii\helpers\Url;
+
+
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+?>
+
 <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
 
     <table class="table table-striped">
