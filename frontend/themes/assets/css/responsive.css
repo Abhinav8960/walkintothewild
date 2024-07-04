@@ -413,10 +413,10 @@ line-height: 19px;
         margin-top: 330px !important;
     }
 
-    .menu-navbar-nav .nav-item .nav-link{
+    /* .menu-navbar-nav .nav-item .nav-link{
 
         font-size: 12px;
-    }
+    } */
 
     .icons_select img {
 
@@ -539,6 +539,21 @@ line-height: 19px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+
+    .sahreSafari.desktop{
+
+        display: none;
+            }
+    .sahreSafari.mobile{
+
+        display: block !important;
+        margin-right: 20px !important;
+    }
+
+    .sahreSafari.mobile .card-img{
+
+        display: block !important;
+    }
     .artical_cards .image-box .image img{
 
         height: 270px !important;
@@ -650,10 +665,7 @@ line-height: 19px;
 
         padding-right: 74px;
     }
-    .navbar-nav {
-
-        gap: 32px;
-    }
+ 
 
     .images_tour {
 
@@ -682,6 +694,21 @@ line-height: 19px;
 
         padding-left: 25px ;
         padding-right: 25px ;
+    }
+
+    .sahreSafari.mobile{
+
+        display: none!important;
+        margin-right: 20px !important;
+    }
+
+    .sahreSafari.mobile .card-img{
+
+        display: none !important;
+    }
+    .navbar-nav {
+
+        gap: 32px;
     }
     .padding-setDes{
 
@@ -776,69 +803,7 @@ line-height: 19px;
         width: 100%;
         padding: 15px 31px;
     }
-    .navbar-nav.menu-navbar-nav {
-
-        align-items: flex-start !important;
-    }
-
-    .sahreSafari {
-
-        margin-left: 0 !important;
-        padding-left: 0;
-        height: auto;
-        padding-top: 12px;
-    }
-
-    .offcanvas-header {
-        background-color: #09422D;
-    }
-
-    .sahreSafari {
-        box-shadow: none;
-    }
-    .sahreSafari {
-        border-bottom: 1px solid #09422D;
-        width: 100%;
-    }
-    .navbar-toggler {
-
-        border: 0 !important;
-    }
-
-    .navbar-toggler:focus {
-
-        outline: none !important;
-        box-shadow: none !important;
-    }
-
-    .navbar-toggler i {
-
-        color: var(--colorwhite);
-        font-size: 30px;
-    }
-
-    .menu-navbar-nav .nav-item.active::after {
-
-        bottom: -2px;
-    }
-
-    .menu-navbar-nav .nav-item {
-
-        line-height: 43px;
-        border-bottom: 1px solid #09422D;
-        width: 100%;
-    }
-
-    .menu-navbar-nav .nav-item .nav-link {
-
-        color: #09422D;
-        padding: 0 !important;
-
-    }
-    .header_wrapper {
-
-        line-height: 70px;
-    }
+  
     .safari_create {
 
         width: 100%;
@@ -849,9 +814,7 @@ line-height: 19px;
         padding-bottom: 20px;
     }
 
-    .card-img {
-        display: none;
-    }
+   
 }
 @media only screen and (max-width:1199px){
 
@@ -975,6 +938,112 @@ line-height: 19px;
     }
 }
 @media (max-width: 991px) {
+    .logoutBox{
+        position: fixed;
+        padding: 4px 10px;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        width: 100%;
+        border-top: 1px solid #0000004D;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+    .menuprofilemobile ul{
+    
+        margin-bottom: 0;
+        padding-left: 0;
+    }
+    
+    .menuprofilemobile ul li{
+    
+        list-style: none;
+    }
+    .menuprofilemobile ul li a {
+        text-decoration: none;
+        color: var(--background-primary);
+        display: block;
+        font-weight: 700;
+        align-items: center;
+        font-size: var(--fs-18);
+        gap: 16px;
+        align-items: center;
+        font-family: "Roboto", sans-serif !important;
+    }
+    
+    .menuprofilemobile ul li a i {
+        font-size: 1.2rem;
+        color: #9c999f;
+        padding-right: 10px;
+    }
+    .navbar-nav.menu-navbar-nav {
+
+        align-items: flex-start !important;
+    }
+    .card-img {
+        display: none;
+    }
+    .proilewrapper{
+
+        display: none;
+    }
+    .sahreSafari {
+
+        margin-left: 0 !important;
+        padding-left: 0;
+        height: auto;
+        padding-top: 12px;
+    }
+
+    .offcanvas-header {
+        background-color: #09422D;
+    }
+
+    .sahreSafari {
+        box-shadow: none;
+    }
+    .sahreSafari {
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+    .navbar-toggler {
+
+        border: 0 !important;
+    }
+
+    .navbar-toggler:focus {
+
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .navbar-toggler i {
+
+        color: var(--colorwhite);
+        font-size: 30px;
+    }
+
+    .menu-navbar-nav .nav-item.active::after {
+
+        bottom: -2px;
+    }
+
+    .menu-navbar-nav .nav-item {
+
+        line-height: 43px;
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+
+    .menu-navbar-nav .nav-item .nav-link {
+
+        color: #09422D;
+        padding: 0 !important;
+
+    }
+    .header_wrapper {
+
+        line-height: 70px;
+    }
     .flex-set{
 
         display: flex;
@@ -1150,6 +1219,18 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
+    .sahreSafari.desktop{
+
+display: block;
+    }
+    .sahreSafari.mobile{
+
+        display: none !important;
+    }
+    .sahreSafari.mobile .card-img{
+
+        display: none !important;
+    }
 
     .articals_wrapper.margin-setposi{
 
@@ -1682,6 +1763,18 @@ font-size: 15px;
     .placeholder_select {
 
         left: 12%;
+    }
+  
+}
+@media only screen and (max-width: 991px) and (min-width: 577px){
+
+    .banner_section-inner .headingBnner_inner h1{
+
+        font-size: 32px;
+    }
+    .banner_section-inner .headingBnner_inner p{
+
+        font-size: 20px;
     }
 }
 @media only screen and (max-width: 576px) and (min-width: 427px){

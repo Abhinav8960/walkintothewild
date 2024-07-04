@@ -57,7 +57,7 @@ $recentposts = ArticleSearch::recentpost();
             </div>
         </div>
         <div class="row my-4">
-            <div class="col-lg-4 col-xl-3 col-xxl-2  mb-4">
+            <div class="col-lg-3 col-xl-3 col-xxl-2  mb-4">
                 <?= $this->render('filter_search', ['searchModel' => $searchModel]) ?>
                 <div class="advertisment pt-5 ">
                     <p class="text-center">ADVERTISMENT</p>
@@ -66,7 +66,7 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-xl-9 col-xxl-10">
+            <div class="col-lg-9 col-xl-9 col-xxl-10">
                 <div class="row ">
                     <div class="col-12  mb-xl-5 mb-3">
                         <div class="row justify-content-between">

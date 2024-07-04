@@ -257,6 +257,17 @@ a {
     -o-transition: all 0.5;
     transition: all 0.5;
 }
+.sahreSafari.mobile{
+    background: var(--colorwhite) !important;
+    padding: 5px 20px;
+    height: 70px !important;
+    line-height: 41px;
+    /* margin-left: 32px; */
+    /* border-radius: 0px 0px 10px 10px; */
+    color: var(--colorBlack);
+    text-decoration: none;
+    /* box-shadow: 0px 3px 6px #00000029; */
+}
 
 .sahreSafari {
 
@@ -278,6 +289,9 @@ a {
 .sahreSafari.active {
 
     background: #A2D22B;
+}
+.sahreSafari.mobile.active{
+    background: #A2D22B !important;
 }
 
 .sahreSafari h5 {
@@ -4233,4 +4247,10 @@ figure {
 .mobile .intested_btn{
 
     border-radius: 8px !important;
+}
+
+
+.offcanvas.offcanvas-end{
+
+    border-left: 0 !important;
 }
