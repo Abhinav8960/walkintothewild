@@ -168,7 +168,7 @@ $recentposts = ArticleSearch::recentpost();
                                                             $count = $share_safari->getIntrested()->count();
                                                             $avatar_count = 3;
                                                             $data = $count - $avatar_count;
-                                                            if ($data > 3) {  ?>
+                                                            if ($data >= 1) {  ?>
                                                                 <div class="roundes_countuser">
                                                                     <?= $data ?>+
                                                                 </div>
