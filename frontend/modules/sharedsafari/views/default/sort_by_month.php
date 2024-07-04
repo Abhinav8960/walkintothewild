@@ -20,7 +20,7 @@ use yii\widgets\ActiveForm;
 ]); ?>
 
 <div class="right-select">
-    <div class="input_check pb-0">
+    <div class="input_check pb-0 mb-2">
         <?= $form->field($searchModel, 'custom_sort_by')->dropDownlist(
             GeneralModel::relevantoption(),
             ['prompt' => 'Sort By: Created Recently']
