@@ -82,7 +82,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div> -->
         <div class="row mb-4 sticky_set e">
-            <div class="col-lg-2 col-12 mb-lg-0 mb-3 ps-xl-5">
+            <div class="col-xl-2 col-lg-3 col-12 mb-lg-0 mb-3 ps-xxl-5 pe-xl-2">
                 <div id="targetDiv">
                     <?= $this->render('_park_side_search', [
                         'model' => $searchModel,
@@ -90,7 +90,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     ]) ?>
                 </div>
             </div>
-            <div class="col-lg-10 col-12 paddingset_desktop ">
+            <div class="col-lg-9 col-xl-10 col-12 paddingset_desktop ">
                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                     <div class="left_text">
                         <p class="">We found <strong><?= count($models) ?> parks</strong> for you</p>
@@ -135,8 +135,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     </div>
                                     <div class="col-md-9 col-sm-8 col-xl-9">
                                         <div class="safariSearch_wrap">
-                                            <div class="safrititles pt-sm-0 pt-3">
-                                                <h6 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?><?= isset($model->location) ? $model->location->title : '' ?></span></h6>
+                                            <div class="safrititles tite_parklist pt-sm-0 pt-3">
+                                                <h4 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?><?= isset($model->location) ? $model->location->title : '' ?></span></h4>
                                             </div>
                                             <div class="seelctes_text  pb-4 ">
                                                 <p>

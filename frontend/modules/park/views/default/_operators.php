@@ -9,6 +9,7 @@ use common\models\GeneralModel;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
+<div class="row">
 <div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 ">
     <div id="targetDiv">
         <?= $this->render('_operator_side_search', [
@@ -27,7 +28,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 </div>
 <div class="col-lg-8 col-xl-9 col-xxl-10 position-relative">
 
-    <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 pe-xl-5">
+    <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 ">
         <div class="left_text">
             <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
         </div>
@@ -61,11 +62,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
     <div class="gridview mt-4">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-lg-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-5">
             <?php if ($operators) {
                 foreach ($operators as $operator) {
             ?>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xl-4 col-xxl-3 mb-3">
+                    <div class="col-lg-6 col-md-4 col-sm-6 col-xl-4 col-xxl-3 mb-3">
                         <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="oprators_boxes">
                             <div class="listingSafari ">
                                 <?php if ($operator->is_highlighted) { ?>
@@ -193,6 +194,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
 
 </div>
+</div>
+
 
 
 <?php

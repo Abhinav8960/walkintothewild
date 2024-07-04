@@ -62,9 +62,9 @@
         z-index: 0;
     } */
 
-    .listingSafari {
+    /* .listingSafari {
         width: 300px;
-    }
+    } */
 
     .padding_right {
         padding-right: 3rem;
@@ -93,11 +93,16 @@
     } */
 }
 @media(min-width:1500px){
+    .container-fluid {
 
-    .searchSafari_parks .row .col-xl-3 {
+        padding-left: 55px ;
+        padding-right: 55px ;
+    }
+
+    /* .searchSafari_parks .row .col-xl-3 {
 
         width: auto !important;
-    }
+    } */
     .margin-added{
 
         margin-left: 77px !important;
@@ -154,6 +159,7 @@ line-height: 19px;
     .single-image img{
 
         height: 89% !important;
+        object-fit: cover;
     }
     .slider_safariimg{
 
@@ -249,6 +255,22 @@ line-height: 19px;
     .artical_cards .lower-content {
 
         padding: 31px 15px 25px 15px;
+    }
+    .safri_tour .titlerescent h3{
+
+        font-size: 14px;
+    }
+    .parks_text p{
+
+        font-size: 13px;
+    }
+    .logo_provide2{
+
+        height: 120px;
+    }
+    .get_quote_btn{
+
+        font-size: 13px;
     }
 
     .artical_cards .image-box .image img {
@@ -526,7 +548,7 @@ line-height: 19px;
     }
     .articals_wrapper.margin-setposi{
 
-        margin-top: 510px !important;
+        margin-top: 400px !important;
     }
     /* .placeholder_select {
 
@@ -573,7 +595,7 @@ line-height: 19px;
     } */
     .articals_wrapper.margin-setposi{
 
-        margin-top: 330px !important;
+        margin-top: 381px !important;
     }
 
     .footer_object {
@@ -654,8 +676,8 @@ line-height: 19px;
 
     .container-fluid {
 
-        padding-left: 55px ;
-        padding-right: 55px ;
+        padding-left: 25px ;
+        padding-right: 25px ;
     }
     .padding-setDes{
 
@@ -689,7 +711,7 @@ line-height: 19px;
         padding-top: 10px;
     }
   
-    .seelctes_text p {
+   .searchSafari_wraper .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -732,7 +754,11 @@ line-height: 19px;
 }
 
 @media(max-width:1199px){
-    .seelctes_text p {
+    .banner_section-inner .banner_search{
+
+        height: 300px;
+    }
+    .searchSafari_wraper .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -914,8 +940,48 @@ line-height: 19px;
     }
     
 }
+@media only screen and (max-width: 1399px) and (min-width: 768px){
 
+    .safartabs .nav-tabs .nav-link{
+
+        padding: 7px 20px;
+    }
+    .safartabs .nav-tabs .nav-link{
+
+        font-size: 12px;
+    }
+    .safartabs .intested_btn{
+
+        font-size: 12px;
+    }
+    .seelctes_text p{
+
+        font-size: 14px;
+    }
+    .single-image img {
+        height: 89% !important;
+        object-fit: cover;
+    }
+    .slider_safariimg {
+        height: 100% !important;
+    }
+    .text-form p{
+
+        font-size: 13px;
+    }
+}
 @media (max-width: 991px) {
+    .flex-set{
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .contact_p p{
+
+        margin-bottom: 0;
+    }
     .banner_section-inner picture img{
 
         height: 230px;
@@ -1061,7 +1127,7 @@ line-height: 19px;
     } */
     .banner_section-inner .banner_search {
 
-        height: 450px;
+        height: 330px;
         object-fit: cover;
     }
 
