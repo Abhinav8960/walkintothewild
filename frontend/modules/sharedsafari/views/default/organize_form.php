@@ -1,7 +1,9 @@
 <?php
 
 use common\interfaces\StatusInterface;
+use common\models\GeneralModel;
 use common\models\meta\MetaStayCategory;
+use common\models\operator\SafariOperatorPark;
 use common\models\park\SafariPark;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -20,22 +22,65 @@ use yii\helpers\Html;
 
     <div class="row">
 
-        <div class="col-12 mb-2">
-            <label for="" class="Modal_label">Select a Safari Park</label>
-            <?= $form->field($model, 'park_id')->dropDownList(ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'Select a Safari Park', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
-        </div>
-        <?php
-        if ($model->shared_safari_model->image) { ?>
-            <div class="col-md-1">
-                <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="50" height="50"></img>'; ?>
+        <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
+            <div class="col-12 mb-2">
+                <label for="" class="Modal_label">Select a Safari Park</label>
+                <?= $form->field($model, 'park_id')->dropDownList(
+                    GeneralModel::operatorsafariparkoption(Yii::$app->user->identity),
+                    [
+                        'prompt' => 'Select a Safari Park',
+                        'class' => 'form-select form-select-lg mb-3',
+                        'onchange' => '
+                     $.get( "' . Yii::$app->urlManager->createUrl('/sharedsafari/default/getparkimage?id=') . '"+$(this).val(), function( data ) {
+                        $( "#park_image").attr( "src",data );
+                        })'
+                    ]
+                )->label(false) ?>
+            </div>
+        <?php } else { ?>
+            <div class="col-12 mb-2">
+                <label for="" class="Modal_label">Select a Safari Park</label>
+                <?= $form->field($model, 'park_id')->dropDownList(ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'Select a Safari Park', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
             </div>
         <?php } ?>
-        <div class="col-12 mb-2">
-            <label for="" class="Modal_label">Image</label>
-            <div class="col-md-12">
-                <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
+
+
+
+        <?php
+        if ($model->shared_safari_model->image) { ?>
+            <div class="col-md-6">
+                <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
             </div>
-        </div>
+
+            <div class="col-6 mb-2">
+                <label for="" class="Modal_label">Image</label>
+                <div class="col-md-12">
+                    <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
+                </div>
+            </div>
+        <?php } ?>
+
+        <?php
+        if ($model->shared_safari_model->image == null) {
+            if ($model->shared_safari_model->park_id) { ?>
+                <div class="col-md-6">
+                    <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                </div>
+            <?php } else { ?>
+                <div class="col-md-6">
+                    <img src="" id="park_image" alt="" width="100px" height="100px">
+                </div>
+            <?php } ?>
+            <div class="col-6 mb-2">
+                <label for="" class="Modal_label">Image</label>
+                <div class="col-md-12">
+                    <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
+                </div>
+            </div>
+        <?php }
+
+        ?>
+
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Agenda</label>
             <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
@@ -83,8 +128,12 @@ use yii\helpers\Html;
     </div>
     <div class="row mt-2 pe-0">
         <div class="col-lg-8">
-            <label for="" class="Modal_label">You Are?</label>
-            <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer', '4' => 'Safari Tour Operator'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
+                <?= $form->field($model, 'host_type')->hiddenInput(['value' => 4])->label(false); ?>
+            <?php } else {  ?>
+                <label for="" class="Modal_label">You Are?</label>
+                <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer', '4' => 'Safari Tour Operator'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?php } ?>
 
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
