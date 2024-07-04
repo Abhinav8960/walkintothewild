@@ -18,7 +18,6 @@ NotifyAsset::register($this);
 
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
-$this->registerMetaTag(['name' => 'author', 'content' => $this->params['meta_author'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 ?>
 <?php $this->beginPage() ?>
