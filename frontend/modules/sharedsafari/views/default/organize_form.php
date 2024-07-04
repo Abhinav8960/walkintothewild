@@ -40,7 +40,17 @@ use yii\helpers\Html;
         <?php } else { ?>
             <div class="col-12 mb-2">
                 <label for="" class="Modal_label">Select a Safari Park</label>
-                <?= $form->field($model, 'park_id')->dropDownList(ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'Select a Safari Park', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                <?= $form->field($model, 'park_id')->dropDownList(
+                    ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'),
+                    [
+                        'prompt' => 'Select a Safari Park',
+                        'class' => 'form-select form-select-lg mb-3',
+                        'onchange' => '
+                 $.get( "' . Yii::$app->urlManager->createUrl('/sharedsafari/default/getparkimage?id=') . '"+$(this).val(), function( data ) {
+                    $( "#park_image").attr( "src",data );
+                    })'
+                    ]
+                )->label(false) ?>
             </div>
         <?php } ?>
 
