@@ -62,7 +62,7 @@ $recentposts = ArticleSearch::recentpost();
                     <?= $this->render('filter_search', [
                         'searchModel' => $searchModel,
                         'device' => $device,
-                        
+
                     ]) ?>
 
                 </div>
@@ -157,8 +157,6 @@ $recentposts = ArticleSearch::recentpost();
                                             <div class="col-6">
                                                 <div class="users">
                                                     <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
-                                                        $count = $share_safari->getIntrested()->count();
-                                                        $avatar_count = 3;
                                                         foreach ($interests as $interest) {
                                                     ?>
                                                             <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
@@ -170,7 +168,7 @@ $recentposts = ArticleSearch::recentpost();
                                                     $data = $count - $avatar_count;
                                                     if ($data > 3) {  ?>
                                                         <div class="roundes_countuser">
-                                                            <?= $data ?>+
+                                                            +<?= $data ?>
                                                         </div>
                                                     <?php } ?>
                                                 </div>
