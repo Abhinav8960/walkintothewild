@@ -19,7 +19,6 @@ use yii\helpers\Html;
 <div class="modal-body modal_form">
 
     <div class="row">
-
         <?php
         if ($model->shared_safari_model->image) { ?>
             <div class="col-md-1">

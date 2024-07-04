@@ -90,7 +90,8 @@ class DefaultController extends FrontendBaseController
                 $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_model->save()) {
+                    if ($model->shared_safari_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_model->id);
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug]));
                     }
