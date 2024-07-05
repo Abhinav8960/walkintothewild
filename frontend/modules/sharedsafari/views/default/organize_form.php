@@ -130,7 +130,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-lg-12 mb-2 mt-2">
             <div class="textarea">
-                <?= $form->field($model, 'safari_plan')->textInput(['placeholder' => 'Write about your plan'])->label(false) ?>
+                <?= $form->field($model, 'safari_plan')->textarea(['row' => 4, 'placeholder' => 'Write about your plan'])->label(false) ?>
             </div>
 
         </div>

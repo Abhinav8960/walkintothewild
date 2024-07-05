@@ -63,9 +63,11 @@ class SharedSafariForm extends \yii\base\Model
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['safari_plan'], 'string'],
-            [
-                ['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],
-            ],
+            [['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
+            ['estimate_price_min', 'compare', 'compareAttribute' => 'estimate_price_max', 'operator' => '<='],
+            ['total_seat', 'compare', 'compareAttribute' => 'share_seat', 'operator' => '>='],
+            ['start_date', 'compare', 'compareAttribute' => 'end_date', 'operator' => '<'],
+            [['safari_plan'], 'validateContent'],
         ];
     }
 
@@ -159,6 +161,14 @@ class SharedSafariForm extends \yii\base\Model
                 $this->shared_safari_model->image = $fileName;
                 $this->shared_safari_model->save(false);
             }
+        }
+    }
+
+    public function validateContent($attribute, $params)
+    {
+        $wordCount = str_word_count($this->$attribute);
+        if ($wordCount >= 100) {
+            $this->addError($attribute, 'Please provide content within 100 words.');
         }
     }
 }
