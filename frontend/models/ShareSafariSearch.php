@@ -98,15 +98,11 @@ class ShareSafariSearch extends ShareSafari
             $price_query = "";
             foreach ((array)$this->estimated_price_filter as $price_filter) {
                 if ($price_filter == 1) {
-                    $price_query .= "estimate_price_min >= 0 AND estimate_price_min <= 1000 OR estimate_price_max >= 0 AND estimate_price_max <= 1000 OR ";
+                    $price_query .= "estimate_price_min >= 0 AND estimate_price_min <= 5000 OR estimate_price_max >= 0 AND estimate_price_max <= 5000 OR ";
                 } else if ($price_filter == 2) {
-                    $price_query .= "estimate_price_min >= 1000 AND estimate_price_min <= 3000 OR estimate_price_max >= 1000 AND estimate_price_max <= 3000 OR ";
-                } else if ($price_filter == 3) {
-                    $price_query .= "estimate_price_min >= 3000 AND estimate_price_min <= 5000 OR estimate_price_max >= 3000 AND estimate_price_max <= 5000 OR ";
-                } else if ($price_filter == 4) {
                     $price_query .= "estimate_price_min >= 5000 AND estimate_price_min <= 10000 OR estimate_price_max >= 5000 AND estimate_price_max <= 10000 OR ";
-                } else if ($price_filter == 5) {
-                    $price_query .= "estimate_price_min >= 10000 OR estimate_price_max >= 10000  OR ";
+                } else if ($price_filter == 3) {
+                    $price_query .= "estimate_price_min >= 10000 AND estimate_price_min >= 15000 OR estimate_price_max >= 10000 AND estimate_price_max >= 15000 OR ";
                 }
             }
             if ($price_query <> '') {

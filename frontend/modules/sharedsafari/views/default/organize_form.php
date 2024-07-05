@@ -59,11 +59,12 @@ use yii\helpers\Html;
         <?php
         if ($model->shared_safari_model->image) { ?>
             <div class="col-md-3">
+                <label for="" class="Modal_label">Current Display Image</label>
                 <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
             </div>
 
             <div class="col-6 mb-2">
-                <label for="" class="Modal_label">Image</label>
+                <label for="" class="Modal_label">Browse Image</label>
                 <div class="col-md-12">
                     <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
                 </div>
@@ -74,15 +75,17 @@ use yii\helpers\Html;
         if ($model->shared_safari_model->image == null) {
             if ($model->shared_safari_model->park_id) { ?>
                 <div class="col-md-6">
+                    <label for="" class="Modal_label">Current Display Image</label>
                     <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
                 </div>
             <?php } else { ?>
                 <div class="col-3 mb-2">
+                    <label for="" class="Modal_label">Current Display Image</label>
                     <img src="" id="park_image" alt="" width="100%" height="100px">
                 </div>
             <?php } ?>
             <div class="col-9 mb-2">
-                <label for="" class="Modal_label">Image</label>
+                <label for="" class="Modal_label">Browse Image</label>
                 <div class="col-md-12">
                     <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
                 </div>
@@ -99,14 +102,14 @@ use yii\helpers\Html;
 
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->dropDownList(['1' => 'One', '2' => 'Two', '3' => 'Three', '4' => 'Four', '5' => 'Five', '6' => 'Six'], ['prompt' => 'Select No of Safari', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->textInput()->label(false) ?>
         </div>
 
         <div class="col-md-12 mb-2">
             <div class="d-flex  gap-3 align-items-center w-100 mb-3">
                 <div class="start w-100">
                     <label for="" class="Modal_label">Start Date</label>
-                    <?= $form->field($model, 'start_date')->textInput(['type' => 'date'])->label(false) ?>
+                    <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
                 </div>
                 <span class="pt-4">-</span>
                 <div class="start w-100">
@@ -117,10 +120,10 @@ use yii\helpers\Html;
         </div>
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Stay Category</label>
-            <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => 'Premium', '2' => 'Budget', '3' => 'Economical'], ['prompt' => 'Stay Category', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => ' Budget', '2' => 'Economical', '3' => 'Premium'], ['prompt' => 'Select Stay Category', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
         <div class="col-lg-6 mb-2">
-            <label for="" class="Modal_label">Estimate Price Per Person</label>
+            <label for="" class="Modal_label">Estimate Price Per Person (INR)</label>
             <div class="d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'estimate_price_min')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control', 'placeholder' => 1000])->label(false) ?>
                 <span>-</span>

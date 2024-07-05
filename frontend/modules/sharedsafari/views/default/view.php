@@ -85,7 +85,7 @@ $this->params['title'] = $this->title;
                                 <?php if (Yii::$app->user->identity) {
                                     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                     if ($share_safari_intrested) { ?>
-                                        <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Unjoin Safari</a>
+                                        <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
                                     <?php } else { ?>
                                         <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
                                     <?php  }
@@ -221,9 +221,15 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
                 <div class="right_button py-lg-5 py-3 d-lg-block d-none">
-                    <?php if ($share_safari->host_user_id) { ?>
+                    <?php if ($share_safari->host_user_id == Yii::$app->user->id) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit"></i>Update
                             Safari</button>
+                    <?php } elseif (Yii::$app->user->identity) { ?>
+                        <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                            Safari</button>
+                    <?php } else {  ?>
+                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
+                            Safari</a>
                     <?php } ?>
                 </div>
                 <div class="advertisment d-lg-block d-none">
@@ -237,12 +243,12 @@ $this->params['title'] = $this->title;
         <div class="row">
             <div class="col-12">
                 <div class="footer_intrst d-lg-none d-block">
-                <div class="right_button py-lg-5 py-3">
-                    <?php if ($share_safari->host_user_id) { ?>
-                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit"></i>Update
-                            Safari</button>
-                    <?php } ?>
-                </div>
+                    <div class="right_button py-lg-5 py-3">
+                        <?php if ($share_safari->host_user_id) { ?>
+                            <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit"></i>Update
+                                Safari</button>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
         </div>
