@@ -13,6 +13,7 @@ use frontend\models\form\SharedSafariForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariIntrested;
 use frontend\models\ShareSafariCommentForm;
+use yii\helpers\Json;
 
 /**
  * DefaultController.
@@ -258,5 +259,36 @@ class DefaultController extends FrontendBaseController
         $image = $model->featureimagepath;
 
         return $image;
+    }
+
+    public function actionDynamicsharedseat($total_seat)
+    {
+        echo "<option value=''>Select Shared Seat</option>";
+        if ($total_seat == 2) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='4'>2</option>";
+        } elseif ($total_seat == 3) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+        } elseif ($total_seat == 4) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+            echo "<option value='4'>4</option>";
+        } elseif ($total_seat == 5) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+            echo "<option value='4'>4</option>";
+            echo "<option value='5'>5</option>";
+        } elseif ($total_seat == 6) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+            echo "<option value='4'>4</option>";
+            echo "<option value='5'>5</option>";
+            echo "<option value='6'>6</option>";
+        }
     }
 }

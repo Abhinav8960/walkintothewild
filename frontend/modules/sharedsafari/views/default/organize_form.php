@@ -5,6 +5,8 @@ use common\models\GeneralModel;
 use common\models\meta\MetaStayCategory;
 use common\models\operator\SafariOperatorPark;
 use common\models\park\SafariPark;
+use common\models\sharesafari\ShareSafari;
+use frontend\models\form\SharedSafariForm;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -120,7 +122,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Stay Category</label>
-            <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => ' Budget', '2' => 'Economical', '3' => 'Premium'], ['prompt' => 'Select Stay Category', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => 'Budget', '2' => 'Economical', '3' => 'Premium'], ['prompt' => 'Select Stay Category', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
         <div class="col-lg-6 mb-2">
             <label for="" class="Modal_label">Estimate Price Per Person (INR)</label>
@@ -151,11 +153,21 @@ use yii\helpers\Html;
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Total Seat</label>
-                    <?= $form->field($model, 'total_seat')->dropDownList([2, 3, 4, 5, 6], ['prompt' => 'Total Seat', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'total_seat')->dropDownList(
+                        ['2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'],
+                        [
+                            'prompt' => 'Total Seat',
+                            'class' => 'form-select form-select-lg mb-3',
+                            'onchange' => '
+                     $.get( "' . Yii::$app->urlManager->createUrl('sharedsafari/default/dynamicsharedseat?total_seat=') . '"+$(this).val(), function( data ) {
+                        $( "#sharedsafariform-share_seat").html(data);
+                        })'
+                        ]
+                    )->label(false) ?>
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Share Seats</label>
-                    <?= $form->field($model, 'share_seat')->dropDownList([1, 2, 3, 4, 5], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'share_seat')->dropDownList($model->getSharedseat(), ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                 </div>
             </div>
         </div>
@@ -163,19 +175,37 @@ use yii\helpers\Html;
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                 <?= Html::submitButton('Create Safari', ['class' => 'safari_create font_set w-auto']) ?>
-                
+
             </div>
         </div>
     </div>
 
 </div>
 <?php ActiveForm::end() ?>
-<style>
-    /* .creat-safri .safari_create {
-        height: 33% !important;
-    }
+<?php
 
-    button.safari_create {
-        margin-top: 80px !important;
-    } */
-</style>
+$script = <<< JS
+          
+          $("#sharedsafariform-start_date").on("change", function(){
+          $("#sharedsafariform-end_date").attr("min", $(this).val());
+          });
+
+        //   $('#sharedsafariform-total_seat').on("change",function(){
+        //     var totalSeat = $(this).val();
+        //     if (totalSeat) {
+        //         $.ajax({
+        //             url: 'sharedsafari/default/dynamicsharedseat',
+        //             type: 'POST',
+        //             dataType: 'json',
+        //             data: {totalSeat: totalSeat},
+        //             success: function(data) {
+        //                 $('#sharedsafariform-share_seat').html(data.options);
+        //             }
+        //         });
+        //     } else {
+        //         $('#sharedsafariform-share_seat').html('<option value="">Share Seats</option>');
+        //     }
+        // });
+JS;
+$this->registerJs($script);
+?>
