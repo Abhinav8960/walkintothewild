@@ -63,7 +63,7 @@ class DefaultController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionView($slug)
+    public function actionView($slug, $sort_by = null)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (empty($operator)) {
@@ -74,6 +74,7 @@ class DefaultController extends FrontendBaseController
 
 
         $ratingsearchModel = new SafariOperatorRatingSearch();
+        $ratingsearchModel->custom_sort_by = $sort_by;
         $ratingsearchModel->safari_operator_id = $operator->id;
         $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
         $reviews = $ratingdataProvider->getModels();
@@ -309,5 +310,22 @@ class DefaultController extends FrontendBaseController
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionReviewwise($slug, $sort_by = null)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $ratingsearchModel = new SafariOperatorRatingSearch();
+        $ratingsearchModel->custom_sort_by = $sort_by;
+        $ratingsearchModel->safari_operator_id = $operator->id;
+        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
+        $reviews = $ratingdataProvider->getModels();
+
+
+        return $this->renderAjax('_review_tab', [
+            'ratingsearchModel' => $ratingsearchModel,
+            'reviews' => $reviews,
+            'operator' => $operator,
+        ]);
     }
 }
