@@ -38,7 +38,7 @@
 							</svg>
 
 						</div>
-						<div class="offcanvas-body justify-content-end">
+						<div class="offcanvas-body justify-content-end position-relative">
 							<ul class="navbar-nav menu-navbar-nav align-items-center">
 								<li class="nav-item 
 							<?= in_array($active_url, array(
