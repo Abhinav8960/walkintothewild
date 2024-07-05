@@ -140,7 +140,7 @@ use yii\helpers\Html;
 
     </div>
     <div class="row mt-2 pe-0">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
                 <?= $form->field($model, 'host_type')->hiddenInput(['value' => 4])->label(false); ?>
             <?php } else {  ?>
@@ -159,9 +159,11 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-        <div class="col-lg-4 pt-4">
-            <div class="creat-safri">
-                <?= Html::submitButton('Create Safari', ['class' => 'safari_create font_set']) ?>
+        <div class="col-lg-12 pt-4">
+            <div class="creat-safri d-flex justify-content-end">
+                <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                <?= Html::submitButton('Create Safari', ['class' => 'safari_create font_set w-auto']) ?>
+                
             </div>
         </div>
     </div>

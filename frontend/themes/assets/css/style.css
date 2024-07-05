@@ -3967,7 +3967,14 @@ figure {
  
 
 } */
+.cancel_btn{
 
+    padding: 6px 20px;
+    background-color: #c3c3c3;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 25px;
+}
 
 
 .dropdown.custom_dropdown::-webkit-scrollbar-track {
