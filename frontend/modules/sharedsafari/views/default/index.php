@@ -120,7 +120,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
 
                             <?php if ($models = $dataProvider->models) {
                                 foreach ($models as $share_safari) {
@@ -159,6 +159,8 @@ $recentposts = ArticleSearch::recentpost();
                                                     <div class="col-6">
                                                         <div class="users">
                                                             <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                                                                $count = $share_safari->getIntrested()->count();
+                                                                $avatar_count = 3;
                                                                 foreach ($interests as $interest) {
                                                             ?>
                                                                     <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
@@ -168,7 +170,7 @@ $recentposts = ArticleSearch::recentpost();
                                                             $count = $share_safari->getIntrested()->count();
                                                             $avatar_count = 3;
                                                             $data = $count - $avatar_count;
-                                                            if ($data >= 1) {  ?>
+                                                            if ($data > 3) {  ?>
                                                                 <div class="roundes_countuser">
                                                                     <?= $data ?>+
                                                                 </div>
@@ -191,8 +193,11 @@ $recentposts = ArticleSearch::recentpost();
                         </div>
                     </div>
                 </div>
-
             </div>
+
+        </div>
+
+    </div>
 
 </section>
 

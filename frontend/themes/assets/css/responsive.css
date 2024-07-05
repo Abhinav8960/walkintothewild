@@ -526,7 +526,10 @@ line-height: 19px;
 
 }
 @media only screen and (min-width: 768px) {
+    .mobile_didplay_block{
 
+        display: none;
+    }
     .close_button{
 
         display: none;
@@ -689,7 +692,10 @@ line-height: 19px;
 }
 
 @media only screen and (min-width:991px) {
+    .mobile_didplay_none{
 
+        display: block;
+    }
     .container-fluid {
 
         padding-left: 25px ;
@@ -1126,7 +1132,10 @@ line-height: 19px;
 
 
 @media only screen and (max-width:991px) {
-  
+    #flashMessage{
+
+        right: 35px;
+    }
     #targetDiv {
         background-color: #faf7f3;
         position: fixed;
@@ -1223,6 +1232,22 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
+    .social-share{
+
+        padding-top: 10px;
+    }
+    .border_bottom2 .border-right{
+
+        border-right: 0;
+    }
+    .mobile_didplay_none{
+
+        display: none !important;
+    }
+    .mobile_didplay_block{
+
+        display: block !important;
+    }
     .sahreSafari.desktop{
 
 display: block;
