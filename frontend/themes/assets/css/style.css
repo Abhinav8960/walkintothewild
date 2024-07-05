@@ -4331,3 +4331,6 @@ figure {
 
     border-right: 1px solid #fff !important;
 }
+.wrapper-skybgsafri .safrititles p a{
+    color: var(--background-primary);
+}

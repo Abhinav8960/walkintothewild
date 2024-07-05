@@ -70,8 +70,8 @@ $this->params['title'] = $this->title;
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <p class="mb-0 pt-2">Organized by <strong><?= $share_safari->user->name ?> (Wildlife
-                                                Influencer)</strong></p>
+                                        <p class="mb-0 pt-2"><a href="">Organized by <strong><?= $share_safari->user->name ?> (Wildlife
+                                                Influencer)</strong></a></p>
 
                                     </div>
 
