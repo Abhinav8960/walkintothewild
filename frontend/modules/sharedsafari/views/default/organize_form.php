@@ -74,7 +74,7 @@ use yii\helpers\Html;
         <?php
         if ($model->shared_safari_model->image == null) {
             if ($model->shared_safari_model->park_id) { ?>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="" class="Modal_label">Current Display Image</label>
                     <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
                 </div>
