@@ -20,7 +20,7 @@ use yii\bootstrap5\ActiveForm;
                                 if ($avg) { ?>
                                     <p class="mb-0">
                                         <?= round($avg, 1) ?>
-                                        <?= GeneralModel::ratiing_views($avg); ?>
+                                        <?= GeneralModel::review_rating($avg); ?>
                                     </p>
                                 <?php } ?>
                             </div>

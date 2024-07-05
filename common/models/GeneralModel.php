@@ -623,6 +623,90 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             <i class="fa-solid fa-star" style="color: #09422d;"></i>
             <i class="fa-solid fa-star" style="color: #09422d;"></i>
             <i class="fa-solid fa-star" style="color: #09422d;"></i>
+        <?php
+        }
+    }
+
+    public static function review_rating($rating)
+    {
+        if ($rating == 0) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: rgb(165, 165, 165);"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating < 1) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star-half" style="color: rgb(165, 165, 165);"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+
+        <?php
+        } else if ($rating == 1) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating > 1 && $rating < 2) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star-half" style="color: #09422d;"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating == 2) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating > 2 && $rating < 3) { ?>
+
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star-half" style="color: #09422d;"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating == 3) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-regular fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating > 3 && $rating < 4) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star-half" style="color: #09422d;"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating == 4) { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-regular fa-star"></i>
+        <?php
+        } else if ($rating > 4 && $rating < 5) { ?></span>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star-half" style="color: #09422d;"></i>
+        <?php
+        } else { ?>
+            <i class="fa-solid fa-star ms-2" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
+            <i class="fa-solid fa-star" style="color: #09422d;"></i>
 <?php
         }
     }
