@@ -60,8 +60,8 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
         </div>
         <div class="row mb-4  justify-content-center">
             <div class="col-xl-12 col-lg-12">
-               <div class="row justify-content-center gx-lg-5">
-               <div class="col-lg-8 col-xl-8 col-xxl-9 ps-lg-0">
+               <div class="row justify-content-center gx-xl-5">
+               <div class="col-lg-8 col-xl-8 col-xxl-9 ps-xl-0">
                 <div class="topics_tags">
                     <h4 class="fs-4"><?= isset($slug) ? strtoupper($slug) : '' ?></h4>
                 </div>
@@ -98,7 +98,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                     } ?>
                 </div>
             </div>
-            <div class="col-lg-4 col-xl-3 col-xxl-2 pe-xl-0 ">
+            <div class="col-lg-3 col-xl-3 col-xxl-2 pe-xl-0 ">
                 <?= $this->render('_recent_posts', [
                     'recentposts' => $recentposts,
                 ]) ?>
