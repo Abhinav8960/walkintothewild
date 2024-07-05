@@ -5,6 +5,7 @@ use common\models\GeneralModel;
 use common\models\meta\MetaStayCategory;
 use common\models\operator\SafariOperatorPark;
 use common\models\park\SafariPark;
+use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -120,7 +121,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-md-6 mb-2">
             <label for="" class="Modal_label">Stay Category</label>
-            <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => ' Budget', '2' => 'Economical', '3' => 'Premium'], ['prompt' => 'Select Stay Category', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => ' Budget', '2' => 'Economical', '3' => 'Premium'], ['class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
         <div class="col-lg-6 mb-2">
             <label for="" class="Modal_label">Estimate Price Per Person (INR)</label>
