@@ -150,7 +150,7 @@
     .searchSafari_parks .parks_body .seelctes_text {
 
         height: 120px !important;
-        overflow: visible;
+        /* overflow: visible; */
     }
     .searchSafari_parks .parks_body .seelctes_text p{
 line-height: 19px;
