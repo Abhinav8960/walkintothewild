@@ -85,12 +85,12 @@ $this->params['title'] = $this->title;
                                 <?php if (Yii::$app->user->identity) {
                                     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                     if ($share_safari_intrested) { ?>
-                                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Unjoin Safari</a>
+                                        <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Unjoin Safari</a>
                                     <?php } else { ?>
-                                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
+                                        <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
                                     <?php  }
                                 } else { ?>
-                                    <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
+                                    <a class="join_btn text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
                                 <?php } ?>
 
                             </div>
@@ -226,7 +226,7 @@ $this->params['title'] = $this->title;
                             Safari</button>
                     <?php } ?>
                 </div>
-                <div class="advertisment ">
+                <div class="advertisment d-lg-block d-none">
                     <p class="text-center">ADVERTISMENT</p>
                     <div class="advertisment_box-2">
 
