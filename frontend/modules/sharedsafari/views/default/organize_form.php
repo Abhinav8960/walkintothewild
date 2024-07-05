@@ -145,7 +145,12 @@ use yii\helpers\Html;
                 <?= $form->field($model, 'host_type')->hiddenInput(['value' => 4])->label(false); ?>
             <?php } else {  ?>
                 <label for="" class="Modal_label">You Are?</label>
-                <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer', '4' => 'Safari Tour Operator'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?php } ?>
+
+            <?php if (!Yii::$app->user->identity->is_safari_operator) { ?>
+                <label for="" class="Modal_label">Social Media Url/ Website Url</label>
+                <?= $form->field($model, 'website_url')->textInput()->label(false); ?>
             <?php } ?>
 
             <div class="d-flex align-items-center gap-2">

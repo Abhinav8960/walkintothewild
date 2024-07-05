@@ -26,6 +26,7 @@ class SharedSafariForm extends \yii\base\Model
     public $share_seat;
     public $status;
     public $shared_safari_image;
+    public $website_url;
 
     public $action_url;
     public $action_validate_url;
@@ -52,6 +53,7 @@ class SharedSafariForm extends \yii\base\Model
             $this->safari_plan =  $this->shared_safari_model->safari_plan;
             $this->total_seat =  $this->shared_safari_model->total_seat;
             $this->share_seat =  $this->shared_safari_model->share_seat;
+            $this->website_url =  $this->shared_safari_model->website_url;
             $this->status =  $this->shared_safari_model->status;
         }
     }
@@ -62,6 +64,11 @@ class SharedSafariForm extends \yii\base\Model
             [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
+            [
+                ['website_url'], 'required', 'when' => function ($model) {
+                    return $model->host_type != 4;
+                }
+            ],
             [['safari_plan'], 'string'],
             [['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
             ['estimate_price_min', 'compare', 'compareAttribute' => 'estimate_price_max', 'operator' => '<='],
@@ -117,6 +124,7 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->safari_plan = $this->safari_plan;
         $this->shared_safari_model->total_seat = $this->total_seat;
         $this->shared_safari_model->share_seat = $this->share_seat;
+        $this->shared_safari_model->website_url = $this->website_url;
         $this->shared_safari_model->status = $this->status;
 
         if ($this->shared_safari_model->slug == '') {
