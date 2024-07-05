@@ -4288,3 +4288,46 @@ figure {
     border-radius: 50%;
 
 }
+
+.card.card_history{
+
+    border-radius: 14px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 10px;
+}
+
+.card.card_history h6{
+
+    color: var(--background-orange);
+    font-weight: 600;
+}
+.card.card_history h5{
+
+    font-size: 15px;
+}
+.th_history {
+
+    font-size: 20px;
+    font-weight: 800;
+    background-color: var(--background-primary) !important;
+    color: #fff !important;
+}
+.card.card_history p{
+
+    font-size: 16px;
+}
+.table_design tbody tr td{
+    border-bottom: 0;
+}
+.table_design tbody tr td:first-child{
+
+    border-right: 1px solid var(--background-primary);
+}
+.table_design thead tr th{
+
+    padding: 9px 15px;
+}
+.table_design thead tr th:first-child{
+
+    border-right: 1px solid #fff !important;
+}
