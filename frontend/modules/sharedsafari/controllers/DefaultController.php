@@ -12,6 +12,7 @@ use common\models\sharesafari\ShareSafariHistory;
 use frontend\models\form\SharedSafariForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariIntrested;
+use frontend\models\ShareSafariCommentForm;
 
 /**
  * DefaultController.
@@ -129,13 +130,17 @@ class DefaultController extends FrontendBaseController
     public function actionView($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $model = new ShareSafariCommentForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
+            Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
+        }
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
-
         return $this->render('view', [
-
-            'share_safari' => $share_safari
+            'share_safari' => $share_safari,
+            'model' => $model,
         ]);
     }
 
