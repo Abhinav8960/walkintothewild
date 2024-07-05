@@ -62,7 +62,7 @@ use yii\helpers\Html;
         if ($model->shared_safari_model->image) { ?>
             <div class="col-md-3">
                 <label for="" class="Modal_label">Current Display Image</label>
-                <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100%" height="80px"></img>'; ?>
             </div>
 
             <div class="col-6 mb-2">
@@ -107,7 +107,7 @@ use yii\helpers\Html;
             <?= $form->field($model, 'no_of_safari')->textInput()->label(false) ?>
         </div>
 
-        <div class="col-md-12 mb-2">
+        <div class="col-md-12 ">
             <div class="d-flex  gap-3 align-items-center w-100 mb-3">
                 <div class="start w-100">
                     <label for="" class="Modal_label">Start Date</label>
@@ -133,7 +133,7 @@ use yii\helpers\Html;
             </div>
 
         </div>
-        <div class="col-lg-12 mb-2 mt-2">
+        <div class="col-lg-12 ">
             <div class="textarea">
                 <?= $form->field($model, 'safari_plan')->textarea(['row' => 4, 'placeholder' => 'Write about your plan'])->label(false) ?>
             </div>
@@ -171,10 +171,10 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-        <div class="col-lg-12 pt-4">
+        <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <?= Html::submitButton('Create Safari', ['class' => 'safari_create font_set w-auto']) ?>
+                <?= Html::submitButton('Create', ['class' => 'safari_create font_set w-auto ms-2']) ?>
 
             </div>
         </div>

@@ -177,7 +177,7 @@ $this->params['title'] = $this->title;
 
                         </div>
                         <div class="col-lg-6">
-                            <div class="social-share d-flex gap-2 align-items-center float-lg-end pt-lg-0 pt-3">
+                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between float-lg-end pt-lg-0 pt-3">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-3">
                                     <?php
@@ -222,7 +222,7 @@ $this->params['title'] = $this->title;
                 </div>
                 <div class="right_button py-lg-5 py-3 d-lg-block d-none">
                     <?php if ($share_safari->host_user_id == Yii::$app->user->id) { ?>
-                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit"></i>Update
+                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                             Safari</button>
                     <?php } elseif (Yii::$app->user->identity) { ?>
                         <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
@@ -337,7 +337,7 @@ $this->params['title'] = $this->title;
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h1>
                 <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body pt-0">
                 <div id='modalContent'></div>
             </div>
         </div>

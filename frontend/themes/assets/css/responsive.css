@@ -86,12 +86,14 @@
     }
   
 }
-@media(min-width:1700px){
+/* @media(max-width:1500px){
 
-    /* .searchSafari_wraper .Slider_safariimg3{
-        width: 303px !important;
-    } */
-}
+    .sharesafribg {
+
+        height: 430px !important;
+
+    }
+} */
 @media(min-width:1500px){
     .container-fluid {
 
@@ -1471,7 +1473,7 @@ display: block;
 @media only screen and (max-width: 575px) and (min-width: 420px){
 
     .safarishareBox .row .col-xxl-3 {
-        padding: 0px 64px;
+        padding: 0px 73px;
     }
 }
 

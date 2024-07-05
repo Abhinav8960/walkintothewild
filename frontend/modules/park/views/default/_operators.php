@@ -141,7 +141,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         </div>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-lg-4 justify-content-center">
                             <?php foreach ($shared_safaries as $share_safari) { ?>
-                                <div class="col mb-xl-0 mb-3 pe-4">
+                                <div class="col mb-xl-0 mb-3 ">
                                     <div class="sharesafri-card">
                                         <div class="flotingdate">
                                             <div class="icons text-center">
