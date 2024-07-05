@@ -694,6 +694,7 @@ line-height: 19px;
 }
 
 @media only screen and (min-width:991px) {
+  
     .mobile_didplay_none{
 
         display: block;
@@ -947,7 +948,9 @@ line-height: 19px;
 }
 @media (max-width: 991px) {
  
-
+    .mobile_didplay_none .join_btn{
+        padding: 9px 35px !important;
+    }
     .images_tour{
 
         height: 250px;
