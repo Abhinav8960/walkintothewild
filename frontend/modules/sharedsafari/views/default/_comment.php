@@ -5,7 +5,7 @@ use yii\bootstrap5\ActiveForm;
 
 ?>
 
-<div class="col-lg-9">
+<div class="col-lg-9 order-lg-1 order-2">
     <div class="comments_safari">
         <div class="top_replysafari">
             <div class="comments-persons">
