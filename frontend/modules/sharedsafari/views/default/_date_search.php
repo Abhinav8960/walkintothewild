@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
 
 <div class="left_search position-relative">
-    <input type="date" name="ShareSafariSearch[date_filter]" placeholder="YYYY-MM-DD" value="<?= $searchModel->date_filter ?>" class="form-control" placeholder="Search by name, date...">
+    <input type="text" name="ShareSafariSearch[title]" value="<?= $searchModel->title ?>" class="form-control" placeholder="Search by name...">
 </div>
 
 <?php ActiveForm::end(); ?>
