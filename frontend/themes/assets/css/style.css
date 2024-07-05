@@ -3834,7 +3834,7 @@ figure {
 
 .safari_create.font_set {
 
-    font-size: 18px;
+    font-size: 15px;
     text-transform: capitalize;
 }
 
@@ -3971,8 +3971,9 @@ figure {
 
     padding: 6px 20px;
     background-color: #c3c3c3;
-    color: #000;
-    font-size: 14px;
+    color: var(--background-primary);
+    font-size: 15px;
+    font-weight: 500;
     border-radius: 25px;
     border: 0;
     -webkit-box-shadow: 0px 3px 6px #00000029;
