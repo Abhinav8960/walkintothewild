@@ -162,8 +162,6 @@ class ShareSafariSearch extends ShareSafari
             }]);
         }
 
-
-
         return $dataProvider;
     }
 }

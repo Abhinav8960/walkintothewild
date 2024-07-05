@@ -74,7 +74,7 @@ use yii\helpers\Html;
         <?php
         if ($model->shared_safari_model->image == null) {
             if ($model->shared_safari_model->park_id) { ?>
-                <div class="col-md-6">
+                <div class="col-sm-3">
                     <label for="" class="Modal_label">Current Display Image</label>
                     <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
                 </div>
@@ -106,7 +106,7 @@ use yii\helpers\Html;
         </div>
 
         <div class="col-md-12">
-        <div class="d-flex  gap-sm-3 align-items-center flex-sm-nowrap flex-wrap  w-100 mb-1">
+            <div class="d-flex  gap-sm-3 align-items-center flex-sm-nowrap flex-wrap  w-100 mb-1">
                 <div class="start w-100">
                     <label for="" class="Modal_label">Start Date</label>
                     <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
@@ -151,11 +151,21 @@ use yii\helpers\Html;
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Total Seat</label>
-                    <?= $form->field($model, 'total_seat')->dropDownList([2, 3, 4, 5, 6], ['prompt' => 'Total Seat', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'total_seat')->dropDownList(
+                        ['2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6'],
+                        [
+                            'prompt' => 'Total Seat',
+                            'class' => 'form-select form-select-lg mb-3',
+                            'onchange' => '
+                     $.get( "' . Yii::$app->urlManager->createUrl('sharedsafari/default/dynamicsharedseat?total_seat=') . '"+$(this).val(), function( data ) {
+                        $( "#sharedsafariform-share_seat").html(data);
+                        })'
+                        ]
+                    )->label(false) ?>
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Share Seats</label>
-                    <?= $form->field($model, 'share_seat')->dropDownList([1, 2, 3, 4, 5], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'share_seat')->dropDownList(($model->share_seat) ? $model->getSharedseat() : [], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                 </div>
             </div>
         </div>
@@ -163,19 +173,21 @@ use yii\helpers\Html;
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
                 <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
-                
+
             </div>
         </div>
     </div>
 
 </div>
 <?php ActiveForm::end() ?>
-<style>
-    /* .creat-safri .safari_create {
-        height: 33% !important;
-    }
+<?php
 
-    button.safari_create {
-        margin-top: 80px !important;
-    } */
-</style>
+$script = <<< JS
+
+          $("#sharedsafariform-start_date").on("change", function(){
+          $("#sharedsafariform-end_date").attr("min", $(this).val());
+          });
+          
+JS;
+$this->registerJs($script);
+?>
