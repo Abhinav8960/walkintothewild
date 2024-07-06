@@ -44,53 +44,19 @@ use yii\bootstrap5\ActiveForm;
                 </div>
                 <div class="sort_wrapper py-3">
                     <div class="sortBy">Sort by</div>
-                    <a class="btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="/operator/new1?SafariOperatorRatingSearch%5Bcustom_sort_by%5D=newest">Newest</a>
-                    <a class="btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="/operator/new1?SafariOperatorRatingSearch%5Bcustom_sort_by%5D=highest">Highest</a>
-                    <a class="btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="/operator/new1?SafariOperatorRatingSearch%5Bcustom_sort_by%5D=lowest">Lowest</a>
+                    <button class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" value="<?= Url::toRoute(['/operator/default/reviewwise', 'slug' => $operator->slug, 'sort_by' => 'newest']) ?>">Newest</button>
+                    <button class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" value="<?= Url::toRoute(['/operator/default/reviewwise', 'slug' => $operator->slug, 'sort_by' => 'highest']) ?>">Highest</button>
+                    <button class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" value="<?= Url::toRoute(['/operator/default/reviewwise', 'slug' => $operator->slug, 'sort_by' => 'lowest']) ?>">Lowest</button>
                 </div>
             </div>
-            <?php
-            if ($reviews) {
-                foreach ($reviews as $review) {  ?>
-                    <div class="commentsOther  position-relative">
-                        <div class="objec-flgs">
-                            <?php if (Yii::$app->user->id) {  ?>
-                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/operator/default/flag', 'operator_id' => $operator->id, 'park_id' => $review->park_id, 'safari_operator_rating_id' => $review->id]) ?>">
-                            <?php } else {
-                                echo 'Please <a href="/site/auth?authclient=google">Sign in</a> for start Comment';
-                            } ?>
-                        </div>
-                        <div class="postcomment  pt-3">
-                            <div class="text_com">
-                                <h6 class="nameavatr"><?= $review->park->title ?></h6>
-                                <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
 
-                                    <div class="ratings">
-                                        <p class="mb-0">
-                                            <?php if ($rating_count = $review->rating) {
-                                                for ($i = 1; $i <= $rating_count; $i++) { ?>
-                                                    <i class="fa-solid fa-star"></i>
-                                                <?php }
-
-                                                for ($i = $rating_count; $i < 5; $i++) { ?>
-                                                    <i class='far fa-star'></i>
-                                            <?php
-                                                }
-                                            } ?>
-                                        </p>
-                                    </div>
-
-                                    <div class="googlerating">
-                                        <p class="mb-0"><?= $review->user->name ?></p>
-                                    </div>
-                                </div>
-                                <p><?= $review->review ?></p>
-                            </div>
-                        </div>
-                    </div>
-            <?php
-                }
-            } ?>
+            <div id="review-list">
+                <?= $this->render('_review_tab', [
+                    'ratingsearchModel' => $ratingsearchModel,
+                    'reviews' => $reviews,
+                    'operator' => $operator,
+                ]) ?>
+            </div>
 
 
         </div>
@@ -135,6 +101,19 @@ use yii\bootstrap5\ActiveForm;
 </div>
 <?php
 $script = <<< JS
+
+
+$(document).ready(function() {
+    $(".review-button").click(function(){
+        var review_url=$(this).attr("value");
+        $('.review-button.active').removeClass('active');
+        $(this).addClass("active")
+        $.get(review_url, function( data ) {
+            $("#review-list").html(data);
+        });
+    })
+});
+    
 function writeareviewfunction() {
 	$('.writeAReviewBtn').on('click', function () {
         $('#review-write-modal').modal('show')
@@ -149,6 +128,7 @@ function writeareviewfunction() {
 	});
 }
 writeareviewfunction();
+              
              
 JS;
 $this->registerJs($script);
