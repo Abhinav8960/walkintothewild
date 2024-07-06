@@ -30,7 +30,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 ">
             <div class="left_text">
-                <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
+                <p class="">There are currently <strong><?= count($operators) ?></strong> safari tour operator</p>
             </div>
             <div class="right-select d-flex gap-2 align-items-center pe-xl-2">
                 <div class="input_check pb-0">
@@ -108,10 +108,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                 <p>Parks</p>
                                             </div>
-                                            <div class="parks_text text-center">
+                                            <!-- <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Resorts</p>
-                                            </div>
+                                            </div> -->
                                             <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Shared Safari</p>

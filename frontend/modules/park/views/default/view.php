@@ -133,7 +133,7 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div>
-        <div class="row my-4 justify-content-center">
+        <div class="row my-4 justify-content-center" id="safari_tour_operator_container">
             <div class="col-lg-12 col-xl-10">
                 <?= $this->render('_operators', [
                     'operators' => $operators,
