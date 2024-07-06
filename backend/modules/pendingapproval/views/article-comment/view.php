@@ -25,13 +25,11 @@ $recentposts = ArticleSearch::recentpost();
         <div class="row mb-4 justify-content-center">
             <div class="col-lg-8 col-xl-8 col-xxl-9 pe-lg-5">
                 <div class="aritcla-details">
-                    <!-- <h1 class="articald-title pb-3"><?= $article->title ?></h1> -->
+                    <h1 class="articald-title pb-3"><?= $article->title ?></h1>
                     <div class="aritcal_bigimg pb-4">
                         <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt="" class="w-100">
                     </div>
-
                     <p><?= $article->description ?> </p>
-
 
                 </div>
 
@@ -62,7 +60,7 @@ $recentposts = ArticleSearch::recentpost();
                         <ul class="artical-info ">
                             <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $article->articleAuthor ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
-                            <li><i class="fa-solid fa-calendar-days"></i><a href=""><?= date('M d, Y', strtotime($article->article_date)) ?></a></li>
+                            <li><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($article->article_date)) ?></li>
 
                         </ul>
                     </div>

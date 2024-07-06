@@ -1092,7 +1092,7 @@ figure {
     -o-transition: all 500ms ease;
     transition: all 500ms ease;
     border-radius: 10px 10px 0px 0px;
-    /* height: 290px; */
+    height: 260px;
     object-fit: cover;
 }
 
@@ -1136,14 +1136,13 @@ figure {
 .artical-info {
 
     display: -webkit-box;
-
     display: -ms-flexbox;
-
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
@@ -1154,7 +1153,7 @@ figure {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    gap: 10px;
+    gap: 5px;
     
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -1205,7 +1204,7 @@ figure {
 .artical_cards .lower-content h3 a {
     display: inline-block;
     color: var(--colorBlack);
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
 
 }
 
@@ -1494,6 +1493,7 @@ figure {
     -ms-flex-align: center;
     align-items: center;
     color: var(--colorBlack);
+    font-weight: 500;
     font-family: "Roboto", sans-serif !important;
     font-size: var(--fs-14);
 
@@ -1523,35 +1523,64 @@ figure {
 
 .aritcla-details p {
 
-    font-size: var(--fs-18);
+    font-size: var(--fs-16);
 }
-.aritcla-details h1,
+.aritcla-details h1{
+
+    font-size: 28px;
+}
+
 .aritcla-details h2,
 .aritcla-details h3,
 .aritcla-details h5,
 .aritcla-details h6,
 .aritcla-details h4{
 
-    font-size: 24px;
+    font-size: 22px;
 
 }
 
 .tags-title{
 
-    font-size: 24px; 
+    font-size: 22px; 
 }
 
 
+.tgas_btns{
 
+    background-color: transparent;
+    border: 1px solid var(--background-yellow);
+    border-radius: 4px;
+    padding: 5px 10px;
+    /* font-size: 13px; */
+}
+.tgas_btns:hover{
+
+    background-color: var(--background-yellow);
+   
+}
+.tgas_btns a{
+
+    color: #212529 !important;
+}
+.tgas_btns:hover a{
+
+    color: #212529 !important;
+}
+.tgas_btns:hover svg path{
+
+    fill: #000000 !important;
+}
 
 .tags-button {
 
     background-color: var(--background-yellow);
     padding: 5px 18px;
     /* width: 120px; */
+    color: #212529 !important;
     text-align: center;
     border: 0;
-    font-size: 13px;
+    font-size: 14px;
     font-family: "Roboto", sans-serif !important;
     border-radius: 5px;
 }
@@ -1579,7 +1608,7 @@ figure {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    font-size: 15px;
+    font-size: 14px;
 }
 
 .comment-wrapper {

@@ -124,19 +124,22 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
                 <?php if ($models) {
                     foreach ($models as $model) { ?>
-                        <a href="/park/<?= $model->slug ?>" class="parking_Box">
-
+                    
                             <div class="searchSafari_wraper mb-4">
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-4 col-md-3">
+
                                         <div class="Slider_safariimg3 h-100">
-                                            <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                        <a href="/park/<?= $model->slug ?>" class="parking_Box">
+                                        <img src="<?= isset($model->logo) ? $model->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100"> </a>       
                                         </div>
                                     </div>
                                     <div class="col-md-9 col-sm-8 col-xl-9">
                                         <div class="safariSearch_wrap">
                                             <div class="safrititles tite_parklist pt-sm-0 pt-3">
-                                                <h4 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?><?= isset($model->location) ? $model->location->title : '' ?></span></h4>
+                                            <a href="/park/<?= $model->slug ?>" class="parking_Box">
+                                            <h4 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?><?= isset($model->location) ? $model->location->title : '' ?></span></h4>
+                                            </a>   
                                             </div>
                                             <div class="seelctes_text  pb-4 ">
                                                 <p>
@@ -169,7 +172,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 </div>
                             </div>
 
-                        </a>
+                       
                 <?php }
                 } ?>
             </div>

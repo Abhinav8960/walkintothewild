@@ -63,7 +63,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                <div class="row justify-content-center gx-xl-5">
                <div class="col-lg-8 col-xl-8 col-xxl-9 ps-xl-0">
                 <div class="topics_tags">
-                    <h4 class="fs-4"><?= isset($slug) ? strtoupper($slug) : '' ?></h4>
+                    <h2 class="fs-3 pb-3"><?= isset($slug) ? strtoupper($slug) : '' ?></h2>
                 </div>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 ">
                     <?php if ($models) {
@@ -89,6 +89,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                             <?php }
                                             } ?>
                                         </ul> -->
+                                        
 
                                     </div>
                                     <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
