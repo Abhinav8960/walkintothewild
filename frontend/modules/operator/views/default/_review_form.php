@@ -29,7 +29,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-lg-12 mb-2 ">
             <div class="textarea">
-                <?= $form->field($model, 'review')->textarea(['placeholder' => 'Write your review about Pugdundee Safaris', 'class' => 'form-control'])->label(false); ?>
+                <?= $form->field($model, 'review')->textarea(['placeholder' => 'Write your review', 'class' => 'form-control'])->label(false); ?>
             </div>
         </div>
         <div class="col-12 py-2">
@@ -46,31 +46,31 @@ $script = <<<JS
     $(document).ready(function() {  
         $(".star_icon_1").click(function() { 
             $(".fa-star").css("color", "black"); 
-            $(".star_icon_1").css("color", "yellow");  
+            $(".star_icon_1").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_2").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2").css("color", "yellow");  
+            $(".star_icon_1,.star_icon_2").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_3").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3").css("color", "yellow");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });   
         $(".star_icon_4").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4").css("color", "yellow");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_5").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4,.star_icon_5").css("color", "yellow");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4,.star_icon_5").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  

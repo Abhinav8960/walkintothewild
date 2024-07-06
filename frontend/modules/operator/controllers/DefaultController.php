@@ -255,6 +255,8 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
         }
 
+        $rating = SafariOperatorRating::find()->where(['id' => $safari_operator_rating_id])->limit(1)->one();
+
         $model = new SafariOperatorRatingReportForm();
         $model->safari_operator_id = $operator_id;
         $model->park_id = $park_id;
@@ -267,7 +269,6 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->flag_model->save(false)) {
-                        $rating = SafariOperatorRating::find()->where(['id' => $safari_operator_rating_id])->limit(1)->one();
                         $rating->flaged = 1;
                         $rating->save(false);
                         Yii::$app->session->setFlash('success', 'Flag added successfully!');
@@ -285,6 +286,7 @@ class DefaultController extends FrontendBaseController
             return $this->renderAjax('_flag_form', [
                 'model' => $model,
                 'operator_id' => $operator_id,
+                'rating' => $rating,
             ]);
         }
     }

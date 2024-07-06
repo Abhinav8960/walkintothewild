@@ -107,10 +107,7 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="detailsText pb-3">
-                                    <p style="font-size: 14px;"><?= GeneralModel::get_substring($operator->about_business); ?>
-                                        <?php if (str_word_count($operator->about_business) >= 99) { ?>
-                                            <a href="" data-bs-toggle="modal" data-bs-target="#modalSeeMore" class="seemoreBtn">See more</a>
-                                        <?php } ?>
+                                    <p style="font-size: 14px;"><?= $operator->about_business ?>
                                     </p>
                                 </div>
                             </div>
@@ -121,24 +118,24 @@ $recentposts = ArticleSearch::recentpost();
                             </div>
                             <div class="d-flex gap-md-5 gap-2">
                                 <div class="phone">
-                                    <a href="tel:<?= $operator->phone_no ?>">
-                                        <i class="fa-solid fa-phone me-2"></i>
-                                        <span>Call</span>
-                                        <div class="phone-numbers">
-                                            <a href="tel:<?= $operator->phone_no ?>"><?= $operator->phone_no ?></a>
+                                    <i class="fa-solid fa-phone me-2"></i>
+                                    <span>Call</span>
+                                    <div class="phone-numbers">
+                                        <a href="tel:<?= $operator->phone_no ?>"><?= $operator->phone_no ?></a>
+                                        <?php if ($operator->operator_phone_no <> '') { ?>
                                             <a href="tel:<?= $operator->operator_phone_no ?>"><?= $operator->operator_phone_no ?></a>
-                                        </div>
-                                    </a>
+                                        <?php } ?>
+                                    </div>
                                 </div>
                                 <div class="phone email">
-                                    <a href="mailto:<?= $operator->email ?>">
-                                        <i class="fa-solid fa-envelope me-2"></i>
-                                        <span>Email</span>
-                                        <div class="email-addresses">
-                                            <a href="mailto:<?= $operator->email ?>"><?= $operator->email ?></a>
+                                    <i class="fa-solid fa-envelope me-2"></i>
+                                    <span>Email</span>
+                                    <div class="email-addresses">
+                                        <a href="mailto:<?= $operator->email ?>"><?= $operator->email ?></a>
+                                        <?php if ($operator->operator_email <> '') { ?>
                                             <a href="mailto:<?= $operator->operator_email ?>"><?= $operator->operator_email ?></a>
-                                        </div>
-                                    </a>
+                                        <?php } ?>
+                                    </div>
                                 </div>
 
                             </div>
@@ -174,61 +171,61 @@ $recentposts = ArticleSearch::recentpost();
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-xl-11 col-lg-12">
-            <div class="row pt-5">
-            <div class="col-lg-4 col-md-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
-                <div class="safri_tour">
-                    <div class="titlerescent" style="justify-content:left !important;">
-                        <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
-                    </div>
-                    <div class="topics_listing">
-                        <ul id="tabList">
-                            <li><a class="tab-items active_safri" data-tab="safariParks">
-                                    <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
-                                </a></li>
-                            <!-- <li><a class="tab-items " data-tab="resort">
+                <div class="row pt-5">
+                    <div class="col-lg-4 col-md-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+                        <div class="safri_tour">
+                            <div class="titlerescent" style="justify-content:left !important;">
+                                <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
+                            </div>
+                            <div class="topics_listing">
+                                <ul id="tabList">
+                                    <li><a class="tab-items active_safri" data-tab="safariParks">
+                                            <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
+                                        </a></li>
+                                    <!-- <li><a class="tab-items " data-tab="resort">
                                     <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
                                 </a></li> -->
-                            <li><a class="tab-items" data-tab="sharedSafari">
-                                    <div class="numparks">Shared Safari <span><?= count($shared_safaries) ?></span></div><i class="fa-solid fa-chevron-right"></i>
-                                </a></li>
-                            <li><a class="tab-items " data-tab="review">
-                                    <div class="numparks">Review <span><?= count($reviews) ?></span></div><i class="fa-solid fa-chevron-right"></i>
-                                </a></li>
-                        </ul>
+                                    <li><a class="tab-items" data-tab="sharedSafari">
+                                            <div class="numparks">Shared Safari <span><?= count($shared_safaries) ?></span></div><i class="fa-solid fa-chevron-right"></i>
+                                        </a></li>
+                                    <li><a class="tab-items " data-tab="review">
+                                            <div class="numparks">Review <span><?= count($reviews) ?></span></div><i class="fa-solid fa-chevron-right"></i>
+                                        </a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-xxl-10 col-xl-9 ">
+                        <div class="tab-content_tour active " id="safariParks">
+                            <!-- Safari Parks content goes here -->
+                            <?= $this->render('_operator_safari_park', [
+                                'operator_parks' => $operator_parks,
+                            ]) ?>
+                        </div>
+
+                        <div class="tab-content_tour " id="resort">
+                            <?= $this->render('_resort') ?>
+                        </div>
+
+                        <div class="tab-content_tour" id="sharedSafari">
+                            <!-- Shared Safari content goes here -->
+                            <?= $this->render('_shared_safari', [
+                                'shared_safaries' => $shared_safaries,
+                            ]) ?>
+                        </div>
+
+                        <div class="tab-content_tour mb-4" id="review">
+                            <?= $this->render('_review', [
+                                'operator' => $operator,
+                                'reviews' => $reviews,
+                                'ratingsearchModel' => $ratingsearchModel
+                            ]) ?>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-8 col-xxl-10 col-xl-9 ">
-                <div class="tab-content_tour active " id="safariParks">
-                    <!-- Safari Parks content goes here -->
-                    <?= $this->render('_operator_safari_park', [
-                        'operator_parks' => $operator_parks,
-                    ]) ?>
-                </div>
-
-                <div class="tab-content_tour " id="resort">
-                    <?= $this->render('_resort') ?>
-                </div>
-
-                <div class="tab-content_tour" id="sharedSafari">
-                    <!-- Shared Safari content goes here -->
-                    <?= $this->render('_shared_safari', [
-                        'shared_safaries' => $shared_safaries,
-                    ]) ?>
-                </div>
-
-                <div class="tab-content_tour mb-4" id="review">
-                    <?= $this->render('_review', [
-                        'operator' => $operator,
-                        'reviews' => $reviews,
-                        'ratingsearchModel' => $ratingsearchModel
-                    ]) ?>
-                </div>
-            </div>
         </div>
-            </div>
-        </div>
-     
+
     </div>
 </section>
 
@@ -279,6 +276,12 @@ $recentposts = ArticleSearch::recentpost();
     .phone,
     .email {
         position: relative;
+        font-family: "Roboto", sans-serif;
+        font-size: var(--fs-18);
+        font-weight: 600;
+        padding: 10px 0px;
+        display: block;
+        color: var(--background-primary);
     }
 
     /* Styling for links (Call and Email) */

@@ -3,17 +3,18 @@
 namespace frontend\modules\sharedsafari\controllers;
 
 use Yii;
+use yii\helpers\Url;
+use yii\helpers\Json;
+use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
-use common\models\park\SafariPark;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
-use common\models\sharesafari\ShareSafariHistory;
 use frontend\models\form\SharedSafariForm;
-use frontend\controllers\FrontendBaseController;
-use common\models\sharesafari\ShareSafariIntrested;
 use frontend\models\ShareSafariCommentForm;
-use yii\helpers\Json;
+use frontend\controllers\FrontendBaseController;
+use common\models\sharesafari\ShareSafariHistory;
+use common\models\sharesafari\ShareSafariIntrested;
 
 /**
  * DefaultController.
@@ -175,6 +176,8 @@ class DefaultController extends FrontendBaseController
                 } else {
                     Yii::$app->session->setFlash('error', 'You can not Join this Shared Safari currently!');
                 }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
         }
@@ -210,6 +213,8 @@ class DefaultController extends FrontendBaseController
                         Yii::$app->session->setFlash('error', 'You can not unfollow this Shared Safari currently!');
                     }
                 }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
         }

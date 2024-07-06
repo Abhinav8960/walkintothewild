@@ -12,9 +12,7 @@ if ($reviews) {
             <div class="objec-flgs">
                 <?php if (Yii::$app->user->id) {  ?>
                     <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/operator/default/flag', 'operator_id' => $operator->id, 'park_id' => $review->park_id, 'safari_operator_rating_id' => $review->id]) ?>">
-                <?php } else {
-                    echo 'Please <a href="/site/auth?authclient=google">Sign in</a> for start Comment';
-                } ?>
+                <?php } ?>
             </div>
             <div class="postcomment  pt-3">
                 <div class="text_com">
@@ -37,7 +35,7 @@ if ($reviews) {
                         </div>
 
                         <div class="googlerating">
-                            <p class="mb-0"><?= $review->user->name ?></p>
+                            <p class="mb-0"> <?= $review->user->name ?></p>
                         </div>
                     </div>
                     <p><?= $review->review ?></p>

@@ -3,13 +3,14 @@
 
 /* @var $this yii\web\View */
 
-use common\interfaces\Constants;
-use common\models\cms\banner\Banner;
-use common\models\GeneralModel;
-use common\models\park\SafariPark;
-use common\models\sharesafari\ShareSafari;
-use frontend\models\ArticleSearch;
 use yii\helpers\Url;
+use common\models\GeneralModel;
+use common\interfaces\Constants;
+use common\models\park\SafariPark;
+use frontend\models\ArticleSearch;
+use common\models\cms\banner\Banner;
+use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariIntrested;
 
 $this->title = 'Share Safari';
 $this->params['breadcrumbs'][] = $this->title;
@@ -180,7 +181,16 @@ $recentposts = ArticleSearch::recentpost();
                                                     <div class="col-6">
                                                         <div class="safari text-center">
                                                             <div class="joinsafari">
-                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                <?php if (Yii::$app->user->identity) {
+                                                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                                    if ($share_safari_intrested) { ?>
+                                                                        <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
+                                                                    <?php } else { ?>
+                                                                        <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                    <?php  }
+                                                                } else { ?>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                <?php } ?>
                                                             </div>
                                                         </div>
                                                     </div>
