@@ -61,7 +61,7 @@ if ($article->meta_title != '') {
 </section>
 
 <section class="articals_wrapper py-3">
-    <div class="container-fluid">
+    <div class="container-lg">
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-5 py-3">
                 <div class="advertisment ">
@@ -126,13 +126,13 @@ if ($article->meta_title != '') {
                             ]) ?>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-xl-3 col-xxl-2  mt-lg-0 mt-3 ps-lg-0 ">
+                    <div class="col-lg-3 col-xl-3 col-xxl-3  mt-lg-0 mt-3 ps-lg-0 ">
                         <?= $this->render('_recent_posts', [
                             'recentposts' => $recentposts,
                         ]) ?>
                         <div class="topics_box">
                             <div class="titlerescent pb-3">
-                                <h3>Topics</h3>
+                                <h3>Category</h3>
                             </div>
                             <?= $this->render('_topic_search') ?>
                         </div>

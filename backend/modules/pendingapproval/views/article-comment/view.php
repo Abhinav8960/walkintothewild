@@ -21,7 +21,7 @@ $recentposts = ArticleSearch::recentpost();
 ?>
 
 <section class="articals_wrapper py-3">
-    <div class="container-fluid">
+    <div class="container-lg">
         <div class="row mb-4 justify-content-center">
             <div class="col-lg-8 col-xl-8 col-xxl-9 pe-lg-5">
                 <div class="aritcla-details">
@@ -79,7 +79,7 @@ $recentposts = ArticleSearch::recentpost();
                 ]) ?>
                 <div class="topics_box">
                     <div class="titlerescent pb-3">
-                        <h3>Topics</h3>
+                        <h3>Category</h3>
                     </div>
                     <?= $this->render('_topic_search') ?>
                 </div>

@@ -104,7 +104,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                 ]) ?>
                 <div class="topics_box">
                     <div class="titlerescent pb-3">
-                        <h3>Topics</h3>
+                        <h3>Category</h3>
                     </div>
                     <?= $this->render('_topic_search') ?>
                 </div>
