@@ -29,7 +29,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-lg-12 mb-2 ">
             <div class="textarea">
-                <?= $form->field($model, 'review')->textarea(['placeholder' => 'Write your review', 'class' => 'form-control'])->label(false); ?>
+                <?= $form->field($model, 'review')->textarea(['placeholder' => 'Write your review', 'class' => 'form-control', 'maxlength' => true])->label(false); ?>
             </div>
         </div>
         <div class="col-12 py-2">

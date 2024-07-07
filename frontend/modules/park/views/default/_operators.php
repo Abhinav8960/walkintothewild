@@ -175,12 +175,23 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <div class="footer_card row pb-2 px-2 align-items-center">
                                                 <div class="col-6">
                                                     <div class="users">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                        <div class="roundes_countuser">
-                                                            15+
-                                                        </div>
+                                                        <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                                                            $count = $share_safari->getIntrested()->count();
+                                                            $avatar_count = 3;
+                                                            foreach ($interests as $interest) {
+                                                        ?>
+                                                                <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                                                            <?php
+                                                            }
+                                                        };
+                                                        $count = $share_safari->getIntrested()->count();
+                                                        $avatar_count = 3;
+                                                        $data = $count - $avatar_count;
+                                                        if ($data > 3) {  ?>
+                                                            <div class="roundes_countuser">
+                                                                <?= $data ?>+
+                                                            </div>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
