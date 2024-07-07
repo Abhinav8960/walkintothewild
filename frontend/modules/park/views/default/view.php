@@ -179,6 +179,8 @@ function writesuggestionfunction() {
 	});
 }
 writesuggestionfunction();
+
+
              
 JS;
 $this->registerJs($script);

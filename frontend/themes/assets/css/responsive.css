@@ -528,6 +528,11 @@ line-height: 19px;
 
 }
 @media only screen and (min-width: 768px) {
+    .desktop_hideDiv.border_top2{
+
+display: none;
+    }
+   
     .mobile_didplay_block{
 
         display: none;
@@ -1244,6 +1249,14 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
+    .desktop_postion.border_top2{
+
+        display: none;
+    }
+    .desktop_hideDiv{
+
+        display: inline-flex !important;
+    }
     .safrititles .date_bx h6{
 
         margin-bottom: 0;
@@ -1477,6 +1490,18 @@ display: block;
         transform: translate(-50%, -50%);
         z-index: 0;
     } */
+}
+@media only screen and (max-width: 710px) and (min-width: 576px){
+
+.slider_safariimg {
+
+    height: 90%;
+}
+.single-image img{
+
+    height: 100%;
+    object-fit: cover;
+}
 }
 @media only screen and (max-width: 768px) and (min-width: 576px){
 
