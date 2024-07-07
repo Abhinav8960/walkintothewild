@@ -1197,6 +1197,20 @@ figure {
     font-size: 14px;
 
 }
+.artical-info a{
+
+    display: inline-block;
+    color: #9C9C9C;
+    font-family: "Roboto", sans-serif !important;
+    font-size: 14px;
+}
+.artical-info span{
+
+    display: inline-block;
+    color: #9C9C9C;
+    font-family: "Roboto", sans-serif !important;
+    font-size: 14px;
+}
 
 
 .artical_cards .lower-content .artical-info li i {
@@ -4397,3 +4411,4 @@ figure {
 .wrapper-skybgsafri .safrititles p a {
     color: var(--background-primary);
 }
+

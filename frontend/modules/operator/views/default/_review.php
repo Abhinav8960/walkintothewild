@@ -33,7 +33,7 @@ use yii\bootstrap5\ActiveForm;
                             } ?>
                         </div>
                     </div>
-                    <div class="whiteReview">
+                    <div class="whiteReview mt-2">
                         <?php if (Yii::$app->user->identity) { ?>
                             <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
                         <?php } else { ?>
