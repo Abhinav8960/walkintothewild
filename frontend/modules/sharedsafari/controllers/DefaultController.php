@@ -67,6 +67,10 @@ class DefaultController extends FrontendBaseController
             return $this->renderAjax('organize_form', [
                 'model' => $model,
             ]);
+        } else {
+            return $this->render('organize_form', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -108,6 +112,10 @@ class DefaultController extends FrontendBaseController
         }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('organize_form', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('organize_form', [
                 'model' => $model,
             ]);
         }
@@ -208,7 +216,7 @@ class DefaultController extends FrontendBaseController
                     $share_safari_intrested->status = 0; //UNfollow
                     $share_safari_intrested->unintrested_at = time();
                     if ($share_safari_intrested->save()) {
-                        Yii::$app->session->setFlash('success', 'You are not part of this Shared Safari!');
+                        Yii::$app->session->setFlash('error', 'You are not part of this Shared Safari!');
                     } else {
                         Yii::$app->session->setFlash('error', 'You can not unfollow this Shared Safari currently!');
                     }

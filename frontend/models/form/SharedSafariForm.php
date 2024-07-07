@@ -191,9 +191,9 @@ class SharedSafariForm extends \yii\base\Model
         } elseif ($this->total_seat == 5) {
             return  [1 => '1', '2' => 2, '3' => 3, '4' => 4, '5' => 5];
         } elseif ($this->total_seat == 6) {
-            [1 => '1', '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6];
+            return [1 => '1', '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6];
         } else {
-            return '';
+            return [];
         }
     }
 }

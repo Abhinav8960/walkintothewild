@@ -171,7 +171,7 @@ use yii\helpers\Html;
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Share Seats</label>
-                    <?= $form->field($model, 'share_seat')->dropDownList(($model->share_seat) ? $model->getSharedseat() : [], ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                    <?= $form->field($model, 'share_seat')->dropDownList($model->getSharedseat(), ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                 </div>
             </div>
         </div>

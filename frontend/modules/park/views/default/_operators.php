@@ -5,6 +5,7 @@
 
 use yii\helpers\Url;
 use common\models\GeneralModel;
+use common\models\sharesafari\ShareSafariIntrested;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -134,9 +135,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <?php if ($shared_safaries) { ?>
                     <div class="backgroud_oprator">
                         <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
-                            <h4 class="text-center">Join Shared Safaris in Bandhavgarh Tiger Reserve</h4>
+                            <h4 class="text-center">Join Shared Safaris in <?= $model->title ?></h4>
                             <div class="joinshareView mt-xl-0 mt-3">
-                                <a href="/sharesafari" class="btn_shareView">View All</a>
+                                <a href="/sharedsafari?ShareSafariSearch[park_id]=<?= $model->id ?>" class="btn_shareView">View All</a>
                             </div>
                         </div>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-lg-4 justify-content-center">
@@ -150,7 +151,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             </div>
                                         </div>
                                         <div class="shareimg">
-                                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhsmall.jpg' ?>" alt=""></a>
+                                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                         </div>
                                         <div class="card_body">
                                             <div class="top_seats">
@@ -185,7 +186,16 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <div class="col-6">
                                                     <div class="safari text-center">
                                                         <div class="joinsafari">
-                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                            <?php if (Yii::$app->user->identity) {
+                                                                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                                if ($share_safari_intrested) { ?>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
+                                                                <?php } else { ?>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                <?php  }
+                                                            } else { ?>
+                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>

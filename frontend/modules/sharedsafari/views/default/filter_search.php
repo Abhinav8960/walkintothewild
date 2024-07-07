@@ -1,8 +1,10 @@
 <?php
 
-use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\GeneralModel;
+use common\models\park\SafariPark;
 
 /** @var yii\web\View $this */
 /** @var common\models\sharesafari\ShareSafari $model */
@@ -29,7 +31,7 @@ use yii\widgets\ActiveForm;
         <div class="title_filter ">
             <h6>Park</h6>
             <div class="input_check ">
-                <?= $form->field($searchModel, 'park_id')->dropDownlist(GeneralModel::safariparkoption(), ['prompt' => 'All Park'])->label(false) ?>
+                <?= $form->field($searchModel, 'park_id')->dropDownlist(ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'All Park'])->label(false) ?>
             </div>
         </div>
         <div class="title_filter mb-3">
