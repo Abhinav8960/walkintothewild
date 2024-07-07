@@ -76,6 +76,10 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
                     'defaultOrder' => ['rating' => SORT_ASC]
                 ];
             }
+        } else {
+            $dataProvider->sort = [
+                'defaultOrder' => ['created_at' => SORT_DESC]
+            ];
         }
 
 

@@ -70,7 +70,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div class="col-12">
                     <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                         <div class="left_text">
-                            <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
+                            <p class="">There are currently <strong><?= count($operators) ?></strong> active operators</p>
                         </div>
                         <div class="right-select d-flex gap-2 align-items-center">
                             <div class="input_check pb-0">
@@ -92,7 +92,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     </div>
                     <div class="top_mobilefilter d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                         <div class="left_text">
-                            <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
+                            <p class="">There are currently <strong><?= count($operators) ?></strong> active operators</p>
                         </div>
                         <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                             <div class="input_check pb-0">
@@ -132,7 +132,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                 </p>
                                                             </div>
                                                             <div class="googlerating">
-                                                                <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Reviews' : '0 Reviews' ?> </p>
+                                                                <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
                                                             </div>
                                                         </div>
 
@@ -144,10 +144,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                             <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                             <p>Parks</p>
                                                         </div>
-                                                        <div class="parks_text text-center">
+                                                        <!-- <div class="parks_text text-center">
                                                             <p>0</p>
                                                             <p>Resorts</p>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="parks_text text-center">
                                                             <p>0</p>
                                                             <p>Shared Safari</p>

@@ -97,7 +97,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </p>
                                                 </div>
                                                 <div class="googlerating">
-                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Reviews' : '0 Reviews' ?> </p>
+                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
                                                 </div>
                                             </div>
 
@@ -256,7 +256,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </p>
                                                 </div>
                                                 <div class="googlerating">
-                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Reviews' : '0 Reviews' ?> </p>
+                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
                                                 </div>
                                             </div>
 
@@ -268,10 +268,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                 <p>Parks</p>
                                             </div>
-                                            <div class="parks_text text-center">
+                                            <!-- <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Resorts</p>
-                                            </div>
+                                            </div> -->
                                             <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Shared Safari</p>

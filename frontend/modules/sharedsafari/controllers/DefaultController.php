@@ -55,7 +55,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->shared_safari_model->save(false)) {
                         $model->UploadFiles($model->shared_safari_model->id);
                         $model->safariHistory();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
                         return $this->redirect(['index']);
                     }
                 }

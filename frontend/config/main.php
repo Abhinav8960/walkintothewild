@@ -142,6 +142,8 @@ return [
                 '/sharedsafari/<slug>' => '/sharedsafari/default/view',
 
 
+                '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
+                '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
                 '/operator/<slug>' => '/operator/default/view', //operator view url
                 '/operator/resort/<id>' => '/operator/default/resort', //operator view url
                 '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
