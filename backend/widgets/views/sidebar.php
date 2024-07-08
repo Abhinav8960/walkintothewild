@@ -682,8 +682,17 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/pendingapproval/article-comment/index",
 															"/pendingapproval/article-comment/view",
 														)) ? "active" : "" ?>" href="/pendingapproval/article-comment/index">Article Comments</a></li>
-							
+
 						</ul>
+					</li>
+
+
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/sharesafari/default/index",
+														"/sharesafari/default/index",
+														"/sharesafari/default/replies",
+													)) ? "active" : "" ?>" href="/sharesafari/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span></a>
 					</li>
 
 				<?php endif; ?>
