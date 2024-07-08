@@ -64,7 +64,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                     <div class="col-lg-8 col-xl-8 col-xxl-9 ps-xl-0">
                         <?php if (isset($sub_title)) { ?>
                             <div class="topics_tags">
-                                <p class="fs-3 pb-3 mb-3 mt-2" style="font-style: italic; font-size: var(--fs-15);"><?= isset($sub_title) ? $sub_title : '' ?></p>
+                                <p class="fs-3 pb-3 mb-3 mt-2" style="font-style: italic;"><?= isset($sub_title) ? $sub_title : '' ?></p>
                             </div>
                         <?php } ?>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 ">
