@@ -37,7 +37,7 @@ use yii\helpers\Url;
                         <?php } ?>
 
                     </div>
-                    <div class="postcomment d-flex gap-2 pt-3">
+                    <div class="postcomment d-flex gap-2 pt-3 w-100">
                         <div class="avatar">
                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
                         </div>
@@ -49,32 +49,37 @@ use yii\helpers\Url;
                                 <?php } ?>
                             </div>
                             <p><?= $comments->comment ?></p>
-
-
-                            <div class="comment-reply">
-
+                        </div>
+                    </div>
+                    <div class="comment-reply">
                                 <?php if ($replies) { ?>
                                     <div class="blog-comment-container">
-                                        <h6 class="card-brown-heading">Replies</h6>
+                                        <h6 class="card-brown-heading pb-2 ms-4">Replies</h6>
                                         <?php foreach ($replies as $reply) { ?>
-                                            <div class="blog-comment-text ms-5" style="border:none;">
-                                                <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
-                                                <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
-                                                <div class="comment-text">
-                                                    <p><?= $reply->comment ?></p>
+                                            <div class="blog-comment-text ms-4 position-relative w-100 flags_reply" style="border:none;">
+                                                <div class="d-flex gap-2">
+                                                <div class="avatar">
+                                                    <img src="/assets/5a869828/img/Share-Safari/dpmain.png" alt="">
+                                                </div>
+                                                <div class="font-color">
+                                                    <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
+                                                    <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
+                                                    <div class="comment-text">
+                                                        <p><?= $reply->comment ?></p>
+                                                    </div>
+                                                    <?php if (Yii::$app->user->id) {  ?>
+                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
+                                                    <?php } ?>
+                                                </div>
                                                 </div>
                                             </div>
-                                            <?php if (Yii::$app->user->id) {  ?>
-                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
-                                            <?php } ?>
 
-
+                                            
                                         <?php } ?>
                                     </div>
                                 <?php } ?>
-
                                 <?php if (Yii::$app->user->id) {  ?>
-                                    <button onclick="toggleReplyForm(this)"><i class="fa-solid fa-reply"></i>Reply</button>
+                                    <button onclick="toggleReplyForm(this)" class="reply_btn"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                                     <div class="reply-form" style="display: none;">
                                         <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
                                         <div class="mb-3">
@@ -91,8 +96,6 @@ use yii\helpers\Url;
 
                                 <?php } ?>
                             </div>
-                        </div>
-                    </div>
             <?php
                 }
             } ?>
