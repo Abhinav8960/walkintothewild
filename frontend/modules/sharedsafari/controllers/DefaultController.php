@@ -11,11 +11,15 @@ use common\interfaces\StatusInterface;
 use common\models\MailLog;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariComment;
+use common\models\sharesafari\ShareSafariCommentReport;
 use frontend\models\form\SharedSafariForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariHistory;
 use common\models\sharesafari\ShareSafariIntrested;
+use frontend\models\ReplyForm;
+use frontend\models\ShareSafariCommentReportForm;
 
 /**
  * DefaultController.
@@ -151,16 +155,26 @@ class DefaultController extends FrontendBaseController
     {
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         $model = new ShareSafariCommentForm();
+        $replymodel = new ReplyForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
             Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
         }
+
+
+        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($share_safari)) {
+            Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+            return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, '#' => 'comments_safari']);
+        }
+
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
         return $this->render('view', [
             'share_safari' => $share_safari,
             'model' => $model,
+            'replymodel' => $replymodel,
         ]);
     }
 
@@ -237,6 +251,64 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+    }
+
+
+    public function actionFlag($slug, $park_id, $share_safari_comment_id)
+    {
+        $share_safari = ShareSafari::find()->where(['slug' => $slug])->one();
+        if (!$share_safari) {
+            return $this->redirect(['/sharedsafari']);
+        }
+
+        $comments = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->limit(1)->one();
+
+        $model = new ShareSafariCommentReportForm();
+        $model->share_safari_id = $share_safari->id;
+        $model->park_id = $park_id;
+        $model->share_safari_comment_id = $share_safari_comment_id;
+
+        $model->action_url = '/sharedsafari/default';
+        $model->action_validate_url = '/sharedsafari/default/validateflag';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->flag_model->save(false)) {
+                        $comments->flaged = 1;
+                        $comments->save(false);
+                        Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
+                        return $this->redirect([
+                            '/sharedsafari/default/view',
+                            'slug' => $share_safari->slug,
+                            '#' => 'comments_safari'
+                        ]);
+                    }
+                }
+            }
+        } else {
+            $model->flag_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_flag_form', [
+                'model' => $model,
+                'slug' => $slug,
+                'comments' => $comments,
+            ]);
+        }
+    }
+
+    public function actionValidateflag($id = null)
+    {
+        $model = new SafariOperatorRatingReportForm();
+        if ($id != null) {
+            $flag_model = $this->findModel($id);
+            $model = new SafariOperatorRatingReportForm($flag_model);
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 
 

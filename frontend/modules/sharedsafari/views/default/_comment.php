@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 
 ?>
 
@@ -27,9 +28,14 @@ use yii\bootstrap5\ActiveForm;
         <div class="commentsOther  position-relative">
             <?php if ($parent_comments = $share_safari->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
                 foreach ($parent_comments as $comments) {
+                    $replies = $comments->getReplies()->where(['status' => 1])->all();
+
             ?>
                     <div class="objec-flgs">
-                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" data-bs-toggle="modal" data-bs-target="#modalFlag">
+                        <?php if (Yii::$app->user->id) {  ?>
+                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
+                        <?php } ?>
+
                     </div>
                     <div class="postcomment d-flex gap-2 pt-3">
                         <div class="avatar">
@@ -41,6 +47,48 @@ use yii\bootstrap5\ActiveForm;
                                 <button class="request_btn">Request Contact</button>
                             </div>
                             <p><?= $comments->comment ?></p>
+
+
+                            <div class="comment-reply">
+
+                                <?php if ($replies) { ?>
+                                    <div class="blog-comment-container">
+                                        <h6 class="card-brown-heading">Replies</h6>
+                                        <?php foreach ($replies as $reply) { ?>
+                                            <div class="blog-comment-text ms-5" style="border:none;">
+                                                <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
+                                                <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
+                                                <div class="comment-text">
+                                                    <p><?= $reply->comment ?></p>
+                                                </div>
+                                            </div>
+                                                <?php if (Yii::$app->user->id) {  ?>
+                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
+                                                <?php } ?>
+
+                                            
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+
+                                <?php if (Yii::$app->user->id) {  ?>
+                                    <button onclick="toggleReplyForm(this)"><i class="fa-solid fa-reply"></i>Reply</button>
+                                    <div class="reply-form" style="display: none;">
+                                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                                        <div class="mb-3">
+                                            <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
+                                        </div>
+                                        <div class="mb-3">
+                                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
+                                        </div>
+                                        <div class="btn-wrapper">
+                                            <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
+                                        </div>
+                                        <?php ActiveForm::end(); ?>
+                                    </div>
+
+                                <?php } ?>
+                            </div>
                         </div>
                     </div>
             <?php
@@ -57,3 +105,34 @@ use yii\bootstrap5\ActiveForm;
         echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
     } ?>
 </div>
+<script>
+    function toggleReplyForm(link) {
+
+        var replyForm = link.nextElementSibling;
+        if (replyForm.style.display === "none" || replyForm.style.display === "") {
+            replyForm.style.display = "block";
+        } else {
+            replyForm.style.display = "none";
+        }
+
+    }
+</script>
+
+<?php
+$script = <<< JS
+
+
+    
+function writeareviewfunction() {
+    $('.flagBtn').on('click', function () {
+        $('#modalFlag').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+writeareviewfunction();
+              
+             
+JS;
+$this->registerJs($script);
+?>
