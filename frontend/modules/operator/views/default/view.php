@@ -56,10 +56,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-11 col-lg-12">
-                <div class="row pt-5">
-                    <div class="col-lg-4 col-md-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+                <div class="row pt-5 pb-4">
+                    <div class="col-lg-3 col-md-3 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                         <div class="safri_tour">
-                            <div class="titlerescent" style="justify-content:left !important;">
+                            <div class="titlerescent" >
                                 <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
                             </div>
                             <div class="topics_listing">
@@ -67,7 +67,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-8 col-xxl-10 col-xl-9 ">
+                    <div class="col-lg-9 col-md-9 col-xxl-10 col-xl-9 ">
                         <div class="tab-content_tour active">
                             <?php
                             if ($operator_parks) {
@@ -77,12 +77,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
                                         <div class="searchSafari_parks mb-4">
                                             <div class="row">
-                                                <div class="col-xl-3">
+                                                <div class="col-xl-3 col-sm-4">
                                                     <div class="parksImg h-100">
                                                         <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-9 ">
+                                                <div class="col-xl-9 col-sm-8">
                                                     <div class="parks_body">
                                                         <div class="safrititles pt-md-0 pt-3">
                                                             <h6 class=""><?= $park_detail->title ?></h6>
@@ -90,8 +90,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         <div class="seelctes_text pt-2 pb-3 ">
                                                             <p><?= $park_detail->long_description ?></p>
                                                         </div>
-                                                        <div class="row ">
-                                                            <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
+                                                        <div class="row tab_hide">
+                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-3 mb-md-1">
                                                                 <div class="safridetails_form d-flex gap-3 ">
                                                                     <div class="iconImg">
                                                                         <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Location">
@@ -101,7 +101,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
+                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-3 mb-md-1">
                                                                 <div class="safridetails_form d-flex gap-3 ">
                                                                     <div class="iconImg">
                                                                         <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
@@ -121,7 +121,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 col-xl-4 col-lg-6 mb-3">
+                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-3 mb-md-1">
                                                                 <div class="safridetails_form d-flex gap-3 ">
                                                                     <div class="iconImg">
                                                                         <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
@@ -132,7 +132,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
+                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-0 mb-xl-3 mb-md-1">
                                                                 <div class="safridetails_form d-flex gap-3 ">
                                                                     <div class="iconImg">
                                                                         <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
@@ -153,7 +153,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
+                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-0 mb-xl-3 mb-md-1">
                                                                 <div class="safridetails_form d-flex gap-3 ">
                                                                     <div class="iconImg">
                                                                         <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport">
@@ -163,7 +163,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 col-xl-4 col-lg-6 mb-xl-0 mb-3">
+                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-0 mb-xl-3 mb-md-1">
                                                                 <div class="safridetails_form d-flex gap-3 ">
                                                                     <div class="iconImg">
                                                                         <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Animals">

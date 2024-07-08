@@ -57,7 +57,7 @@ use common\models\park\SafariPark;
             </div>
         </div>
         <div class="title_filter mb-4">
-            <h6>No. Of Safaris</h6>
+            <h6>Total Safaris</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'no_of_safari')->checkboxList(
                     GeneralModel::noofsafarioption(),
@@ -69,7 +69,7 @@ use common\models\park\SafariPark;
             </div>
         </div>
         <div class="title_filter mb-4">
-            <h6>Agenda</h6>
+            <h6>Theme</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
                     GeneralModel::agendaoption(),
@@ -81,7 +81,7 @@ use common\models\park\SafariPark;
             </div>
         </div>
         <div class="title_filter mb-4">
-            <h6>Host</h6>
+            <h6>Organizer</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'host_type')->checkboxList(
                     GeneralModel::hostoption(),

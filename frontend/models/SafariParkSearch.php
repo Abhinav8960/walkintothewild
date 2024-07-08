@@ -144,7 +144,8 @@ class SafariParkSearch extends SafariPark
         // If Rare EXOTIC ANIMAL Selected
         if ($this->master_rare_animal_id == '') {
             $query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_park_rare_animal WHERE status=1)");
-            $query->andFilterWhere(['like', 'title', 'Tiger Reserve']);
+            // $query->andFilterWhere(['like', 'title', 'Tiger Reserve']);
+            $query->andWhere("title like '%Tiger Reserve%' OR title like '%Gir National Park%' OR title like '%Jhalana Leopard Conservation Reserve%' OR title like '%Jawai Leopard Safari%'");
         }
 
         return $dataProvider;

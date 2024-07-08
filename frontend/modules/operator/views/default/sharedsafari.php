@@ -58,8 +58,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-11 col-lg-12">
-                <div class="row pt-5">
-                    <div class="col-lg-4 col-md-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+                <div class="row pt-5 pb-4">
+                    <div class="col-lg-3 col-md-3 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                         <div class="safri_tour">
                             <div class="titlerescent" style="justify-content:left !important;">
                                 <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
@@ -69,7 +69,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-8 col-xxl-10 col-xl-9 ">
+                    <div class="col-lg-9 col-md-9 col-xxl-10 col-xl-9">
                         <div class="tab-content_tour active">
                             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-3 gx-lg-5">
                                 <?php
@@ -149,7 +149,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         </div>
                                 <?php }
                                 } else {
-                                    echo 'No Shared Safari Found!';
+                                    echo '<p class="noData">No Shared Safari Found!</p>';
                                 } ?>
                             </div>
                         </div>
