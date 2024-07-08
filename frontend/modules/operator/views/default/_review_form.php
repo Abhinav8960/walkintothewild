@@ -12,7 +12,7 @@ use yii\helpers\Html;
     <div class="row">
         <div class="col-12 mb-2">
             <label for="" class="label_modal">Where did you go?</label>
-            <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator_id), ['prompt' => 'Select a Safari park', 'class' => 'form-select form-select-lg'])->label(false) ?>
+            <?= $form->field($model, 'park_id')->dropDownList($model->getParklist(), ['prompt' => 'Select a Safari park', 'class' => 'form-select form-select-lg'])->label(false) ?>
         </div>
         <div class="col-12 my-4">
             <div class="stars d-flex gap-4 justify-content-center">
@@ -43,6 +43,37 @@ use yii\helpers\Html;
 
 <?php
 $script = <<<JS
+
+    if ($('#safarioperatorreviewform-rating').val()) {
+        var selected_value = $('#safarioperatorreviewform-rating').val(); 
+        if (selected_value == 1) {
+            $(".star_icon_1").css("color", "#fdbf2b");
+        }
+        else if (selected_value == 2) {
+            $(".star_icon_1").css("color", "#fdbf2b");
+            $(".star_icon_2").css("color", "#fdbf2b");
+        }
+        else if (selected_value == 3) {
+            $(".star_icon_1").css("color", "#fdbf2b");
+            $(".star_icon_2").css("color", "#fdbf2b");
+            $(".star_icon_3").css("color", "#fdbf2b");
+        }
+        else if (selected_value == 4) {
+            $(".star_icon_1").css("color", "#fdbf2b");
+            $(".star_icon_2").css("color", "#fdbf2b");
+            $(".star_icon_3").css("color", "#fdbf2b");
+            $(".star_icon_4").css("color", "#fdbf2b");
+        }
+        else {
+            $(".star_icon_1").css("color", "#fdbf2b");
+            $(".star_icon_2").css("color", "#fdbf2b");
+            $(".star_icon_3").css("color", "#fdbf2b");
+            $(".star_icon_4").css("color", "#fdbf2b");
+            $(".star_icon_5").css("color", "#fdbf2b");
+        }
+    }
+
+
     $(document).ready(function() {  
         $(".star_icon_1").click(function() { 
             $(".fa-star").css("color", "black"); 
