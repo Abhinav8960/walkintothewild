@@ -79,7 +79,7 @@ use yii\helpers\Url;
                                     </div>
                                 <?php } ?>
                                 <?php if (Yii::$app->user->id) {  ?>
-                                    <button onclick="toggleReplyForm(this)" class="reply_btn"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                    <button onclick="toggleReplyForm(this)" class="reply_btn ms-lg-4 ms-2"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                                     <div class="reply-form" style="display: none;">
                                         <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
                                         <div class="mb-3">

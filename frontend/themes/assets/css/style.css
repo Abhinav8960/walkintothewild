@@ -4478,10 +4478,10 @@ figure {
 }
 
 .reply_btn {
-
+/* 
     position: absolute;
     top: 13px;
-    right: 38px;
+    right: 38px; */
     background-color: transparent;
     border: 0;
     color: var(--background-orange);
