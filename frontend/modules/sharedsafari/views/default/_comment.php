@@ -49,12 +49,13 @@ use yii\helpers\Url;
                                 <?php } ?>
                             </div>
                             <p><?= $comments->comment ?></p>
+                            <button onclick="toggleReplyForm(this)" class="reply_btn"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                         </div>
                     </div>
                     <div class="comment-reply">
                                 <?php if ($replies) { ?>
                                     <div class="blog-comment-container">
-                                        <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2">Replies</h6>
+                                        <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6>
                                         <?php foreach ($replies as $reply) { ?>
                                             <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
                                                 <div class="d-flex gap-2">
@@ -79,7 +80,7 @@ use yii\helpers\Url;
                                     </div>
                                 <?php } ?>
                                 <?php if (Yii::$app->user->id) {  ?>
-                                    <button onclick="toggleReplyForm(this)" class="reply_btn ms-lg-4 ms-2"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                    <!-- <button onclick="toggleReplyForm(this)" class="reply_btn ms-lg-4 ms-2"> <i class="fa-solid fa-reply me-1"></i>Reply </button> -->
                                     <div class="reply-form" style="display: none;">
                                         <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
                                         <div class="mb-3">
