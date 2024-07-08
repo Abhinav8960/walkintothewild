@@ -59,7 +59,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="row justify-content-center">
             <div class="col-xl-11 col-lg-12">
                 <div class="row pt-5">
-                    <div class="col-lg-4 col-md-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+                    <div class="col-lg-3 col-md-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                         <div class="safri_tour">
                             <div class="titlerescent" style="justify-content:left !important;">
                                 <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
@@ -69,7 +69,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-8 col-xxl-10 col-xl-9 ">
+                    <div class="col-lg-9 col-md-8 col-xxl-10 col-xl-9 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
                                 <div class="col-12">
@@ -115,10 +115,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <?php if ($reviews) { ?>
                                                 <div class="sort_wrapper py-3">
                                                     <div class="sortBy">Sort by</div>
-                                                    <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'newest']) ?>">Newest</a>
+                                                   <div class="d-flex flex-wrap align-items-center">
+                                                   <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'newest']) ?>">Newest</a>
                                                     <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'highest']) ?>">Highest</a>
                                                     <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'lowest']) ?>">Lowest</a>
                                                     <?= $this->render('_filter_park', ['model' => $ratingsearchModel, 'operator_id' => $operator->id]) ?>
+                                                   </div>
                                                 </div>
                                             <?php } ?>
 

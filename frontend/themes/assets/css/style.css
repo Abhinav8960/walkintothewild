@@ -4442,6 +4442,12 @@ figure {
     margin-top: 50px;
     font-size: var(--fs-18);
 }
+.form_review .form-group .form-select{
+
+    border-radius: 20px !important;
+    padding: 6px 30px !important;
+    margin: 8px 10px 0px 0px;
+}
 /* .sign_intext{
 
     color: #A2D22B;

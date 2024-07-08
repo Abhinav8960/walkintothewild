@@ -13,7 +13,7 @@ use yii\widgets\ActiveForm;
     'method' => 'get',
 ]); ?>
 
-<div class="col-2">
+<div class="col-12 form_review">
     <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator_id),  ['prompt' => 'Search by Park', 'class' => 'form-select'])->label(false) ?>
 </div>
 
