@@ -4448,6 +4448,54 @@ figure {
     padding: 6px 30px !important;
     margin: 8px 10px 0px 0px;
 }
+.flags_reply .flagBtn{
+
+    position: absolute;
+    top: 3px;
+    right: 8px;
+}
+
+.font-color span a{
+
+    color: #040404;
+    cursor: unset;
+}
+
+.font-color .comment-author{
+
+    font-size: var(--fs-16);
+    font-weight: 500;
+}
+.font-color  .comment-date{
+
+    font-size: 14px;
+}
+
+.reply_btn {
+
+    position: absolute;
+    top: 13px;
+    right: 38px;
+    background-color: transparent;
+    border: 0;
+    color: var(--background-orange);
+    font-weight: 500;
+}
+
+/* .reply_btn i{
+
+color: #475275;
+} */
+.card-brown-heading {
+
+    font-size: var(--fs-18);
+}
+.blog-comment-text .avatar{
+
+    width: 26px !important;
+    height: 26px !important;
+}
+
 /* .sign_intext{
 
     color: #A2D22B;
