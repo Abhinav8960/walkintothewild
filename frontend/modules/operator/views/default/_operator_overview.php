@@ -57,7 +57,7 @@ use common\models\operator\SafariOperatorFollow;
 
                         <div class="providerNamerating d-flex flex-wrap gap-4 align-items-center pb-3 pt-2">
                             <div class="ratings">
-                                <p class="mb-0"><?= $operator->google_rating ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
+                                <p class="mb-0"><?= round($operator->google_rating, 1) ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
                             </div>
                             <div class="googlerating">
                                 <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'viewcontent']) ?>" style="color:inherit;"> <?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?></a></p>

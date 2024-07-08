@@ -302,35 +302,36 @@ class DefaultController extends FrontendBaseController
     }
 
 
-    // public function actionReviewupdate($operator_id, $user_id)
-    // {
-    //     $rating_model = SafariOperatorRating::find()->where(['user_id' => $user_id, 'safari_operator_id' => $operator_id])->one();
-    //     $model = new SafariOperatorReviewForm($rating_model);
-    //     if ($this->request->isPost) {
-    //         if ($model->load($this->request->post())) {
-    //             if ($model->validate()) {
-    //                 $model->initializeForm();
-    //                 if ($model->rating_model->save(false)) {
-    //                     $model->updateRatingintoTable($rating_model);
-    //                     Yii::$app->session->setFlash('success', 'Thanks for Review!!');
-    //                     return $this->redirect([
-    //                         '/operator/default/reviewlist',
-    //                         'slug' => $rating_model->slug,
-    //                         '#' => 'viewcontent'
-    //                     ]);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         $model->rating_model->loadDefaultValues();
-    //     }
-    //     if (Yii::$app->request->isAjax) {
-    //         return $this->renderAjax('_review_form', [
-    //             'model' => $model,
-    //             'operator_id' => $operator_id,
-    //         ]);
-    //     }
-    // }
+    public function actionReviewupdate($operator_id, $user_id)
+    {
+        $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
+        $rating_model = SafariOperatorRating::find()->where(['user_id' => $user_id, 'safari_operator_id' => $operator_id])->one();
+        $model = new SafariOperatorReviewForm($rating_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->rating_model->save(false)) {
+                        $model->updateRatingintoTable($operator);
+                        Yii::$app->session->setFlash('success', 'Thanks for Edit Review!!');
+                        return $this->redirect([
+                            '/operator/default/reviewlist',
+                            'slug' => $operator->slug,
+                            '#' => 'viewcontent'
+                        ]);
+                    }
+                }
+            }
+        } else {
+            $model->rating_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_review_form', [
+                'model' => $model,
+                'operator_id' => $operator_id,
+            ]);
+        }
+    }
 
     public function actionValidatereview($id = null)
     {

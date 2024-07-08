@@ -232,7 +232,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             continue;
                         }
                 ?>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xl-4 col-xxl-3 mb-3">
+                        <div class="col-lg-6 col-md-4 col-sm-6 col-xl-4 col-xxl-3 mb-3">
                             <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="oprators_boxes">
                                 <div class="listingSafari ">
                                     <?php if ($operator->is_highlighted) { ?>
