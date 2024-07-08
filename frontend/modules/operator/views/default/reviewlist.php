@@ -158,7 +158,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
                                                                 </div>
                                                                 <p><?= $review->review ?> &nbsp;
-                                                                    <span class="writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id]) ?>"><i class="fa fa-edit"></i></span>
+                                                                    <span class="writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
                                                                 </p>
                                                             </div>
                                                         </div>

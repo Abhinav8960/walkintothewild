@@ -302,10 +302,10 @@ class DefaultController extends FrontendBaseController
     }
 
 
-    public function actionReviewupdate($operator_id, $user_id)
+    public function actionReviewupdate($operator_id, $user_id, $id)
     {
         $operator = SafariOperator::find()->where(['id' => $operator_id])->one();
-        $rating_model = SafariOperatorRating::find()->where(['user_id' => $user_id, 'safari_operator_id' => $operator_id])->one();
+        $rating_model = SafariOperatorRating::find()->where(['user_id' => $user_id, 'safari_operator_id' => $operator_id, 'id' => $id])->one();
         $model = new SafariOperatorReviewForm($rating_model);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
