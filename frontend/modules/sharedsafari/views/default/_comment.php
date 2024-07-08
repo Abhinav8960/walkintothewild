@@ -31,35 +31,36 @@ use yii\helpers\Url;
                     $replies = $comments->getReplies()->where(['status' => 1])->all();
 
             ?>
-                    <div class="objec-flgs">
-                        <?php if (Yii::$app->user->id) {  ?>
-                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
-                        <?php } ?>
+                    <div class="one_box">
+                        <div class="objec-flgs">
+                            <?php if (Yii::$app->user->id) {  ?>
+                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
+                            <?php } ?>
 
-                    </div>
-                    <div class="postcomment d-flex gap-2 pt-3 w-100">
-                        <div class="avatar">
-                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
                         </div>
-                        <div class="text_com">
-                            <div class="requestContact d-flex gap-2 align-items-center">
-                                <h6 class="nameavatr"><?= $comments->user->name ?></h6>
-                                <?php if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
-                                    <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>
-                                <?php } ?>
+                        <div class="postcomment d-flex gap-2 pt-3 w-100">
+                            <div class="avatar">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
                             </div>
-                            <p><?= $comments->comment ?></p>
-                            <button onclick="toggleReplyForm(this)" class="reply_btn "> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                            <div class="text_com">
+                                <div class="requestContact d-flex gap-2 align-items-center">
+                                    <h6 class="nameavatr"><?= $comments->user->name ?></h6>
+                                    <?php if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
+                                        <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>
+                                    <?php } ?>
+                                </div>
+                                <p><?= $comments->comment ?></p>
+                                <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="comment-reply">
-                                <?php if ($replies) { ?>
-                                    <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2" id="toggleReplies">View <?= count($replies) ?> replies</h6>
-                                    <div class="blog-comment-container" style="display: none;">
-                                        <!-- <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6> -->
-                                        <?php foreach ($replies as $reply) { ?>
-                                            <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
-                                                <div class="d-flex gap-2">
+                        <div class="comment-reply">
+                            <?php if ($replies) { ?>
+                                <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $comments->id ?>" >View <?= count($replies) ?> replies</h6>
+                                <div class="blog-comment-container" id="comment-container-<?= $comments->id ?>" style="display: none;">
+                                    <!-- <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6> -->
+                                    <?php foreach ($replies as $reply) { ?>
+                                        <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
+                                            <div class="d-flex gap-2">
                                                 <div class="avatar">
                                                     <img src="/assets/5a869828/img/Share-Safari/dpmain.png" alt="">
                                                 </div>
@@ -73,30 +74,32 @@ use yii\helpers\Url;
                                                         <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
                                                     <?php } ?>
                                                 </div>
-                                                </div>
                                             </div>
+                                        </div>
 
-                                            
-                                        <?php } ?>
-                                    </div>
-                                <?php } ?>
-                                <?php if (Yii::$app->user->id) {  ?>
-                                    <div class="reply-form ms-lg-4 ms-2" style="display: none;">
-                                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                                        <div class="mb-3">
-                                            <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
-                                        </div>
-                                        <div class="mb-3">
-                                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                                        </div>
-                                        <div class="btn-wrapper">
-                                            <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
-                                        </div>
-                                        <?php ActiveForm::end(); ?>
-                                    </div>
 
-                                <?php } ?>
-                            </div>
+                                    <?php } ?>
+                                </div>
+                            <?php } ?>
+                            <?php if (Yii::$app->user->id) {  ?>
+                                <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $comments->id ?>">
+                                    <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                                    <div class="mb-3">
+                                        <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
+                                    </div>
+                                    <div class="mb-3">
+                                        <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
+                                    </div>
+                                    <div class="btn-wrapper">
+                                        <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
+                                    </div>
+                                    <?php ActiveForm::end(); ?>
+                                </div>
+
+                            <?php } ?>
+                        </div>
+                    </div>
+
             <?php
                 }
             } ?>
@@ -112,21 +115,20 @@ use yii\helpers\Url;
     } ?>
 </div>
 <script>
- function toggleReplyForm(link) {
-    var replyForm = document.querySelector('.reply-form');
-    if (replyForm.style.display === "none" || replyForm.style.display === "") {
-        replyForm.style.display = "block";
-    } else {
-        replyForm.style.display = "none";
+   function toggleReplyForm(link) {
+        var target = link.getAttribute('data-target');
+        var replyForm = document.querySelector('#' + target);       
+        if (replyForm.style.display === "none" || replyForm.style.display === "") {
+            replyForm.style.display = "block";
+        } else {
+            replyForm.style.display = "none";
+        }
     }
-}
 </script>
 
 <?php
 $script = <<< JS
 
-
-    
 function writeareviewfunction() {
     $('.flagBtn').on('click', function () {
         $('#modalFlag').modal('show')
@@ -136,16 +138,13 @@ function writeareviewfunction() {
 }
 writeareviewfunction();
 
-$('#toggleReplies').click(function() {
-
-            var containerReply = $('.blog-comment-container');
-            var isVisible = containerReply.is(':visible');
-            
-            containerReply.slideToggle();
-            $(this).text(isVisible ? 'View replies' : 'Hide replies');
-        });
-          
-             
+$('.toggle-replies').click(function() {
+        var target = $(this).data('target');
+        var container = $('#' + target);
+        var isVisible = container.is(':visible');
+        container.slideToggle();
+        $(this).text(isVisible ? 'View replies' : 'Hide replies');
+    });        
 JS;
 $this->registerJs($script);
 ?>
