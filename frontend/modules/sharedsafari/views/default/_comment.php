@@ -55,14 +55,14 @@ use yii\helpers\Url;
                         </div>
                         <div class="comment-reply">
                             <?php if ($replies) { ?>
-                                <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $comments->id ?>" >View <?= count($replies) ?> replies</h6>
+                                <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $comments->id ?>">View <?= count($replies) ?> replies</h6>
                                 <div class="blog-comment-container" id="comment-container-<?= $comments->id ?>" style="display: none;">
                                     <!-- <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6> -->
                                     <?php foreach ($replies as $reply) { ?>
                                         <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
                                             <div class="d-flex gap-2">
                                                 <div class="avatar">
-                                                    <img src="/assets/5a869828/img/Share-Safari/dpmain.png" alt="">
+                                                    <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                                                 </div>
                                                 <div class="font-color">
                                                     <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
@@ -115,9 +115,9 @@ use yii\helpers\Url;
     } ?>
 </div>
 <script>
-   function toggleReplyForm(link) {
+    function toggleReplyForm(link) {
         var target = link.getAttribute('data-target');
-        var replyForm = document.querySelector('#' + target);       
+        var replyForm = document.querySelector('#' + target);
         if (replyForm.style.display === "none" || replyForm.style.display === "") {
             replyForm.style.display = "block";
         } else {

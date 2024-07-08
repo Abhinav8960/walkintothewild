@@ -192,8 +192,8 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="comment-reply">
                             <?php if ($replies) { ?>
-                                <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2" id="toggleReplies">View replies</h6>
-                                <div class="blog-comment-container" style="display: none;">
+                                <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $comments->id ?>">View <?= count($replies) ?> replies</h6>
+                                <div class="blog-comment-container" id="comment-container-<?= $comments->id ?>" style="display: none;">
                                     <!-- <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6> -->
                                     <?php foreach ($replies as $reply) { ?>
                                         <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
@@ -278,13 +278,13 @@ function writeareviewfunction() {
 	});
 }
 writeareviewfunction();
-
-        $('#toggleReplies').click(function() {
-            var containerReply = $('.blog-comment-container');
-            var isVisible = containerReply.is(':visible');            
-            containerReply.slideToggle();
-            $(this).text(isVisible ? 'View replies' : 'Hide Replies');
-        });
+        $('.toggle-replies').click(function() {
+        var target = $(this).data('target');
+        var container = $('#' + target);
+        var isVisible = container.is(':visible');
+        container.slideToggle();
+        $(this).text(isVisible ? 'View replies' : 'Hide replies');
+    });   
           
              
 JS;
