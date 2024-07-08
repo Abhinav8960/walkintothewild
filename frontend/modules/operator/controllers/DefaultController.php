@@ -5,6 +5,7 @@ namespace frontend\modules\operator\controllers;
 use Yii;
 use yii\helpers\Url;
 use common\models\GeneralModel;
+use common\models\MailLog;
 use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;
 use frontend\models\OperatorQuoteForm;
@@ -213,6 +214,13 @@ class DefaultController extends FrontendBaseController
                 $operator_follow->status = 1;
                 $operator_follow->follow_datetime = date('Y-m-d h:i:s');
                 if ($operator_follow->save()) {
+
+                    $to_mail = $operator->email;
+                    $subject = 'Following Request';
+                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SHARE_SAFARI_REQUEST_CONTACT;
+                    $req = ['username' => $operator->business_name];
+
+                    MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                     Yii::$app->session->setFlash('success', 'You are start following ' . $operator->business_name);
                 } else {
                     Yii::$app->session->setFlash('error', 'You can not follow this operator currently!');
