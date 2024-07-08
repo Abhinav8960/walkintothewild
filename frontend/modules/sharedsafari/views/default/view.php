@@ -51,10 +51,8 @@ $this->params['title'] = $this->title;
         <div class="row my-4">
             <div class="col-12">
                 <div class="btn_set float-end">
-
                     <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
                 </div>
-
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
@@ -80,8 +78,7 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
                             <div class="btn_wrap d-flex flex-column ">
-                                <button class="intested_btn interestBtn mb-2" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i> <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?>
-                                    Interested</button>
+                           
                                 <?php if (Yii::$app->user->identity) {
                                     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                     if ($share_safari_intrested) { ?>
@@ -157,27 +154,10 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-4 align-items-center gx-4">
-                        <div class="col-lg-6 d-lg-block  mobile_didplay_block">
-                            <div class="btn_wrap">
-                                <button class="intested_btn interestBtn" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i> <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?>
-                                    Interested</button>
-                                <?php if (Yii::$app->user->identity) {
-                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                                    if ($share_safari_intrested) { ?>
-                                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
-                                    <?php } else { ?>
-                                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
-                                    <?php  }
-                                } else { ?>
-                                    <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
-                                <?php } ?>
-
-                            </div>
-
-                        </div>
+                    <div class="row pt-md-4 align-items-center gx-4">
+                       
                         <div class="col-lg-6">
-                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between float-lg-end pt-lg-0 pt-3">
+                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-3">
                                     <?php
@@ -197,6 +177,23 @@ $this->params['title'] = $this->title;
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-6 d-lg-block  mobile_didplay_block">
+                            <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                            
+                                <?php if (Yii::$app->user->identity) {
+                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                    if ($share_safari_intrested) { ?>
+                                        <a class="join_btn  mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
+                                    <?php } else { ?>
+                                        <a class="join_btn  mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
+                                    <?php  }
+                                } else { ?>
+                                    <a class="join_btn  mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
+                                <?php } ?>
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -204,10 +201,12 @@ $this->params['title'] = $this->title;
         <div class="row">
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
+             <button class="intested_btn interestBtn " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i> <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?>
+                                    Interested</button>
                 <div class="interst_wrapper">
-                    <div class="titlerescent pb-3">
+                    <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
-                    </div>
+                    </div> -->
                     <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
                         <?php if ($intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all()) {
                             foreach ($intrested_users as $intrested_user) {
