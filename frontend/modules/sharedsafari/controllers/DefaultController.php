@@ -365,9 +365,10 @@ class DefaultController extends FrontendBaseController
     public function actionUserdetail($token)
     {
 
-        return $this->renderAjax('userdetail_form', [
+        return $this->render('userdetail_form', [
             'token' => $token
         ]);
+     
     }
 
     /**
