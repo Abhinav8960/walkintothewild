@@ -46,7 +46,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
     </div>
     <?php ActiveForm::end(); ?>
 <?php } else {
-    echo 'Please <a href="/site/auth?authclient=google">Sign in</a> for start Comment';
+    echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
 } ?>
 
 <?php

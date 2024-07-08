@@ -636,10 +636,10 @@ display: none;
         left: 16%;
     }
 
-    .parksImg img {
+    /* .parksImg img {
 
         border-radius: 10px 10px 0px 0px;
-    }
+    } */
 }
 @media only screen and (max-width: 991px) and (min-width: 990.98px){
 
@@ -849,7 +849,15 @@ display: none;
 }
 @media only screen and (max-width:1200px) {
 
- 
+    .searchSafari_parks .parks_body .seelctes_text p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 5); /* Fallback line clamp */
+        -webkit-box-orient: vertical;
+        line-clamp: var(--line-clamp, 5); /* For browsers that support it */
+        box-orient: vertical;
+    }
     .select_boxes .form-select {
 
         border-radius: 10px !important;
@@ -1862,7 +1870,22 @@ font-size: 15px;
   
 }
 @media only screen and (max-width: 991px) and (min-width: 577px){
+    .parksImg img {
+        border-radius: 10px 0px 0px 10px !important;
+    }
+    .parksImg img{
 
+        object-fit: cover;
+    }
+    .searchSafari_parks .parks_body .seelctes_text p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 3); /* Fallback line clamp */
+        -webkit-box-orient: vertical;
+        line-clamp: var(--line-clamp, 3); /* For browsers that support it */
+        box-orient: vertical;
+    }
     .banner_section-inner .headingBnner_inner h1{
 
         font-size: 32px;

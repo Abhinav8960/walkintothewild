@@ -9,7 +9,7 @@
 :root {
 
     --background-primary: #09422D;
-    --background-yellow: #F7BF39;
+    --background-yellow: #f9d600;
     --background-orange: #FD5634;
     --background-secondry: #add740;
     --color1: #FD5634;
@@ -1394,7 +1394,7 @@ figure {
     font-size: var(--fs-23);
     font-weight: 700;
     text-transform: uppercase;
-    color: #f7bf39;
+    color: var(--background-yellow);
 }
 
 .banner_section-inner picture img {
@@ -2593,6 +2593,7 @@ figure {
 .parksImg img {
 
     border-radius: 10px 0px 0px 10px;
+    object-fit: cover;
 }
 
 .parks_body {
@@ -4411,4 +4412,15 @@ figure {
 .wrapper-skybgsafri .safrititles p a {
     color: var(--background-primary);
 }
+.noData {
 
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+    margin-top: 50px;
+    font-size: var(--fs-18);
+}
+/* .sign_intext{
+
+    color: #A2D22B;
+} */
