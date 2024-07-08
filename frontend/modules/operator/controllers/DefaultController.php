@@ -216,9 +216,9 @@ class DefaultController extends FrontendBaseController
                 if ($operator_follow->save()) {
 
                     $to_mail = $operator->email;
-                    $subject = 'Following Request';
-                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SHARE_SAFARI_REQUEST_CONTACT;
-                    $req = ['username' => $operator->business_name];
+                    $subject = 'Follow Request';
+                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
+                    $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name];
 
                     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                     Yii::$app->session->setFlash('success', 'You are start following ' . $operator->business_name);
@@ -258,6 +258,13 @@ class DefaultController extends FrontendBaseController
                     $operator_follow->status = 0; //UNfollow
                     $operator_follow->unfollow_datetime = date('Y-m-d h:i:s');
                     if ($operator_follow->save()) {
+
+                        $to_mail = $operator->email;
+                        $subject = 'UnFollow Request';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
+                        $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name];
+
+                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         Yii::$app->session->setFlash('error', 'You UnFollowed ' . $operator->business_name);
                     } else {
                         Yii::$app->session->setFlash('error', 'You can not unfollow this operator currently!');
