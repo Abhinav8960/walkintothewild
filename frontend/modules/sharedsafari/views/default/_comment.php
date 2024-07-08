@@ -79,7 +79,7 @@ use yii\helpers\Url;
                             </div>
                         <?php } ?>
                         <?php if (Yii::$app->user->id) {  ?>
-                            <button onclick="toggleReplyForm(this)" class="reply_btn"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                            <button onclick="toggleReplyForm(this)" class="reply_btn ms-lg-4 ms-2"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                             <div class="reply-form" style="display: none;">
                                 <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
                                 <div class="mb-3">
@@ -96,23 +96,42 @@ use yii\helpers\Url;
 
                         <?php } ?>
                     </div>
-            <?php
-                }
-            } ?>
+                <?php } ?>
+                <?php if (Yii::$app->user->id) {  ?>
+                    <button onclick="toggleReplyForm(this)" class="reply_btn"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                    <div class="reply-form" style="display: none;">
+                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                        <div class="mb-3">
+                            <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
+                        </div>
+                        <div class="mb-3">
+                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
+                        </div>
+                        <div class="btn-wrapper">
+                            <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+
+                <?php } ?>
         </div>
-
-
-
+    <?php
+            }
+    ?>
     </div>
-    <?php if ($share_safari->status == 2) {
-        echo "Safari Closed"; ?>
-        <?php } else {
-        if (Yii::$app->user->id) { ?>
-            <?= $this->render('_comment_form', ['model' => $model]) ?>
+
+
+
+</div>
+<?php if ($share_safari->status == 2) {
+    echo "Safari Closed"; ?>
     <?php } else {
-            echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
-        }
-    } ?>
+    if (Yii::$app->user->id) { ?>
+        <?= $this->render('_comment_form', ['model' => $model]) ?>
+<?php } else {
+        echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
+    }
+} ?>
 </div>
 <script>
     function toggleReplyForm(link) {

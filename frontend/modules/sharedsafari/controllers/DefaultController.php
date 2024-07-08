@@ -19,6 +19,7 @@ use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariHistory;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariRequestContact;
+use frontend\models\form\ShareSafariRequestContactForm;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentReportForm;
 
@@ -341,6 +342,7 @@ class DefaultController extends FrontendBaseController
             $request_contact->email = $share_safari_comment->user->email;
             $request_contact->name = $share_safari_comment->user->name;
             $request_contact->request_token = Yii::$app->security->generateRandomString() . '_' . time();
+            $request_contact->is_filled = 0;
             $request_contact->status = 1;
             if ($request_contact->save(false)) {
                 Yii::$app->session->setFlash('success', 'You have requested contact to ' . $share_safari_comment->user->name);
@@ -364,11 +366,59 @@ class DefaultController extends FrontendBaseController
 
     public function actionUserdetail($token)
     {
+        if (Yii::$app->user->identity) {
+            $requent_contact = ShareSafariRequestContact::find()->where(['request_token' => $token])->limit(1)->one();
+            $share_safari = ShareSafari::find()->where(['id' => $requent_contact->share_safari_id])->limit(1)->one();
+
+            $model = new ShareSafariRequestContactForm($requent_contact);
+            $model->share_safari_id = $requent_contact->share_safari_id;
+            $model->park_id = $requent_contact->park_id;
+            $model->is_filled = 1;
+            $model->share_safari_comment_id = $requent_contact->share_safari_comment_id;
+
+            $model->action_url = '/sharedsafari/default/userdetail?token=' . $token . '';
+            $model->action_validate_url = '/sharedsafari/default/validateuserdetail?id=' . $requent_contact->id . '';
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post())) {
+                    if ($model->validate()) {
+                        $model->initializeForm();
+                        if ($model->shared_safari_request_contact_model->save(false)) {
+                            Yii::$app->session->setFlash('success', 'Details Updated Successfully!');
+                            return $this->redirect([
+                                '/sharedsafari/default/view',
+                                'slug' => $share_safari->slug,
+                                '#' => 'comments_safari'
+                            ]);
+                        }
+                    }
+                }
+            } else {
+                $model->shared_safari_request_contact_model->loadDefaultValues();
+            }
+        } else {
+            return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/userdetail', 'token' => $token])]);
+        }
 
         return $this->render('userdetail_form', [
-            'token' => $token
+            'token' => $token,
+            'model' => $model
         ]);
     }
+
+
+    public function actionValidateuserdetail($id = null)
+    {
+        $model = new ShareSafariCommentReportForm();
+        if ($id != null) {
+            $shared_safari_request_contact_model = $this->findModel($id);
+            $model = new ShareSafariCommentReportForm($shared_safari_request_contact_model);
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
 
     /**
      * Show Safari List by user or host

@@ -1973,7 +1973,7 @@ figure {
 .interst_wrapper {
     background: #F5F5F5;
     padding: 20px;
-    border-radius: 10px;
+    border-radius:0px 0px 10px 10px;
 }
 
 .profileavtar {
@@ -2003,6 +2003,12 @@ figure {
 .safartabs .intested_btn:hover {
 
     color: #fff !important;
+}
+.intested_btn.interestBtn{
+
+    border-radius: 10px 10px 0px 0px !important;
+    width: 100%;
+    text-align: left;
 }
 
 .safartabs .tab-content {
@@ -4472,10 +4478,10 @@ figure {
 }
 
 .reply_btn {
-
+/* 
     position: absolute;
     top: 13px;
-    right: 38px;
+    right: 38px; */
     background-color: transparent;
     border: 0;
     color: var(--background-orange);
