@@ -6,7 +6,7 @@ use common\interfaces\StatusInterface;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
-use frontend\models\ShareSafariSearch;
+use common\models\sharesafari\ShareSafariSearch;
 use Yii;
 use yii\web\Controller;
 
