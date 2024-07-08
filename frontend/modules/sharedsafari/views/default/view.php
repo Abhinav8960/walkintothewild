@@ -202,7 +202,7 @@ $this->params['title'] = $this->title;
             </div>
         </div>
         <div class="row">
-            <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model]) ?>
+            <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <div class="interst_wrapper">
                     <div class="titlerescent pb-3">
@@ -391,6 +391,26 @@ $this->params['title'] = $this->title;
             <div class="modal-body">
                 <div id='modalContent'></div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalFlag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Report Content
+                    <br>
+                    <p>Please report inappropriate members and/or content to help our Trust & Safety team keep our Community safe for everyone.</p>
+                </h6>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt=""></button>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
         </div>
     </div>
 </div>
