@@ -14,10 +14,13 @@ use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
 use common\models\SafariOperatorRequestSearch;
+use Exception;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+use yii\helpers\FileHelper;
+
 
 /**
  * SafariOperatorTourController.
@@ -96,6 +99,39 @@ class SafariOperatorTourController extends Controller
                             $safari_operator->is_highlighted                  =  $model->safarioperator_request_approval_model->is_highlighted;
                             $safari_operator->status                          =  $model->safarioperator_request_approval_model->status;
                             if ($safari_operator->save(false)) {
+
+                                $sourcePath = Yii::$app->params['datapath'] . '/safarioperatorrequest/' . $safari_operator->safari_operator_request_id . '/' . $safari_operator->logo;
+                                $destinationPath = Yii::$app->params['datapath'] . '/safarioperator/' . $safari_operator->id . '/' . $safari_operator->logo;
+                                $destinationDir = Yii::$app->params['datapath'] . '/safarioperator/' . $safari_operator->id . '/';
+                                $destinationFile = $safari_operator->logo;
+
+                                try {
+                                    // Create destination directory if it doesn't exist
+                                    FileHelper::createDirectory($destinationDir);
+                                } catch (Exception $e) {
+                                    echo "Failed to create directory: " . $e->getMessage();
+                                    exit;
+                                }
+
+                                // Check if source file exists before copying
+                                if (!file_exists($sourcePath)) {
+                                    echo "Source file does not exist: $sourcePath";
+                                    exit;
+                                }
+
+                                try {
+                                    // Attempt to copy the image file
+                                    if (copy($sourcePath, $destinationPath)) {
+                                        echo "Image copied successfully.";
+                                    } else {
+                                        echo "Failed to copy image.";
+                                        exit;
+                                    }
+                                } catch (Exception $e) {
+                                    echo "Failed to copy image: " . $e->getMessage();
+                                    exit;
+                                }
+
 
                                 $model->safarioperator_request_approval_model->safari_operator_id = $safari_operator->id;
                                 $model->safarioperator_request_approval_model->save(false);
