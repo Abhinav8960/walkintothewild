@@ -118,9 +118,11 @@ class ShareSafariSearch extends ShareSafari
                 if ($no_of_safari == 1) {
                     $safari_query .= "no_of_safari between 1 and 2 OR ";
                 } else if ($no_of_safari == 2) {
-                    $safari_query .= "no_of_safari between 3 and 4 OR ";
+                    $safari_query .= "no_of_safari between 3 and 5 OR ";
                 } else if ($no_of_safari == 3) {
-                    $safari_query .= "no_of_safari between 5 and 6 OR ";
+                    $safari_query .= "no_of_safari between 6 and 8 OR ";
+                } else {
+                    $safari_query .= "no_of_safari >=8 OR ";
                 }
             }
             if ($safari_query <> '') {
