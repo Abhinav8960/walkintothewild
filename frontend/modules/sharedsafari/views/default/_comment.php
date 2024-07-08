@@ -54,9 +54,9 @@ use yii\helpers\Url;
                     <div class="comment-reply">
                                 <?php if ($replies) { ?>
                                     <div class="blog-comment-container">
-                                        <h6 class="card-brown-heading pb-2 ms-4">Replies</h6>
+                                        <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2">Replies</h6>
                                         <?php foreach ($replies as $reply) { ?>
-                                            <div class="blog-comment-text ms-4 position-relative w-100 flags_reply" style="border:none;">
+                                            <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
                                                 <div class="d-flex gap-2">
                                                 <div class="avatar">
                                                     <img src="/assets/5a869828/img/Share-Safari/dpmain.png" alt="">
