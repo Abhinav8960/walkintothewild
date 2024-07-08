@@ -1179,6 +1179,7 @@ figure {
 .artical-info li i {
 
     color: var(--background-yellow) !important;
+    font-size: 14px;
 
 }
 
@@ -1214,7 +1215,7 @@ figure {
 
 
 .artical_cards .lower-content .artical-info li i {
-    font-size: var(--fs-20);
+    /* font-size: var(--fs-20); */
     color: var(--background-yellow);
 }
 
