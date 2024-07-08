@@ -39,7 +39,7 @@ class DefaultController extends FrontendBaseController
 
         $featured_articles = Article::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
         $rare_exotics = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->all();
-        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE])->limit(2)->all();
+        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE])->limit(2)->orderby("RAND()")->all();
 
         return $this->render(
             'index',

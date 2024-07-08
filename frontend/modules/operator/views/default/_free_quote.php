@@ -15,7 +15,7 @@ use yii\bootstrap5\ActiveForm;
             'enableAjaxValidation' => true,
             'enableClientValidation' => false,
             'enableClientScript' => true,
-            'action' => $model->action_url,
+            // 'action' => $model->action_url,
             'validationUrl' => $model->action_validate_url,
         ]); ?>
         <div class="row ">
@@ -103,20 +103,3 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
 </div>
-
-<?php
-$script = <<< JS
-    $(document).ready(function(){
-        setTimeout(function() {
-    $('#info').fadeOut('fast');
-}, 3000);
-});
-JS;
-$this->registerJs($script);
-?>
-
-<style>
-    .alert-success {
-        display: none !important;
-    }
-</style>

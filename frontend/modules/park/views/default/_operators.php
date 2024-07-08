@@ -5,6 +5,7 @@
 
 use yii\helpers\Url;
 use common\models\GeneralModel;
+use common\models\sharesafari\ShareSafariIntrested;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -30,7 +31,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
         <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 ">
             <div class="left_text">
-                <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
+                <p class="">There are currently <strong><?= count($operators) ?></strong> safari tour operator</p>
             </div>
             <div class="right-select d-flex gap-2 align-items-center pe-xl-2">
                 <div class="input_check pb-0">
@@ -62,7 +63,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="gridview mt-4">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-5">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-4">
                 <?php
                 $counter = 0; // Initialize counter variable
 
@@ -96,7 +97,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </p>
                                                 </div>
                                                 <div class="googlerating">
-                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Reviews' : '0 Reviews' ?> </p>
+                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
                                                 </div>
                                             </div>
 
@@ -108,10 +109,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                 <p>Parks</p>
                                             </div>
-                                            <div class="parks_text text-center">
+                                            <!-- <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Resorts</p>
-                                            </div>
+                                            </div> -->
                                             <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Shared Safari</p>
@@ -134,14 +135,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <?php if ($shared_safaries) { ?>
                     <div class="backgroud_oprator">
                         <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
-                            <h4 class="text-center">Join Shared Safaris in Bandhavgarh Tiger Reserve</h4>
+                            <h4 class="text-center">Join Shared Safaris in <?= $model->title ?></h4>
                             <div class="joinshareView mt-xl-0 mt-3">
-                                <a href="/sharesafari" class="btn_shareView">View All</a>
+                                <a href="/sharedsafari?ShareSafariSearch[park_id]=<?= $model->id ?>" class="btn_shareView">View All</a>
                             </div>
                         </div>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-lg-4 justify-content-center">
                             <?php foreach ($shared_safaries as $share_safari) { ?>
-                                <div class="col mb-xl-0 mb-3 pe-4">
+                                <div class="col mb-xl-0 mb-3 ">
                                     <div class="sharesafri-card">
                                         <div class="flotingdate">
                                             <div class="icons text-center">
@@ -150,7 +151,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             </div>
                                         </div>
                                         <div class="shareimg">
-                                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= isset($share_safari->park) && isset($share_safari->park->logo) ? $share_safari->park->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhsmall.jpg' ?>" alt=""></a>
+                                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                         </div>
                                         <div class="card_body">
                                             <div class="top_seats">
@@ -174,18 +175,38 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <div class="footer_card row pb-2 px-2 align-items-center">
                                                 <div class="col-6">
                                                     <div class="users">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                                                        <div class="roundes_countuser">
-                                                            15+
-                                                        </div>
+                                                        <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                                                            $count = $share_safari->getIntrested()->count();
+                                                            $avatar_count = 3;
+                                                            foreach ($interests as $interest) {
+                                                        ?>
+                                                                <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                                                            <?php
+                                                            }
+                                                        };
+                                                        $count = $share_safari->getIntrested()->count();
+                                                        $avatar_count = 3;
+                                                        $data = $count - $avatar_count;
+                                                        if ($data > 3) {  ?>
+                                                            <div class="roundes_countuser">
+                                                                <?= $data ?>+
+                                                            </div>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="safari text-center">
                                                         <div class="joinsafari">
-                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                            <?php if (Yii::$app->user->identity) {
+                                                                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                                if ($share_safari_intrested) { ?>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
+                                                                <?php } else { ?>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                <?php  }
+                                                            } else { ?>
+                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -235,7 +256,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </p>
                                                 </div>
                                                 <div class="googlerating">
-                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . 'Reviews' : '0 Reviews' ?> </p>
+                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
                                                 </div>
                                             </div>
 
@@ -247,10 +268,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                 <p>Parks</p>
                                             </div>
-                                            <div class="parks_text text-center">
+                                            <!-- <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Resorts</p>
-                                            </div>
+                                            </div> -->
                                             <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Shared Safari</p>

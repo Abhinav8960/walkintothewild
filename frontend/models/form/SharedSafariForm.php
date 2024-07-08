@@ -26,6 +26,7 @@ class SharedSafariForm extends \yii\base\Model
     public $share_seat;
     public $status;
     public $shared_safari_image;
+    public $website_url;
 
     public $action_url;
     public $action_validate_url;
@@ -52,6 +53,7 @@ class SharedSafariForm extends \yii\base\Model
             $this->safari_plan =  $this->shared_safari_model->safari_plan;
             $this->total_seat =  $this->shared_safari_model->total_seat;
             $this->share_seat =  $this->shared_safari_model->share_seat;
+            $this->website_url =  $this->shared_safari_model->website_url;
             $this->status =  $this->shared_safari_model->status;
         }
     }
@@ -62,10 +64,17 @@ class SharedSafariForm extends \yii\base\Model
             [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [['safari_plan'], 'string'],
             [
-                ['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],
+                ['website_url'], 'required', 'when' => function ($model) {
+                    return $model->host_type != 4;
+                }
             ],
+            [['safari_plan'], 'string'],
+            [['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
+            ['estimate_price_min', 'compare', 'compareAttribute' => 'estimate_price_max', 'operator' => '<='],
+            ['total_seat', 'compare', 'compareAttribute' => 'share_seat', 'operator' => '>='],
+            ['start_date', 'compare', 'compareAttribute' => 'end_date', 'operator' => '<'],
+            [['safari_plan'], 'validateContent'],
         ];
     }
 
@@ -115,6 +124,7 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->safari_plan = $this->safari_plan;
         $this->shared_safari_model->total_seat = $this->total_seat;
         $this->shared_safari_model->share_seat = $this->share_seat;
+        $this->shared_safari_model->website_url = $this->website_url;
         $this->shared_safari_model->status = $this->status;
 
         if ($this->shared_safari_model->slug == '') {
@@ -159,6 +169,31 @@ class SharedSafariForm extends \yii\base\Model
                 $this->shared_safari_model->image = $fileName;
                 $this->shared_safari_model->save(false);
             }
+        }
+    }
+
+    public function validateContent($attribute, $params)
+    {
+        $wordCount = str_word_count($this->$attribute);
+        if ($wordCount >= 100) {
+            $this->addError($attribute, 'Please provide content within 100 words.');
+        }
+    }
+
+    public function getSharedseat()
+    {
+        if ($this->total_seat == 2) {
+            return [1 => '1', '2' => 2];
+        } elseif ($this->total_seat == 3) {
+            return [1 => '1', '2' => 2, '3' => 3];
+        } elseif ($this->total_seat == 4) {
+            return [1 => '1', '2' => 2, '3' => 3, '4' => 4];
+        } elseif ($this->total_seat == 5) {
+            return  [1 => '1', '2' => 2, '3' => 3, '4' => 4, '5' => 5];
+        } elseif ($this->total_seat == 6) {
+            return [1 => '1', '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6];
+        } else {
+            return [];
         }
     }
 }

@@ -65,7 +65,7 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
         if ($this->custom_sort_by) {
             if ($this->custom_sort_by == 'newest') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['created_at' => SORT_ASC]
+                    'defaultOrder' => ['created_at' => SORT_DESC]
                 ];
             } else if ($this->custom_sort_by == 'highest') {
                 $dataProvider->sort = [
@@ -76,6 +76,10 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
                     'defaultOrder' => ['rating' => SORT_ASC]
                 ];
             }
+        } else {
+            $dataProvider->sort = [
+                'defaultOrder' => ['created_at' => SORT_DESC]
+            ];
         }
 
 

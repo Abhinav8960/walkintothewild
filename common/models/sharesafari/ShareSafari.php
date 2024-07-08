@@ -115,4 +115,13 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
 
         return isset($this->image) ? ('/storage/Shared_Image/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
+
+    /**
+     * Get Host Type
+     */
+    public function getHosttype()
+    {
+        $options = [1 => 'Individual', 2 => 'Wildlife Photographer', 3 => 'Wildlife Influencer', 4 => 'Safari Tour Operator'];
+        return isset($options[$this->host_type]) ? $options[$this->host_type] : $this->host_type;
+    }
 }

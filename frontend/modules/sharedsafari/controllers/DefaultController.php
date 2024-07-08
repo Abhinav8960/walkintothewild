@@ -3,14 +3,17 @@
 namespace frontend\modules\sharedsafari\controllers;
 
 use Yii;
+use yii\helpers\Url;
+use yii\helpers\Json;
+use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
-use common\models\park\SafariPark;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
-use common\models\sharesafari\ShareSafariHistory;
 use frontend\models\form\SharedSafariForm;
+use frontend\models\ShareSafariCommentForm;
 use frontend\controllers\FrontendBaseController;
+use common\models\sharesafari\ShareSafariHistory;
 use common\models\sharesafari\ShareSafariIntrested;
 
 /**
@@ -52,7 +55,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->shared_safari_model->save(false)) {
                         $model->UploadFiles($model->shared_safari_model->id);
                         $model->safariHistory();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -62,6 +65,10 @@ class DefaultController extends FrontendBaseController
         }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('organize_form', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('organize_form', [
                 'model' => $model,
             ]);
         }
@@ -107,6 +114,10 @@ class DefaultController extends FrontendBaseController
             return $this->renderAjax('organize_form', [
                 'model' => $model,
             ]);
+        } else {
+            return $this->render('organize_form', [
+                'model' => $model,
+            ]);
         }
     }
 
@@ -129,13 +140,17 @@ class DefaultController extends FrontendBaseController
     public function actionView($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $model = new ShareSafariCommentForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
+            Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
+        }
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
-
         return $this->render('view', [
-
-            'share_safari' => $share_safari
+            'share_safari' => $share_safari,
+            'model' => $model,
         ]);
     }
 
@@ -169,6 +184,8 @@ class DefaultController extends FrontendBaseController
                 } else {
                     Yii::$app->session->setFlash('error', 'You can not Join this Shared Safari currently!');
                 }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
         }
@@ -199,11 +216,13 @@ class DefaultController extends FrontendBaseController
                     $share_safari_intrested->status = 0; //UNfollow
                     $share_safari_intrested->unintrested_at = time();
                     if ($share_safari_intrested->save()) {
-                        Yii::$app->session->setFlash('success', 'You are not part of this Shared Safari!');
+                        Yii::$app->session->setFlash('error', 'You are not part of this Shared Safari!');
                     } else {
                         Yii::$app->session->setFlash('error', 'You can not unfollow this Shared Safari currently!');
                     }
                 }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
         }
@@ -253,5 +272,36 @@ class DefaultController extends FrontendBaseController
         $image = $model->featureimagepath;
 
         return $image;
+    }
+
+    public function actionDynamicsharedseat($total_seat)
+    {
+        echo "<option value=''>Select Shared Seat</option>";
+        if ($total_seat == 2) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='4'>2</option>";
+        } elseif ($total_seat == 3) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+        } elseif ($total_seat == 4) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+            echo "<option value='4'>4</option>";
+        } elseif ($total_seat == 5) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+            echo "<option value='4'>4</option>";
+            echo "<option value='5'>5</option>";
+        } elseif ($total_seat == 6) {
+            echo "<option value='1'>1</option>";
+            echo "<option value='2'>2</option>";
+            echo "<option value='3'>3</option>";
+            echo "<option value='4'>4</option>";
+            echo "<option value='5'>5</option>";
+            echo "<option value='6'>6</option>";
+        }
     }
 }

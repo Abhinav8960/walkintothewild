@@ -1,8 +1,10 @@
 <?php
 
-use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use common\models\GeneralModel;
+use common\models\park\SafariPark;
 
 /** @var yii\web\View $this */
 /** @var common\models\sharesafari\ShareSafari $model */
@@ -29,7 +31,7 @@ use yii\widgets\ActiveForm;
         <div class="title_filter ">
             <h6>Park</h6>
             <div class="input_check ">
-                <?= $form->field($searchModel, 'park_id')->dropDownlist(GeneralModel::safariparkoption(), ['prompt' => 'Select Park'])->label(false) ?>
+                <?= $form->field($searchModel, 'park_id')->dropDownlist(ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'All Park'])->label(false) ?>
             </div>
         </div>
         <div class="title_filter mb-3">
@@ -122,8 +124,8 @@ use yii\widgets\ActiveForm;
                         <h6 class="mb-0">Sort By</h6>
                     </div>
                 </div>
-                <div class="col-7">                
-                <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
+                <div class="col-7">
+                    <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
                 </div>
             </div>
         </div>
@@ -136,10 +138,10 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="col-7">
                     <div class="title_filter">
-              
-                    <div class="input_check ">
-                <?= $form->field($searchModel, 'park_id')->dropDownlist(GeneralModel::safariparkoption(), ['prompt' => 'Select Park'])->label(false) ?>
-            </div>
+
+                        <div class="input_check ">
+                            <?= $form->field($searchModel, 'park_id')->dropDownlist(GeneralModel::safariparkoption(), ['prompt' => 'Select Park'])->label(false) ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,13 +154,13 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div class="col-7">
-                <div class="input_check ">
-                <?= $form->field($searchModel, 'month_id')->dropDownlist(
-                    GeneralModel::monthoption(),
-                    ['prompt' => 'Select Month']
+                    <div class="input_check ">
+                        <?= $form->field($searchModel, 'month_id')->dropDownlist(
+                            GeneralModel::monthoption(),
+                            ['prompt' => 'Select Month']
 
-                )->label(false); ?>
-            </div>
+                        )->label(false); ?>
+                    </div>
 
                 </div>
             </div>
@@ -171,15 +173,15 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div class="col-7">
-                <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'estimated_price_filter')->checkboxList(
-                    GeneralModel::estimatedpriceoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'estimated_price_filter')->checkboxList(
+                            GeneralModel::estimatedpriceoption(),
+                            [
+                                'required' => true,
+                                'itemOptions' => ['class' => 'checkbox_design'],
+                            ]
+                        )->label(false); ?>
+                    </div>
 
                 </div>
             </div>
@@ -192,16 +194,16 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div class="col-7">
-            
-                <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'no_of_safari')->checkboxList(
-                    GeneralModel::noofsafarioption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
+
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'no_of_safari')->checkboxList(
+                            GeneralModel::noofsafarioption(),
+                            [
+                                'required' => true,
+                                'itemOptions' => ['class' => 'checkbox_design'],
+                            ]
+                        )->label(false); ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -213,16 +215,16 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div class="col-7">
-            
-                <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
-                    GeneralModel::agendaoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
+
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
+                            GeneralModel::agendaoption(),
+                            [
+                                'required' => true,
+                                'itemOptions' => ['class' => 'checkbox_design'],
+                            ]
+                        )->label(false); ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -234,42 +236,42 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div class="col-7">
-            
-                <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'host_type')->checkboxList(
-                    GeneralModel::hostoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
+
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'host_type')->checkboxList(
+                            GeneralModel::hostoption(),
+                            [
+                                'required' => true,
+                                'itemOptions' => ['class' => 'checkbox_design'],
+                            ]
+                        )->label(false); ?>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
         <div class="searchwrap mb-2">
-         <div class="row align-items-center">
+            <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
-                    <h6>Budget</h6>
+                        <h6>Budget</h6>
                     </div>
                 </div>
                 <div class="col-7">
-              
-               <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
-                    GeneralModel::budgetoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-               </div>
+
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
+                            GeneralModel::budgetoption(),
+                            [
+                                'required' => true,
+                                'itemOptions' => ['class' => 'checkbox_design'],
+                            ]
+                        )->label(false); ?>
+                    </div>
+                </div>
             </div>
-         </div>
-       </div>
-   </div>
-       
+        </div>
+    </div>
+
 <?php } ?>
 
 <?php ActiveForm::end(); ?>

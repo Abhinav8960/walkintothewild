@@ -10,15 +10,14 @@ use frontend\models\SafariParkSearch;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorSearch;
 use common\models\operator\SafariOperator;
+use common\models\sharesafari\ShareSafari;
+use frontend\models\SafariOperatorReviewForm;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
-use common\models\operator\SafariOperatorRatingReport;
-use common\models\operator\SafariOperatorRatingSearch;
-use common\models\sharesafari\ShareSafari;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\SafariOperatorRatingReportForm;
-use frontend\models\SafariOperatorReviewForm;
+use common\models\operator\SafariOperatorRatingSearch;
 
 /**
  * DefaultController.
@@ -27,7 +26,7 @@ class DefaultController extends FrontendBaseController
 {
     public $enableCsrfValidation = false;
 
-    public $action_ids = ['index', 'view', 'follow', 'unfollow'];
+    public $action_ids = ['index', 'view', 'follow', 'unfollow', 'reviewlist', 'sharedsafari', 'review', 'flag'];
 
 
     /**
@@ -70,17 +69,9 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
-
-
-        $ratingsearchModel = new SafariOperatorRatingSearch();
-        $ratingsearchModel->safari_operator_id = $operator->id;
-        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
-        $reviews = $ratingdataProvider->getModels();
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         $model = new OperatorQuoteForm();
-        $model->action_url = Url::toRoute(['/operator/default/view', 'slug' => $slug]);
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
@@ -93,11 +84,83 @@ class DefaultController extends FrontendBaseController
             [
                 'operator' => $operator,
                 'model' => $model,
+                'operator_parks' => $operator_parks
+            ]
+        );
+    }
+
+
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionReviewlist($slug, $sort_by = null)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $ratingsearchModel = new SafariOperatorRatingSearch();
+        $ratingsearchModel->custom_sort_by = $sort_by;
+        $ratingsearchModel->safari_operator_id = $operator->id;
+        $ratingsearchModel->status = 1;
+        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
+        $reviews = $ratingdataProvider->getModels();
+
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
+        $model = new OperatorQuoteForm();
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
+        }
+
+
+        return $this->render(
+            'reviewlist',
+            [
+                'operator' => $operator,
+                'model' => $model,
                 'operator_parks' => $operator_parks,
-                'shared_safaries' => $shared_safaries,
                 'reviews' => $reviews,
                 'ratingsearchModel' => $ratingsearchModel,
                 'ratingdataProvider' => $ratingdataProvider,
+            ]
+        );
+    }
+
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionSharedsafari($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
+
+
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
+        $model = new OperatorQuoteForm();
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        }
+
+
+        return $this->render(
+            'sharedsafari',
+            [
+                'operator' => $operator,
+                'model' => $model,
+                'operator_parks' => $operator_parks,
+                'shared_safaries' => $shared_safaries,
             ]
         );
     }
@@ -150,10 +213,12 @@ class DefaultController extends FrontendBaseController
                 $operator_follow->status = 1;
                 $operator_follow->follow_datetime = date('Y-m-d h:i:s');
                 if ($operator_follow->save()) {
-                    Yii::$app->session->setFlash('success', 'Operator is Followed!');
+                    Yii::$app->session->setFlash('success', 'You are start following ' . $operator->business_name);
                 } else {
                     Yii::$app->session->setFlash('error', 'You can not follow this operator currently!');
                 }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/operator/default/follow', 'id' => $operator->id])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
         }
@@ -185,11 +250,13 @@ class DefaultController extends FrontendBaseController
                     $operator_follow->status = 0; //UNfollow
                     $operator_follow->unfollow_datetime = date('Y-m-d h:i:s');
                     if ($operator_follow->save()) {
-                        Yii::$app->session->setFlash('success', 'Operator is UnFollowed!');
+                        Yii::$app->session->setFlash('error', 'You UnFollowed ' . $operator->business_name);
                     } else {
                         Yii::$app->session->setFlash('error', 'You can not unfollow this operator currently!');
                     }
                 }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/operator/default/unfollow', 'id' => $operator->id])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
         }
@@ -214,9 +281,11 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->rating_model->save(false)) {
                         $model->updateRatingintoTable($operator);
+                        Yii::$app->session->setFlash('success', 'Thanks for Review!!');
                         return $this->redirect([
-                            '/operator/default/view',
+                            '/operator/default/reviewlist',
                             'slug' => $operator->slug,
+                            '#' => 'viewcontent'
                         ]);
                     }
                 }
@@ -254,6 +323,8 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
         }
 
+        $rating = SafariOperatorRating::find()->where(['id' => $safari_operator_rating_id])->limit(1)->one();
+
         $model = new SafariOperatorRatingReportForm();
         $model->safari_operator_id = $operator_id;
         $model->park_id = $park_id;
@@ -266,13 +337,13 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->flag_model->save(false)) {
-                        $rating = SafariOperatorRating::find()->where(['id' => $safari_operator_rating_id])->limit(1)->one();
                         $rating->flaged = 1;
                         $rating->save(false);
-                        Yii::$app->session->setFlash('success', 'Flag added successfully!');
+                        Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
                         return $this->redirect([
-                            '/operator/default/view',
+                            '/operator/default/reviewlist',
                             'slug' => $operator->slug,
+                            '#' => 'viewcontent'
                         ]);
                     }
                 }
@@ -284,6 +355,7 @@ class DefaultController extends FrontendBaseController
             return $this->renderAjax('_flag_form', [
                 'model' => $model,
                 'operator_id' => $operator_id,
+                'rating' => $rating,
             ]);
         }
     }

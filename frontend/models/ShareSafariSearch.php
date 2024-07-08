@@ -15,6 +15,7 @@ class ShareSafariSearch extends ShareSafari
     public $custom_sort_by;
     public $estimated_price_filter;
     public $date_filter;
+    public $title;
 
 
 
@@ -26,7 +27,7 @@ class ShareSafariSearch extends ShareSafari
     {
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
-            [['start_date', 'end_date', 'estimated_price_filter'], 'safe'],
+            [['start_date', 'end_date', 'estimated_price_filter', 'title'], 'safe'],
             [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter'], 'safe'],
         ];
     }
@@ -98,15 +99,11 @@ class ShareSafariSearch extends ShareSafari
             $price_query = "";
             foreach ((array)$this->estimated_price_filter as $price_filter) {
                 if ($price_filter == 1) {
-                    $price_query .= "estimate_price_min >= 0 AND estimate_price_min <= 1000 OR estimate_price_max >= 0 AND estimate_price_max <= 1000 OR ";
+                    $price_query .= "estimate_price_min >= 0 AND estimate_price_min <= 5000 OR estimate_price_max >= 0 AND estimate_price_max <= 5000 OR ";
                 } else if ($price_filter == 2) {
-                    $price_query .= "estimate_price_min >= 1000 AND estimate_price_min <= 3000 OR estimate_price_max >= 1000 AND estimate_price_max <= 3000 OR ";
-                } else if ($price_filter == 3) {
-                    $price_query .= "estimate_price_min >= 3000 AND estimate_price_min <= 5000 OR estimate_price_max >= 3000 AND estimate_price_max <= 5000 OR ";
-                } else if ($price_filter == 4) {
                     $price_query .= "estimate_price_min >= 5000 AND estimate_price_min <= 10000 OR estimate_price_max >= 5000 AND estimate_price_max <= 10000 OR ";
-                } else if ($price_filter == 5) {
-                    $price_query .= "estimate_price_min >= 10000 OR estimate_price_max >= 10000  OR ";
+                } else if ($price_filter == 3) {
+                    $price_query .= "estimate_price_min >= 10000 AND estimate_price_min >= 15000 OR estimate_price_max >= 10000 AND estimate_price_max >= 15000 OR ";
                 }
             }
             if ($price_query <> '') {
@@ -159,7 +156,11 @@ class ShareSafariSearch extends ShareSafari
             }
         }
 
-
+        if ($this->title) {
+            $query->joinwith(['park' => function ($title_query) {
+                $title_query->andWhere(['like', 'title', $this->title]);
+            }]);
+        }
 
         return $dataProvider;
     }

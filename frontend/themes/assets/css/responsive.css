@@ -86,12 +86,14 @@
     }
   
 }
-@media(min-width:1700px){
+/* @media(max-width:1500px){
 
-    /* .searchSafari_wraper .Slider_safariimg3{
-        width: 303px !important;
-    } */
-}
+    .sharesafribg {
+
+        height: 430px !important;
+
+    }
+} */
 @media(min-width:1500px){
     .container-fluid {
 
@@ -148,7 +150,7 @@
     .searchSafari_parks .parks_body .seelctes_text {
 
         height: 120px !important;
-        overflow: visible;
+        /* overflow: visible; */
     }
     .searchSafari_parks .parks_body .seelctes_text p{
 line-height: 19px;
@@ -192,7 +194,7 @@ line-height: 19px;
     }
 
     .artical_cards .image-box .image img {
-        height: 310px;
+        height: 260px;
     }
     .imgsbox img{
 
@@ -273,11 +275,11 @@ line-height: 19px;
         font-size: 13px;
     }
 
-    .artical_cards .image-box .image img {
+    /* .artical_cards .image-box .image img {
 
         height: 260px;
 
-    }
+    } */
     .aritcla-details p{
 
         font-size: 15px;
@@ -526,7 +528,15 @@ line-height: 19px;
 
 }
 @media only screen and (min-width: 768px) {
+    .desktop_hideDiv.border_top2{
 
+display: none;
+    }
+   
+    .mobile_didplay_block{
+
+        display: none;
+    }
     .close_button{
 
         display: none;
@@ -661,6 +671,11 @@ line-height: 19px;
 }
 
 @media(min-width:1200px) {
+    .aritcal_bigimg img{
+
+        height: 400px;
+        object-fit: cover;
+    }
     .paddingset_desktop{
 
         padding-right: 74px;
@@ -689,7 +704,11 @@ line-height: 19px;
 }
 
 @media only screen and (min-width:991px) {
+  
+    .mobile_didplay_none{
 
+        display: block;
+    }
     .container-fluid {
 
         padding-left: 25px ;
@@ -804,11 +823,11 @@ line-height: 19px;
         padding: 15px 31px;
     }
   
-    .safari_create {
+    /* .safari_create {
 
         width: 100%;
         margin-top: 15px;
-    }
+    } */
 
     .creat-safri {
         padding-bottom: 20px;
@@ -938,12 +957,16 @@ line-height: 19px;
     }
 }
 @media (max-width: 991px) {
+ 
+    .mobile_didplay_none .join_btn{
+        padding: 9px 35px !important;
+    }
     .images_tour{
 
         height: 250px;
     }
     .logoutBox{
-        position: fixed;
+        position:absolute;
         padding: 4px 10px;
         bottom: 0;
         left: 0;
@@ -1126,7 +1149,10 @@ line-height: 19px;
 
 
 @media only screen and (max-width:991px) {
-  
+    #flashMessage{
+
+        right: 35px;
+    }
     #targetDiv {
         background-color: #faf7f3;
         position: fixed;
@@ -1223,6 +1249,39 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
+    .desktop_postion.border_top2{
+
+        display: none;
+    }
+    .desktop_hideDiv{
+
+        display: inline-flex !important;
+    }
+    .safrititles .date_bx h6{
+
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+    .btn_newsafari.organizeBtn{
+
+        width: 100%;
+    }
+    .social-share{
+
+        padding-top: 10px;
+    }
+    .border_bottom2 .border-right{
+
+        border-right: 0;
+    }
+    .mobile_didplay_none{
+
+        display: none !important;
+    }
+    .mobile_didplay_block{
+
+        display: block !important;
+    }
     .sahreSafari.desktop{
 
 display: block;
@@ -1353,7 +1412,12 @@ display: block;
         background: var(--background-primary) !important;
         height: auto;
         padding-top: 30px;
+        border-radius: 10px;
 
+    }
+    .padditg_mobile{
+
+        padding: 0px 40px;
     }
 
 
@@ -1427,16 +1491,31 @@ display: block;
         z-index: 0;
     } */
 }
+@media only screen and (max-width: 710px) and (min-width: 576px){
+
+.slider_safariimg {
+
+    height: 90%;
+}
+.single-image img{
+
+    height: 100%;
+    object-fit: cover;
+}
+}
 @media only screen and (max-width: 768px) and (min-width: 576px){
 
-    .safarishareBox .row .col-xxl-3 {
+    /* .safarishareBox .row .col-xxl-3 {
         padding: 0px 150px;
+    } */
+    .sharesafribg.home .shareimg {
+        height: 188px;
     }
 }
 @media only screen and (max-width: 575px) and (min-width: 420px){
 
     .safarishareBox .row .col-xxl-3 {
-        padding: 0px 64px;
+        padding: 0px 73px;
     }
 }
 
@@ -1464,6 +1543,10 @@ display: block;
 }
 
 @media only screen and (max-width:576px) {
+    .padditg_mobile{
+
+        padding: 0px 20px;
+    }
     .Slider_safariimg3 img{
 
         border-radius: 10px 10px 0px 0px !important;
@@ -1731,6 +1814,14 @@ font-size: 15px;
         transform: translate(-50%, -50%);
         z-index: 0;
     } */
+    .intested_btn{
+
+        padding: 9px 12px !important;
+    }
+    .join_btn{
+
+        padding: 11px 12px;
+    }
 
     .safariBox {
         top: 17%;

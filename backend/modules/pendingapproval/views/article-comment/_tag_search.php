@@ -10,7 +10,7 @@ $tags = MasterArticleTag::find()->where(['status' => MasterArticleTag::STATUS_AC
     <?php if ($tags) {
         foreach ($tags as $tag) {
     ?>
-            <a href="#" class="tags-button" style="color:black;"><i class="fa-solid fa-tag pe-1" ></i><?= $tag->title ?></a>
+            <a href="#" class="tags-button" ><i class="fa-solid fa-tag pe-1" ></i><?= $tag->title ?></a>
     <?php }
     } ?>
 </div>

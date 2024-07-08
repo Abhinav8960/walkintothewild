@@ -3,13 +3,14 @@
 
 /* @var $this yii\web\View */
 
-use common\interfaces\Constants;
-use common\models\cms\banner\Banner;
-use common\models\GeneralModel;
-use common\models\park\SafariPark;
-use common\models\sharesafari\ShareSafari;
-use frontend\models\ArticleSearch;
 use yii\helpers\Url;
+use common\models\GeneralModel;
+use common\interfaces\Constants;
+use common\models\park\SafariPark;
+use frontend\models\ArticleSearch;
+use common\models\cms\banner\Banner;
+use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariIntrested;
 
 $this->title = 'Share Safari';
 $this->params['breadcrumbs'][] = $this->title;
@@ -120,7 +121,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
 
                             <?php if ($models = $dataProvider->models) {
                                 foreach ($models as $share_safari) {
@@ -159,6 +160,8 @@ $recentposts = ArticleSearch::recentpost();
                                                     <div class="col-6">
                                                         <div class="users">
                                                             <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                                                                $count = $share_safari->getIntrested()->count();
+                                                                $avatar_count = 3;
                                                                 foreach ($interests as $interest) {
                                                             ?>
                                                                     <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
@@ -178,7 +181,16 @@ $recentposts = ArticleSearch::recentpost();
                                                     <div class="col-6">
                                                         <div class="safari text-center">
                                                             <div class="joinsafari">
-                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                <?php if (Yii::$app->user->identity) {
+                                                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                                    if ($share_safari_intrested) { ?>
+                                                                        <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
+                                                                    <?php } else { ?>
+                                                                        <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                    <?php  }
+                                                                } else { ?>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                <?php } ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -191,8 +203,11 @@ $recentposts = ArticleSearch::recentpost();
                         </div>
                     </div>
                 </div>
-
             </div>
+
+        </div>
+
+    </div>
 
 </section>
 
@@ -205,11 +220,11 @@ $recentposts = ArticleSearch::recentpost();
 <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header justify-content-center">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a New Safari</h1>
-                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
-            <div class="modal-body">
+            <div class="modal-body px-2 pt-0">
                 <div id='modalContent'></div>
             </div>
         </div>
