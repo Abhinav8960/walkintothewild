@@ -1376,10 +1376,10 @@ figure {
 
 
 
-.safari_content h5 {
+.safari_content h3 {
 
     color: var(--colorwhite);
-    font-size: var(--fs-25);
+    font-size: var(--fs-22);
     margin-bottom: 0;
 }
 

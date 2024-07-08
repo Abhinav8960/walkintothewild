@@ -1433,9 +1433,9 @@ display: block;
         height: 258px;
     }
 
-    .safari_content h5 {
+    .safari_content h3 {
 
-        font-size: var(--fs-20);
+        font-size: var(--fs-18);
     }
 
     .btn-knowmore {
@@ -1778,7 +1778,7 @@ display: block;
         top: -2%;
     }
 
-    .safari_content h5 {
+    .safari_content h3 {
         font-size: 14px;
     }
 
