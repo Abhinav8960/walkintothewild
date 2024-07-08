@@ -47,7 +47,7 @@ $script = <<<JS
     if ($('#safarioperatorreviewform-rating').val()) {
         var selected_value = $('#safarioperatorreviewform-rating').val(); 
         if (selected_value == 1) {
-            $(".star_icon_1").css("color", "#fdbf2b");
+            $(".star_icon_1").addClass("fa-solid").css("color", "#fdbf2b");
         }
         else if (selected_value == 2) {
             $(".star_icon_1").css("color", "#fdbf2b");

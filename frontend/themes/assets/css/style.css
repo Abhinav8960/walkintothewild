@@ -2395,6 +2395,15 @@ figure {
     font-weight: 600;
     font-size: var(--fs-18);
     margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+.pname:hover{
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
 }
 
 .detailsText p {
@@ -4432,6 +4441,12 @@ figure {
     font-weight: 600;
     margin-top: 50px;
     font-size: var(--fs-18);
+}
+.form_review .form-group .form-select{
+
+    border-radius: 20px !important;
+    padding: 6px 30px !important;
+    margin: 8px 10px 0px 0px;
 }
 /* .sign_intext{
 

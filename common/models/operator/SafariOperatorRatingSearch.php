@@ -88,6 +88,7 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
         $query->andFilterWhere([
             'id' => $this->id,
             'safari_operator_id' => $this->safari_operator_id,
+            'park_id' => $this->park_id,
             'rating' => $this->rating,
             'review' => $this->review,
             'created_at' => $this->created_at,
