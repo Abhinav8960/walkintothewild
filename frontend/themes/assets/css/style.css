@@ -691,6 +691,18 @@ a {
     border-bottom: 2px solid #0000004D;
     margin-left: 10px;
     margin-right: 10px;
+    /* min-height: 85px;
+    height: 100%; */
+
+}
+
+.titleDate h6{
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.2;
+    max-height: 2.4em; /* Assuming 1.2em per line, 2 lines */
 }
 
 .orgnizer {
