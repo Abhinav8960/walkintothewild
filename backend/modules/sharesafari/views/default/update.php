@@ -8,9 +8,8 @@ use yii\bootstrap5\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
-<h5>Basic Detail</h5>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <?= $form->field($model, 'status')->dropDownList(['1' => 'Approved', '3' => 'Disapproved'], ['prompt' => 'Select Status']) ?>
     </div>
 </div>

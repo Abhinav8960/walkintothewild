@@ -39,7 +39,6 @@ class DefaultController extends Controller
         $share_safari = ShareSafari::find()
             ->where([
                 'id' => $id,
-                'status' => StatusInterface::STATUS_ACTIVE,
             ])->limit(1)->one();
         return $this->render('view', [
             'share_safari' => $share_safari,
@@ -86,14 +85,14 @@ class DefaultController extends Controller
                     $model->initializeForm();
                     if ($model->share_safari_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['view', 'id' => $id]);
                     }
                 }
             }
         } else {
             $model->share_safari_model->loadDefaultValues();
         }
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }

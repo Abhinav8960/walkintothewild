@@ -88,6 +88,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Deactivate', self::STATUS_DELETE => 'Deleted'];
     }
 
+
+    /**
+     * Get Status Active/Inactive Options List
+     *
+     * @return void
+     */
+    public static function approvaloption()
+    {
+        return [1 => 'Approved', 3 => 'Disapprove'];
+    }
     /**
      * Get Status Active/Inactive Options List
      *

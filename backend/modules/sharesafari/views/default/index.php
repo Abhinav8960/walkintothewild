@@ -81,14 +81,14 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->approvallabel;
                         }
                     ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp{update}',
+                        'template' => '{view}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
@@ -98,12 +98,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
                                 ]);
                             },
-                            'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">', ['approved', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
-                                ]);
-                            },
+
                         ]
                     ],
                 ],

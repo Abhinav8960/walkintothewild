@@ -17,6 +17,9 @@ $this->params['title'] = $this->title;
 
 <div class="row my-4">
     <div class="col-12">
+        <div class="btn_set float-end">
+            <button class="history_btn" value="<?= Url::toRoute(['/sharesafari/default/approved', 'id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?= $share_safari->approvallabel ?>" style="color:white;"><?= $share_safari->approvallabel ?></button>
+        </div>
         <div class="wrapper-skybgsafri">
             <div class="row border_bottom2 pb-4">
                 <div class="col-lg-7 col-md-8 border-right">
@@ -265,6 +268,23 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
+<div class="modal fade" id="modalApprove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Approval Form
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 
@@ -273,6 +293,12 @@ $script = <<< JS
 function writeareviewfunction() {
     $('.flagBtn').on('click', function () {
         $('#modalFlag').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+    $('.history_btn').on('click', function () {
+        $('#modalApprove').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});
