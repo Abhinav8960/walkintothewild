@@ -8,7 +8,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 <div class="sticky">
 	<aside class="app-sidebar ">
 		<div class="main-sidebar-header active" style="background: #09422D !important;">
-			<a class="header-logo active" href="#">
+			<a class="header-logo active" href="/">
 				<img src="/img/logo.png" class="main-logo  desktop-logo" alt="logo">
 				<img src="/img/2.jpg" class="main-logo  desktop-dark" alt="logo">
 				<img src="/img/2.jpg" class="main-logo  mobile-logo" alt="logo">
