@@ -4487,7 +4487,7 @@ figure {
     color: var(--background-orange);
     font-weight: 400;
 }
-#toggleReplies{
+.toggle-replies{
     cursor: pointer;
 }
 
