@@ -116,6 +116,11 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
         return isset($this->image) ? ('/storage/Shared_Image/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
+    public function getComments()
+    {
+        return $this->hasMany(ShareSafariComment::class, ['share_safari_id' => 'id']);
+    }
+
     /**
      * Get Host Type
      */
