@@ -8,6 +8,7 @@ use yii\helpers\Json;
 use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
+use common\models\MailLog;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
 use frontend\models\form\SharedSafariForm;
@@ -55,6 +56,15 @@ class DefaultController extends FrontendBaseController
                     if ($model->shared_safari_model->save(false)) {
                         $model->UploadFiles($model->shared_safari_model->id);
                         $model->safariHistory();
+                        if ($model->shared_safari_model->user) {
+                            $user = $model->shared_safari_model->user;
+                            $to_mail = $user->email;
+                            $subject = 'New Safari Request';
+                            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
+                            $req = ['username' => $user->name];
+                            MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        }
+
                         \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
                         return $this->redirect(['index']);
                     }

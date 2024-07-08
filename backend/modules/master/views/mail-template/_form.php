@@ -17,6 +17,9 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Template Name']) ?>
     </div>
     <div class="col-md-6">
+        <?= $form->field($model, 'code')->textInput(['maxlength' => true, 'placeholder' => 'Enter Template Code']) ?>
+    </div>
+    <div class="col-md-6">
         <?= $form->field($model, 'path')->textInput(['maxlength' => true, 'placeholder' => 'Enter Path']) ?>
     </div>
 

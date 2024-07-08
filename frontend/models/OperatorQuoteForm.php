@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\MailLog;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use Yii;
@@ -103,6 +104,12 @@ class OperatorQuoteForm extends Model
 
 
         if ($operator_quote->save()) {
+            $to_mail = $operator_quote->email;
+            $subject = 'Request Free Quote';
+            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
+            $req = ['username' => $operator_quote->full_name];
+
+            MailLog::createMailLog($to_mail, $subject, $template, $req, []);
             return $operator_quote->save();
         }
     }
