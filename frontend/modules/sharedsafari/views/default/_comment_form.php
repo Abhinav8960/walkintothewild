@@ -9,7 +9,7 @@ use yii\helpers\Html;
 <div class="comments-persons pe-0 pt-4">
     <div class="postcomment d-flex gap-3">
         <div class="avatar">
-            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+            <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
         </div>
         <div class="text-area">
             <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>

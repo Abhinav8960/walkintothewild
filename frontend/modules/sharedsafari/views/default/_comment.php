@@ -13,7 +13,7 @@ use yii\helpers\Url;
                 <div class="comments-persons">
                     <div class="postcomment d-flex gap-2">
                         <div class="avatar">
-                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+                            <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                         </div>
                         <div class="text_com">
                             <h6 class="nameavatr"><?= $share_safari->user->name ?></h6>
