@@ -296,7 +296,7 @@ class SafaritourRegistrationForm extends model
     {
 
         if ($this->logo) {
-            $storagePath = Yii::$app->params['datapath'] . '/safarioperator';
+            $storagePath = Yii::$app->params['datapath'] . '/safarioperatorrequest';
 
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
