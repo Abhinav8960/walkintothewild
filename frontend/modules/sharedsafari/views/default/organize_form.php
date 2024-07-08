@@ -175,10 +175,17 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
+        <?php if (isset($model->shared_safari_model->id)) { ?>
+            <?= $form->field($model, 'status')->checkbox(['value' => "2"])->label('Mark as completed') ?>
+        <?php } ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                <?php if (isset($model->shared_safari_model->id)) { ?>
+                    <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                <?php } else {  ?>
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                <?php } ?>
 
             </div>
         </div>
