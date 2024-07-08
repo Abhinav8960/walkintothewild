@@ -2,13 +2,16 @@
 
 namespace backend\modules\sharesafari\controllers;
 
+
 use common\interfaces\StatusInterface;
+use common\models\sharesafari\form\ShareSafariApprovalForm;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
 use common\models\sharesafari\ShareSafariSearch;
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController.
@@ -71,5 +74,35 @@ class DefaultController extends Controller
                 'dataProvider' => $dataProvider,
             ]);
         }
+    }
+
+    public function actionApproved($id)
+    {
+        $share_safari_model = $this->findModel($id);
+        $model = new ShareSafariApprovalForm($share_safari_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->share_safari_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->share_safari_model->loadDefaultValues();
+        }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
+
+    public function findModel($id)
+    {
+        if ($model = ShareSafari::find()->limit(1)->one()) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

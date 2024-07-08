@@ -88,14 +88,20 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}',
+                        'template' => '{view}&nbsp{update}',
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
                             ', ['view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
+                                    'title' => 'view',
 
+                                ]);
+                            },
+                            'update' => function ($url, $model) {
+                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">', ['approved', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'Update',
                                 ]);
                             },
                         ]
