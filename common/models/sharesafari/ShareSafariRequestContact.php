@@ -48,8 +48,10 @@ class ShareSafariRequestContact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'share_safari_id', 'park_id', 'user_id', 'share_safari_comment_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['share_safari_id', 'park_id', 'host_user_id', 'user_id', 'share_safari_comment_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['request_token'], 'string', 'max' => 40],
+            [['name', 'user_device', 'user_agent', 'user_platform', 'user_browser', 'user_ip_address'], 'string', 'max' => 255],
+            [['phone_no'], 'string', 'max' => 12],
         ];
     }
 
@@ -62,14 +64,22 @@ class ShareSafariRequestContact extends \yii\db\ActiveRecord
             'id' => 'ID',
             'share_safari_id' => 'Share Safari ID',
             'park_id' => 'Park ID',
-            'user_id' => 'User ID',
-            'share_safari_comment_id' => 'Share Safari Request Comment ID',
             'request_token' => 'Request Token',
+            'share_safari_comment_id' => 'Share Safari Comment ID',
+            'user_id' => 'User ID',
+            'email' => 'Email',
+            'name' => 'Name',
+            'phone_no' => 'Phone No',
+            'user_device' => 'User Device',
+            'user_agent' => 'User Agent',
+            'user_platform' => 'User Platform',
+            'user_browser' => 'User Browser',
+            'user_ip_address' => 'User Ip Address',
+            'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
-            'status' => 'Status',
         ];
     }
 

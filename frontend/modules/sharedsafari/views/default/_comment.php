@@ -44,7 +44,9 @@ use yii\helpers\Url;
                         <div class="text_com">
                             <div class="requestContact d-flex gap-2 align-items-center">
                                 <h6 class="nameavatr"><?= $comments->user->name ?></h6>
-                                <button class="request_btn">Request Contact</button>
+                                <?php if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
+                                    <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>
+                                <?php } ?>
                             </div>
                             <p><?= $comments->comment ?></p>
 
@@ -62,11 +64,11 @@ use yii\helpers\Url;
                                                     <p><?= $reply->comment ?></p>
                                                 </div>
                                             </div>
-                                                <?php if (Yii::$app->user->id) {  ?>
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
-                                                <?php } ?>
+                                            <?php if (Yii::$app->user->id) {  ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
+                                            <?php } ?>
 
-                                            
+
                                         <?php } ?>
                                     </div>
                                 <?php } ?>
