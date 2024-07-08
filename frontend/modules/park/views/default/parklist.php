@@ -102,7 +102,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
                                     <option value="" <?= !in_array($searchModel->custom_sort_by, ['most-demanding', 'shared-safari']) ? 'selected' : '' ?>>Sort By: Relevant</option>
                                     <option value="most-demanding" <?= $searchModel->custom_sort_by == 'most-demanding' ? 'selected' : '' ?>>Most Demanding</option>
-                                    <option value="shared-safari" <?= $searchModel->custom_sort_by == 'shared-safari' ? 'selected' : '' ?>>Shared Safari</option>
+                                  
                                 </select>
                             </form>
                         </div>

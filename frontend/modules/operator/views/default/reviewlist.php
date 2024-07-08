@@ -129,6 +129,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <div class="commentsOther  position-relative">
                                                         <div class="objec-flgs">
                                                             <?php if (Yii::$app->user->id) {  ?>
+                                                                <button class="btn btn-warning writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id]) ?>">Edit</button>
                                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/operator/default/flag', 'operator_id' => $operator->id, 'park_id' => $review->park_id, 'safari_operator_rating_id' => $review->id]) ?>">
                                                             <?php } ?>
                                                         </div>
