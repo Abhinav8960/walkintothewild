@@ -4487,6 +4487,9 @@ figure {
     color: var(--background-orange);
     font-weight: 400;
 }
+#toggleReplies{
+    cursor: pointer;
+}
 
 /* .reply_btn i{
 

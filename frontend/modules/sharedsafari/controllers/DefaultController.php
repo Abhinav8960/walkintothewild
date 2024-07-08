@@ -155,7 +155,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [1, 2], 'slug' => $slug])->limit(1)->one();
         $model = new ShareSafariCommentForm();
         $replymodel = new ReplyForm();
 
