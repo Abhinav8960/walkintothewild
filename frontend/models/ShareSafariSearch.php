@@ -50,7 +50,7 @@ class ShareSafariSearch extends ShareSafari
      */
     public function search($params, $pagination = true)
     {
-        $query = ShareSafari::find()->where(['share_safari.status' => [1, 2]]);
+        $query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]]);
 
         // add conditions that should always apply here
 

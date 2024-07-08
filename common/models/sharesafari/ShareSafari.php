@@ -34,6 +34,11 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
 {
     use CommanRelationship;
 
+    const STATUS_PENDING_APPROVAL = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_COMPLETED = 2;
+    const STATUS_DISAPPROVED = 3;
+
     /**
      * {@inheritdoc}
      */
