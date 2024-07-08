@@ -52,86 +52,63 @@ use yii\helpers\Url;
                         </div>
                     </div>
                     <div class="comment-reply">
-                        <?php if ($replies) { ?>
-                            <div class="blog-comment-container">
-                                <h6 class="card-brown-heading pb-2 ms-4">Replies</h6>
-                                <?php foreach ($replies as $reply) { ?>
-                                    <div class="blog-comment-text ms-4 position-relative w-100 flags_reply" style="border:none;">
-                                        <div class="d-flex gap-2">
-                                            <div class="avatar">
-                                                <img src="/assets/5a869828/img/Share-Safari/dpmain.png" alt="">
-                                            </div>
-                                            <div class="font-color">
-                                                <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
-                                                <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
-                                                <div class="comment-text">
-                                                    <p><?= $reply->comment ?></p>
+                                <?php if ($replies) { ?>
+                                    <div class="blog-comment-container">
+                                        <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2">Replies</h6>
+                                        <?php foreach ($replies as $reply) { ?>
+                                            <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
+                                                <div class="d-flex gap-2">
+                                                <div class="avatar">
+                                                    <img src="/assets/5a869828/img/Share-Safari/dpmain.png" alt="">
                                                 </div>
-                                                <?php if (Yii::$app->user->id) {  ?>
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
-                                                <?php } ?>
+                                                <div class="font-color">
+                                                    <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
+                                                    <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
+                                                    <div class="comment-text">
+                                                        <p><?= $reply->comment ?></p>
+                                                    </div>
+                                                    <?php if (Yii::$app->user->id) {  ?>
+                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
+                                                    <?php } ?>
+                                                </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
 
+                                            
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+                                <?php if (Yii::$app->user->id) {  ?>
+                                    <button onclick="toggleReplyForm(this)" class="reply_btn ms-lg-4 ms-2"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                    <div class="reply-form" style="display: none;">
+                                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                                        <div class="mb-3">
+                                            <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
+                                        </div>
+                                        <div class="mb-3">
+                                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
+                                        </div>
+                                        <div class="btn-wrapper">
+                                            <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
+                                        </div>
+                                        <?php ActiveForm::end(); ?>
+                                    </div>
 
                                 <?php } ?>
                             </div>
-                        <?php } ?>
-                        <?php if (Yii::$app->user->id) {  ?>
-                            <button onclick="toggleReplyForm(this)" class="reply_btn ms-lg-4 ms-2"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
-                            <div class="reply-form" style="display: none;">
-                                <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                                <div class="mb-3">
-                                    <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
-                                </div>
-                                <div class="mb-3">
-                                    <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                                </div>
-                                <div class="btn-wrapper">
-                                    <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
-                                </div>
-                                <?php ActiveForm::end(); ?>
-                            </div>
-
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-                <?php if (Yii::$app->user->id) {  ?>
-                    <button onclick="toggleReplyForm(this)" class="reply_btn"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
-                    <div class="reply-form" style="display: none;">
-                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                        <div class="mb-3">
-                            <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
-                        </div>
-                        <div class="mb-3">
-                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                        </div>
-                        <div class="btn-wrapper">
-                            <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
-                        </div>
-                        <?php ActiveForm::end(); ?>
-                    </div>
-
-                <?php } ?>
+            <?php
+                }
+            } ?>
         </div>
-    <?php
-            }
-    ?>
+
+
+
     </div>
-
-
-
-</div>
-<?php if ($share_safari->status == 2) {
-    echo "Safari Closed"; ?>
-    <?php } else {
-    if (Yii::$app->user->id) { ?>
+    <?php if (Yii::$app->user->id) { ?>
         <?= $this->render('_comment_form', ['model' => $model]) ?>
-<?php } else {
+    <?php } else {
         echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
-    }
-} ?>
+    } ?>
 </div>
 <script>
     function toggleReplyForm(link) {
