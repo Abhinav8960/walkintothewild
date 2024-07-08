@@ -17,7 +17,7 @@ use yii\helpers\Url;
                 <div class="col mb-5">
                     <div class="artical_cards h-100">
                         <div class="image-box">
-                            <figure class="image"><a href="/article/<?= $featured_article->slug ?>"><img src="<?= isset($featured_article->feature_image) ? $featured_article->featureimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                            <figure class="image"><a href="/article/<?= $featured_article->slug ?>"><img src="<?= isset($featured_article->banner_image) ? $featured_article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                             </figure>
                         </div>
                         <div class="lower-content">
