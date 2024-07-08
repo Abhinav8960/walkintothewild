@@ -18,6 +18,7 @@ use frontend\models\ShareSafariCommentForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariHistory;
 use common\models\sharesafari\ShareSafariIntrested;
+use common\models\sharesafari\ShareSafariRequestContact;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentReportForm;
 
@@ -300,10 +301,10 @@ class DefaultController extends FrontendBaseController
 
     public function actionValidateflag($id = null)
     {
-        $model = new SafariOperatorRatingReportForm();
+        $model = new ShareSafariCommentReportForm();
         if ($id != null) {
             $flag_model = $this->findModel($id);
-            $model = new SafariOperatorRatingReportForm($flag_model);
+            $model = new ShareSafariCommentReportForm($flag_model);
         }
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -311,6 +312,63 @@ class DefaultController extends FrontendBaseController
         }
     }
 
+
+    /**
+     * Follow Operator
+     */
+    public function actionRequestContact($slug, $park_id, $share_safari_comment_id)
+    {
+        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+
+        $share_safari_comment = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->one();
+        if ($share_safari && $share_safari_comment->user) {
+            $request_contact = ShareSafariRequestContact::find()->where(['user_id' => $share_safari_comment->user->id, 'share_safari_id' => $share_safari->id])->one();
+            if (!$request_contact) {
+                $request_contact = new ShareSafariRequestContact();
+            }
+            $agent = new \Jenssegers\Agent\Agent();
+            $agent->setUserAgent(Yii::$app->request->userAgent);
+            $request_contact->user_ip_address = Yii::$app->getRequest()->getUserIp();
+            $request_contact->user_agent =  Yii::$app->request->userAgent;
+            $request_contact->user_device  = $agent->device();
+            $request_contact->user_platform = $agent->platform();
+            $request_contact->user_browser = $agent->browser();
+            $request_contact->share_safari_id = $share_safari->id;
+            $request_contact->share_safari_comment_id = $share_safari_comment_id;
+            $request_contact->park_id = $park_id;
+            $request_contact->user_id = $share_safari_comment->user_id;
+            $request_contact->host_user_id = Yii::$app->user->identity->id;
+            $request_contact->email = $share_safari_comment->user->email;
+            $request_contact->name = $share_safari_comment->user->name;
+            $request_contact->request_token = Yii::$app->security->generateRandomString() . '_' . time();
+            $request_contact->status = 1;
+            if ($request_contact->save(false)) {
+                Yii::$app->session->setFlash('success', 'You have requested contact to ' . $share_safari_comment->user->name);
+
+                $to_mail = $request_contact->email;
+                $subject = 'Request Contact';
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SHARE_SAFARI_REQUEST_CONTACT;
+                $req = ['username' => $request_contact->name, 'token' => $request_contact->request_token];
+
+                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            } else {
+                Yii::$app->session->setFlash('error', 'You can not request this user currently!');
+            }
+
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $slug]));
+        } else {
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+        }
+    }
+
+
+    public function actionUserdetail($token)
+    {
+
+        return $this->renderAjax('userdetail_form', [
+            'token' => $token
+        ]);
+    }
 
     /**
      * Show Safari List by user or host
