@@ -773,9 +773,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function noofsafarioption()
     {
         $return = [
-            '1' => '2',
-            '2' => '4',
-            '3' => '6+'
+            '1' => '1',
+            '2' => '3-5',
+            '3' => '5-8',
+            '4' => '8+',
         ];
         return $return;
     }

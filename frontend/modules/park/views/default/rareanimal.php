@@ -110,7 +110,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             </div>
                                             <div class="tour_logosliders">
                                                 <div class="taglines">
-                                                    <p>Top Safari Tour Operators</p>
+                                                    <p><a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $model->slug, '#' => 'safari_tour_operator_container']) ?>" style="color:inherit;">Top Safari Tour Operators</a></p>
                                                 </div>
                                                 <div class="touroprators">
                                                     <div class="opratios-slider owl-carousel owl-theme">

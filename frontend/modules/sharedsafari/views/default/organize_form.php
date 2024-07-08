@@ -150,7 +150,7 @@ use yii\helpers\Html;
             <?php } ?>
 
             <?php if (!Yii::$app->user->identity->is_safari_operator) { ?>
-                <label for="" class="Modal_label">Social Media Url/ Website Url</label>
+                <label for="" class="Modal_label">Your Social Media Url/ Website Url</label>
                 <?= $form->field($model, 'website_url')->textInput()->label(false); ?>
             <?php } ?>
 

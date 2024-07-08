@@ -71,9 +71,9 @@ class SharedSafariForm extends \yii\base\Model
             ],
             [['safari_plan'], 'string'],
             [['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
-            ['estimate_price_min', 'compare', 'compareAttribute' => 'estimate_price_max', 'operator' => '<='],
+            ['estimate_price_max', 'compare', 'compareAttribute' => 'estimate_price_min', 'operator' => '>='],
             ['total_seat', 'compare', 'compareAttribute' => 'share_seat', 'operator' => '>='],
-            ['start_date', 'compare', 'compareAttribute' => 'end_date', 'operator' => '<'],
+            ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
         ];
     }

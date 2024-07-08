@@ -30,6 +30,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'name',
+                    'code',
                     'path',
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
