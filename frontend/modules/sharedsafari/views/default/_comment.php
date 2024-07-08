@@ -54,7 +54,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="comment-reply">
                                 <?php if ($replies) { ?>
-                                    <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2" id="toggleReplies">View replies</h6>
+                                    <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2" id="toggleReplies">View <?= count($replies) ?> replies</h6>
                                     <div class="blog-comment-container" style="display: none;">
                                         <!-- <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6> -->
                                         <?php foreach ($replies as $reply) { ?>
@@ -136,11 +136,13 @@ function writeareviewfunction() {
 }
 writeareviewfunction();
 
-        $('#toggleReplies').click(function() {
+$('#toggleReplies').click(function() {
+
             var containerReply = $('.blog-comment-container');
-            var isVisible = containerReply.is(':visible');            
+            var isVisible = containerReply.is(':visible');
+            
             containerReply.slideToggle();
-            $(this).text(isVisible ? 'View replies' : 'Hide Replies');
+            $(this).text(isVisible ? 'View replies' : 'Hide replies');
         });
           
              
