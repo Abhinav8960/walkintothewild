@@ -3,7 +3,7 @@
 		<div class=" main-container container-fluid">
 			<div class="main-header-left ">
 				<div class="responsive-logo">
-					<a href="index.html" class="header-logo">
+					<a href="/" class="header-logo">
 						<img src="/img/logo.png" class="mobile-logo logo-1" alt="logo">
 						<img src="/img/logo-white.png" class="mobile-logo dark-logo-1" alt="logo">
 					</a>
@@ -13,7 +13,7 @@
 					<a class="close-toggle" href="javascript:void(0);"><i class="header-icon fe fe-x"></i></a>
 				</div>
 				<div class="logo-horizontal">
-					<a href="index.html" class="header-logo">
+					<a href="/" class="header-logo">
 						<img src="/img/logo.png" class="mobile-logo logo-1" alt="logo">
 						<img src="/img/logo-white.png" class="mobile-logo dark-logo-1" alt="logo">
 					</a>

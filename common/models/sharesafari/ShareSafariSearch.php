@@ -1,10 +1,10 @@
 <?php
 
-namespace frontend\models;
+namespace common\models\sharesafari;
+
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\sharesafari\ShareSafari;
 
 /**
  * ShareSafariSearch represents the model behind the search form of `common\models\sharesafari\ShareSafari`.
@@ -16,8 +16,6 @@ class ShareSafariSearch extends ShareSafari
     public $estimated_price_filter;
     public $date_filter;
     public $title;
-
-
 
 
     /**
@@ -50,7 +48,7 @@ class ShareSafariSearch extends ShareSafari
      */
     public function search($params, $pagination = true)
     {
-        $query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]]);
+        $query = ShareSafari::find();
 
         // add conditions that should always apply here
 

@@ -8,7 +8,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 <div class="sticky">
 	<aside class="app-sidebar ">
 		<div class="main-sidebar-header active" style="background: #09422D !important;">
-			<a class="header-logo active" href="#">
+			<a class="header-logo active" href="/">
 				<img src="/img/logo.png" class="main-logo  desktop-logo" alt="logo">
 				<img src="/img/2.jpg" class="main-logo  desktop-dark" alt="logo">
 				<img src="/img/2.jpg" class="main-logo  mobile-logo" alt="logo">
@@ -690,8 +690,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/sharesafari/default/index",
-														"/sharesafari/default/index",
-														"/sharesafari/default/replies",
+														"/sharesafari/default/view",
 													)) ? "active" : "" ?>" href="/sharesafari/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span></a>
 					</li>
 
