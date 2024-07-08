@@ -73,7 +73,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                     <div class="col mb-5">
                                         <div class="artical_cards h-100">
                                             <div class="image-box">
-                                                <figure class="image"><a href="/article/<?= $model->slug ?>"><img src="<?= isset($model->feature_image) ? $model->featureimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                                <figure class="image"><a href="/article/<?= $model->slug ?>"><img src="<?= isset($model->banner_image) ? $model->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                                                 </figure>
                                             </div>
                                             <div class="lower-content">
