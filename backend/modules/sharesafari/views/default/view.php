@@ -11,7 +11,7 @@ AppAsset::register($this);
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Safari Tour Operator Registration';
+$this->title = 'Share Safari';
 $this->params['title'] = $this->title;
 ?>
 <div class="col-lg-12 order-lg-1 order-2">
