@@ -2395,6 +2395,15 @@ figure {
     font-weight: 600;
     font-size: var(--fs-18);
     margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+.pname:hover{
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
 }
 
 .detailsText p {
