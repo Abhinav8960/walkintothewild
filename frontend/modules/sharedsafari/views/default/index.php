@@ -146,7 +146,7 @@ $recentposts = ArticleSearch::recentpost();
                                                         </div>
                                                         <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
                                                             <p class="text_safari">SEATS</p>
-                                                            <h6 class="number-safari"><?= $share_safari->total_seat ?></h6>
+                                                            <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
                                                         </div>
                                                     </div>
                                                 </div>

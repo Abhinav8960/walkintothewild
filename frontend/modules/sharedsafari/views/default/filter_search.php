@@ -45,7 +45,7 @@ use common\models\park\SafariPark;
             </div>
         </div>
         <div class="title_filter mb-4">
-            <h6>Estimate Price Per Person</h6>
+            <h6>Budget Price Per Person</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'estimated_price_filter')->checkboxList(
                     GeneralModel::estimatedpriceoption(),

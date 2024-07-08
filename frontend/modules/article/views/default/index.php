@@ -64,7 +64,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                     <div class="col-lg-8 col-xl-8 col-xxl-9 ps-xl-0">
                         <?php if (isset($sub_title)) { ?>
                             <div class="topics_tags">
-                                <p class="fs-3 pb-3 mb-3 mt-2" style="font-style: italic; font-size: var(--fs-15);"><?= isset($sub_title) ? $sub_title : '' ?></p>
+                                <p class="fs-3 pb-3 mb-3 mt-2" style="font-style: italic;"><?= isset($sub_title) ? $sub_title : '' ?></p>
                             </div>
                         <?php } ?>
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 ">
@@ -78,7 +78,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                             </div>
                                             <div class="lower-content">
                                                 <ul class="artical-info ">
-                                                    <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $model->articleAuthor ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
+                                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $model->articleAuthor ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
 
                                                 </ul>
                                                 <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>
@@ -86,7 +86,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                                 <div class="artical-info justify-content-center">
                                                     <a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $model->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a>
 
-                                                    <span style="color: #9C9C9C;"><i class="fa-solid fa-calendar-days me-1" style="color:#f8cd67;"></i><?= date('M d, Y', strtotime($model->article_date)) ?></span>
+                                                    <span style="color: #9C9C9C;"><i class="fa-solid fa-calendar-days me-1" style="color:#f9d600;"></i><?= date('M d, Y', strtotime($model->article_date)) ?></span>
                                                 </div>
 
 

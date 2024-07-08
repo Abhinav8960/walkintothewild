@@ -58,7 +58,7 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                     <div class="author_wrapper">
                         <ul class="artical-info ">
-                            <li><img src="<?= $this->params['baseurl'] ?>/img/author.png" alt=""><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $article->articleAuthor ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
+                            <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $article->articleAuthor ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
                             <li><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($article->article_date)) ?></li>
 
