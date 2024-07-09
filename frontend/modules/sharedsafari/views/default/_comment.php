@@ -110,10 +110,14 @@ use yii\helpers\Url;
 
 
     </div>
-    <?php if (Yii::$app->user->id) { ?>
-        <?= $this->render('_comment_form', ['model' => $model]) ?>
+    <?php if ($share_safari->status == 2) {
+        echo "Comment Closed for this Safari..." ?>
+        <?php } else {
+        if (Yii::$app->user->id) { ?>
+            <?= $this->render('_comment_form', ['model' => $model]) ?>
     <?php } else {
-        echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
+            echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
+        }
     } ?>
 </div>
 <script>

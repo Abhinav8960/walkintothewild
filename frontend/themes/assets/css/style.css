@@ -657,6 +657,7 @@ a {
     color: #152F1B;
     border: 0;
     border-radius: 8px;
+    width: 100%;
 }
 
 .icons {
@@ -1674,6 +1675,11 @@ figure {
 .comments-persons {
 
     padding: 8px 6px;
+}
+
+.blog-comment-text .font-color{
+
+    flex: 1;
 }
 
 .request_btn {
@@ -3888,6 +3894,15 @@ figure {
 .input_check label {
 
     font-size: 14px;
+    flex: 1;
+}
+.safridetails_form .text-form{
+
+    flex: 1; 
+}
+.postcomment .text_com{
+    flex: 1; 
+
 }
 
 .input_check .form-group>div label {
