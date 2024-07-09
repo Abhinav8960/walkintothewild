@@ -777,8 +777,8 @@ a {
 
 .date_bx h6 {
 
-    font-size: var(--fs-15);
-    color: var(--color1);
+    font-size: var(--fs-15) !important;
+    color: var(--color1) !important;
 }
 
 .users {

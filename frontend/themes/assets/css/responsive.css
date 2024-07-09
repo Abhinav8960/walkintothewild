@@ -178,6 +178,10 @@ line-height: 19px;
 
         margin-top: 290px !important;
     }
+    .safari_wrapper.margin-setposi{
+
+        margin-top: 290px !important;
+    }
     /* Sticky sidebar styles */
 
  .margin-added{
@@ -414,6 +418,10 @@ line-height: 19px;
 
         margin-top: 330px !important;
     }
+    .safari_wrapper.margin-setposi{
+
+        margin-top: 330px !important;
+    }
 
     /* .menu-navbar-nav .nav-item .nav-link{
 
@@ -579,6 +587,11 @@ display: none;
 
         margin-top: 400px !important;
     }
+    .safari_wrapper.margin-setposi{
+
+        margin-top: 400px !important;
+    }
+
     /* .placeholder_select {
 
         left: 17%;
@@ -623,6 +636,11 @@ display: none;
         width: 100%;
     } */
     .articals_wrapper.margin-setposi{
+
+        margin-top: 381px !important;
+    }
+    
+    .safari_wrapper.margin-setposi{
 
         margin-top: 381px !important;
     }
@@ -690,6 +708,10 @@ display: none;
         align-items: center;
         justify-content: center;
         width: 100%;
+    }
+    .images_tour.select_safrai{
+
+        height: 125px;
     }
 
     /* .banner_section picture img {

@@ -17,4 +17,8 @@ class WildlifetourController extends FrontendBaseController
     {
         return $this->render('index');
     }
+    public function actionSelect()
+    {
+        return $this->render('selectsafari');
+    }
 }
