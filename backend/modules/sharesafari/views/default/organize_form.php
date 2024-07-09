@@ -58,13 +58,13 @@ use yii\helpers\Html;
 
 
         <?php
-        if ($model->shared_safari_request_model->image) { ?>
-            <div class="col-md-3">
+        if ($model->shared_safari_model->image) { ?>
+            <div class="col-md-12">
                 <label for="" class="Modal_label">Current Display Image</label>
-                <?php echo '<img src="' . $model->shared_safari_request_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
             </div>
 
-            <div class="col-6 mb-2">
+            <div class="col-12 mb-2">
                 <label for="" class="Modal_label">Browse Image</label>
                 <div class="col-md-12">
                     <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
@@ -73,19 +73,19 @@ use yii\helpers\Html;
         <?php } ?>
 
         <?php
-        if ($model->shared_safari_request_model->image == null) {
-            if ($model->shared_safari_request_model->park_id) { ?>
-                <div class="col-sm-3">
+        if ($model->shared_safari_model->image == null) {
+            if ($model->shared_safari_model->park_id) { ?>
+                <div class="col-sm-12">
                     <label for="" class="Modal_label">Current Display Image</label>
-                    <?php echo '<img src="' . $model->shared_safari_request_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                    <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
                 </div>
             <?php } else { ?>
-                <div class="col-sm-3 mb-2">
+                <div class="col-sm-12 mb-2">
                     <label for="" class="Modal_label">Current Display Image</label>
                     <img src="" id="park_image" alt="" width="100%" height="100px">
                 </div>
             <?php } ?>
-            <div class="col-sm-9 mb-2">
+            <div class="col-sm-12 mb-2">
                 <label for="" class="Modal_label">Browse Image</label>
                 <div class="col-md-12">
                     <?= $form->field($model, 'shared_safari_image')->fileInput()->label(false) ?>
@@ -95,13 +95,13 @@ use yii\helpers\Html;
 
         ?>
 
-        <div class="col-md-6 mb-1">
+        <div class="col-md-12 mb-1">
             <label for="" class="Modal_label">Agenda</label>
             <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 
         </div>
 
-        <div class="col-md-6 mb-1">
+        <div class="col-md-12 mb-1">
             <label for="" class="Modal_label">Number of Safaris</label>
             <?= $form->field($model, 'no_of_safari')->textInput()->label(false) ?>
         </div>
@@ -119,11 +119,11 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-        <div class="col-md-6 mb-2">
+        <div class="col-md-12 mb-2">
             <label for="" class="Modal_label">Stay Category</label>
             <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => ' Budget', '2' => 'Economical', '3' => 'Premium'], ['class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
-        <div class="col-lg-6 mb-2">
+        <div class="col-lg-12 mb-2">
             <label for="" class="Modal_label">Estimate Price Per Person (INR)</label>
             <div class="d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'estimate_price_min')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control', 'placeholder' => 1000])->label(false) ?>
@@ -175,13 +175,13 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-        <?php if (isset($model->shared_safari_request_model->id)) { ?>
+        <?php if (isset($model->shared_safari_model->id)) { ?>
             <?= $form->field($model, 'status')->checkbox(['value' => "2"])->label('Mark as completed') ?>
         <?php } ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <?php if (isset($model->shared_safari_request_model->id)) { ?>
+                <?php if (isset($model->shared_safari_model->id)) { ?>
                     <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                 <?php } else {  ?>
                     <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>

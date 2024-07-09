@@ -96,7 +96,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
      */
     public static function approvaloption()
     {
-        return [1 => 'Approved', 3 => 'Disapprove'];
+        return [1 => 'Approved', 0 => 'Disapprove'];
     }
     /**
      * Get Status Active/Inactive Options List

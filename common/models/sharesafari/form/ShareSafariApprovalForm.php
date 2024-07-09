@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariRequest;
 
 /**
  * @author Smriti Pal <smritipal2201@gmial.com>
@@ -17,22 +18,22 @@ class ShareSafariApprovalForm extends model
 {
 
 
-    public $status;
-    public $share_safari_model;
+    public $is_approved;
+    public $share_safari_request_approval_model;
 
 
-    public function __construct(ShareSafari $share_safari_model = null)
+    public function __construct(ShareSafariRequest $share_safari_request_approval_model = null)
     {
 
-        $this->share_safari_model = Yii::createObject([
-            'class' => ShareSafari::className()
+        $this->share_safari_request_approval_model = Yii::createObject([
+            'class' => ShareSafariRequest::className()
         ]);
 
 
 
-        if ($share_safari_model  != '') {
-            $this->share_safari_model = $share_safari_model;
-            $this->status              =  $this->share_safari_model->status;
+        if ($share_safari_request_approval_model  != '') {
+            $this->share_safari_request_approval_model = $share_safari_request_approval_model;
+            $this->is_approved              =  $this->share_safari_request_approval_model->is_approved;
         }
     }
 
@@ -45,8 +46,8 @@ class ShareSafariApprovalForm extends model
 
 
         return [
-            [['status'], 'integer'],
-            [['status'], 'required'],
+            [['is_approved'], 'integer'],
+            [['is_approved'], 'required'],
 
         ];
     }
@@ -58,7 +59,7 @@ class ShareSafariApprovalForm extends model
     {
         return [
             'id' => 'ID',
-            'status' => 'Status',
+            'is_approved' => 'Status',
         ];
     }
     /**
@@ -68,6 +69,6 @@ class ShareSafariApprovalForm extends model
      */
     public function initializeForm()
     {
-        $this->share_safari_model->status =  $this->status;
+        $this->share_safari_request_approval_model->is_approved =  $this->is_approved;
     }
 }

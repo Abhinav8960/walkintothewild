@@ -8,7 +8,9 @@ use common\models\sharesafari\form\ShareSafariApprovalForm;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariSearch;
+use frontend\models\form\SharedSafariRequestForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -26,6 +28,10 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new ShareSafariSearch();
+
+        if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) {
+            $searchModel->host_user_id = Yii::$app->user->identity->id;
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -75,26 +81,62 @@ class DefaultController extends Controller
         }
     }
 
-    public function actionApproved($id)
+
+
+    public function actionOrganizeSafari($id)
     {
-        $share_safari_model = $this->findModel($id);
-        $model = new ShareSafariApprovalForm($share_safari_model);
+        $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $model = new SharedSafariRequestForm($shared_safari_model);
+        $model->share_safari_id = $id;
+        $model->status = ShareSafariRequest::STATUS_ACTIVE;
+        $model->action_url = '/sharesafari/default/organize-safari?id=' . $id . '';
+        $model->action_validate_url = '/sharesafari/default/validate?id=' . $id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
+
+                $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->share_safari_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['view', 'id' => $id]);
+                    if ($model->shared_safari_request_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_request_model->id);
+
+                        \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
+                        return $this->redirect(['index']);
                     }
+                } else {
+                    print_r($model->errors);
+                    exit;
                 }
             }
         } else {
-            $model->share_safari_model->loadDefaultValues();
+            $model->shared_safari_request_model->loadDefaultValues();
         }
-        return $this->renderAjax('update', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('organize_form', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('organize_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+
+    public function actionValidate($id = null)
+    {
+
+        if ($id != null) {
+            $shared_safari_request_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+            $model = new SharedSafariRequestForm($shared_safari_request_model);
+        } else {
+
+            $model = new SharedSafariRequestForm();
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 
     public function findModel($id)

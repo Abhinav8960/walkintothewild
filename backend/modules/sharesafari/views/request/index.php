@@ -7,7 +7,7 @@
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-$this->title = 'Share Safari';
+$this->title = 'Share Safari Request';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -81,7 +81,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->approvallabel;
                         }
                     ],
                     [

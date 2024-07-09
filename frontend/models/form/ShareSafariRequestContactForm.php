@@ -5,7 +5,6 @@ namespace frontend\models\form;
 use Yii;
 use common\interfaces\StatusInterface;
 use common\models\share_safari_id\ShareSafari;
-use common\models\sharesafari\ShareSafariHistory;
 use common\models\sharesafari\ShareSafariRequestContact;
 
 class ShareSafariRequestContactForm extends \yii\base\Model

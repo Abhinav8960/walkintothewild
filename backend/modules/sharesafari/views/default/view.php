@@ -17,9 +17,15 @@ $this->params['title'] = $this->title;
 
 <div class="row my-4">
     <div class="col-12">
-        <div class="btn_set float-end">
-            <button class="history_btn" value="<?= Url::toRoute(['/sharesafari/default/approved', 'id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="<?= $share_safari->approvallabel ?>" style="color:white;"><?= $share_safari->approvallabel ?></button>
-        </div>
+        <?php if (Yii::$app->user->identity) {
+            if (Yii::$app->user->identity->id == $share_safari->host_user_id) {
+        ?>
+                <div class="btn_set float-end">
+                    <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharesafari/default/organize-safari', 'id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" style="color:white;"><i class="fas fa-edit me-1"></i> Update
+                        Safari</button>
+                </div>
+        <?php }
+        } ?>
         <div class="wrapper-skybgsafri">
             <div class="row border_bottom2 pb-4">
                 <div class="col-lg-7 col-md-8 border-right">
@@ -268,12 +274,13 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
-<div class="modal fade" id="modalApprove" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header flageHeader">
                 <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Approval Form
+                    Update Share Safari
                 </h6>
             </div>
 
@@ -284,7 +291,6 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
-
 <?php
 $script = <<< JS
 
@@ -297,8 +303,8 @@ function writeareviewfunction() {
 		.load($(this).attr('value'));
 	});
 
-    $('.history_btn').on('click', function () {
-        $('#modalApprove').modal('show')
+    $('.btn_newsafari').on('click', function () {
+        $('#modalUpdate').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});

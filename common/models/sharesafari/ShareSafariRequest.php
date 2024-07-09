@@ -30,7 +30,7 @@ use common\traits\CommanRelationship;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ShareSafariRequest extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
 
@@ -44,7 +44,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
      */
     public static function tableName()
     {
-        return 'share_safari';
+        return 'share_safari_request';
     }
 
 
@@ -63,8 +63,8 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function rules()
     {
         return [
-            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['start_date', 'end_date', 'slug'], 'safe'],
+            [['host_user_id', 'share_safari_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['start_date', 'end_date', 'slug', 'is_approved'], 'safe'],
             [['safari_plan'], 'string'],
             [['image'], 'string'],
         ];
@@ -103,6 +103,11 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 
+    public function getSharesafari()
+    {
+        return $this->hasOne(ShareSafari::className(), ['share_safari_request_id' => 'share_safari_id']);
+    }
+
 
     public function getUser()
     {
@@ -118,7 +123,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function getSharedimagepath()
     {
 
-        return isset($this->image) ? ('/storage/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image) ? ('/storage/share_safari_request/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()

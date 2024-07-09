@@ -5,13 +5,14 @@ namespace frontend\models\form;
 use Yii;
 use common\interfaces\StatusInterface;
 use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariRequest;
 
-
-class SharedSafariForm extends \yii\base\Model
+class SharedSafariRequestForm extends \yii\base\Model
 {
+    public $shared_safari_request_model;
     public $shared_safari_model;
+    public $share_safari_id;
     public $host_user_id;
-    public $share_safari_request_id;
     public $host_type;
     public $park_id;
     public $share_safari_agenda_id;
@@ -24,6 +25,7 @@ class SharedSafariForm extends \yii\base\Model
     public $safari_plan;
     public $total_seat;
     public $share_seat;
+    public $is_approved;
     public $status;
     public $shared_safari_image;
     public $website_url;
@@ -34,6 +36,10 @@ class SharedSafariForm extends \yii\base\Model
 
     public function __construct(ShareSafari $shared_safari_model = null)
     {
+        $this->shared_safari_request_model = Yii::createObject([
+            'class' => ShareSafariRequest::className()
+        ]);
+
         $this->shared_safari_model = Yii::createObject([
             'class' => ShareSafari::className()
         ]);
@@ -42,7 +48,6 @@ class SharedSafariForm extends \yii\base\Model
 
             $this->host_user_id =  $this->shared_safari_model->host_user_id;
             $this->host_type =  $this->shared_safari_model->host_type;
-            $this->share_safari_request_id =  $this->shared_safari_model->share_safari_request_id;
             $this->park_id =  $this->shared_safari_model->park_id;
             $this->share_safari_agenda_id =  $this->shared_safari_model->share_safari_agenda_id;
             $this->no_of_safari =  $this->shared_safari_model->no_of_safari;
@@ -63,13 +68,14 @@ class SharedSafariForm extends \yii\base\Model
     {
         return [
             [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
-            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
-            [['start_date', 'end_date'], 'safe'],
+            [['host_user_id', 'share_safari_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
+            [['start_date', 'end_date', 'is_approved', 'website_url'], 'safe'],
             [
                 ['website_url'], 'required', 'when' => function ($model) {
                     return $model->host_type != 4;
                 }
             ],
+            [['is_approved'], 'default', 'value' => 0],
             [['safari_plan'], 'string'],
             [['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
             ['estimate_price_max', 'compare', 'compareAttribute' => 'estimate_price_min', 'operator' => '>='],
@@ -112,43 +118,42 @@ class SharedSafariForm extends \yii\base\Model
      */
     public function initializeForm()
     {
-        $this->shared_safari_model->host_user_id = $this->host_user_id;
-        $this->shared_safari_model->host_type = $this->host_type;
-        $this->shared_safari_model->share_safari_request_id = $this->share_safari_request_id;
-        $this->shared_safari_model->park_id = $this->park_id;
-        $this->shared_safari_model->share_safari_agenda_id = $this->share_safari_agenda_id;
-        $this->shared_safari_model->no_of_safari = $this->no_of_safari;
-        $this->shared_safari_model->start_date = $this->start_date;
-        $this->shared_safari_model->end_date = $this->end_date;
-        $this->shared_safari_model->stay_category_id = $this->stay_category_id;
-        $this->shared_safari_model->estimate_price_min = $this->estimate_price_min;
-        $this->shared_safari_model->estimate_price_max = $this->estimate_price_max;
-        $this->shared_safari_model->safari_plan = $this->safari_plan;
-        $this->shared_safari_model->total_seat = $this->total_seat;
-        $this->shared_safari_model->share_seat = $this->share_seat;
-        $this->shared_safari_model->website_url = $this->website_url;
-        $this->shared_safari_model->status = $this->status;
+        $this->shared_safari_request_model->host_user_id = $this->host_user_id;
+        $this->shared_safari_request_model->host_type = $this->host_type;
+        $this->shared_safari_request_model->park_id = $this->park_id;
+        $this->shared_safari_request_model->share_safari_id = $this->share_safari_id;
+        $this->shared_safari_request_model->share_safari_agenda_id = $this->share_safari_agenda_id;
+        $this->shared_safari_request_model->no_of_safari = $this->no_of_safari;
+        $this->shared_safari_request_model->start_date = $this->start_date;
+        $this->shared_safari_request_model->end_date = $this->end_date;
+        $this->shared_safari_request_model->stay_category_id = $this->stay_category_id;
+        $this->shared_safari_request_model->estimate_price_min = $this->estimate_price_min;
+        $this->shared_safari_request_model->estimate_price_max = $this->estimate_price_max;
+        $this->shared_safari_request_model->safari_plan = $this->safari_plan;
+        $this->shared_safari_request_model->total_seat = $this->total_seat;
+        $this->shared_safari_request_model->share_seat = $this->share_seat;
+        $this->shared_safari_request_model->website_url = $this->website_url;
+        $this->shared_safari_request_model->is_approved = $this->is_approved;
+        $this->shared_safari_request_model->status = ShareSafariRequest::STATUS_ACTIVE;
 
-        if ($this->shared_safari_model->slug == '') {
-            $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_model->user->name));
+        if ($this->shared_safari_request_model->slug == '') {
+            $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_request_model->user->name));
             $string = preg_replace('/[^A-Za-z0-9\-]/', '', $without_space_string);
-            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_model->host_user_id . time() . '-shared-safari';
-            $this->shared_safari_model->slug = $slug;
+            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_request_model->host_user_id . time() . '-shared-safari';
+            $this->shared_safari_request_model->slug = $slug;
         }
     }
-
-
 
     public function UploadFiles($id)
     {
         if ($this->shared_safari_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/share_safari';
+            $storagePath = Yii::$app->params['datapath'] . '/share_safari_request';
 
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
-            $storagePath = $storagePath . '/' . $this->shared_safari_model->id;
+            $storagePath = $storagePath . '/' . $this->shared_safari_request_model->id;
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
@@ -157,8 +162,8 @@ class SharedSafariForm extends \yii\base\Model
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->shared_safari_image->saveAs($filePath)) {
-                $this->shared_safari_model->image = $fileName;
-                $this->shared_safari_model->save(false);
+                $this->shared_safari_request_model->image = $fileName;
+                $this->shared_safari_request_model->save(false);
             }
         }
     }

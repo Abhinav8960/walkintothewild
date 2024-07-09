@@ -52,10 +52,10 @@ trait CommanRelationship
     {
         $statuses = GeneralModel::approvaloption();
 
-        if (isset($statuses[$this->status])) {
-            if ($this->status == 1) {
+        if (isset($statuses[$this->is_approved])) {
+            if ($this->is_approved == 1) {
                 return '<img src="/img/active.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
-            } else if ($this->status == 3) {
+            } else if ($this->is_approved == 0) {
                 return '<img src="/img/suspend.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
             }
         }
@@ -63,7 +63,7 @@ trait CommanRelationship
     }
 
 
-     /**
+    /**
      * Status Label
      *
      * @return void
@@ -72,10 +72,10 @@ trait CommanRelationship
     {
         $statuses = GeneralModel::approvaloption();
 
-        if (isset($statuses[$this->status])) {
-            if ($this->status == 1) {
+        if (isset($statuses[$this->is_approved])) {
+            if ($this->is_approved == 1) {
                 return 'Approved';
-            } else if ($this->status == 3) {
+            } else if ($this->is_approved == 0) {
                 return 'Disapproved';
             }
         }
