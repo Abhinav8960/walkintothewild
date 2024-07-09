@@ -8,14 +8,13 @@ namespace frontend\controllers;
  */
 class WildlifetourController extends FrontendBaseController
 {
-    /**
-     * Renders the index view for the module
-     * @return string
+  /**
+     * Displays Safari tour form Page.
+     *
+     * @return mixed
      */
     public function actionIndex()
     {
-        return $this->render(
-            'index'
-        );
+        return $this->render('index');
     }
 }
