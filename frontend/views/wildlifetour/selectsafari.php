@@ -35,12 +35,8 @@ $this->params['title'] = $this->title;
 
 <section class="safari_wrapper margin-setposi py-3 py-3 mb-5">
   <div class="container-lg">
-
     <div class="row my-4">
       <div class="col-12">
-        <div class="btn_set float-end">
-          <button class=" history_btn" value="/sharedsafari/default/history?slug=vikas-chaudhary-8eb1ec-251720186292-shared-safari" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></button>
-        </div>
         <div class="wrapper-skybgsafri">
           <div class="row border_bottom2 pb-4">
             <div class="col-lg-7 col-md-8 border-right">
@@ -73,9 +69,9 @@ $this->params['title'] = $this->title;
             <div class="col-lg-5 pt-lg-0 pt-4">
               <div class="row px-sm-4 px-0">
                 <div class="col-12 col-sm-6  mb-3">
-                  <div class="safridetails_form d-flex gap-3 align-items-center">
+                  <div class="safridetails_form d-flex gap-3 ">
                     <div class="iconImg">
-                      <img src="/assets/779f5fee/img/Share-Safari/safari_4391688.png" alt="">
+                      <img src="http://app.walkintothewild.io/assets/5a869828/img/hotel_forest_location.png" alt="">
                     </div>
                     <div class="text-form">
                       <p class="mb-0">1 Safaris</p>
@@ -83,9 +79,9 @@ $this->params['title'] = $this->title;
                   </div>
                 </div>
                 <div class="col-12 col-sm-6  mb-3">
-                  <div class="safridetails_form d-flex gap-3 align-items-center">
+                  <div class="safridetails_form d-flex gap-3 ">
                     <div class="iconImg">
-                      <img src="/assets/779f5fee/img/Share-Safari/car-seat_5102816.png" alt="">
+                      <img src="http://app.walkintothewild.io/assets/5a869828/img/gypsycanter.png" alt="">
                     </div>
                     <div class="text-form">
                       <p class="mb-0">Available Seats - 4/2</p>
@@ -93,9 +89,9 @@ $this->params['title'] = $this->title;
                   </div>
                 </div>
                 <div class="col-12 col-sm-6  mb-3">
-                  <div class="safridetails_form d-flex gap-3 align-items-center">
+                  <div class="safridetails_form d-flex gap-3 ">
                     <div class="iconImg">
-                      <img src="/assets/779f5fee/img/Share-Safari/camera.png" alt="">
+                      <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
                     </div>
                     <div class="text-form">
                       <p class="mb-0">Vlogging</p>
@@ -103,19 +99,29 @@ $this->params['title'] = $this->title;
                   </div>
                 </div>
                 <div class="col-12 col-sm-6  mb-3">
-                  <div class="safridetails_form d-flex gap-3 align-items-center">
+                  <div class="safridetails_form d-flex gap-3 ">
                     <div class="iconImg">
-                      <img src="/assets/779f5fee/img/Share-Safari/resort_11834952.png" alt="">
+                      <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
                     </div>
                     <div class="text-form">
                       <p class="mb-0">Premium</p>
                     </div>
                   </div>
                 </div>
-                <div class="col-12 ">
-                  <div class="safridetails_form d-flex gap-3 align-items-center">
+                <div class="col-12 col-sm-6 ">
+                  <div class="safridetails_form d-flex gap-3 ">
                     <div class="iconImg">
-                      <img src="/assets/779f5fee/img/Share-Safari/rupee_3104891.png" alt="">
+                      <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                    </div>
+                    <div class="text-form">
+                      <p class="mb-0">4- 6 Estimate Per Person Cost</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-6 ">
+                  <div class="safridetails_form d-flex gap-3 ">
+                    <div class="iconImg">
+                      <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
                     </div>
                     <div class="text-form">
                       <p class="mb-0">4- 6 Estimate Per Person Cost</p>
@@ -127,7 +133,7 @@ $this->params['title'] = $this->title;
           </div>
           <div class="row pt-md-4 align-items-center gx-4">
 
-            <div class="col-lg-6">
+            <div class="col-lg-7">
               <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                 <p>Share this event with your friends:</p>
                 <div class="sociel_icons ps-3">
@@ -145,12 +151,167 @@ $this->params['title'] = $this->title;
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 d-lg-block  mobile_didplay_block">
-              <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                <a class="join_btn  mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=vikas-chaudhary-8eb1ec-251720186292-shared-safari">Join Safari</a>
+            <div class="col-lg-5 d-lg-block  mobile_didplay_block">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="pakageCost">
+                  <h6 class="fs-4 mb-0">25,000 +GST</h6>
+                </div>
+                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                  <a class="join_btn  mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=vikas-chaudhary-8eb1ec-251720186292-shared-safari">Book Now</a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4 mt-5 justify-content-center mt-4 itenary_tabs">
+      <div class="col-lg-12 col-xl-12 safartabs position-relative">
+        <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">AINCLUSIONS</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">EXCLUSIONS</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#howto-reach-pan" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">TERMS & CONDITIONS</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false" tabindex="-1">ACCOMODATION</button>
+          </li>
+        </ul>
+        <div class="tab-content accordion" id="myTabContent">
+          <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+            <h2 class="accordion-header d-lg-none" id="headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Overview</button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+              <div class="accordion-body p-3">
+                <div class="row">
+                  <div class="col-lg-6 mb-3">
+                    <div class="itenary-title">
+                      <h6 class="fs-5 pb-2">ABOUT TRIP / OVERVIEW</h6>
+                    </div>
+                    <div class="itenary_text">
+
+                      <p>Five Tiger Reserve Tour covers all the tiger reserves of Madhya Pradesh and is ideal for a wildlife enthusiast not wanting to miss out anything. This tour covers Panna - Bandhavgarh - Kanha - Pench – Satpura national parks spreading across the complete length & breadth of the state. This is a holistic wildlife experience offering the very best of Central India. Trip not only offers high chance of Royal Bengal Tiger but also provides with an opportunity to explore the diverse flora & fauna of Central India with each park offering a unique habitat.</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 mb-3">
+                    <div class="itenary-title">
+                      <h6 class="fs-5 pb-2">LOCATION</h6>
+                    </div>
+                    <div class="itenary_text">
+                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.627337221733!2d77.36012777632219!3d28.61095457567664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d054809ac1cc3%3A0xf081c1e27610b8f2!2sTriline%20Infotech%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1720531973102!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="row pt-4">
+                  <div class="col-12">
+                    <div class="accordion accordion-flush" id="accordionFlushExample">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                          DAY 1 - Check-in and relax
+                          </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                        </div>
+                      </div>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingTwo">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                          DAY 2 - Morning and Evening Safari
+                          </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                        </div>
+                      </div>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingThree">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                          DAY 3 - Morning Safari and Sight Seeing
+                          </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Rendered on 2024-07-09 13:16:37 -->
+          </div>
+          <div class="tab-pane fade accordion-item" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <h2 class="accordion-header d-lg-none" id="headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                About Park
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
+              <div class="accordion-body height_set">
 
               </div>
             </div>
+            <!-- Rendered on 2024-07-09 13:16:37 -->
+          </div>
+          <div class="tab-pane fade accordion-item" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+            <h2 class="accordion-header d-lg-none" id="headingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                FLORA &amp; FAUNA
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingThree" data-bs-parent="#myTabContent">
+              <div class="accordion-body height_set">
+
+              </div>
+            </div>
+            <!-- Rendered on 2024-07-09 13:16:37 -->
+          </div>
+          <div class="tab-pane fade accordion-item" id="howto-reach-pan" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
+            <h2 class="accordion-header d-lg-none" id="headingFour">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                HOW TO REACH
+              </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+              <div class="accordion-body height_set">
+
+              </div>
+            </div>
+            <!-- Rendered on 2024-07-09 13:16:37 -->
+          </div>
+          <div class="tab-pane fade accordion-item" id="map-tab-pane" role="tabpanel" aria-labelledby="map-tab" tabindex="0">
+            <h2 class="accordion-header d-lg-none" id="headingFive">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                MAP
+              </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
+              <div class="accordion-body height_set">
+
+                <iframe width="100%" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps?q=23.721942,81.019378&amp;hl=es&amp;z=13&amp;output=embed" allowfullscreen="">
+                </iframe>
+
+              </div>
+            </div>
+            <!-- Rendered on 2024-07-09 13:16:37 -->
           </div>
         </div>
       </div>

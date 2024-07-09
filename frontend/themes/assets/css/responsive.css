@@ -1,5 +1,11 @@
 @media only screen and (min-width:1600px) {
 
+    .postthumbnail img{
+
+     height: 56px;
+    object-fit: cover;
+    }
+
     .title_web h2 {
 
         font-size: var(--fs-40);
@@ -95,6 +101,7 @@
     }
 } */
 @media(min-width:1500px){
+   
     .container-fluid {
 
         padding-left: 55px !important;
@@ -244,6 +251,11 @@ line-height: 19px;
         height: 600px;
       
     }
+    .postthumbnail img{
+
+        height: 47px;
+       object-fit: cover;
+       }
     /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 75.5%;
@@ -257,11 +269,13 @@ line-height: 19px;
     } */
 }
 
+
 @media only screen and (max-width: 1500px) and (min-width: 991px) {
     .artical_cards .lower-content {
 
         padding: 31px 15px 25px 15px;
     }
+   
     .safri_tour .titlerescent h3{
 
         font-size: 14px;
@@ -557,6 +571,11 @@ display: none;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .postthumbnail img{
+
+        height: 70px;
+       object-fit: cover;
+       }
 
     .sahreSafari.desktop{
 
@@ -1279,6 +1298,11 @@ display: none;
 }
 
 @media only screen and (max-width:767px) {
+    .postthumbnail img{
+
+        height: 50px;
+       object-fit: cover;
+       }
     .desktop_postion.border_top2{
 
         display: none;
@@ -1572,7 +1596,22 @@ display: block;
     }
 }
 
+@media only screen and (max-width: 575px) and (min-width: 420px){
+    .postthumbnail img{
+
+        height: calc(15vw) !important; /* Adjust the 10vw to whatever proportion of the viewport width you desire */
+    max-height: 80px !important; /* Optional: set a maximum height */
+    object-fit: cover; /* This maintains the aspect ratio and covers the area */;
+       }
+}
+
+
 @media only screen and (max-width:576px) {
+    .postthumbnail img{
+
+        height: 100px;
+       object-fit: cover;
+       }
     .padditg_mobile{
 
         padding: 0px 20px;
@@ -1833,6 +1872,12 @@ font-size: 15px;
 }
 
 @media (max-width:420px) {
+    .postthumbnail img{
+
+        height: calc(15vw) !important; /* Adjust the 10vw to whatever proportion of the viewport width you desire */
+    max-height: 80px !important; /* Optional: set a maximum height */
+    object-fit: cover; /* This maintains the aspect ratio and covers the area */;
+       }
     /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 56%;
