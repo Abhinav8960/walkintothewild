@@ -12,6 +12,11 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
+if (Yii::$app->user->identity) {
+    if (Yii::$app->user->identity->is_safari_operator == 1) {
+        $this->params['buttons'][] = Html::Button('+ Organize New Safari', ['value' => "/sharesafari/default/organize-safari-new", 'class' => 'btn popupButton btn-orange', 'title' => 'Organize New Safari']);
+    }
+}
 
 ?>
 <div class="card">
@@ -106,3 +111,39 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Organize New Safari
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<?php
+$script = <<< JS
+
+
+    
+function writeareviewfunction() {
+     $('.popup').on('click', function () {
+        $('#modalUpdate').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+writeareviewfunction();
+    
+          
+             
+JS;
+$this->registerJs($script);
+?>
