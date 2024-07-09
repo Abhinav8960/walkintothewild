@@ -86,10 +86,30 @@ $this->params['title'] = $this->title;
               <div class="title_filter mb-3">
                 <h6 class="pb-0">Tour Duration</h6>
                 <div class="rangetours range">
-                  <input type="range" min="0" max="50" value="0" class="range-slider" />
+                  <input type="range" min="0" max="50" value="0" class="range-slider" data-display-text="Nights" />
                   <div class="range_values d-flex align-items-center justify-content-between">
                     <div class="value">0 Nights</div>
-                    <div class="range_n">10+ Nights</div>
+                    <div>10+ Nights</div>
+                  </div>
+                </div>
+              </div>
+              <div class="title_filter mb-3">
+                <h6 class="pb-0">Total Safaris</h6>
+                <div class="rangetours range">
+                  <input type="range" min="0" max="50" value="0" class="range-slider" data-display-text="" />
+                  <div class="range_values d-flex align-items-center justify-content-between">
+                    <div class="value">0</div>
+                    <div>10+ </div>
+                  </div>
+                </div>
+              </div>
+              <div class="title_filter mb-3">
+                <h6 class="pb-0">Cost (Per Person)</h6>
+                <div class="rangetours range">
+                  <input type="range" min="1000" max="50000" value="0" class="range-slider" data-display-text="" />
+                  <div class="range_values d-flex align-items-center justify-content-between">
+                    <div class="value">1000</div>
+                    <div>50000+ </div>
                   </div>
                 </div>
               </div>
@@ -558,9 +578,14 @@ $this->params['title'] = $this->title;
       const sliderEl = event.target;
       const valueEl = sliderEl.nextElementSibling.querySelector('.value');
       const tempSliderValue = sliderEl.value;
+      const displayText = sliderEl.getAttribute('data-display-text');
 
-      // Update the slider value text with the count and "Nights"
-      valueEl.textContent = `${tempSliderValue} Nights`;
+      // Update the slider value text based on the display text attribute
+      if (displayText === 'Nights') {
+        valueEl.textContent = `${tempSliderValue} Nights`;
+      } else {
+        valueEl.textContent = tempSliderValue;
+      }
 
       const progress = (tempSliderValue / sliderEl.max) * 100;
 
