@@ -7,8 +7,8 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Package Feature';
-$this->params['breadcrumbs_home_url'] = '/master/packagefeature';
+$this->title = 'Package Include';
+$this->params['breadcrumbs_home_url'] = '/master/packageinclude';
 $this->params['breadcrumbs'][] =  ['label' => 'Master', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;

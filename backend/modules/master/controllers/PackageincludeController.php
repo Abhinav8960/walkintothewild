@@ -3,17 +3,16 @@
 namespace backend\modules\master\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\master\packagefeature\form\MasterPackagefeatureForm;
-use common\models\master\packagefeature\MasterPackagefeature;
-use common\models\master\packagefeature\MasterPackagefeatureSearch;
-
+use common\models\master\packageinclude\form\MasterPackageIncludeForm;
+use common\models\master\packageinclude\MasterPackageInclude;
+use common\models\master\packageinclude\MasterPackageIncludeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
  * VehicleController.
  */
-class PackagefeatureController extends Controller
+class PackageincludeController extends Controller
 {
     /**
      * Lists all MasterCenterSeatType models.
@@ -22,7 +21,7 @@ class PackagefeatureController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MasterPackagefeatureSearch();
+        $searchModel = new MasterPackageIncludeSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -40,21 +39,21 @@ class PackagefeatureController extends Controller
      */
     public function actionCreate()
     {
-        $model = new MasterPackagefeatureForm();
+        $model = new MasterPackageIncludeForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_feature_model->save(false)) {
+                    if ($model->package_include_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->package_feature_model->loadDefaultValues();
+            $model->package_include_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -71,21 +70,21 @@ class PackagefeatureController extends Controller
      */
     public function actionUpdate($id)
     {
-        $package_feature_model = $this->findModel($id);
-        $model = new MasterPackagefeatureForm($package_feature_model);
+        $package_include_model = $this->findModel($id);
+        $model = new MasterPackageIncludeForm($package_include_model);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_feature_model->save()) {
+                    if ($model->package_include_model->save()) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->package_feature_model->loadDefaultValues();
+            $model->package_include_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -115,12 +114,12 @@ class PackagefeatureController extends Controller
      * Finds the MasterCenterSeatType model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return MasterPackagefeature the loaded model
+     * @return MasterPackageInclude the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = MasterPackagefeature::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterPackageInclude::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
