@@ -20,8 +20,8 @@ if ($rare_exotics) {
                 <img src="<?= isset($animal->banner) ? $animal->bannerimagepath : $this->params['baseurl'] . '/img/brownbearbg.jpg' ?>" alt="" class="position-relative w-100">
                 <div class="safariBox">
                     <div class="container">
-                        <div class="row align-items-center ">
-                            <div class="col-lg-6 col-md-5 col-4 text-center position-relative">
+                        <div class="row align-items-center gx-lg-auto gx-0">
+                            <div class="col-lg-6 col-md-5 col-4  text-center position-relative">
                                 <img src="<?= isset($animal->feature_image) ? $animal->imagepath : $this->params['baseurl'] . '/img/brownbear.png' ?>" alt="" class="imag_width position-relative">
                             </div>
                             <div class="col-lg-6 col-md-7 col-8">

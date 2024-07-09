@@ -4045,7 +4045,7 @@ figure {
 
     margin-top: 4px;
     border-radius: 5px;
-    min-height: 265px;
+    /* min-height: 265px; */
     max-height: 265px;
     overflow: auto;
     box-shadow: 0px 3px 6px #00000029;
@@ -4123,11 +4123,11 @@ figure {
     background-color: #F5F5F5;
 }
 
-.select_searcjBox .select_boxes:first-child .custom_dropdown {
+/* .select_searcjBox .select_boxes:first-child .custom_dropdown {
 
     max-height: unset !important;
     overflow: unset !important;
-}
+} */
 
 
 
