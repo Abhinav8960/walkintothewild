@@ -3,6 +3,7 @@
 use common\interfaces\StatusInterface;
 use common\models\GeneralModel;
 use common\models\master\bonusexperience\MasterBonusExperience;
+use common\models\meta\MetaAccommodation;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -32,7 +33,7 @@ use yii\widgets\ActiveForm;
             <h6>Accommodation</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'accomodation_id')->checkboxList(
-                    GeneralModel::accomodationoption(),
+                    ArrayHelper::map(MetaAccommodation::find()->where(['status' => StatusInterface::STATUS_ACTIVE])->andWhere(['not in', 'id', 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title'),
                     [
                         'required' => true,
                         'itemOptions' => ['class' => 'checkbox_design'],
@@ -44,7 +45,7 @@ use yii\widgets\ActiveForm;
             <h6>Bonus Experience</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'bonus_experience_id')->checkboxList(
-                    ArrayHelper::map(MasterBonusExperience::find()->where(['status' => StatusInterface::STATUS_ACTIVE])->andWhere(['not in', 'id', [4, 5]])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title'),
+                    ArrayHelper::map(MasterBonusExperience::find()->where(['status' => StatusInterface::STATUS_ACTIVE])->andWhere(['not in', 'id', 4])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title'),
                     [
                         'required' => true,
                         'itemOptions' => ['class' => 'checkbox_design'],
