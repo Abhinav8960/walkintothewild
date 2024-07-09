@@ -1,37 +1,36 @@
 <?php
 
-namespace common\models\master\packagefeature\form;
+namespace common\models\master\packageinclude\form;
 
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\master\packagefeature\MasterPackagefeature;
-
+use common\models\master\packageinclude\MasterPackageInclude;
 
 /**
  * Update and Create package_feature
  */
-class MasterPackagefeatureForm extends model
+class MasterPackageIncludeForm extends model
 {
     public $title;
     public $status;
     public $status_option = [];
-    public $package_feature_model;
+    public $package_include_model;
 
 
-    public function __construct(MasterPackagefeature $package_feature_model = null)
+    public function __construct(MasterPackageInclude $package_include_model = null)
     {
 
-        $this->package_feature_model = Yii::createObject([
-            'class' => MasterPackagefeature::className()
+        $this->package_include_model = Yii::createObject([
+            'class' => MasterPackageInclude::className()
         ]);
 
 
 
-        if ($package_feature_model  != '') {
-            $this->package_feature_model = $package_feature_model;
-            $this->title = $this->package_feature_model->title;
-            $this->status = $this->package_feature_model->status;
+        if ($package_include_model  != '') {
+            $this->package_include_model = $package_include_model;
+            $this->title = $this->package_include_model->title;
+            $this->status = $this->package_include_model->status;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -69,7 +68,7 @@ class MasterPackagefeatureForm extends model
      */
     public function initializeForm()
     {
-        $this->package_feature_model->title = $this->title;
-        $this->package_feature_model->status = $this->status;
+        $this->package_include_model->title = $this->title;
+        $this->package_include_model->status = $this->status;
     }
 }
