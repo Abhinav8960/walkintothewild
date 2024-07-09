@@ -62,7 +62,7 @@ class SafariParkSearch extends SafariPark
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 1000 : $pagination],
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
             'sort' => ['defaultOrder' => ['title' => SORT_ASC]],
 
         ]);

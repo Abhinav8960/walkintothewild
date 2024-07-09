@@ -3,6 +3,7 @@
 use common\models\sharesafari\ShareSafariIntrested;
 use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 FrontAppAsset::register($this);
@@ -177,13 +178,36 @@ $this->params['title'] = $this->title;
                 <?php } ?>
             </div>
             <div class="commentsOther  position-relative">
-                <?php if ($parent_comments = $share_safari->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
+                <?php if ($parent_comments = $share_safari->getComments()->where("parent_id IS NULL")->andWhere(['status' => [1, 2]])->all()) {
                     foreach ($parent_comments as $comments) {
                         $replies = $comments->getReplies()->where(['status' => 1])->all();
 
                 ?>
                         <div class="objec-flgs">
                             <?php if (Yii::$app->user->id) {  ?>
+                                <?php
+                                if ($comments->status == 1) {
+                                    echo  Html::a('Disapprove', ['disapprove', 'id' => $comments->id], [
+                                        'class' => 'history_btn w-100 me-5',
+                                        'style' => 'color:white;background:red !important;',
+                                        'title' => 'Disapprove',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to disapprove  ' . $comments->comment . '?',
+                                            'method' => 'post',
+                                        ],
+                                    ]);
+                                } elseif ($comments->status == 2) {
+                                    echo Html::a('Approve', ['approve', 'id' => $comments->id], [
+                                        'class' => 'history_btn w-100 me-5',
+                                        'style' => 'color:white;',
+                                        'title' => 'Disapprove',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to approve  ' . $comments->comment . '?',
+                                            'method' => 'post',
+                                        ],
+                                    ]);
+                                }
+                                ?>
                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharesafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
                             <?php } ?>
 
