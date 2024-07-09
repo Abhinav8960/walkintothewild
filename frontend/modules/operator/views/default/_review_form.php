@@ -50,26 +50,26 @@ $script = <<<JS
             $(".star_icon_1").addClass("fa-solid").css("color", "#fdbf2b");
         }
         else if (selected_value == 2) {
-            $(".star_icon_1").css("color", "#fdbf2b");
-            $(".star_icon_2").css("color", "#fdbf2b");
+            $(".star_icon_1").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_2").addClass("fa-solid").css("color", "#fdbf2b");
         }
         else if (selected_value == 3) {
-            $(".star_icon_1").css("color", "#fdbf2b");
-            $(".star_icon_2").css("color", "#fdbf2b");
-            $(".star_icon_3").css("color", "#fdbf2b");
+            $(".star_icon_1").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_2").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_3").addClass("fa-solid").css("color", "#fdbf2b");
         }
         else if (selected_value == 4) {
-            $(".star_icon_1").css("color", "#fdbf2b");
-            $(".star_icon_2").css("color", "#fdbf2b");
-            $(".star_icon_3").css("color", "#fdbf2b");
-            $(".star_icon_4").css("color", "#fdbf2b");
+            $(".star_icon_1").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_2").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_3").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_4").addClass("fa-solid").css("color", "#fdbf2b");
         }
         else {
-            $(".star_icon_1").css("color", "#fdbf2b");
-            $(".star_icon_2").css("color", "#fdbf2b");
-            $(".star_icon_3").css("color", "#fdbf2b");
-            $(".star_icon_4").css("color", "#fdbf2b");
-            $(".star_icon_5").css("color", "#fdbf2b");
+            $(".star_icon_1").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_2").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_3").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_4").addClass("fa-solid").css("color", "#fdbf2b");
+            $(".star_icon_5").addClass("fa-solid").css("color", "#fdbf2b");
         }
     }
 
@@ -77,31 +77,31 @@ $script = <<<JS
     $(document).ready(function() {  
         $(".star_icon_1").click(function() { 
             $(".fa-star").css("color", "black"); 
-            $(".star_icon_1").css("color", "#fdbf2b");  
+            $(".star_icon_1").addClass("fa-solid").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_2").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2").css("color", "#fdbf2b");  
+            $(".star_icon_1,.star_icon_2").addClass("fa-solid").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_3").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3").css("color", "#fdbf2b");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3").addClass("fa-solid").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });   
         $(".star_icon_4").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4").css("color", "#fdbf2b");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4").addClass("fa-solid").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  
         $(".star_icon_5").click(function() {   
             $(".fa-star").css("color", "black");
-            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4,.star_icon_5").css("color", "#fdbf2b");  
+            $(".star_icon_1,.star_icon_2,.star_icon_3,.star_icon_4,.star_icon_5").addClass("fa-solid").css("color", "#fdbf2b");  
             var selected_value = $(this).attr('value');
             $('#safarioperatorreviewform-rating').val(selected_value);
         });  

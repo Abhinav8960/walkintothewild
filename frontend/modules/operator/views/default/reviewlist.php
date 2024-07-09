@@ -115,12 +115,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <?php if ($reviews) { ?>
                                                 <div class="sort_wrapper py-3">
                                                     <div class="sortBy">Sort by</div>
-                                                   <div class="d-flex flex-wrap align-items-center">
-                                                   <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'newest']) ?>">Newest</a>
-                                                    <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'highest']) ?>">Highest</a>
-                                                    <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'lowest']) ?>">Lowest</a>
-                                                    <?= $this->render('_filter_park', ['model' => $ratingsearchModel, 'operator_id' => $operator->id]) ?>
-                                                   </div>
+                                                    <div class="d-flex flex-wrap align-items-center">
+                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'newest']) ?>">Newest</a>
+                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'highest']) ?>">Highest</a>
+                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'lowest']) ?>">Lowest</a>
+                                                        <?= $this->render('_filter_park', ['model' => $ratingsearchModel, 'operator_id' => $operator->id, 'operator' => $operator]) ?>
+                                                    </div>
                                                 </div>
                                             <?php } ?>
 

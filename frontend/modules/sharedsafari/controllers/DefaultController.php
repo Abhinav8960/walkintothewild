@@ -438,6 +438,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionHistory($slug)
     {
+
         $history_model = ShareSafariHistory::find()->where(['slug' => $slug])->all();
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_view', [
