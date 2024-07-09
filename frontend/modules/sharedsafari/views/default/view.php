@@ -224,7 +224,7 @@ $this->params['title'] = $this->title;
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                             Safari</button>
                     <?php } elseif (Yii::$app->user->identity) { ?>
-                        <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                        <button class="btn_newsafari organizeBtn w-100" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                             Safari</button>
                     <?php } else {  ?>
                         <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
@@ -243,10 +243,16 @@ $this->params['title'] = $this->title;
             <div class="col-12">
                 <div class="footer_intrst d-lg-none d-block">
                     <div class="right_button py-lg-5 py-3">
-                        <?php if ($share_safari->host_user_id) { ?>
-                            <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit"></i>Update
-                                Safari</button>
-                        <?php } ?>
+                          <?php if ($share_safari->host_user_id == Yii::$app->user->id) { ?>
+                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                            Safari</button>
+                    <?php } elseif (Yii::$app->user->identity) { ?>
+                        <button class="btn_newsafari organizeBtn w-100" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                            Safari</button>
+                    <?php } else {  ?>
+                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2 w-100" href="/site/auth?authclient=google">+ Organize a New
+                            Safari</a>
+                    <?php } ?>
                     </div>
                 </div>
             </div>
