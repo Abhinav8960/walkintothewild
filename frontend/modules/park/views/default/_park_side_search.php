@@ -1,6 +1,9 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use common\models\GeneralModel;
+use common\models\master\bonusexperience\MasterBonusExperience;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -23,7 +26,7 @@ use yii\widgets\ActiveForm;
 <?php if ($device == 'desktop') { ?>
     <div class="filter-wrapper d-lg-block d-none sticky-sidebar">
         <div class="title_top pb-4">
-            <h4>Select </h4>
+            <h4>Select Filter</h4>
         </div>
         <div class="title_filter mb-4">
             <h6>Accommodation</h6>
@@ -41,12 +44,13 @@ use yii\widgets\ActiveForm;
             <h6>Bonus Experience</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'bonus_experience_id')->checkboxList(
-                    GeneralModel::bonusexperienceoption(),
+                    ArrayHelper::map(MasterBonusExperience::find()->where(['status' => StatusInterface::STATUS_ACTIVE])->andWhere(['not in', 'id', [4, 5]])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title'),
                     [
                         'required' => true,
                         'itemOptions' => ['class' => 'checkbox_design'],
                     ]
                 )->label(false); ?>
+
             </div>
         </div>
     </div>
