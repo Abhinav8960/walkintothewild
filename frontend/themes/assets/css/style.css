@@ -4630,3 +4630,8 @@ color: #4B4B4B;
     font-size: 14px; 
     color: var(--background-primary);
 }
+
+.itenary_tabs > .safartabs .accordion-item{
+
+   background: #ffffff!important;
+}
