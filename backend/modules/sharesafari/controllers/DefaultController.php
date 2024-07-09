@@ -139,6 +139,24 @@ class DefaultController extends Controller
         }
     }
 
+    public function actionDisapprove($id)
+    {
+        $model = ShareSafariComment::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = StatusInterface::STATUS_SUSPEND;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Comment disapprove Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionApprove($id)
+    {
+        $model = ShareSafariComment::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Comment approved Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
     public function findModel($id)
     {
         if ($model = ShareSafari::find()->limit(1)->one()) {
