@@ -455,7 +455,6 @@ class DefaultController extends FrontendBaseController
     }
 
 
-
     public function actionInterestview($share_safari_id)
     {
         $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => StatusInterface::STATUS_ACTIVE])->all();

@@ -15,6 +15,7 @@ use common\models\park\SafariPark;
         'data-pjax' => true,
         'id' => 'side-search-form'
     ],
+    'action' => ['index'],
     'method' => 'get',
     'fieldConfig' => [
         'template' => '{input}{error}',

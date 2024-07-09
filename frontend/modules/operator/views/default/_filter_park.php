@@ -1,16 +1,21 @@
 <?php
 
 use common\models\GeneralModel;
-use frontend\models\SafariOperatorReviewForm;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 ?>
 <?php $form = ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
-        'id' => 'search-form'
+        'id' => 'Searchform',
+
     ],
+    'action' => ['reviewlist', 'slug' => $operator->slug],
     'method' => 'get',
+    'fieldConfig' => [
+        'template' => '{input}{error}',
+    ],
 ]); ?>
 
 <div class="col-12 form_review">
@@ -22,12 +27,13 @@ use yii\widgets\ActiveForm;
 <?php
 
 $script = <<< JS
-          
+               
     $('form').on('change', function(){
-        $("#side-search-form").attr("data-pjax", "true");    
+        $("#Searchform").attr("data-pjax", "true");    
         $(this).closest('form').submit();
        
     }); 
+    
 JS;
 $this->registerJs($script);
 ?>
