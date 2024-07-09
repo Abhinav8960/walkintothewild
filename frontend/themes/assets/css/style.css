@@ -2956,11 +2956,11 @@ figure {
     box-shadow: 0px 5px 10px #00000029; */
 }
 
-/* .searchSafari_wraper:hover {
+.searchSafari_wraper:hover {
 
 
-    border-color: #F5F5F5;
-} */
+    box-shadow: 0px 3px 6px #00000029;
+}
 
 .Slider_safariimg3 img {
 
