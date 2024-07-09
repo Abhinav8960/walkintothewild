@@ -34,6 +34,30 @@ $this->params['title'] = $this->title;
 <section class="articals_wrapper margin-setposi py-3">
   <div class="container-fluid">
     <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="topSlider_tour owl-carousel owl-theme">
+          <div class="items_slider">
+            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="w-100">
+          </div>
+          <div class="items_slider">
+            <img src="<?= $this->params['baseurl'] ?>/img/soonbanner.jpg" alt="" class="w-100">
+          </div>
+          <div class="items_slider">
+            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="w-100">
+          </div>
+          <div class="items_slider">
+            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="w-100">
+          </div>
+          <div class="items_slider">
+            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="w-100">
+          </div>
+          <div class="items_slider">
+            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="w-100">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
       <div class="col-xl-11 col-lg-12">
         <div class="row my-4 justify-content-center">
           <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4">

@@ -219,22 +219,101 @@ $this->params['title'] = $this->title;
                   </div>
                 </div>
                 <div class="row pt-4">
-                  <div class="col-12">
+                  <div class="col-12 inner_accordion">
                     <div class="accordion accordion-flush" id="accordionFlushExample">
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingOne">
                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                          DAY 1 - Check-in and relax
+                            DAY 1 - Check-in and relax
                           </button>
                         </h2>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                          <div class="accordion-body">
+                            <div class="wrap_days">
+                              <div class="row">
+                                <div class="col-12">
+                                  <div class="days_title">
+                                    <h4 class="fs-5">Nights jim corbett tiger</h4>
+                                  </div>
+                                  <div class="text_wrapperite">
+                                    <p>You will be picked up from the airport by a Lion King representative and conveyed to your accommodation in Arusha where you will overnight, relax, and prepare in anticipation of the adventures to come. Our partner lodge, Outpost Lodge, is an oasis of calm and aesthetic pleasure.</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col-lg-4 mb-3">
+                                  <div class="titles_locations">
+                                    <h6 class="fs-5">Start Location</h6>
+                                    <p>407, C-51, Sector 62, BSI Business Park, Noida, Uttar Pradesh 201309</p>
+                                  </div>
+                                </div>
+                                <div class="col-lg-4 mb-3">
+                                  <div class="titles_locations">
+                                    <h6 class="fs-5">End Location</h6>
+                                    <p>407, C-51, Sector 62, BSI Business Park, Noida, Uttar Pradesh 201309</p>
+                                  </div>
+                                </div>
+                                <div class="col-lg-4 mb-3">
+                                  <div class="titles_locations">
+                                    <h6 class="fs-5">Hotel Stay Home</h6>
+                                    <p>Grand Plaza Hotel</p>
+                                  </div>
+                                </div>
+                                <div class="col-12">
+                                  <div class="titles_locations">
+                                    <h6 class="fs-5">Meal</h6>
+                                    <div class="mealchecks d-flex gap-4 align-items-center">
+                                      <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
+                                        <input type="checkbox" id="check">
+                                        <label for="check">Breackfast</label>
+                                      </div>
+                                      <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
+                                        <input type="checkbox" id="check2">
+                                        <label for="check2">Lunch</label>
+                                      </div>
+                                      <div class="inputsCheck mb-2 d-flex  align-items-center gap-2 ">
+                                        <input type="checkbox" id="check3">
+                                        <label for="check3">Dinner</label>
+                                      </div>
+                                      <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
+                                        <input type="checkbox" id="check4">
+                                        <label for="check4">All</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                         
+                                  <div class="titles_locations pt-4">
+                                    <h6 class="fs-5">Images</h6>
+                                  </div>
+                                
+                              <div class="row pt-2">
+                                <div class="col-lg-4 mb-2">
+                                  <div class="hotelImages">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/FESHwr.jpg" alt="" class="w-100">
+                                  </div>
+                                </div>
+                                <div class="col-lg-4 mb-2">
+                                  <div class="hotelImages">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/FESHwr.jpg" alt="" class="w-100">
+                                  </div>
+                                </div>
+                                <div class="col-lg-4 mb-2">
+                                  <div class="hotelImages">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/FESHwr.jpg" alt="" class="w-100">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
                         </div>
                       </div>
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingTwo">
                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                          DAY 2 - Morning and Evening Safari
+                            DAY 2 - Morning and Evening Safari
                           </button>
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -244,7 +323,7 @@ $this->params['title'] = $this->title;
                       <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingThree">
                           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                          DAY 3 - Morning Safari and Sight Seeing
+                            DAY 3 - Morning Safari and Sight Seeing
                           </button>
                         </h2>
                         <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
