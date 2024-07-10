@@ -29,7 +29,7 @@ $recentposts = ArticleSearch::recentpost();
 <section class="articals_wrapper py-3">
     <div class="container-lg">
         <div class="row mb-4 justify-content-center">
-            <div class="col-lg-8 col-xl-8 col-xxl-9 pe-lg-5">
+            <div class="col-lg-12 col-xl-12 col-xxl-12 pe-lg-5">
                 <div class="aritcla-details">
                     <h1 class="articald-title pb-3"><?= $article->title ?></h1>
                     <div class="aritcal_bigimg pb-4">
@@ -77,19 +77,6 @@ $recentposts = ArticleSearch::recentpost();
                     ]) ?>
                 </div>
             </div>
-            <div class="col-lg-3 col-xl-3 col-xxl-2  mt-lg-0 mt-3">
-                <?= $this->render('_recent_posts', [
-                    'recentposts' => $recentposts,
-                ]) ?>
-                <div class="topics_box">
-                    <div class="titlerescent pb-3">
-                        <h3>Category</h3>
-                    </div>
-                    <?= $this->render('_topic_search') ?>
-                </div>
-            </div>
-
         </div>
-    </div>
     </div>
 </section>
