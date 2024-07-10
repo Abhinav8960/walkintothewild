@@ -41,6 +41,14 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                         }
                     ],
                     [
+                        'label' => 'Date',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->article_date) ? date('M d, Y', strtotime($model->article_date)) : '';
+                        }
+                    ],
+                    [
                         'label' => 'Topics',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -68,6 +76,19 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                                 }
                             }
                             return $html;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Comment Count',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->articlecomments) {
+                                return count($model->articlecomments);
+                            } else {
+                                return 0;
+                            }
                         }
                     ],
                     [

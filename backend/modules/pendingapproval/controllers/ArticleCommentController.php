@@ -4,6 +4,7 @@ namespace backend\modules\pendingapproval\controllers;
 
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleComment;
+use common\models\cms\article\ArticleSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -13,22 +14,13 @@ class ArticleCommentController extends Controller
 {
     public function actionIndex()
     {
-        $query = ArticleComment::find()->where(['status' => 3]);
-        $dataProvider = new ActiveDataProvider(
-            [
-                'query' => $query,
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
-            ],
-        );
+        $searchModel = new ArticleSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render(
-            'index',
-            [
-                'dataProvider' => $dataProvider,
-            ]
-        );
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
 

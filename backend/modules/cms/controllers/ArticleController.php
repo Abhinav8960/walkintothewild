@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleComment;
+use common\models\cms\article\ArticleCommentSearch;
 use common\models\cms\article\ArticleSearch;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
@@ -210,20 +211,15 @@ class ArticleController extends Controller
     {
         $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
 
-        $query = ArticleComment::find()->where(['article_id' => $id]);
-        $dataProvider = new ActiveDataProvider(
-            [
-                'query' => $query,
-                'pagination' => [
-                    'pageSize' => 10,
-                ],
-            ],
-        );
+        $searchModel = new ArticleCommentSearch();
+        $searchModel->article_id = $id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render(
             'comment',
             [
                 'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
                 'article' => $article,
             ]
         );

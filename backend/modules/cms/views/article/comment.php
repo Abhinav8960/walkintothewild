@@ -10,7 +10,7 @@ FrontAppAsset::register($this);
 AppAsset::register($this);
 
 
-$this->title = 'Article Comment';
+$this->title = $article->title;
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] =  ['label' => 'Article', 'url' => '/cms/article'];
 $this->params['breadcrumbs'][] = $this->title;
@@ -35,7 +35,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="row mb-4 justify-content-center">
             <div class="col-lg-12 col-xl-12 col-xxl-12 pe-lg-5">
                 <div class="aritcla-details">
-                    <h1 class="articald-title pb-3"><?= $article->title ?></h1>
                     <div class="aritcal_bigimg pb-4">
                         <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt="" class="w-100">
                     </div>
@@ -80,6 +79,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="comment-wrapper" id="comment-wrapper-section">
                     <?= $this->render('_comment', [
                         'article' => $article,
+                        'dataProvider' => $dataProvider,
+                        'searchModel' => $searchModel,
                     ]) ?>
                 </div>
             </div>
