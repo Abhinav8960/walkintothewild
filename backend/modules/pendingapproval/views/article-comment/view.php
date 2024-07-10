@@ -87,12 +87,6 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                     <?= $this->render('_topic_search') ?>
                 </div>
-                <div class="advertisment pt-5">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box">
-
-                    </div>
-                </div>
             </div>
 
         </div>

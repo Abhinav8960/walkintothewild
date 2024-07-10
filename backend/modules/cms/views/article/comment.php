@@ -5,6 +5,7 @@ use frontend\assets\FrontAppAsset;
 use frontend\models\ArticleSearch;
 
 use yii\widgets\Pjax;
+
 FrontAppAsset::register($this);
 AppAsset::register($this);
 
@@ -63,7 +64,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
                     <div class="d-flex align-items-center">
                         <h3 class="me-4 mb-0 tags-title">Tags</h3>
-                        <?= $this->render('_tag_search') ?>
+                        <?= $this->render('_tag_search', [
+                            'article' => $article,
+                        ]) ?>
                     </div>
                     <div class="author_wrapper">
                         <ul class="artical-info ">
@@ -89,12 +92,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <h3>Category</h3>
                     </div>
                     <?= $this->render('_topic_search') ?>
-                </div>
-                <div class="advertisment pt-5">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box">
-
-                    </div>
                 </div>
             </div>
 
