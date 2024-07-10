@@ -864,15 +864,73 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 
-					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
+					<li class="slide <?= in_array($active_url, array(
+											"/article/article-source/index",
+											"/article/article-source/create",
+											"/article/article-source/update",
+											"/article/article-source/view",
+											"/article/frequency/index",
+											"/article/frequency/create",
+											"/article/frequency/update",
+											"/article/category/index",
+											"/article/category/create",
+											"/article/category/update",
+											"/article/article-tag/index",
+											"/article/article-tag/create",
+											"/article/article-tag/update",
+											"/article/article/index",
+											"/article/article/create",
+											"/article/article/update",
+											"/article/article/view",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/article/article-source/index",
+														"/article/article-source/create",
+														"/article/article-source/update",
+														"/article/article-source/view",
+														"/article/frequency/index",
+														"/article/frequency/create",
+														"/article/frequency/update",
+														"/article/category/index",
+														"/article/category/create",
+														"/article/category/update",
+														"/article/article-tag/index",
+														"/article/article-tag/create",
+														"/article/article-tag/update",
+														"/article/article/index",
+														"/article/article/create",
+														"/article/article/update",
+														"/article/article/view",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
-							<li><a class="slide-item" href="/article/article-source/index">Article Source</a></li>
-							<li><a class="slide-item" href="/article/frequency/index">Frequency</a></li>
-							<li><a class="slide-item" href="/article/category/index">Category</a></li>
-							<li><a class="slide-item" href="/article/article-tag/index">Article Tag</a></li>
-							<li><a class="slide-item" href="/article/article/index">Article</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/article-source/index",
+															"/article/article-source/create",
+															"/article/article-source/update",
+															"/article/article-source/view"
+														)) ? "active" : "" ?>" href="/article/article-source/index">Article Source</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/frequency/index",
+															"/article/frequency/create",
+															"/article/frequency/update",
+														)) ? "active" : "" ?>" href="/article/frequency/index">Frequency</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/category/index",
+															"/article/category/create",
+															"/article/category/update",
+														)) ? "active" : "" ?>" href="/article/category/index">Category</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/article-tag/index",
+															"/article/article-tag/create",
+															"/article/article-tag/update",
+														)) ? "active" : "" ?>" href="/article/article-tag/index">Article Tag</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/article/index",
+															"/article/article/create",
+															"/article/article/update",
+															"/article/article/view"
+														)) ? "active" : "" ?>" href="/article/article/index">Article</a></li>
 
 						</ul>
 					</li>

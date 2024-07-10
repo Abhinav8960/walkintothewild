@@ -15,48 +15,41 @@ if (isset($model->category_model->id)) {
 $this->params['title'] = $this->title;
 ?>
 
+<?php $form = ActiveForm::begin([
+    'id' => 'tag-form',
+    'method' => 'POST',
+    'fieldConfig' => [
+        'template' => '<div class="form-group">{label}{input}{error}</div>',
+    ],
+
+
+]); ?>
 <div class="card">
-    <?php $form = ActiveForm::begin([
-        'id' => 'tag-form',
-        'method' => 'POST',
-        'fieldConfig' => [
-            'template' => '<div class="form-group">{label}{input}{error}</div>',
-        ],
+    <div class="card-body">
+        <?= $form->errorSummary($model) ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
+            </div>
 
+        </div>
 
-    ]); ?>
-
-
-    <div class="card">
-        <div class="card-body">
-            <?= $form->errorSummary($model) ?>
-            <div class="row">
+        <div class="row">
+            <?php
+            if (!empty($model->category_model->id)) { ?>
                 <div class="col-md-6">
-                    <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Title']) ?>
+                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => 'Select Status']) ?>
                 </div>
-
-            </div>
-
-            <div class="row">
-                <?php
-                if (!empty($model->category_model->id)) { ?>
-                    <div class="col-md-6">
-                        <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => 'Select Status']) ?>
-                    </div>
-                <?php } ?>
-            </div>
-            <hr>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
-                    </div>
+            <?php } ?>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange']) ?>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    <?php ActiveForm::end(); ?>
 </div>
+<?php ActiveForm::end(); ?>

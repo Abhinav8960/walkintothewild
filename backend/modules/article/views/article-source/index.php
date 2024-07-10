@@ -74,17 +74,17 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Link',
-                        'contentOptions' => ['style' => 'width: 10%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::a($model->web_link, $model->web_link, [
                                 'target' => '_blank',
-                                'style' => 'color: blue !important; display: inline-block; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
+                                'style' => 'color: blue !important;',
                             ]);
                         }
                     ],
-                    
-                    
+
+
 
                     [
                         'label' => 'Status',

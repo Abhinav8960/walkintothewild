@@ -33,7 +33,7 @@ $this->params['title'] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'label' => 'Article Title',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::tag('div', $model->article_title, [
@@ -43,7 +43,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Writer',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::tag('div', $model->writer, [
@@ -53,7 +53,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Article Source',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->source) ? GeneralModel::sourceoption()[$model->source] : '';
@@ -62,7 +62,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Post Date',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => ['date', 'php:Y-m-d'],
                         'value' => function ($model) {
                             return $model->post_date;
@@ -72,7 +72,7 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Abstract',
-                        'contentOptions' => ['style' => 'width: 50%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::tag('div', $model->key_point, [
@@ -82,7 +82,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Tags',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             // Decode the tag_id if it's a JSON string, otherwise use it directly
@@ -107,18 +107,18 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Link',
-                        'contentOptions' => ['style' => 'width: 10%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return Html::a($model->link, $model->link, [
                                 'target' => '_blank',
-                                'style' => 'color: blue !important; display: inline-block; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;',
+                                'style' => 'color: blue !important;',
                             ]);
                         }
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->status == 1) {
@@ -133,7 +133,7 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
