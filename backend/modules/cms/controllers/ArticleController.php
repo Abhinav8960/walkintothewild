@@ -209,7 +209,7 @@ class ArticleController extends Controller
 
     public function actionComment($id)
     {
-        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $article = Article::find()->where(['id' => $id])->limit(1)->one();
 
         $searchModel = new ArticleCommentSearch();
         $searchModel->article_id = $id;
