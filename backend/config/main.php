@@ -60,6 +60,9 @@ return [
         'operatordashboard' => [
             'class' => 'backend\modules\operatordashboard\Module',
         ],
+        'article' => [
+            'class' => 'backend\modules\article\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [

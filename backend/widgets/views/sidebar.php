@@ -799,6 +799,22 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
+
+					<li class="slide">
+						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
+							<li><a class="slide-item" href="/article/article-source/index">Article Source</a></li>
+							<li><a class="slide-item" href="/article/frequency/index">Frequency</a></li>
+							<li><a class="slide-item" href="/article/category/index">Category</a></li>
+							<li><a class="slide-item" href="/article/article-tag/index">Article Tag</a></li>
+							<li><a class="slide-item" href="/article/article/index">Article</a></li>
+
+						</ul>
+					</li>
+				<?php endif; ?>
+
 				<li class="slide">
 					<a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
 						<span class="side-menu__label">Logout</span></a>
