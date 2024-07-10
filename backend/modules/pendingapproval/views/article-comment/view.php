@@ -7,10 +7,16 @@ use yii\helpers\Url;
 use common\interfaces\Constants;
 use frontend\models\ArticleSearch;
 use common\models\cms\banner\Banner;
+use frontend\assets\AppAsset;
+use frontend\assets\FrontAppAsset;
 
-$this->title = 'Article';
+$this->title = 'Article Comment';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
+
+
+FrontAppAsset::register($this);
+AppAsset::register($this);
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;

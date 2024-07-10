@@ -10,7 +10,7 @@ use yii\bootstrap5\ActiveForm;
 <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 <div class="row">
     <div class="col-md-12">
-        <?= $form->field($model, 'is_approved')->dropDownList(['1' => 'Approved', '0' => 'Disapproved'], ['prompt' => 'Select Status']) ?>
+        <?= $form->field($model, 'is_approved')->dropDownList(['1' => 'Approve', '0' => 'Reject'], ['prompt' => 'Select Status']) ?>
     </div>
 </div>
 <hr>

@@ -208,6 +208,8 @@ class ArticleController extends Controller
 
     public function actionComment($id)
     {
+        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+
         $query = ArticleComment::find()->where(['article_id' => $id]);
         $dataProvider = new ActiveDataProvider(
             [
@@ -222,6 +224,7 @@ class ArticleController extends Controller
             'comment',
             [
                 'dataProvider' => $dataProvider,
+                'article' => $article,
             ]
         );
     }
