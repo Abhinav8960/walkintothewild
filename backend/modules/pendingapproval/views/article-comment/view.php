@@ -60,7 +60,9 @@ $recentposts = ArticleSearch::recentpost();
                 <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
                     <div class="d-flex align-items-center">
                         <h3 class="me-4 mb-0 tags-title">Tags</h3>
-                        <?= $this->render('_tag_search') ?>
+                        <?= $this->render('_tag_search', [
+                            'article' => $article,
+                        ]) ?>
                     </div>
                     <div class="author_wrapper">
                         <ul class="artical-info ">
