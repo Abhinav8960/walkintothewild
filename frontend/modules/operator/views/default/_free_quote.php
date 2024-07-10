@@ -10,13 +10,24 @@ use yii\bootstrap5\ActiveForm;
         <h4>Get a FREE quote</h4>
     </div>
     <div class="getquote_box">
+        <?php
+        // $form = ActiveForm::begin([
+        //     'id' => 'quoteform',
+        //     'enableAjaxValidation' => true,
+        //     'enableClientValidation' => false,
+        //     'enableClientScript' => true,
+        //     'action' => $model->action_url,
+        //     'validationUrl' => $model->action_validate_url,
+        // ]); 
+        ?>
+
         <?php $form = ActiveForm::begin([
             'id' => 'quoteform',
-            'enableAjaxValidation' => true,
-            'enableClientValidation' => false,
-            'enableClientScript' => true,
-            // 'action' => $model->action_url,
-            'validationUrl' => $model->action_validate_url,
+            'method' => 'POST',
+            'fieldConfig' => [
+                'template' => '<div class="form-group">{label}{input}{error}</div>',
+            ],
+
         ]); ?>
         <div class="row ">
             <div class="col-lg-3">
