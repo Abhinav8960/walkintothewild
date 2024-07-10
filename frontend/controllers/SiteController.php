@@ -64,9 +64,13 @@ class SiteController extends FrontendBaseController
     public function beforeAction($action)
     {
         if ($action->id == 'auth') {
+            $referrer = Yii::$app->request->referrer;
+            if (isset($this->request->queryParams['referrer'])) {
+                $referrer = $this->request->queryParams['referrer'];
+            }
             Yii::$app->response->cookies->add(new \yii\web\Cookie([
                 'name' => 'user_login_redirect',
-                'value' => Yii::$app->request->referrer,
+                'value' => $referrer,
                 'expire' => time() + 86400 * 365 * 365,
             ]));
         }

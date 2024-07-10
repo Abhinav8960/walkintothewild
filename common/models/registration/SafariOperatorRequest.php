@@ -144,7 +144,7 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
     public function getImagepath()
     {
         if ($this->logo != '') {
-            return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
+            return '/storage/safarioperatorrequest/' . $this->id . '/' . $this->logo;
         }
     }
 

@@ -28,8 +28,11 @@ class SafaritourRegistrationController extends FrontendBaseController
             return $this->redirect(['/site/auth?authclient=google']);
         }
         if (Yii::$app->user->identity) {
-            if (($model = SafariOperator::findOne(['user_id' => Yii::$app->user->identity->id])) !== null) {
-                return $this->redirect([Yii::$app->params['backend_url']]);
+            $model = SafariOperator::findOne(['user_id' => Yii::$app->user->identity->id]);
+
+            if ($model !== null) {
+                Yii::$app->getResponse()->redirect(Yii::$app->params['backend_url'])->send();
+                Yii::$app->end();
             }
         }
         $model = new SafaritourRegistrationForm();

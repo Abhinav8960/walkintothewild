@@ -1,6 +1,6 @@
 <!-- <h4 class="popupButton" value="/">open modal</h4> -->
 <div id="popupmodal" class="modal fade" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-lg" style="max-width: 90% !important;">
+	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button class="btn-close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close">

@@ -25,6 +25,14 @@ class MetaStayCategory extends \yii\db\ActiveRecord
         return 'meta_stay_category';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */

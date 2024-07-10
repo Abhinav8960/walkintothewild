@@ -13,7 +13,7 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
-    'defaultRoute' => '/coming-soon',
+    'defaultRoute' => '/park',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'reCaptcha3' => [
@@ -107,6 +107,7 @@ return [
 
                 '/parklist/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',
                 '/parklist' => '/park/default/parklist', //park listing url
+                '/rareanimal/<slug>' => '/park/default/rareanimal', //park listing url
 
                 '/article' => '/article/default/index',
                 '/article/tag/<slug>' => '/article/default/tag',
@@ -141,6 +142,8 @@ return [
                 '/sharedsafari/<slug>' => '/sharedsafari/default/view',
 
 
+                '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
+                '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
                 '/operator/<slug>' => '/operator/default/view', //operator view url
                 '/operator/resort/<id>' => '/operator/default/resort', //operator view url
                 '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url

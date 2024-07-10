@@ -25,6 +25,14 @@ class MetaBirdType extends \yii\db\ActiveRecord
         return 'meta_bird_type';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */

@@ -118,15 +118,15 @@ class ArticleForm extends \yii\base\Model
                 'skipOnEmpty' => true,
             ],
 
-            [
-                ['feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 350,
-                'maxWidth' => 350,
-                'maxHeight' => 350,
-                'minHeight' => 350,
-                'maxSize' => 250 * 1024,
-                'skipOnEmpty' => true,
-            ],
+            // [
+            //     ['feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+            //     'minWidth' => 350,
+            //     'maxWidth' => 350,
+            //     'maxHeight' => 350,
+            //     'minHeight' => 350,
+            //     'maxSize' => 250 * 1024,
+            //     'skipOnEmpty' => true,
+            // ],
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
             [

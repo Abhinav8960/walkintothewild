@@ -7,16 +7,23 @@
 	?>
 	<!-- main-header -->
 	<header class="header_wrapper">
-		<nav class="navbar navbar-expand-xl p-0">
+		<nav class="navbar navbar-expand-lg p-0">
 			<div class="container-fluid">
-				<a href="/park">
+				<a href="/">
 					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="210px" class="logo">
 				</a>
-
 				<div class="d-flex align-items-center">
+					<a href="/sharedsafari" class="sahreSafari mobile text-center <?= in_array($active_url, array("/sharedsafari", "/sharesafari")) ? "active" : "" ?>">
+						<div class="card-img ">
+							<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
+						</div>
+						<h5>Shared Safari</h5>
+					</a>
+
 					<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
 						<i class="fa-solid fa-bars"></i>
 					</button>
+
 					<div class="offcanvas offcanvas-end header_canvas" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header ps-1">
 							<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
@@ -31,7 +38,7 @@
 							</svg>
 
 						</div>
-						<div class="offcanvas-body justify-content-end">
+						<div class="offcanvas-body justify-content-end position-relative">
 							<ul class="navbar-nav menu-navbar-nav align-items-center">
 								<li class="nav-item 
 							<?= in_array($active_url, array(
@@ -40,21 +47,22 @@
 								"/park/default/parklist",
 								// "/park/default/view",
 							)) ? "active" : "" ?>">
-									<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>"> <i class="fa-solid fa-magnifying-glass d-xl-inline-flex d-none"></i> Search Safari</a>
+									<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>"> <i class="fa-solid fa-magnifying-glass d-lg-inline-flex d-none"></i> Search Safari</a>
 								</li>
 								<li class="nav-item <?= in_array($active_url, array(
 														"/article/default/index",
 														"/article/default/view",
 													)) ? "active" : "" ?>">
-									<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-xl-inline-flex d-none"> ARTICLES & TIPS</a>
+									<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> ARTICLES & TIPS</a>
 								</li>
 								<!-- <li class="nav-item <?= in_array($active_url, array(
 																"/contact",
 															)) ? "active" : "" ?>">
 								<a class="nav-link" href="/contact"> <img src="<?= $this->params['baseurl'] ?>/img/contact-us.png" alt="" class="me-1 d-xl-inline-flex d-none" width="25"> Contact Us</a>
 							</li> -->
-							
-								<a href="/sharedsafari" class="sahreSafari text-xl-center <?= in_array($active_url, array("/sharedsafari","/sharesafari")) ? "active" : "" ?>">
+
+
+								<a href="/sharedsafari" class="sahreSafari desktop text-lg-center  <?= (in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) || str_starts_with($active_url, "/sharedsafari")) ? "active" : "" ?>">
 									<div class="card-img">
 										<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
 									</div>
@@ -65,7 +73,35 @@
 
 								</li>
 
+
 							</ul>
+
+							<div class="logoutBox d-lg-none">
+								<div class="menuprofilemobile">
+									<ul>
+										<?php if (!Yii::$app->user->identity) { ?>
+											<li>
+												<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+											</li>
+										<?php } else { ?>
+											<?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
+												<li>
+													<a class="" target="_blank" href="<?= Yii::$app->params['backend_url'] ?>">
+														<i class="fa-solid fa-cog"></i>
+														Manage</a>
+												</li>
+											<?php } ?>
+											<li>
+												<a class="" href="/site/logout">
+													<i class="fa-solid fa-arrow-right-from-bracket"></i>
+													Log Out</a>
+											</li>
+										<?php } ?>
+
+
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="proilewrapper">
@@ -100,9 +136,7 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
-
 		</nav>
 	</header>
 	<!-- /main-header -->

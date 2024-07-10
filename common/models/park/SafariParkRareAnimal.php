@@ -28,6 +28,14 @@ class SafariParkRareAnimal extends \yii\db\ActiveRecord
         return 'safari_park_rare_animal';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

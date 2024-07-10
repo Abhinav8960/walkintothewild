@@ -110,4 +110,9 @@ class ShareSafariComment extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ShareSafariCommentReport::className(), ['share_safari_comment_id' => 'id']);
     }
+
+    public function getReplies()
+    {
+        return $this->hasMany(self::class, ['parent_id' => 'id']);
+    }
 }

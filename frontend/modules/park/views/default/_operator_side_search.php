@@ -21,7 +21,7 @@ $form = ActiveForm::begin([
             <h4>Select Operator</h4>
         </div>
         <div class="title_filter mb-2">
-            <h6>Operator Budget</h6>
+            <h6>Budget Segment</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'budget_segment')->checkboxList(
                     GeneralModel::packageoption(),

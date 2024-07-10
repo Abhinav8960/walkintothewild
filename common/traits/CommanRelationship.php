@@ -41,4 +41,44 @@ trait CommanRelationship
         }
         return $return;
     }
+
+
+    /**
+     * Status Label
+     *
+     * @return void
+     */
+    public function getApprovalstatus()
+    {
+        $statuses = GeneralModel::approvaloption();
+
+        if (isset($statuses[$this->is_approved])) {
+            if ($this->is_approved == 1) {
+                return '<img src="/img/active.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
+            } else if ($this->is_approved == 0) {
+                return '<img src="/img/suspend.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
+            }
+        }
+        return $this->status;
+    }
+
+
+    /**
+     * Status Label
+     *
+     * @return void
+     */
+    public function getApprovallabel()
+    {
+        $statuses = GeneralModel::approvaloption();
+
+        if (isset($statuses[$this->is_approved])) {
+            if ($this->is_approved == 1) {
+                return 'Approved';
+            } else if ($this->is_approved == 0) {
+                return 'Pending';
+            }
+        }
+        return $this->status;
+    }
 }

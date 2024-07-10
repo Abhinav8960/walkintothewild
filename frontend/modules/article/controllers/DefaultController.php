@@ -9,7 +9,9 @@ use frontend\models\ArticleSearch;
 use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleAuthor;
+use common\models\cms\article\MasterArticleTag;
 use frontend\controllers\FrontendBaseController;
+use common\models\cms\article\MasterArticleTopic;
 
 /**
  * DefaultController.
@@ -81,11 +83,13 @@ class DefaultController extends FrontendBaseController
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
 
+        $article_topic = MasterArticleTopic::find()->where(['slug' => $slug])->one();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
             'slug' => $slug,
+            'sub_title' => '<b>Category :</b> ' . ($article_topic ? $article_topic->title : strtoupper($slug)),
         ]);
     }
 
@@ -99,11 +103,14 @@ class DefaultController extends FrontendBaseController
         $dataProvider = $searchModel->search($this->request->queryParams);
         $models = $dataProvider->getModels();
 
+        $article_tag = MasterArticleTag::find()->where(['slug' => $slug])->one();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
             'slug' => $slug,
+            'sub_title' => '<b>Tag :</b> ' . ($article_tag ? $article_tag->title : strtoupper($slug)),
         ]);
     }
 
@@ -126,6 +133,8 @@ class DefaultController extends FrontendBaseController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
+            'slug' => $slug,
+            'sub_title' => '<b>Author :</b> ' . ($article_author ? $article_author->author_name : strtoupper($slug)),
         ]);
     }
 }

@@ -25,6 +25,14 @@ class MetaSafariSession extends \yii\db\ActiveRecord
         return 'meta_safari_session';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */

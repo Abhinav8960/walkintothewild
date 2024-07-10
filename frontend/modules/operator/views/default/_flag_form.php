@@ -11,6 +11,9 @@ $reasons = GeneralModel::getFlagreasons();
     <?php $form = ActiveForm::begin(['id' => 'flag-form']); ?>
     <div class="row">
         <div class="col-12">
+            <p><?= $rating->review ?></p>
+        </div>
+        <div class="col-12">
             <div class="selects w-100 d-flex align-items-center gap-3">
                 <label for="" class="Modal_label">Reason</label>
                 <?= $form->field($model, 'report_reason_id')->dropDownList(
@@ -26,7 +29,7 @@ $reasons = GeneralModel::getFlagreasons();
         <div class="col-lg-12 mb-2 mt-2">
             <label for="" class="Modal_label">Details</label>
             <div class="textarea">
-                <?= $form->field($model, 'report_detail')->textarea(['class' => "form-control", 'placeholder' => "Write....."])->label(false) ?>
+                <?= $form->field($model, 'report_detail')->textarea(['class' => "form-control", 'placeholder' => "Write Reason in Detail"])->label(false) ?>
             </div>
         </div>
         <div class="col-12">

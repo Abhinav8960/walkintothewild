@@ -1,5 +1,11 @@
 @media only screen and (min-width:1600px) {
 
+    .postthumbnail img{
+
+     height: 56px;
+    object-fit: cover;
+    }
+
     .title_web h2 {
 
         font-size: var(--fs-40);
@@ -62,9 +68,9 @@
         z-index: 0;
     } */
 
-    .listingSafari {
+    /* .listingSafari {
         width: 300px;
-    }
+    } */
 
     .padding_right {
         padding-right: 3rem;
@@ -86,18 +92,26 @@
     }
   
 }
-@media(min-width:1700px){
+/* @media(max-width:1500px){
 
-    /* .searchSafari_wraper .Slider_safariimg3{
-        width: 303px !important;
-    } */
-}
+    .sharesafribg {
+
+        height: 430px !important;
+
+    }
+} */
 @media(min-width:1500px){
+   
+    .container-fluid {
 
-    .searchSafari_parks .row .col-xl-3 {
+        padding-left: 55px !important;
+        padding-right: 55px !important;
+    }
+
+    /* .searchSafari_parks .row .col-xl-3 {
 
         width: auto !important;
-    }
+    } */
     .margin-added{
 
         margin-left: 77px !important;
@@ -105,7 +119,7 @@
     .searchSafari_parks .parksImg {
 
         height: 265px !important;
-        width: 265px;
+        /* width: 265px; */
     }
     .searchSafari_parks .parksImg img{
 
@@ -143,7 +157,7 @@
     .searchSafari_parks .parks_body .seelctes_text {
 
         height: 120px !important;
-        overflow: visible;
+        /* overflow: visible; */
     }
     .searchSafari_parks .parks_body .seelctes_text p{
 line-height: 19px;
@@ -154,6 +168,7 @@ line-height: 19px;
     .single-image img{
 
         height: 89% !important;
+        object-fit: cover;
     }
     .slider_safariimg{
 
@@ -167,6 +182,10 @@ line-height: 19px;
     }
  
     .articals_wrapper.margin-setposi{
+
+        margin-top: 290px !important;
+    }
+    .safari_wrapper.margin-setposi{
 
         margin-top: 290px !important;
     }
@@ -186,7 +205,7 @@ line-height: 19px;
     }
 
     .artical_cards .image-box .image img {
-        height: 310px;
+        height: 260px;
     }
     .imgsbox img{
 
@@ -232,6 +251,11 @@ line-height: 19px;
         height: 600px;
       
     }
+    .postthumbnail img{
+
+        height: 47px;
+       object-fit: cover;
+       }
     /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 75.5%;
@@ -245,17 +269,35 @@ line-height: 19px;
     } */
 }
 
+
 @media only screen and (max-width: 1500px) and (min-width: 991px) {
     .artical_cards .lower-content {
 
         padding: 31px 15px 25px 15px;
     }
+   
+    .safri_tour .titlerescent h3{
 
-    .artical_cards .image-box .image img {
+        font-size: 14px;
+    }
+    .parks_text p{
+
+        font-size: 13px;
+    }
+    .logo_provide2{
+
+        height: 120px;
+    }
+    .get_quote_btn{
+
+        font-size: 13px;
+    }
+
+    /* .artical_cards .image-box .image img {
 
         height: 260px;
 
-    }
+    } */
     .aritcla-details p{
 
         font-size: 15px;
@@ -390,11 +432,15 @@ line-height: 19px;
 
         margin-top: 330px !important;
     }
+    .safari_wrapper.margin-setposi{
 
-    .menu-navbar-nav .nav-item .nav-link{
+        margin-top: 330px !important;
+    }
+
+    /* .menu-navbar-nav .nav-item .nav-link{
 
         font-size: 12px;
-    }
+    } */
 
     .icons_select img {
 
@@ -504,7 +550,15 @@ line-height: 19px;
 
 }
 @media only screen and (min-width: 768px) {
+    .desktop_hideDiv.border_top2{
 
+display: none;
+    }
+   
+    .mobile_didplay_block{
+
+        display: none;
+    }
     .close_button{
 
         display: none;
@@ -517,6 +571,30 @@ line-height: 19px;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+    .postthumbnail img{
+
+        height: 70px;
+       object-fit: cover;
+       }
+
+    .sahreSafari.desktop{
+
+        display: none;
+            }
+    .sahreSafari.mobile{
+
+        display: block !important;
+        margin-right: 20px !important;
+    }
+
+    .sahreSafari.mobile .card-img{
+
+        display: block !important;
+    }
+    .artical_cards .image-box .image img{
+
+        height: 270px !important;
+    }
     .touroprators{
 
         padding: 9px 10px;
@@ -526,8 +604,13 @@ line-height: 19px;
     }
     .articals_wrapper.margin-setposi{
 
-        margin-top: 510px !important;
+        margin-top: 400px !important;
     }
+    .safari_wrapper.margin-setposi{
+
+        margin-top: 400px !important;
+    }
+
     /* .placeholder_select {
 
         left: 17%;
@@ -573,7 +656,12 @@ line-height: 19px;
     } */
     .articals_wrapper.margin-setposi{
 
-        margin-top: 330px !important;
+        margin-top: 381px !important;
+    }
+    
+    .safari_wrapper.margin-setposi{
+
+        margin-top: 381px !important;
     }
 
     .footer_object {
@@ -585,10 +673,10 @@ line-height: 19px;
         left: 16%;
     }
 
-    .parksImg img {
+    /* .parksImg img {
 
         border-radius: 10px 10px 0px 0px;
-    }
+    } */
 }
 @media only screen and (max-width: 991px) and (min-width: 990.98px){
 
@@ -620,14 +708,16 @@ line-height: 19px;
 }
 
 @media(min-width:1200px) {
+    .aritcal_bigimg img{
+
+        height: 400px;
+        object-fit: cover;
+    }
     .paddingset_desktop{
 
         padding-right: 74px;
     }
-    .navbar-nav {
-
-        gap: 32px;
-    }
+ 
 
     .images_tour {
 
@@ -637,6 +727,10 @@ line-height: 19px;
         align-items: center;
         justify-content: center;
         width: 100%;
+    }
+    .images_tour.select_safrai{
+
+        height: 125px;
     }
 
     /* .banner_section picture img {
@@ -651,11 +745,30 @@ line-height: 19px;
 }
 
 @media only screen and (min-width:991px) {
+  
+    .mobile_didplay_none{
 
+        display: block;
+    }
     .container-fluid {
 
-        padding-left: 55px ;
-        padding-right: 55px ;
+        padding-left: 25px ;
+        padding-right: 25px ;
+    }
+
+    .sahreSafari.mobile{
+
+        display: none!important;
+        margin-right: 20px !important;
+    }
+
+    .sahreSafari.mobile .card-img{
+
+        display: none !important;
+    }
+    .navbar-nav {
+
+        gap: 32px;
     }
     .padding-setDes{
 
@@ -689,7 +802,7 @@ line-height: 19px;
         padding-top: 10px;
     }
   
-    .seelctes_text p {
+   .searchSafari_wraper .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -732,7 +845,11 @@ line-height: 19px;
 }
 
 @media(max-width:1199px){
-    .seelctes_text p {
+    .banner_section-inner .banner_search{
+
+        height: 300px;
+    }
+    .searchSafari_wraper .seelctes_text p {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -746,82 +863,18 @@ line-height: 19px;
         width: 100%;
         padding: 15px 31px;
     }
-    .navbar-nav.menu-navbar-nav {
-
-        align-items: flex-start !important;
-    }
-
-    .sahreSafari {
-
-        margin-left: 0 !important;
-        padding-left: 0;
-        height: auto;
-        padding-top: 12px;
-    }
-
-    .offcanvas-header {
-        background-color: #09422D;
-    }
-
-    .sahreSafari {
-        box-shadow: none;
-    }
-    .sahreSafari {
-        border-bottom: 1px solid #09422D;
-        width: 100%;
-    }
-    .navbar-toggler {
-
-        border: 0 !important;
-    }
-
-    .navbar-toggler:focus {
-
-        outline: none !important;
-        box-shadow: none !important;
-    }
-
-    .navbar-toggler i {
-
-        color: var(--colorwhite);
-        font-size: 30px;
-    }
-
-    .menu-navbar-nav .nav-item.active::after {
-
-        bottom: -2px;
-    }
-
-    .menu-navbar-nav .nav-item {
-
-        line-height: 43px;
-        border-bottom: 1px solid #09422D;
-        width: 100%;
-    }
-
-    .menu-navbar-nav .nav-item .nav-link {
-
-        color: #09422D;
-        padding: 0 !important;
-
-    }
-    .header_wrapper {
-
-        line-height: 70px;
-    }
-    .safari_create {
+  
+    /* .safari_create {
 
         width: 100%;
         margin-top: 15px;
-    }
+    } */
 
     .creat-safri {
         padding-bottom: 20px;
     }
 
-    .card-img {
-        display: none;
-    }
+   
 }
 @media only screen and (max-width:1199px){
 
@@ -837,7 +890,15 @@ line-height: 19px;
 }
 @media only screen and (max-width:1200px) {
 
- 
+    .searchSafari_parks .parks_body .seelctes_text p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 5); /* Fallback line clamp */
+        -webkit-box-orient: vertical;
+        line-clamp: var(--line-clamp, 5); /* For browsers that support it */
+        box-orient: vertical;
+    }
     .select_boxes .form-select {
 
         border-radius: 10px !important;
@@ -914,8 +975,162 @@ line-height: 19px;
     }
     
 }
+@media only screen and (max-width: 1399px) and (min-width: 768px){
 
+    .safartabs .nav-tabs .nav-link{
+
+        padding: 7px 20px;
+    }
+    .safartabs .nav-tabs .nav-link{
+
+        font-size: 12px;
+    }
+    .safartabs .intested_btn{
+
+        font-size: 12px;
+    }
+    .seelctes_text p{
+
+        font-size: 14px;
+    }
+    .single-image img {
+        height: 89% !important;
+        object-fit: cover;
+    }
+    .slider_safariimg {
+        height: 100% !important;
+    }
+    .text-form p{
+
+        font-size: 13px;
+    }
+}
 @media (max-width: 991px) {
+ 
+    .mobile_didplay_none .join_btn{
+        padding: 9px 35px !important;
+    }
+    .images_tour{
+
+        height: 250px;
+    }
+    .logoutBox{
+        position:absolute;
+        padding: 4px 10px;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        width: 100%;
+        border-top: 1px solid #0000004D;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+    .menuprofilemobile ul{
+    
+        margin-bottom: 0;
+        padding-left: 0;
+    }
+    
+    .menuprofilemobile ul li{
+    
+        list-style: none;
+    }
+    .menuprofilemobile ul li a {
+        text-decoration: none;
+        color: var(--background-primary);
+        display: block;
+        font-weight: 700;
+        align-items: center;
+        font-size: var(--fs-18);
+        gap: 16px;
+        align-items: center;
+        font-family: "Roboto", sans-serif !important;
+    }
+    
+    .menuprofilemobile ul li a i {
+        font-size: 1.2rem;
+        color: #9c999f;
+        padding-right: 10px;
+    }
+    .navbar-nav.menu-navbar-nav {
+
+        align-items: flex-start !important;
+    }
+    .card-img {
+        display: none;
+    }
+    .proilewrapper{
+
+        display: none;
+    }
+    .sahreSafari {
+
+        margin-left: 0 !important;
+        padding-left: 0;
+        height: auto;
+        padding-top: 12px;
+    }
+
+    .offcanvas-header {
+        background-color: #09422D;
+    }
+
+    .sahreSafari {
+        box-shadow: none;
+    }
+    .sahreSafari {
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+    .navbar-toggler {
+
+        border: 0 !important;
+    }
+
+    .navbar-toggler:focus {
+
+        outline: none !important;
+        box-shadow: none !important;
+    }
+
+    .navbar-toggler i {
+
+        color: var(--colorwhite);
+        font-size: 30px;
+    }
+
+    .menu-navbar-nav .nav-item.active::after {
+
+        bottom: -2px;
+    }
+
+    .menu-navbar-nav .nav-item {
+
+        line-height: 43px;
+        border-bottom: 1px solid #09422D;
+        width: 100%;
+    }
+
+    .menu-navbar-nav .nav-item .nav-link {
+
+        color: #09422D;
+        padding: 0 !important;
+
+    }
+    .header_wrapper {
+
+        line-height: 70px;
+    }
+    .flex-set{
+
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .contact_p p{
+
+        margin-bottom: 0;
+    }
     .banner_section-inner picture img{
 
         height: 230px;
@@ -983,7 +1198,10 @@ line-height: 19px;
 
 
 @media only screen and (max-width:991px) {
-  
+    #flashMessage{
+
+        right: 35px;
+    }
     #targetDiv {
         background-color: #faf7f3;
         position: fixed;
@@ -1061,7 +1279,7 @@ line-height: 19px;
     } */
     .banner_section-inner .banner_search {
 
-        height: 450px;
+        height: 330px;
         object-fit: cover;
     }
 
@@ -1080,6 +1298,56 @@ line-height: 19px;
 }
 
 @media only screen and (max-width:767px) {
+    .postthumbnail img{
+
+        height: 50px;
+       object-fit: cover;
+       }
+    .desktop_postion.border_top2{
+
+        display: none;
+    }
+    .desktop_hideDiv{
+
+        display: inline-flex !important;
+    }
+    .safrititles .date_bx h6{
+
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+    .btn_newsafari.organizeBtn{
+
+        width: 100%;
+    }
+    .social-share{
+
+        padding-top: 10px;
+    }
+    .border_bottom2 .border-right{
+
+        border-right: 0;
+    }
+    .mobile_didplay_none{
+
+        display: none !important;
+    }
+    .mobile_didplay_block{
+
+        display: block !important;
+    }
+    .sahreSafari.desktop{
+
+display: block;
+    }
+    .sahreSafari.mobile{
+
+        display: none !important;
+    }
+    .sahreSafari.mobile .card-img{
+
+        display: none !important;
+    }
 
     .articals_wrapper.margin-setposi{
 
@@ -1198,7 +1466,12 @@ line-height: 19px;
         background: var(--background-primary) !important;
         height: auto;
         padding-top: 30px;
+        border-radius: 10px;
 
+    }
+    .padditg_mobile{
+
+        padding: 0px 40px;
     }
 
 
@@ -1206,9 +1479,9 @@ line-height: 19px;
         height: 258px;
     }
 
-    .safari_content h5 {
+    .safari_content h3 {
 
-        font-size: var(--fs-20);
+        font-size: var(--fs-18);
     }
 
     .btn-knowmore {
@@ -1245,9 +1518,13 @@ line-height: 19px;
         padding: 10px 14px 10px 21px;
     }
 
-    .inner_animals>img {
+    /* .inner_animals>img {
 
         height: 160px;
+    } */
+    .safariBox{
+
+        top: 11%;
     }
 
     .imag_width {
@@ -1272,16 +1549,31 @@ line-height: 19px;
         z-index: 0;
     } */
 }
+@media only screen and (max-width: 710px) and (min-width: 576px){
+
+.slider_safariimg {
+
+    height: 90%;
+}
+.single-image img{
+
+    height: 100%;
+    object-fit: cover;
+}
+}
 @media only screen and (max-width: 768px) and (min-width: 576px){
 
-    .safarishareBox .row .col-xxl-3 {
+    /* .safarishareBox .row .col-xxl-3 {
         padding: 0px 150px;
+    } */
+    .sharesafribg.home .shareimg {
+        height: 188px;
     }
 }
 @media only screen and (max-width: 575px) and (min-width: 420px){
 
     .safarishareBox .row .col-xxl-3 {
-        padding: 0px 64px;
+        padding: 0px 73px;
     }
 }
 
@@ -1308,10 +1600,33 @@ line-height: 19px;
     }
 }
 
+@media only screen and (max-width: 575px) and (min-width: 420px){
+    .postthumbnail img{
+
+        height: calc(15vw) !important; /* Adjust the 10vw to whatever proportion of the viewport width you desire */
+    max-height: 80px !important; /* Optional: set a maximum height */
+    object-fit: cover; /* This maintains the aspect ratio and covers the area */;
+       }
+}
+
+
 @media only screen and (max-width:576px) {
+    .postthumbnail img{
+
+        height: 100px;
+       object-fit: cover;
+       }
+    .padditg_mobile{
+
+        padding: 0px 20px;
+    }
     .Slider_safariimg3 img{
 
         border-radius: 10px 10px 0px 0px !important;
+    }
+    .artical_cards .image-box .image img{
+
+        height: 275px !important;
     }
     .sharesafri {
         padding-top: 50px;
@@ -1524,11 +1839,10 @@ line-height: 19px;
     }
 
     .safariBox {
-
-        top: -2%;
+        top: 13%;
     }
 
-    .safari_content h5 {
+    .safari_content h3 {
         font-size: 14px;
     }
 
@@ -1543,7 +1857,7 @@ line-height: 19px;
 
     .inner_animals>img {
 
-        height: 150px;
+        height: 190px;
     }
 
     .safari_content p {
@@ -1561,6 +1875,15 @@ font-size: 15px;
 }
 
 @media (max-width:420px) {
+    .inner_animals>img {
+        height: 215px;
+    }
+    .postthumbnail img{
+
+        height: calc(15vw) !important; /* Adjust the 10vw to whatever proportion of the viewport width you desire */
+    max-height: 80px !important; /* Optional: set a maximum height */
+    object-fit: cover; /* This maintains the aspect ratio and covers the area */;
+       }
     /* .main_homebanner .banner_searchBox {
         position: absolute;
         top: 56%;
@@ -1572,9 +1895,17 @@ font-size: 15px;
         transform: translate(-50%, -50%);
         z-index: 0;
     } */
+    .intested_btn{
+
+        padding: 9px 12px !important;
+    }
+    .join_btn{
+
+        padding: 11px 12px;
+    }
 
     .safariBox {
-        top: 17%;
+        top: 11%;
     }
 
     .placeholder_select {
@@ -1609,6 +1940,33 @@ font-size: 15px;
 
         left: 12%;
     }
+  
+}
+@media only screen and (max-width: 991px) and (min-width: 577px){
+    .parksImg img {
+        border-radius: 10px 0px 0px 10px !important;
+    }
+    .parksImg img{
+
+        object-fit: cover;
+    }
+    .searchSafari_parks .parks_body .seelctes_text p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: var(--line-clamp, 3); /* Fallback line clamp */
+        -webkit-box-orient: vertical;
+        line-clamp: var(--line-clamp, 3); /* For browsers that support it */
+        box-orient: vertical;
+    }
+    .banner_section-inner .headingBnner_inner h1{
+
+        font-size: 32px;
+    }
+    .banner_section-inner .headingBnner_inner p{
+
+        font-size: 20px;
+    }
 }
 @media only screen and (max-width: 576px) and (min-width: 427px){
 
@@ -1629,6 +1987,9 @@ font-size: 15px;
     .placeholder_select {
 
         left: 22%;
+    }
+    .inner_animals>img {
+        height: 270px;
     }
 }
 @media (max-width:305px) {

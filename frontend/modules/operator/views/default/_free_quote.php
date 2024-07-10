@@ -5,11 +5,6 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 ?>
-<?php if (Yii::$app->session->hasFlash('success')) : ?>
-    <div class="alert alert-primary" id="info">
-        <?= Yii::$app->session->getFlash('success') ?>
-    </div>
-<?php endif; ?>
 <div class="col-lg-12 col-xxl-8 col-xl-10">
     <div class="get_free_title">
         <h4>Get a FREE quote</h4>
@@ -20,7 +15,7 @@ use yii\bootstrap5\ActiveForm;
             'enableAjaxValidation' => true,
             'enableClientValidation' => false,
             'enableClientScript' => true,
-            'action' => $model->action_url,
+            // 'action' => $model->action_url,
             'validationUrl' => $model->action_validate_url,
         ]); ?>
         <div class="row ">
@@ -108,20 +103,3 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
 </div>
-
-<?php
-$script = <<< JS
-    $(document).ready(function(){
-        setTimeout(function() {
-    $('#info').fadeOut('fast');
-}, 3000);
-});
-JS;
-$this->registerJs($script);
-?>
-
-<style>
-    .alert-success {
-        display: none !important;
-    }
-</style>

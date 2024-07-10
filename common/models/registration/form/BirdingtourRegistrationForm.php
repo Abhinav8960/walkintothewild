@@ -300,7 +300,7 @@ class BirdingtourRegistrationForm extends model
     {
 
         if ($this->logo) {
-            $storagePath = Yii::$app->params['datapath'] . '/birdingoperator';
+            $storagePath = Yii::$app->params['datapath'] . '/birdingoperatorrequest';
 
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);

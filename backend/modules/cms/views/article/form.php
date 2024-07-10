@@ -59,19 +59,19 @@ $this->params['title'] = $this->title;
                     <?php
                     if ($model->article_model->banner_image) { ?>
                         <div class="col-md-5">
-                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                            <?= $form->field($model, 'banner_image')->fileInput()->label('Article Image (JPEG / JPG / PNG / 850px * 420px / 250kb)') ?>
                         </div>
                         <div class="col-md-1">
                             <?php echo '<img src="' . $model->article_model->bannerimagepath . '" width="75" height="75"></img>'; ?>
                         </div>
                     <?php } else { ?>
                         <div class="col-md-6">
-                            <?= $form->field($model, 'banner_image')->fileInput()->label('Banner Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                            <?= $form->field($model, 'banner_image')->fileInput()->label('Article Image (JPEG / JPG / PNG / 850px * 420px / 250kb)') ?>
                         </div>
                     <?php  } ?>
 
-                    <?php
-                    if ($model->article_model->feature_image) { ?>
+                    <!-- <?php
+                            if ($model->article_model->feature_image) { ?>
                         <div class="col-md-5">
                             <?= $form->field($model, 'feature_image')->fileInput()->label('Feature Image (JPEG / JPG / PNG / 350px * 350px / 250kb)') ?>
                         </div>
@@ -82,7 +82,7 @@ $this->params['title'] = $this->title;
                         <div class="col-md-6">
                             <?= $form->field($model, 'feature_image')->fileInput()->label('Feature Image (JPEG / JPG / PNG / 350px * 350px / 250kb)') ?>
                         </div>
-                    <?php  } ?>
+                    <?php  } ?> -->
 
                     <div class="col-md-12">
                         <?= $form->field($model, 'description')->widget(CKEditor::className(), [
@@ -140,6 +140,11 @@ $this->params['title'] = $this->title;
                     <div class="col-md-6">
                         <?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Title']) ?>
                     </div>
+
+                    <div class="col-md-6">
+                        <?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Keyword']) ?>
+                    </div>
+
 
                     <div class="col-md-12">
                         <?= $form->field($model, 'meta_description')->textarea() ?>

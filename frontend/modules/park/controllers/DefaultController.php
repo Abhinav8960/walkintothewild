@@ -39,7 +39,7 @@ class DefaultController extends FrontendBaseController
 
         $featured_articles = Article::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
         $rare_exotics = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->all();
-        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE])->limit(2)->all();
+        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE])->limit(2)->orderby("RAND()")->all();
 
         return $this->render(
             'index',
@@ -221,6 +221,29 @@ class DefaultController extends FrontendBaseController
         ]);
     }
 
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionRareanimal($slug)
+    {
+        $rare_animal = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $searchModel = new SafariParkSearch();
+        if ($rare_animal) {
+            $searchModel->master_rare_animal_id = $rare_animal->id;
+        }
+
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $models = $dataProvider->getModels();
+
+        return $this->render('rareanimal', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'models' => $models,
+            'device' => $this->device(),
+            'slug' => $slug,
+        ]);
+    }
 
     /**
      * Get Redirect URL

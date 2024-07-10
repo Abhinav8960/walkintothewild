@@ -2,8 +2,11 @@
 
 namespace frontend\models;
 
+use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleComment;
+use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariComment;
 use Yii;
 use yii\base\Model;
 
@@ -28,32 +31,24 @@ class ReplyForm extends Model
     }
 
 
-    /**
-     * Save Contatc Query
-     *
-     * @param Corporate $corporate
-     * @return void
-     */
-    public function reply(Article $article)
+    public function reply(ShareSafari $share_safari)
     {
 
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
-        $reply = new ArticleComment();
-        $reply->comment = $this->comment;
-        $reply->comment_datetime = date('Y-m-d H:i:s');
+        $reply = new ShareSafariComment();
+        $reply->share_safari_id = $share_safari->id;
+        $reply->park_id = $share_safari->park->id;
         $reply->user_id = Yii::$app->user->id;
-        $reply->article_id = $article->id;
-        $reply->ip_address = Yii::$app->getRequest()->getUserIp();
-        $reply->device_type = $agent->device();
-        $reply->browser = $agent->browser();
-        $reply->os = $agent->platform();
+        $reply->parent_id = $this->parent_id;
+        $reply->comment = $this->comment;
+        $reply->user_device = $agent->device();
+        $reply->user_agent = Yii::$app->request->userAgent;
+        $reply->user_platform =  $agent->platform();
+        $reply->user_browser = $agent->browser();
+        $reply->user_ip_address = Yii::$app->getRequest()->getUserIp();
+        $reply->status = StatusInterface::STATUS_ACTIVE;
 
-        if ($article->approval_required == 1) {
-            $reply->status = 3;
-        } else {
-            $reply->status = 1;
-        }
 
 
         if ($reply->save()) {

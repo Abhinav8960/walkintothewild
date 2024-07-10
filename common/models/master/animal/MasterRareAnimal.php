@@ -52,6 +52,18 @@ class MasterRareAnimal extends \yii\db\ActiveRecord implements \common\interface
                     return time();
                 },
             ],
+            'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'slug', //The attribute to be generated
+                'attribute' => 'animal_name', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '-',
+                    'trim' => true
+                ]
+            ]
         ];
     }
 
@@ -62,7 +74,7 @@ class MasterRareAnimal extends \yii\db\ActiveRecord implements \common\interface
     {
         return [
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_feature_sequence'], 'integer'],
-            [['animal_name', 'banner', 'feature_image', 'know_as'], 'string', 'max' => 255],
+            [['animal_name', 'banner', 'feature_image', 'know_as', 'slug'], 'string', 'max' => 255],
             [['short_description'], 'string', 'max' => 512],
         ];
     }
@@ -105,5 +117,5 @@ class MasterRareAnimal extends \yii\db\ActiveRecord implements \common\interface
     public function getRareparkanimals()
     {
         return $this->hasMany(SafariParkRareAnimal::className(), ['master_rare_animal_id' => 'id'])->andWhere(['safari_park_rare_animal.status' => 1]);
-    } 
+    }
 }

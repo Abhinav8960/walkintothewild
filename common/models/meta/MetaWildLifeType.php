@@ -26,6 +26,14 @@ class MetaWildLifeType extends \yii\db\ActiveRecord
         return 'meta_wild_life_type';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */

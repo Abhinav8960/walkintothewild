@@ -20,16 +20,16 @@ if ($rare_exotics) {
                 <img src="<?= isset($animal->banner) ? $animal->bannerimagepath : $this->params['baseurl'] . '/img/brownbearbg.jpg' ?>" alt="" class="position-relative w-100">
                 <div class="safariBox">
                     <div class="container">
-                        <div class="row align-items-center ">
-                            <div class="col-lg-6 col-md-5 col-4 text-center position-relative">
+                        <div class="row align-items-center gx-lg-auto gx-0">
+                            <div class="col-lg-6 col-md-5 col-4  text-center position-relative">
                                 <img src="<?= isset($animal->feature_image) ? $animal->imagepath : $this->params['baseurl'] . '/img/brownbear.png' ?>" alt="" class="imag_width position-relative">
                             </div>
                             <div class="col-lg-6 col-md-7 col-8">
                                 <div class="safari_content">
-                                    <h5><?= $animal->animal_name ?></h5>
+                                    <h3><?= $animal->animal_name ?></h3>
                                     <p><?= $animal->short_description ?></p>
                                     <div class="knowmore">
-                                        <a href="<?= \yii\helpers\Url::toRoute(['/park/default/parklist', 'master_location_id' => '0', 'session_id' => '0', 'master_animal_id' => '0', 'master_vehicle_id' => '0', 'SafariParkSearch[master_rare_animal_id]' => $animal->id]) ?>" class="btn-knowmore">Know More</a>
+                                        <a href="<?= \yii\helpers\Url::toRoute(['/park/default/rareanimal', 'slug' => $animal->slug]) ?>" class="btn-knowmore">Know More</a>
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,119 @@
+<?php
+
+use yii\helpers\Url;
+use common\models\sharesafari\ShareSafari;
+use common\models\operator\SafariOperatorRating;
+
+$review_count = SafariOperatorRating::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->count();
+$shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->count();
+
+?>
+<ul>
+    <li><a class="<?= $active == 'safari' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>">
+            <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
+        </a></li>
+    <!-- <li><a class="<?= $active == 'resort' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/resort', 'slug' => $operator->slug]) ?>">
+            <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
+        </a></li> -->
+    <li><a class="<?= $active == 'sharedsafari' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>">
+            <div class="numparks">Shared Safari <span><?= $shared_safaries_count ?></span></div><i class="fa-solid fa-chevron-right"></i>
+        </a></li>
+    <li><a class="<?= $active == 'reviewlist' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>">
+            <div class="numparks">Review <span><?= $review_count ?></span></div><i class="fa-solid fa-chevron-right"></i>
+        </a></li>
+</ul>
+
+
+<style>
+    /* Flex container styles */
+    .d-flex {
+        display: flex;
+    }
+
+    /* Gap between items on medium and larger screens */
+    .gap-md-5 {
+        gap: 20px;
+        /* Adjust as needed */
+    }
+
+    /* Gap between items on smaller screens */
+    .gap-2 {
+        gap: 5px;
+        /* Adjust as needed */
+    }
+
+    /* Phone and email container styles */
+    .phone,
+    .email {
+        position: relative;
+        font-family: "Roboto", sans-serif;
+        font-size: var(--fs-18);
+        font-weight: 600;
+        padding: 10px 0px;
+        display: block;
+        color: var(--background-primary);
+    }
+
+    /* Styling for links (Call and Email) */
+    /* .phone a,
+    .email a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #333;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    } */
+
+    /* Hover effect for links */
+    .phone a:hover,
+    .email a:hover {
+        background-color: #f0f0f0;
+        /* Change background color on hover */
+    }
+
+    /* Styling for icons */
+    .phone i,
+    .email i {
+        font-size: 1.2rem;
+        /* Adjust icon size */
+        margin-right: 8px;
+        /* Space between icon and text */
+    }
+
+    /* Styling for dropdowns (phone numbers and email addresses) */
+    .phone .phone-numbers,
+    .email .email-addresses {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 10;
+    }
+
+    /* Show dropdowns on hover */
+    .phone:hover .phone-numbers,
+    .email:hover .email-addresses {
+        display: block;
+    }
+
+    /* Styling for links inside dropdowns */
+    .phone .phone-numbers a,
+    .email .email-addresses a {
+        display: block;
+        color: #333;
+        text-decoration: none;
+        margin-top: 5px;
+        transition: color 0.3s ease;
+    }
+
+    /* Hover effect for links inside dropdowns */
+    .phone .phone-numbers a:hover,
+    .email .email-addresses a:hover {
+        color: #007bff;
+        /* Change color on hover */
+    }
+</style>
