@@ -26,6 +26,14 @@ class MetaZoneType extends \yii\db\ActiveRecord
         return 'meta_zone_type';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -25,6 +25,14 @@ class MetaAnimalType extends \yii\db\ActiveRecord
         return 'meta_animal_type';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

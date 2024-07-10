@@ -25,6 +25,14 @@ class MetaTermConditionType extends \yii\db\ActiveRecord
         return 'meta_term_condition_type';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */
