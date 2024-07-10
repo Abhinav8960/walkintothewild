@@ -16,6 +16,7 @@ if (isset($model->article_model->id)) {
 }
 $this->params['title'] = $this->title;
 ?>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
 <div class="card">
     <div class="card-body">
@@ -96,12 +97,9 @@ $this->params['title'] = $this->title;
                         </div>
                     <?php  } ?>
 
-                    <div class="col-md-12">
-                        <?= $form->field($model, 'description')->widget(CKEditor::className(), [
-                            'options' => ['rows' => 4],
-                            'preset' => 'full',
 
-                        ]) ?>
+                    <div class="col-md-12">
+                        <?= $form->field($model, 'description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
                     </div>
 
 
@@ -200,6 +198,17 @@ $script = <<< JS
         });
 
     });
+JS;
+$this->registerJs($script);
+?>
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('articleform-description');
 JS;
 $this->registerJs($script);
 ?>

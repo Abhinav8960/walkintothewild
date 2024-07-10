@@ -22,9 +22,12 @@ class NovaAppAsset extends AssetBundle
         'plugins/datatable/css/dataTables.bootstrap5.css',
         'plugins/datatable/css/buttons.bootstrap5.min.css',
         'plugins/datatable/responsive.bootstrap5.css',
+        'https://uicdn.toast.com/editor/latest/toastui-editor.min.css',
+        'https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.css',
+        'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.css',
     ];
     public $publishOptions = [
-        'forceCopy' => false,
+        'forceCopy' => true,
     ];
     public $js = [
         'plugins/bootstrap/js/popper.min.js',
@@ -53,10 +56,17 @@ class NovaAppAsset extends AssetBundle
         'plugins/datatable/responsive.bootstrap5.min.js',
         'js/themecolor.js',
         'https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js',
-        'https://unpkg.com/bootstrap-table@1.19.1/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js'
+        'https://unpkg.com/bootstrap-table@1.19.1/dist/extensions/sticky-header/bootstrap-table-sticky-header.min.js',
+
+        'https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js',
+        'https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js',
+        'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js',
+        'https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js',
     ];
 
     public $depends = [
         'yii\web\YiiAsset',
+        'yii\bootstrap5\BootstrapAsset',
+        'yii\bootstrap5\BootstrapPluginAsset',
     ];
 }
