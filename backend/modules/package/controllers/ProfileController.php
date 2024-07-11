@@ -5,6 +5,7 @@ namespace backend\modules\package\controllers;
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageForm;
 use common\models\package\Package;
+use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
@@ -158,10 +159,45 @@ class ProfileController extends Controller
     public function actionFaq($package_id)
     {
         $package_model = $this->findModel($package_id);
+        $searchModel = new PackageFaqSearch();
+        $searchModel->package_id = $package_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
         return $this->render('faq', [
             'package_model' => $package_model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    /**
+     * Create SeatType.
+     * 
+     * @return mixed
+     */
+    public function actionCreateFaq($package_id)
+    {
+        $model = new PackageForm();
+        $model->package_id = $package_id;
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->package_model->loadDefaultValues();
+        }
+
+        return $this->render('create_faq', [
+            'model' => $model,
         ]);
     }
     /**

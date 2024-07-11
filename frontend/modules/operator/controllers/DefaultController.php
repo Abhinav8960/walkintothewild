@@ -73,6 +73,10 @@ class DefaultController extends FrontendBaseController
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         $model = new OperatorQuoteForm();
+
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+        }
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
