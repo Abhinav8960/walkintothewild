@@ -7,7 +7,7 @@ use yii\helpers\Html;
 
 $this->title = 'Package : ' . $model->package_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '/';
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/trip/default/index'];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/package/default/index'];
 $this->params['breadcrumbs'][] = "Update";
 $this->params['title'] = $this->title;
 ?>

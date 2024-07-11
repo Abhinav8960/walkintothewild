@@ -9,7 +9,7 @@ $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '/park/safari/default/index'];
 $this->params['breadcrumbs'][] = "Package View";
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('Edit Profile', ['/trip/profile/index', 'package_id' => $model->id], ['class' => 'btn btn-orange ', 'title' => 'Edit']);
+$this->params['buttons'][] = Html::a('Edit Profile', ['/package/profile/index', 'package_id' => $model->id], ['class' => 'btn btn-orange ', 'title' => 'Edit']);
 ?>
 
 <div class="card">

@@ -9,14 +9,12 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@backend/modules/trip/views/profile/_profile_navbar', ['package' => $package_model, 'overview_active' => 'active']) ?>
+    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'itinerary_active' => 'active']) ?>
 
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
             <div class="tab-pane active">
-                <?= $this->render('_basic_details_form', [
-                    'model' => $model,
-                ]) ?>
+
             </div>
         </div>
     </div>

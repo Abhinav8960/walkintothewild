@@ -42,8 +42,8 @@ return [
         'sharesafari' => [
             'class' => 'backend\modules\sharesafari\Module',
         ],
-        'trip' => [
-            'class' => 'backend\modules\trip\Module',
+        'package' => [
+            'class' => 'backend\modules\package\Module',
         ],
         'user' => [
             'class' => 'backend\modules\user\Module',

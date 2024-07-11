@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\modules\trip\controllers;
+namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageForm;
