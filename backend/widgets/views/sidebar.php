@@ -784,9 +784,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_resort_manager) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
-						<a class="side-menu__item" href="#"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/trip/default/index",
+														"/trip/default/create",
+														"/trip/default/update",
+													)) ? "active" : "" ?>" href="/trip/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Trip</span></a>
 					</li>
 				<?php endif; ?>
 

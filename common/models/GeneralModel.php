@@ -24,6 +24,8 @@ use common\models\master\email\MasterMailTemplate;
 use common\models\master\location\MasterLocation;
 use common\models\master\month\MasterMonth;
 use common\models\master\operatorcategory\MasterOperatorCategory;
+use common\models\master\packagefeature\MasterPackagefeature;
+use common\models\master\packageinclude\MasterPackageInclude;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\suggetioncategory\MasterSuggestionCategory;
@@ -531,9 +533,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(ArticleTagArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
-    public static function topicoption()
+    public static function packagefeatureoptiontopicoption()
     {
         return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function packagefeatureoption()
+    {
+        return ArrayHelper::map(MasterPackagefeature::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function packageincludeoption()
+    {
+        return ArrayHelper::map(MasterPackageInclude::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function articleoption()

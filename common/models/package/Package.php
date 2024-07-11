@@ -28,8 +28,9 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class Package extends \yii\db\ActiveRecord
+class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -54,6 +55,18 @@ class Package extends \yii\db\ActiveRecord
                     return time();
                 },
             ],
+            'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'package_slug', //The attribute to be generated
+                'attribute' => 'package_name', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '-',
+                    'trim' => true
+                ]
+            ]
         ];
     }
 
@@ -64,13 +77,12 @@ class Package extends \yii\db\ActiveRecord
     {
         return [
             [['package_name', 'package_slug'], 'required'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'string'],
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
-            [['package_image'], 'string', 'max' => 255],
-            [['package_slug'], 'unique'],
+            [['start_location', 'end_location'], 'string', 'max' => 255],
         ];
     }
 
@@ -101,5 +113,26 @@ class Package extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'status' => 'Status',
         ];
+    }
+
+
+
+    public function getPackageincluded()
+    {
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => 1]);
+    }
+
+
+    public function getPackagefeatures()
+    {
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => 1]);
+    }
+
+
+    public function getImagepath()
+    {
+        if ($this->package_image != '') {
+            return '/storage/package/' . $this->id . '/' . $this->package_image;
+        }
     }
 }
