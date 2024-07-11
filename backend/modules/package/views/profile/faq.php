@@ -56,24 +56,15 @@ $this->params['buttons'][] = Html::a('+ Create Faq', ['create-faq', 'package_id'
                                         'class' => 'yii\grid\ActionColumn',
                                         'header' => "Actions",
                                         'contentOptions' => ['style' => 'width: 15%;'],
-                                        'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                                        'template' => '{update}',
                                         'buttons' => [
-                                            'view' => function ($url, $model) {
-                                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                            'update' => function ($url, $model) {
+                                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
                             ', ['/package/profile/faq-update', 'package_id' => $model->package_id, 'id' => $model->id], [
                                                     'class' => 'btn p-0 change-menuicon',
                                                     'title' => 'View',
 
                                                 ]);
-                                            },
-                                            'delete' => function ($url, $model) {
-                                                if ($model->status != -1) {
-                                                } else {
-                                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package Faq']);
-                                                }
-                                            },
-                                            'suspend' => function ($url, $model) {
-                                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package Faq']);
                                             },
                                         ]
                                     ],

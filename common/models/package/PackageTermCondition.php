@@ -5,20 +5,19 @@ namespace common\models\package;
 use Yii;
 
 /**
- * This is the model class for table "package_faq".
+ * This is the model class for table "package_term_condition".
  *
  * @property int $id
  * @property int $package_id
- * @property string|null $question
- * @property string|null $answer
- * @property int|null $position
+ * @property string|null $title
+ * @property string|null $description
  * @property int|null $status
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class PackageTermCondition extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use \common\traits\CommanRelationship;
     /**
@@ -26,8 +25,9 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\Stat
      */
     public static function tableName()
     {
-        return 'package_faq';
+        return 'package_term_condition';
     }
+
 
     public function behaviors()
     {
@@ -55,9 +55,9 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     {
         return [
             [['package_id'], 'required'],
-            [['package_id', 'position', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['answer'], 'string'],
-            [['question'], 'string', 'max' => 512],
+            [['package_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['description'], 'string'],
+            [['title'], 'string', 'max' => 512],
         ];
     }
 
@@ -69,9 +69,8 @@ class PackageFaq extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         return [
             'id' => 'ID',
             'package_id' => 'Package ID',
-            'question' => 'Question',
-            'answer' => 'Answer',
-            'position' => 'Position',
+            'title' => 'Title',
+            'description' => 'Description',
             'status' => 'Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',

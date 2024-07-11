@@ -15,7 +15,7 @@ $this->params['title'] = $this->title;
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
+    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'term_condition_active' => 'active']) ?>
 
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
@@ -33,13 +33,14 @@ $this->params['title'] = $this->title;
 
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'question')->textInput(['rows' => '2', 'placeholder' => 'Package Question'])->label('Package Question') ?>
+                                <?= $form->field($model, 'title')->textInput(['rows' => '2', 'placeholder' => 'Enter Title'])->label('Title') ?>
                             </div>
                             <div class="col-md-12">
-                                <?= $form->field($model, 'answer')->textInput(['rows' => '2', 'placeholder' => 'Package Answer'])->label('Package Answer') ?>
+                                <?= $form->field($model, 'description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
                             </div>
+
                             <?php
-                            if (!empty($model->package_faq_model->id)) { ?>
+                            if (!empty($model->package_termcondition_model->id)) { ?>
                                 <div class="col-md-3">
                                     <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
                                 </div>
@@ -60,3 +61,15 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('packagetermconditionform-description');
+JS;
+$this->registerJs($script);
+?>

@@ -11,6 +11,7 @@ class PackageFaqForm extends \yii\base\Model
     public $question;
     public $answer;
     public $position;
+    public $status;
     public $package_faq_model;
     public $action_url;
     public $action_validate_url;
@@ -71,35 +72,5 @@ class PackageFaqForm extends \yii\base\Model
         $this->package_faq_model->answer = $this->answer;
         $this->package_faq_model->position = $this->position;
         $this->package_faq_model->status = $this->status;
-    }
-
-    /**
-     * Upload Banner image
-     *
-     * @return void
-     */
-    public function UploadFile()
-    {
-        if ($this->package_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/package';
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->package_faq_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-
-            $fileName = 'package_image' . '-' . time() . '.' . $this->package_image->extension;
-            $filePath = $storagePath . '/' . $fileName;
-
-            if ($this->package_image->saveAs($filePath)) {
-                $this->package_faq_model->package_image = $fileName;
-                $this->package_faq_model->save(false);
-            }
-        }
     }
 }
