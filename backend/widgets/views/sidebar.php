@@ -791,22 +791,17 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/sharesafari/default/index",
 															"/sharesafari/default/view",
 														)) ? "active" : "" ?>" href="/sharesafari/default/index">Share Safari</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/sharesafari/share-safari-comment/index",
+															"/sharesafari/share-safari-comment/view",
+														)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_resort_manager) : ?>
 					<li class="slide">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/package/default/index",
-														"/package/default/create",
-														"/package/profile",
-														"/package/profile/itinerary",
-														"/package/profile/inclusion",
-														"/package/profile/exclusion",
-														"/package/profile/term-condition",
-														"/package/profile/faq",
-													)) ? "active" : "" ?>" href="/package/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
+						<a class="side-menu__item" href="#"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
 					</li>
 				<?php endif; ?>
 

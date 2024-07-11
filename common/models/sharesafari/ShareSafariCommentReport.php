@@ -2,6 +2,7 @@
 
 namespace common\models\sharesafari;
 
+use common\models\cms\flagreason\Flagreason;
 use Yii;
 use common\models\User;
 use common\models\park\SafariPark;
@@ -100,6 +101,11 @@ class ShareSafariCommentReport extends \yii\db\ActiveRecord
     public function getPark()
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+    }
+
+    public function getReportreason()
+    {
+        return $this->hasOne(Flagreason::className(), ['id' => 'report_reason_id']);
     }
 
 
