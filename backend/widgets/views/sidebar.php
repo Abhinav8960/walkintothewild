@@ -53,6 +53,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/packageinclude/index",
 											"/master/packageinclude/create",
 											"/master/packageinclude/update",
+											"/master/share-safari-reason/index",
+											"/master/share-safari-reason/create",
+											"/master/share-safari-reason/update",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/master",
@@ -82,6 +85,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/packageinclude/index",
 														"/master/packageinclude/create",
 														"/master/packageinclude/update",
+														"/master/share-safari-reason/index",
+														"/master/share-safari-reason/create",
+														"/master/share-safari-reason/update",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
@@ -150,6 +156,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/master/packageinclude/create",
 															"/master/packageinclude/update",
 														)) ? "active" : "" ?>" href="/master/packageinclude/index">Package Include</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/master/share-safari-reason/index",
+															"/master/share-safari-reason/create",
+															"/master/share-safari-reason/update",
+														)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
 						</ul>
 					</li>
 
