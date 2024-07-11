@@ -1,7 +1,8 @@
 <?php
 
-namespace common\models\master\sharesafari;
+namespace common\models\master\sharesafarireason;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -15,14 +16,38 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterShareSafariReason extends \yii\db\ActiveRecord
+class MasterShareSafariReason extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return 'master_share_safari_reason';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+
+        ];
     }
 
     /**
