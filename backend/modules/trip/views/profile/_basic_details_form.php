@@ -1,12 +1,12 @@
 <?php
 
-
 use common\models\GeneralModel;
-use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
-use kartik\datetime\DateTimePicker;
 
+/** @var yii\web\View $this */
+/** @var common\models\master\airport\MasterAirport $model */
+/** @var yii\widgets\ActiveForm $form */
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 

@@ -38,7 +38,7 @@ use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 /**
- * DefaultController implements the CRUD actions for Employee model.
+ * ProfileController implements the CRUD actions for Employee model.
  */
 class ProfileController extends Controller
 {

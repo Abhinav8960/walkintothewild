@@ -46,6 +46,7 @@ class DefaultController extends Controller
     {
         $model = new PackageForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->scenario = 'create';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -80,7 +81,7 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageIncluded::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
@@ -114,6 +115,7 @@ class DefaultController extends Controller
     {
         $package_model = $this->findModel($id);
         $model = new PackageForm($package_model);
+        $model->scenario = 'update';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -148,7 +150,7 @@ class DefaultController extends Controller
 
                         $package_park = $model->package_park;
                         if ($package_park) {
-                            PackageIncluded::deleteAll(['package_id' => $model->package_model->id]);
+                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
                             foreach ($package_park as $park) {
                                 $packagesafaripark = new PackageSafariPark();
                                 $packagesafaripark->package_id = $model->package_model->id;
@@ -169,6 +171,39 @@ class DefaultController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+
+    public function actionView($package_id)
+    {
+        $model = $this->findModel($package_id);
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionActive($id)
+    {
+        $model = Package::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = Package::STATUS_ACTIVE;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+
+    /**
+     * Suspend Model
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionSuspend($id)
+    {
+        $model = Package::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = Package::STATUS_SUSPEND;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
     /**

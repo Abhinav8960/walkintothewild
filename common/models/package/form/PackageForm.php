@@ -77,7 +77,9 @@ class PackageForm extends \yii\base\Model
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
-            [['package_name', 'package_slug'], 'required'],
+            [['package_name', 'package_slug'], 'required', 'on' => 'create'],
+            [['package_inclusion'], 'required', 'on' => 'inclusion'],
+            [['package_exclusion'], 'required', 'on' => 'exclusion'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'string'],
@@ -88,6 +90,29 @@ class PackageForm extends \yii\base\Model
         ];
     }
 
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['create'] = [
+            'package_name', 'package_image', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_safari',
+            'stay_category_id', 'status', 'cost_per_person', 'package_description',
+            'package_inclusion', 'package_exclusion', 'package_terms_condtition',
+            'package_feature', 'package_included', 'package_park', 'package_image',
+            'start_location', 'end_location'
+        ];
+        $scenarios['update'] = [
+            'package_name', 'package_image', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_safari',
+            'stay_category_id', 'status', 'cost_per_person', 'package_description',
+            'package_inclusion', 'package_exclusion', 'package_terms_condtition',
+            'package_feature', 'package_included', 'package_park', 'package_image',
+            'start_location', 'end_location'
+        ];
+        $scenarios['inclusion'] = ['package_inclusion'];
+        $scenarios['exclusion'] = ['package_exclusion'];
+
+        return $scenarios;
+    }
 
     /**
      * {@inheritdoc}

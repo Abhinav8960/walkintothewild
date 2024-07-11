@@ -31,61 +31,42 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
                     [
                         'label' => 'Package Name',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->package_name;
                         }
                     ],
                     [
-                        'label' => 'Number Of Day',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'label' => 'Info',
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->no_of_day;
-                        }
-                    ],
-                    [
-                        'label' => 'Number Of Night',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->no_of_night;
-                        }
-                    ],
-                    [
-                        'label' => 'Number Of Safari',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->no_of_safari;
-                        }
-                    ],
-                    [
-                        'label' => 'Start Location',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->start_location;
-                        }
-                    ],
-                    [
-                        'label' => 'End Location',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->end_location;
+                            $html = '';
+                            $html .= 'Number Of Day    : ' . $model->no_of_day . '<br>';
+                            $html .= 'Number Of Night  : ' . $model->no_of_night . '<br>';
+                            $html .= 'Number Of Safari : ' . $model->no_of_safari . '<br>';
+                            $html .= 'Start Location   : ' . $model->start_location . '<br>';
+                            $html .= 'End Location     : ' . $model->end_location . '<br>';
+                            return $html;
                         }
                     ],
                     [
                         'label' => 'Cost Per Person',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 5%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->cost_per_person;
                         }
                     ],
-
+                    [
+                        'label' => 'Stay Category',
+                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->stay_category_id) ? GeneralModel::packageoption()[$model->stay_category_id] : '';
+                        }
+                    ],
                     [
                         'label' => 'Feature',
                         'contentOptions' => ['style' => 'width: 15%;'],
@@ -129,26 +110,24 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
-                            'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
-                                ', ['update', 'id' => $model->id], [
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                ', ['/trip/default/view', 'package_id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Update',
+                                    'title' => 'View',
 
                                 ]);
                             },
-
                             'delete' => function ($url, $model) {
-                                return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->package_name . '?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
+                                if ($model->status != -1) {
+                                } else {
+                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
+                                }
+                            },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
                             },
                         ]
                     ],

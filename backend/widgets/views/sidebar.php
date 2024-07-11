@@ -800,7 +800,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/trip/default/index",
 														"/trip/default/create",
-														"/trip/default/update",
+														"/trip/profile",
+														"/trip/profile/itinerary",
+														"/trip/profile/inclusion",
+														"/trip/profile/exclusion",
+														"/trip/profile/term-condition",
+														"/trip/profile/faq",
 													)) ? "active" : "" ?>" href="/trip/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Trip</span></a>
 					</li>
 				<?php endif; ?>
