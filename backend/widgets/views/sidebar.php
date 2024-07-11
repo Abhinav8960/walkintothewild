@@ -799,9 +799,22 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_resort_manager) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
-						<a class="side-menu__item" href="#"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/package/default/index",
+														"/package/default/create",
+														"/package/profile",
+														"/package/profile/itinerary",
+														"/package/profile/inclusion",
+														"/package/profile/exclusion",
+														"/package/profile/term-condition",
+														"/package/profile/create-term-condition",
+														"/package/profile/update-term-condition",
+														"/package/profile/faq",
+														"/package/profile/create-faq",
+														"/package/profile/faq-update",
+													)) ? "active" : "" ?>" href="/package/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
 					</li>
 				<?php endif; ?>
 
