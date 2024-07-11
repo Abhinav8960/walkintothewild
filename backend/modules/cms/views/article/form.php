@@ -50,16 +50,26 @@ $this->params['title'] = $this->title;
 
                 <div class="row">
                     <div class="col-md-4">
-                        <?= $form->field($model, 'title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Article Title']) ?>
+                        <?= $form->field($model, 'title')->textInput([
+                            'maxlength' => true,
+                            'placeholder' => 'Enter Article Title',
+                            'id' => 'articleform-title', // Add an ID for JavaScript targeting
+                        ]) ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?= $form->field($model, 'slug')->textInput([
+                            'maxlength' => true,
+                            'placeholder' => 'Enter Slug',
+                            'readonly' => isset($model->article_model->id) ? true : false, // Make it readonly for existing records
+                            'id' => 'articleform-slug', // Add an ID for JavaScript targeting
+                        ]) ?>
                     </div>
 
                     <div class="col-md-4">
                         <?= $form->field($model, 'article_author_id')->dropDownList(GeneralModel::authoroption(), ['prompt' => '--Select Author Name--']) ?>
                     </div>
 
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'placeholder' => 'Enter Slug', 'readonly' => isset($model->article_model->id) ? true : false]) ?>
-                    </div>
 
                     <div class="col-md-4 select_width">
                         <?= $form->field($model, 'article_tags')->widget(\kartik\select2\Select2::classname(), [
@@ -209,6 +219,37 @@ $this->registerJs($script);
 <?php
 $script = <<< JS
 editor('articleform-description');
+JS;
+$this->registerJs($script);
+?>
+
+<?php
+$script = <<< JS
+    $(function(){
+        // Function to generate slug from title
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
+        }
+
+        // Handle title change to update slug
+        $('#articleform-title').on('input', function() {
+            var title = $(this).val();
+            var slug = slugify(title);
+            $('#articleform-slug').val(slug);
+        });
+
+        // Initialize slug when editing existing record
+        if (!$('#articleform-slug').val() && $('#articleform-title').val()) {
+            var title = $('#articleform-title').val();
+            var slug = slugify(title);
+            $('#articleform-slug').val(slug);
+        }
+    });
 JS;
 $this->registerJs($script);
 ?>

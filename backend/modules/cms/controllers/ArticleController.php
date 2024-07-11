@@ -13,6 +13,7 @@ use common\models\cms\article\ArticleSearch;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\cms\article\form\ArticleForm;
+use common\models\cms\article\MasterArticleTag;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
@@ -154,6 +155,45 @@ class ArticleController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionAddTag()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $tags = Yii::$app->request->post('tags');
+
+        if (is_array($tags)) {
+            // Handle the case where 'tags' is an array (e.g., if multiple tags are submitted)
+            $tagsArray = $tags;
+        } elseif (is_string($tags)) {
+            // Handle the case where 'tags' is a string (e.g., if only one tag is submitted)
+            $tagsArray = explode(',', $tags);
+        } else {
+            // Handle any other unexpected cases
+            return ['success' => false, 'message' => 'Invalid tags format'];
+        }
+
+        if (!empty($tagsArray)) {
+            $existingTags = MasterArticleTag::find()->select('title')->column();
+
+            foreach ($tagsArray as $tag) {
+                $tag = trim($tag);
+                if (!in_array($tag, $existingTags)) {
+                    $newTag = new MasterArticleTag();
+                    $newTag->title = $tag;
+                    $newTag->slug = $tag;
+                    $newTag->status = MasterArticleTag::STATUS_ACTIVE;
+                    if (!$newTag->save(false)) {
+                        return ['success' => false, 'message' => 'Failed to save tag: ' . $newTag->title];
+                    }
+                }
+            }
+            return ['success' => true];
+        }
+
+        return ['success' => false, 'message' => 'No tags provided'];
+    }
+
 
 
     /**
