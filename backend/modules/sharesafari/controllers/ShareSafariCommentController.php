@@ -60,7 +60,7 @@ class ShareSafariCommentController extends Controller
     {
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id, 'status' => 1]),
+            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id, 'status' => [1, 20]]),
             'pagination' => [
                 'pageSize' => 20,
             ],

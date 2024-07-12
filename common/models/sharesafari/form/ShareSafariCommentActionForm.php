@@ -4,6 +4,7 @@ namespace common\models\sharesafari\form;
 
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\User;
 use Yii;
 use yii\base\Model;
 
@@ -17,6 +18,8 @@ class ShareSafariCommentActionForm extends model
 {
     public $comment_action_model;
     public $status;
+    public $reason;
+    public $user_id;
 
 
     public function __construct(ShareSafariCommentReport $comment_action_model = null)
@@ -30,6 +33,7 @@ class ShareSafariCommentActionForm extends model
         if ($comment_action_model  != '') {
             $this->comment_action_model = $comment_action_model;
             $this->status =  $this->comment_action_model->status;
+            $this->reason =  $this->comment_action_model->reason;
         }
     }
 
@@ -42,8 +46,8 @@ class ShareSafariCommentActionForm extends model
 
 
         return [
-            [['status'], 'integer'],
-            ['status', 'required']
+            [['status', 'user_id'], 'integer'],
+            [['status', 'reason'], 'required']
 
 
         ];
@@ -57,6 +61,8 @@ class ShareSafariCommentActionForm extends model
         return [
             'id' => 'ID',
             'status' => 'Status',
+            'user_id' => 'User Id',
+            'reason' => 'Reason',
         ];
     }
     /**
@@ -67,5 +73,12 @@ class ShareSafariCommentActionForm extends model
     public function initializeForm()
     {
         $this->comment_action_model->status =  $this->status;
+        $this->comment_action_model->reason =  $this->reason;
+
+        if ($this->status == 20) {
+            $model = User::find()->where(['id' => $this->comment_action_model->user_id])->limit(1)->one();
+            $model->status = 20;
+            $model->save(false);
+        }
     }
 }
