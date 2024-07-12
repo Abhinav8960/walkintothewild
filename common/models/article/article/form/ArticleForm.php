@@ -64,7 +64,7 @@ class ArticleForm extends model
     public function rules()
     {
         return [
-            [['status'], 'required'],
+            [['status','article_title'], 'required'],
             [['status', 'source'], 'integer'],
             [['article_title', 'writer'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
