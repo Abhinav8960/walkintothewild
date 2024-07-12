@@ -3,7 +3,9 @@
 namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
+use common\models\master\faq\MasterFaq;
 use common\models\package\form\PackageFaqForm;
+use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
 use common\models\package\form\PackageTermConditionForm;
 use common\models\package\Package;
@@ -88,11 +90,11 @@ class ProfileController extends Controller
     }
 
 
-    public function actionInclusion($package_id)
+    public function actionPolicyInfo($package_id)
     {
         $package_model = $this->findModel($package_id);
         $model = new PackageForm($package_model);
-        $model->scenario = 'inclusion';
+        $model->scenario = 'policy_info';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -100,12 +102,101 @@ class ProfileController extends Controller
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['inclusion', 'package_id' => $package_id]);
+                        return $this->redirect(['policy-info', 'package_id' => $package_id]);
                     }
                 }
             }
         } else {
             $model->package_model->loadDefaultValues();
+        }
+
+        return $this->render('policy_info', [
+            'model' => $model,
+            'package_model' => $package_model,
+        ]);
+    }
+
+
+    public function actionGettingThere($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $model = new PackageForm($package_model);
+        $model->scenario = 'getting_there';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['getting-there', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_model->loadDefaultValues();
+        }
+
+        return $this->render('getting_there', [
+            'model' => $model,
+            'package_model' => $package_model,
+        ]);
+    }
+
+    public function actionInclusion($package_id)
+    {
+        // Find the package model based on $package_id
+        $package_model = $this->findModel($package_id);
+
+        // Instantiate PackageForm using the found package model
+        $model = new PackageForm($package_model);
+        $model->scenario = 'inclusion'; // Set scenario to 'inclusion' for validation purposes
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                // Validate and save package model
+                if ($model->validate()) {
+                    // Save the package model first
+                    $transaction = Yii::$app->db->beginTransaction();
+                    try {
+                        if ($model->package_model->save(false)) {
+                            // Save package inclusion options
+                            foreach ($model->package_included as $optionId => $selection) {
+                                // Check if option exists, and update or create as needed
+                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_id]);
+                                if (!$packageIncluded) {
+                                    $packageIncluded = new PackageIncluded();
+                                    $packageIncluded->include_id = $optionId;
+                                    $packageIncluded->package_id = $package_id;
+                                }
+                                $packageIncluded->selection = $selection;
+                                if (!$packageIncluded->save()) {
+                                    throw new \Exception('Failed to save package inclusion option ' . $optionId);
+                                }
+                            }
+
+                            $transaction->commit();
+                            Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                            return $this->redirect(['inclusion', 'package_id' => $package_id]);
+                        } else {
+                            Yii::$app->session->setFlash('error', 'Failed to update package details.');
+                        }
+                    } catch (\Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', 'An error occurred while updating data: ' . $e->getMessage());
+                    }
+                }
+            }
+        } else {
+            // Populate the form with existing data
+            $model->package_model->loadDefaultValues(); // Ensure package model has default values
+
+            // Fetch related package inclusion options
+            $includedOptions = [];
+            foreach ($package_model->packageIncludeds as $includedOption) {
+                $includedOptions[$includedOption->include_id] = $includedOption->selection;
+            }
+            $model->package_included = $includedOptions;
         }
 
         return $this->render('inclusion', [
@@ -113,33 +204,6 @@ class ProfileController extends Controller
             'package_model' => $package_model,
         ]);
     }
-
-    public function actionExclusion($package_id)
-    {
-        $package_model = $this->findModel($package_id);
-        $model = new PackageForm($package_model);
-        $model->scenario = 'exclusion';
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['exclusion', 'package_id' => $package_id]);
-                    }
-                }
-            }
-        } else {
-            $model->package_model->loadDefaultValues();
-        }
-
-        return $this->render('exclusion', [
-            'model' => $model,
-            'package_model' => $package_model,
-        ]);
-    }
-
 
     public function actionItinerary($package_id)
     {
@@ -151,19 +215,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function actionTermCondition($package_id)
-    {
-        $package_model = $this->findModel($package_id);
-        $searchModel = new PackageTermConditionSearch();
-        $searchModel->package_id = $package_id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('term_condition', [
-            'package_model' => $package_model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     public function actionFaq($package_id)
     {
@@ -197,6 +248,15 @@ class ProfileController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_faq_model->save(false)) {
+                        $faq = new MasterFaq();
+                        $faq->question = $model->question;
+                        $faq->answer = $model->answer;
+                        $faq->position = 0;
+                        $faq->status = StatusInterface::STATUS_ACTIVE;
+                        if ($faq->save(false)) {
+                            $model->package_faq_model->faq_id = $faq->id;
+                            $model->package_faq_model->save(false);
+                        }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
@@ -206,101 +266,72 @@ class ProfileController extends Controller
             $model->package_faq_model->loadDefaultValues();
         }
 
-        return $this->render('create_faq', [
-            'model' => $model,
-            'package_model' => $package_model,
-        ]);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_faq', [
+                'model' => $model,
+                'package_model' => $package_model,
+            ]);
+        }
     }
+
 
     /**
      * Create PackageFaqForm.
      * 
      * @return mixed
      */
-    public function actionFaqUpdate($package_id, $id)
+    public function actionSelectFaq($package_id)
     {
         $package_model = $this->findModel($package_id);
-        $package_faq_model = $this->findModelfaq($id);
-        $model = new PackageFaqForm($package_faq_model);
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_faq_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['faq', 'package_id' => $package_id]);
-                    }
-                }
-            }
-        } else {
-            $model->package_faq_model->loadDefaultValues();
-        }
-
-        return $this->render('create_faq', [
-            'model' => $model,
-            'package_model' => $package_model,
-        ]);
-    }
-
-    /**
-     * Create PackageTermConditionForm.
-     * 
-     * @return mixed
-     */
-    public function actionCreateTermCondition($package_id)
-    {
-        $package_model = $this->findModel($package_id);
-        $model = new PackageTermConditionForm();
+        $model = new PackageFaqSelectForm();
         $model->package_id = $package_id;
         $model->status = StatusInterface::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_termcondition_model->save(false)) {
+                    if ($model->package_faq_select_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['term-condition', 'package_id' => $package_id]);
+                        return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
             }
         } else {
-            $model->package_termcondition_model->loadDefaultValues();
+            $model->package_faq_select_model->loadDefaultValues();
         }
 
-        return $this->render('create_term_condition', [
-            'model' => $model,
-            'package_model' => $package_model,
-        ]);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('select_faq', [
+                'model' => $model,
+                'package_model' => $package_model,
+            ]);
+        }
     }
 
-    /**
-     * Create PackageTermConditionForm.
-     * 
-     * @return mixed
-     */
-    public function actionUpdateTermCondition($package_id, $id)
-    {
-        $package_model = $this->findModel($package_id);
-        $package_termcondition_model = $this->findModeltermcondition($id);
-        $model = new PackageTermConditionForm($package_termcondition_model);
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_termcondition_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['term-condition', 'package_id' => $package_id]);
-                    }
-                }
-            }
-        } else {
-            $model->package_termcondition_model->loadDefaultValues();
-        }
 
-        return $this->render('create_term_condition', [
-            'model' => $model,
-            'package_model' => $package_model,
-        ]);
+    public function actionActive($id)
+    {
+        $model = PackageFaq::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = PackageFaq::STATUS_ACTIVE;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+
+    /**
+     * Suspend Model
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionSuspend($id)
+    {
+        $model = PackageFaq::find()->where(['id' => $id])->limit(1)->one();
+        $model->status = PackageFaq::STATUS_SUSPEND;
+        $model->save(false);
+        return $this->redirect(\Yii::$app->request->referrer);
     }
     /**
      * Finds the Package model based on its primary key value.

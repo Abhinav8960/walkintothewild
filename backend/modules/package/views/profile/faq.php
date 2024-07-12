@@ -10,7 +10,8 @@ $this->title = 'Package : ' . $package_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create Faq', ['create-faq', 'package_id' => $package_model->id], ['class' => 'btn btn-orange ', 'title' => 'Create Faq']);
+$this->params['buttons'][] = Html::Button('+ Add FAQ', ['value' => "/package/profile/create-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
+$this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/profile/select-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange', 'title' => 'Select FAQ']);
 ?>
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
@@ -56,15 +57,16 @@ $this->params['buttons'][] = Html::a('+ Create Faq', ['create-faq', 'package_id'
                                         'class' => 'yii\grid\ActionColumn',
                                         'header' => "Actions",
                                         'contentOptions' => ['style' => 'width: 15%;'],
-                                        'template' => '{update}',
+                                        'template' => '{delete}&nbsp;&nbsp;{suspend}',
                                         'buttons' => [
-                                            'update' => function ($url, $model) {
-                                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
-                            ', ['/package/profile/faq-update', 'package_id' => $model->package_id, 'id' => $model->id], [
-                                                    'class' => 'btn p-0 change-menuicon',
-                                                    'title' => 'View',
-
-                                                ]);
+                                            'delete' => function ($url, $model) {
+                                                if ($model->status != -1) {
+                                                } else {
+                                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
+                                                }
+                                            },
+                                            'suspend' => function ($url, $model) {
+                                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
                                             },
                                         ]
                                     ],

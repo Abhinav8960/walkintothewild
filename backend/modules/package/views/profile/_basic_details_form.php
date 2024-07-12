@@ -121,16 +121,6 @@ use yii\bootstrap5\ActiveForm;
                 ])->label('Package Feature') ?>
             </div>
 
-            <div class="col-md-3">
-                <?= $form->field($model, 'package_included')->widget(\kartik\select2\Select2::classname(), [
-                    'data' => GeneralModel::packageincludeoption(),
-                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Select', 'multiple' => true],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ])->label('Package Included') ?>
-            </div>
             <?php
             if (!empty($model->package_model->id)) { ?>
                 <div class="col-md-3">

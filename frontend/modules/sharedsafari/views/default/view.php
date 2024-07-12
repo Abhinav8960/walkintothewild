@@ -51,7 +51,7 @@ $this->params['title'] = $this->title;
         <div class="row my-4">
             <div class="col-12">
                 <div class="btn_set float-end">
-                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
+                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'share_safari_id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
                 </div>
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
@@ -279,7 +279,7 @@ $this->params['title'] = $this->title;
 
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-3 g-lg-5 mb-5 pb-5">
-            <?php $rand_safari = ShareSafari::find()->where(['status' => StatusInterface::STATUS_ACTIVE])->orderBy('RAND()')->limit(5)->all();
+            <?php $rand_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderBy('RAND()')->limit(5)->all();
             foreach ($rand_safari as $safari) { ?>
                 <div class="col mb-4 padding_right">
                     <div class="sharesafri-card">

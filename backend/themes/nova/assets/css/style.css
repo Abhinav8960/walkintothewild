@@ -112527,3 +112527,16 @@ a.text-dark:focus {
 
     padding: 8px 30px;
 }
+.custom_color .tab-menu-heading .tabs-menu   .nav.panel-tabs li a{
+
+  text-decoration: none;
+}
+  .custom_color .tab-menu-heading .tabs-menu   .nav.panel-tabs li a.active{
+
+    background: #09422D !important;
+}
+
+.tabs-style-4 .nav.panel-tabs li{
+
+  border-bottom:0 !important;
+}

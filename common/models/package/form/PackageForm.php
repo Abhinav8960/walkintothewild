@@ -24,6 +24,10 @@ class PackageForm extends \yii\base\Model
     public $package_inclusion;
     public $package_exclusion;
     public $package_terms_condtition;
+    public $privacy_policy;
+    public $change_policy;
+    public $what_you_must_carry;
+    public $getting_there;
     public $status;
     public $package_feature;
     public $package_included;
@@ -57,10 +61,14 @@ class PackageForm extends \yii\base\Model
             $this->package_inclusion = $this->package_model->package_inclusion;
             $this->package_exclusion = $this->package_model->package_exclusion;
             $this->package_terms_condtition = $this->package_model->package_terms_condtition;
+            $this->privacy_policy = $this->package_model->privacy_policy;
+            $this->change_policy = $this->package_model->change_policy;
+            $this->what_you_must_carry = $this->package_model->what_you_must_carry;
+            $this->getting_there = $this->package_model->getting_there;
             $this->status = $this->package_model->status;
 
             $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
-            $this->package_included = PackageIncluded::find()->select('include_id')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
+            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
             $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
         }
     }
@@ -82,8 +90,8 @@ class PackageForm extends \yii\base\Model
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status'], 'integer'],
             [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'string'],
-            [['package_feature', 'package_included', 'package_park', 'package_image'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
+            [['package_feature', 'package_included', 'package_park', 'package_image', 'getting_there'], 'safe'],
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
@@ -108,9 +116,9 @@ class PackageForm extends \yii\base\Model
             'package_feature', 'package_included', 'package_park', 'package_image',
             'start_location', 'end_location'
         ];
-        $scenarios['inclusion'] = ['package_inclusion'];
-        $scenarios['exclusion'] = ['package_exclusion'];
-
+        $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
+        $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'];
+        $scenarios['getting_there'] = ['getting_there'];
         return $scenarios;
     }
 
@@ -159,6 +167,10 @@ class PackageForm extends \yii\base\Model
         $this->package_model->package_inclusion = $this->package_inclusion;
         $this->package_model->package_exclusion = $this->package_exclusion;
         $this->package_model->package_terms_condtition = $this->package_terms_condtition;
+        $this->package_model->privacy_policy = $this->privacy_policy;
+        $this->package_model->change_policy = $this->change_policy;
+        $this->package_model->what_you_must_carry = $this->what_you_must_carry;
+        $this->package_model->getting_there = $this->getting_there;
         $this->package_model->status = $this->status;
     }
 

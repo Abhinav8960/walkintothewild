@@ -22,10 +22,9 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="card">
     <div class="card-body">
-
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Exclusion'])->label('Package Exclusion') ?>
+                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Package Getting There'])->label('Package Getting There') ?>
             </div>
         </div>
         <hr>
@@ -47,7 +46,7 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-editor('packageform-package_exclusion');
+bulleteditor('packageform-getting_there');
 JS;
 $this->registerJs($script);
 ?>

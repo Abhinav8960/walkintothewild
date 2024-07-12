@@ -25,18 +25,11 @@ $this->params['title'] = $this->title;
     <div class="card-body">
 
         <div class="row">
+
             <div class="col-md-12">
-                <?= $form->field($model, 'question')->textInput(['rows' => '2', 'placeholder' => 'Package Question'])->label('Package Question') ?>
+                <?= $form->field($model, 'faq_id')->dropDownList(GeneralModel::masterfaqoption($package_model->id), ['prompt' => 'Select FAQ']) ?>
             </div>
-            <div class="col-md-12">
-                <?= $form->field($model, 'answer')->textInput(['rows' => '2', 'placeholder' => 'Package Answer'])->label('Package Answer') ?>
-            </div>
-            <?php
-            if (!empty($model->package_faq_model->id)) { ?>
-                <div class="col-md-3">
-                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
-                </div>
-            <?php } ?>
+
         </div>
         <hr>
         <div class="row">

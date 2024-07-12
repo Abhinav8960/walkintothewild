@@ -38,11 +38,12 @@ class DefaultController extends FrontendBaseController
     {
         $searchModel = new ShareSafariSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $models = $dataProvider->getModels();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'models' => $models,
             'device' => $this->device(),
         ]);
     }
@@ -427,9 +428,11 @@ class DefaultController extends FrontendBaseController
     }
 
 
-    public function actionHistory($slug)
+    public function actionHistory($share_safari_id)
     {
-        $history_model = ShareSafariRequest::find()->where(['slug' => $slug])->all();
+        $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->orderBy([
+            'id' => SORT_DESC
+        ])->all();
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_view', [
                 'history_model' => $history_model
