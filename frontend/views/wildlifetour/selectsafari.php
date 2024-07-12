@@ -35,8 +35,11 @@ $this->params['title'] = $this->title;
 
 <section class="safari_wrapper margin-setposi py-3 py-3 mb-5">
   <div class="container-lg">
-    <div class="row my-4">
+    <div class="row my-4 packageSfari">
       <div class="col-12">
+        <div class="imagesSafari">
+        <img src="<?= $this->params['baseurl'] ?>/img/FESHwr.jpg" alt="" class="w-100">
+        </div>
         <div class="wrapper-skybgsafri">
           <div class="row border_bottom2 pb-4">
             <div class="col-lg-7 col-md-8 border-right">
@@ -167,7 +170,7 @@ $this->params['title'] = $this->title;
       </div>
     </div>
     <div class="row mb-4 mt-5 justify-content-center mt-4 itenary_tabs">
-      <div class="col-lg-12 col-xl-12 safartabs position-relative">
+      <div class="col-lg-12 col-xl-11 safartabs position-relative">
         <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
@@ -184,9 +187,7 @@ $this->params['title'] = $this->title;
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
           </li>
-          <li class="nav-item" role="presentation">
-            <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
-          </li>
+
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false" tabindex="-1">ACCOMODATION</button>
           </li>
@@ -283,11 +284,11 @@ $this->params['title'] = $this->title;
                                   </div>
                                 </div>
                               </div>
-                         
-                                  <div class="titles_locations pt-4">
-                                    <h6 class="fs-5">Images</h6>
-                                  </div>
-                                
+
+                              <div class="titles_locations pt-4">
+                                <h6 class="fs-5">Images</h6>
+                              </div>
+
                               <div class="row pt-2">
                                 <div class="col-lg-4 mb-2">
                                   <div class="hotelImages">

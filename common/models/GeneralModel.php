@@ -21,6 +21,7 @@ use common\models\master\bird\MasterBird;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
 use common\models\master\email\MasterMailTemplate;
+use common\models\master\faq\MasterFaq;
 use common\models\master\location\MasterLocation;
 use common\models\master\month\MasterMonth;
 use common\models\master\operatorcategory\MasterOperatorCategory;
@@ -45,6 +46,7 @@ use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
+use common\models\package\PackageFaq;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
 use common\models\park\SafariPark;
@@ -881,5 +883,34 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function topicoption()
     {
         return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+
+
+    public static function masterfaqoption($packageId)
+    {
+        // Get all active FAQs
+        $faqs = MasterFaq::find()
+            ->where(['status' => self::STATUS_ACTIVE])
+            ->orderBy(['question' => SORT_ASC])
+            ->all();
+
+        // Get the IDs of FAQs already associated with the given package
+        $existingFaqIds = PackageFaq::find()
+            ->select('faq_id')
+            ->where(['package_id' => $packageId, 'status' => self::STATUS_ACTIVE])
+            ->column();
+
+        // Prepare an array to store FAQs that are not yet associated with the package
+        $options = [];
+
+        foreach ($faqs as $faq) {
+            // Check if the FAQ ID is not already associated with the package
+            if (!in_array($faq->id, $existingFaqIds)) {
+                $options[$faq->id] = $faq->question;
+            }
+        }
+
+        return $options;
     }
 }
