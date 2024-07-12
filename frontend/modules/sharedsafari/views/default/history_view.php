@@ -15,9 +15,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     $counter = 1;
                     $previous_history_model = null;
                     foreach ($history_model as $share_safari) {
-                        if ($counter % 2 == 0) {
-                            $previous_history_model = $share_safari;
-                        }
                 ?>
                         <div class="card card_history col-6">
                             <?php if ($counter != 1) { ?>
