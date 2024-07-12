@@ -77,7 +77,7 @@ class ShareSafariCommentActionForm extends model
 
         if ($this->status == 20) {
             $model = User::find()->where(['id' => $this->comment_action_model->user_id])->limit(1)->one();
-            $model->status = 20;
+            $model->blocked_at = time();
             $model->save(false);
         }
     }
