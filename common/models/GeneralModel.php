@@ -876,4 +876,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
         return $return;
     }
+
+
+    public static function topicoption()
+    {
+        return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
 }

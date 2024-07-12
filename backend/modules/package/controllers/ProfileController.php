@@ -246,6 +246,41 @@ class ProfileController extends Controller
         }
     }
 
+
+    /**
+     * Create PackageFaqForm.
+     * 
+     * @return mixed
+     */
+    public function actionSelectFaq($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $model = new PackageFaqForm();
+        $model->package_id = $package_id;
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_faq_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['faq', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_faq_model->loadDefaultValues();
+        }
+
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_faq', [
+                'model' => $model,
+                'package_model' => $package_model,
+            ]);
+        }
+    }
+
     /**
      * Create PackageFaqForm.
      * 
