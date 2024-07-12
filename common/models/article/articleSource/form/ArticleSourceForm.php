@@ -46,14 +46,13 @@ class ArticleSourceForm extends model
         $this->status_option = GeneralModel::statusoption();
     }
 
-
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['article_source', 'publisher'], 'required'],
+            [['article_source'], 'required'],
             [['status','category_id','frequency_id'], 'integer'],
             [['article_source','publisher'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
