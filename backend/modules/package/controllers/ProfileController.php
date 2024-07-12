@@ -117,6 +117,31 @@ class ProfileController extends Controller
     }
 
 
+    public function actionGettingThere($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $model = new PackageForm($package_model);
+        $model->scenario = 'getting_there';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['getting-there', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_model->loadDefaultValues();
+        }
+
+        return $this->render('getting_there', [
+            'model' => $model,
+            'package_model' => $package_model,
+        ]);
+    }
 
     public function actionInclusion($package_id)
     {
