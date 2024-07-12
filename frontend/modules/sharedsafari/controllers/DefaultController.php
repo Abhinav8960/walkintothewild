@@ -429,7 +429,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionHistory($share_safari_id)
     {
-        $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->all();
+        $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->orderBy([
+            'id' => SORT_DESC
+        ])->all();
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('history_view', [
                 'history_model' => $history_model
