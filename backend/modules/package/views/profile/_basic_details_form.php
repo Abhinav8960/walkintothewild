@@ -1,6 +1,7 @@
 <?php
 
 use common\models\GeneralModel;
+use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -42,16 +43,14 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'no_of_day')->textInput(['type' => 'number', 'min' => 1, 'placeholder' => 'Enter Number of days']) ?>
+                <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Day/Night'])->label('Day/Night') ?>
             </div>
-
             <div class="col-md-3">
-                <?= $form->field($model, 'no_of_night')->textInput([
+                <?= $form->field($model, 'no_of_safari')->textInput([
                     'maxlength' => true,
-                    'placeholder' => 'Enter Number of Nights',
+                    'placeholder' => 'Enter Number of Safaries',
                 ]) ?>
             </div>
-
             <div class="col-md-3">
                 <?= $form->field($model, 'start_location')->textInput([
                     'maxlength' => true,
@@ -65,11 +64,34 @@ use yii\bootstrap5\ActiveForm;
                 ]) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'no_of_safari')->textInput([
-                    'maxlength' => true,
-                    'placeholder' => 'Enter Number of Safaries',
-                ]) ?>
+                <?= $form->field($model, 'start_date')->widget(\kartik\datetime\DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter Start Date'],
+                    'pluginOptions' => [
+
+                        'type' => DateTimePicker::TYPE_BUTTON,
+                        'format' => 'yyyy-mm-dd',
+                        'startDate' => 'today',
+                        'minView' => 'month',
+                        'maxView' => 'decade',
+                        'autoclose' => true,
+                    ]
+                ]); ?>
             </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'end_date')->widget(\kartik\datetime\DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter End Date'],
+                    'pluginOptions' => [
+
+                        'type' => DateTimePicker::TYPE_BUTTON,
+                        'format' => 'yyyy-mm-dd',
+                        'startDate' => 'today',
+                        'minView' => 'month',
+                        'maxView' => 'decade',
+                        'autoclose' => true,
+                    ]
+                ]); ?>
+            </div>
+
 
 
             <?php
@@ -88,48 +110,49 @@ use yii\bootstrap5\ActiveForm;
 
 
 
-            <div class="col-md-3">
-                <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
-                    'data' => GeneralModel::safariparkoption(),
-                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Select', 'multiple' => true],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ])->label('Safari Park') ?>
+            <div class="row">
+                <div class="col-md-3">
+                    <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
+                        'data' => GeneralModel::safariparkoption(),
+                        // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                        'options' => ['placeholder' => 'Select', 'multiple' => true],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])->label('Safari Park') ?>
+                </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Category']) ?>
+                </div>
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'cost_per_person')->textInput([
+                        'maxlength' => true,
+                        'placeholder' => 'Enter Cost Per Person',
+                    ]) ?>
+                </div>
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
+                        'data' => GeneralModel::packagefeatureoption(),
+                        // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                        'options' => ['placeholder' => 'Select', 'multiple' => true],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])->label('Package Feature') ?>
+                </div>
             </div>
 
-            <div class="col-md-3">
-                <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Category']) ?>
+            <div class="col-md-12">
+                <?= $form->field($model, 'package_description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
-
-            <div class="col-md-3">
-                <?= $form->field($model, 'cost_per_person')->textInput([
-                    'maxlength' => true,
-                    'placeholder' => 'Enter Cost Per Person',
-                ]) ?>
-            </div>
-
-            <div class="col-md-3">
-                <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
-                    'data' => GeneralModel::packagefeatureoption(),
-                    // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                    'options' => ['placeholder' => 'Select', 'multiple' => true],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ])->label('Package Feature') ?>
-            </div>
-
             <?php
             if (!empty($model->package_model->id)) { ?>
                 <div class="col-md-3">
                     <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
                 </div>
             <?php } ?>
-            <div class="col-md-12">
-                <?= $form->field($model, 'package_description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
-            </div>
         </div>
         <hr>
         <div class="row">

@@ -57,7 +57,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
             ],
             'slug' => [
                 'class' => 'skeeks\yii2\slug\SlugBehavior',
-                'slugAttribute' => 'package_slug', //The attribute to be generated
+                'slugAttribute' => 'package_slug', //The attribute to be generateddate_change_policy
                 'attribute' => 'package_name', //The attribute from which will be generated
                 'maxLength' => 255,
                 'ensureUnique' => true,

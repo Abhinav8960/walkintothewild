@@ -30,10 +30,12 @@ use yii\bootstrap5\ActiveForm;
                             <div class="tabs-menu ">
                                 <!-- Tabs -->
                                 <ul class="nav panel-tabs me-3">
-                                    <li class=""><a href="#tab21" class="active" data-bs-toggle="tab"> Package Terms Condtition</a></li>
+                                    <li class=""><a href="#tab21" class="active" data-bs-toggle="tab"> Terms Condtition</a></li>
                                     <li><a href="#tab22" data-bs-toggle="tab"> Privacy Policy</a></li>
                                     <li><a href="#tab23" data-bs-toggle="tab"> Change Policy</a></li>
                                     <li><a href="#tab24" data-bs-toggle="tab"> What You Must Carry</a></li>
+                                    <li><a href="#tab25" data-bs-toggle="tab"> Date Change Policy</a></li>
+                                    <li><a href="#tab26" data-bs-toggle="tab"> Refund Policy</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -60,6 +62,17 @@ use yii\bootstrap5\ActiveForm;
                             <div class="tab-pane" id="tab24">
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="tab25">
+                                <div class="col-md-12">
+                                    <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tab26">
+                                <div class="col-md-12">
+                                    <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
                                 </div>
                             </div>
                         </div>
@@ -91,6 +104,8 @@ bulleteditor('packageform-package_terms_condtition');
 bulleteditor('packageform-privacy_policy');
 bulleteditor('packageform-change_policy');
 bulleteditor('packageform-what_you_must_carry');
+bulleteditor('packageform-date_change_policy');
+bulleteditor('packageform-refund_policy');
 JS;
 $this->registerJs($script);
 ?>

@@ -28,8 +28,9 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class PackageDay extends \yii\db\ActiveRecord
+class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -99,5 +100,12 @@ class PackageDay extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getImagepath()
+    {
+        if ($this->day_image != '') {
+            return '/storage/package/day/' . $this->id . '/' . $this->day_image;
+        }
     }
 }

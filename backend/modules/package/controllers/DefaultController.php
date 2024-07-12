@@ -67,17 +67,6 @@ class DefaultController extends Controller
                             }
                         }
 
-                        $package_included = $model->package_included;
-                        if ($package_included) {
-                            PackageIncluded::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_included as $include) {
-                                $packageincluded = new PackageIncluded();
-                                $packageincluded->package_id = $model->package_model->id;
-                                $packageincluded->include_id = $include;
-                                $packageincluded->save(false);
-                            }
-                        }
-
 
                         $package_park = $model->package_park;
                         if ($package_park) {

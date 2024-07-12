@@ -236,6 +236,28 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+
+    public static function packagedayoption()
+    {
+        return [
+            1 => '1 day 0 night',
+            2 => '2 day 1 night',
+            3 => '3 day 2 night',
+            4 => '4 day 3 night',
+            5 => '5 day 4 night',
+            6 => '6 day 5 night',
+            7 => '7 day 6 night',
+            8 => '8 day 7 night',
+            9 => '9 day 8 night',
+            10 => '10 day 9 night',
+            11 => '11 day 10 night',
+            12 => '12 day 11 night',
+            13 => '13 day 12 night',
+            14 => '14 day 13 night',
+            15 => '15 day 14 night',
+        ];
+    }
+
     public static function numberformat($num)
     {
         if ($num) {

@@ -4,11 +4,13 @@ namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\master\faq\MasterFaq;
+use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
 use common\models\package\form\PackageTermConditionForm;
 use common\models\package\Package;
+use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
@@ -51,16 +53,6 @@ class ProfileController extends Controller
                             }
                         }
 
-                        $package_included = $model->package_included;
-                        if ($package_included) {
-                            PackageIncluded::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_included as $include) {
-                                $packageincluded = new PackageIncluded();
-                                $packageincluded->package_id = $model->package_model->id;
-                                $packageincluded->include_id = $include;
-                                $packageincluded->save(false);
-                            }
-                        }
 
 
                         $package_park = $model->package_park;
@@ -143,6 +135,39 @@ class ProfileController extends Controller
         ]);
     }
 
+
+    /**
+     * Map View
+     *
+     * @param [type] $safari_park_id
+     * @return void
+     */
+    public function actionMap($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $model = new PackageForm($package_model);
+        $model->scenario = 'map';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_model->save()) {
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['map', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_model->loadDefaultValues();
+        }
+
+        return $this->render('map', [
+            'package_model' => $package_model,
+            'model' => $model
+        ]);
+    }
+
     public function actionInclusion($package_id)
     {
         // Find the package model based on $package_id
@@ -205,16 +230,46 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function actionItinerary($package_id)
-    {
-        $package_model = $this->findModel($package_id);
 
+
+
+
+    public function actionItinerary($package_id, $day = 1)
+    {
+        $package_day_model = $this->findModelDay($package_id, $day);
+        $package_model = Package::findOne(['id' => $package_id]);
+        if ($package_day_model) {
+            $model = new DayItineraryForm($package_day_model);
+        } else {
+            $model = new DayItineraryForm();
+            $model->package_id = $package_id;
+            $model->no_of_day = $package_model->no_of_day;
+            $model->day = $day;
+        }
+        // Validate and save each day's itinerary entries
+
+        if ($this->request->isPost) {
+
+            if ($model->load($this->request->post())) {
+                $model->day_image = UploadedFile::getInstance($model, 'day_image');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_day_model->save(false)) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['itinerary', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_day_model->loadDefaultValues();
+        }
 
         return $this->render('itinerary', [
             'package_model' => $package_model,
+            'model' => $model,
         ]);
     }
-
 
     public function actionFaq($package_id)
     {
@@ -361,6 +416,15 @@ class ProfileController extends Controller
     protected function findModeltermcondition($id)
     {
         if (($model = PackageTermCondition::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelDay($package_id, $day)
+    {
+        if (($model = PackageDay::findOne(['package_id' => $package_id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
