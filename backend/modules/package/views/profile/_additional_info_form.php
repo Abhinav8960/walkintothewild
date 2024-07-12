@@ -22,10 +22,18 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="card">
     <div class="card-body">
-
         <div class="row">
-            <div class="col-md-12">
-                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Exclusion'])->label('Package Exclusion') ?>
+            <div class="col-md-6">
+                <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Package Terms Condtition'])->label('Package Terms Condtition') ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Privacy Policy'])->label('Package Privacy Policy') ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Change Policy'])->label('Package Change Policy') ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
             </div>
         </div>
         <hr>
@@ -47,7 +55,10 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-editor('packageform-package_exclusion');
+editor('packageform-package_terms_condtition');
+editor('packageform-privacy_policy');
+editor('packageform-change_policy');
+editor('packageform-what_you_must_carry');
 JS;
 $this->registerJs($script);
 ?>

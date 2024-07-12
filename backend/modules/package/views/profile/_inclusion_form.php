@@ -24,7 +24,42 @@ use yii\bootstrap5\ActiveForm;
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
+                <div class="form-group">
+                    <?php foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <label class="control-label"><?= $optionLabel ?></label>
+                            </div>
+                            <div class="col-sm-9">
+                                <?= $form->field($model, 'package_included[' . $optionValue . ']')->radioList(
+                                    [
+                                        '1' => 'Include',
+                                        '2' => 'Exclude',
+                                        '3' => 'Optional',
+                                    ],
+                                    [
+                                        'item' => function ($index, $label, $name, $checked, $value) {
+                                            return '<div class="form-check form-check-inline">' .
+                                                '<input class="form-check-input" type="radio" name="' . $name . '" value="' . $value . '"' . ($checked ? ' checked' : '') . '>' .
+                                                '<label class="form-check-label">' . $label . '</label>' .
+                                                '</div>';
+                                        },
+                                        'itemOptions' => ['class' => 'form-check-input'], // Additional item options if needed
+                                    ]
+                                )->label(false) ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
                 <?= $form->field($model, 'package_inclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Inclusion'])->label('Package Inclusion') ?>
+            </div>
+            <div class="col-md-6">
+                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Exclusion'])->label('Package Exclusion') ?>
             </div>
         </div>
         <hr>
@@ -47,6 +82,7 @@ use yii\bootstrap5\ActiveForm;
 <?php
 $script = <<< JS
 editor('packageform-package_inclusion');
+editor('packageform-package_exclusion');
 JS;
 $this->registerJs($script);
 ?>

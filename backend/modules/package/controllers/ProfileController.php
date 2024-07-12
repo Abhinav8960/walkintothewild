@@ -88,11 +88,11 @@ class ProfileController extends Controller
     }
 
 
-    public function actionInclusion($package_id)
+    public function actionAdditionalInfo($package_id)
     {
         $package_model = $this->findModel($package_id);
         $model = new PackageForm($package_model);
-        $model->scenario = 'inclusion';
+        $model->scenario = 'additional_info';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -100,12 +100,76 @@ class ProfileController extends Controller
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['inclusion', 'package_id' => $package_id]);
+                        return $this->redirect(['additional-info', 'package_id' => $package_id]);
                     }
                 }
             }
         } else {
             $model->package_model->loadDefaultValues();
+        }
+
+        return $this->render('additional_info', [
+            'model' => $model,
+            'package_model' => $package_model,
+        ]);
+    }
+
+
+
+    public function actionInclusion($package_id)
+    {
+        // Find the package model based on $package_id
+        $package_model = $this->findModel($package_id);
+
+        // Instantiate PackageForm using the found package model
+        $model = new PackageForm($package_model);
+        $model->scenario = 'inclusion'; // Set scenario to 'inclusion' for validation purposes
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                // Validate and save package model
+                if ($model->validate()) {
+                    // Save the package model first
+                    $transaction = Yii::$app->db->beginTransaction();
+                    try {
+                        if ($model->package_model->save(false)) {
+                            // Save package inclusion options
+                            foreach ($model->package_included as $optionId => $selection) {
+                                // Check if option exists, and update or create as needed
+                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_id]);
+                                if (!$packageIncluded) {
+                                    $packageIncluded = new PackageIncluded();
+                                    $packageIncluded->include_id = $optionId;
+                                    $packageIncluded->package_id = $package_id;
+                                }
+                                $packageIncluded->selection = $selection;
+                                if (!$packageIncluded->save()) {
+                                    throw new \Exception('Failed to save package inclusion option ' . $optionId);
+                                }
+                            }
+
+                            $transaction->commit();
+                            Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                            return $this->redirect(['inclusion', 'package_id' => $package_id]);
+                        } else {
+                            Yii::$app->session->setFlash('error', 'Failed to update package details.');
+                        }
+                    } catch (\Exception $e) {
+                        $transaction->rollBack();
+                        Yii::$app->session->setFlash('error', 'An error occurred while updating data: ' . $e->getMessage());
+                    }
+                }
+            }
+        } else {
+            // Populate the form with existing data
+            $model->package_model->loadDefaultValues(); // Ensure package model has default values
+
+            // Fetch related package inclusion options
+            $includedOptions = [];
+            foreach ($package_model->packageIncludeds as $includedOption) {
+                $includedOptions[$includedOption->include_id] = $includedOption->selection;
+            }
+            $model->package_included = $includedOptions;
         }
 
         return $this->render('inclusion', [
@@ -113,33 +177,6 @@ class ProfileController extends Controller
             'package_model' => $package_model,
         ]);
     }
-
-    public function actionExclusion($package_id)
-    {
-        $package_model = $this->findModel($package_id);
-        $model = new PackageForm($package_model);
-        $model->scenario = 'exclusion';
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['exclusion', 'package_id' => $package_id]);
-                    }
-                }
-            }
-        } else {
-            $model->package_model->loadDefaultValues();
-        }
-
-        return $this->render('exclusion', [
-            'model' => $model,
-            'package_model' => $package_model,
-        ]);
-    }
-
 
     public function actionItinerary($package_id)
     {
@@ -151,19 +188,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function actionTermCondition($package_id)
-    {
-        $package_model = $this->findModel($package_id);
-        $searchModel = new PackageTermConditionSearch();
-        $searchModel->package_id = $package_id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('term_condition', [
-            'package_model' => $package_model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     public function actionFaq($package_id)
     {

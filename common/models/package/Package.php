@@ -129,6 +129,11 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     }
 
 
+    public function getPackageIncludeds()
+    {
+        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
+    }
+
     public function getImagepath()
     {
         if ($this->package_image != '') {
