@@ -22,7 +22,7 @@ $this->params['title'] = $this->title;
                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
                         <div class="card mb-0">
                             <div class="card-header" id="heading<?= $i ?>" role="tab">
-                                <a aria-controls="collapse<?= $i ?>" aria-expanded="true" data-bs-toggle="collapse" href="/package/profile/itinerary?package_id=<?= $package_model->id ?>&day=<?= $i ?>#collapse<?= $i ?>">Day <?= $i ?></a>
+                                <a href="/package/profile/itinerary?package_id=<?= $package_model->id ?>&day=<?= $i ?>" aria-controls="collapse<?= $i ?>" aria-expanded="true" data-bs-toggle="collapse" href="#collapse<?= $i ?>">Day <?= $i ?></a>
                             </div>
                             <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == 1) ? 'show' : ''; ?>" data-bs-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
                                 <div class="card-body">
