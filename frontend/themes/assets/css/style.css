@@ -4699,3 +4699,14 @@ color: #4B4B4B;
     left: 50%;
     transform: translateX(-50%);
 }
+.packageSfari .wrapper-skybgsafri{
+
+    border-radius: 0px 0px 10px 10px;
+}  
+
+.packageSfari .imagesSafari img{
+    max-height: 300px;
+    height: 400px;
+    border-radius: 10px 10px 0px 0px;
+    object-fit: cover;
+}
