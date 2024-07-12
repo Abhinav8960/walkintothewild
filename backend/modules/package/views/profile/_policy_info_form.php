@@ -21,7 +21,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="col-xl-12">
     <!-- div -->
 
-    <div class="text-wrap">
+    <div class="text-wrap custom_color">
         <div class="example">
             <div class="d-md-flex">
                 <div class="">
@@ -39,7 +39,7 @@ use yii\bootstrap5\ActiveForm;
                         </div>
                     </div>
                 </div>
-                <div class="tabs-style-4 ">
+                <div class="tabs-style-4 w-100 ">
                     <div class="panel-body tabs-menu-body">
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab21">
