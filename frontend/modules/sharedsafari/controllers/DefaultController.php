@@ -38,11 +38,12 @@ class DefaultController extends FrontendBaseController
     {
         $searchModel = new ShareSafariSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $models = $dataProvider->getModels();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'models' => $models,
             'device' => $this->device(),
         ]);
     }
