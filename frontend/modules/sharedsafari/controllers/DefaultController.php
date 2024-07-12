@@ -38,11 +38,12 @@ class DefaultController extends FrontendBaseController
     {
         $searchModel = new ShareSafariSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
+        $models = $dataProvider->getModels();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'models' => $models,
             'device' => $this->device(),
         ]);
     }
@@ -503,6 +504,17 @@ class DefaultController extends FrontendBaseController
             echo "<option value='4'>4</option>";
             echo "<option value='5'>5</option>";
             echo "<option value='6'>6</option>";
+        }
+    }
+
+    public function actionCompleted($slug)
+    {
+        $model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+        if ($model) {
+            $model->status = 2;
+            $model->save(false);
+            Yii::$app->session->setFlash('success', 'Thank You!!');
+            return $this->redirect(['view', ['slug' => $slug]]);
         }
     }
 }

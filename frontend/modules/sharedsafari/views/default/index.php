@@ -102,7 +102,7 @@ $recentposts = ArticleSearch::recentpost();
                             <div class="col-12">
                                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                                     <div class="left_text">
-                                        <p>There are currently <strong><?= $dataProvider->getTotalCount() ?> </strong> active shared safaris created by individuals</p>
+                                        <p>There are currently <strong><?= count($models) ?> </strong> active shared safaris created by individuals</p>
                                     </div>
                                     <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
                                 </div>
