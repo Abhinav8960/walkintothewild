@@ -181,6 +181,8 @@ class ProfileController extends Controller
             if ($model->load($this->request->post())) {
                 // Validate and save package model
                 if ($model->validate()) {
+                    $model->initializeForm();
+
                     // Save the package model first
                     $transaction = Yii::$app->db->beginTransaction();
                     try {
@@ -427,7 +429,5 @@ class ProfileController extends Controller
         if (($model = PackageDay::findOne(['package_id' => $package_id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
