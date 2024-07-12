@@ -2,6 +2,7 @@
 
 namespace common\models\package\form;
 
+use common\models\master\faq\MasterFaq;
 use Yii;
 use common\models\package\PackageFaq;
 
@@ -9,6 +10,9 @@ class PackageFaqSelectForm extends \yii\base\Model
 {
     public $package_id;
     public $faq_id;
+    public $position;
+    public $answer;
+    public $question;
     public $status;
     public $package_faq_select_model;
     public $action_url;
@@ -36,6 +40,7 @@ class PackageFaqSelectForm extends \yii\base\Model
         return [
             [['faq_id'], 'required'],
             [['package_id', 'position', 'status'], 'integer'],
+            [['position', 'question', 'answer'], 'safe'],
         ];
     }
 
@@ -63,6 +68,12 @@ class PackageFaqSelectForm extends \yii\base\Model
     {
         $this->package_faq_select_model->package_id = $this->package_id;
         $this->package_faq_select_model->faq_id = $this->faq_id;
+        if ($this->faq_id) {
+            $faq = MasterFaq::find()->where(['id' => $this->faq_id])->limit(1)->one();
+            $this->package_faq_select_model->question = $faq->question;
+            $this->package_faq_select_model->answer = $faq->answer;
+            $this->package_faq_select_model->position = $faq->position;
+        }
         $this->package_faq_select_model->status = $this->status;
     }
 }

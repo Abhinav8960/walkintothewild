@@ -115,7 +115,7 @@ class PackageForm extends \yii\base\Model
             'start_location', 'end_location'
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
-        $scenarios['additional_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'];
+        $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'];
         return $scenarios;
     }
 

@@ -870,3 +870,73 @@ function editor(editor_id) {
 		]
 	});
 }
+
+function bulleteditor(editor_id) {
+	CKEDITOR.ClassicEditor.create(document.getElementById(editor_id), {
+		toolbar: {
+			items: ['numberedList'] // Include only 'numberedList' in the toolbar items
+		},
+		heading: false, // Disable heading options
+		placeholder: 'Enter Page Detail!',
+		fontFamily: {
+			options: [
+				'default', 'Arial, Helvetica, sans-serif', 'Courier New, Courier, monospace',
+				'Georgia, serif', 'Lucida Sans Unicode, Lucida Grande, sans-serif',
+				'Tahoma, Geneva, sans-serif', 'Times New Roman, Times, serif',
+				'Trebuchet MS, Helvetica, sans-serif', 'Verdana, Geneva, sans-serif'
+			],
+			supportAllValues: true
+		},
+		fontSize: {
+			options: [10, 12, 14, 'default', 18, 20, 22],
+			supportAllValues: true
+		},
+		htmlSupport: {
+			allow: [{ name: /.*/, attributes: true, classes: true, styles: true }]
+		},
+		htmlEmbed: { showPreviews: true },
+		link: {
+			decorators: {
+				addTargetToExternalLinks: true,
+				defaultProtocol: 'https://',
+				toggleDownloadable: {
+					mode: 'manual',
+					label: 'Downloadable',
+					attributes: { download: 'file' }
+				}
+			}
+		},
+		mention: {
+			feeds: [{
+				marker: '@',
+				feed: [
+					'@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes',
+					'@chocolate', '@cookie', '@cotton', '@cream', '@cupcake', '@danish',
+					'@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice',
+					'@jelly-o', '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie',
+					'@plum', '@pudding', '@sesame', '@snaps', '@soufflé', '@sugar',
+					'@sweet', '@topping', '@wafer'
+				],
+				minimumCharacters: 1
+			}]
+		},
+		removePlugins: [
+			'CKBox', 'CKFinder', 'EasyImage', 'RealTimeCollaborativeComments',
+			'RealTimeCollaborativeTrackChanges', 'RealTimeCollaborativeRevisionHistory',
+			'PresenceList', 'Comments', 'TrackChanges', 'TrackChangesData', 'RevisionHistory',
+			'Pagination', 'WProofreader', 'MathType'
+		],
+		on: {
+			pluginsLoaded: function () {
+				// Set numbered list active by default
+				this.execute('numberedList');
+			}
+		}
+	})
+		.catch(error => {
+			console.error(error);
+		});
+}
+
+
+
