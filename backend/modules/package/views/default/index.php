@@ -43,7 +43,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'format' => 'raw',
                         'value' => function ($model) {
                             $html = '';
-                            $html .= 'Number Of Day    : ' . $model->no_of_day . '<br>';
+                            $html .= 'Number Of Day    : ' . GeneralModel::packagedayoption()[$model->no_of_day]  . '<br>';
                             $html .= 'Number Of Night  : ' . $model->no_of_night . '<br>';
                             $html .= 'Number Of Safari : ' . $model->no_of_safari . '<br>';
                             $html .= 'Start Location   : ' . $model->start_location . '<br>';

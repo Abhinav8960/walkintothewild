@@ -42,13 +42,13 @@ use kartik\datetime\DateTimePicker;
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'no_of_day')->textInput(['type' => 'number', 'min' => 1, 'placeholder' => 'Enter Number of days']) ?>
+                <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Day/Night'])->label('Day/Night') ?>
             </div>
 
             <div class="col-md-3">
-                <?= $form->field($model, 'no_of_night')->textInput([
+                <?= $form->field($model, 'no_of_safari')->textInput([
                     'maxlength' => true,
-                    'placeholder' => 'Enter Number of Nights',
+                    'placeholder' => 'Enter Number of Safaries',
                 ]) ?>
             </div>
 
@@ -65,11 +65,34 @@ use kartik\datetime\DateTimePicker;
                 ]) ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'no_of_safari')->textInput([
-                    'maxlength' => true,
-                    'placeholder' => 'Enter Number of Safaries',
-                ]) ?>
+                <?= $form->field($model, 'start_date')->widget(\kartik\datetime\DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter Start Date'],
+                    'pluginOptions' => [
+
+                        'type' => DateTimePicker::TYPE_BUTTON,
+                        'format' => 'yyyy-mm-dd',
+                        'startDate' => 'today',
+                        'minView' => 'month',
+                        'maxView' => 'decade',
+                        'autoclose' => true,
+                    ]
+                ]); ?>
             </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'end_date')->widget(\kartik\datetime\DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Enter End Date'],
+                    'pluginOptions' => [
+
+                        'type' => DateTimePicker::TYPE_BUTTON,
+                        'format' => 'yyyy-mm-dd',
+                        'startDate' => 'today',
+                        'minView' => 'month',
+                        'maxView' => 'decade',
+                        'autoclose' => true,
+                    ]
+                ]); ?>
+            </div>
+
 
 
             <?php

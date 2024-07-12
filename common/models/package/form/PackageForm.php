@@ -17,6 +17,8 @@ class PackageForm extends \yii\base\Model
     public $no_of_safari;
     public $start_location;
     public $end_location;
+    public $start_date;
+    public $end_date;
     public $package_image;
     public $stay_category_id;
     public $cost_per_person;
@@ -27,11 +29,31 @@ class PackageForm extends \yii\base\Model
     public $privacy_policy;
     public $change_policy;
     public $what_you_must_carry;
+    public $date_change_policy;
+    public $refund_policy;
     public $getting_there;
     public $status;
     public $package_feature;
     public $package_included;
     public $package_park;
+    public $latitude;
+    public $longitude;
+
+    public $day;
+    public $day_title;
+    public $day_description;
+    public $day_start_location;
+    public $day_end_location;
+    public $hotel_name;
+    public $day_image;
+    public $meal_lunch;
+    public $meal_breakfast;
+    public $meal_dinner;
+    public $day_activity;
+    public $day_accommodation;
+    public $day_note;
+    public $day_status;
+
     public $package_model;
     public $action_url;
     public $action_validate_url;
@@ -55,6 +77,8 @@ class PackageForm extends \yii\base\Model
             $this->no_of_safari = $this->package_model->no_of_safari;
             $this->start_location = $this->package_model->start_location;
             $this->end_location = $this->package_model->end_location;
+            $this->start_date = $this->package_model->start_date;
+            $this->end_date = $this->package_model->end_date;
             $this->stay_category_id = $this->package_model->stay_category_id;
             $this->cost_per_person = $this->package_model->cost_per_person;
             $this->package_description = $this->package_model->package_description;
@@ -64,7 +88,13 @@ class PackageForm extends \yii\base\Model
             $this->privacy_policy = $this->package_model->privacy_policy;
             $this->change_policy = $this->package_model->change_policy;
             $this->what_you_must_carry = $this->package_model->what_you_must_carry;
+            $this->date_change_policy = $this->package_model->date_change_policy;
+            $this->refund_policy = $this->package_model->refund_policy;
             $this->getting_there = $this->package_model->getting_there;
+
+            $this->latitude = $this->package_model->latitude;
+            $this->longitude = $this->package_model->longitude;
+
             $this->status = $this->package_model->status;
 
             $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
@@ -85,7 +115,7 @@ class PackageForm extends \yii\base\Model
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
-            [['package_name', 'package_slug'], 'required', 'on' => 'create'],
+            [['package_name', 'package_slug', 'no_of_day'], 'required', 'on' => 'create'],
             [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status'], 'integer'],
@@ -95,6 +125,16 @@ class PackageForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy'], 'safe'],
+
+
+
+            [['package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'status'], 'integer'],
+            [['day_description', 'day_activity', 'day_accommodation', 'day_note'], 'string'],
+            [['day_title'], 'string', 'max' => 512],
+            [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
+            [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
+
         ];
     }
 
@@ -107,18 +147,24 @@ class PackageForm extends \yii\base\Model
             'stay_category_id', 'status', 'cost_per_person', 'package_description',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
-            'start_location', 'end_location'
+            'start_location', 'end_location', 'start_date', 'end_date'
         ];
         $scenarios['update'] = [
             'package_name', 'package_image', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_safari',
             'stay_category_id', 'status', 'cost_per_person', 'package_description',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
-            'start_location', 'end_location'
+            'start_location', 'end_location', 'start_date', 'end_date'
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
-        $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'];
+        $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
         $scenarios['getting_there'] = ['getting_there'];
+        $scenarios['map'] = ['latitude', 'longitude'];
+        $scenarios['day'] = [
+            'package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'day_status',
+            'day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title',
+            'day_start_location', 'day_end_location', 'hotel_name', 'day_image',
+        ];
         return $scenarios;
     }
 
@@ -134,8 +180,8 @@ class PackageForm extends \yii\base\Model
             'no_of_day' => 'Number Of Days',
             'no_of_night' => 'Number Of Nights',
             'no_of_safari' => 'Number Of Safaries',
-            'start_location' => 'Start Location',
-            'end_location' => 'End Location',
+            'start_location' => 'Tour Start',
+            'end_location' => 'Tour End',
             'package_image' => 'Package Image',
             'stay_category_id' => 'Stay Category',
             'cost_per_person' => 'Cost Per Person',
@@ -157,10 +203,14 @@ class PackageForm extends \yii\base\Model
         $this->package_model->package_name = $this->package_name;
         $this->package_model->package_slug = $this->package_slug;
         $this->package_model->no_of_day = $this->no_of_day;
-        $this->package_model->no_of_night = $this->no_of_night;
+        if ($this->no_of_day) {
+            $this->package_model->no_of_night = $this->no_of_day - 1;
+        }
         $this->package_model->no_of_safari = $this->no_of_safari;
         $this->package_model->start_location = $this->start_location;
         $this->package_model->end_location = $this->end_location;
+        $this->package_model->start_date = $this->start_date;
+        $this->package_model->end_date = $this->end_date;
         $this->package_model->stay_category_id = $this->stay_category_id;
         $this->package_model->cost_per_person = $this->cost_per_person;
         $this->package_model->package_description = $this->package_description;
@@ -170,7 +220,11 @@ class PackageForm extends \yii\base\Model
         $this->package_model->privacy_policy = $this->privacy_policy;
         $this->package_model->change_policy = $this->change_policy;
         $this->package_model->what_you_must_carry = $this->what_you_must_carry;
+        $this->package_model->date_change_policy = $this->date_change_policy;
+        $this->package_model->refund_policy = $this->refund_policy;
         $this->package_model->getting_there = $this->getting_there;
+        $this->package_model->latitude = $this->latitude;
+        $this->package_model->longitude = $this->longitude;
         $this->package_model->status = $this->status;
     }
 
