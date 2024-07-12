@@ -238,6 +238,16 @@ $this->params['title'] = $this->title;
                         <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
                             Safari</a>
                     <?php } ?>
+
+                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
+                        <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
+                            'class' => 'btn btn-success w-100 mt-2',
+                            'data' => [
+                                'confirm' => 'Are you sure you want to Completed this Safari?',
+                                'method' => 'post',
+                            ],
+                        ]) ?>
+                    <?php } ?>
                 </div>
                 <div class="advertisment d-lg-block d-none">
                     <p class="text-center">ADVERTISMENT</p>
@@ -460,3 +470,17 @@ interestfucntion();
 JS;
 $this->registerJs($script);
 ?>
+
+<style>
+    .safari_completed {
+        background-color: lightgreen;
+        padding: 10px 20px;
+        font-size: var(--fs-16);
+        font-weight: 600;
+        font-family: "Roboto", sans-serif !important;
+        color: #152F1B;
+        border: 0;
+        border-radius: 8px;
+        margin: 2px;
+    }
+</style>
