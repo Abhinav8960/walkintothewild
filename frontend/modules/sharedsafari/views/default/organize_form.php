@@ -58,10 +58,10 @@ use yii\helpers\Html;
 
 
         <?php
-        if ($model->shared_safari_request_model->image) { ?>
+        if ($model->shared_safari_model->image) { ?>
             <div class="col-md-3">
                 <label for="" class="Modal_label">Current Display Image</label>
-                <?php echo '<img src="' . $model->shared_safari_request_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
             </div>
 
             <div class="col-6 mb-2">
@@ -73,11 +73,11 @@ use yii\helpers\Html;
         <?php } ?>
 
         <?php
-        if ($model->shared_safari_request_model->image == null) {
-            if ($model->shared_safari_request_model->park_id) { ?>
+        if ($model->shared_safari_model->image == null) {
+            if ($model->shared_safari_model->park_id) { ?>
                 <div class="col-sm-3">
                     <label for="" class="Modal_label">Current Display Image</label>
-                    <?php echo '<img src="' . $model->shared_safari_request_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                    <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
                 </div>
             <?php } else { ?>
                 <div class="col-sm-3 mb-2">
@@ -175,13 +175,10 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-        <?php if (isset($model->shared_safari_request_model->id)) { ?>
-            <?= $form->field($model, 'status')->checkbox(['value' => "2"])->label('Mark as completed') ?>
-        <?php } ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                <?php if (isset($model->shared_safari_request_model->id)) { ?>
+                <?php if (isset($model->shared_safari_model->id)) { ?>
                     <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                 <?php } else {  ?>
                     <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
