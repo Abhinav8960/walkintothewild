@@ -51,7 +51,7 @@ $this->params['title'] = $this->title;
         <div class="row my-4">
             <div class="col-12">
                 <div class="btn_set float-end">
-                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
+                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'share_safari_id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
                 </div>
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
