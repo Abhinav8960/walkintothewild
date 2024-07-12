@@ -41,6 +41,7 @@ class PackageFaqForm extends \yii\base\Model
             [['answer', 'question'], 'required'],
             [['package_id', 'position', 'status'], 'integer'],
             [['answer'], 'string'],
+            [['position'], 'default', 'value' => 0],
             [['question'], 'string', 'max' => 512],
         ];
     }

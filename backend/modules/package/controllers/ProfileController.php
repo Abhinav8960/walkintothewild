@@ -3,6 +3,7 @@
 namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
+use common\models\master\faq\MasterFaq;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageForm;
 use common\models\package\form\PackageTermConditionForm;
@@ -221,6 +222,12 @@ class ProfileController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_faq_model->save(false)) {
+                        $faq = new MasterFaq();
+                        $faq->question = $model->question;
+                        $faq->answer = $model->answer;
+                        $faq->position = 0;
+                        $faq->status = StatusInterface::STATUS_ACTIVE;
+                        $faq->save(false);
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
@@ -230,10 +237,13 @@ class ProfileController extends Controller
             $model->package_faq_model->loadDefaultValues();
         }
 
-        return $this->render('create_faq', [
-            'model' => $model,
-            'package_model' => $package_model,
-        ]);
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_faq', [
+                'model' => $model,
+                'package_model' => $package_model,
+            ]);
+        }
     }
 
     /**
