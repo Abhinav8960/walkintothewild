@@ -28,6 +28,8 @@ class DayItineraryForm  extends \yii\base\Model
     public $day_note;
     public $hotel_name;
     public $day_image;
+    public $latitude;
+    public $longitude;
     public $package_day_model;
     public $status;
 
@@ -56,6 +58,8 @@ class DayItineraryForm  extends \yii\base\Model
             $this->day_note = $this->package_day_model->day_note;
             $this->hotel_name = $this->package_day_model->hotel_name;
             $this->day_image = $this->package_day_model->day_image;
+            $this->latitude = $this->package_day_model->latitude;
+            $this->longitude = $this->package_day_model->longitude;
             $this->status = $this->package_day_model->status;
         }
     }
@@ -65,8 +69,12 @@ class DayItineraryForm  extends \yii\base\Model
         return [
             [['package_id', 'day', 'day_title'], 'required'],
             [['status'], 'default', 'value' => 1],
+            [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
             [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner'], 'integer'],
-            [['day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title', 'start_location', 'end_location', 'hotel_name', 'day_image'], 'safe'],
+            [[
+                'day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title',
+                'start_location', 'end_location', 'hotel_name', 'day_image', 'latitude', 'longitude'
+            ], 'safe'],
         ];
     }
 
@@ -80,9 +88,14 @@ class DayItineraryForm  extends \yii\base\Model
         $this->package_day_model->package_id = $this->package_id;
         $this->package_day_model->day = $this->day;
         $this->package_day_model->day_title = $this->day_title;
-        $this->package_day_model->meal_breakfast = $this->meal_breakfast;
-        $this->package_day_model->meal_lunch = $this->meal_lunch;
-        $this->package_day_model->meal_dinner = $this->meal_dinner;
+        if ($this->package_id) {
+            $package_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
+            if ($package_includes) {
+                $this->package_day_model->meal_breakfast = 1;
+                $this->package_day_model->meal_lunch = 1;
+                $this->package_day_model->meal_dinner = 1;
+            }
+        }
         $this->package_day_model->day_description = $this->day_description;
         $this->package_day_model->day_activity = $this->day_activity;
         $this->package_day_model->day_accommodation = $this->day_accommodation;
@@ -90,6 +103,8 @@ class DayItineraryForm  extends \yii\base\Model
         $this->package_day_model->start_location = $this->start_location;
         $this->package_day_model->end_location = $this->end_location;
         $this->package_day_model->hotel_name = $this->hotel_name;
+        $this->package_day_model->latitude = $this->latitude;
+        $this->package_day_model->longitude = $this->longitude;
         $this->package_day_model->status = $this->status;
     }
 

@@ -136,38 +136,6 @@ class ProfileController extends Controller
     }
 
 
-    /**
-     * Map View
-     *
-     * @param [type] $safari_park_id
-     * @return void
-     */
-    public function actionMap($package_id)
-    {
-        $package_model = $this->findModel($package_id);
-        $model = new PackageForm($package_model);
-        $model->scenario = 'map';
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_model->save()) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['map', 'package_id' => $package_id]);
-                    }
-                }
-            }
-        } else {
-            $model->package_model->loadDefaultValues();
-        }
-
-        return $this->render('map', [
-            'package_model' => $package_model,
-            'model' => $model
-        ]);
-    }
-
     public function actionInclusion($package_id)
     {
         // Find the package model based on $package_id

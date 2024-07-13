@@ -36,8 +36,6 @@ class PackageForm extends \yii\base\Model
     public $package_feature;
     public $package_included;
     public $package_park;
-    public $latitude;
-    public $longitude;
 
     public $day;
     public $day_title;
@@ -92,8 +90,6 @@ class PackageForm extends \yii\base\Model
             $this->refund_policy = $this->package_model->refund_policy;
             $this->getting_there = $this->package_model->getting_there;
 
-            $this->latitude = $this->package_model->latitude;
-            $this->longitude = $this->package_model->longitude;
 
             $this->status = $this->package_model->status;
 
@@ -159,7 +155,6 @@ class PackageForm extends \yii\base\Model
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
         $scenarios['getting_there'] = ['getting_there'];
-        $scenarios['map'] = ['latitude', 'longitude'];
         $scenarios['day'] = [
             'package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'day_status',
             'day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title',
@@ -223,8 +218,6 @@ class PackageForm extends \yii\base\Model
         $this->package_model->date_change_policy = $this->date_change_policy;
         $this->package_model->refund_policy = $this->refund_policy;
         $this->package_model->getting_there = $this->getting_there;
-        $this->package_model->latitude = $this->latitude;
-        $this->package_model->longitude = $this->longitude;
         $this->package_model->status = $this->status;
     }
 
