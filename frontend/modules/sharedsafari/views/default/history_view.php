@@ -29,14 +29,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <h6 style="color:green">Current Updated</h6>
                             <?php } ?>
                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
-                            <h5 class="mb-0" style="<?= ($samepark) ? 'background-color:red' : '' ?>"><?= $share_safari->park->title ?></h5>
+                            <h5 class="mb-0" style="<?= ($samepark) ? 'background-color:yellow' : '' ?>"><?= $share_safari->park->title ?></h5>
                             <p class="mb-0 pt-2">Organized by <strong><?= $share_safari->user->name ?> (Wildlife
                                     Influencer)</strong></p>
-                            <p class="mb-0 pt-2" style="<?= ($same_no_of_safaris) ? 'background-color:red' : '' ?>">Safaris <strong><?= $share_safari->no_of_safari ?></strong></p>
-                            <p class="mb-0 pt-2" style="<?= ($same_total_seat) ? 'background-color:red' : '' ?>">Total Seat <strong><?= $share_safari->total_seat ?></strong></p>
-                            <p class="mb-0 pt-2" style="<?= ($same_share_seat) ? 'background-color:red' : '' ?>">Share Seat <strong><?= $share_safari->share_seat ?></strong></p>
-                            <p class="mb-0 pt-2" style="<?= ($same_estimate_min_price) ? 'background-color:red' : '' ?>">Estimate Min Price <strong><?= $share_safari->estimate_price_min ?></strong></p>
-                            <p class="mb-0 pt-2" style="<?= ($same_estimate_max_price) ? 'background-color:red' : '' ?>">Estimate Max Price <strong><?= $share_safari->estimate_price_max ?></strong></p>
+                            <p class="mb-0 pt-2" style="<?= ($same_no_of_safaris) ? 'background-color:yellow' : '' ?>">Safaris <strong><?= $share_safari->no_of_safari ?></strong></p>
+                            <p class="mb-0 pt-2" style="<?= ($same_total_seat) ? 'background-color:yellow' : '' ?>">Total Seat <strong><?= $share_safari->total_seat ?></strong></p>
+                            <p class="mb-0 pt-2" style="<?= ($same_share_seat) ? 'background-color:yellow' : '' ?>">Share Seat <strong><?= $share_safari->share_seat ?></strong></p>
+                            <p class="mb-0 pt-2" style="<?= ($same_estimate_min_price) ? 'background-color:yellow' : '' ?>">Estimate Min Price <strong><?= $share_safari->estimate_price_min ?></strong></p>
+                            <p class="mb-0 pt-2" style="<?= ($same_estimate_max_price) ? 'background-color:yellow' : '' ?>">Estimate Max Price <strong><?= $share_safari->estimate_price_max ?></strong></p>
                         </div>
                 <?php $counter++;
                         $previous_history_model = $share_safari;
