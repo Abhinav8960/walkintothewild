@@ -29,6 +29,7 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
+        $searchModel->status = StatusInterface::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
