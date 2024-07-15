@@ -136,6 +136,26 @@
 											Profile</a>
 									</li>
 									<li>
+										<a class="" target="_blank" href="/profile/default">
+											<i class="fa-solid fa-user"></i>
+											Account Setting</a>
+									</li>
+									<li>
+										<a class="" target="_blank" href="#">
+											<i class="fa-solid fa-user"></i>
+											Messages</a>
+									</li>
+									<li>
+										<a class="" target="_blank" href="/profile/default">
+											<i class="fa-solid fa-user"></i>
+											Search Profile</a>
+									</li>
+									<li>
+										<a class="" target="_blank" href="#">
+											<i class="fa-solid fa-user"></i>
+											Whishlist</a>
+									</li>
+									<li>
 										<a class="" href="/site/logout">
 											<i class="fa-solid fa-arrow-right-from-bracket"></i>
 											Log Out</a>

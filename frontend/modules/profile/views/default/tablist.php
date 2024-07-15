@@ -18,12 +18,12 @@ $this->params['title'] = $this->title;
                 <div class="d-flex align-items-center justify-content-center mb-2">
                     <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle" style="width: 110px; height: 110px;" ;="">
                         <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden" style="width: 100px; height: 100px;" ;="">
-                            <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
+                            <img src="<?= $user->avatar <> '' ?  $user->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
                         </div>
                     </div>
                 </div>
                 <div class="text-center">
-                    <h5 class="fs-5 mb-0 fw-semibold"><?= Yii::$app->user->identity->name ?></h5>
+                    <h5 class="fs-5 mb-0 fw-semibold"><?= $user->name ?></h5>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
 
             <div class="col-lg-4 order-lg-2 order-2 mx-auto ">
                 <div class="d-flex align-items-center m-1 mx-auto align-items-center justify-content-center">
-                    <a href="<?= Url::toRoute(['/profile/default/follow', 'id' => Yii::$app->user->identity->id]) ?>" class="btn btn-light m-2">Follow</a>
+                    <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Follow</a>
                     <a href="#" class="btn btn-light m-2">Message</a>
                 </div>
             </div>
