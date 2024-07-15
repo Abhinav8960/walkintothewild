@@ -180,6 +180,9 @@ return [
         'package' => [
             'class' => 'frontend\modules\package\Module',
         ],
+        'profile' => [
+            'class' => 'frontend\modules\profile\Module',
+        ]
     ],
     'params' => $params,
 ];
