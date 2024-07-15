@@ -20,4 +20,8 @@ class DefaultController extends FrontendBaseController
     {
         return $this->render('index');
     }
+
+    public function actionFollow()
+    {
+    }
 }
