@@ -51,6 +51,7 @@ class User extends ActiveRecord implements IdentityInterface
                 'class' => SluggableBehavior::class,
                 'attribute' => 'name',
                 'slugAttribute' => 'user_handle',
+                'ensureUnique' => true,
             ],
             TimestampBehavior::class,
         ];

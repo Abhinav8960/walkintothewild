@@ -146,7 +146,7 @@
 											Messages</a>
 									</li>
 									<li>
-										<a class="" target="_blank" href="/profile/default">
+										<a class="" target="_blank" href="/profile/search">
 											<i class="fa-solid fa-user"></i>
 											Search Profile</a>
 									</li>
