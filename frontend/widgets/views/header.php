@@ -113,7 +113,7 @@
 						<div class="profile">
 							<div class="img-box2">
 								<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="25" height="25">
-								
+
 							</div>
 						</div>
 						<div class="menuprofile">
@@ -131,10 +131,10 @@
 										</li>
 									<?php } ?>
 									<li>
-											<a class="" target="_blank" href="/user/update">
-												<i class="fa-solid fa-user"></i>
-												Profile</a>
-										</li>
+										<a class="" target="_blank" href="/profile/default">
+											<i class="fa-solid fa-user"></i>
+											Profile</a>
+									</li>
 									<li>
 										<a class="" href="/site/logout">
 											<i class="fa-solid fa-arrow-right-from-bracket"></i>
