@@ -141,7 +141,14 @@ $this->params['title'] = $this->title;
                                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/resort_11834952.png" alt="">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0">Premium</p>
+                                            <p class="mb-0"><?php
+                                                            if ($share_safari->stay_category_id == 1) {
+                                                                echo "Budget";
+                                                            } elseif ($share_safari->stay_category_id == 2) {
+                                                                echo "Economical";
+                                                            } elseif ($share_safari->stay_category_id == 3) {
+                                                                echo "Premium";
+                                                            } ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -183,6 +190,16 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="col-lg-6 d-lg-block  mobile_didplay_block">
                             <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
+                                    <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
+                                        'class' => 'join_btn text-center mt-sm-0 mt-2',
+                                        'style' => 'background-color:green; color:white;',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to Completed this Safari?',
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
+                                <?php } ?>
 
                                 <?php if ($share_safari->status == 2) { ?>
                                     <a class="join_btn text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
@@ -239,15 +256,7 @@ $this->params['title'] = $this->title;
                             Safari</a>
                     <?php } ?>
 
-                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
-                        <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
-                            'class' => 'btn btn-success w-100 mt-2',
-                            'data' => [
-                                'confirm' => 'Are you sure you want to Completed this Safari?',
-                                'method' => 'post',
-                            ],
-                        ]) ?>
-                    <?php } ?>
+
                 </div>
                 <div class="advertisment d-lg-block d-none">
                     <p class="text-center">ADVERTISMENT</p>
