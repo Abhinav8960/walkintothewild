@@ -86,3 +86,17 @@ bulleteditor('packageform-package_exclusion');
 JS;
 $this->registerJs($script);
 ?>
+<style>
+    .form-check-input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        border-radius: 50% !important;
+        /* Additional styles as needed */
+    }
+
+    .form-check-label {
+        /* Additional label styles if necessary */
+        margin-left: 5px;
+        /* Example: Adds a margin to the left of the label */
+    }
+</style>
