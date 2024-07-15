@@ -1,8 +1,72 @@
-<ul class="nav nav-pills">
-    <li><a href="/profile/index" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
-    <li><a href="/profile/activity" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
-    <li><a href="/profile/contribution" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
-    <li><a href="/profile/photo" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
-    <li><a href="/profile/article" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
-    <li><a href="/profile/share-safari" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Share Safari</a></li>
-</ul>
+<?php
+
+use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
+
+$this->title = 'Profile';
+$this->params['title'] = $this->title;
+?>
+
+<div class="card overflow-hidden">
+    <div class="card-body p-0">
+        <img src="https://www.bootdey.com/image/1352x300/FF00FF/000000" alt="" class="img-fluid">
+        <div class="row align-items-center">
+            <div class="col-lg-4 order-lg-1 order-2">
+                <div class="d-flex align-items-center justify-content-around m-4">
+                    <div class="text-center">
+                        <i class="fa fa-user fs-6 d-block mb-2"></i>
+                        <p class="mb-0 fs-4">Followers</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa fa-check fs-6 d-block mb-2"></i>
+                        <p class="mb-0 fs-4">Following</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
+                <div class="mt-n5">
+                    <div class="d-flex align-items-center justify-content-center mb-2">
+                        <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle" style="width: 110px; height: 110px;" ;="">
+                            <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden" style="width: 100px; height: 100px;" ;="">
+                                <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h5 class="fs-5 mb-0 fw-semibold"><?= Yii::$app->user->identity->name ?></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 order-last">
+                <div class="sociel_icons ps-3">
+                    <?php
+                    $shared_url = urlencode(Url::to('', true));
+                    ?>
+                    <ul>
+                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
+                        </li>
+                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
+                        </li>
+                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
+                        </li>
+                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <ul class="nav nav-pills mb-2 ms-2">
+            <li><a href="/profile/default" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
+            <li><a href="/profile/activity" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
+            <li><a href="/profile/contribution" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
+            <li><a href="/profile/photo" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
+            <li><a href="/profile/article" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
+            <li><a href="/profile/share-safari" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Share Safari</a></li>
+        </ul>
+    </div>
+</div>
