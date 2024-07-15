@@ -156,7 +156,9 @@ return [
                 '/package/profile/inclusion/<package_id>' => '/package/profile/inclusion', //package profile inclusion url          
                 '/package/profile/getting-there/<package_id>' => '/package/profile/getting-there', //package profile getting-there url          
                 '/package/profile/policy-info/<package_id>' => '/package/profile/policy-info', //package profile policy-info url          
-                '/package/profile/faq/<package_id>' => '/package/profile/faq', //package profile policy-info url          
+                '/package/profile/faq/<package_id>' => '/package/profile/faq', //package profile faq url          
+                '/package/profile/create-faq/<package_id>' => '/package/profile/create-faq', //package profile create faq url          
+                '/package/profile/select-faq/<package_id>' => '/package/profile/select-faq', //package profile select faq url          
             ],
         ],
         'mobileDetect' => [

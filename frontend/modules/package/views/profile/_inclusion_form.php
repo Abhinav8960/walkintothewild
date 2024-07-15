@@ -66,7 +66,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+                    <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn']) ?>
                 </div>
             </div>
         </div>

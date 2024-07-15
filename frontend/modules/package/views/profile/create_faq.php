@@ -21,31 +21,27 @@ $this->params['title'] = $this->title;
     ],
 
 ]); ?>
-<div class="card">
-    <div class="card-body">
-
-        <div class="row">
-            <div class="col-md-12">
-                <?= $form->field($model, 'question')->textInput(['rows' => '2', 'placeholder' => 'Package Question'])->label('Package Question') ?>
-            </div>
-            <div class="col-md-12">
-                <?= $form->field($model, 'answer')->textInput(['rows' => '2', 'placeholder' => 'Package Answer'])->label('Package Answer') ?>
-            </div>
-            <?php
-            if (!empty($model->package_faq_model->id)) { ?>
-                <div class="col-md-3">
-                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
-                </div>
-            <?php } ?>
+<div class="row mt-2">
+    <div class="col-md-12">
+        <?= $form->field($model, 'question')->textInput(['rows' => '2', 'placeholder' => 'Package Question'])->label('Package Question')->label(false) ?>
+    </div>
+    <div class="col-md-12">
+        <?= $form->field($model, 'answer')->textInput(['rows' => '2', 'placeholder' => 'Package Answer'])->label('Package Answer')->label(false) ?>
+    </div>
+    <?php
+    if (!empty($model->package_faq_model->id)) { ?>
+        <div class="col-md-3">
+            <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--'])->label(false) ?>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
-                </div>
-            </div>
+    <?php } ?>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn']) ?>
         </div>
     </div>
 </div>
+
 <?php ActiveForm::end(); ?>
