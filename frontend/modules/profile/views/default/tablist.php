@@ -25,6 +25,9 @@ $this->params['title'] = $this->title;
                 <div class="text-center">
                     <h5 class="fs-5 mb-0 fw-semibold"><?= $user->name ?></h5>
                 </div>
+                <div class="text-center">
+                    <h6 class="mb-0"><?= $user->userhandle ?></h6>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -37,7 +40,9 @@ $this->params['title'] = $this->title;
 
             <div class="col-lg-4 order-lg-2 order-2 mx-auto ">
                 <div class="d-flex align-items-center m-1 mx-auto align-items-center justify-content-center">
+
                     <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Follow</a>
+
                     <a href="#" class="btn btn-light m-2">Message</a>
                 </div>
             </div>

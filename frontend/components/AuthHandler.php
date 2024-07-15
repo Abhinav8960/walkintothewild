@@ -187,7 +187,7 @@ class AuthHandler
         if ($user->gmail == false && $gmail) {
             $user->gmail = $gmail;
         }
-        $user->save(false);
+        $user->save();
     }
 
     private function loginUser($user)
