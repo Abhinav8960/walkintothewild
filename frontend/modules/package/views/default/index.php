@@ -154,7 +154,7 @@ $this->params['title'] = $this->title;
                               <div class="safari text-center">
                                 <div class="joinsafari package">
                                   <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>
-                                  <a href="">View Details</a>
+                                  <a href="/package/<?= $model->package_slug ?>">View Details</a>
                                 </div>
                               </div>
                             </div>

@@ -150,6 +150,7 @@ return [
                 '/operator/review/<id>' => '/operator/default/review', //operator view url
 
                 '/package' => '/package/default/index', //package page url
+                '/package/<slug>' => '/package/default/view', //package page url
                 '/package/create' => '/package/default/create', //package create url          
                 '/package/profile/<package_id>' => '/package/profile/index', //package profile  url          
                 '/package/profile/itinerary/<package_id>/<day>' => '/package/profile/itinerary', //package profile itenary url          
