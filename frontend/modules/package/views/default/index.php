@@ -114,7 +114,7 @@ $this->params['title'] = $this->title;
                           </div>
                         </div>
                         <div class="shareimg">
-                          <a href="/sharedsafari/gufran-ahmad-b82588-191720175893-shared-safari">
+                          <a href="/package/<?= $model->package_slug ?>">
                             <img src="<?= $model->imagepath ?>" alt=""></a>
                         </div>
                         <div class="card_body">
@@ -158,21 +158,6 @@ $this->params['title'] = $this->title;
                                 </div>
                               </div>
                             </div>
-
-                          </div>
-                          <div class="footer_card row pb-2 px-2 align-items-center">
-                            <div class="col-6">
-
-                            </div>
-
-                            <div class="col-6">
-                              <div class="safari text-center">
-                                <div class="joinsafari package">
-                                  <a href="/package/profile/<?= $model->id ?>">Edit</a>
-                                </div>
-                              </div>
-                            </div>
-
                           </div>
                         </div>
                       </div>
