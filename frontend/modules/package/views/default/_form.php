@@ -11,7 +11,7 @@ use kartik\datetime\DateTimePicker;
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
 <?php $form = ActiveForm::begin([
-    'id' => 'author-form',
+    'id' => 'package-form',
     'method' => 'POST',
     'fieldConfig' => [
         'template' => '<div class="form-group">{label}{input}{error}</div>',
