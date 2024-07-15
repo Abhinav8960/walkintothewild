@@ -13,6 +13,7 @@ use common\models\package\PackageSafariPark;
 use common\models\package\PackageSearch;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\PackageCommentForm;
+use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
 use yii\web\NotFoundHttpException;
 
@@ -138,6 +139,17 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/package/' . $package->package_slug . '']);
         }
 
+
+
+
+        $packagemodel = new PackageQuoteForm();
+
+        $packagemodel->action_validate_url = '/package/default/validate';
+        if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/package/default/view',  'slug' => $package->package_slug]);
+        }
+
         return $this->render(
             'view',
             [
@@ -145,7 +157,29 @@ class DefaultController extends FrontendBaseController
                 'faqs' => $faqs,
                 'model' => $model,
                 'replymodel' => $replymodel,
+                'packagemodel' => $packagemodel,
             ]
         );
+    }
+
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidate($id = null)
+    {
+        $packagemodel = new PackageQuoteForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $packagemodel = new PackageQuoteForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $packagemodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($packagemodel);
+        }
     }
 }

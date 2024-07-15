@@ -172,8 +172,7 @@ $this->params['title'] = $this->title;
                                     <h6 class="fs-4 mb-0"><?= $package->cost_per_person ?> +GST</h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <a class="join_btn  mt-sm-0 mt-2" href="/package/profile/<?= $package->id ?>">Update Package</a>
-                                    <a class="join_btn  mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=vikas-chaudhary-8eb1ec-251720186292-shared-safari">Book Now</a>
+                                    <a class="join_btn  mt-sm-0 mt-2" href="#">Book Now</a>
                                 </div>
                             </div>
 
@@ -477,22 +476,42 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
 
-                <div class="col-lg-6 mb-3 mt-5">
-                    <div class="itenary-title">
-                        <h6 class="fs-5 pb-2">Disclaimer</h6>
-                    </div>
-                    <div class="itenary_text">
-                        <ul>
-                            <li>This tour is operated by Eagle Safaris and not by Walk Into The Wild.</li>
-                            <li>Eagle Safaris reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
-                            <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                            <li>In the event that accommodations are fully booked, Eagle Safaris will propose a suitable alternative.</li>
-                            <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
-                        </ul>
+
+            </div>
+        </div>
+        <div class="row mb-4 mt-5 justify-content-center mt-4 itenary_tabs">
+
+            <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
+
+            <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
+                <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                    Request Quote</button>
+                <div class="interst_wrapper">
+                    <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
+                        <?= $this->render('_quote', ['packagemodel' => $packagemodel]) ?>
+
                     </div>
                 </div>
-                <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
+                <div class="right_button py-lg-5 py-3 d-lg-block d-none">
+                    <a class="btn_newsafari organizeBtn w-100" href="/package/profile/<?= $package->id ?>"><i class="fas fa-edit me-1"></i>Update Package</a>
+                </div>
+            </div>
 
+        </div>
+        <div class="row mb-4 mt-5 justify-content-center mt-4 itenary_tabs">
+            <div class="col-lg-9 mb-3 mt-5">
+                <div class="itenary-title">
+                    <h6 class="fs-5 pb-2">Disclaimer</h6>
+                </div>
+                <div class="itenary_text">
+                    <ul>
+                        <li>This tour is operated by Eagle Safaris and not by Walk Into The Wild.</li>
+                        <li>Eagle Safaris reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                        <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
+                        <li>In the event that accommodations are fully booked, Eagle Safaris will propose a suitable alternative.</li>
+                        <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
