@@ -12,7 +12,7 @@ $this->params['title'] = $this->title;
 
 
 <div class="container">
-    <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active']) ?>
+    <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active', 'user' => $user]) ?>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
             <div class="card mt-2 mb-4">
