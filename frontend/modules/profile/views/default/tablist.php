@@ -14,33 +14,35 @@ $this->params['title'] = $this->title;
     <div class="card-body p-0">
         <img src="https://www.bootdey.com/image/1352x300/FF00FF/000000" alt="" class="img-fluid">
         <div class="row align-items-center">
-            <div class="col-lg-4 order-lg-1 order-2">
-                <div class="d-flex align-items-center justify-content-around m-4">
-                    <div class="text-center">
-                        <i class="fa fa-user fs-6 d-block mb-2"></i>
-                        <p class="mb-0 fs-4">Followers</p>
-                    </div>
-                    <div class="text-center">
-                        <i class="fa fa-check fs-6 d-block mb-2"></i>
-                        <p class="mb-0 fs-4">Following</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mt-n3 order-lg-2 order-1">
-                <div class="mt-n5">
-                    <div class="d-flex align-items-center justify-content-center mb-2">
-                        <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle" style="width: 110px; height: 110px;" ;="">
-                            <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden" style="width: 100px; height: 100px;" ;="">
-                                <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
-                            </div>
+            <div class="mt-n5">
+                <div class="d-flex align-items-center justify-content-center mb-2">
+                    <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle" style="width: 110px; height: 110px;" ;="">
+                        <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden" style="width: 100px; height: 100px;" ;="">
+                            <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
                         </div>
                     </div>
-                    <div class="text-center">
-                        <h5 class="fs-5 mb-0 fw-semibold"><?= Yii::$app->user->identity->name ?></h5>
-                    </div>
+                </div>
+                <div class="text-center">
+                    <h5 class="fs-5 mb-0 fw-semibold"><?= Yii::$app->user->identity->name ?></h5>
                 </div>
             </div>
-            <div class="col-lg-4 order-last">
+        </div>
+        <div class="row">
+            <div class="col-lg-4 order-lg-1 order-1">
+                <div class="d-flex align-items-center m-1">
+                    <p class="mb-1 m-4">Followers</p>
+                    <p class="mb-1 m-4">Following</p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 order-lg-2 order-2 mx-auto">
+                <div class="d-flex align-items-center m-1 mx-auto">
+                    <button type="button" class="btn btn-light m-2">Follow</button>
+                    <button type="button" class="btn btn-light m-2">Message</button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 order-lg-3">
                 <div class="sociel_icons ps-3">
                     <?php
                     $shared_url = urlencode(Url::to('', true));
