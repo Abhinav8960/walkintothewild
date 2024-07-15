@@ -21,23 +21,17 @@ $this->params['title'] = $this->title;
     ],
 
 ]); ?>
-<div class="card">
-    <div class="card-body">
 
-        <div class="row">
-
-            <div class="col-md-12">
-                <?= $form->field($model, 'faq_id')->dropDownList(GeneralModel::masterfaqoption($package_model->id), ['prompt' => 'Select FAQ']) ?>
-            </div>
-
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
-                </div>
-            </div>
+<div class="row mt-2">
+    <div class="col-md-12">
+        <?= $form->field($model, 'faq_id')->dropDownList(GeneralModel::masterfaqoption($package_model->id), ['prompt' => 'Select FAQ'])->label(false) ?>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group float-end">
+            <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
         </div>
     </div>
 </div>

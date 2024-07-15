@@ -7,120 +7,159 @@ $this->title = 'Package : ' . $package_model->package_name;
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
+
+
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
-<div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'itinerary_active' => 'active']) ?>
+<section class="banner_section-inner ee position-relative">
+    <picture class="position-relative">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 " alt="banner">
+    </picture>
+    <div class="banner_searchBox">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="headingBnner_inner">
+                        <h1><?= $package_model->package_name ?></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="panel-body tabs-menu-body main-content-body-right border">
-        <div class="tab-content">
-            <div class="tab-pane active">
-                <div aria-multiselectable="true" class="accordion" id="accordion" role="tablist">
-                    <?php
-                    $no_of_day = $package_model->no_of_day;
-                    for ($i = 1; $i <= $no_of_day; $i++) { ?>
-                        <div class="card mb-0">
-                            <div class="card-header" id="heading<?= $i ?>" role="tab">
-                                <a href="/package/profile/itinerary?package_id=<?= $package_model->id ?>&day=<?= $i ?>" aria-controls="collapse<?= $i ?>" aria-expanded="true" data-bs-toggle="collapse" href="#collapse<?= $i ?>">Day <?= $i ?></a>
-                            </div>
-                            <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == 1) ? 'show' : ''; ?>" data-bs-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
-                                <div class="card-body">
-                                    <?php $form = ActiveForm::begin(); ?>
+    </div>
+</section>
 
-                                    <?= $form->field($model, 'package_id')->hiddenInput(['value' => $package_model->id])->label(false) ?>
+<section class="articals_wrapper py-3 ">
+    <div class="container-fluid">
+        <div class="row mb-4  justify-content-center mt-4">
+            <div class="col-lg-12 col-xl-10 safartabs position-relative">
 
-                                    <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_model->no_of_day])->label(false) ?>
-                                    <div class="row">
+                <?= $this->render('@frontend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'itinerary_active' => 'active']) ?>
 
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'day')->textInput([
-                                                'maxlength' => true,
-                                                'value' => $i,
-                                                'placeholder' => 'Enter Day',
-                                                'id' => 'dayitineraryform-day', // Add an ID for JavaScript targeting
-                                            ]) ?>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'day_title')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter Day Title',
-                                                'id' => 'dayitineraryform-day_title', // Add an ID for JavaScript targeting
-                                            ]) ?>
-                                        </div>
+                <div class="tab-content accordion" id="myTabContent">
+                    <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                        <div aria-multiselectable="true" class="accordion" id="accordion" role="tablist">
+                            <?php
+                            $no_of_day = $package_model->no_of_day;
+                            for ($i = 1; $i <= $no_of_day; $i++) { ?>
+                                <div class="card mb-0">
+                                    <div class="card-header" id="heading<?= $i ?>" role="tab">
+                                        <a class="day-accordion-link" aria-controls="collapse<?= $i ?>" aria-expanded="<?= ($i == 1) ? 'true' : 'false'; ?>" data-day="<?= $i ?>" href="#">Day <?= $i ?></a>
                                     </div>
-                                    <div class="row">
+                                    <div aria-labelledby="heading<?= $i ?>" class="collapse <?= ($i == $model->day) ? 'show' : ''; ?>" data-parent="#accordion" id="collapse<?= $i ?>" role="tabpanel">
+                                        <div class="card-body">
+                                            <?php $form = ActiveForm::begin(); ?>
 
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'day_description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail ', 'id' => 'dayitineraryform-day_description' . $i . ''])->label('Description') ?>
-                                        </div>
-                                    </div>
+                                            <?= $form->field($model, 'package_id')->hiddenInput(['value' => $package_model->id])->label(false) ?>
 
-                                    <div class="row">
-
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'start_location')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter Start Location',
-                                                'id' => 'dayitineraryform-start_location', // Add an ID for JavaScript targeting
-                                            ]) ?>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'end_location')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter End Location',
-                                                'id' => 'dayitineraryform-end_location', // Add an ID for JavaScript targeting
-                                            ]) ?>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'hotel_name')->textInput([
-                                                'maxlength' => true,
-                                                'placeholder' => 'Enter Hotel Name',
-                                                'id' => 'dayitineraryform-hotel_name', // Add an ID for JavaScript targeting
-                                            ]) ?>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'meal_breakfast')->checkbox(['class' => 'me-2 checkbox_design'])->label(false); ?>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'meal_lunch')->checkbox(['class' => 'me-2 checkbox_design'])->label(false); ?>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <?= $form->field($model, 'meal_dinner')->checkbox(['class' => 'me-2 checkbox_design'])->label(false); ?>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <?php
-                                        if ($model->package_day_model->day_image) { ?>
-                                            <div class="col-md-3">
-                                                <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                            <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $package_model->no_of_day])->label(false) ?>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'day')->textInput([
+                                                        'maxlength' => true,
+                                                        'value' => $i,
+                                                        'placeholder' => 'Enter Day',
+                                                        'id' => 'dayitineraryform-day' . $i,
+                                                    ]) ?>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'day_title')->textInput([
+                                                        'maxlength' => true,
+                                                        'placeholder' => 'Enter Day Title',
+                                                        'id' => 'dayitineraryform-day_title' . $i,
+                                                    ]) ?>
+                                                </div>
                                             </div>
-                                            <div class="col-md-1">
-                                                <?php echo '<img src="' . $model->package_day_model->imagepath . '" width="75" height="75"></img>'; ?>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <?= $form->field($model, 'day_description')->textarea([
+                                                        'rows' => '2',
+                                                        'placeholder' => 'Description Detail',
+                                                        'id' => 'dayitineraryform-day_description' . $i,
+                                                    ])->label('Description') ?>
+                                                </div>
                                             </div>
-                                        <?php } else { ?>
-                                            <div class="col-md-3">
-                                                <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'start_location')->textInput([
+                                                        'maxlength' => true,
+                                                        'placeholder' => 'Enter Start Location',
+                                                        'id' => 'dayitineraryform-start_location' . $i,
+                                                    ]) ?>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'end_location')->textInput([
+                                                        'maxlength' => true,
+                                                        'placeholder' => 'Enter End Location',
+                                                        'id' => 'dayitineraryform-end_location' . $i,
+                                                    ]) ?>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'hotel_name')->textInput([
+                                                        'maxlength' => true,
+                                                        'placeholder' => 'Enter Hotel Name',
+                                                        'id' => 'dayitineraryform-hotel_name' . $i,
+                                                    ]) ?>
+                                                </div>
                                             </div>
-                                        <?php  } ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-                                    </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Latitude']) ?>
+                                                </div>
 
-                                    <?php ActiveForm::end(); ?>
+                                                <div class="col-md-4">
+                                                    <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
+                                                </div>
+                                                <?php
+
+                                                $latitude = $model->latitude;
+                                                $longitude = $model->longitude;
+
+                                                $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
+
+                                                if (!empty($latitude) && !empty($longitude)) {
+                                                ?>
+                                                    <div class="col-md-4">
+
+                                                        <iframe width="500" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
+                                                        </iframe>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="row">
+                                                <?php if ($model->package_day_model->day_image) { ?>
+                                                    <div class="col-md-3">
+                                                        <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <?= Html::img($model->package_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="col-md-3">
+                                                        <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="form-group">
+                                                <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                                            </div>
+
+                                            <?php ActiveForm::end(); ?>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div><!-- accordion -->
+                            <?php } ?>
+                        </div><!-- accordion -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
+</section>
 <style>
     .ck-editor__editable {
         min-height: 350px;
@@ -144,6 +183,36 @@ editor('dayitineraryform-day_description12');
 editor('dayitineraryform-day_description13');
 editor('dayitineraryform-day_description14');
 editor('dayitineraryform-day_description15');
+JS;
+$this->registerJs($script);
+?>
+
+<?php
+$script = <<< JS
+$(document).ready(function() {
+    // Handle accordion link clicks
+    $('.day-accordion-link').on('click', function(e) {
+        e.preventDefault();
+        
+        var dayNumber = $(this).data('day');
+        var accordionId = 'collapse' + dayNumber;
+        var url = '/package/profile/itinerary/{$package_model->id}/' + dayNumber + '#' + accordionId;
+
+        // Update URL
+        window.history.pushState({ path: url }, '', url);
+
+        // Collapse all accordions
+        $('.card-header').attr('aria-expanded', 'false');
+        $('.collapse').removeClass('show');
+
+        // Expand the clicked accordion
+        $(this).attr('aria-expanded', 'true');
+        $('#' + accordionId).addClass('show');
+
+        // Reload the page after URL update
+        location.reload();
+    });
+});
 JS;
 $this->registerJs($script);
 ?>

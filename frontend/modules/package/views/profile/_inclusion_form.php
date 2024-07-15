@@ -65,8 +65,8 @@ use yii\bootstrap5\ActiveForm;
         <hr>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
+                <div class="form-group float-end">
+                    <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
                 </div>
             </div>
         </div>
@@ -86,3 +86,17 @@ bulleteditor('packageform-package_exclusion');
 JS;
 $this->registerJs($script);
 ?>
+<style>
+    .form-check-input[type="radio"] {
+        width: 20px;
+        height: 20px;
+        border-radius: 50% !important;
+        /* Additional styles as needed */
+    }
+
+    .form-check-label {
+        /* Additional label styles if necessary */
+        margin-left: 5px;
+        /* Example: Adds a margin to the left of the label */
+    }
+</style>

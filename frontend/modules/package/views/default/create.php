@@ -16,10 +16,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 
 ?>
-<div class="card">
-    <div class="card-body">
-        <?= $this->render('_form', [
-            'model' => $model,
-        ]) ?>
-    </div>
+<div class="modal-body modal_form">
+
+    <?= $this->render('_form', [
+        'model' => $model,
+    ]) ?>
 </div>

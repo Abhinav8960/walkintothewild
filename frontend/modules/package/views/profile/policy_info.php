@@ -30,7 +30,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
 </section>
 
-<section class="articals_wrapper py-3 ">
+<section class="articals_wrapper py-3 mb-5">
     <div class="container-fluid">
         <div class="row mb-4  justify-content-center mt-4">
             <div class="col-lg-12 col-xl-10 safartabs position-relative">

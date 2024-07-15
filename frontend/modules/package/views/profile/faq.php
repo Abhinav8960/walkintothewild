@@ -44,49 +44,74 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <?= $this->render('@frontend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
                 <div class="tab-content accordion" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        <div class="table-responsive">
-                            <?= GridView::widget([
-                                'dataProvider' => $dataProvider,
-                                'columns' => [
-                                    [
-                                        'class' => 'yii\grid\SerialColumn',
-                                        'contentOptions' => ['style' => 'width: 5%;'],
-                                    ],
-                                    [
-                                        'label' => 'Question',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return $model->question;
-                                        }
-                                    ],
-                                    [
-                                        'label' => 'Answer',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return $model->answer;
-                                        }
-                                    ],
-                                    [
-                                        'class' => 'yii\grid\ActionColumn',
-                                        'header' => "Actions",
-                                        'contentOptions' => ['style' => 'width: 15%;'],
-                                        'template' => '{delete}&nbsp;&nbsp;{suspend}',
-                                        'buttons' => [
-                                            'delete' => function ($url, $model) {
-                                                if ($model->status != -1) {
-                                                } else {
-                                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-12  mb-xl-5 mb-3">
+                                    <div class="row justify-content-between">
+                                        <div class="col-md-5">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="right_button float-md-end">
+                                                <?php if (Yii::$app->user->identity) { ?>
+                                                    <button class="packageBtn join_btn ms-sm-3 mt-sm-0 mt-2" value="<?= \yii\helpers\Url::toRoute(['/package/profile/create-faq/' . $package_model->id . '']) ?>">+ Create FAQ</button>
+                                                <?php } else {  ?>
+                                                    <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Create FAQ</a>
+                                                <?php } ?>
+
+                                                <?php if (Yii::$app->user->identity) { ?>
+                                                    <button class="packageBtn join_btn ms-sm-3 mt-sm-0 mt-2" value="<?= \yii\helpers\Url::toRoute(['/package/profile/select-faq/' . $package_model->id . '']) ?>">+ Select FAQ</button>
+                                                <?php } else {  ?>
+                                                    <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Select FAQ</a>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <?= GridView::widget([
+                                        'dataProvider' => $dataProvider,
+                                        'columns' => [
+                                            [
+                                                'class' => 'yii\grid\SerialColumn',
+                                                'contentOptions' => ['style' => 'width: 5%;'],
+                                            ],
+                                            [
+                                                'label' => 'Question',
+                                                'contentOptions' => ['style' => 'width: 10%;'],
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return $model->question;
                                                 }
-                                            },
-                                            'suspend' => function ($url, $model) {
-                                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
-                                            },
-                                        ]
-                                    ],
-                                ],
-                            ]); ?>
+                                            ],
+                                            [
+                                                'label' => 'Answer',
+                                                'contentOptions' => ['style' => 'width: 10%;'],
+                                                'format' => 'raw',
+                                                'value' => function ($model) {
+                                                    return $model->answer;
+                                                }
+                                            ],
+                                            [
+                                                'class' => 'yii\grid\ActionColumn',
+                                                'header' => "Actions",
+                                                'contentOptions' => ['style' => 'width: 15%;'],
+                                                'template' => '{delete}&nbsp;&nbsp;{suspend}',
+                                                'buttons' => [
+                                                    'delete' => function ($url, $model) {
+                                                        if ($model->status != -1) {
+                                                        } else {
+                                                            return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
+                                                        }
+                                                    },
+                                                    'suspend' => function ($url, $model) {
+                                                        return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
+                                                    },
+                                                ]
+                                            ],
+                                        ],
+                                    ]); ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,3 +119,32 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
 </section>
+
+<div class="modal fade _standard-text" id="package-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Package</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+function organizefunction() {
+	$('.packageBtn').on('click', function () {
+        $('#package-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+             
+JS;
+$this->registerJs($script);
+?>
