@@ -20,91 +20,98 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 <div class="card">
     <div class="card-body">
-        <div class="col-xl-12">
-            <!-- div -->
 
-            <div class="text-wrap custom_color">
-                <div class="example">
-                    <div class="d-md-flex">
-                        <div class="">
-                            <div class="topics_listing">
-                                <ul>
-                                    <li><a class="active" href="#tab21">
-                                            <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
-                                        </a></li>
-
-                                    <li><a href="#tab22">
-                                            <div class="numparks">Privacy Policy</div><i class="fa-solid fa-chevron-right"></i>
-                                        </a></li>
-                                    <li><a href="#tab23">
-                                            <div class="numparks">Change Policy </div><i class="fa-solid fa-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                    <li><a href="#tab24">
-                                            <div class="numparks">What You Must Carry </div><i class="fa-solid fa-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                    <li><a href="#tab25">
-                                            <div class="numparks">Date Change Policy </div><i class="fa-solid fa-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                    <li><a href="#tab26">
-                                            <div class="numparks">Refund Policy </div><i class="fa-solid fa-chevron-right"></i>
-                                        </a>
-                                    </li>
-
-
-                                </ul>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+                    <div class="safri_tour">
+                        <div class="topics_listing">
+                            <ul id="tabList">
+                                <li><a class="tab-items active_safri" data-tab="tab21">
+                                        <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
+                                    </a></li>
+                                <li><a class="tab-items " data-tab="tab22">
+                                        <div class="numparks">Privacy Policy</div><i class="fa-solid fa-chevron-right"></i>
+                                    </a></li>
+                                <li><a class="tab-items" data-tab="tab23">
+                                        <div class="numparks">Change Policy </div><i class="fa-solid fa-chevron-right"></i>
+                                    </a></li>
+                                <li><a class="tab-items " data-tab="tab24">
+                                        <div class="numparks">What You Must Carry </div><i class="fa-solid fa-chevron-right"></i>
+                                    </a></li>
+                                <li><a class="tab-items " data-tab="tab25">
+                                        <div class="numparks">Date Change Policy </div><i class="fa-solid fa-chevron-right"></i>
+                                    </a></li>
+                                <li><a class="tab-items " data-tab="tab26">
+                                        <div class="numparks">Refund Policy </div><i class="fa-solid fa-chevron-right"></i>
+                                    </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 col-xxl-10 col-xl-9">
+                    <div class="tab-content_tour active " id="tab21">
+                        <!-- Safari Parks content goes here -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Package Terms Condtition'])->label(false) ?>
                             </div>
                         </div>
-                        <div class="tabs-style-4 w-100 ">
-                            <div class="panel-body tabs-menu-body">
-                                <div class="tab-content">
-                                    <div class="tab-content_tour active" id="tab21">
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Package Terms Condtition'])->label('Package Terms Condtition') ?>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab22">
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Privacy Policy'])->label('Package Privacy Policy') ?>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab23">
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Change Policy'])->label('Package Change Policy') ?>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab24">
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
-                                        </div>
-                                    </div>
+                    </div>
+                    <div class="tab-content_tour" id="tab22">
+                        <!-- Safari Parks content goes here -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Privacy Policy'])->label(false) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content_tour" id="tab23">
+                        <!-- Safari Parks content goes here -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Change Policy'])->label(false) ?>
+                            </div>
+                        </div>
+                    </div>
 
-                                    <div class="tab-pane" id="tab25">
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane" id="tab26">
-                                        <div class="col-md-12">
-                                            <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
-                                        </div>
-                                    </div>
+                    <div class="tab-content_tour " id="tab24">
+                        <div class="searchSafari_parks mb-4">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label(false) ?>
                                 </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="tab-content_tour" id="tab25">
+                        <!-- Shared Safari content goes here -->
+                        <div class="row">
+                            <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Date Change Policy'])->label(false) ?>
+                        </div>
+                    </div>
+
+                    <div class="tab-content_tour mb-4" id="tab26">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Refund Policy'])->label(false) ?>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div><br>
+            </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn']) ?>
+                    <div class="form-group float-end">
+                        <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 <?php ActiveForm::end(); ?>

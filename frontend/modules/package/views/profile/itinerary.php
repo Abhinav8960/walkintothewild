@@ -152,8 +152,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <?= Html::submitButton('Submit', ['class' => 'submit-btn submit-button next-btn']) ?>
+                                                                    <div class="form-group float-end">
+                                                                        <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
