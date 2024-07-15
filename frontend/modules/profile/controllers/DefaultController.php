@@ -2,9 +2,9 @@
 
 namespace frontend\modules\profile\controllers;
 
-
+use common\models\UserFollow;
 use frontend\controllers\FrontendBaseController;
-
+use Yii;
 
 /**
  * DefaultController.
@@ -21,7 +21,23 @@ class DefaultController extends FrontendBaseController
         return $this->render('index');
     }
 
-    public function actionFollow()
+    public function actionFollow($id)
     {
+        if (Yii::$app->user->identity) {
+            if (Yii::$app->user->identity->id = $id) {
+                Yii::$app->session->setFlash('error', "You can't follow yourself!");
+                return $this->redirect(Yii::$app->request->referrer);
+            }
+            $follower = UserFollow::find()->where(['follow_user_id' => Yii::$app->user->identity->id, 'user_id' => $id])->one();
+            if (!$follower) {
+                $follower = new UserFollow();
+            }
+            $follower->follow_user_id = Yii::$app->user->identity->id;
+            $follower->user_id = $id;
+            $follower->status = 1;
+            $follower->save(false);
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

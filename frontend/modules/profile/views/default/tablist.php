@@ -37,17 +37,17 @@ $this->params['title'] = $this->title;
 
             <div class="col-lg-4 order-lg-2 order-2 mx-auto ">
                 <div class="d-flex align-items-center m-1 mx-auto align-items-center justify-content-center">
-                    <button type="button" class="btn btn-light m-2">Follow</button>
-                    <button type="button" class="btn btn-light m-2">Message</button>
+                    <a href="<?= Url::toRoute(['/profile/default/follow', 'id' => Yii::$app->user->identity->id]) ?>" class="btn btn-light m-2">Follow</a>
+                    <a href="#" class="btn btn-light m-2">Message</a>
                 </div>
             </div>
 
-            <div class="col-lg-4 order-lg-3 ">
+            <div class="col-lg-4 order-lg-3 order-3">
                 <div class="sociel_icons ps-3 ">
                     <?php
                     $shared_url = urlencode(Url::to('', true));
                     ?>
-                    <ul >
+                    <ul>
                         <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
                         </li>
                         <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
