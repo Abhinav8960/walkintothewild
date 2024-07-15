@@ -129,9 +129,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                                                                 if (!empty($latitude) && !empty($longitude)) {
                                                                 ?>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-4 mt-2">
 
-                                                                        <iframe width="500" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
+                                                                        <iframe width="400" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
                                                                         </iframe>
                                                                     </div>
                                                                 <?php } ?>
