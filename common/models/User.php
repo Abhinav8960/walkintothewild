@@ -329,4 +329,9 @@ class User extends ActiveRecord implements IdentityInterface
 
         return false;
     }
+
+    public function getUserhandle()
+    {
+        return "@" . $this->user_handle;
+    }
 }
