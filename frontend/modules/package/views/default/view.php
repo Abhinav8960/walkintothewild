@@ -56,7 +56,7 @@ $this->params['title'] = $this->title;
                                     <div class="safrititles">
                                         <h5 class="fs-4"><a href="/park/satpura-tiger-reserve">Satpura Tiger Reserve </a></h5>
                                         <div class="date_bx">
-                                            <h6>11 Jul 24 - 13 Jul 24</h6>
+                                            <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div>
                                         <p class="mb-0 pt-2">Organized by <a href="https:/adasdsad.asdp" target="_blank"><strong><?= isset($package->user) ? $package->user->name : '' ?></strong></a></p>
 
@@ -90,7 +90,22 @@ $this->params['title'] = $this->title;
                                             <img src="http://app.walkintothewild.io/assets/5a869828/img/gypsycanter.png" alt="">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= $package->no_of_safari ?> Shared Safaris</p>
+                                            <p class="mb-0"><?php
+                                                            $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 6, 'selection' => 1, 'status' => 1])->limit(1)->one();
+
+                                                            echo ($pick_drop_includes) ? 'Pick & Drop' : '';
+                                                            ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 ">
+                                        <div class="iconImg">
+                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0"><?= $package->no_of_safari ?> Shared Safari
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -104,18 +119,7 @@ $this->params['title'] = $this->title;
                                                             $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
                                                             echo ($package_includes) ? 'All meals' : '';
-                                                            ?>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 ">
-                                        <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
-                                        </div>
-                                        <div class="text-form">
-                                            <p class="mb-0"><?= $package->no_of_night ?> Nights</p>
+                                                            ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +169,7 @@ $this->params['title'] = $this->title;
                         <div class="col-lg-5 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="pakageCost">
-                                    <h6 class="fs-4 mb-0">25,000 +GST</h6>
+                                    <h6 class="fs-4 mb-0"><?= $package->cost_per_person ?> +GST</h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <a class="join_btn  mt-sm-0 mt-2" href="/package/profile/<?= $package->id ?>">Update Package</a>
