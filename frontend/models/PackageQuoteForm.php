@@ -35,10 +35,6 @@ class PackageQuoteForm extends Model
     {
         return [
             [['travelers', 'pack_start_date'], 'required'],
-            [['package_id', 'travelers', 'status'], 'integer'],
-            [['pack_start_date', 'user_agent'], 'string', 'max' => 255],
-            [['travelers'], 'number', 'min' => 1],
-            [['ip_address'], 'string', 'max' => 45],
         ];
     }
 
@@ -59,13 +55,13 @@ class PackageQuoteForm extends Model
         ];
     }
 
-    public function request(Package $package)
+    public function request($package_id)
     {
 
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
         $package_quote = new PackageQuote();
-        $package_quote->package_id = $package->id;
+        $package_quote->package_id = $package_id;
         $package_quote->travelers = $this->travelers;
         $package_quote->start_date = $this->pack_start_date;
         $package_quote->ip_address = Yii::$app->getRequest()->getUserIp();
@@ -74,8 +70,10 @@ class PackageQuoteForm extends Model
         $package_quote->browser = $agent->browser();
         $package_quote->os = $agent->platform();
         $package_quote->status = 1;
-        $package_quote->save();
 
+        if ($package_quote->save()) {
+            return $package_quote->save();
+        }
         // if ($package_quote->save()) {
         //     $to_mail = $package_quote->email;
         //     $subject = 'Request Free Quote';

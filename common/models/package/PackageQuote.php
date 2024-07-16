@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -22,8 +23,9 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class PackageQuote extends \yii\db\ActiveRecord
+class PackageQuote extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -85,5 +87,11 @@ class PackageQuote extends \yii\db\ActiveRecord
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 }

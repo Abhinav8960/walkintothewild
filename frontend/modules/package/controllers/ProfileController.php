@@ -8,7 +8,6 @@ use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
-use common\models\package\form\PackageTermConditionForm;
 use common\models\package\Package;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
@@ -16,8 +15,6 @@ use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageTermCondition;
-use common\models\package\PackageTermConditionSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -383,14 +380,6 @@ class ProfileController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function findModeltermcondition($id)
-    {
-        if (($model = PackageTermCondition::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 
     protected function findModelDay($package_id, $day)
     {

@@ -484,17 +484,22 @@ $this->params['title'] = $this->title;
             <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
 
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
-                <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                    Request Quote</button>
-                <div class="interst_wrapper">
-                    <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
-                        <?= $this->render('_quote', ['packagemodel' => $packagemodel]) ?>
+                <?php if (Yii::$app->user->identity) { ?>
 
+                    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                        Request Quote</button>
+                    <div class="interst_wrapper">
+                        <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
+                            <?= $this->render('_quote', ['packagemodel' => $packagemodel]) ?>
+
+                        </div>
                     </div>
-                </div>
-                <div class="right_button py-lg-5 py-3 d-lg-block d-none">
-                    <a class="btn_newsafari organizeBtn w-100" href="/package/profile/<?= $package->id ?>"><i class="fas fa-edit me-1"></i>Update Package</a>
-                </div>
+                    <div class="right_button py-lg-5 py-3 d-lg-block d-none">
+                        <a class="btn_newsafari organizeBtn w-100" href="/package/profile/<?= $package->id ?>"><i class="fas fa-edit me-1"></i>Update Package</a>
+                    </div>
+                <?php } else { ?>
+                    <p>Please Login to Request Quote</p>
+                <?php } ?>
             </div>
 
         </div>

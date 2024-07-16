@@ -25,8 +25,9 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class PackageComment extends \yii\db\ActiveRecord
+class PackageComment extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
      */
