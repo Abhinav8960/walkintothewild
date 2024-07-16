@@ -113,25 +113,22 @@ class UserForm extends Model
 
         if ($this->profile_image) {
             $storagePath = Yii::$app->params['datapath'] . '/user';
-            // print_r($storagePath);
-            // die;
+
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
             $storagePath = $storagePath . '/' . $this->user_model->id;
-            // print_r($storagePath);
-            // die;
+
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
 
             $fileName = 'user' . time() . '.' . $this->profile_image->extension;
-            //print_r($fileName);
+
             $filePath = $storagePath . '/' . $fileName;
-            // print_r($filePath);
-            // die;
+
 
             if ($this->profile_image->saveAs($filePath)) {
                 $this->user_model->profile_image = $fileName;

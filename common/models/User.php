@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\models\sharesafari\ShareSafari;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\SluggableBehavior;
@@ -360,4 +361,9 @@ class User extends ActiveRecord implements IdentityInterface
     // {
     //     return $this->hasMany(UserFollow::class, ['follow_user_id' => $this->id]);
     // }
+
+    public function getSharesafari()
+    {
+        return $this->hasMany(ShareSafari::class, ['host_user_id' => $this->id]);
+    }
 }

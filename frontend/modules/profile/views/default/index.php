@@ -55,5 +55,62 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
         </div>
+        <div class="col-4">
+            <div class="card mt-2 mb-2">
+                <div class="card-body">
+                    <h5>Instagram</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+        </div>
+        <div class="col-4">
+            <div class="card mt-2 mb-2">
+                <div class="card-body">
+                    <h5>Shared Safari</h5>
+                    <div class="col-6 mb-4 padding_righ">
+                        <div class="sharesafri-card">
+                            <div class="flotingdate">
+                                <div class="icons text-center">
+
+                                </div>
+                            </div>
+                            <div class="shareimg">
+                                <a href="#"><img src="<?= $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                            </div>
+                            <div class="card_body">
+                                <div class="top_seats">
+                                    <div class="safari d-flex justify-content-between ">
+                                        <div class="safarinum d-flex gap-2 align-items-center ">
+                                            <p class="text_safari">SAFARI</p>
+
+                                        </div>
+                                        <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
+                                            <p class="text_safari">SEATS</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="titleDate">
+
+                                </div>
+                                <div class="footer_card row pb-2 px-2 align-items-center">
+                                    <div class="col-6">
+
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="safari text-center">
+                                            <div class="joinsafari">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
