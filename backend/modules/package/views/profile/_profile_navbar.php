@@ -3,6 +3,15 @@
         <div class="card-body">
             <div class="main-content-label mg-b-5">
                 <?= $package->package_name ?>
+                <?php
+
+                use yii\helpers\Html;
+
+                echo Html::a('Package Preview', ['/package/preview', 'slug' => $package->package_slug], [
+                    'class' => 'btn  btn-orange me-2 float-end',
+                    'name' => 'Package Preview',
+                ]);
+                ?>
             </div>
         </div>
 
