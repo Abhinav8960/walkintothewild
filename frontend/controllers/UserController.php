@@ -38,9 +38,6 @@ class UserController extends Controller
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['update']);
                     }
-                } else {
-                    print_r($model->errors);
-                    die();
                 }
             }
         } else {

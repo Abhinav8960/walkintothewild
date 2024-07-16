@@ -108,85 +108,30 @@ class UserForm extends Model
     }
 
 
-    // public function uploadFile()
-    // {
-
-    //     if ($this->profile_image) {
-    //         $storagePath = Yii::$app->params['datapath'] . '/user';
-    //         // print_r($storagePath);
-    //         // die;
-    //         if (!file_exists($storagePath)) {
-    //             mkdir($storagePath);
-    //             chmod($storagePath, 0777);
-    //         }
-    //         $storagePath = $storagePath . '/' . $this->user_model->id;
-    //         // print_r($storagePath);
-    //         // die;
-    //         if (!file_exists($storagePath)) {
-    //             mkdir($storagePath);
-    //             chmod($storagePath, 0777);
-    //         }
-
-    //         $fileName = 'user' . time() . '.' . $this->profile_image->extension;
-    //         //print_r($fileName);
-    //         $filePath = $storagePath . '/' . $fileName;
-    //         // print_r($filePath);
-    //         // die;
-
-    //         if ($this->profile_image->saveAs($filePath)) {
-    //             $this->user_model->profile_image = $fileName;
-    //             $this->user_model->save(false);
-    //         }
-    //     }
-
-    //     if ($this->cover_image) {
-    //         $storagePath = Yii::$app->params['datapath'] . '/user_cover_image';
-
-    //         if (!file_exists($storagePath)) {
-    //             mkdir($storagePath);
-    //             chmod($storagePath, 0777);
-    //         }
-    //         $storagePath = $storagePath . '/' . $this->user_model->id;
-
-    //         if (!file_exists($storagePath)) {
-    //             mkdir($storagePath);
-    //             chmod($storagePath, 0777);
-    //         }
-
-    //         $fileName = 'user_cover_image' . time() . '.' . $this->cover_image->extension;
-    //         $filePath = $storagePath . '/' . $fileName;
-
-
-    //         if ($this->cover_image->saveAs($filePath)) {
-    //             $this->user_model->cover_image = $fileName;
-    //             $this->user_model->save(false);
-    //         }
-    //     }
-    // }
-
-
-    /**
-     * Upload Day image
-     *
-     * @return void
-     */
-    public function UploadFile()
+    public function uploadFile()
     {
+
         if ($this->profile_image) {
             $storagePath = Yii::$app->params['datapath'] . '/user';
-
+            // print_r($storagePath);
+            // die;
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
             $storagePath = $storagePath . '/' . $this->user_model->id;
+            // print_r($storagePath);
+            // die;
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
 
-            $fileName = 'user' . '-' . time() . '.' . $this->profile_image->extension;
+            $fileName = 'user' . time() . '.' . $this->profile_image->extension;
+            //print_r($fileName);
             $filePath = $storagePath . '/' . $fileName;
+            // print_r($filePath);
+            // die;
 
             if ($this->profile_image->saveAs($filePath)) {
                 $this->user_model->profile_image = $fileName;
@@ -202,13 +147,15 @@ class UserForm extends Model
                 chmod($storagePath, 0777);
             }
             $storagePath = $storagePath . '/' . $this->user_model->id;
+
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
 
-            $fileName = 'user_cover_image' . '-' . time() . '.' . $this->cover_image->extension;
+            $fileName = 'user_cover_image' . time() . '.' . $this->cover_image->extension;
             $filePath = $storagePath . '/' . $fileName;
+
 
             if ($this->cover_image->saveAs($filePath)) {
                 $this->user_model->cover_image = $fileName;
