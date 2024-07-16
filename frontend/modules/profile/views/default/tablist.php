@@ -47,8 +47,9 @@ $this->params['title'] = $this->title;
                         <?php } else { ?>
                             <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Follow</a>
                         <?php } ?>
+                        <a href="#" class="btn btn-light m-2">Message</a>
                     <?php } ?>
-                    <a href="#" class="btn btn-light m-2">Message</a>
+
                 </div>
             </div>
 
