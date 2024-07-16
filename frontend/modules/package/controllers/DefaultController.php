@@ -52,6 +52,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = new PackageForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->owned_by_id = Yii::$app->user->identity->id;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {

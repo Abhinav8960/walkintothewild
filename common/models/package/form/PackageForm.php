@@ -10,6 +10,7 @@ use common\models\package\PackageSafariPark;
 
 class PackageForm extends \yii\base\Model
 {
+    public $owned_by_id;
     public $package_name;
     public $package_slug;
     public $no_of_day;
@@ -67,6 +68,7 @@ class PackageForm extends \yii\base\Model
         ]);
         if ($package_model != null) {
             $this->package_model = $package_model;
+            $this->owned_by_id = $this->package_model->owned_by_id;
             $this->package_name = $this->package_model->package_name;
             $this->package_image = $this->package_model->package_image;
             $this->package_slug = $this->package_model->package_slug;
@@ -121,7 +123,7 @@ class PackageForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id'], 'safe'],
 
 
 
@@ -143,7 +145,7 @@ class PackageForm extends \yii\base\Model
             'stay_category_id', 'status', 'cost_per_person', 'package_description',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
-            'start_location', 'end_location', 'start_date', 'end_date'
+            'start_location', 'end_location', 'start_date', 'end_date', 'owned_by_id'
         ];
         $scenarios['update'] = [
             'package_name', 'package_image', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_safari',
@@ -195,6 +197,7 @@ class PackageForm extends \yii\base\Model
      */
     public function initializeForm()
     {
+        $this->package_model->owned_by_id = $this->owned_by_id;
         $this->package_model->package_name = $this->package_name;
         $this->package_model->package_slug = $this->package_slug;
         $this->package_model->no_of_day = $this->no_of_day;
