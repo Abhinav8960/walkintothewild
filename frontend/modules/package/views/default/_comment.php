@@ -8,23 +8,6 @@ use yii\helpers\Url;
 
 <div class="col-lg-9 order-lg-1 order-2">
     <div class="comments_safari">
-        <div class="top_replysafari">
-            <?php if ($package->created_by) { ?>
-                <div class="comments-persons">
-                    <div class="postcomment d-flex gap-2">
-                        <div class="avatar">
-                            <img src="<?= $package->user && $package->user->avatar <> '' ? $package->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
-                        </div>
-                        <div class="text_com">
-                            <h6 class="nameavatr"><?= $package->user->name ?></h6>
-                            <?php if ($package->package_description) { ?>
-                                <p><?= $package->package_description; ?></p>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-        </div>
         <div class="commentsOther  position-relative">
             <?php if ($parent_comments = $package->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
                 foreach ($parent_comments as $comments) {
