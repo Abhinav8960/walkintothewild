@@ -20,14 +20,19 @@ class FrontendBaseController extends Controller
     /**
      * {@inheritdoc}
      */
-    public function afterAction($action, $result)
-    {
-        if (in_array($action->id, $this->action_ids)) {
-            $this->savePageViews();
-        }
+    // public function afterAction($action, $result)
+    // {
+    //     if (in_array($action->id, $this->action_ids)) {
+    //         $this->savePageViews();
+    //     }
 
-        return parent::afterAction($action, $result);
-    }
+    //     parent::afterAction($action, $result);
+
+    //     $event = new \yii\base\ActionEvent($action);
+    //     $event->result = $result;
+    //     $this->trigger(self::EVENT_AFTER_ACTION, $event);
+    //     return $event->result;
+    // }
 
     /**
      * Save Page Views
