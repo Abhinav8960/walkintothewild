@@ -39,14 +39,8 @@ use yii\helpers\Url;
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center">
                                     <h6 class="nameavatr"><?= $comments->user->name ?></h6>
-                                    <?php if (Yii::$app->user->identity) {
-                                        if (Yii::$app->user->identity->id == $package->created_by) { ?>
-                                            <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $package->package_slug ?>&park_id=<?= $package->park_id ?>&package_comment_id=<?= $comments->id ?>">Request Contact</a>
-                                    <?php }
-                                    } ?>
                                 </div>
                                 <p><?= $comments->comment ?></p>
-                                <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                             </div>
                         </div>
                         <div class="comment-reply">
@@ -66,51 +60,19 @@ use yii\helpers\Url;
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>
                                                     </div>
-                                                  
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     <?php } ?>
                                 </div>
                             <?php } ?>
-                            <?php if (Yii::$app->user->id) {  ?>
-                                <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $comments->id ?>">
-                                    <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                                    <div class="mb-3">
-                                        <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
-                                    </div>
-                                    <div class="mb-3">
-                                        <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                                    </div>
-                                    <div class="btn-wrapper">
-                                        <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
-                                    </div>
-                                    <?php ActiveForm::end(); ?>
-                                </div>
-
-                            <?php } ?>
                         </div>
                     </div>
-
             <?php
                 }
             } ?>
         </div>
-
-
-
     </div>
-    <?php if ($package->status == 2) {
-        echo "Comment Closed for this Package..." ?>
-        <?php } else {
-        if (Yii::$app->user->id) { ?>
-            <?= $this->render('_comment_form', ['model' => $model]) ?>
-    <?php } else {
-            echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
-        }
-    } ?>
 </div>
 <script>
     function toggleReplyForm(link) {
@@ -126,16 +88,6 @@ use yii\helpers\Url;
 
 <?php
 $script = <<< JS
-
-function writeareviewfunction() {
-    $('.flagBtn').on('click', function () {
-        $('#modalFlag').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-}
-writeareviewfunction();
-
 $('.toggle-replies').click(function() {
         var target = $(this).data('target');
         var container = $('#' + target);
