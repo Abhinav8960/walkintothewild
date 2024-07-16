@@ -48,8 +48,9 @@ class UserForm extends Model
             ['name', 'required'],
             ['name', 'string', 'min' => 2, 'max' => 255],
             ['mobile_no', 'match', 'pattern' => '/^\+?\d{10,15}$/', 'message' => 'Invalid mobile number format.'],
-            [['profile_image'], 'file', 'extensions' => 'png, jpg, jpeg'],
-            [['cover_image'], 'file', 'extensions' => 'png, jpg, jpeg'],
+            [['profile_image', 'cover_image'], 'safe'],
+            [['profile_image'], 'file', 'extensions' => 'jpg, gif, png, jpeg'],
+            [['cover_image'], 'file', 'extensions' => 'jpg, gif, png, jpeg'],
             ['user_handle', 'safe'],
             [
                 'user_handle', 'unique', 'when' => function ($model, $attribute) {
@@ -74,7 +75,7 @@ class UserForm extends Model
             'user_handle' => 'User Handle',
             'facebook_url' => 'Facebook',
             'whatsapp_url' => 'Whatsapp',
-            'x_url' => 'X',
+            'x_url' => 'Twitter Link',
             'insta_url' => 'Instagram',
 
         ];
