@@ -352,18 +352,18 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
-    // public function getUserfollower()
-    // {
-    //     return $this->hasMany(UserFollow::class, ['user_id' => $this->id]);
-    // }
+    public function getUserfollowers()
+    {
+        return $this->hasMany(UserFollow::class, ['user_id' => 'id']);
+    }
 
-    // public function getUserfollowing()
-    // {
-    //     return $this->hasMany(UserFollow::class, ['follow_user_id' => $this->id]);
-    // }
+    public function getUserfollowings()
+    {
+        return $this->hasMany(UserFollow::class, ['follow_user_id' => 'id']);
+    }
 
     public function getSharesafari()
     {
-        return $this->hasMany(ShareSafari::class, ['host_user_id' => $this->id]);
+        return $this->hasMany(ShareSafari::class, ['host_user_id' => 'id']);
     }
 }

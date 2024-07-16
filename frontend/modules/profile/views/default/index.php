@@ -45,6 +45,11 @@ $this->params['title'] = $this->title;
             <div class="card mt-2">
                 <div class="card-body">
                     <h5>Following</h5>
+                    <?php if ($followings = $user->userfollowings) {
+                        foreach ($followings as $following) { ?>
+                            <img src="<?= $following->user->profile_image <> '' ?  $following->user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle" width="25" height="25">
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </div>
@@ -144,9 +149,3 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
-
-<style>
-    .mt-n5 {
-        margin-top: -3rem !important;
-    }
-</style>

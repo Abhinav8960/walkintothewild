@@ -54,7 +54,7 @@ $this->params['title'] = $this->title;
             </div>
 
             <div class="col-lg-4 order-lg-3 order-3">
-                <div class="sociel_icons ps-3 ">
+                <div class="sociel_icons ps-3">
                     <?php
                     $shared_url = urlencode(Url::to('', true));
                     ?>
@@ -91,3 +91,13 @@ $this->params['title'] = $this->title;
         </ul>
     </div>
 </div>
+
+<style>
+    .mt-n5 {
+        margin-top: -3rem !important;
+    }
+
+    .linear-gradient {
+        background-image: linear-gradient(#50b2fc, #f44c66);
+    }
+</style>
