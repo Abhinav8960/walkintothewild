@@ -19,6 +19,7 @@
                 <li><a href="/package/profile/policy-info?package_id=<?= $package->id ?>" class="nav-link <?= isset($policy_info_active) ? $policy_info_active : '' ?>">Policy Info</a></li>
                 <li><a href="/package/profile/faq?package_id=<?= $package->id ?>" class="nav-link <?= isset($faq_active) ? $faq_active : '' ?>">FAQ</a></li>
                 <li><a href="/package/profile/quote?package_id=<?= $package->id ?>" class="nav-link <?= isset($quote_active) ? $quote_active : '' ?>">Request Quote</a></li>
+                <li><a href="/package/profile/gallery?package_id=<?= $package->id ?>" class="nav-link <?= isset($gallery_active) ? $gallery_active : '' ?>">Gallery</a></li>
             </ul>
         </div>
     </div>
