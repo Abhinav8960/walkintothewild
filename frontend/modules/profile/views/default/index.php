@@ -41,5 +41,19 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
         </div>
+        <div class="col-4">
+            <div class="card mt-2">
+                <div class="card-body">
+                    <h5>Following</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="card mt-2 mb-2">
+                <div class="card-body">
+                    <h5>Share Safari Experience</h5>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
