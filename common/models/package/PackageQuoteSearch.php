@@ -2,14 +2,14 @@
 
 namespace common\models\package;
 
-use common\models\package\PackageTermCondition;
+use common\models\package\PackageQuote;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * PackageTermConditionSearch represents the model behind the search form of `common\models\package\PackageTermCondition`.
+ * PackageQuoteSearch represents the model behind the search form of `common\models\package\PackageQuote`.
  */
-class PackageTermConditionSearch extends PackageTermCondition
+class PackageQuoteSearch extends PackageQuote
 {
     /**
      * {@inheritdoc}
@@ -17,10 +17,9 @@ class PackageTermConditionSearch extends PackageTermCondition
     public function rules()
     {
         return [
-            [['package_id'], 'required'],
-            [['package_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['description'], 'string'],
-            [['title'], 'string', 'max' => 512],
+            [['package_id', 'travelers', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['start_date', 'user_agent', 'os', 'browser', 'device_type'], 'string', 'max' => 255],
+            [['ip_address'], 'string', 'max' => 45],
         ];
     }
 
@@ -42,7 +41,7 @@ class PackageTermConditionSearch extends PackageTermCondition
      */
     public function search($params)
     {
-        $query = PackageTermCondition::find()->where(['status' => [1, 2]]);
+        $query = PackageQuote::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -62,14 +61,14 @@ class PackageTermConditionSearch extends PackageTermCondition
         $query->andFilterWhere([
             'id' => $this->id,
             'package_id' => $this->package_id,
+            'start_date' => $this->start_date,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
-        $query->andFilterWhere(['like', 'description', $this->description]);
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'travelers', $this->travelers]);
 
         return $dataProvider;
     }

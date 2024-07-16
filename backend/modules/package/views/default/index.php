@@ -114,7 +114,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'buttons' => [
                             'view' => function ($url, $model) {
                                 return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
-                                ', ['/package/default/view', 'package_id' => $model->id], [
+                                ', ['/package/profile/index', 'package_id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
 

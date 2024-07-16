@@ -2,7 +2,7 @@
 
 use common\models\GeneralModel;
 use yii\helpers\Html;
-use yii\bootstrap5\ActiveForm;
+use yii\widgets\ActiveForm;
 
 ?>
 <div class="col-lg-12">
@@ -40,6 +40,8 @@ use yii\bootstrap5\ActiveForm;
                     <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control'])->label(false) ?>
                 </div>
             </div>
+        </div>
+        <div class="row mt-2">
             <div class="col-lg-12">
                 <?= Html::submitButton('Send Request', ['class' => 'sent_btn']) ?>
             </div>
@@ -49,7 +51,8 @@ use yii\bootstrap5\ActiveForm;
                 </div>
             </div>
         </div>
-        <?php ActiveForm::end(); ?>
     </div>
+    <?php ActiveForm::end(); ?>
+</div>
 
 </div>

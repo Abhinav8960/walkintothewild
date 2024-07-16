@@ -145,9 +145,9 @@ class DefaultController extends FrontendBaseController
         $packagemodel = new PackageQuoteForm();
 
         $packagemodel->action_validate_url = '/package/default/validate';
-        if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package)) {
+        if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package->id)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/package/default/view',  'slug' => $package->package_slug]);
+            return $this->redirect(['/package/' . $package->package_slug . '']);
         }
 
         return $this->render(
