@@ -10,11 +10,10 @@ $this->title = 'Package : ' . $package_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::Button('+ Add FAQ', ['value' => "/package/profile/create-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
-$this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/profile/select-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange', 'title' => 'Select FAQ']);
+$this->params['buttons'][] = Html::Button('+ Add New Gallery Image', ['value' => "/package/profile/create-gallery?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create Gallery']);
 ?>
 <div class="panel panel-primary tabs-style-2">
-    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
+    <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'gallery_active' => 'active']) ?>
 
     <div class="panel-body tabs-menu-body main-content-body-right border">
         <div class="tab-content">
@@ -30,27 +29,26 @@ $this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/
                                         'contentOptions' => ['style' => 'width: 5%;'],
                                     ],
                                     [
-                                        'label' => 'Question',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
+                                        'label' => 'Image Caption',
+                                        'contentOptions' => ['style' => 'width: 15%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {
-                                            return $model->question;
+                                            return $model->image_caption;
                                         }
                                     ],
                                     [
-                                        'label' => 'Answer',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
+                                        'label' => 'Image',
+                                        'contentOptions' => ['style' => 'width: 15%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {
-                                            return $model->answer;
+                                            return Html::img($model->imagepath, ['alt' => 'Banner Photograph', 'style' => 'max-width:60px;']);
                                         }
                                     ],
-
                                     'created_at:dateTime:Created at',
                                     'updated_at:dateTime:Last Updated at',
                                     [
                                         'label' => 'Status',
-                                        'contentOptions' => ['style' => 'width: 10%;'],
+                                        'contentOptions' => ['style' => 'width: 15%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {
                                             return $model->statuslabel;
@@ -60,16 +58,10 @@ $this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/
                                         'class' => 'yii\grid\ActionColumn',
                                         'header' => "Actions",
                                         'contentOptions' => ['style' => 'width: 15%;'],
-                                        'template' => '{delete}&nbsp;&nbsp;{suspend}',
+                                        'template' => '{update}',
                                         'buttons' => [
-                                            'delete' => function ($url, $model) {
-                                                if ($model->status != -1) {
-                                                } else {
-                                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                                                }
-                                            },
-                                            'suspend' => function ($url, $model) {
-                                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
+                                            'update' => function ($url, $model) {
+                                                return Html::Button('+ Edit Gallery Image', ['value' => "/package/profile/create-gallery?package_id=$model->package_id&id=$model->id", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create Gallery']);
                                             },
                                         ]
                                     ],

@@ -224,7 +224,7 @@ class ProfileController extends Controller
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['itinerary', 'package_id' => $package_id]);
+                        return $this->redirect(['itinerary', 'package_id' => $package_id, 'day' => $day]);
                     }
                 }
             }
