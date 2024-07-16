@@ -34,8 +34,8 @@ $this->params['title'] = $this->title;
         <div class="row">
             <div class="col-lg-4 order-lg-1 order-1">
                 <div class="d-flex align-items-center m-1">
-                    <p class="mb-1 m-4">Followers</p>
-                    <p class="mb-1 m-4">Following</p>
+                    <p class="mb-1 m-4"><?= UserFollow::find()->where(['user_id' => $user->id, 'status' => 1])->count(); ?>Followers</p>
+                    <p class="mb-1 m-4"><?= UserFollow::find()->where(['follow_user_id' => $user->id, 'status' => 1])->count(); ?>Following</p>
                 </div>
             </div>
 
