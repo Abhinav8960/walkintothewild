@@ -19,12 +19,12 @@ class DefaultController extends FrontendBaseController
      */
     public function actionIndex()
     {
-        $share_safari = ShareSafari::find()->where(['host_user_id' => $this->module->user()->id])->all();
+        $model = ShareSafari::find()->where(['host_user_id' => $this->module->user()->id])->all();
         return $this->render(
             'index',
             [
                 'user' => $this->module->user(),
-                'share_safari' => $share_safari
+                'model' => $model
             ]
         );
     }
