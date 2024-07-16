@@ -200,10 +200,6 @@ $this->params['title'] = $this->title;
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
                     </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="accomodation-tab" data-bs-toggle="tab" data-bs-target="#accomodation-tab-pane" type="button" role="tab" aria-controls="accomodation-tab-pane" aria-selected="false" tabindex="-1">ACCOMODATION</button>
-                    </li>
                 </ul>
                 <div class="tab-content accordion" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -241,7 +237,6 @@ $this->params['title'] = $this->title;
                         <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                             <div class="accordion-body height_set">
                                 <?= $this->render('_getting_there', ['package' => $package]) ?>
-
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
@@ -257,7 +252,6 @@ $this->params['title'] = $this->title;
                         <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                             <div class="accordion-body height_set">
                                 <?= $this->render('_policy', ['package' => $package]) ?>
-
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
@@ -271,20 +265,6 @@ $this->params['title'] = $this->title;
                         <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
                             <div class="accordion-body height_set">
                                 <?= $this->render('_faq', ['faqs' => $faqs]) ?>
-                            </div>
-                        </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
-                    </div>
-                    <div class="tab-pane fade accordion-item" id="accomodation-tab-pane" role="tabpanel" aria-labelledby="accomodation-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFive">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                ACCOMODATION
-                            </button>
-                        </h2>
-                        <div id="collapseSix" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set">
-
-
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
