@@ -21,9 +21,9 @@ use yii\widgets\ActiveForm;
 
 
 
-<div class="left_search position-relative">
+<!-- <div class="left_search position-relative">
     <input type="text" name="ShareSafariSearch[title]" value="<?= $searchModel->title ?>" class="form-control" placeholder="Search by name...">
-</div>
+</div> -->
 
 <?php ActiveForm::end(); ?>
 

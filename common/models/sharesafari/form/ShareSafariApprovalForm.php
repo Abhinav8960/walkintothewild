@@ -19,6 +19,7 @@ class ShareSafariApprovalForm extends model
 
 
     public $is_approved;
+    public $reason_id;
     public $share_safari_request_approval_model;
 
 
@@ -30,10 +31,10 @@ class ShareSafariApprovalForm extends model
         ]);
 
 
-
         if ($share_safari_request_approval_model  != '') {
             $this->share_safari_request_approval_model = $share_safari_request_approval_model;
-            $this->is_approved              =  $this->share_safari_request_approval_model->is_approved;
+            $this->is_approved =  $this->share_safari_request_approval_model->is_approved;
+            $this->reason_id =  $this->share_safari_request_approval_model->reason_id;
         }
     }
 
@@ -46,7 +47,7 @@ class ShareSafariApprovalForm extends model
 
 
         return [
-            [['is_approved'], 'integer'],
+            [['is_approved', 'reason_id'], 'integer'],
             [['is_approved'], 'required'],
 
         ];
@@ -60,6 +61,7 @@ class ShareSafariApprovalForm extends model
         return [
             'id' => 'ID',
             'is_approved' => 'Status',
+            'reason_id' => 'Reject Id'
         ];
     }
     /**
@@ -70,5 +72,8 @@ class ShareSafariApprovalForm extends model
     public function initializeForm()
     {
         $this->share_safari_request_approval_model->is_approved =  $this->is_approved;
+        if ($this->share_safari_request_approval_model->is_approved == 0) {
+            $this->share_safari_request_approval_model->reason_id =  $this->reason_id;
+        }
     }
 }

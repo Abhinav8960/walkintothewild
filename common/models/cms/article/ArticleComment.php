@@ -81,11 +81,11 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         if (isset($this->status)) {
             if ($this->status == 1) {
-                return "<span class='btn-success' style='padding: inherit !important;'>" . "Approved" . "</span>";
+                return "<i class='fa fa-thumbs-up'></i>";
             } else if ($this->status == 2) {
-                return "<span class='btn-danger' style='padding: inherit !important;'>" . "Reject" . "</span>";
+                return "<i class='fa fa-thumbs-down'></i>";
             } else {
-                return "<span class='btn-info' style='padding: inherit !important;'>" . "Hold" . "</span>";
+                return "<i class='fe fe-pause'></i>";
             }
         }
         return $this->status;

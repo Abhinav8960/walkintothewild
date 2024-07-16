@@ -42,8 +42,8 @@ return [
         'sharesafari' => [
             'class' => 'backend\modules\sharesafari\Module',
         ],
-        'trip' => [
-            'class' => 'backend\modules\trip\Module',
+        'package' => [
+            'class' => 'backend\modules\package\Module',
         ],
         'user' => [
             'class' => 'backend\modules\user\Module',
@@ -62,6 +62,9 @@ return [
         ],
         'operatordashboard' => [
             'class' => 'backend\modules\operatordashboard\Module',
+        ],
+        'article' => [
+            'class' => 'backend\modules\article\Module',
         ],
         'pendingapproval' => [
             'class' => 'backend\modules\pendingapproval\Module',

@@ -41,6 +41,14 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                         }
                     ],
                     [
+                        'label' => 'Date',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->article_date) ? date('M d, Y', strtotime($model->article_date)) : '';
+                        }
+                    ],
+                    [
                         'label' => 'Topics',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -57,7 +65,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                     ],
                     [
                         'label' => 'Tag',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $html = '';
@@ -68,6 +76,19 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                                 }
                             }
                             return $html;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Comment Count',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->articlecomments) {
+                                return count($model->articlecomments);
+                            } else {
+                                return 0;
+                            }
                         }
                     ],
                     [
@@ -83,7 +104,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{update}&nbsp;&nbsp;{delete}',
+                        'template' => '{update}&nbsp;&nbsp;{comment}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
@@ -94,25 +115,10 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                                 ]);
                             },
 
-                            'delete' => function ($url, $model) {
-                                return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
+                            'comment' => function ($url, $model) {
+                                return Html::a('<img src="/img/view.png" alt="" width="25" height="25">', ['comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
                             },
                         ]
-                    ],
-                    [
-                        'label' => 'Comment',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return Html::a('<img src="/img/view.png" alt="" width="25" height="25">', ['comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
-                        }
                     ],
                 ],
             ]); ?>

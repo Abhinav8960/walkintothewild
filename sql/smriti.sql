@@ -87,3 +87,8 @@ master_bird
 3 June 2024
 
 ALTER TABLE `deployment_phase` ADD `commit_no` VARCHAR(255) NULL DEFAULT NULL AFTER `version`, ADD `migration` LONGTEXT NULL DEFAULT NULL AFTER `commit_no`;
+
+
+10 Jul 2024
+
+ALTER TABLE `share_safari_request` ADD `reason_id` INT NULL DEFAULT NULL AFTER `is_approved`;

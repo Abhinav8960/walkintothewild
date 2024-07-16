@@ -1,5 +1,8 @@
 	<?php
 
+	use yii\bootstrap5\Html;
+	use yii\helpers\Url;
+
 	$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 	$this->params['baseurl'] = $webasset->baseUrl;
 
@@ -95,7 +98,9 @@
 												<a class="" href="/site/logout">
 													<i class="fa-solid fa-arrow-right-from-bracket"></i>
 													Log Out</a>
+
 											</li>
+
 										<?php } ?>
 
 
@@ -108,6 +113,7 @@
 						<div class="profile">
 							<div class="img-box2">
 								<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="25" height="25">
+
 							</div>
 						</div>
 						<div class="menuprofile">
@@ -125,10 +131,36 @@
 										</li>
 									<?php } ?>
 									<li>
+										<a class="" target="_blank" href="/profile/default">
+											<i class="fa-solid fa-user"></i>
+											Profile</a>
+									</li>
+									<li>
+										<a class="" target="_blank" href="/profile/default">
+											<i class="fa-solid fa-user"></i>
+											Account Setting</a>
+									</li>
+									<li>
+										<a class="" target="_blank" href="#">
+											<i class="fa-solid fa-user"></i>
+											Messages</a>
+									</li>
+									<li>
+										<a class="" target="_blank" href="/profile/search">
+											<i class="fa-solid fa-user"></i>
+											Search Profile</a>
+									</li>
+									<li>
+										<a class="" target="_blank" href="#">
+											<i class="fa-solid fa-user"></i>
+											Whishlist</a>
+									</li>
+									<li>
 										<a class="" href="/site/logout">
 											<i class="fa-solid fa-arrow-right-from-bracket"></i>
 											Log Out</a>
 									</li>
+
 								<?php } ?>
 
 

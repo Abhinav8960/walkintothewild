@@ -148,6 +148,17 @@ return [
                 '/operator/resort/<id>' => '/operator/default/resort', //operator view url
                 '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
                 '/operator/review/<id>' => '/operator/default/review', //operator view url
+
+                '/package' => '/package/default/index', //package page url
+                '/package/<slug>' => '/package/default/view', //package page url
+                '/package/profile/<package_id>' => '/package/profile/index', //package profile  url          
+                '/package/profile/itinerary/<package_id>/<day>' => '/package/profile/itinerary', //package profile itenary url          
+                '/package/profile/inclusion/<package_id>' => '/package/profile/inclusion', //package profile inclusion url          
+                '/package/profile/getting-there/<package_id>' => '/package/profile/getting-there', //package profile getting-there url          
+                '/package/profile/policy-info/<package_id>' => '/package/profile/policy-info', //package profile policy-info url          
+                '/package/profile/faq/<package_id>' => '/package/profile/faq', //package profile faq url          
+                '/package/profile/create-faq/<package_id>' => '/package/profile/create-faq', //package profile create faq url          
+                '/package/profile/select-faq/<package_id>' => '/package/profile/select-faq', //package profile select faq url          
             ],
         ],
         'mobileDetect' => [
@@ -168,6 +179,12 @@ return [
         'sharedsafari' => [
             'class' => 'frontend\modules\sharedsafari\Module',
         ],
+        'package' => [
+            'class' => 'frontend\modules\package\Module',
+        ],
+        'profile' => [
+            'class' => 'frontend\modules\profile\Module',
+        ]
     ],
     'params' => $params,
 ];

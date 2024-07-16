@@ -7,10 +7,16 @@ use yii\helpers\Url;
 use common\interfaces\Constants;
 use frontend\models\ArticleSearch;
 use common\models\cms\banner\Banner;
+use frontend\assets\AppAsset;
+use frontend\assets\FrontAppAsset;
 
-$this->title = 'Article';
+$this->title = 'Article Comment';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
+
+
+FrontAppAsset::register($this);
+AppAsset::register($this);
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -23,7 +29,7 @@ $recentposts = ArticleSearch::recentpost();
 <section class="articals_wrapper py-3">
     <div class="container-lg">
         <div class="row mb-4 justify-content-center">
-            <div class="col-lg-8 col-xl-8 col-xxl-9 pe-lg-5">
+            <div class="col-lg-12 col-xl-12 col-xxl-12 pe-lg-5">
                 <div class="aritcla-details">
                     <h1 class="articald-title pb-3"><?= $article->title ?></h1>
                     <div class="aritcal_bigimg pb-4">
@@ -54,7 +60,9 @@ $recentposts = ArticleSearch::recentpost();
                 <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
                     <div class="d-flex align-items-center">
                         <h3 class="me-4 mb-0 tags-title">Tags</h3>
-                        <?= $this->render('_tag_search') ?>
+                        <?= $this->render('_tag_search', [
+                            'article' => $article,
+                        ]) ?>
                     </div>
                     <div class="author_wrapper">
                         <ul class="artical-info ">
@@ -71,25 +79,6 @@ $recentposts = ArticleSearch::recentpost();
                     ]) ?>
                 </div>
             </div>
-            <div class="col-lg-3 col-xl-3 col-xxl-2  mt-lg-0 mt-3">
-                <?= $this->render('_recent_posts', [
-                    'recentposts' => $recentposts,
-                ]) ?>
-                <div class="topics_box">
-                    <div class="titlerescent pb-3">
-                        <h3>Category</h3>
-                    </div>
-                    <?= $this->render('_topic_search') ?>
-                </div>
-                <div class="advertisment pt-5">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box">
-
-                    </div>
-                </div>
-            </div>
-
         </div>
-    </div>
     </div>
 </section>

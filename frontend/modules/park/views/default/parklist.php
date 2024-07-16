@@ -141,6 +141,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     \yii\widgets\Pjax::end();
                     ?>
                 </div>
+                <div class="col-md-12 loader text-center" style="display: none;">
+                    <i class="fas fa-spinner fa-spin fa-3x"></i>
+                </div>
             </div>
 
         </div>

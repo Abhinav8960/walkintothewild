@@ -53,6 +53,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/packageinclude/index",
 											"/master/packageinclude/create",
 											"/master/packageinclude/update",
+											"/master/share-safari-reason/index",
+											"/master/share-safari-reason/create",
+											"/master/share-safari-reason/update",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/master",
@@ -82,6 +85,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/packageinclude/index",
 														"/master/packageinclude/create",
 														"/master/packageinclude/update",
+														"/master/share-safari-reason/index",
+														"/master/share-safari-reason/create",
+														"/master/share-safari-reason/update",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
@@ -150,6 +156,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/master/packageinclude/create",
 															"/master/packageinclude/update",
 														)) ? "active" : "" ?>" href="/master/packageinclude/index">Package Include</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/master/share-safari-reason/index",
+															"/master/share-safari-reason/create",
+															"/master/share-safari-reason/update",
+														)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
 						</ul>
 					</li>
 
@@ -708,14 +719,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 
-
-					<li class="slide">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/sharesafari/default/index",
-														"/sharesafari/default/view",
-													)) ? "active" : "" ?>" href="/sharesafari/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span></a>
-					</li>
-
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
@@ -757,21 +760,61 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
 						</ul>
 					</li>
-					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
-							<li><a class="slide-item" href="#">Safari</a></li>
-							<li><a class="slide-item" href="#">Safari Comments</a></li>
-						</ul>
-					</li>
-
-
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_resort_manager) : ?>
+
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
+
+					<li class="slide <?= in_array($active_url, array(
+											"/sharesafari/default/index",
+											"/sharesafari/default/view",
+											"/sharesafari/request/index",
+											"/sharesafari/request/view",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/sharesafari/default/index",
+														"/sharesafari/default/view",
+														"/sharesafari/request/index",
+														"/sharesafari/request/view",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
+							<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
+
+								<li><a class="slide-item <?= in_array($active_url, array(
+																"/sharesafari/request/index",
+																"/sharesafari/request/view",
+															)) ? "active" : "" ?>" href="/sharesafari/request/index">Share Safari Request</a></li>
+							<?php endif; ?>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/sharesafari/default/index",
+															"/sharesafari/default/view",
+														)) ? "active" : "" ?>" href="/sharesafari/default/index">Share Safari</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/sharesafari/share-safari-comment/index",
+															"/sharesafari/share-safari-comment/view",
+														)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li>
+						</ul>
+					</li>
+				<?php endif; ?>
+
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
-						<a class="side-menu__item" href="#"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Resort</span></a>
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/package/default/index",
+														"/package/default/create",
+														"/package/profile",
+														"/package/profile/itinerary",
+														"/package/profile/inclusion",
+														"/package/profile/exclusion",
+														"/package/profile/term-condition",
+														"/package/profile/create-term-condition",
+														"/package/profile/update-term-condition",
+														"/package/profile/faq",
+														"/package/profile/create-faq",
+														"/package/profile/faq-update",
+													)) ? "active" : "" ?>" href="/package/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
 					</li>
 				<?php endif; ?>
 
@@ -844,6 +887,80 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/user",
 														"/user/default/index",
 													)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
+					</li>
+				<?php endif; ?>
+
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
+
+					<li class="slide <?= in_array($active_url, array(
+											"/article/article-source/index",
+											"/article/article-source/create",
+											"/article/article-source/update",
+											"/article/article-source/view",
+											"/article/frequency/index",
+											"/article/frequency/create",
+											"/article/frequency/update",
+											"/article/category/index",
+											"/article/category/create",
+											"/article/category/update",
+											"/article/article-tag/index",
+											"/article/article-tag/create",
+											"/article/article-tag/update",
+											"/article/article/index",
+											"/article/article/create",
+											"/article/article/update",
+											"/article/article/view",
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/article/article-source/index",
+														"/article/article-source/create",
+														"/article/article-source/update",
+														"/article/article-source/view",
+														"/article/frequency/index",
+														"/article/frequency/create",
+														"/article/frequency/update",
+														"/article/category/index",
+														"/article/category/create",
+														"/article/category/update",
+														"/article/article-tag/index",
+														"/article/article-tag/create",
+														"/article/article-tag/update",
+														"/article/article/index",
+														"/article/article/create",
+														"/article/article/update",
+														"/article/article/view",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/article-source/index",
+															"/article/article-source/create",
+															"/article/article-source/update",
+															"/article/article-source/view"
+														)) ? "active" : "" ?>" href="/article/article-source/index">Article Source</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/frequency/index",
+															"/article/frequency/create",
+															"/article/frequency/update",
+														)) ? "active" : "" ?>" href="/article/frequency/index">Frequency</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/category/index",
+															"/article/category/create",
+															"/article/category/update",
+														)) ? "active" : "" ?>" href="/article/category/index">Category</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/article-tag/index",
+															"/article/article-tag/create",
+															"/article/article-tag/update",
+														)) ? "active" : "" ?>" href="/article/article-tag/index">Article Tag</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/article/index",
+															"/article/article/create",
+															"/article/article/update",
+															"/article/article/view"
+														)) ? "active" : "" ?>" href="/article/article/index">Article</a></li>
+
+						</ul>
 					</li>
 				<?php endif; ?>
 

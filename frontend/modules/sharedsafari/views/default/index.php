@@ -102,7 +102,7 @@ $recentposts = ArticleSearch::recentpost();
                             <div class="col-12">
                                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                                     <div class="left_text">
-                                        <p>There are currently <strong><?= ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->count(); ?></strong> active shared safaris created by individuals</p>
+                                        <p>There are currently <strong><?= count($models) ?> </strong> active shared safaris created by individuals</p>
                                     </div>
                                     <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
                                 </div>
@@ -166,15 +166,17 @@ $recentposts = ArticleSearch::recentpost();
                                                             ?>
                                                                     <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
                                                                 <?php
-                                                                }
-                                                            };
-                                                            $count = $share_safari->getIntrested()->count();
-                                                            $avatar_count = 3;
-                                                            $data = $count - $avatar_count;
-                                                            if ($data > 3) {  ?>
-                                                                <div class="roundes_countuser">
-                                                                    <?= $data ?>+
-                                                                </div>
+                                                                };
+                                                                $count = $share_safari->getIntrested()->count();
+                                                                $avatar_count = 3;
+                                                                $data = $count - $avatar_count;
+                                                                if ($data > 3) {  ?>
+                                                                    <div class="roundes_countuser">
+                                                                        <?= $data ?>+
+                                                                    </div>
+                                                                <?php }
+                                                            } else { ?>
+                                                                <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
                                                             <?php } ?>
                                                         </div>
                                                     </div>

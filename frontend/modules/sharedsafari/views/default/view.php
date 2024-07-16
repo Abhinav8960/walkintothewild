@@ -51,7 +51,7 @@ $this->params['title'] = $this->title;
         <div class="row my-4">
             <div class="col-12">
                 <div class="btn_set float-end">
-                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'slug' => $share_safari->slug]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
+                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'share_safari_id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
                 </div>
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
@@ -141,7 +141,14 @@ $this->params['title'] = $this->title;
                                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/resort_11834952.png" alt="">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0">Premium</p>
+                                            <p class="mb-0"><?php
+                                                            if ($share_safari->stay_category_id == 1) {
+                                                                echo "Budget";
+                                                            } elseif ($share_safari->stay_category_id == 2) {
+                                                                echo "Economical";
+                                                            } elseif ($share_safari->stay_category_id == 3) {
+                                                                echo "Premium";
+                                                            } ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -183,6 +190,16 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="col-lg-6 d-lg-block  mobile_didplay_block">
                             <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
+                                    <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
+                                        'class' => 'join_btn text-center mt-sm-0 mt-2',
+                                        'style' => 'background-color:green; color:white;',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to Completed this Safari?',
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
+                                <?php } ?>
 
                                 <?php if ($share_safari->status == 2) { ?>
                                     <a class="join_btn text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
@@ -238,6 +255,8 @@ $this->params['title'] = $this->title;
                         <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
                             Safari</a>
                     <?php } ?>
+
+
                 </div>
                 <div class="advertisment d-lg-block d-none">
                     <p class="text-center">ADVERTISMENT</p>
@@ -279,7 +298,7 @@ $this->params['title'] = $this->title;
 
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-3 g-lg-5 mb-5 pb-5">
-            <?php $rand_safari = ShareSafari::find()->where(['status' => StatusInterface::STATUS_ACTIVE])->orderBy('RAND()')->limit(5)->all();
+            <?php $rand_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderBy('RAND()')->limit(5)->all();
             foreach ($rand_safari as $safari) { ?>
                 <div class="col mb-4 padding_right">
                     <div class="sharesafri-card">
@@ -460,3 +479,17 @@ interestfucntion();
 JS;
 $this->registerJs($script);
 ?>
+
+<style>
+    .safari_completed {
+        background-color: lightgreen;
+        padding: 10px 20px;
+        font-size: var(--fs-16);
+        font-weight: 600;
+        font-family: "Roboto", sans-serif !important;
+        color: #152F1B;
+        border: 0;
+        border-radius: 8px;
+        margin: 2px;
+    }
+</style>

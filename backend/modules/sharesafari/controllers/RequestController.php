@@ -4,6 +4,8 @@ namespace backend\modules\sharesafari\controllers;
 
 
 use common\interfaces\StatusInterface;
+use common\models\MailLog;
+use common\models\master\sharesafarireason\MasterShareSafariReason;
 use common\models\sharesafari\form\ShareSafariApprovalForm;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
@@ -143,7 +145,16 @@ class RequestController extends Controller
                                 $model->share_safari_request_approval_model->share_safari_id = $share_safari->id;
                                 $model->share_safari_request_approval_model->save(false);
                             }
+                        } else if ($model->is_approved == 0) {
+                            $reason = MasterShareSafariReason::find()->select('reason')->where(['id' => $model->share_safari_request_approval_model->id])->one();
+                            $user = $share_safari_request_approval_model->user;
+                            $to_mail = $user->email;
+                            $subject = 'Safari Reject Reason';
+                            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_REJECT_SHARE_SAFARI;
+                            $req = ['username' => $user->name, 'reason' => $reason];
+                            MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         }
+
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['view', 'id' => $id]);
                     }

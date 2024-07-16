@@ -93,7 +93,7 @@ class ArticleForm extends \yii\base\Model
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
         $scenarios['update'] = [
-            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug',
+            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];

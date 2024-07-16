@@ -76,7 +76,7 @@ trait CommanRelationship
             if ($this->is_approved == 1) {
                 return 'Approved';
             } else if ($this->is_approved == 0) {
-                return 'Disapproved';
+                return 'Pending';
             }
         }
         return $this->status;

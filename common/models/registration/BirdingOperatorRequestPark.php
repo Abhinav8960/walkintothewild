@@ -24,6 +24,15 @@ class BirdingOperatorRequestPark extends \yii\db\ActiveRecord
         return 'birding_operator_request_park';
     }
 
+
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

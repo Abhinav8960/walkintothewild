@@ -70,6 +70,7 @@ class SharedSafariRequestForm extends \yii\base\Model
             [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
             [['host_user_id', 'share_safari_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
             [['start_date', 'end_date', 'is_approved', 'website_url'], 'safe'],
+            [['no_of_safari'], 'number', 'min' => 1, 'max' => 25],
             [
                 ['website_url'], 'required', 'when' => function ($model) {
                     return $model->host_type != 4;
@@ -78,6 +79,7 @@ class SharedSafariRequestForm extends \yii\base\Model
             [['is_approved'], 'default', 'value' => 0],
             [['safari_plan'], 'string'],
             [['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
+            [['estimate_price_max', 'estimate_price_min'], 'number', 'min' => 1, 'max' => 100000],
             ['estimate_price_max', 'compare', 'compareAttribute' => 'estimate_price_min', 'operator' => '>='],
             ['total_seat', 'compare', 'compareAttribute' => 'share_seat', 'operator' => '>='],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],

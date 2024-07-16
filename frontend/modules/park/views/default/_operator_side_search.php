@@ -42,7 +42,7 @@ $form = ActiveForm::begin([
                 ); ?>
             </div>
         </div>
-        <div class="title_filter mb-2">
+        <!-- <div class="title_filter mb-2">
             <h6>Operator Rating</h6>
             <?php
             $ratings = GeneralModel::rating();
@@ -73,7 +73,7 @@ $form = ActiveForm::begin([
             }
             ?>
 
-        </div>
+        </div> -->
         <?= $form->field($model, 'custom_sort_by')->hiddenInput(); ?>
 
     </div>
@@ -149,7 +149,7 @@ $form = ActiveForm::begin([
                 </div>
             </div>
         </div>
-        <div class="searchwrap mb-3">
+        <!-- <div class="searchwrap mb-3">
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
@@ -190,7 +190,7 @@ $form = ActiveForm::begin([
 
                 </div>
             </div>
-        </div>
+        </div> -->
         <?= $form->field($model, 'custom_sort_by')->hiddenInput(); ?>
     </div>
 <?php } ?>

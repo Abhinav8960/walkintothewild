@@ -61,6 +61,14 @@ class BirdingOperator extends \yii\db\ActiveRecord
         return 'birding_operator';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

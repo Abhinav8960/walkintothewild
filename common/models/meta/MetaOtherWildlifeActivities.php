@@ -25,6 +25,14 @@ class MetaOtherWildlifeActivities extends \yii\db\ActiveRecord
         return 'meta_other_wildlife_activities';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+    
     /**
      * {@inheritdoc}
      */

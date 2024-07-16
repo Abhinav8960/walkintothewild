@@ -2,6 +2,10 @@
 
 namespace common\models;
 
+use common\models\article\articleSource\ArticleSource;
+use common\models\article\articleTag\ArticleTag as ArticleTagArticleTag;
+use common\models\article\category\Category;
+use common\models\article\frequency\Frequency;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleAuthor;
 use common\models\cms\article\ArticleTag;
@@ -17,9 +21,12 @@ use common\models\master\bird\MasterBird;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
 use common\models\master\email\MasterMailTemplate;
+use common\models\master\faq\MasterFaq;
 use common\models\master\location\MasterLocation;
 use common\models\master\month\MasterMonth;
 use common\models\master\operatorcategory\MasterOperatorCategory;
+use common\models\master\packagefeature\MasterPackagefeature;
+use common\models\master\packageinclude\MasterPackageInclude;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\state\MasterState;
 use common\models\master\suggetioncategory\MasterSuggestionCategory;
@@ -39,6 +46,7 @@ use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
+use common\models\package\PackageFaq;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
 use common\models\park\SafariPark;
@@ -77,6 +85,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Deactivate'];
     }
 
+    /**
+     * Get Status Active/Inactive Options List
+     *
+     * @return void
+     */
+    public static function commentstatusoption()
+    {
+        return [1 => 'Approved', 2 => 'Reject', 3 => 'Pending'];
+    }
 
     /**
      * Get Status Active/Inactive Options List
@@ -216,6 +233,28 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             4 => 'Has Cancellation Policy',
             5 => 'Wildlife Photographer',
             6 => 'Wildlife Influencer',
+        ];
+    }
+
+
+    public static function packagedayoption()
+    {
+        return [
+            1 => '1 day 0 night',
+            2 => '2 day 1 night',
+            3 => '3 day 2 night',
+            4 => '4 day 3 night',
+            5 => '5 day 4 night',
+            6 => '6 day 5 night',
+            7 => '7 day 6 night',
+            8 => '8 day 7 night',
+            9 => '9 day 8 night',
+            10 => '10 day 9 night',
+            11 => '11 day 10 night',
+            12 => '12 day 11 night',
+            13 => '13 day 12 night',
+            14 => '14 day 13 night',
+            15 => '15 day 14 night',
         ];
     }
 
@@ -376,6 +415,18 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(ArticleAuthor::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
     }
 
+    public static function sourceoption()
+    {
+        return ArrayHelper::map(ArticleSource::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['article_source' => SORT_ASC])->all(), 'id', 'article_source');
+    }
+    public static function frequencyoption()
+    {
+        return ArrayHelper::map(Frequency::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['frequency' => SORT_ASC])->all(), 'id', 'frequency');
+    }
+    public static function categoryoption()
+    {
+        return ArrayHelper::map(Category::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['category' => SORT_ASC])->all(), 'id', 'category');
+    }
 
     public static function birdingparkoption()
     {
@@ -501,10 +552,24 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return ArrayHelper::map(MasterArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
+    public static function articletagoption()
+    {
+        return ArrayHelper::map(ArticleTagArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
 
-    public static function topicoption()
+    public static function packagefeatureoptiontopicoption()
     {
         return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function packagefeatureoption()
+    {
+        return ArrayHelper::map(MasterPackagefeature::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+    public static function packageincludeoption()
+    {
+        return ArrayHelper::map(MasterPackageInclude::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function articleoption()
@@ -834,5 +899,40 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
         ];
         return $return;
+    }
+
+
+    public static function topicoption()
+    {
+        return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    }
+
+
+
+    public static function masterfaqoption($packageId)
+    {
+        // Get all active FAQs
+        $faqs = MasterFaq::find()
+            ->where(['status' => self::STATUS_ACTIVE])
+            ->orderBy(['question' => SORT_ASC])
+            ->all();
+
+        // Get the IDs of FAQs already associated with the given package
+        $existingFaqIds = PackageFaq::find()
+            ->select('faq_id')
+            ->where(['package_id' => $packageId, 'status' => self::STATUS_ACTIVE])
+            ->column();
+
+        // Prepare an array to store FAQs that are not yet associated with the package
+        $options = [];
+
+        foreach ($faqs as $faq) {
+            // Check if the FAQ ID is not already associated with the package
+            if (!in_array($faq->id, $existingFaqIds)) {
+                $options[$faq->id] = $faq->question;
+            }
+        }
+
+        return $options;
     }
 }
