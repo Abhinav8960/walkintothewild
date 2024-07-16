@@ -136,7 +136,7 @@
 											Profile</a>
 									</li>
 									<li>
-										<a class="" target="_blank" href="/profile/default">
+										<a class="" target="_blank" href="/user/update">
 											<i class="fa-solid fa-user"></i>
 											Account Setting</a>
 									</li>

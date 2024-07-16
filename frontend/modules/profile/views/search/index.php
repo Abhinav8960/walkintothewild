@@ -1,4 +1,15 @@
-<h3>Search USer</h3>
+<?php
+
+use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
+
+$this->title = 'Search User';
+$this->params['title'] = $this->title;
+?>
+<h3>Search User</h3>
 <div class="container">
 
     <div class="row">
@@ -8,7 +19,7 @@
                     <div class="card testimonial-card mt-2 mb-3">
                         <div class="card-up aqua-gradient"></div>
                         <div class="avatar mx-auto white">
-                            <img src="<?= $user->avatar ?>" class="rounded-circle img-fluid" alt="woman avatar">
+                            <img src="<?= $user->profile_image ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" class="rounded-circle img-fluid" alt="woman avatar">
                         </div>
                         <div class="card-body text-center">
                             <h4 class="card-title font-weight-bold"><?= $user->name ?></h4>
