@@ -165,6 +165,18 @@ class ProfileController extends Controller
                                 if (!$packageIncluded->save()) {
                                     throw new \Exception('Failed to save package inclusion option ' . $optionId);
                                 }
+
+                                if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_id, 'status' => 1])->all();
+                                    if ($package_days) {
+                                        foreach ($package_days as $package_day) {
+                                            $package_day->meal_breakfast = 1;
+                                            $package_day->meal_lunch = 1;
+                                            $package_day->meal_dinner = 1;
+                                            $package_day->save();
+                                        }
+                                    }
+                                }
                             }
 
                             $transaction->commit();
