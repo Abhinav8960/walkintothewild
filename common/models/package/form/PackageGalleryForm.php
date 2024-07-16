@@ -44,6 +44,15 @@ class PackageGalleryForm extends \yii\base\Model
             [['package_id', 'sequence', 'status'], 'integer'],
             [['image'], 'safe'],
             [['image_caption'], 'string', 'max' => 512],
+            [
+                ['image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 940,
+                'maxWidth' => 940,
+                'maxHeight' => 430,
+                'minHeight' => 430,
+                'maxSize' => 250 * 1024,
+                'skipOnEmpty' => true,
+            ],
         ];
     }
 
