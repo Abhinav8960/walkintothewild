@@ -17,8 +17,8 @@ $this->params['title'] = $this->title;
     <div class="card m-5">
         <div class="card-body">
             <?php $form = ActiveForm::begin([
-                'id' => 'tag-form',
-
+                'id' => 'user-form',
+                'method' => 'POST',
             ]); ?>
             <div class="card">
                 <div class="card-body">
