@@ -58,14 +58,22 @@ $this->params['title'] = $this->title;
                     $shared_url = urlencode(Url::to('', true));
                     ?>
                     <ul>
-                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
-                        </li>
-                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
-                        </li>
-                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
-                        </li>
-                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
-                        </li>
+                        <?php if ($user->facebook_url) { ?>
+                            <li><a href="<?= $user->facebook_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
+                            </li>
+                        <?php } ?>
+                        <?php if ($user->whatsapp_url) { ?>
+                            <li><a href="<?= $user->whatsapp_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
+                            </li>
+                        <?php } ?>
+                        <?php if ($user->x_url) { ?>
+                            <li><a href="<?= $user->x_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
+                            </li>
+                        <?php } ?>
+                        <?php if ($user->insta_url) { ?>
+                            <li><a href="<?= $user->insta_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
+                            </li>
+                        <?php } ?>
 
                     </ul>
                 </div>

@@ -153,6 +153,17 @@
 									<li>
 										<a class="" href="#">
 											<i class="fa-solid fa-user"></i>
+											Article</a>
+									</li>
+									<li>
+										<a class="" href="#">
+											<i class="fa-solid fa-user"></i>
+											Safari Experience</a>
+									</li>
+									
+									<li>
+										<a class="" href="#">
+											<i class="fa-solid fa-user"></i>
 											Whishlist</a>
 									</li>
 									<li>
