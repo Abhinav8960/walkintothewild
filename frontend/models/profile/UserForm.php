@@ -24,20 +24,22 @@ class UserForm extends Model
     public $insta_url;
     public $about;
 
-    public function __construct($user_model)
+    public function __construct(User $user_model = null)
     {
         $this->user_model = Yii::createObject([
             'class' => User::className()
         ]);
-        $this->user_model = $user_model;
-        $this->name = $this->user_model->name;
-        $this->user_handle = $this->user_model->user_handle;
-        $this->mobile_no = $this->user_model->mobile_no;
-        $this->facebook_url = $this->user_model->facebook_url;
-        $this->whatsapp_url = $this->user_model->whatsapp_url;
-        $this->x_url = $this->user_model->x_url;
-        $this->insta_url = $this->user_model->insta_url;
-        $this->about = $this->user_model->about;
+        if ($user_model != null) {
+            $this->user_model = $user_model;
+            $this->name = $this->user_model->name;
+            $this->user_handle = $this->user_model->user_handle;
+            $this->mobile_no = $this->user_model->mobile_no;
+            $this->facebook_url = $this->user_model->facebook_url;
+            $this->whatsapp_url = $this->user_model->whatsapp_url;
+            $this->x_url = $this->user_model->x_url;
+            $this->insta_url = $this->user_model->insta_url;
+            $this->about = $this->user_model->about;
+        }
     }
 
     /**
