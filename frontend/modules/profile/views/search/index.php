@@ -21,7 +21,9 @@ $this->params['title'] = $this->title;
                 <section class="mx-auto my-5" style="max-width: 23rem;">
                     <a href="<?= Url::toRoute(['/profile/default', 'user_handle' => $user->user_handle]) ?>">
                         <div class="card testimonial-card mt-2 mb-3">
-                            <div class="card-up aqua-gradient"></div>
+                            <div class="card-up">
+                                <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="img-fluid" style="width: 500px; height: 200px;">
+                            </div>
                             <div class="avatar mx-auto white">
                                 <img src="<?= $user->profile_image ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" class="rounded-circle img-fluid" alt="woman avatar">
                             </div>
@@ -46,10 +48,6 @@ $this->params['title'] = $this->title;
         overflow: hidden;
         border-top-left-radius: .25rem;
         border-top-right-radius: .25rem;
-    }
-
-    .aqua-gradient {
-        background: linear-gradient(40deg, #2096ff, #05ffa3) !important;
     }
 
     .testimonial-card .avatar {

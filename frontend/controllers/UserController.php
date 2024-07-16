@@ -25,11 +25,12 @@ class UserController extends Controller
     public function actionUpdate()
     {
         $user_model = $this->findModel();
-        $model = new UserForm($user_model);        
+        $model = new UserForm($user_model);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->profile_image = UploadedFile::getInstance($model, 'profile_image');
+                $model->cover_image = UploadedFile::getInstance($model, 'cover_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->user_model->save(false)) {
@@ -48,5 +49,4 @@ class UserController extends Controller
             //'imagepath' => $model->imagepath,
         ]);
     }
-
 }
