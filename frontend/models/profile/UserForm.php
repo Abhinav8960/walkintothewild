@@ -11,19 +11,31 @@ use common\models\User;
  */
 class UserForm extends Model
 {
+    public $id;
     public $name;
     public $mobile_no;
     public $profile_image;
+    public $cover_image;
     public $user_model;
+    public $user_handle;
+    public $facebook_url;
+    public $whatsapp_url;
+    public $x_url;
+    public $insta_url;
 
     public function __construct($user_model)
     {
         $this->user_model = Yii::createObject([
             'class' => User::className()
         ]);
-            $this->user_model = $user_model;
-            $this->name = $this->user_model->name;
-            $this->mobile_no = $this->user_model->mobile_no;
+        $this->user_model = $user_model;
+        $this->name = $this->user_model->name;
+        $this->user_handle = $this->user_model->user_handle;
+        $this->mobile_no = $this->user_model->mobile_no;
+        $this->facebook_url = $this->user_model->facebook_url;
+        $this->whatsapp_url = $this->user_model->whatsapp_url;
+        $this->x_url = $this->user_model->x_url;
+        $this->insta_url = $this->user_model->insta_url;
     }
 
     /**
@@ -37,6 +49,16 @@ class UserForm extends Model
             ['name', 'string', 'min' => 2, 'max' => 255],
             ['mobile_no', 'match', 'pattern' => '/^\+?\d{10,15}$/', 'message' => 'Invalid mobile number format.'],
             [['profile_image'], 'file', 'extensions' => 'png, jpg, jpeg'],
+            [['cover_image'], 'file', 'extensions' => 'png, jpg, jpeg'],
+            ['user_handle', 'safe'],
+            [
+                'user_handle', 'unique', 'when' => function ($model, $attribute) {
+                    return strtolower($this->user_model->$attribute) != strtolower($model->$attribute);
+                },
+                'targetClass' => User::className(), 'targetAttribute' => ['id', 'user_handle'],
+                'message' => 'This username has already been taken'
+            ],
+            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url'], 'string']
 
 
         ];
@@ -48,6 +70,12 @@ class UserForm extends Model
             'name' => 'Name',
             'mobile_no' => 'Mobile Number',
             'profile_image' => 'Profile Picture',
+            'cover_image' => 'Cover Image',
+            'user_handle' => 'User Handle',
+            'facebook_url' => 'Facebook',
+            'whatsapp_url' => 'Whatsapp',
+            'x_url' => 'X',
+            'insta_url' => 'Instagram',
 
         ];
     }
@@ -56,7 +84,14 @@ class UserForm extends Model
     {
         $this->user_model->name = $this->name;
         $this->user_model->mobile_no = $this->mobile_no;
+        $this->user_model->user_handle = $this->user_handle;
+        $this->user_model->facebook_url = $this->facebook_url;
+        $this->user_model->whatsapp_url = $this->whatsapp_url;
+        $this->user_model->x_url = $this->x_url;
+        $this->user_model->insta_url = $this->insta_url;
     }
+
+
     public function uploadFile()
     {
 
@@ -84,6 +119,30 @@ class UserForm extends Model
 
             if ($this->profile_image->saveAs($filePath)) {
                 $this->user_model->profile_image = $fileName;
+                $this->user_model->save(false);
+            }
+        }
+
+        if ($this->cover_image) {
+            $storagePath = Yii::$app->params['datapath'] . '/user_cover_image';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->user_model->id;
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
+            $fileName = 'user_cover_image' . time() . '.' . $this->cover_image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+
+            if ($this->cover_image->saveAs($filePath)) {
+                $this->user_model->cover_image = $fileName;
                 $this->user_model->save(false);
             }
         }

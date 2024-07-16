@@ -344,6 +344,13 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
+    public function getCoverimage()
+    {
+        if ($this->cover_image != '') {
+            return '/storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
+        }
+    }
+
     // public function getUserfollower()
     // {
     //     return $this->hasMany(UserFollow::class, ['user_id' => $this->id]);

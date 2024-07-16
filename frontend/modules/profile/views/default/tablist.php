@@ -13,7 +13,7 @@ $this->params['title'] = $this->title;
 
 <div class="card overflow-hidden">
     <div class="card-body p-0">
-        <img src="https://www.bootdey.com/image/1352x300/FF00FF/000000" alt="" class="img-fluid">
+        <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="img-fluid" style="width: 1500px; height: 300px;">
         <div class="row align-items-center">
             <div class="mt-n5">
                 <div class="d-flex align-items-center justify-content-center mb-2">
