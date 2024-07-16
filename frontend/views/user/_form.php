@@ -60,6 +60,12 @@ $this->params['title'] = $this->title;
                         <div class="col-6"><?= $form->field($model, 'x_url')->textInput(['maxlength' => true, 'placeholder' => 'X Link']) ?></div>
                         <div class="col-6"><?= $form->field($model, 'insta_url')->textInput(['maxlength' => true, 'placeholder' => 'Instagram Link']) ?></div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <?= $form->field($model, 'about')->textarea(['rows' => 6, 'placeholder' => 'About']) ?>
+                        </div>
+                    </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-12">

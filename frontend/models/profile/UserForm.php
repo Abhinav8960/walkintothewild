@@ -22,20 +22,24 @@ class UserForm extends Model
     public $whatsapp_url;
     public $x_url;
     public $insta_url;
+    public $about;
 
-    public function __construct($user_model)
+    public function __construct(User $user_model = null)
     {
         $this->user_model = Yii::createObject([
             'class' => User::className()
         ]);
-        $this->user_model = $user_model;
-        $this->name = $this->user_model->name;
-        $this->user_handle = $this->user_model->user_handle;
-        $this->mobile_no = $this->user_model->mobile_no;
-        $this->facebook_url = $this->user_model->facebook_url;
-        $this->whatsapp_url = $this->user_model->whatsapp_url;
-        $this->x_url = $this->user_model->x_url;
-        $this->insta_url = $this->user_model->insta_url;
+        if ($user_model != null) {
+            $this->user_model = $user_model;
+            $this->name = $this->user_model->name;
+            $this->user_handle = $this->user_model->user_handle;
+            $this->mobile_no = $this->user_model->mobile_no;
+            $this->facebook_url = $this->user_model->facebook_url;
+            $this->whatsapp_url = $this->user_model->whatsapp_url;
+            $this->x_url = $this->user_model->x_url;
+            $this->insta_url = $this->user_model->insta_url;
+            $this->about = $this->user_model->about;
+        }
     }
 
     /**
@@ -49,8 +53,8 @@ class UserForm extends Model
             ['name', 'string', 'min' => 2, 'max' => 255],
             ['mobile_no', 'match', 'pattern' => '/^\+?\d{10,15}$/', 'message' => 'Invalid mobile number format.'],
             [['profile_image', 'cover_image'], 'safe'],
-            [['profile_image'], 'file', 'extensions' => 'jpg, gif, png, jpeg'],
-            [['cover_image'], 'file', 'extensions' => 'jpg, gif, png, jpeg'],
+            [['profile_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png']],
+            [['cover_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png']],
             ['user_handle', 'safe'],
             [
                 'user_handle', 'unique', 'when' => function ($model, $attribute) {
@@ -59,7 +63,8 @@ class UserForm extends Model
                 'targetClass' => User::className(), 'targetAttribute' => ['id', 'user_handle'],
                 'message' => 'This username has already been taken'
             ],
-            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url'], 'string']
+            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url'], 'string'],
+            [['about'], 'string'],
 
 
         ];
@@ -77,6 +82,7 @@ class UserForm extends Model
             'whatsapp_url' => 'Whatsapp',
             'x_url' => 'Twitter Link',
             'insta_url' => 'Instagram',
+            'about' => 'About',
 
         ];
     }
@@ -90,6 +96,7 @@ class UserForm extends Model
         $this->user_model->whatsapp_url = $this->whatsapp_url;
         $this->user_model->x_url = $this->x_url;
         $this->user_model->insta_url = $this->insta_url;
+        $this->user_model->about = $this->about;
     }
 
 
