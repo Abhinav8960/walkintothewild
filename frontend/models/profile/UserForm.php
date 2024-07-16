@@ -22,6 +22,7 @@ class UserForm extends Model
     public $whatsapp_url;
     public $x_url;
     public $insta_url;
+    public $about;
 
     public function __construct($user_model)
     {
@@ -36,6 +37,7 @@ class UserForm extends Model
         $this->whatsapp_url = $this->user_model->whatsapp_url;
         $this->x_url = $this->user_model->x_url;
         $this->insta_url = $this->user_model->insta_url;
+        $this->about = $this->user_model->about;
     }
 
     /**
@@ -59,7 +61,8 @@ class UserForm extends Model
                 'targetClass' => User::className(), 'targetAttribute' => ['id', 'user_handle'],
                 'message' => 'This username has already been taken'
             ],
-            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url'], 'string']
+            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url'], 'string'],
+            [['about'], 'string'],
 
 
         ];
@@ -77,6 +80,7 @@ class UserForm extends Model
             'whatsapp_url' => 'Whatsapp',
             'x_url' => 'Twitter Link',
             'insta_url' => 'Instagram',
+            'about' => 'About',
 
         ];
     }
@@ -90,6 +94,7 @@ class UserForm extends Model
         $this->user_model->whatsapp_url = $this->whatsapp_url;
         $this->user_model->x_url = $this->x_url;
         $this->user_model->insta_url = $this->insta_url;
+        $this->user_model->about = $this->about;
     }
 
 
