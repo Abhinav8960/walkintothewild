@@ -131,27 +131,27 @@
 										</li>
 									<?php } ?>
 									<li>
-										<a class="" target="_blank" href="/profile/default">
+										<a class="" href="/profile/default">
 											<i class="fa-solid fa-user"></i>
 											Profile</a>
 									</li>
 									<li>
-										<a class="" target="_blank" href="/profile/default">
+										<a class="" href="/user/update">
 											<i class="fa-solid fa-user"></i>
 											Account Setting</a>
 									</li>
 									<li>
-										<a class="" target="_blank" href="#">
+										<a class="" href="#">
 											<i class="fa-solid fa-user"></i>
 											Messages</a>
 									</li>
 									<li>
-										<a class="" target="_blank" href="/profile/search">
+										<a class="" href="/profile/search">
 											<i class="fa-solid fa-user"></i>
 											Search Profile</a>
 									</li>
 									<li>
-										<a class="" target="_blank" href="#">
+										<a class="" href="#">
 											<i class="fa-solid fa-user"></i>
 											Whishlist</a>
 									</li>

@@ -28,8 +28,8 @@ class Module extends \yii\base\Module
 
     public function user()
     {
-        if (isset(Yii::$app->request->queryParams['user_name'])) {
-            $user = User::find()->where(['username' => Yii::$app->request->queryParams['user_name']])->one();
+        if (isset(Yii::$app->request->queryParams['user_handle'])) {
+            $user = User::find()->where(['user_handle' => Yii::$app->request->queryParams['user_handle']])->one();
             if (!$user) {
                 throw new NotFoundHttpException('User Not Found');
             }

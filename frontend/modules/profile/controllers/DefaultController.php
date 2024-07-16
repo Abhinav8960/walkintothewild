@@ -24,7 +24,7 @@ class DefaultController extends FrontendBaseController
     public function actionFollow($id)
     {
         if (Yii::$app->user->identity) {
-            if (Yii::$app->user->identity->id = $id) {
+            if (Yii::$app->user->identity->id == $id) {
                 Yii::$app->session->setFlash('error', "You can't follow yourself!");
                 return $this->redirect(Yii::$app->request->referrer);
             }
@@ -36,6 +36,21 @@ class DefaultController extends FrontendBaseController
             $follower->user_id = $id;
             $follower->status = 1;
             $follower->save(false);
+            Yii::$app->session->setFlash('success', "Follow Successfully!!");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionUnfollow($id)
+    {
+        if (Yii::$app->user->identity) {
+            $follower = UserFollow::find()->where(['follow_user_id' => Yii::$app->user->identity->id, 'user_id' => $id])->one();
+            $follower->follow_user_id = Yii::$app->user->identity->id;
+            $follower->user_id = $id;
+            $follower->status = 0;
+            $follower->save(false);
+            Yii::$app->session->setFlash('success', "Unfollow Successfully!!");
             return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(Yii::$app->request->referrer);
