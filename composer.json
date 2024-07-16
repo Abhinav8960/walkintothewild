@@ -20,7 +20,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4.0",
-        "yiisoft/yii2": "2.0.45",
+        "yiisoft/yii2": "2.0.50",
         "yiisoft/yii2-bootstrap5": "~2.0.2",
         "yiisoft/yii2-symfonymailer": "^3.0",
         "skeeks/yii2-slug-behavior": "*",
