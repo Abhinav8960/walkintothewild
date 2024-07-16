@@ -39,11 +39,6 @@ use yii\helpers\Url;
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center">
                                     <h6 class="nameavatr"><?= $comments->user->name ?></h6>
-                                    <?php if (Yii::$app->user->identity) {
-                                        if (Yii::$app->user->identity->id == $package->created_by) { ?>
-                                            <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $package->package_slug ?>&park_id=<?= $package->park_id ?>&package_comment_id=<?= $comments->id ?>">Request Contact</a>
-                                    <?php }
-                                    } ?>
                                 </div>
                                 <p><?= $comments->comment ?></p>
                                 <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
@@ -66,7 +61,7 @@ use yii\helpers\Url;
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>
                                                     </div>
-                                                  
+
                                                 </div>
                                             </div>
                                         </div>
