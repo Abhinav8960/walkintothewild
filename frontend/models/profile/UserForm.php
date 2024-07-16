@@ -49,8 +49,8 @@ class UserForm extends Model
             ['name', 'string', 'min' => 2, 'max' => 255],
             ['mobile_no', 'match', 'pattern' => '/^\+?\d{10,15}$/', 'message' => 'Invalid mobile number format.'],
             [['profile_image', 'cover_image'], 'safe'],
-            [['profile_image'], 'file', 'extensions' => 'jpg, gif, png, jpeg'],
-            [['cover_image'], 'file', 'extensions' => 'jpg, gif, png, jpeg'],
+            [['profile_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png']],
+            [['cover_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png']],
             ['user_handle', 'safe'],
             [
                 'user_handle', 'unique', 'when' => function ($model, $attribute) {
