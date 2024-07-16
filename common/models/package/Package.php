@@ -155,6 +155,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
 }
