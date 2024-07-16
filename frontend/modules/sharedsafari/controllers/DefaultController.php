@@ -75,9 +75,6 @@ class DefaultController extends FrontendBaseController
                         \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
                         return $this->redirect(['index']);
                     }
-                } else {
-                    print_r($model->errors);
-                    die();
                 }
             }
         } else {
