@@ -53,7 +53,12 @@ use yii\helpers\Url;
                                     } ?>
                                 </div>
                                 <p><?= $comments->comment ?></p>
-                                <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                <?php if (Yii::$app->user->identity) {
+                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                    if ($share_safari_intrested) { ?>
+                                        <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                <?php }
+                                } ?>
                             </div>
                         </div>
                         <div class="comment-reply">
