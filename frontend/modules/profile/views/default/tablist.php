@@ -88,10 +88,12 @@ $this->params['title'] = $this->title;
             <li class="nav-item"><a href="/profile/activity" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
             <li class="nav-item"><a href="/profile/contribution" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
             <li class="nav-item"><a href="/profile/photo" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
+            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
+                <li class="nav-item"><a href="/profile/business" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
+            <?php } ?>
         </ul>
     </div>
 </div>
-
 <style>
     .mt-n5 {
         margin-top: -3rem !important;

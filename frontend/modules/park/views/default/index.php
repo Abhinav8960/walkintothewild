@@ -181,10 +181,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br>Safari Tour Operator</h6>
+                        <?php if (Yii::$app->user->id) {  ?>
 
-                        <div class="btn_r">
-                            <a href="/safaritour-registration" class="btn_registrtion">Register Now</a>
-                        </div>
+                            <div class="btn_r">
+                                <a href="/safaritour-registration" class="btn_registrtion">Register Now</a>
+                            </div>
+                        <?php } else {
+                            echo '<p style="color:white !important;">Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for register now</p>';
+                        } ?>
 
                     </div>
                 </div>
@@ -194,10 +198,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100" loading="lazy">
                     <div class="registratin_text text-center">
                         <h6>Register your business as a <br>Birding Tour Operator</h6>
+                        <?php if (Yii::$app->user->id) {  ?>
+                            <div class="btn_r">
+                                <a href="/birdingtour-registration" class="btn_registrtion">Register Now</a>
+                            </div>
+                        <?php } else {
+                            echo '<p style="color:white !important;">Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for register now</p>';
+                        } ?>
 
-                        <div class="btn_r">
-                            <a href="/birdingtour-registration" class="btn_registrtion">Register Now</a>
-                        </div>
 
                     </div>
                 </div>
