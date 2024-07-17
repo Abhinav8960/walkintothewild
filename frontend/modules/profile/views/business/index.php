@@ -38,6 +38,9 @@ foreach ($park as $key => $role) {
             <div class="card mt-2 mb-4">
                 <div class="card-body">
                     <div class="container-fluid">
+                        <div class="col-md-3 mb-3">
+                            <a class="btn_newsafari organizeBtn" href="/profile/business/edit-request?safari_operator_id=<?= $safari_operator->id ?>"><i class="fas fa-edit me-1"></i>Update Business</a>
+                        </div>
                         <div class="row">
                             <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                                 <div class="safri_tour">
@@ -60,6 +63,7 @@ foreach ($park as $key => $role) {
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-8 col-xxl-10 col-xl-9">
                                 <div class="tab-content_tour active " id="tab21">
                                     <!-- Safari Parks content goes here -->

@@ -56,6 +56,7 @@ class SafariOperatorRequestForm extends model
     public $operator_phone_no;
     public $operator_email;
     public $registration_platform;
+    public $user_id;
 
     public $status;
     public $status_option = [];
@@ -122,6 +123,7 @@ class SafariOperatorRequestForm extends model
             $this->operator_email                                 =  $this->safari_operator_model->operator_email;
             $this->is_highlighted                                 =  $this->safari_operator_model->is_highlighted;
             $this->status                                         =  $this->safari_operator_model->status;
+            $this->user_id                                         =  $this->safari_operator_model->user_id;
             // $this->is_agree                                       =  $this->safari_operator_model->is_agree;
             // $this->registration_platform                          =  $this->safari_operator_model->registration_platform;
             $this->park_id                                        = SafariOperatorPark::find()->select('park_id')->where(['safari_operator_id' => $this->safari_operator_model->id, 'status' => 1])->column();
@@ -292,6 +294,7 @@ class SafariOperatorRequestForm extends model
         $this->safari_operator_request_model->operator_phone_no               =  $this->operator_phone_no;
         $this->safari_operator_request_model->operator_email                  =  $this->operator_email;
         $this->safari_operator_request_model->is_highlighted                  =  $this->is_highlighted;
+        $this->safari_operator_request_model->user_id                  =  $this->user_id;
         $this->safari_operator_request_model->status                          =  1; //$this->status;
         // $this->safari_operator_request_model->is_agree                        =  $this->is_agree;
         $this->safari_operator_request_model->registration_platform           =  1;
