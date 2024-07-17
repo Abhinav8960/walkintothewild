@@ -64,6 +64,7 @@ class SafariOperatorTourController extends Controller
                             if (!$safari_operator) {
                                 $safari_operator = new SafariOperator();
                             }
+                            $safari_operator->user_id                         =  $model->safarioperator_request_approval_model->user_id;
                             $safari_operator->category_id                     =  $model->safarioperator_request_approval_model->category_id;
                             $safari_operator->safari_operator_request_id      =  $model->safarioperator_request_approval_model->id;
                             $safari_operator->business_name                   =  $model->safarioperator_request_approval_model->business_name;
@@ -159,30 +160,22 @@ class SafariOperatorTourController extends Controller
                                 }
 
                                 if ($safari_operator) {
-
-                                    $user = User::find()->where(['email' => $safari_operator->email])->limit(1)->one();
-                                    if (!$user) {
-                                        $user = new User();
-                                        $user->username = $safari_operator->email;
-                                        $user->generateAuthKey();
-                                        $user->generateEmailVerificationToken();
-                                        $user->email = $safari_operator->email;
-                                        $user->mobile_no = $safari_operator->phone_no;
-                                        $user->name = $safari_operator->business_name;
-                                        $user->setPassword($safari_operator->phone_no);
+                                    if ($safari_operator->user_id) {
+                                        $user = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
+                                    } elseif ($safari_operator->email) {
+                                        $user = User::find()->where(['email' => $safari_operator->email])->limit(1)->one();
                                     }
-                                    $user->is_safari_operator = 1;
-                                    $user->status = 10;
+                                    if ($user) {
+                                        $user->is_safari_operator = 1;
+                                        $user->status = 10;
 
-
-                                    // $user->setUpd($model->phone);
-
-                                    if ($user->save(false)) {
-                                        $safari_operator->user_id = $user->id;
-                                        $safari_operator->save(false);
                                         if ($user->save(false)) {
-                                            \Yii::$app->session->setFlash('success', 'Operator Approved Successfully');
-                                            return $this->redirect(['index']);
+                                            $safari_operator->user_id = $user->id;
+                                            $safari_operator->save(false);
+                                            if ($user->save(false)) {
+                                                \Yii::$app->session->setFlash('success', 'Operator Approved Successfully');
+                                                return $this->redirect(['index']);
+                                            }
                                         }
                                     }
                                 }

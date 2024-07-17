@@ -51,6 +51,7 @@ class SafaritourRegistrationForm extends model
     public $operator_phone_no;
     public $operator_email;
     public $registration_platform;
+    public $user_id;
 
     public $status;
     public $status_option = [];
@@ -139,7 +140,7 @@ class SafaritourRegistrationForm extends model
             [['business_name', 'register_comapany_name', 'address', 'gst', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
             [['is_highlighted', 'has_cancellation_policy', 'is_register_company', 'has_a_website', 'wildlife_photographer', 'wildlife_influencer', 'is_approved', 'starting_price', 'operator_name'], 'default', 'value' => 0],
-            [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities'], 'safe'],
+            [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities', 'user_id'], 'safe'],
             [['referrer_url', 'registration_platform'], 'safe'],
             [
                 ['logo'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
@@ -266,6 +267,7 @@ class SafaritourRegistrationForm extends model
         $this->safarioperator_request_model->is_highlighted                  =  $this->is_highlighted;
         $this->safarioperator_request_model->status                          =  $this->status;
         $this->safarioperator_request_model->is_agree                        =  $this->is_agree;
+        $this->safarioperator_request_model->user_id                         =  $this->user_id;
         $this->safarioperator_request_model->registration_platform           =  2;
     }
 
