@@ -2,6 +2,7 @@
 
 namespace frontend\modules\article\controllers;
 
+use common\models\article\article\form\ArticleForm;
 use Yii;
 use frontend\models\CommentForm;
 use common\models\park\SafariPark;
@@ -9,9 +10,11 @@ use frontend\models\ArticleSearch;
 use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleAuthor;
+use common\models\cms\article\ArticleComment;
 use common\models\cms\article\MasterArticleTag;
 use frontend\controllers\FrontendBaseController;
 use common\models\cms\article\MasterArticleTopic;
+use frontend\models\ArticleCommentReportForm;
 
 /**
  * DefaultController.
@@ -136,5 +139,62 @@ class DefaultController extends FrontendBaseController
             'slug' => $slug,
             'sub_title' => '<b>Author :</b> ' . ($article_author ? $article_author->author_name : strtoupper($slug)),
         ]);
+    }
+
+
+
+
+
+
+    public function actionFlag($slug, $article_comment_id)
+    {
+        $article = Article::find()->where(['slug' => $slug])->one();
+        if (!$article) {
+            return $this->redirect(['/article']);
+        }
+
+        $comments = ArticleComment::find()->where(['id' => $article_comment_id])->limit(1)->one();
+
+        $model = new ArticleCommentReportForm();
+        $model->article_id = $article->id;
+        $model->article_comment_id = $article_comment_id;
+
+        $model->action_url = '/article/default';
+        $model->action_validate_url = '/article/default/validateflag';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->flag_model->save(false)) {
+                        $comments->flaged = 1;
+                        $comments->save(false);
+                        Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
+                        return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+                    }
+                }
+            }
+        } else {
+            $model->flag_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_flag_form', [
+                'model' => $model,
+                'slug' => $slug,
+                'comments' => $comments,
+            ]);
+        }
+    }
+
+    public function actionValidateflag($id = null)
+    {
+        $model = new ArticleCommentReportForm();
+        if ($id != null) {
+            $flag_model = $this->findModel($id);
+            $model = new ArticleCommentReportForm($flag_model);
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 }

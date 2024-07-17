@@ -75,18 +75,18 @@ $this->params['title'] = $this->title;
                                         <div class="col-md-4">
                                             <?= $form->field($model, 'hotel_name')->textInput([
                                                 'maxlength' => true,
-                                                'placeholder' => 'Enter Hotel Name',
+                                                'placeholder' => 'Enter Accommodation Name',
                                                 'id' => 'dayitineraryform-hotel_name' . $i,
-                                            ]) ?>
+                                            ])->label('Accommodation') ?>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Latitude']) ?>
+                                            <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Latitude'])->label('Accommodation Latitude') ?>
                                         </div>
 
                                         <div class="col-md-4">
-                                            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Longitude']) ?>
+                                            <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Longitude'])->label('Accommodation Longitude') ?>
                                         </div>
                                         <?php
 
