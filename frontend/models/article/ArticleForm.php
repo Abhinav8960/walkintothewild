@@ -2,8 +2,9 @@
 
 namespace frontend\models\article;
 
-use common\models\article\articleTag\ArticleTag;
+
 use common\models\cms\article\Article;
+use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\GeneralModel;
 use Yii;
