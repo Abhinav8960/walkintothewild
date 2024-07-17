@@ -88,4 +88,9 @@ class ShareSafariIntrested extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function getSharesafari()
+    {
+        return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
+    }
 }
