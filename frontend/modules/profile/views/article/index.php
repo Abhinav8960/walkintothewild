@@ -18,29 +18,8 @@ $this->params['title'] = $this->title;
                 <div class="col-8">
                     <div class="card mt-2">
                         <div class="card-body">
+                            <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
                             <div class="col-6 mb-5">
-                                <div class="artical_cards h-100">
-                                    <div class="image-box">
-                                        <figure class="image"><a href="#" alt=""></a>
-                                        </figure>
-                                    </div>
-                                    <div class="lower-content">
-                                        <ul class="artical-info ">
-                                            <li><i class="fa-solid fa-user"></i><a href="#"></a></li>
-
-                                        </ul>
-                                        <h3><a href="#"></a></h3>
-
-                                        <div class="artical-info justify-content-center">
-                                            <a href="#" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> Comments</a>
-
-                                            <span style="color: #9C9C9C;"><i class="fa-solid fa-calendar-days me-1" style="color:#f9d600;"></i></span>
-                                        </div>
-
-
-                                    </div>
-                                    <div class="link"><a href="#"><i class="fa-solid fa-arrow-right"></i></a></div>
-                                </div>
                             </div>
 
                         </div>
