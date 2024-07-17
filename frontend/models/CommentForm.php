@@ -48,11 +48,8 @@ class CommentForm extends Model
         $comment->browser = $agent->browser();
         $comment->os = $agent->platform();
 
-        if ($article->approval_required == 1) {
-            $comment->status = 3;
-        } else {
-            $comment->status = 1;
-        }
+
+        $comment->status = 1;
 
         if ($comment->save()) {
             return $comment->save();

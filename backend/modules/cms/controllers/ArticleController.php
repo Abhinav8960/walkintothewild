@@ -8,10 +8,12 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleComment;
+use common\models\cms\article\ArticleCommentReport;
 use common\models\cms\article\ArticleCommentSearch;
 use common\models\cms\article\ArticleSearch;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
+use common\models\cms\article\form\ArticleCommentActionForm;
 use common\models\cms\article\form\ArticleForm;
 use common\models\cms\article\MasterArticleTag;
 use yii\data\ActiveDataProvider;
@@ -286,6 +288,45 @@ class ArticleController extends Controller
     }
 
 
+
+
+    public function actionEdit($id)
+    {
+        $comment_action_model = ArticleCommentReport::find()->where(['id' => $id])->limit(1)->one();
+        $model = new ArticleCommentActionForm($comment_action_model);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->comment_action_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                        return $this->redirect(\Yii::$app->request->referrer);
+                    }
+                }
+            }
+        } else {
+            $model->comment_action_model->loadDefaultValues();
+        }
+        return $this->renderAjax('edit', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionView($id)
+    {
+
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  ArticleCommentReport::find()->where(['article_comment_id' => $id, 'status' => [1, 20]]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('view', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Finds the Article model based on its primary key value.
