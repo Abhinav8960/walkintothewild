@@ -2,8 +2,9 @@
 
 namespace frontend\modules\profile\controllers;
 
-use common\models\article\articleTag\ArticleTag;
+
 use common\models\cms\article\Article;
+use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\sharesafari\ShareSafari;
 use frontend\controllers\FrontendBaseController;
@@ -34,56 +35,56 @@ class ArticleController extends FrontendBaseController
         );
     }
 
-    // public function actionCreate()
-    // {
-    //     $model = new ArticleForm();
-    //     $model->action_url = '/article/create';
-    //     $model->action_validate_url = '/article/validate';
-    //     $model->status = Article::STATUS_ACTIVE;
-    //     $model->scenario = 'create';
-    //     $model->article_author_id = 10;
+    public function actionCreate()
+    {
+        $model = new ArticleForm();
+        $model->action_url = '/article/create';
+        $model->action_validate_url = '/article/validate';
+        $model->status = Article::STATUS_ACTIVE;
+        $model->scenario = 'create';
+        $model->article_author_id = 10;
 
-    //     if ($this->request->isPost) {
-    //         if ($model->load($this->request->post())) {
-    //             $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
-    //             $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
-    //             if ($model->validate()) {
-    //                 $model->initializeForm();
-    //                 if ($model->article_model->save(false)) {
-    //                     $model->uploadFile();
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
+                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->article_model->save(false)) {
+                        $model->uploadFile();
 
-    //                     $articleTopics = $model->article_topics;
-    //                     if ($articleTopics) {
-    //                         foreach ($articleTopics as $articleT) {
-    //                             $articleTopic = new ArticleTopic();
-    //                             $articleTopic->article_id = $model->article_model->id;
-    //                             $articleTopic->master_article_topic_id = $articleT;
-    //                             $articleTopic->save(false);
-    //                         }
-    //                     }
+                        $articleTopics = $model->article_topics;
+                        if ($articleTopics) {
+                            foreach ($articleTopics as $articleT) {
+                                $articleTopic = new ArticleTopic();
+                                $articleTopic->article_id = $model->article_model->id;
+                                $articleTopic->master_article_topic_id = $articleT;
+                                $articleTopic->save(false);
+                            }
+                        }
 
-    //                     $articleTags = $model->article_tags;
-    //                     if ($articleTags) {
-    //                         foreach ($articleTags as $articleT) {
-    //                             $articleTag = new ArticleTag();
-    //                             $articleTag->article_id = $model->article_model->id;
-    //                             $articleTag->master_article_tag_id = $articleT;
-    //                             $articleTag->save(false);
-    //                         }
-    //                     }
-    //                     \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-    //                     return $this->redirect(['index']);
-    //                 }
-    //             }
-    //         }
-    //     } else {
-    //         $model->article_model->loadDefaultValues();
-    //     }
+                        $articleTags = $model->article_tags;
+                        if ($articleTags) {
+                            foreach ($articleTags as $articleT) {
+                                $articleTag = new ArticleTag();
+                                $articleTag->article_id = $model->article_model->id;
+                                $articleTag->master_article_tag_id = $articleT;
+                                $articleTag->save(false);
+                            }
+                        }
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->article_model->loadDefaultValues();
+        }
 
-    //     return $this->render('_form', [
-    //         'model' => $model,
-    //     ]);
-    // }
+        return $this->render('_form', [
+            'model' => $model,
+        ]);
+    }
 
     public function actionValidate($id = null)
     {
