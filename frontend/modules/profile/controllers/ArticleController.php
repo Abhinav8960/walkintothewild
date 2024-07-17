@@ -2,7 +2,7 @@
 
 namespace frontend\modules\profile\controllers;
 
-
+use common\models\sharesafari\ShareSafari;
 use frontend\controllers\FrontendBaseController;
 
 
@@ -18,6 +18,13 @@ class ArticleController extends FrontendBaseController
      */
     public function actionIndex()
     {
-        return $this->render('index', ['user' => $this->module->user()]);
+        $model = ShareSafari::find()->where(['host_user_id' => $this->module->user()->id])->all();
+        return $this->render(
+            'index',
+            [
+                'user' => $this->module->user(),
+                'model' => $model
+            ]
+        );
     }
 }
