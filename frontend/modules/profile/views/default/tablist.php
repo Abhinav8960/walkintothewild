@@ -88,8 +88,6 @@ $this->params['title'] = $this->title;
             <li><a href="/profile/activity" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
             <li><a href="/profile/contribution" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
             <li><a href="/profile/photo" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
-
-
         </ul>
     </div>
 </div>

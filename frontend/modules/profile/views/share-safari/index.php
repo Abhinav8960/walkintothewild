@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
                 <div class="col-8">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <h5>Shared Safari</h5>
+                            <h5>Shared Safari Organized by <?= $user->name ?> <?= count($organized_by); ?></h5>
                             <?php if ($organized_by) {
                                 foreach ($organized_by as $share_safari) {
                             ?>
@@ -108,7 +108,7 @@ $this->params['title'] = $this->title;
                 <div class="col-8">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <h5>Shared Safari Joined by <?= $user->name ?></h5>
+                            <h5>Shared Safari Joined by <?= $user->name ?> <?= count($joined_by); ?></h5>
                             <?php if ($joined_by) {
                                 foreach ($joined_by as $share_safari) {
                             ?>
