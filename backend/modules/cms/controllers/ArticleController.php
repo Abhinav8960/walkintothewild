@@ -301,7 +301,7 @@ class ArticleController extends Controller
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(\Yii::$app->request->referrer);
                     }
                 }
             }
