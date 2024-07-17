@@ -32,14 +32,14 @@ $this->params['title'] = $this->title;
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 order-lg-1 order-1">
+            <div class="col-lg-4 ">
                 <div class="d-flex align-items-center m-1">
                     <p class="mb-1 m-4"><?= UserFollow::find()->where(['user_id' => $user->id, 'status' => 1])->count(); ?>Followers</p>
                     <p class="mb-1 m-4"><?= UserFollow::find()->where(['follow_user_id' => $user->id, 'status' => 1])->count(); ?>Following</p>
                 </div>
             </div>
 
-            <div class="col-lg-4 order-lg-2 order-2 mx-auto ">
+            <div class="col-lg-4 ">
                 <div class="d-flex align-items-center m-1 mx-auto align-items-center justify-content-center">
                     <?php if (Yii::$app->user->identity->id != $user->id) {
                         if (UserFollow::find()->where(['follow_user_id' => Yii::$app->user->identity->id, 'user_id' => $user->id, 'status' => '1'])->one()) { ?>
@@ -53,7 +53,7 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
 
-            <div class="col-lg-4 order-lg-3 order-3">
+            <div class="col-lg-4">
                 <div class="sociel_icons ps-3">
                     <?php
                     $shared_url = urlencode(Url::to('', true));
@@ -82,12 +82,12 @@ $this->params['title'] = $this->title;
         </div>
         <hr>
         <ul class="nav nav-pills mb-2 ms-2">
-            <li><a href="/profile/default" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
-            <li><a href="/profile/share-safari" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Share Safari</a></li>
-            <li><a href="/profile/article" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
-            <li><a href="/profile/activity" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
-            <li><a href="/profile/contribution" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
-            <li><a href="/profile/photo" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
+            <li class="nav-item"><a href="/profile/default" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
+            <li class="nav-item"><a href="/profile/share-safari" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Share Safari</a></li>
+            <li class="nav-item"><a href="/profile/article" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
+            <li class="nav-item"><a href="/profile/activity" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
+            <li class="nav-item"><a href="/profile/contribution" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
+            <li class="nav-item"><a href="/profile/photo" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
         </ul>
     </div>
 </div>
