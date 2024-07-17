@@ -224,7 +224,10 @@ $this->params['title'] = $this->title;
             </div>
         </div>
         <div class="row">
+
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+
+
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>

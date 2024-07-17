@@ -1,5 +1,6 @@
 <?php
 
+use common\models\sharesafari\ShareSafariIntrested;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
@@ -113,10 +114,15 @@ use yii\helpers\Url;
     <?php if ($share_safari->status == 2) {
         echo "Comment Closed for this Safari..." ?>
         <?php } else {
-        if (Yii::$app->user->id) { ?>
-            <?= $this->render('_comment_form', ['model' => $model]) ?>
+        if (Yii::$app->user->id) {
+            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+            if ($share_safari_intrested) { ?>
+                <?= $this->render('_comment_form', ['model' => $model]) ?>
     <?php } else {
-            echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
+                echo 'Please Join in</a> for start Comment';
+            }
+        } else {
+            echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign In</a> for start Comment';
         }
     } ?>
 </div>
