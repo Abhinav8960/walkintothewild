@@ -53,12 +53,18 @@ class UserForm extends Model
             ['name', 'string', 'min' => 2, 'max' => 255],
             ['mobile_no', 'match', 'pattern' => '/^\+?\d{10,15}$/', 'message' => 'Invalid mobile number format.'],
             [['profile_image', 'cover_image'], 'safe'],
-            ['user_handle', 'safe'],
+
+            ['user_handle', function () {
+                // Allow Only Small Letter Character(a-z), digit(0-9) and Underscore(_)
+                if (!preg_match('/^[a-z0-9_-]*$/', $this->user_handle)) {
+                    $this->addError('user_handle', 'Invalid Username!!!');
+                }
+            }],
             [
                 'user_handle', 'unique', 'when' => function ($model, $attribute) {
                     return strtolower($this->user_model->$attribute) != strtolower($model->$attribute);
                 },
-                'targetClass' => User::className(), 'targetAttribute' => ['id', 'user_handle'],
+                'targetClass' => User::className(), 'targetAttribute' => ['user_handle'],
                 'message' => 'This username has already been taken'
             ],
             [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url'], 'string'],
