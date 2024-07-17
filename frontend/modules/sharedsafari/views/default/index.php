@@ -190,7 +190,7 @@ $recentposts = ArticleSearch::recentpost();
                                                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                                         if ($share_safari_intrested) { ?>
                                                                             <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
-                                                                        <?php } else { ?>
+                                                                        <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                                             <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
                                                                         <?php  }
                                                                     } else { ?>
