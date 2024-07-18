@@ -76,11 +76,17 @@ class SafariParkSearch extends SafariPark
 
         // Sorting based on custom_sort_by attribute
         if ($this->custom_sort_by == 'most-demanding') {
-            $query->orderBy(['is_most_demanding' => SORT_DESC]);
+            $dataProvider->sort = [
+                'defaultOrder' => ['is_most_demanding' => SORT_DESC]
+            ];
         } else if ($this->custom_sort_by == 'shared-safari') {
-            $query->orderBy(['is_shared_safari' => SORT_DESC]);
+            $dataProvider->sort = [
+                'defaultOrder' => ['is_shared_safari' => SORT_DESC]
+            ];
         } else {
-            $query->orderBy(['title' => SORT_ASC]); // Example: sorting by title ascending
+            $dataProvider->sort = [
+                'defaultOrder' => ['title' => SORT_DESC]
+            ];
         }
 
         if ($this->month_id && $this->month_id != 0) {

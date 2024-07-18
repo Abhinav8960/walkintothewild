@@ -122,7 +122,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                     </div>
                 </div>
-                <div id="ajaxMptrackData" class="">
+                <div id="ajaxSafariParkData" class="">
                     <?php
                     $pjax = \yii\widgets\Pjax::begin();
                     echo \yii\widgets\ListView::widget([
@@ -182,7 +182,7 @@ $(document).ready(function() {
                 var html = $(text);
                 $("#w0").append(html.find(".list-view-park").html());
                 $("body").find(".pagination").html(html.find(".pagination").html());
-                    $(".parklistcount").text($(".list-view-park a").length);
+                $(".parklistcount").text($(".list-view-park .parking_Box").length);
             }
         });
     }
