@@ -28,6 +28,7 @@ $this->params['title'] = $this->title;
                                         <div class="col-4 mb-5 mt-4">
                                             <div class="artical_cards h-100">
                                                 <div class="image-box">
+                                                    <button class="join_btn text-center mt-sm-0 mt-2 articleBtn" value="<?= Url::toRoute(['update', 'id' => $article->id]) ?>">Update</button>
                                                     <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                                                     </figure>
                                                 </div>

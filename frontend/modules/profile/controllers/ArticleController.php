@@ -141,4 +141,71 @@ class ArticleController extends FrontendBaseController
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    /**
+     * Updates an existing Article Author model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param int $id ID
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $article_model = $this->findModel($id);
+        $model = new ArticleForm($article_model);
+        $model->action_url = '/profile/article/update?id=' . $id;
+        $model->action_validate_url = '/profile/article/validate?id=' . $id;
+        $model->status = Article::STATUS_SUSPEND;
+        $model->is_approved = 0;
+        $model->scenario = 'update';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->article_model->save(false)) {
+                        $model->uploadFile();
+
+                        $articleTopics = $model->article_topics;
+                        if ($articleTopics) {
+                            ArticleTopic::deleteAll(['article_id' => $id]);
+                            foreach ($articleTopics as $articleT) {
+                                $articleTopic = new ArticleTopic();
+                                $articleTopic->article_id = $model->article_model->id;
+                                $articleTopic->master_article_topic_id = $articleT;
+                                $articleTopic->save(false);
+                            }
+                        }
+
+                        $articleTags = $model->article_tags;
+                        if ($articleTags) {
+                            ArticleTag::deleteAll(['article_id' => $id]);
+                            foreach ($articleTags as $articleT) {
+                                $articleTag = new ArticleTag();
+                                $articleTag->article_id = $model->article_model->id;
+                                $articleTag->master_article_tag_id = $articleT;
+                                $articleTag->save(false);
+                            }
+                        }
+
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->article_model->loadDefaultValues();
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('_form', [
+                'model' => $model,
+            ]);
+        }
+    }
 }
