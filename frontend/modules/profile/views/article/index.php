@@ -18,9 +18,32 @@ $this->params['title'] = $this->title;
                 <div class="col-8">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <!-- <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a> -->
-                            <div class="col-6 mb-5">
+                            <?php if (Yii::$app->user->identity) { ?>
+                                <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
+                            <?php } ?>
+
+                            <div class="row">
+                                <?php if ($articles) {
+                                    foreach ($articles as $article) {  ?>
+                                        <div class="col-4 mb-5 mt-4">
+                                            <div class="artical_cards h-100">
+                                                <div class="image-box">
+                                                    <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                                    </figure>
+                                                </div>
+                                                <div class="lower-content">
+                                                    <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><?= $article->title ?> </a></h3>
+                                                    <div class="artical-info justify-content-center">
+                                                        <a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                <?php }
+                                } ?>
                             </div>
+
 
                         </div>
                     </div>

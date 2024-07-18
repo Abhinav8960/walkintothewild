@@ -12,13 +12,14 @@ use yii\base\Model;
 
 class ArticleForm extends Model
 {
+    public $user_id;
     public $title;
     public $sub_title;
     public $slug;
     public $article_author_id;
     public $author_name;
-    public $article_tags;
-    public $tag_name;
+    public $article_tags; //it comes from Backend
+    public $tag_name;  //it comes from Backend
     public $description;
     public $meta_title;
     public $meta_description;
@@ -26,14 +27,14 @@ class ArticleForm extends Model
     public $view;
     public $post_body;
     public $comment_allowed;
-    public $approval_required;
+    public $is_approved;
     public $article_date;
     public $is_schedule;
     public $publish_date_time;
     public $status;
     public $banner_image;
     public $feature_image;
-    public $article_topics;
+    public $article_topics; //it comes from Backend
     public $article_model;
     public $action_url;
     public $action_validate_url;
@@ -50,20 +51,20 @@ class ArticleForm extends Model
             $this->article_model = $article_model;
             $this->title = $this->article_model->title;
             $this->banner_image = $this->article_model->banner_image;
-            $this->feature_image = $this->article_model->feature_image;
-            $this->sub_title = $this->article_model->sub_title;
-            $this->slug = $this->article_model->slug;
+            // $this->feature_image = $this->article_model->feature_image; //Not in use
+            $this->sub_title = $this->article_model->sub_title; // I have not input field for it
+            $this->slug = $this->article_model->slug;  // It generate when i input title
             $this->description = $this->article_model->description;
-            $this->article_author_id = $this->article_model->article_author_id;
-            $this->author_name = $this->article_model->author_name;
+            // $this->article_author_id = $this->article_model->article_author_id;  //Not necessary when create article form frontend
+            // $this->author_name = $this->article_model->author_name;
             $this->meta_title = $this->article_model->meta_title;
             $this->meta_description = $this->article_model->meta_description;
             $this->meta_keywords = $this->article_model->meta_keywords;
-            $this->view = $this->article_model->view;
+            $this->view = $this->article_model->view;  // Extra Not in use
             $this->article_date = $this->article_model->article_date;
             $this->post_body = $this->article_model->post_body;
             $this->comment_allowed = $this->article_model->comment_allowed;
-            $this->approval_required = $this->article_model->approval_required;
+            $this->is_approved = $this->article_model->is_approved;
             $this->is_schedule = $this->article_model->is_schedule;
             $this->publish_date_time = $this->article_model->publish_date_time;
             $this->status = $this->article_model->status;
@@ -79,14 +80,14 @@ class ArticleForm extends Model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
-            'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
-            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
+            'article_date', 'long_description', 'meta_title', 'meta_description', 'comment_allowed',
+            'is_approved', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
         $scenarios['update'] = [
             'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
-            'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
-            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'article_date', 'long_description', 'meta_title', 'meta_description', 'comment_allowed',
+            'is_approved', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
         return $scenarios;
     }
@@ -96,6 +97,7 @@ class ArticleForm extends Model
         return [
             [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics'], 'required'],
             [['status'], 'default', 'value' => 1],
+            [['is_approved'], 'default', 'value' => 0],
             [['status', 'article_author_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
             [['article_topics'], 'safe'],
@@ -128,7 +130,7 @@ class ArticleForm extends Model
                 'message' => 'This Title has already been taken'
             ],
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
-            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status'], 'integer'],
+            [['article_author_id', 'view', 'comment_allowed', 'is_approved', 'is_schedule', 'status'], 'integer'],
             [['publish_date_time', 'article_date'], 'safe'],
             [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
             [['sub_title'], 'string', 'max' => 75],
@@ -143,6 +145,7 @@ class ArticleForm extends Model
     {
         return [
             'id' => 'ID',
+            'user_id' => 'User ID',
             'title' => 'Title',
             'slug' => 'Slug',
             'sub_title' => 'Sub Title',
@@ -161,7 +164,7 @@ class ArticleForm extends Model
             'article_date' => 'Article Date',
             'post_body' => 'Post Body',
             'comment_allowed' => 'Comment Allowed',
-            'approval_required' => 'Approval Required',
+            'is_approved' => 'Approval Required',
             'is_schedule' => 'Is Schedule',
             'publish_date_time' => 'Publish Date Time',
             'status' => 'Status',
@@ -175,14 +178,11 @@ class ArticleForm extends Model
      */
     public function initializeForm()
     {
+        $this->article_model->user_id = Yii::$app->user->identity->id;
         $this->article_model->title = $this->title;
         $this->article_model->sub_title = $this->sub_title;
         $this->article_model->slug = $this->slug;
         $this->article_model->description = $this->description;
-        $this->article_model->article_author_id = $this->article_author_id;
-        if ($this->article_author_id) {
-            $this->article_model->author_name =  GeneralModel::authoroption()[$this->article_author_id];
-        }
         $this->article_model->meta_title = $this->meta_title;
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;
@@ -190,7 +190,7 @@ class ArticleForm extends Model
         $this->article_model->article_date = $this->article_date;
         $this->article_model->post_body = $this->post_body;
         $this->article_model->comment_allowed = $this->comment_allowed;
-        $this->article_model->approval_required = $this->approval_required;
+        $this->article_model->is_approved = $this->is_approved;
         $this->article_model->is_schedule = $this->is_schedule;
         $this->article_model->publish_date_time = $this->publish_date_time;
         $this->article_model->status = $this->status;
@@ -225,26 +225,26 @@ class ArticleForm extends Model
             }
         }
 
-        if ($this->feature_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/article';
+        // if ($this->feature_image) {
+        //     $storagePath = Yii::$app->params['datapath'] . '/article';
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->article_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->article_model->id;
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
 
-            $fileName = 'article_feature' . time() . '.' . $this->feature_image->extension;
-            $filePath = $storagePath . '/' . $fileName;
+        //     $fileName = 'article_feature' . time() . '.' . $this->feature_image->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->feature_image->saveAs($filePath)) {
-                $this->article_model->feature_image = $fileName;
-                $this->article_model->save(false);
-            }
-        }
+        //     if ($this->feature_image->saveAs($filePath)) {
+        //         $this->article_model->feature_image = $fileName;
+        //         $this->article_model->save(false);
+        //     }
+        // }
     }
 }
