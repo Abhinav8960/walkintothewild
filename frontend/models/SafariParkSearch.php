@@ -28,7 +28,7 @@ class SafariParkSearch extends SafariPark
     {
         return [
             [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'safe'],
-            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_most_demanding', 'is_shared_safari'], 'safe'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
             [['latitude', 'longitude', 'custom_sort_by'], 'safe'],
             [['month_id', 'master_animal_id', 'master_rare_animal_id', 'master_vehicle_id', 'accomodation_id', 'session_id', 'bonus_experience_id'], 'safe']
@@ -63,7 +63,6 @@ class SafariParkSearch extends SafariPark
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
-            'sort' => ['defaultOrder' => ['title' => SORT_ASC]],
 
         ]);
 
@@ -75,27 +74,35 @@ class SafariParkSearch extends SafariPark
             return $dataProvider;
         }
 
+        // Sorting based on custom_sort_by attribute
+        if ($this->custom_sort_by == 'most-demanding') {
+            $query->orderBy(['is_most_demanding' => SORT_DESC]);
+        } else if ($this->custom_sort_by == 'shared-safari') {
+            $query->orderBy(['is_shared_safari' => SORT_DESC]);
+        } else {
+            $query->orderBy(['title' => SORT_ASC]); // Example: sorting by title ascending
+        }
 
-        if ($this->month_id) {
+        if ($this->month_id && $this->month_id != 0) {
             $query->joinwith(['months' => function ($query) {
                 $query->andFilterWhere(['safari_park_month.month_id' => $this->month_id]);
             }]);
         }
 
 
-        if ($this->master_animal_id) {
+        if ($this->master_animal_id && $this->master_animal_id != 0) {
             $query->joinwith(['animals' => function ($query) {
                 $query->andFilterWhere(['safari_parks_animal.master_animal_id' => $this->master_animal_id]);
             }]);
         }
 
-        if ($this->master_rare_animal_id) {
+        if ($this->master_rare_animal_id && $this->master_rare_animal_id != 0) {
             $query->joinwith(['rareanimals' => function ($query) {
                 $query->andFilterWhere(['safari_park_rare_animal.master_rare_animal_id' => $this->master_rare_animal_id]);
             }]);
         }
 
-        if ($this->master_vehicle_id) {
+        if ($this->master_vehicle_id && $this->master_vehicle_id != 0) {
             $query->joinwith(['vehicles' => function ($query) {
                 $query->andFilterWhere(['safari_parks_vehicle.vehicle_id' => $this->master_vehicle_id]);
             }]);
@@ -103,20 +110,20 @@ class SafariParkSearch extends SafariPark
 
 
 
-        if ($this->accomodation_id) {
+        if ($this->accomodation_id && $this->accomodation_id != 0) {
             $query->joinwith(['accomodations' => function ($query) {
                 $query->andFilterWhere(['safari_park_accomodation.master_accomodation_id' => $this->accomodation_id]);
             }]);
         }
 
-        if ($this->session_id) {
+        if ($this->session_id && $this->session_id != 0) {
             $query->joinwith(['sessions' => function ($query) {
                 $query->andFilterWhere(['safari_park_session.session_id' => $this->session_id]);
             }]);
         }
 
 
-        if ($this->bonus_experience_id) {
+        if ($this->bonus_experience_id && $this->bonus_experience_id != 0) {
             $query->joinwith(['bonusexperience' => function ($query) {
                 $query->andFilterWhere(['safari_park_bonus_experience.master_bonus_experience_id' => $this->bonus_experience_id]);
             }]);
@@ -125,7 +132,6 @@ class SafariParkSearch extends SafariPark
         $query->andFilterWhere([
             'id' => $this->id,
             'safari_park.slug' => $this->slug,
-            'safari_park.master_location_id' => $this->master_location_id,
             'safari_park.created_at' => $this->created_at,
             'safari_park.created_by' => $this->created_by,
             'safari_park.updated_at' => $this->updated_at,
@@ -134,12 +140,11 @@ class SafariParkSearch extends SafariPark
         ]);
         $query->andFilterWhere(['like', 'title', $this->title]);
 
-
-        if ($this->custom_sort_by == 'most-demanding') {
-            $query->andWhere(['is_most_demanding' => 1]);
-        } else if ($this->custom_sort_by == 'shared-safari') {
-            $query->andWhere(['is_shared_safari' => 1]);
+        if ($this->master_location_id && $this->master_location_id != 0) {
+            $query->andFilterWhere(['safari_park.master_location_id' => $this->master_location_id]);
         }
+
+
 
         // If Rare EXOTIC ANIMAL Selected
         if ($this->master_rare_animal_id == '') {

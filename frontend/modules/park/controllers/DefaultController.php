@@ -261,25 +261,24 @@ class DefaultController extends FrontendBaseController
     public function actionGeturl()
     {
         if (Yii::$app->request->isPost) {
-            $url = ['/park/default/parklist'];
-            if (isset(Yii::$app->request->bodyParams['SafariParkSearch'])) {
-                foreach (Yii::$app->request->bodyParams['SafariParkSearch'] as $key => $value) {
-                    if (in_array($key, ['master_location_id', 'session_id', 'master_animal_id', 'master_vehicle_id'])) {
-                        if ($value) {
-                            $url[$key] = $value;
-                        } else {
-                            $url[$key] = 0;
-                        }
-                    } else {
-                        if ($value) {
-                            $url['SafariParkSearch[' . $key . ']'] = $value;
-                        }
-                    }
+            // Initialize URL with the base route
+            $url = ['/parklist'];
+
+            // Loop through the payload parameters
+            foreach (Yii::$app->request->post('SafariParkSearch') as $key => $value) {
+                // Only add parameters that are not empty
+                if (!empty($value)) {
+                    $url['SafariParkSearch[' . $key . ']'] = $value;
+                } else {
+                    $url['SafariParkSearch[' . $key . ']'] = 0;
                 }
             }
-            return \yii\helpers\Url::toRoute($url);
+
+            // Construct the redirect URL
+            return \yii\helpers\Url::to($url);
         }
     }
+
 
 
 
