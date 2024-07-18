@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
                 <div class="col-8">
                     <div class="card mt-2">
                         <div class="card-body">
-                            <?php if (Yii::$app->user->identity) { ?>
+                            <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                 <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
                             <?php } ?>
 
