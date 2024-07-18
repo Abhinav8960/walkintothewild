@@ -4,6 +4,7 @@ namespace frontend\modules\profile\controllers;
 
 
 use common\models\cms\article\Article;
+use common\models\cms\article\ArticleAuthor;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\sharesafari\ShareSafari;
@@ -26,10 +27,12 @@ class ArticleController extends FrontendBaseController
     public function actionIndex()
     {
         $model = ShareSafari::find()->where(['host_user_id' => $this->module->user()->id])->all();
+        $articles = Article::find()->where(['user_id' => $this->module->user()->id])->all();
         return $this->render(
             'index',
             [
                 'user' => $this->module->user(),
+                'articles' => $articles,
                 'model' => $model
             ]
         );
@@ -42,7 +45,6 @@ class ArticleController extends FrontendBaseController
         $model->action_validate_url = '/article/validate';
         $model->status = Article::STATUS_ACTIVE;
         $model->scenario = 'create';
-        $model->article_author_id = 10;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -52,6 +54,24 @@ class ArticleController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->article_model->save(false)) {
                         $model->uploadFile();
+
+                        /**
+                         * Here is the concept of generating article_author_id and author_name and first save in Article Author
+                         */
+                        $author = ArticleAuthor::find()->where(['user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+                        if (!$author) {
+                            $author = new ArticleAuthor();
+                        }
+                        $author->user_id = Yii::$app->user->identity->id; // check here which id will user $this->module->user()->id
+                        $author->author_name = Yii::$app->user->identity->name;
+                        $author->status = 1;
+                        if ($author->save()) {
+                            $model->article_model->article_author_id = $author->id;
+                            $model->article_model->author_name = $author->author_name;
+                            $model->article_model->save(false);
+                        };
+
+
 
                         $articleTopics = $model->article_topics;
                         if ($articleTopics) {

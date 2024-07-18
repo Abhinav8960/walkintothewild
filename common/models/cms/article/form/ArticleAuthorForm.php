@@ -13,6 +13,7 @@ use common\models\cms\article\ArticleAuthor;
  */
 class ArticleAuthorForm extends \yii\base\Model
 {
+    public $user_id;
     public $author_name;
     public $slug;
     public $status;
@@ -47,7 +48,7 @@ class ArticleAuthorForm extends \yii\base\Model
         return [
             [['author_name'], 'required'],
             [['status'], 'default', 'value' => 1],
-            [['status'], 'integer'],
+            [['status', 'user_id'], 'integer'],
             [['author_name'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
             ['author_image_file', 'safe'],
@@ -59,6 +60,7 @@ class ArticleAuthorForm extends \yii\base\Model
                 'targetClass' => ArticleAuthor::className(), 'targetAttribute' => ['author_name'],
                 'message' => 'This Author Name has already been taken'
             ],
+
         ];
     }
 
