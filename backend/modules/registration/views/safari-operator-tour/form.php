@@ -19,6 +19,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
     'validationUrl' => $model->action_validate_url,
 ]); ?>
 <div class="row">
+    <?php
+    if ((!$model->safarioperator_request_model->id)) { ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'user_id')->dropDownList(GeneralModel::users(), ['prompt' => 'Select person who owns'])->label('Person who owns') ?>
+        </div>
+    <?php } ?>
     <div class="col-md-6">
         <?= $form->field($model, 'logo')->fileInput() ?>
     </div>
@@ -97,7 +103,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
 
     <!-- <div class="col-md-6">
-        <?php 
+        <?php
         //  $form->field($model, 'google_rating')->widget(\yii\widgets\MaskedInput::class, [
         //     'mask' => '9.9',
         //     'options' => [
@@ -105,7 +111,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         //         'placeholder' => 'Enter rating (e.g., 4.50)',
         //     ],
         // ]);
-         ?>
+        ?>
     </div> -->
 
 

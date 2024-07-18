@@ -93,10 +93,29 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $username
      * @return static|null
      */
+    // public static function findByUsername($username)
+    // {
+    //     return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+    // }
+
+
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::find()
+            ->where(['username' => $username, 'status' => self::STATUS_ACTIVE])
+            ->andWhere([
+                'OR',
+                ['is_adminstrator' => 1],
+                ['is_admin' => 1],
+                ['is_cms_manager' => 1],
+                ['is_resort_manager' => 1],
+            ])
+            ->one();
     }
+
+
+
+
 
     /**
      * Finds user by password reset token
