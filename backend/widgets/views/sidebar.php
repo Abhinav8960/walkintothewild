@@ -715,6 +715,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/pendingapproval/article-comment/index",
 															"/pendingapproval/article-comment/view",
 														)) ? "active" : "" ?>" href="/pendingapproval/article-comment/index">Article Comments</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/pendingapproval/user-article/index",
+															"/pendingapproval/user-article/view",
+														)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li>
 
 						</ul>
 					</li>

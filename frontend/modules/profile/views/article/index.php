@@ -19,7 +19,7 @@ $this->params['title'] = $this->title;
                     <div class="card mt-2">
                         <div class="card-body">
                             <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
+                                <button class="join_btn text-center mt-sm-0 mt-2 articleBtn" value="<?= Url::toRoute(['create']) ?>">Create Article</button>
                             <?php } ?>
 
                             <div class="row">
@@ -165,3 +165,32 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+
+
+<div class="modal fade _standard-text" id="article-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Article</h1>
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+function articlefunction() {
+	$('.articleBtn').on('click', function () {
+        $('#article-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+articlefunction();
+             
+JS;
+$this->registerJs($script);
+?>
