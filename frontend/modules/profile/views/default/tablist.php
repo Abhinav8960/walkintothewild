@@ -88,7 +88,7 @@ $this->params['title'] = $this->title;
             <li class="nav-item"><a href="/profile/activity?user_handle=<?= $user->user_handle ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
             <li class="nav-item"><a href="/profile/contribution?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
             <li class="nav-item"><a href="/profile/photo?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
-            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
+            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->id == $user->id) { ?>
                 <li class="nav-item"><a href="/profile/business?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
             <?php } ?>
         </ul>

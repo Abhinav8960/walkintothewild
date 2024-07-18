@@ -35,6 +35,8 @@ class BusinessController extends FrontendBaseController
         } else {
             if (Yii::$app->user->identity->is_safari_operator != 1) {
                 throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
+            } elseif (Yii::$app->user->identity->id != $this->module->user()->id) {
+                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action.');
             }
         }
 
