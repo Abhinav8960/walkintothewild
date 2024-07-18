@@ -82,14 +82,14 @@ $this->params['title'] = $this->title;
         </div>
         <hr>
         <ul class="nav nav-pills mb-2 ms-2">
-            <li class="nav-item"><a href="/profile/default" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
-            <li class="nav-item"><a href="/profile/share-safari" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Share Safari</a></li>
-            <li class="nav-item"><a href="/profile/article" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
-            <li class="nav-item"><a href="/profile/activity" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
-            <li class="nav-item"><a href="/profile/contribution" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
-            <li class="nav-item"><a href="/profile/photo" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
+            <li class="nav-item"><a href="/profile/default?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
+            <li class="nav-item"><a href="/profile/share-safari?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Share Safari</a></li>
+            <li class="nav-item"><a href="/profile/article?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
+            <li class="nav-item"><a href="/profile/activity?user_handle=<?= $user->user_handle ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
+            <li class="nav-item"><a href="/profile/contribution?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
+            <li class="nav-item"><a href="/profile/photo?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
-                <li class="nav-item"><a href="/profile/business" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
+                <li class="nav-item"><a href="/profile/business?user_handle=<?= $user->user_handle ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
             <?php } ?>
         </ul>
     </div>
