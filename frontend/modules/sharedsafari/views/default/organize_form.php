@@ -164,7 +164,7 @@ use yii\helpers\Html;
                             'class' => 'form-select form-select-lg mb-3',
                             'onchange' => '
                      $.get( "' . Yii::$app->urlManager->createUrl('sharedsafari/default/dynamicsharedseat?total_seat=') . '"+$(this).val(), function( data ) {
-                        $( "#sharedsafarirequestform-share_seat").html(data);
+                        $( "#sharedsafariform-share_seat").html(data);
                         })'
                         ]
                     )->label(false) ?>
@@ -194,8 +194,8 @@ use yii\helpers\Html;
 
 $script = <<< JS
 
-          $("#sharedsafarirequestform-start_date").on("change", function(){
-          $("#sharedsafarirequestform-end_date").attr("min", $(this).val());
+          $("#sharedsafariform-start_date").on("change", function(){
+          $("#sharedsafariform-end_date").attr("min", $(this).val());
           });
           
 JS;

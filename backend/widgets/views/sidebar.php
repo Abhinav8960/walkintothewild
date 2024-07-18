@@ -772,23 +772,23 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<li class="slide <?= in_array($active_url, array(
 											"/sharesafari/default/index",
 											"/sharesafari/default/view",
-											"/sharesafari/request/index",
-											"/sharesafari/request/view",
+											// "/sharesafari/request/index",
+											// "/sharesafari/request/view",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/sharesafari/default/index",
 														"/sharesafari/default/view",
-														"/sharesafari/request/index",
-														"/sharesafari/request/view",
+														// "/sharesafari/request/index",
+														// "/sharesafari/request/view",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
 							<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
-								<li><a class="slide-item <?= in_array($active_url, array(
-																"/sharesafari/request/index",
-																"/sharesafari/request/view",
-															)) ? "active" : "" ?>" href="/sharesafari/request/index">Share Safari Request</a></li>
+								<!-- <li><a class="slide-item <?= in_array($active_url, array(
+																	"/sharesafari/request/index",
+																	"/sharesafari/request/view",
+																)) ? "active" : "" ?>" href="/sharesafari/request/index">Share Safari Request</a></li> -->
 							<?php endif; ?>
 
 							<li><a class="slide-item <?= in_array($active_url, array(

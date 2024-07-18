@@ -93,7 +93,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             <div class="col-lg-9 col-xl-10 col-12 paddingset_desktop ">
                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
                     <div class="left_text">
-                        <p class="">We found <strong><?= count($models) ?> parks</strong> for you</p>
+                        <p class="">We found <strong class="parklistcount"><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select mb-md-0 mb-4">
                         <div class="input_check pb-0">
@@ -111,7 +111,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
                 <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                     <div class="left_text">
-                        <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
+                        <p class="mb-0">We found <strong class="parklistcount"><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                         <div class="input_check pb-0">
@@ -122,9 +122,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                     </div>
                 </div>
-
                 <div id="ajaxMptrackData" class="">
-                    <?php $pjax = \yii\widgets\Pjax::begin();
+                    <?php
+                    $pjax = \yii\widgets\Pjax::begin();
                     echo \yii\widgets\ListView::widget([
                         'dataProvider' => $dataProvider,
                         'options' => ['class' => 'list-view-park row view-content mt-20 mla-mp-card-wrapper'],
@@ -182,7 +182,7 @@ $(document).ready(function() {
                 var html = $(text);
                 $("#w0").append(html.find(".list-view-park").html());
                 $("body").find(".pagination").html(html.find(".pagination").html());
-
+                    $(".parklistcount").text($(".list-view-park a").length);
             }
         });
     }

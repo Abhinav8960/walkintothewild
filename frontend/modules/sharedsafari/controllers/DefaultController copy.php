@@ -51,9 +51,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionOrganizeSafari()
     {
-        $model = new SharedSafariForm();
+        $model = new SharedSafariRequestForm();
         $model->host_user_id = Yii::$app->user->identity->id;
-        $model->status = ShareSafari::STATUS_ACTIVE;
+        $model->status = ShareSafariRequest::STATUS_ACTIVE;
         $model->action_url = '/sharedsafari/default/organize-safari';
         $model->action_validate_url = '/sharedsafari/default/validate';
         if ($this->request->isPost) {
@@ -61,10 +61,10 @@ class DefaultController extends FrontendBaseController
                 $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_model->save(false)) {
-                        $model->UploadFiles($model->shared_safari_model->id);
-                        if ($model->shared_safari_model->user) {
-                            $user = $model->shared_safari_model->user;
+                    if ($model->shared_safari_request_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_request_model->id);
+                        if ($model->shared_safari_request_model->user) {
+                            $user = $model->shared_safari_request_model->user;
                             $to_mail = $user->email;
                             $subject = 'New Safari Request';
                             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
@@ -78,7 +78,7 @@ class DefaultController extends FrontendBaseController
                 }
             }
         } else {
-            $model->shared_safari_model->loadDefaultValues();
+            $model->shared_safari_request_model->loadDefaultValues();
         }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('organize_form', [
@@ -93,7 +93,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionValidate()
     {
-        $model = new SharedSafariForm();
+        $model = new SharedSafariRequestForm();
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
@@ -107,8 +107,9 @@ class DefaultController extends FrontendBaseController
     public function actionUpdate($slug)
     {
         $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
-        $model = new SharedSafariForm($shared_safari_model);
-        $model->status = ShareSafari::STATUS_ACTIVE;
+        $model = new SharedSafariRequestForm($shared_safari_model);
+        $model->share_safari_id = $shared_safari_model->id;
+        $model->status = ShareSafariRequest::STATUS_ACTIVE;
         $model->action_url = '/sharedsafari/default/update?slug=' . $slug . '';
         $model->action_validate_url = '/sharedsafari/default/updatevalidate?id=' . $shared_safari_model->id . '';
 
@@ -117,15 +118,15 @@ class DefaultController extends FrontendBaseController
                 $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_model->save(false)) {
-                        $model->UploadFiles($model->shared_safari_model->id);
+                    if ($model->shared_safari_request_model->save(false)) {
+                        $model->UploadFiles($model->shared_safari_request_model->id);
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug]));
                     }
                 }
             }
         } else {
-            $model->shared_safari_model->loadDefaultValues();
+            $model->shared_safari_request_model->loadDefaultValues();
         }
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('organize_form', [
@@ -141,11 +142,11 @@ class DefaultController extends FrontendBaseController
     public function actionUpdatevalidate($id)
     {
         if ($id != null) {
-            $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
-            $model = new SharedSafariForm($shared_safari_model);
+            $shared_safari_request_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+            $model = new SharedSafariRequestForm($shared_safari_request_model);
         } else {
 
-            $model = new SharedSafariForm();
+            $model = new SharedSafariRequestForm();
         }
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
