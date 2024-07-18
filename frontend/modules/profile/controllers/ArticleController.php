@@ -41,9 +41,9 @@ class ArticleController extends FrontendBaseController
     public function actionCreate()
     {
         $model = new ArticleForm();
-        $model->action_url = '/article/create';
-        $model->action_validate_url = '/article/validate';
-        $model->status = Article::STATUS_ACTIVE;
+        $model->action_url = '/profile/article/create';
+        $model->action_validate_url = '/profile/article/validate';
+        $model->status = Article::STATUS_SUSPEND;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
@@ -101,9 +101,15 @@ class ArticleController extends FrontendBaseController
             $model->article_model->loadDefaultValues();
         }
 
-        return $this->render('_form', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_form', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('_form', [
+                'model' => $model,
+            ]);
+        }
     }
 
     public function actionValidate($id = null)
