@@ -3,6 +3,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\helpers\Url;
 ?>
 <div class="commentCount mb-4">
     <h6> Comments</h6>
@@ -13,12 +14,18 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
 ?>
         <div class="comments-persons">
             <div class="postcomment d-flex gap-3">
+
                 <div class="avatar">
                     <img src="<?= $article_comment->user && $article_comment->user->avatar <> '' ? $article_comment->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                 </div>
                 <div class="text_com">
                     <h6 class="nameavatr"><?= $article_comment->user->name ?></h6>
                     <p><?= $article_comment->comment ?></p>
+                </div>
+                <div class="objec-flgs">
+                    <?php if (Yii::$app->user->id) {  ?>
+                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/article/default/flag', 'slug' => $article->slug, 'article_comment_id' => $article_comment->id]) ?>">
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -65,3 +72,19 @@ $this->registerJs($script);
         display: none !important;
     }
 </style>
+
+
+<?php
+$script = <<< JS
+
+function writeareviewfunction() {
+    $('.flagBtn').on('click', function () {
+        $('#modalFlag').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+writeareviewfunction();     
+JS;
+$this->registerJs($script);
+?>

@@ -20,6 +20,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             ]) ?>
         </div>
 
+
         <div class="advertisment pt-5 d-lg-block d-none">
             <p class="text-center">ADVERTISMENT</p>
             <div class="advertisment_box-2">

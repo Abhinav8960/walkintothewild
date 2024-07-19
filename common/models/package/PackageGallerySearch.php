@@ -2,14 +2,14 @@
 
 namespace common\models\package;
 
-use common\models\package\PackageTermCondition;
+use common\models\package\PackageGallery;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * PackageTermConditionSearch represents the model behind the search form of `common\models\package\PackageTermCondition`.
+ * PackageGallerySearch represents the model behind the search form of `common\models\package\PackageGallery`.
  */
-class PackageTermConditionSearch extends PackageTermCondition
+class PackageGallerySearch extends PackageGallery
 {
     /**
      * {@inheritdoc}
@@ -17,10 +17,10 @@ class PackageTermConditionSearch extends PackageTermCondition
     public function rules()
     {
         return [
-            [['package_id'], 'required'],
-            [['package_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['description'], 'string'],
-            [['title'], 'string', 'max' => 512],
+            [['package_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['package_id', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['image'], 'string', 'max' => 255],
+            [['image_caption'], 'string', 'max' => 512],
         ];
     }
 
@@ -42,7 +42,7 @@ class PackageTermConditionSearch extends PackageTermCondition
      */
     public function search($params)
     {
-        $query = PackageTermCondition::find()->where(['status' => [1, 2]]);
+        $query = PackageGallery::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -62,14 +62,14 @@ class PackageTermConditionSearch extends PackageTermCondition
         $query->andFilterWhere([
             'id' => $this->id,
             'package_id' => $this->package_id,
+            'image' => $this->image,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
-        $query->andFilterWhere(['like', 'description', $this->description]);
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'image_caption', $this->image_caption]);
 
         return $dataProvider;
     }

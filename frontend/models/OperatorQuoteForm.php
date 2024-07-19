@@ -9,7 +9,7 @@ use Yii;
 use yii\base\Model;
 
 /**
- * ContactForm is the model behind the contact form.
+ * OperatorQuoteForm is the model behind the contact form.
  */
 class OperatorQuoteForm extends Model
 {
@@ -73,12 +73,7 @@ class OperatorQuoteForm extends Model
     }
 
 
-    /**
-     * Save Contatc Query
-     *
-     * @param Corporate $corporate
-     * @return void
-     */
+
     public function request(SafariOperator $operator)
     {
 

@@ -8,16 +8,17 @@ use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
-use common\models\package\form\PackageTermConditionForm;
+use common\models\package\form\PackageGalleryForm;
 use common\models\package\Package;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
+use common\models\package\PackageGallery;
+use common\models\package\PackageGallerySearch;
 use common\models\package\PackageIncluded;
+use common\models\package\PackageQuoteSearch;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageTermCondition;
-use common\models\package\PackageTermConditionSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -167,6 +168,18 @@ class ProfileController extends Controller
                                 $packageIncluded->selection = $selection;
                                 if (!$packageIncluded->save()) {
                                     throw new \Exception('Failed to save package inclusion option ' . $optionId);
+                                }
+
+                                if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_id, 'status' => 1])->all();
+                                    if ($package_days) {
+                                        foreach ($package_days as $package_day) {
+                                            $package_day->meal_breakfast = 1;
+                                            $package_day->meal_lunch = 1;
+                                            $package_day->meal_dinner = 1;
+                                            $package_day->save();
+                                        }
+                                    }
                                 }
                             }
 
@@ -336,6 +349,75 @@ class ProfileController extends Controller
     }
 
 
+
+    public function actionQuote($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $searchModel = new PackageQuoteSearch();
+        $searchModel->package_id = $package_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        return $this->render('quote', [
+            'package_model' => $package_model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+
+
+    public function actionGallery($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $searchModel = new PackageGallerySearch();
+        $searchModel->package_id = $package_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        return $this->render('gallery', [
+            'package_model' => $package_model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCreateGallery($package_id, $id = null)
+    {
+        $package_model = $this->findModel($package_id);
+        if ($id) {
+            $package_gallery_model = $this->findModelgallery($id);
+            $model = new PackageGalleryForm($package_gallery_model);
+        } else {
+            $model = new PackageGalleryForm();
+            $model->package_id = $package_id;
+        }
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->image = UploadedFile::getInstance($model, 'image');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_gallery_model->save(false)) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['gallery', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_gallery_model->loadDefaultValues();
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_gallery', [
+                'model' => $model,
+                'package_model' => $package_model,
+            ]);
+        }
+    }
+
     public function actionActive($id)
     {
         $model = PackageFaq::find()->where(['id' => $id])->limit(1)->one();
@@ -383,14 +465,15 @@ class ProfileController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function findModeltermcondition($id)
+    protected function findModelgallery($id)
     {
-        if (($model = PackageTermCondition::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 
     protected function findModelDay($package_id, $day)
     {

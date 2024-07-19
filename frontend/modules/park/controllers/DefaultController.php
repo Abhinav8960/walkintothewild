@@ -10,11 +10,13 @@ use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariParkMonth;
 use common\models\master\animal\MasterRareAnimal;
+use common\models\park\SafariParkRatingSearch;
 use common\models\sharesafari\ShareSafari;
 use common\models\suggestions\form\SafariSuggestionsForm;
 use frontend\models\SafariParkSearch;
 use frontend\models\SafariOperatorSearch;
 use frontend\controllers\FrontendBaseController;
+use frontend\models\SafariParkReviewForm;
 
 /**
  * DefaultController.
@@ -114,6 +116,13 @@ class DefaultController extends FrontendBaseController
         }
 
 
+
+        $ratingsearchModel = new SafariParkRatingSearch();
+        $ratingsearchModel->safari_park_id = $model->id;
+        $ratingsearchModel->status = 1;
+        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
+        $reviews = $ratingdataProvider->getModels();
+
         return $this->render(
             'view',
             [
@@ -129,6 +138,7 @@ class DefaultController extends FrontendBaseController
                 'operators' => $operators,
                 'shared_safaries' => $shared_safaries,
                 'device' => $this->device(),
+                'reviews' => $reviews
             ]
         );
     }
@@ -251,23 +261,60 @@ class DefaultController extends FrontendBaseController
     public function actionGeturl()
     {
         if (Yii::$app->request->isPost) {
-            $url = ['/park/default/parklist'];
-            if (isset(Yii::$app->request->bodyParams['SafariParkSearch'])) {
-                foreach (Yii::$app->request->bodyParams['SafariParkSearch'] as $key => $value) {
-                    if (in_array($key, ['master_location_id', 'session_id', 'master_animal_id', 'master_vehicle_id'])) {
-                        if ($value) {
-                            $url[$key] = $value;
-                        } else {
-                            $url[$key] = 0;
-                        }
-                    } else {
-                        if ($value) {
-                            $url['SafariParkSearch[' . $key . ']'] = $value;
-                        }
+            // Initialize URL with the base route
+            $url = ['/parklist'];
+
+            // Loop through the payload parameters
+            foreach (Yii::$app->request->post('SafariParkSearch') as $key => $value) {
+                // Only add parameters that are not empty
+                if (!empty($value)) {
+                    $url['SafariParkSearch[' . $key . ']'] = $value;
+                } else {
+                    $url['SafariParkSearch[' . $key . ']'] = 0;
+                }
+            }
+
+            // Construct the redirect URL
+            return \yii\helpers\Url::to($url);
+        }
+    }
+
+
+
+
+    public function actionReview($park_id)
+    {
+        $safari_park = SafariPark::find()->where(['id' => $park_id])->one();
+        if (!$safari_park) {
+            return $this->redirect(['/parklist']);
+        }
+
+        $model = new SafariParkReviewForm();
+        $model->safari_park_id = $park_id;
+
+        $model->action_url = '/park/default';
+        $model->action_validate_url = '/park/default/validatereview';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->rating_model->save(false)) {
+                        $model->updateRatingintoTable($safari_park);
+                        Yii::$app->session->setFlash('success', 'Thanks for Review!!');
+                        return $this->redirect([
+                            '/park/' . $safari_park->slug . ''
+                        ]);
                     }
                 }
             }
-            return \yii\helpers\Url::toRoute($url);
+        } else {
+            $model->rating_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_review_form', [
+                'model' => $model,
+                'park_id' => $park_id,
+            ]);
         }
     }
 }

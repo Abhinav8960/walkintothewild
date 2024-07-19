@@ -75,6 +75,16 @@ class DayItineraryForm  extends \yii\base\Model
                 'day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title',
                 'start_location', 'end_location', 'hotel_name', 'day_image', 'latitude', 'longitude'
             ], 'safe'],
+
+            [
+                ['day_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                'minWidth' => 940,
+                'maxWidth' => 940,
+                'maxHeight' => 430,
+                'minHeight' => 430,
+                'maxSize' => 250 * 1024,
+                'skipOnEmpty' => true,
+            ],
         ];
     }
 

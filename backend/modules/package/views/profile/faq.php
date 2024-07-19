@@ -45,6 +45,9 @@ $this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/
                                             return $model->answer;
                                         }
                                     ],
+
+                                    'created_at:dateTime:Created at',
+                                    'updated_at:dateTime:Last Updated at',
                                     [
                                         'label' => 'Status',
                                         'contentOptions' => ['style' => 'width: 10%;'],

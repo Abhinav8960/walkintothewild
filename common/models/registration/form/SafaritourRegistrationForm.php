@@ -16,6 +16,7 @@ use common\models\registration\SafariOperatorRequestPark;
  */
 class SafaritourRegistrationForm extends model
 {
+    public $user_id;
     public $park_id;
     public $category_id;
     public $safari_operator_id;
@@ -79,6 +80,7 @@ class SafaritourRegistrationForm extends model
 
 
 
+            $this->user_id                                    =  $this->safarioperator_request_model->user_id;
             $this->category_id                                    =  $this->safarioperator_request_model->category_id;
             $this->safari_operator_id                             =  $this->safarioperator_request_model->safari_operator_id;
             $this->business_name                                  =  $this->safarioperator_request_model->business_name;
@@ -145,10 +147,10 @@ class SafaritourRegistrationForm extends model
     public function rules()
     {
         $rules = [
-            [['category_id', 'safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
+            [['category_id', 'user_id', 'safari_operator_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_approved', 'status'], 'integer'],
             [['is_agree'], 'required', 'requiredValue' => 1, 'message' => 'You must agree to the terms and conditions.'],
 
-            [['business_name', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment'], 'required'],
+            [['business_name', 'register_comapany_name', 'category_id', 'address', 'park_id', 'email', 'budget_segment', 'user_id'], 'required'],
             [['phone_no', 'operator_phone_no'], 'unique', 'targetClass' => 'common\models\registration\SafariOperatorRequest', 'message' => 'This phone has already been taken.', 'targetAttribute' => 'id'],
             [['phone_no', 'operator_phone_no'], 'match', 'pattern' => '/^[1234567890]\d{9}$/', 'message' => 'Invalid Phone number.'],
             [['facebook_url', 'instagram_url', 'youtube_link'], 'url'],
@@ -240,6 +242,7 @@ class SafaritourRegistrationForm extends model
      */
     public function initializeForm()
     {
+        $this->safarioperator_request_model->user_id                         =  $this->user_id;
         $this->safarioperator_request_model->category_id                     =  $this->category_id;
         $this->safarioperator_request_model->safari_operator_id              =  $this->safari_operator_id;
         $this->safarioperator_request_model->business_name                   =  $this->business_name;

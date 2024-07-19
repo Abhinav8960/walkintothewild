@@ -4,12 +4,18 @@ namespace frontend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageForm;
+use common\models\package\Package;
+use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use Yii;
 use yii\web\UploadedFile;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageSearch;
 use frontend\controllers\FrontendBaseController;
+use frontend\models\PackageCommentForm;
+use frontend\models\PackageQuoteForm;
+use frontend\models\PackageReplyForm;
+use yii\web\NotFoundHttpException;
 
 /**
  * DefaultController.
@@ -46,6 +52,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = new PackageForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->owned_by_id = Yii::$app->user->identity->id;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
@@ -97,6 +104,83 @@ class DefaultController extends FrontendBaseController
             return $this->render('create', [
                 'model' => $model,
             ]);
+        }
+    }
+
+
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionView($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (empty($package)) {
+            return $this->redirect(['/package']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $searchModel = new PackageFaqSearch();
+        $searchModel->package_id = $package->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
+
+        $model = new PackageCommentForm();
+        $replymodel = new PackageReplyForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($package)) {
+            Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
+            return $this->redirect(\yii\helpers\Url::toRoute(['/package/' . $package->package_slug . '']));
+        }
+
+
+        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($package)) {
+            Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+            return $this->redirect(['/package/' . $package->package_slug . '']);
+        }
+
+
+
+
+        $packagemodel = new PackageQuoteForm();
+
+        $packagemodel->action_validate_url = '/package/default/validate';
+        if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package->id)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/package/' . $package->package_slug . '']);
+        }
+
+        return $this->render(
+            'view',
+            [
+                'package' => $package,
+                'faqs' => $faqs,
+                'model' => $model,
+                'replymodel' => $replymodel,
+                'packagemodel' => $packagemodel,
+            ]
+        );
+    }
+
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidate($id = null)
+    {
+        $packagemodel = new PackageQuoteForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $packagemodel = new PackageQuoteForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $packagemodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($packagemodel);
         }
     }
 }

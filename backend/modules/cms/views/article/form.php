@@ -142,10 +142,6 @@ $this->params['title'] = $this->title;
                         <div class="col-md-4">
                             <?= $form->field($model, 'comment_allowed')->dropDownList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
                         </div>
-                        <div class="col-md-4" <?php if ($model->comment_allowed == 0) { ?>style="display:none!important;" <?php } ?> id="approval_required">
-                            <?= $form->field($model, 'approval_required')->dropDownList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
-                        </div>
-
                     </div>
 
                     <div class="col-md-4">
@@ -189,15 +185,6 @@ $this->params['title'] = $this->title;
 <?php
 $script = <<< JS
     $(function(){
-        $('#articleform-comment_allowed').change(function(){
-            var comment_allowed=$("#articleform-comment_allowed").val();
-            if(comment_allowed ==1){
-                document.getElementById("approval_required").style.display= "block";
-            }else{
-                document.getElementById("approval_required").style.display= "none";
-            }
-        });
-
         $('#articleform-is_schedule').change(function(){
             var comment_allowed=$("#articleform-is_schedule").val();
             if(comment_allowed ==1){

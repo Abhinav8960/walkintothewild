@@ -2,19 +2,15 @@
 
 namespace frontend\controllers;
 
-use common\models\User;
 use frontend\models\profile\UserForm;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 
 /**
  * RareAnimalController.
  */
-class UserController extends Controller
+class UserController extends FrontendBaseController
 {
 
     protected function findModel()
@@ -25,15 +21,16 @@ class UserController extends Controller
     public function actionUpdate()
     {
         $user_model = $this->findModel();
-        $model = new UserForm($user_model);        
+        $model = new UserForm($user_model);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->profile_image = UploadedFile::getInstance($model, 'profile_image');
+                $model->cover_image = UploadedFile::getInstance($model, 'cover_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->user_model->save(false)) {
-                        $model->uploadFile($model->user_model->id);
+                        $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['update']);
                     }
@@ -48,5 +45,4 @@ class UserController extends Controller
             //'imagepath' => $model->imagepath,
         ]);
     }
-
 }

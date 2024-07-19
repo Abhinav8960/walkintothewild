@@ -18,7 +18,7 @@ class ArticleCommentSearch extends ArticleComment
         return [
             [['article_id', 'user_id', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['comment'], 'string'],
-            [['comment_datetime'], 'safe'],
+            [['comment_datetime', 'flaged'], 'safe'],
         ];
     }
 
@@ -64,6 +64,7 @@ class ArticleCommentSearch extends ArticleComment
             'id' => $this->id,
             'article_id' => $this->article_id,
             'user_id' => $this->user_id,
+            'flaged' => $this->flaged,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,

@@ -8,7 +8,6 @@ use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
-use common\models\package\form\PackageTermConditionForm;
 use common\models\package\Package;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
@@ -16,8 +15,6 @@ use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageTermCondition;
-use common\models\package\PackageTermConditionSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -168,6 +165,18 @@ class ProfileController extends Controller
                                 if (!$packageIncluded->save()) {
                                     throw new \Exception('Failed to save package inclusion option ' . $optionId);
                                 }
+
+                                if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_id, 'status' => 1])->all();
+                                    if ($package_days) {
+                                        foreach ($package_days as $package_day) {
+                                            $package_day->meal_breakfast = 1;
+                                            $package_day->meal_lunch = 1;
+                                            $package_day->meal_dinner = 1;
+                                            $package_day->save();
+                                        }
+                                    }
+                                }
                             }
 
                             $transaction->commit();
@@ -227,7 +236,7 @@ class ProfileController extends Controller
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['itinerary', 'package_id' => $package_id]);
+                        return $this->redirect(['itinerary', 'package_id' => $package_id, 'day' => $day]);
                     }
                 }
             }
@@ -383,14 +392,6 @@ class ProfileController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function findModeltermcondition($id)
-    {
-        if (($model = PackageTermCondition::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
 
     protected function findModelDay($package_id, $day)
     {

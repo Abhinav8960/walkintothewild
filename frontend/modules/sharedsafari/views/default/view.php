@@ -208,7 +208,7 @@ $this->params['title'] = $this->title;
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                         if ($share_safari_intrested) { ?>
                                             <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
-                                        <?php } else { ?>
+                                        <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                             <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
                                         <?php }
                                     } else { ?>
@@ -224,7 +224,10 @@ $this->params['title'] = $this->title;
             </div>
         </div>
         <div class="row">
+
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+
+
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>

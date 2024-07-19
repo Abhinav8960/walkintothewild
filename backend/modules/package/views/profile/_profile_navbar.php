@@ -3,6 +3,15 @@
         <div class="card-body">
             <div class="main-content-label mg-b-5">
                 <?= $package->package_name ?>
+                <?php
+
+                use yii\helpers\Html;
+
+                echo Html::a('Package Preview', ['/package/preview', 'slug' => $package->package_slug], [
+                    'class' => 'btn  btn-orange me-2 float-end',
+                    'name' => 'Package Preview',
+                ]);
+                ?>
             </div>
         </div>
 
@@ -18,6 +27,8 @@
                 <li><a href="/package/profile/getting-there?package_id=<?= $package->id ?>" class="nav-link <?= isset($getting_there_active) ? $getting_there_active : '' ?>">Getting There</a></li>
                 <li><a href="/package/profile/policy-info?package_id=<?= $package->id ?>" class="nav-link <?= isset($policy_info_active) ? $policy_info_active : '' ?>">Policy Info</a></li>
                 <li><a href="/package/profile/faq?package_id=<?= $package->id ?>" class="nav-link <?= isset($faq_active) ? $faq_active : '' ?>">FAQ</a></li>
+                <li><a href="/package/profile/quote?package_id=<?= $package->id ?>" class="nav-link <?= isset($quote_active) ? $quote_active : '' ?>">Request Quote</a></li>
+                <li><a href="/package/profile/gallery?package_id=<?= $package->id ?>" class="nav-link <?= isset($gallery_active) ? $gallery_active : '' ?>">Gallery</a></li>
             </ul>
         </div>
     </div>

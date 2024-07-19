@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -134,10 +135,26 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
     }
 
+    public function getPackagedays()
+    {
+        return $this->hasMany(PackageDay::class, ['package_id' => 'id']);
+    }
+
     public function getImagepath()
     {
         if ($this->package_image != '') {
             return '/storage/package/' . $this->id . '/' . $this->package_image;
         }
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
+    }
+
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
 }

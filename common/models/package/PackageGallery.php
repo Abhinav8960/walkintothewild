@@ -5,19 +5,20 @@ namespace common\models\package;
 use Yii;
 
 /**
- * This is the model class for table "package_term_condition".
+ * This is the model class for table "package_gallery".
  *
  * @property int $id
  * @property int $package_id
- * @property string|null $title
- * @property string|null $description
- * @property int|null $status
- * @property int|null $created_at
- * @property int|null $created_by
- * @property int|null $updated_at
- * @property int|null $updated_by
+ * @property string|null $image
+ * @property string|null $image_caption
+ * @property int $sequence
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
  */
-class PackageTermCondition extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class PackageGallery extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use \common\traits\CommanRelationship;
     /**
@@ -25,9 +26,8 @@ class PackageTermCondition extends \yii\db\ActiveRecord implements \common\inter
      */
     public static function tableName()
     {
-        return 'package_term_condition';
+        return 'package_gallery';
     }
-
 
     public function behaviors()
     {
@@ -54,10 +54,10 @@ class PackageTermCondition extends \yii\db\ActiveRecord implements \common\inter
     public function rules()
     {
         return [
-            [['package_id'], 'required'],
-            [['package_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['description'], 'string'],
-            [['title'], 'string', 'max' => 512],
+            [['package_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
+            [['package_id', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['image'], 'string', 'max' => 255],
+            [['image_caption'], 'string', 'max' => 512],
         ];
     }
 
@@ -69,13 +69,21 @@ class PackageTermCondition extends \yii\db\ActiveRecord implements \common\inter
         return [
             'id' => 'ID',
             'package_id' => 'Package ID',
-            'title' => 'Title',
-            'description' => 'Description',
+            'image' => 'Image',
+            'image_caption' => 'Image Caption',
+            'sequence' => 'Sequence',
             'status' => 'Status',
             'created_at' => 'Created At',
-            'created_by' => 'Created By',
             'updated_at' => 'Updated At',
+            'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getImagepath()
+    {
+        if ($this->image != '') {
+            return '/storage/package_gallery/' . $this->id . '/' . $this->image;
+        }
     }
 }

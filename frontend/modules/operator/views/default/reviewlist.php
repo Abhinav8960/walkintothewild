@@ -162,7 +162,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
                                                                 </div>
                                                                 <p><?= $review->review ?> &nbsp;
-                                                                    <span class="writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
+                                                                    <?php if (Yii::$app->user->id == $review->user_id) { ?>
+                                                                        <span class="writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
+                                                                    <?php } ?>
                                                                 </p>
                                                             </div>
                                                         </div>

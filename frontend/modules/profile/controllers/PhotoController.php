@@ -18,6 +18,6 @@ class PhotoController extends FrontendBaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->render('index', ['user' => $this->module->user()]);
     }
 }

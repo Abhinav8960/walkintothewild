@@ -24,6 +24,13 @@ use kartik\datetime\DateTimePicker;
     <div class="card-body">
 
         <div class="row">
+            <?php
+            if ((!$model->package_model->id)) { ?>
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'owned_by_id')->dropDownList(GeneralModel::users(), ['prompt' => 'Select person who owns the package'])->label('Person who owns the package') ?>
+                </div>
+            <?php } ?>
             <div class="col-md-3">
                 <?= $form->field($model, 'package_name')->textInput([
                     'maxlength' => true,
