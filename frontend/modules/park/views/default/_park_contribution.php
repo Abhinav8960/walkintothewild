@@ -15,9 +15,14 @@ $suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id,
     <div class="title_top">
         <h4>Park Contribution</h4>
     </div>
-    <div class="title_filter mb-3">
-        <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $safari_model->id]) ?>" class="btn_newsafari writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">Suggest Correction </button>
-    </div>
+    <?php if (Yii::$app->user->id) {  ?>
+
+        <div class="title_filter mb-3">
+            <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $safari_model->id]) ?>" class="btn_newsafari writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">Suggest Correction </button>
+        </div>
+    <?php } else {
+        echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for giving your contribution';
+    } ?>
     <div class="title_filter mb-2">
         <div class="input_check d-flex gap-3 align-items-center">
             <?php

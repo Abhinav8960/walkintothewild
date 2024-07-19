@@ -37,10 +37,14 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
             </div>
         <?php } ?>
     </div>
-    <div class="title_filter mb-2">
-        <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $safari_model->id]) ?>" class="btn_newsafari writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
+    <?php if (Yii::$app->user->id) {  ?>
+        <div class="title_filter mb-2">
+            <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $safari_model->id]) ?>" class="btn_newsafari writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
+        </div>
+    <?php } else {
+        echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for giving your review';
+    } ?>
 
-    </div>
     <div class="title_filter mb-2">
 
         <div id="review-list">
