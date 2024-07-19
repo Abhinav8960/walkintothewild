@@ -131,7 +131,7 @@
 										</li>
 									<?php } ?>
 									<li>
-										<a class="" href="/profile/default">
+										<a class="" href="<?= Url::toRoute(['/profile/default', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
 											<i class="fa-solid fa-user"></i>
 											Profile</a>
 									</li>
@@ -160,7 +160,7 @@
 											<i class="fa-solid fa-user"></i>
 											Safari Experience</a>
 									</li>
-									
+
 									<li>
 										<a class="" href="#">
 											<i class="fa-solid fa-user"></i>

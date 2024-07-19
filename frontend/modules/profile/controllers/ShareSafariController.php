@@ -4,6 +4,7 @@ namespace frontend\modules\profile\controllers;
 
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
+use common\models\User;
 use frontend\controllers\FrontendBaseController;
 
 
@@ -16,14 +17,15 @@ class ShareSafariController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($user_handle)
     {
-        $organized_by = ShareSafari::find()->where(['host_user_id' => $this->module->user()->id])->all();
-        $joined_by = ShareSafariIntrested::find()->where(['user_id' => $this->module->user()->id])->all();
+        $user = User::find()->where(['user_handle' => $user_handle])->limit(1)->one();
+        $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
+        $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id])->all();
         return $this->render(
             'index',
             [
-                'user' => $this->module->user(),
+                'user' => $user,
                 'organized_by' => $organized_by,
                 'joined_by' => $joined_by,
             ]
