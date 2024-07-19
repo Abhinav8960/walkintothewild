@@ -60,7 +60,7 @@ return [
     '/package/profile/select-faq/<package_id>' => '/package/profile/select-faq', //package profile select faq url     
 
 
-    '/profile/default/<user_handle>' => '/profile/default/index',
+    '/profile/user/<user_handle>' => '/profile/default/index',
 
     '/profile/article/validate' => '/profile/article/validate',
     '/profile/article/create' => '/profile/article/create',

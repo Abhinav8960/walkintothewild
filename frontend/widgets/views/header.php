@@ -131,39 +131,28 @@
 										</li>
 									<?php } ?>
 									<li>
-										<a class="" href="<?= Url::toRoute(['/profile/default', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
+										<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
 											<i class="fa-solid fa-user"></i>
 											Profile</a>
 									</li>
 									<li>
-										<a class="" href="/user/update">
-											<i class="fa-solid fa-user"></i>
+										<a class="" href="/account">
+											<i class="fa-solid fa-cog"></i>
 											Account Setting</a>
 									</li>
 									<li>
 										<a class="" href="#">
-											<i class="fa-solid fa-user"></i>
+											<i class="fa-solid fa-message"></i>
 											Messages</a>
 									</li>
 									<li>
 										<a class="" href="/profile/search">
-											<i class="fa-solid fa-user"></i>
+											<i class="fa-solid fa-search"></i>
 											Search Profile</a>
 									</li>
 									<li>
-										<a class="" href="#">
-											<i class="fa-solid fa-user"></i>
-											Article</a>
-									</li>
-									<li>
-										<a class="" href="#">
-											<i class="fa-solid fa-user"></i>
-											Safari Experience</a>
-									</li>
-
-									<li>
-										<a class="" href="#">
-											<i class="fa-solid fa-user"></i>
+										<a class="" href="/account/wishlist">
+											<i class="fa-solid fa-heart"></i>
 											Whishlist</a>
 									</li>
 									<li>

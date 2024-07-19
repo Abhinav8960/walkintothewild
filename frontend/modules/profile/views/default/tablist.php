@@ -10,18 +10,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $this->title = 'Profile';
 $this->params['title'] = $this->title;
 
-print_r(Yii::$app->requestedRoute);
 ?>
 
-<div class="card overflow-hidden">
+<div class="card overflow-hidden mt-2">
     <div class="card-body p-0">
-        <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="img-fluid" style="width: 1500px; height: 300px;">
+        <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class="img-fluid" style="width: 1500px; height: 300px;">
         <div class="row align-items-center">
             <div class="mt-n5">
                 <div class="d-flex align-items-center justify-content-center mb-2">
                     <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle" style="width: 110px; height: 110px;" ;="">
                         <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden" style="width: 100px; height: 100px;" ;="">
-                            <img src="<?= $user->profile_image <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
+                            <img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
                         </div>
                     </div>
                 </div>
@@ -31,13 +30,18 @@ print_r(Yii::$app->requestedRoute);
                 <div class="text-center">
                     <h6 class="mb-0"><?= $user->userhandle ?></h6>
                 </div>
+                <?php if ($user->about <> '') { ?>
+                    <div class="text-center">
+                        <p class="mb-0"><?= $user->about ?></p>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-4 ">
                 <div class="d-flex align-items-center m-1">
-                    <p class="mb-1 m-4"><?= UserFollow::find()->where(['user_id' => $user->id, 'status' => 1])->count(); ?>Followers</p>
-                    <p class="mb-1 m-4"><?= UserFollow::find()->where(['follow_user_id' => $user->id, 'status' => 1])->count(); ?>Following</p>
+                    <p class="mb-1 m-4"><?= $user->getUserfollowers()->where(['status' => 1])->count(); ?> Followers</p>
+                    <p class="mb-1 m-4"><?= $user->getUserfollowings()->where(['status' => 1])->count(); ?> Following</p>
                 </div>
             </div>
 
@@ -57,9 +61,6 @@ print_r(Yii::$app->requestedRoute);
 
             <div class="col-lg-4">
                 <div class="sociel_icons ps-3">
-                    <?php
-                    $shared_url = urlencode(Url::to('', true));
-                    ?>
                     <ul>
                         <?php if ($user->facebook_url) { ?>
                             <li><a href="<?= $user->facebook_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
@@ -90,8 +91,13 @@ print_r(Yii::$app->requestedRoute);
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
-            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->id == $user->id) { ?>
-                <li class="nav-item"><a href="<?= Url::toRoute(['/profile/business', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
+            <?php if (Yii::$app->user->identity->id == $user->id) {
+                if ($user->is_safari_operator == 1) { ?>
+                    <li class="nav-item"><a href="<?= Url::toRoute(['/profile/business', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
+                <?php } else if (in_array($user->account_type, [2, 3])) { ?>
+                    <li class="nav-item"><a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="nav-link bg-warning">Register Your Business</a></li>
+                <?php }
+                ?>
             <?php } ?>
         </ul>
     </div>
@@ -102,6 +108,6 @@ print_r(Yii::$app->requestedRoute);
     }
 
     .linear-gradient {
-        background-image: linear-gradient(#50b2fc, #f44c66);
+        background-image: linear-gradient(#09422dfc, #f9d600);
     }
 </style>
