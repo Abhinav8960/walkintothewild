@@ -4548,8 +4548,8 @@ color: #4B4B4B;
 
 .titlePrice{
 
-    font-size: var(--fs-16);
-    font-weight: 600;
+    font-size: var(--fs-18);
+    font-weight: 700;
     color: #4B4B4B;
 }
 
@@ -4557,6 +4557,7 @@ color: #4B4B4B;
 
     padding: 6px 14px;
     font-weight: 500;
+    border-radius: 8px;
 }
 
 .rangetours.range input[type="range"] {
@@ -4723,4 +4724,21 @@ color: #4B4B4B;
     /* Additional label styles if necessary */
     margin-left: 5px;
     /* Example: Adds a margin to the left of the label */
+}
+.sharesafri-card.tourpackage .flotingdate{
+
+    height: auto;
+    width: auto;
+    padding: 1px 10px;
+}
+.icons_restro{
+
+    text-align: center;
+    padding-top: 10px;
+}
+.icons_restro p{
+
+    color: #4B4B4B;
+    font-size: 14px ;
+    font-weight: 500;
 }
