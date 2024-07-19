@@ -3,8 +3,11 @@
 namespace frontend\controllers;
 
 use Yii;
+use common\models\User;
 use yii\web\Controller;
 use common\models\RenderedContent;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * FrontendBaseController
@@ -67,5 +70,17 @@ class FrontendBaseController extends Controller
     public function device()
     {
         return (\Yii::$app->mobileDetect->isMobile()) ? 'mobile' : 'desktop';
+    }
+
+    /**
+     * Find User by Handle
+     */
+    public function findUserbyHandle($user_handle)
+    {
+        if ($user = User::find()->where(['user_handle' => $user_handle])->limit(1)->one()) {
+            return $user;
+        }
+
+        throw new ForbiddenHttpException('User Not Found');
     }
 }

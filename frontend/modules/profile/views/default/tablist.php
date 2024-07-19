@@ -1,7 +1,8 @@
 <?php
 
-use common\models\UserFollow;
 use yii\helpers\Url;
+use common\models\UserFollow;
+use common\models\registration\SafariOperatorRequest;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -94,8 +95,14 @@ $this->params['title'] = $this->title;
             <?php if (Yii::$app->user->identity->id == $user->id) {
                 if ($user->is_safari_operator == 1) { ?>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/business', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
-                <?php } else if (in_array($user->account_type, [2, 3])) { ?>
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="nav-link bg-warning">Register Your Business</a></li>
+                    <?php } else if (in_array($user->account_type, [2, 3])) {
+                    $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->one();
+                    if ($business_request) { ?>
+                        <li class="nav-item"><a href="<?= Url::toRoute(['/profile/business/request']) ?>" class="nav-link bg-info">Pending Business Request</a></li>
+                    <?php } else { ?>
+                        <li class="nav-item"><a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="nav-link bg-warning">Register Your Business</a></li>
+                    <?php }
+                    ?>
                 <?php }
                 ?>
             <?php } ?>

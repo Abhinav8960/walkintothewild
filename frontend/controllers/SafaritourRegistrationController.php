@@ -29,15 +29,23 @@ class SafaritourRegistrationController extends FrontendBaseController
         }
         if (Yii::$app->user->identity) {
             $model = SafariOperator::findOne(['user_id' => Yii::$app->user->identity->id]);
+            if ($model) {
+                return $this->redirect(['/profile/business/index']);
+            }
 
-            if ($model !== null) {
-                Yii::$app->getResponse()->redirect(Yii::$app->params['backend_url'])->send();
-                Yii::$app->end();
+            if (!in_array(Yii::$app->user->identity->account_type, [2, 3])) {
+                Yii::$app->session->setFlash('warning', 'Please Update Your Account Type for Register as an tour Operator');
+                return $this->redirect(['/account']);
             }
         }
         $model = new SafaritourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->user_id = Yii::$app->user->identity->id;
+        if (Yii::$app->user->identity->account_type == 2) {
+            $model->category_id = 2; // Wild Life Photographer
+        } else if (Yii::$app->user->identity->account_type == 3) {
+            $model->category_id = 1; // safari Operator
+        }
         $model->action_url = '/safaritour-registration';
         $model->action_validate_url = '/safaritour-registration/validate';
 

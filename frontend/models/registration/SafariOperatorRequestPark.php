@@ -3,6 +3,7 @@
 namespace frontend\models\registration;
 
 use Yii;
+use common\models\park\SafariPark;
 
 /**
  * This is the model class for table "safari_operator_request_park".
@@ -71,6 +72,11 @@ class SafariOperatorRequestPark extends \yii\db\ActiveRecord
         ];
     }
 
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+    }
 
     /**
      * Parks List

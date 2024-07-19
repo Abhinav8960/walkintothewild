@@ -308,7 +308,7 @@ class SafariOperatorRequestForm extends model
     {
 
         if ($this->logo) {
-            $storagePath = Yii::$app->params['datapath'] . '/safarioperator';
+            $storagePath = Yii::$app->params['datapath'] . '/safarioperatorrequest';
 
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
@@ -319,7 +319,7 @@ class SafariOperatorRequestForm extends model
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
-
+ 
             $fileName = 'safarioperator' . time() . '.' . $this->logo->extension;
             $filePath = $storagePath . '/' . $fileName;
 

@@ -23,13 +23,13 @@ foreach ($activies as $key => $role) {
     }
 }
 
-$html_park = '';
+// $html_park = '';
 $park = GeneralModel::operatorpark($safari_operator->id);
-foreach ($park as $key => $role) {
-    if (isset(GeneralModel::safariparkoption()[$key])) {
-        $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
-    }
-}
+// foreach ($park as $key => $role) {
+//     if (isset(GeneralModel::safariparkoption()[$key])) {
+//         $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
+//     }
+// }
 ?>
 <div class="container">
     <?= $this->render('@frontend/modules/profile/views/default/tablist', ['business' => 'active', 'user' => $user]) ?>
@@ -39,7 +39,7 @@ foreach ($park as $key => $role) {
                 <div class="card-body">
                     <div class="container-fluid">
                         <div class="col-md-3 mb-3">
-                            <a class="btn_newsafari organizeBtn" href="/profile/business/edit-request?safari_operator_id=<?= $safari_operator->id ?>"><i class="fas fa-edit me-1"></i>Update Business</a>
+                            <a class="btn_newsafari organizeBtn" href="/profile/business/edit-request"><i class="fas fa-edit me-1"></i>Update Business</a>
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
@@ -69,7 +69,7 @@ foreach ($park as $key => $role) {
                                     <!-- Safari Parks content goes here -->
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <img src="<?= $safari_operator->Imagepath ?>" width="150" height="150">
+                                            <img src="<?= $safari_operator->Imagepath ?>" style="width:100%;">
                                         </div>
                                         <div class="col-md-3">
                                             <div class="text-box">
@@ -148,9 +148,6 @@ foreach ($park as $key => $role) {
                                                     <span>Offers Other Wildlife Activities: </span><?= substr($html, 0, -2) ?>
                                                 </p>
 
-                                                <p>
-                                                    <span>Operates in Parks : </span><?= substr($html_park, 0, -2) ?>
-                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -160,6 +157,34 @@ foreach ($park as $key => $role) {
                                                 <span>About Business: </span><?= $safari_operator->about_business ?>
                                             </p>
                                         </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-4">
+                                        <h5>Park List</h5>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <td>Park Name</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $srn = 1;
+                                                foreach ($park as $key => $park_name) {
+                                                ?>
+                                                    <tr>
+                                                        <td><?= $srn ?></td>
+                                                        <td><?= $park_name ?></td>
+                                                    </tr>
+                                                <?php
+
+                                                    $srn++;
+                                                }
+                                                ?>
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <div class="tab-content_tour" id="tab22">

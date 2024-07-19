@@ -41,7 +41,13 @@ $this->title = 'Account Settings';
                             </div>
 
                             <div class="col-md-6">
-                                <?= $form->field($model, 'account_type')->radioList([1 => 'Individual/Personal', 2 => 'Wildlife Influencer', 3 => 'Safari Operator']) ?>
+                                <?php
+                                $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer/Photographer', 3 => 'Safari Operator'];
+                                if (Yii::$app->user->identity->is_safari_operator == 1) {
+                                    echo 'Account Type <br> <b>' . (isset($account_type[$model->account_type]) ? $account_type[$model->account_type] : $model->account_type) . '</b>';
+                                } else { ?>
+                                    <?= $form->field($model, 'account_type')->radioList($account_type) ?>
+                                <?php  } ?>
                             </div>
 
                             <div class="col-md-6">
@@ -67,7 +73,7 @@ $this->title = 'Account Settings';
                             </div>
 
                             <div class="col-md-12">
-                                <?= Html::submitButton('Save Chnages', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                                <?= Html::submitButton('Save Changes', ['class' => 'btn btn-info mb-2 ms-2']) ?>
                             </div>
                         </div>
                     </div>
@@ -78,7 +84,7 @@ $this->title = 'Account Settings';
                             </div>
 
                             <div class="col-md-12">
-                                <?= Html::submitButton('Save Chnages', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                                <?= Html::submitButton('Save Changes', ['class' => 'btn btn-info mb-2 ms-2']) ?>
                             </div>
                         </div>
                     </div>
@@ -89,7 +95,7 @@ $this->title = 'Account Settings';
                             </div>
 
                             <div class="col-md-12">
-                                <?= Html::submitButton('Save Chnages', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                                <?= Html::submitButton('Save Changes', ['class' => 'btn btn-info mb-2 ms-2']) ?>
                             </div>
                         </div>
 

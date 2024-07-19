@@ -533,13 +533,13 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function operatorresquestpark($safari_operator_request_id)
     {
         $query = SafariOperatorRequestPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_request_id' => $safari_operator_request_id]);
-        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
+        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park.title');
     }
 
     public static function operatorpark($safari_operator_id)
     {
         $query = SafariOperatorPark::find()->where(['status' => self::STATUS_ACTIVE, 'safari_operator_id' => $safari_operator_id]);
-        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park_id');
+        return ArrayHelper::map($query->orderBy(['id' => SORT_ASC])->all(), 'park_id', 'park.title');
     }
 
     public static function birdingoperatorresquestpark($birding_operator_request_id)

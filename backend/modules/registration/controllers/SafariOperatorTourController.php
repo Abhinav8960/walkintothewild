@@ -71,7 +71,9 @@ class SafariOperatorTourController extends Controller
                             $safari_operator->register_comapany_name          =  $model->safarioperator_request_approval_model->register_comapany_name;
                             $safari_operator->address                         =  $model->safarioperator_request_approval_model->address;
                             $safari_operator->gst                             =  $model->safarioperator_request_approval_model->gst;
-                            $safari_operator->logo                            =  $model->safarioperator_request_approval_model->logo;
+                            if ($model->safarioperator_request_approval_model->logo <> '') {
+                                $safari_operator->logo                            =  $model->safarioperator_request_approval_model->logo;
+                            }
                             $safari_operator->is_highlighted                  =  $model->safarioperator_request_approval_model->is_highlighted;
                             $safari_operator->google_rating                   =  $model->safarioperator_request_approval_model->google_rating;
                             $safari_operator->google_review_count             =  $model->safarioperator_request_approval_model->google_review_count;
@@ -101,36 +103,17 @@ class SafariOperatorTourController extends Controller
                             $safari_operator->status                          =  $model->safarioperator_request_approval_model->status;
                             if ($safari_operator->save(false)) {
 
-                                $sourcePath = Yii::$app->params['datapath'] . '/safarioperatorrequest/' . $safari_operator->safari_operator_request_id . '/' . $safari_operator->logo;
-                                $destinationPath = Yii::$app->params['datapath'] . '/safarioperator/' . $safari_operator->id . '/' . $safari_operator->logo;
-                                $destinationDir = Yii::$app->params['datapath'] . '/safarioperator/' . $safari_operator->id . '/';
-                                $destinationFile = $safari_operator->logo;
-
-                                try {
-                                    // Create destination directory if it doesn't exist
-                                    FileHelper::createDirectory($destinationDir);
-                                } catch (Exception $e) {
-                                    echo "Failed to create directory: " . $e->getMessage();
-                                    exit;
-                                }
-
-                                // Check if source file exists before copying
-                                if (!file_exists($sourcePath)) {
-                                    echo "Source file does not exist: $sourcePath";
-                                    exit;
-                                }
-
-                                try {
-                                    // Attempt to copy the image file
-                                    if (copy($sourcePath, $destinationPath)) {
-                                        echo "Image copied successfully.";
-                                    } else {
-                                        echo "Failed to copy image.";
-                                        exit;
+                                if ($model->safarioperator_request_approval_model->logo <> '') {
+                                    $sourcePath = Yii::$app->params['datapath'] . '/safarioperatorrequest/' . $safari_operator->safari_operator_request_id . '/' . $model->safarioperator_request_approval_model->logo;
+                                    $destinationPath = Yii::$app->params['datapath'] . '/safarioperator/' . $safari_operator->id . '/' . $model->safarioperator_request_approval_model->logo;
+                                    $destinationDir = Yii::$app->params['datapath'] . '/safarioperator/' . $safari_operator->id . '/';
+                                    if (!file_exists($destinationDir)) {
+                                        FileHelper::createDirectory($destinationDir);
                                     }
-                                } catch (Exception $e) {
-                                    echo "Failed to copy image: " . $e->getMessage();
-                                    exit;
+
+                                    if (file_exists($sourcePath)) {
+                                        copy($sourcePath, $destinationPath);
+                                    }
                                 }
 
 

@@ -90,8 +90,14 @@ class BusinessController extends FrontendBaseController
         }
     }
 
-    public function actionEditRequest($safari_operator_id)
+    public function actionEditRequest()
     {
+        $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id])->limit(1)->one();
+        if (!$safari_operator) {
+            return $this->redirect(['/profile']);
+        }
+        $safari_operator_id = $safari_operator->id;
+
         $searchModel = new SafariOperatorRequestSearch();
         $searchModel->safari_operator_id = $safari_operator_id;
         $searchModel->user_id = Yii::$app->user->identity->id;
@@ -103,7 +109,7 @@ class BusinessController extends FrontendBaseController
         $model = new SafariOperatorRequestForm($safari_operator_model);
         $model->user_id = Yii::$app->user->identity->id;
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/profile/business/edit-request?safari_operator_id=' . $safari_operator_id . '';
+        $model->action_url = '/profile/business/edit-request';
         $model->action_validate_url = '/profile/business/validate?safari_operator_id=' . $safari_operator_id . '';
         $model->referrer_url = \Yii::$app->request->referrer;
 
@@ -177,5 +183,20 @@ class BusinessController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+    /**
+     * Business Request
+     */
+    public function actionRequest()
+    {
+        $user = Yii::$app->user->identity;
+        $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->orderby(['id' => SORT_DESC])->one();
+        if (!$business_request) {
+            Yii::$app->session->setFlash('success', 'No Business Request Found!');
+            return $this->redirect(['/profile']);
+        }
+
+        return $this->render('request', ['user' => $user, 'safari_operator_request' => $business_request]);
     }
 }
