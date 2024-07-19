@@ -225,26 +225,5 @@ class ArticleForm extends Model
             }
         }
 
-        // if ($this->feature_image) {
-        //     $storagePath = Yii::$app->params['datapath'] . '/article';
-
-        //     if (!file_exists($storagePath)) {
-        //         mkdir($storagePath);
-        //         chmod($storagePath, 0777);
-        //     }
-        //     $storagePath = $storagePath . '/' . $this->article_model->id;
-        //     if (!file_exists($storagePath)) {
-        //         mkdir($storagePath);
-        //         chmod($storagePath, 0777);
-        //     }
-
-        //     $fileName = 'article_feature' . time() . '.' . $this->feature_image->extension;
-        //     $filePath = $storagePath . '/' . $fileName;
-
-        //     if ($this->feature_image->saveAs($filePath)) {
-        //         $this->article_model->feature_image = $fileName;
-        //         $this->article_model->save(false);
-        //     }
-        // }
     }
 }
