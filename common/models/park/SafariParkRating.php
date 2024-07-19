@@ -2,6 +2,7 @@
 
 namespace common\models\park;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -76,5 +77,9 @@ class SafariParkRating extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'status' => 'Status',
         ];
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
