@@ -130,7 +130,10 @@ return [
         ],
         'profile' => [
             'class' => 'frontend\modules\profile\Module',
-        ]
+        ],
+        'account' => [
+            'class' => 'frontend\modules\account\Module',
+        ],
     ],
     'params' => $params,
 ];

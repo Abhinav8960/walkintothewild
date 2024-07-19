@@ -2,6 +2,8 @@
 
 namespace frontend\modules\profile\controllers;
 
+use Yii;
+use yii\web\UploadedFile;
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
 use common\models\operator\form\SafariOperatorRequestForm;
@@ -15,8 +17,6 @@ use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
 use common\models\SafariOperatorRequestSearch;
 use frontend\controllers\FrontendBaseController;
-use Yii;
-use yii\web\UploadedFile;
 
 /**
  * BusinessController.
@@ -30,14 +30,8 @@ class BusinessController extends FrontendBaseController
      */
     public function actionIndex()
     {
-        if (!Yii::$app->user->identity) {
-            \Yii::$app->response->redirect('/site/login')->send();
-        } else {
-            if (Yii::$app->user->identity->is_safari_operator != 1) {
-                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
-            } elseif (Yii::$app->user->identity->id != $this->module->user()->id) {
-                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action.');
-            }
+        if (Yii::$app->user->identity->is_safari_operator != 1) {
+            return $this->redirect(['/']);
         }
 
         $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id])->limit(1)->one();
@@ -80,7 +74,6 @@ class BusinessController extends FrontendBaseController
 
     public function actionFlagview($id)
     {
-
         $searchModel = new SafariOperatorRatingReportSearch();
         $searchModel->safari_operator_rating_id = $id;
         $searchModel->status = 1;

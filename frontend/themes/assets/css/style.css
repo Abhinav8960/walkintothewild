@@ -4281,7 +4281,8 @@ figure {
     position: absolute;
     top: calc(100% + -5px);
     right: 45px;
-    width: 153px;
+    width: auto;
+    /* 153px; */
     /* min-height: 100px; */
     background: #fff;
     /* box-shadow: 0 10px 20px rgba(0, 0, 0, .2); */
@@ -4723,4 +4724,18 @@ color: #4B4B4B;
     /* Additional label styles if necessary */
     margin-left: 5px;
     /* Example: Adds a margin to the left of the label */
+}
+
+.nav-pills {
+    --bs-nav-pills-border-radius: var(--bs-border-radius);
+    --bs-nav-pills-link-active-color: #fff;
+    --bs-nav-pills-link-active-bg: #09422d;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-link:hover, .nav-link:focus {
+    color: #09422d;
 }

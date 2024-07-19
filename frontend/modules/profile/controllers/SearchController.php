@@ -18,7 +18,7 @@ class SearchController extends FrontendBaseController
      */
     public function actionIndex()
     {
-        $user_list = User::find()->where(['status' => 10])->all();
+        $user_list = User::find()->where(['status' => 10])->andWhere("user_handle IS NOT NULL")->all();
         return $this->render('index', ['user_list' => $user_list]);
     }
 }
