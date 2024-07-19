@@ -1,7 +1,8 @@
 <?php
 
 return [
-    '/park' => '/park/default/index', //home page url
+    '/home' => '/plan-safari', //home Page url
+    '/park' => '/park/default/index', //home-old page url
     '/park/<slug>' => '/park/default/view', //park view url
 
     '/parklist/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',

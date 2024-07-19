@@ -17,7 +17,7 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
-    'defaultRoute' => '/park',
+    'defaultRoute' => '/plan-safari',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'reCaptcha3' => [
