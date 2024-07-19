@@ -3,7 +3,8 @@
 use common\interfaces\Constants;
 use frontend\models\ArticleSearch;
 use common\models\cms\banner\Banner;
-
+use common\models\operator\SafariOperatorRating;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 
@@ -53,140 +54,194 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
 
     </div>
+    <?= $this->render('_view_navbar', ['active' => 'park', 'operator' => $operator]) ?>
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-11 col-lg-12">
                 <div class="row pt-5 pb-4">
-                    <div class="col-lg-3 col-md-3 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
-                        <div class="safri_tour">
-                            <div class="titlerescent" >
-                                <h3 style="text-align:left !important;"><?= $operator->business_name ?></h3>
-                            </div>
-                            <div class="topics_listing">
-                                <?= $this->render('_view_navbar', ['active' => 'safari', 'operator' => $operator]) ?>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-lg-9 col-md-9 col-xxl-10 col-xl-9 ">
-                        <div class="tab-content_tour active">
-                            <?php
-                            if ($operator_parks) {
-                                foreach ($operator_parks as $operator_park) {
-                                    $park_detail = $operator_park->park;
-                            ?>
-                                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
-                                        <div class="searchSafari_parks mb-4">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="tab-content_tour active">
                                             <div class="row">
-                                                <div class="col-xl-3 col-sm-4">
-                                                    <div class="parksImg h-100">
-                                                        <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-9 col-sm-8">
-                                                    <div class="parks_body">
-                                                        <div class="safrititles pt-md-0 pt-3">
-                                                            <h6 class=""><?= $park_detail->title ?></h6>
-                                                        </div>
-                                                        <div class="seelctes_text pt-2 pb-3 ">
-                                                            <p><?= $park_detail->long_description ?></p>
-                                                        </div>
-                                                        <div class="row tab_hide">
-                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-3 mb-md-1">
-                                                                <div class="safridetails_form d-flex gap-3 ">
-                                                                    <div class="iconImg">
-                                                                        <img src="<?= $this->params['baseurl'] ?>/img/hotel_forest_location.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Location">
-                                                                    </div>
-                                                                    <div class="text-form">
-                                                                        <p class="mb-0"><?= isset($park_detail->state) ? $park_detail->state->state_name . ',' : '' ?> <?= isset($park_detail->location) ? $park_detail->location->title : '' ?></p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-3 mb-md-1">
-                                                                <div class="safridetails_form d-flex gap-3 ">
-                                                                    <div class="iconImg">
-                                                                        <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
-                                                                    </div>
-                                                                    <div class="text-form">
-                                                                        <p class="mb-0">
-                                                                            <?php if ($park_detail->vehicles) {
-                                                                                $vehicle_name = '';
-                                                                                foreach ($park_detail->vehicles as $vehicle) {
-                                                                                    if ($vehicle->mastervehicle) {
-                                                                                        $vehicle_name .= $vehicle->mastervehicle->vehicle_name . ', ';
-                                                                                    }
-                                                                                }
-                                                                                echo substr($vehicle_name, 0, -2);
-                                                                            } ?>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-3 mb-md-1">
-                                                                <div class="safridetails_form d-flex gap-3 ">
-                                                                    <div class="iconImg">
-                                                                        <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
-                                                                    </div>
-                                                                    <div class="text-form">
-                                                                        <p class="mb-0"><?= isset($park_detail->railwaystation) ? $park_detail->railwaystation->title . ' , ' : '' ?><?= isset($park_detail->railwaystationtwo) ? $park_detail->railwaystationtwo->title : '' ?>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-0 mb-xl-3 mb-md-1">
-                                                                <div class="safridetails_form d-flex gap-3 ">
-                                                                    <div class="iconImg">
-                                                                        <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
-                                                                    </div>
-                                                                    <div class="text-form">
-                                                                        <p class="mb-0">
-                                                                            <?php if ($park_detail->sessions) {
+                                                <?php
+                                                if ($operator_parks) {
+                                                    foreach ($operator_parks as $operator_park) {
+                                                        $park_detail = $operator_park->park;
+                                                ?>
 
-                                                                                $metasession_title = '';
-                                                                                foreach ($park_detail->sessions as $session) {
-                                                                                    if ($session->metasession) {
-                                                                                        $metasession_title .= $session->metasession->title . ', ';
-                                                                                    }
-                                                                                }
-                                                                                echo substr($metasession_title, 0, -2);
-                                                                            } ?>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
+
+
+                                                        <div class="col-4 gap-2 mt-2 mb-2">
+                                                            <div class="parksImg h-100">
+                                                                <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
+                                                                    <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+
+                                                                </a>
+                                                                <h6 class=""><?= $park_detail->title ?></h6>
                                                             </div>
-                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-0 mb-xl-3 mb-md-1">
-                                                                <div class="safridetails_form d-flex gap-3 ">
-                                                                    <div class="iconImg">
-                                                                        <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport">
-                                                                    </div>
-                                                                    <div class="text-form">
-                                                                        <p class="mb-0"><?= isset($park_detail->airport) ? $park_detail->airport->name : '' ?></p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6 col-sm-6 col-xl-4 col-lg-6 mb-xl-0 mb-xl-3 mb-md-1">
-                                                                <div class="safridetails_form d-flex gap-3 ">
-                                                                    <div class="iconImg">
-                                                                        <img src="<?= $this->params['baseurl'] ?>/img/pawprint_3175935.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Animals">
-                                                                    </div>
-                                                                    <div class="text-form">
-                                                                        <p class="mb-0">
-                                                                            <?php if ($park_detail->animal_text) {
-                                                                                echo $park_detail->animal_text ?>
-                                                                            <?php
-                                                                            } ?>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+
                                                         </div>
+
+
+
+                                                <?php }
+                                                } ?>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="col-12 mb-2">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <?php if ($reviews) { ?>
+                                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
+                                                if ($avg) { ?>
+                                                    <h4>Operator Rating <?= round($avg, 1) ?></h4>
+                                                <?php } ?>
+                                            <?php } ?>
+                                            <div class="comments_safari operator_comment">
+                                                <div id="review-list">
+                                                    <?php
+                                                    if ($reviews) {
+                                                        foreach ($reviews as $review) {  ?>
+                                                            <div class="commentsOther  position-relative">
+                                                                <div class="postcomment  pt-3">
+                                                                    <div class="text_com">
+                                                                        <h6 class="nameavatr"><?= $review->park->title ?></h6>
+                                                                        <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
+
+                                                                            <div class="ratings">
+                                                                                <p class="mb-0">
+                                                                                    <?php if ($rating_count = $review->rating) {
+                                                                                        for ($i = 1; $i <= $rating_count; $i++) { ?>
+                                                                                            <i class="fa-solid fa-star"></i>
+                                                                                        <?php }
+
+                                                                                        for ($i = $rating_count; $i < 5; $i++) { ?>
+                                                                                            <i class='far fa-star'></i>
+                                                                                    <?php
+                                                                                        }
+                                                                                    } ?>
+                                                                                </p>
+                                                                            </div>
+
+                                                                            <div class="googlerating">
+                                                                                <p class="mb-0"> <?= $review->user->name ?></p>
+
+                                                                            </div>
+                                                                        </div>
+                                                                        <p><?= $review->review ?> &nbsp;
+                                                                            
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                    <?php
+                                                        }
+                                                    } ?>
+                                                    <div class="whiteReview m-2">
+                                                        <?php if (Yii::$app->user->identity) { ?>
+                                                            <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
+                                                        <?php } else { ?>
+                                                            <a class="btn_review" href="/site/auth?authclient=google">Please Login to Review</a>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </a>
-                            <?php }
-                            } ?>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <div class="card-body">
+                                                <h5>Organized Safari <?= count($organized_by); ?></h5>
+                                                <?php if ($organized_by) {
+                                                    foreach ($organized_by as $share_safari) {
+                                                ?>
+                                                        <div class="col-6 mb-4 padding_righ">
+                                                            <div class="sharesafri-card">
+                                                                <div class="flotingdate">
+                                                                    <div class="icons text-center">
+                                                                        <p class="mb-0"><?= date('M', strtotime($share_safari->start_date)) ?></p>
+                                                                        <p class="mb-0"><?= date('d', strtotime($share_safari->start_date)) ?></p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="shareimg">
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                                                                </div>
+                                                                <div class="card_body">
+                                                                    <div class="top_seats">
+                                                                        <div class="safari d-flex justify-content-between ">
+                                                                            <div class="safarinum d-flex gap-2 align-items-center ">
+                                                                                <p class="text_safari">SAFARI</p>
+                                                                                <h6 class="number-safari"><?= $share_safari->no_of_safari ?></h6>
+
+                                                                            </div>
+                                                                            <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
+                                                                                <p class="text_safari">SEATS</p>
+                                                                                <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="titleDate">
+                                                                        <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= $share_safari->park->title ?></a></h6>
+                                                                        <div class="orgnizer">
+                                                                            <p>Organized by: <strong><?= $share_safari->user->name ?></strong></p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="footer_card row pb-2 px-2 align-items-center">
+                                                                        <div class="col-6">
+                                                                            <div class="users">
+                                                                                <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                                                                                    $count = $share_safari->getIntrested()->count();
+                                                                                    $avatar_count = 3;
+                                                                                    foreach ($interests as $interest) {
+                                                                                ?>
+                                                                                        <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                                                                                    <?php
+                                                                                    };
+                                                                                    $count = $share_safari->getIntrested()->count();
+                                                                                    $avatar_count = 3;
+                                                                                    $data = $count - $avatar_count;
+                                                                                    if ($data > 3) {  ?>
+                                                                                        <div class="roundes_countuser">
+                                                                                            <?= $data ?>+
+                                                                                        </div>
+                                                                                    <?php }
+                                                                                } else { ?>
+                                                                                    <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                                                                                <?php } ?>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <div class="safari text-center">
+                                                                                <div class="joinsafari">
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                <?php }
+                                                } ?>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
