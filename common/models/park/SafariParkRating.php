@@ -3,6 +3,7 @@
 namespace common\models\park;
 
 use common\models\User;
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -27,8 +28,9 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class SafariParkRating extends \yii\db\ActiveRecord
+class SafariParkRating extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */
@@ -36,6 +38,26 @@ class SafariParkRating extends \yii\db\ActiveRecord
     {
         return 'safari_park_rating';
     }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => function () {
+                    return time();
+                },
+            ],
+        ];
+    }
+
 
     /**
      * {@inheritdoc}

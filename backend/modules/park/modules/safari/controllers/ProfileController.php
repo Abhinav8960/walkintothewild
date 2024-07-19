@@ -24,6 +24,7 @@ use common\models\park\SafariParkGallery;
 use common\models\park\SafariParkGallerySearch;
 use common\models\park\SafariParkMonth;
 use common\models\park\SafariParkRareAnimal;
+use common\models\park\SafariParkRatingSearch;
 use common\models\park\SafariParkSession;
 use common\models\park\SafariParkVehicle;
 use common\models\park\SafariParkVehicleSearch;
@@ -710,6 +711,28 @@ class ProfileController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
+
+    /**
+     * Suggestion View
+     *
+     * @param [type] $safari_park_id
+     * @return void
+     */
+    public function actionReviews($safari_park_id)
+    {
+        $searchModel = new SafariParkRatingSearch();
+        $searchModel->safari_park_id = $safari_park_id;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('reviews', [
+            'safari_model' => $this->findModel($safari_park_id),
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
 
     /**
      * Finds the Employee model based on its primary key value.
