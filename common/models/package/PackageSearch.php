@@ -11,6 +11,10 @@ use yii\data\ActiveDataProvider;
  */
 class PackageSearch extends Package
 {
+    public $park_id;
+    public $month_id;
+    public $estimated_price_filter;
+
     /**
      * {@inheritdoc}
      */
@@ -23,6 +27,7 @@ class PackageSearch extends Package
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['package_image'], 'string', 'max' => 255],
+            [['park_id', 'month_id', 'estimated_price_filter'], 'safe']
         ];
     }
 
@@ -44,7 +49,7 @@ class PackageSearch extends Package
      */
     public function search($params)
     {
-        $query = Package::find()->where(['status' => [1, 2]]);
+        $query = Package::find()->where(['package.status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -71,7 +76,6 @@ class PackageSearch extends Package
             'stay_category_id' => $this->stay_category_id,
             'package_inclusion' => $this->package_inclusion,
             'package_description' => $this->package_description,
-            'cost_per_person' => $this->cost_per_person,
             'package_exclusion' => $this->package_exclusion,
             'package_terms_condtition' => $this->package_terms_condtition,
             'package_slug' => $this->package_slug,
@@ -80,9 +84,43 @@ class PackageSearch extends Package
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'package.status' => $this->status,
         ]);
+
+
+
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);
+
+
+        if ($this->month_id) {
+            $query->andWhere("MONTH(start_date)=" . $this->month_id);
+            // $query->andWhere("MONTH(start_date)=" . $this->month_id . " OR MONTH(end_date)=" . $this->month_id);
+        }
+
+        if ($this->estimated_price_filter) {
+            $price_query = "";
+            foreach ((array)$this->estimated_price_filter as $price_filter) {
+                if ($price_filter == 1) {
+                    $price_query .= "cost_per_person >= 0 AND cost_per_person <= 5000 OR cost_per_person >= 0 AND cost_per_person <= 5000 OR ";
+                } else if ($price_filter == 2) {
+                    $price_query .= "cost_per_person >= 5000 AND cost_per_person <= 10000 OR cost_per_person >= 5000 AND cost_per_person <= 10000 OR ";
+                } else if ($price_filter == 3) {
+                    $price_query .= "cost_per_person >= 10000 AND cost_per_person >= 15000 OR cost_per_person >= 10000 AND cost_per_person >= 15000 OR ";
+                }
+            }
+            if ($price_query <> '') {
+                $price_query = substr($price_query, 0, -3);
+                $query->andWhere($price_query);
+            }
+        }
+
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
+
 
         return $dataProvider;
     }

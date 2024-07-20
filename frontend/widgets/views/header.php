@@ -58,11 +58,6 @@
 													)) ? "active" : "" ?>">
 									<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> ARTICLES & TIPS</a>
 								</li>
-								<!-- <li class="nav-item <?= in_array($active_url, array(
-																"/contact",
-															)) ? "active" : "" ?>">
-								<a class="nav-link" href="/contact"> <img src="<?= $this->params['baseurl'] ?>/img/contact-us.png" alt="" class="me-1 d-xl-inline-flex d-none" width="25"> Contact Us</a>
-							</li> -->
 
 
 								<a href="/sharedsafari" class="sahreSafari desktop text-lg-center  <?= (in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) || str_starts_with($active_url, "/sharedsafari")) ? "active" : "" ?>">
@@ -71,12 +66,15 @@
 									</div>
 									<h5>Shared Safari</h5>
 								</a>
-
+								<a href="/package" class="sahreSafari desktop text-lg-center  <?= (in_array($active_url, array("/package/default/index", "/package/default/view")) || str_starts_with($active_url, "/package")) ? "active" : "" ?>">
+									<div class="card-img">
+										<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
+									</div>
+									<h5>Packages</h5>
+								</a>
 								<li>
 
 								</li>
-
-
 							</ul>
 
 							<div class="logoutBox d-lg-none">
