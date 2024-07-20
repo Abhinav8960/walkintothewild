@@ -14,6 +14,8 @@ class PackageSearch extends Package
     public $park_id;
     public $month_id;
     public $estimated_price_filter;
+    public $package_feature;
+    public $package_include;
 
     /**
      * {@inheritdoc}
@@ -27,7 +29,7 @@ class PackageSearch extends Package
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['package_image'], 'string', 'max' => 255],
-            [['park_id', 'month_id', 'estimated_price_filter'], 'safe']
+            [['park_id', 'month_id', 'estimated_price_filter', 'package_feature', 'package_include'], 'safe']
         ];
     }
 
@@ -65,7 +67,7 @@ class PackageSearch extends Package
             return $dataProvider;
         }
 
-        // grid filtering conditions
+        // grid filteringcost_per_person conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'no_of_day' => $this->no_of_day,
@@ -121,6 +123,18 @@ class PackageSearch extends Package
             }]);
         }
 
+
+        if ($this->package_include) {
+            $query->joinwith(['packageincluded' => function ($package_include_query) {
+                $package_include_query->andFilterWhere(['include_id' => $this->package_include]);
+            }]);
+        }
+
+        if ($this->package_feature) {
+            $query->joinwith(['packagefeatures' => function ($package_feature_query) {
+                $package_feature_query->andFilterWhere(['feature_id' => $this->package_feature]);
+            }]);
+        }
 
         return $dataProvider;
     }
