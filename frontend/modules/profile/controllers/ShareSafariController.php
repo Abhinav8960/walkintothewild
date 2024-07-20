@@ -19,7 +19,7 @@ class ShareSafariController extends FrontendBaseController
      */
     public function actionIndex($user_handle)
     {
-        $user = User::find()->where(['user_handle' => $user_handle])->limit(1)->one();
+        $user = $this->findUserbyHandle($user_handle);
         $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
         $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id])->all();
         return $this->render(

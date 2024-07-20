@@ -20,7 +20,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionIndex($user_handle)
     {
-        $user = User::find()->where(['user_handle' => $user_handle])->limit(1)->one();
+        $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
         return $this->render(
             'index',

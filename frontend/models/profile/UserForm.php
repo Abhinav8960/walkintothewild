@@ -95,7 +95,7 @@ class UserForm extends Model
             'mobile_no' => 'Mobile Number',
             'profile_image' => 'Profile Picture',
             'cover_image' => 'Cover Image',
-            'user_handle' => 'User Handle',
+            'user_handle' => 'Username',
             'facebook_url' => 'Facebook',
             'whatsapp_url' => 'Whatsapp',
             'x_url' => 'Twitter Link',

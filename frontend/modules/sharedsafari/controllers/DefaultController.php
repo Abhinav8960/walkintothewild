@@ -5,10 +5,10 @@ namespace frontend\modules\sharedsafari\controllers;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Json;
-use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
+use common\models\park\SafariPark;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
@@ -17,8 +17,10 @@ use frontend\models\form\SharedSafariForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariIntrested;
+use common\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariRequestContact;
+use frontend\models\form\CreateDepartureForm;
 use frontend\models\form\SharedSafariRequestForm;
 use frontend\models\form\ShareSafariRequestContactForm;
 use frontend\models\ReplyForm;
@@ -511,6 +513,56 @@ class DefaultController extends FrontendBaseController
             $model->save(false);
             Yii::$app->session->setFlash('success', 'Thank You!!');
             return $this->redirect(['view', ['slug' => $slug]]);
+        }
+    }
+
+    public function actionCreateFixedDeparture()
+    {
+        $model = new CreateDepartureForm();
+        $model->host_user_id = Yii::$app->user->identity->id;
+        $model->type = 1;
+        $model->status = ShareSafari::STATUS_ACTIVE;
+        $model->action_url = '/sharedsafari/default/create-fixed-departure';
+        $model->action_validate_url = '/sharedsafari/default/departure-validate';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->shared_safari_departure_model->save(false)) {
+                        $parks = $model->park_list;
+                        if ($parks) {
+                            foreach ($parks as $park) {
+                                $park_model = new ShareSafariParklist();
+                                $park_model->share_safari_id = $model->shared_safari_departure_model->id;
+                                $park_model->park_id = $park;
+                                $park_model->save(false);
+                            }
+                        }
+                        \Yii::$app->session->setFlash('success', 'Fixed Departure Created Successfully');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->shared_safari_departure_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_fixed_departure_form', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('_fixed_departure_form', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionDepartureValidate()
+    {
+        $model = new CreateDepartureForm();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
         }
     }
 }

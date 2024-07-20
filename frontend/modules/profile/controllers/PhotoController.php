@@ -18,7 +18,7 @@ class PhotoController extends FrontendBaseController
      */
     public function actionIndex($user_handle)
     {
-        $user = User::find()->where(['user_handle' => $user_handle])->limit(1)->one();
+        $user = $this->findUserbyHandle($user_handle);
         return $this->render('index', ['user' => $user]);
     }
 }
