@@ -143,7 +143,15 @@ $recentposts = ArticleSearch::recentpost();
                                                 <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                             </div>
                                             <div class="card_body">
-                                                <div class="top_seats">
+                                                <?php
+                                                $class = '';
+                                                if (Yii::$app->user->identity) {
+                                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                    if ($share_safari_intrested) {
+                                                        $class = 'background-color: #007BFF;';
+                                                    }
+                                                } ?>
+                                                <div class="top_seats" style='<?= $class ?>'>
                                                     <div class="safari d-flex justify-content-between ">
                                                         <div class="safarinum d-flex gap-2 align-items-center ">
                                                             <p class="text_safari">SAFARI</p>
@@ -194,7 +202,7 @@ $recentposts = ArticleSearch::recentpost();
                                                                     if (Yii::$app->user->identity) {
                                                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                                         if ($share_safari_intrested) { ?>
-                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color: #007BFF;">Leave Safari</a>
                                                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                                             <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
                                                                         <?php  }
