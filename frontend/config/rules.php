@@ -42,6 +42,8 @@ return [
     '/sharedsafari/default/unjoin' => '/sharedsafari/default/unjoin',
     '/sharedsafari/default/organize-safari' => '/sharedsafari/default/organize-safari',
     '/sharedsafari/<slug>' => '/sharedsafari/default/view',
+    '/sharedsafari/wishlist/<slug>' => '/sharedsafari/default/wishlist', //sharedsafari page url
+    '/sharedsafari/unwishlist/<slug>' => '/sharedsafari/default/unwishlist', //sharedsafari page url
 
 
     '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url

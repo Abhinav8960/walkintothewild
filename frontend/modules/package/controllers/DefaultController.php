@@ -237,7 +237,7 @@ class DefaultController extends FrontendBaseController
             if (Yii::$app->user->identity) {
                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1])->one();
                 if ($wishlist) {
-                    $wishlist->status = 1;
+                    $wishlist->status = 0;
                     if ($wishlist->save(false)) {
                         Yii::$app->session->setFlash('success', 'You removed ' . $package->package_name . ' from wishlist ');
                     } else {
