@@ -317,7 +317,7 @@ $this->params['title'] = $this->title;
 
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-3 g-lg-5 mb-5 pb-5">
-            <?php $rand_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderBy('RAND()')->limit(5)->all();
+            <?php $rand_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderBy('RAND()')->limit(5)->all();
             foreach ($rand_safari as $safari) { ?>
                 <div class="col mb-4 padding_right">
                     <div class="sharesafri-card">
@@ -369,6 +369,8 @@ $this->params['title'] = $this->title;
                                             <div class="roundes_countuser">
                                                 <?= $data ?>+
                                             </div>
+                                        <?php  } else { ?>
+                                            <img src="<?= $safari->user && $safari->user->avatar <> '' ? $safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -381,7 +383,7 @@ $this->params['title'] = $this->title;
                                                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $safari->id, 'status' => 1])->limit(1)->one();
                                                 if ($share_safari_intrested) { ?>
                                                     <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $safari->slug]) ?>">Leave Safari</a>
-                                                <?php } else { ?>
+                                                <?php } else if ($safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                     <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $safari->slug]) ?>">Join Safari</a>
                                                 <?php  }
                                             } else { ?>
