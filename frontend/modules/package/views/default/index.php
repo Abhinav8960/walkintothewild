@@ -116,19 +116,20 @@ $this->params['title'] = $this->title;
                         </div>
                       </div>
                       <div class="floating-watchlist">
-                        <div class="heart_bx">
-                          <?php
-                          $class = '';
-                          if (Yii::$app->user->identity) {
+                        <?php
+                        if (Yii::$app->user->identity) { ?>
+                          <div class="heart_bx">
+                            <?php
                             $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
                             if ($wishlist) {
-                          ?>
+                            ?>
                               <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
                             <?php } else { ?>
                               <a href="/package/wishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
-                          <?php }
-                          } ?>
-                        </div>
+                            <?php }
+                            ?>
+                          </div>
+                        <?php } ?>
                       </div>
                       <div class="shareimg">
                         <a href="/package/<?= $model->package_slug ?>">

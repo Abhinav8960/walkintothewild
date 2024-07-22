@@ -165,7 +165,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED], 'slug' => $slug])->limit(1)->one();
         $model = new ShareSafariCommentForm();
         $replymodel = new ReplyForm();
 
@@ -196,7 +196,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionJoin($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_APPROVED, 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id])->one();
@@ -234,7 +234,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionUnjoin($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_APPROVED, 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id])->one();
@@ -452,7 +452,7 @@ class DefaultController extends FrontendBaseController
 
     protected function findModel($slug)
     {
-        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]])) !== null) {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED]])) !== null) {
             return $model;
         }
 
