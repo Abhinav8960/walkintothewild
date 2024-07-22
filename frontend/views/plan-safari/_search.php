@@ -47,7 +47,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <p>Location</p>
                     </div>
                     <!-- <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
+                        <img src="<?= $this->params['baseurl'] ?>/img/plans.png" alt="">
                     </div> -->
                 </div>
 
@@ -81,8 +81,6 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
 
             </div>
-
-
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
@@ -108,6 +106,9 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <!-- <div class="icons_select">
                         <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                     </div> -->
+                </div>
+                <div class="OrBox">
+                    <p>OR</p>
                 </div>
             </div>
             <div class="select_boxes position-relative">

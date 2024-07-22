@@ -58,7 +58,7 @@ use yii\helpers\ArrayHelper;
                     'type' => 'range',
                     'min' => 0,
                     'max' => 20,
-                    'value' => 0,
+                    'value' => isset($searchModel->no_of_night) ? $searchModel->no_of_night : 0,
                     'class' => 'range_values d-flex align-items-center justify-content-between',
                 ]) ?>
             </div>
@@ -75,7 +75,7 @@ use yii\helpers\ArrayHelper;
                     'type' => 'range',
                     'min' => 0,
                     'max' => 20,
-                    'value' => 0,
+                    'value' => isset($searchModel->no_of_safari) ? $searchModel->no_of_safari : 0,
                     'class' => 'range_values d-flex align-items-center justify-content-between',
                 ]) ?>
             </div>
@@ -92,7 +92,7 @@ use yii\helpers\ArrayHelper;
                     'type' => 'range',
                     'min' => 1000,
                     'max' => 50000,
-                    'value' => 0,
+                    'value' => isset($searchModel->estimated_price_filter) ? $searchModel->estimated_price_filter : 0,
                     'class' => 'range_values d-flex align-items-center justify-content-between',
                 ]) ?>
             </div>

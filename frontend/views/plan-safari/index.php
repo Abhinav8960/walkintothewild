@@ -37,13 +37,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="tab-block" id="tab-block">
                         <ul class="tab-mnu">
                             <a href="/plan-safari">
-                                <li class="active">Plan Safari</li>
+                                <li class="active">   <img src="<?= $this->params['baseurl'] ?>/img/plans.png" alt="" width="30" class="me-2"> Plan Safari</li>
                             </a>
                             <a href="/safari-packages">
-                                <li>Safari Packages</li>
+                                <li> <img src="<?= $this->params['baseurl'] ?>/img/package.png" alt="" width="30" class="me-1" style="padding:6px;"> Safari Packages</li>
                             </a>
                             <a href="/shared-safari">
-                                <li> Shared Safari</li>
+                                <li><img src="<?= $this->params['baseurl'] ?>/img/car_852639.png" alt="" width="30" class="me-1" style="padding:6px;">  Shared Safari</li>
                             </a>
                         </ul>
 
@@ -68,14 +68,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
     <section class="sharesafri">
         <div class="container-lg padditg_mobile">
-            <div class="row justify-content-center">
-                <div class="col-xl-11 px-md-1 px-0">
+            <div class="row justify-content-center ">
+                <div class="col-xl-11  px-md-1 px-0 ">
                     <div class="sharesafribg home px-lg-0 px-2">
-                        <div class="safarishareBox py-3">
+                        <div class="safarishareBox py-3 pb-5">
                             <div class="row justify-content-center">
-                                <div class="col-xxl-8 col-lg-12 col-xl-8">
+                                <div class="col-xl-3">
+                                    
+                                </div>
+                                <div class="col-xxl-9 col-lg-12 col-xl-9">
                                     <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
-                                        <h4 class="text-center">Discover and Join 100+ Shared Safaris</h4>
+                                        <h4 class="text-center ps-4">Discover and Join 100+ Shared Safaris</h4>
                                         <div class="joinshareView mt-xl-0 mt-3" style="margin-right: 49px !important;">
                                             <a href="/sharedsafari" class="btn_shareView">View All</a>
                                         </div>
@@ -83,9 +86,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 </div>
 
                             </div>
-                            <div class="row pt-4 justify-content-center gx-lg-5">
+                            <div class="row postion_setsfari px-5">
+                                <div class="col-3"></div>
                                 <?php foreach ($shared_safaries as $share_safari) { ?>
-                                    <div class="col-lg-3 col-sm-5 col-xxl-2 col-md-4 mb-4 px-lg-1">
+                                    <div class="col-lg-3 col-sm-5 col-xxl-3 col-md-4 mb-4 ">
                                         <div class="sharesafri-card">
                                             <div class="flotingdate">
                                                 <div class="icons text-center">
@@ -164,10 +168,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                 </div>
             </div>
-
         </div>
-
-
     </section>
 <?php } ?>
 
