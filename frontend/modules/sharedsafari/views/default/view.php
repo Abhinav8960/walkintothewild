@@ -50,9 +50,9 @@ $this->params['title'] = $this->title;
         </div>
         <div class="row my-4">
             <div class="col-12">
-                <div class="btn_set float-end">
+                <!-- <div class="btn_set float-end">
                     <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'share_safari_id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
-                </div>
+                </div> -->
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
@@ -266,7 +266,7 @@ $this->params['title'] = $this->title;
                             Safari</button>
                     <?php } else if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                            Safari</button>
+                            Fixed Departure</button>
                     <?php } elseif (Yii::$app->user->identity) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                             Safari</button>
