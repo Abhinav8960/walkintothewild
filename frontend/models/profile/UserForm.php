@@ -23,6 +23,7 @@ class UserForm extends Model
     public $x_url;
     public $insta_url;
     public $about;
+    public $user_bio;
     public $account_type;
 
     public function __construct(User $user_model = null)
@@ -40,6 +41,7 @@ class UserForm extends Model
             $this->x_url = $this->user_model->x_url;
             $this->insta_url = $this->user_model->insta_url;
             $this->about = $this->user_model->about;
+            $this->user_bio = $this->user_model->user_bio;
             $this->account_type = $this->user_model->account_type;
         }
     }
@@ -55,6 +57,7 @@ class UserForm extends Model
             ['name', 'trim'],
             ['name', 'required'],
             ['name', 'string', 'min' => 2, 'max' => 255],
+            ['user_bio', 'string', 'max' => 255],
             ['mobile_no', 'match', 'pattern' => '/^\+?\d{10,15}$/', 'message' => 'Invalid mobile number format.'],
             [['profile_image', 'cover_image'], 'safe'],
 
@@ -102,6 +105,7 @@ class UserForm extends Model
             'insta_url' => 'Instagram',
             'about' => 'About',
             'account_type' => 'Account Type',
+            'user_bio' => 'User Bio'
 
         ];
     }
@@ -116,6 +120,7 @@ class UserForm extends Model
         $this->user_model->x_url = $this->x_url;
         $this->user_model->insta_url = $this->insta_url;
         $this->user_model->about = $this->about;
+        $this->user_model->user_bio = $this->user_bio;
         $this->user_model->account_type = $this->account_type;
     }
 

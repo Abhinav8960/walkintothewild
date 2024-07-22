@@ -5,8 +5,7 @@ use yii\helpers\Url;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-
-$this->title = 'Shared Safari';
+$this->title = $user->name . ' | Shared Safari';
 $this->params['title'] = $this->title;
 ?>
 

@@ -6,12 +6,12 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 
-$this->title = 'Profile';
+$this->title = $user->name . ' | Profile';
 $this->params['title'] = $this->title;
 ?>
 
 
-<div class="container">
+<div class="container mb-5">
     <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active', 'user' => $user]) ?>
     <div class="row">
         <div class="col-8">
@@ -23,20 +23,16 @@ $this->params['title'] = $this->title;
                     <?php } ?>
                     <h6>Social Media</h6>
                     <?php if ($user->facebook_url) { ?>
-                        <a href="<?= $user->facebook_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
-                        <p><?= $user->facebook_url; ?></p>
+                        <a href="<?= $user->facebook_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i> <?= $user->facebook_url; ?></a>
                     <?php } ?>
                     <?php if ($user->whatsapp_url) { ?>
-                        <a href="<?= $user->whatsapp_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
-                        <p><?= $user->whatsapp_url; ?></p>
+                        <a href="<?= $user->whatsapp_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i> <?= $user->whatsapp_url; ?></a>
                     <?php } ?>
                     <?php if ($user->x_url) { ?>
-                        <a href="<?= $user->x_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
-                        <p><?= $user->x_url; ?></p>
+                        <a href="<?= $user->x_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i><?= $user->x_url; ?></a>
                     <?php } ?>
                     <?php if ($user->insta_url) { ?>
-                        <a href="<?= $user->insta_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
-                        <p><?= $user->insta_url; ?></p>
+                        <a href="<?= $user->insta_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i> <?= $user->insta_url; ?></a>
                     <?php } ?>
                 </div>
             </div>
@@ -47,7 +43,7 @@ $this->params['title'] = $this->title;
                     <h5>Following</h5>
                     <?php if ($followings = $user->userfollowings) {
                         foreach ($followings as $following) { ?>
-                            <img src="<?= $following->user->profile_image <> '' ?  $following->user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle" width="25" height="25">
+                            <a href="<?= \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $following->user->user_handle]) ?>"> <img src="<?= $following->user->profileimage <> '' ?  $following->user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle" width="25" height="25" title="<?= $following->user->name ?>"></a>
                     <?php }
                     } ?>
                 </div>
