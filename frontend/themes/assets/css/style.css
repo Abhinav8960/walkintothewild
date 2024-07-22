@@ -4055,6 +4055,8 @@ figure {
     font-weight: 600;
     border-radius: 0;
     width: 265px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     height: 70px;
     cursor: pointer;
     background-color: var(--colorwhite);
@@ -4922,21 +4924,21 @@ a.desc:after {
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle {
 
-    width: 240px;
-    padding-left: 57px;
+    width: 230px;
+    padding-left: 38px;
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle {
 
-    width: 240px;
-    padding-left: 57px;
+    width: 230px;
+    padding-left: 38px;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .dropdown-toggle {
 
-    width: 310px;
+    width: 331px;
     padding-left: 57px;
     border-radius: 10px;
 }
@@ -4949,6 +4951,10 @@ a.desc:after {
 .planSearch_box .placeholder_select.loc {
 
     left: 14%;
+}
+.planSearch_box .placeholder_select{
+
+    left: 17%;
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .placeholder_select {
