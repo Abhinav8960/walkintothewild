@@ -516,7 +516,7 @@ class DefaultController extends FrontendBaseController
             $model->status = 2;
             $model->save(false);
             Yii::$app->session->setFlash('success', 'Thank You!!');
-            return $this->redirect(['view', ['slug' => $slug]]);
+            return $this->redirect(Yii::$app->request->referrer);
         }
     }
 
