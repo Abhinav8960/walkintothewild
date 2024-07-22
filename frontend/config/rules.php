@@ -69,7 +69,7 @@ return [
 
     '/profile/article/validate' => '/profile/article/validate',
     '/profile/article/create' => '/profile/article/create',
-    '/profile/article/update/<id>' => '/profile/article/update',
+    '/profile/article/update/<slug>' => '/profile/article/update',
     '/profile/article/<user_handle>' => '/profile/article/index',
 
     [
