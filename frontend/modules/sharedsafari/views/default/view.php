@@ -328,7 +328,7 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                         <div class="shareimg">
-                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $safari->slug]) ?>"><img src="<?= $safari->sharedimagepath ? $safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                         </div>
                         <div class="card_body">
                             <div class="top_seats">
