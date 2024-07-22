@@ -87,11 +87,14 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
             } ?>
         </div>
     </div>
-    <div class="col-12">
-        <div class="safari text-center">
-            <div class="joinsafari">
-                <a href="/park/reviewlist/<?= $safari_model->slug ?>">View All</a>
+    <?php if (count($reviews) >= 5) { ?>
+
+        <div class="col-12">
+            <div class="safari text-center">
+                <div class="joinsafari">
+                    <a href="/park/reviewlist/<?= $safari_model->slug ?>">View All</a>
+                </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
 </div>
