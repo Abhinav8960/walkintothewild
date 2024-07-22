@@ -4,7 +4,7 @@ namespace frontend\models\form;
 
 use Yii;
 use common\models\sharesafari\ShareSafari;
-
+use common\models\sharesafari\ShareSafariParklist;
 
 class CreateDepartureForm extends \yii\base\Model
 {
@@ -41,7 +41,7 @@ class CreateDepartureForm extends \yii\base\Model
             $this->type =  $this->shared_safari_departure_model->type;
             $this->host_user_id =  $this->shared_safari_departure_model->host_user_id;
             $this->host_type =  $this->shared_safari_departure_model->host_type;
-            $this->park_id =  $this->shared_safari_departure_model->park_id; //abb multiple park ko store karenge
+
             $this->share_safari_agenda_id =  $this->shared_safari_departure_model->share_safari_agenda_id;
             $this->no_of_safari =  $this->shared_safari_departure_model->no_of_safari;
             $this->start_date =  $this->shared_safari_departure_model->start_date;
@@ -52,6 +52,8 @@ class CreateDepartureForm extends \yii\base\Model
             $this->total_seat =  $this->shared_safari_departure_model->total_seat;
             $this->tour_duration =  $this->shared_safari_departure_model->tour_duration;
             $this->status =  $this->shared_safari_departure_model->status;
+
+            $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_model->id])->column(); //abb multiple park ko store karenge
         }
     }
 
@@ -59,7 +61,7 @@ class CreateDepartureForm extends \yii\base\Model
     {
         return [
             [['host_type', 'park_list', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'tour_duration', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
-            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'tour_duration', 'status'], 'integer'],
+            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'tour_duration', 'status', 'type'], 'integer'],
             [['start_date', 'end_date', 'park_list'], 'safe'],
             [['safari_plan'], 'string'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
@@ -103,7 +105,7 @@ class CreateDepartureForm extends \yii\base\Model
         $this->shared_safari_departure_model->type = $this->type;
         $this->shared_safari_departure_model->host_user_id = $this->host_user_id;
         $this->shared_safari_departure_model->host_type = $this->host_type; // iss bhi check karna ha
-
+        $this->shared_safari_departure_model->type = $this->type;
         $this->shared_safari_departure_model->share_safari_agenda_id = $this->share_safari_agenda_id;
         $this->shared_safari_departure_model->no_of_safari = $this->no_of_safari;
         $this->shared_safari_departure_model->start_date = $this->start_date;
