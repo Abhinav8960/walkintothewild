@@ -179,13 +179,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div>
     </section>
-    <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="joinshareView mt-xl-0 mt-3">
-                <a href="/sharedsafari" class="btn_shareView">View All</a>
-            </div>
-        </div>
-    </div>
 <?php } ?>
 
 <section class="safariduring_sesons">
