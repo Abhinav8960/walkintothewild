@@ -117,7 +117,6 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($parkoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>

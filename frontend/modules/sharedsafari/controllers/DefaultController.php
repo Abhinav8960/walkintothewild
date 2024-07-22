@@ -20,6 +20,7 @@ use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariRequestContact;
+use common\models\UserWishlist;
 use frontend\models\form\CreateDepartureForm;
 use frontend\models\form\SharedSafariRequestForm;
 use frontend\models\form\ShareSafariRequestContactForm;
@@ -621,5 +622,66 @@ class DefaultController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+
+    /**
+     * Add To Wishlist sharedsafari
+     */
+    public function actionWishlist($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($share_safari)) {
+            return $this->redirect(['/sharedsafari']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        if ($share_safari) {
+            if (Yii::$app->user->identity) {
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2])->one();
+                if (!$wishlist) {
+                    $wishlist = new UserWishlist();
+                }
+                $wishlist->user_id = Yii::$app->user->identity->id;
+                $wishlist->item_id = $share_safari->id;
+                $wishlist->item_type_id = 2;
+                $wishlist->item_type = 'share-safari';
+                $wishlist->status = 1;
+                if ($wishlist->save(false)) {
+                    Yii::$app->session->setFlash('success', 'You added share safari to wishlist ');
+                } else {
+                    Yii::$app->session->setFlash('error', 'You can not add this sharedsafari to wishlist currently!');
+                }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
+            }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+        }
+        return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+    }
+
+    public function actionUnwishlist($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($share_safari)) {
+            return $this->redirect(['/sharedsafari']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        if ($share_safari) {
+            if (Yii::$app->user->identity) {
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2])->one();
+                if ($wishlist) {
+                    $wishlist->status = 0;
+                    if ($wishlist->save(false)) {
+                        Yii::$app->session->setFlash('success', 'You removed share safari from wishlist ');
+                    } else {
+                        Yii::$app->session->setFlash('error', 'You can not add this sharedsafari to wishlist currently!');
+                    }
+                }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
+            }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+        }
+        return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
     }
 }
