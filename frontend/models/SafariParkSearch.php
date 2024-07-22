@@ -136,7 +136,7 @@ class SafariParkSearch extends SafariPark
         }
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'safari_park.id' => $this->id,
             'safari_park.slug' => $this->slug,
             'safari_park.created_at' => $this->created_at,
             'safari_park.created_by' => $this->created_by,
