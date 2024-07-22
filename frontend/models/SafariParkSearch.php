@@ -27,7 +27,7 @@ class SafariParkSearch extends SafariPark
     public function rules()
     {
         return [
-            [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'safe'],
+            [['short_description', 'long_description', 'meta_description', 'meta_keywords', 'id'], 'safe'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_most_demanding', 'is_shared_safari'], 'safe'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
             [['latitude', 'longitude', 'custom_sort_by'], 'safe'],
@@ -85,7 +85,7 @@ class SafariParkSearch extends SafariPark
             ];
         } else {
             $dataProvider->sort = [
-                'defaultOrder' => ['title' => SORT_DESC]
+                'defaultOrder' => ['title' => SORT_ASC]
             ];
         }
 
@@ -136,7 +136,7 @@ class SafariParkSearch extends SafariPark
         }
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'safari_park.id' => $this->id,
             'safari_park.slug' => $this->slug,
             'safari_park.created_at' => $this->created_at,
             'safari_park.created_by' => $this->created_by,

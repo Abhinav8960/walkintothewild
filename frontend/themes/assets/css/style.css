@@ -359,6 +359,7 @@ a {
     background-size: cover;
     height: 447px;
     width: 100%;
+    border-radius: 10px;
     position: relative;
 }
 
@@ -455,12 +456,18 @@ a {
 
 .joinshareView .btn_shareView {
 
-    background-color: var(--background-yellow);
+    background-color: var(--colorwhite);
     color: var(--background-primary);
     font-weight: 500;
-    font-size: 18px;
-    padding: 5px 30px;
+    font-size: 16px;
+    padding: 8px 25px;
     border-radius: 20px;
+}
+.btn_shareView.pakage{
+
+    background-color: var(--background-primary);
+    color: var(--colorwhite);
+    padding: 8px 25px;
 }
 
 .title_top h4 {
@@ -1188,14 +1195,19 @@ figure {
 
 .artical_cards .lower-content .artical-info li {
     position: relative;
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
+    display: flex; */
     gap: 5px;
-
+    list-style: none;
+/* 
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center;
+    align-items: center; */
+}
+.artical_cards .lower-content .artical-info{
+
+    padding-left: 0;
 }
 
 .artical-info li {
@@ -1207,6 +1219,7 @@ figure {
 
     color: var(--background-yellow) !important;
     font-size: 14px;
+    margin-right: 7px;
 
 }
 
@@ -1219,7 +1232,7 @@ figure {
 }
 
 .artical_cards .lower-content .artical-info li a {
-    display: inline-block;
+    /* display: inline-block; */
     color: #9C9C9C;
     font-family: "Roboto", sans-serif !important;
     font-size: 14px;
@@ -1227,7 +1240,7 @@ figure {
 }
 .artical-info a{
 
-    display: inline-block;
+    /* display: inline-block; */
     color: #9C9C9C;
     font-family: "Roboto", sans-serif !important;
     font-size: 14px;
@@ -3210,13 +3223,13 @@ figure {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
-    background-color: #676262;
-    color: #fef6f675;
-    width: 130px;
+    background-color: var(--colorwhite);
+    color: #040404;
+    width: 160px;
     font-family: "Roboto", sans-serif;
     text-align: center;
-    /* padding: 4px 6px; */
-    border-radius: 5px;
+    padding: 4px 6px;
+    border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3233,7 +3246,7 @@ figure {
 } */
 
 .tab-block .tab-mnu .active {
-    background-color: #fff;
+    background-color: var(--background-yellow);
     color: var(--background-primary);
     cursor: default;
     font-weight: 600;
@@ -4281,7 +4294,8 @@ figure {
     position: absolute;
     top: calc(100% + -5px);
     right: 45px;
-    width: 153px;
+    width: auto;
+    /* 153px; */
     /* min-height: 100px; */
     background: #fff;
     /* box-shadow: 0 10px 20px rgba(0, 0, 0, .2); */
@@ -4548,8 +4562,8 @@ color: #4B4B4B;
 
 .titlePrice{
 
-    font-size: var(--fs-16);
-    font-weight: 600;
+    font-size: var(--fs-18);
+    font-weight: 700;
     color: #4B4B4B;
 }
 
@@ -4557,6 +4571,7 @@ color: #4B4B4B;
 
     padding: 6px 14px;
     font-weight: 500;
+    border-radius: 8px;
 }
 
 .rangetours.range input[type="range"] {
@@ -4724,3 +4739,175 @@ color: #4B4B4B;
     margin-left: 5px;
     /* Example: Adds a margin to the left of the label */
 }
+
+.nav-pills {
+    --bs-nav-pills-border-radius: var(--bs-border-radius);
+    --bs-nav-pills-link-active-color: #fff;
+    --bs-nav-pills-link-active-bg: #09422d;
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-link:hover, .nav-link:focus {
+    color: #09422d;
+}
+
+
+main > .container, main > .container-fluid
+{
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    background-color: #f5f5f5;
+    font-size: .9em;
+    height: 60px;
+}
+
+.footer > .container, .footer > .container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    content: '';
+    left: 3px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: solid 5px transparent;
+    margin: 4px 4px 2px 4px;
+    background: transparent;
+}
+
+a.asc:after {
+    border-bottom: solid 7px #212529;
+    border-top-width: 0;
+}
+
+a.desc:after {
+    border-top: solid 7px #212529;
+    border-bottom-width: 0;
+}
+
+.grid-view th,
+.grid-view td:last-child {
+    white-space: nowrap;
+}
+
+.grid-view .filters input,
+.grid-view .filters select {
+    min-width: 50px;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.navbar form > button.logout {
+    padding-top: 7px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media(max-width:767px) {
+    .navbar form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 0;
+    }
+}
+
+.navbar form > button.logout:focus,
+.navbar form > button.logout:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar form > button.logout:focus {
+    outline: none;
+}
+
+/* style breadcrumb widget as in previous bootstrap versions */
+.breadcrumb {
+    background-color: var(--bs-gray-200);
+    border-radius: .25rem;
+    padding: .75rem 1rem;
+}
+
+.breadcrumb-item > a
+{
+    text-decoration: none;
+}
+
+.sharesafri-card.tourpackage .flotingdate{
+
+    height: auto;
+    width: auto;
+    padding: 1px 10px;
+}
+.icons_restro{
+
+    text-align: center;
+    padding-top: 10px;
+}
+.icons_restro p{
+
+    color: #4B4B4B;
+    font-size: 14px ;
+    font-weight: 500;}
+
+    .PackageBox_home{
+
+        border: 1px solid #7070704D;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 20px 30px;
+    }
+    .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle {
+
+     width: 160px;
+    }
+    .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle {
+
+        width: 238px;
+        padding-left: 57px;
+       }
+       .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle {
+
+        width: 238px;
+        padding-left: 57px;
+       }
+       .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .dropdown-toggle {
+
+        width: 310px;
+        padding-left: 57px;
+       }
+    .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle{
+
+        padding-left: 20px;
+    }
+
+    .planSearch_box  .placeholder_select.loc{
+
+        left: 14%;
+    }

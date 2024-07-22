@@ -8,20 +8,27 @@ $review_count = SafariOperatorRating::find()->where(['safari_operator_id' => $op
 $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->count();
 
 ?>
-<ul>
-    <li><a class="<?= $active == 'safari' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>">
-            <div class="numparks">Safari Parks <span><?= count($operator->park) ?></span></div><i class="fa-solid fa-chevron-right"></i>
+<ul class="nav nav-tabs gap-5 mb-0" style="margin-left:140px;" role="tablist">
+    <li class="nav-item"><a class="nav-link <?= $active == 'package' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug]) ?>">
+            Packages</i>
         </a></li>
-    <!-- <li><a class="<?= $active == 'resort' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/resort', 'slug' => $operator->slug]) ?>">
-            <div class="numparks">Resort <span>0</span></div><i class="fa-solid fa-chevron-right"></i>
-        </a></li> -->
-    <li><a class="<?= $active == 'sharedsafari' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>">
-            <div class="numparks">Shared Safari <span><?= $shared_safaries_count ?></span></div><i class="fa-solid fa-chevron-right"></i>
+    <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>">
+            Shared Safari</i>
         </a></li>
-    <li><a class="<?= $active == 'reviewlist' ? 'active_safri' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>">
-            <div class="numparks">Review <span><?= $review_count ?></span></div><i class="fa-solid fa-chevron-right"></i>
+    <li class="nav-item"><a class="nav-link <?= $active == 'park' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>">
+            Parks</i>
+        </a></li>
+    <li class="nav-item"><a class="nav-link <?= $active == 'reviewlist' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>">
+            Review</i>
+        </a></li>
+    <li class="nav-item"><a class="nav-link <?= $active == 'article' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug]) ?>">
+            Article</i>
+        </a></li>
+    <li class="nav-item"><a class="nav-link <?= $active == 'contact' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/contact', 'slug' => $operator->slug]) ?>">
+            Contact</i>
         </a></li>
 </ul>
+<hr class="m-0">
 
 
 <style>

@@ -362,6 +362,10 @@ class User extends ActiveRecord implements IdentityInterface
         if ($this->profile_image != '') {
             return '/storage/user/' . $this->id . '/' . $this->profile_image;
         }
+
+        if ($this->avatar != '') {
+            return $this->avatar;
+        }
     }
 
     public function getCoverimage()

@@ -63,7 +63,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function rules()
     {
         return [
-            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'tour_duration', 'cost_per_person', 'type'], 'integer'],
             [['start_date', 'end_date', 'slug'], 'safe'],
             [['safari_plan'], 'string'],
             [['image'], 'string'],

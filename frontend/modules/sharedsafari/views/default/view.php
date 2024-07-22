@@ -152,16 +152,29 @@ $this->params['title'] = $this->title;
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 ">
-                                    <div class="safridetails_form d-flex gap-3 align-items-center">
-                                        <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="">
-                                        </div>
-                                        <div class="text-form">
-                                            <p class="mb-0"><?= $share_safari->estimate_price_min ?>- <?= $share_safari->estimate_price_max ?> Estimate Per Person Cost</p>
+                                <?php if ($share_safari->type == 1) { ?>
+                                    <div class="col-12 ">
+                                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                                            <div class="iconImg">
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="">
+                                            </div>
+                                            <div class="text-form">
+                                                <p class="mb-0"><?= $share_safari->estimate_price_min ?>- <?= $share_safari->estimate_price_max ?> Estimate Per Person Cost</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php } else if ($share_safari->type == 2) { ?>
+                                    <div class="col-12 ">
+                                        <div class="safridetails_form d-flex gap-3 align-items-center">
+                                            <div class="iconImg">
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="">
+                                            </div>
+                                            <div class="text-form">
+                                                <p class="mb-0"><?= $share_safari->cost_per_person ?> Estimate Per Person Cost</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -248,8 +261,11 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
                 <div class="right_button py-lg-5 py-3 d-lg-block d-none">
-                    <?php if ($share_safari->host_user_id == Yii::$app->user->id) { ?>
+                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                            Safari</button>
+                    <?php } else if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
+                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                             Safari</button>
                     <?php } elseif (Yii::$app->user->identity) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New

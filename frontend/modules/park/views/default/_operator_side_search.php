@@ -16,7 +16,7 @@ $form = ActiveForm::begin([
 ]); ?>
 
 <?php if ($device == 'desktop') { ?>
-    <div class="filter-wrapper custoM-inputs d-lg-block d-none">
+    <div class="filter-wrapper custoM-inputs d-lg-block d-none mb-2">
         <div class="title_top pb-4">
             <h4>Select Operator</h4>
         </div>

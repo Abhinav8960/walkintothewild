@@ -27,6 +27,8 @@ class SharedSafariForm extends \yii\base\Model
     public $status;
     public $shared_safari_image;
     public $website_url;
+    public $type;
+    public $tour_duration;
 
     public $action_url;
     public $action_validate_url;
@@ -42,6 +44,7 @@ class SharedSafariForm extends \yii\base\Model
 
             $this->host_user_id =  $this->shared_safari_model->host_user_id;
             $this->host_type =  $this->shared_safari_model->host_type;
+            $this->type =  $this->shared_safari_model->type;
             $this->share_safari_request_id =  $this->shared_safari_model->share_safari_request_id;
             $this->park_id =  $this->shared_safari_model->park_id;
             $this->share_safari_agenda_id =  $this->shared_safari_model->share_safari_agenda_id;
@@ -55,6 +58,7 @@ class SharedSafariForm extends \yii\base\Model
             $this->total_seat =  $this->shared_safari_model->total_seat;
             $this->share_seat =  $this->shared_safari_model->share_seat;
             $this->website_url =  $this->shared_safari_model->website_url;
+            $this->tour_duration =  $this->shared_safari_departure_model->tour_duration;
             $this->status =  $this->shared_safari_model->status;
         }
     }
@@ -62,8 +66,8 @@ class SharedSafariForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
-            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status'], 'integer'],
+            [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id','tour_duration', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
+            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'tour_duration','no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status', 'type'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [
                 ['website_url'], 'required', 'when' => function ($model) {
@@ -114,6 +118,7 @@ class SharedSafariForm extends \yii\base\Model
     {
         $this->shared_safari_model->host_user_id = $this->host_user_id;
         $this->shared_safari_model->host_type = $this->host_type;
+        $this->shared_safari_model->type = $this->type;
         $this->shared_safari_model->share_safari_request_id = $this->share_safari_request_id;
         $this->shared_safari_model->park_id = $this->park_id;
         $this->shared_safari_model->share_safari_agenda_id = $this->share_safari_agenda_id;
@@ -127,6 +132,8 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->total_seat = $this->total_seat;
         $this->shared_safari_model->share_seat = $this->share_seat;
         $this->shared_safari_model->website_url = $this->website_url;
+
+        $this->shared_safari_departure_model->tour_duration = $this->tour_duration;
         $this->shared_safari_model->status = $this->status;
 
         if ($this->shared_safari_model->slug == '') {

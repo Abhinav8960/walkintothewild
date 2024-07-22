@@ -14,20 +14,23 @@ $this->title = $name;
 if ($exception->statusCode == 404) {
     echo $this->render('_error_404', ['message' => $message, 'exception' => $exception, 'name' => $name]);
 } else { ?>
-    <div class="site-error">
+    <div class="site-error mt-5 pb-5 pt-2">
+        <div class="container mt-5 pt-5 pb-5">
+            <div class="row mb-5">
+                <h1><?= Html::encode($this->title) ?></h1>
 
-        <h1><?= Html::encode($this->title) ?></h1>
+                <div class="alert alert-danger">
+                    <?= nl2br(Html::encode($message)) ?>
+                </div>
 
-        <div class="alert alert-danger">
-            <?= nl2br(Html::encode($message)) ?>
+                <p>
+                    The above error occurred while the Web server was processing your request.
+                </p>
+                <p>
+                    Please contact us if you think this is a server error. Thank you.
+                </p>
+            </div>
         </div>
-
-        <p>
-            The above error occurred while the Web server was processing your request.
-        </p>
-        <p>
-            Please contact us if you think this is a server error. Thank you.
-        </p>
 
     </div>
 <?php  } ?>

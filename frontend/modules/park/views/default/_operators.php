@@ -19,7 +19,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 'device' => $device,
             ]) ?>
         </div>
-
+        <div id="targetDiv">
+            <?= $this->render('_park_review', [
+                'model' => $operatorsearchModel,
+                'safari_model' => $model,
+                'device' => $device,
+            ]) ?>
+        </div>
+        <div id="targetDiv">
+            <?= $this->render('_park_contribution', [
+                'model' => $operatorsearchModel,
+                'safari_model' => $model,
+                'device' => $device,
+            ]) ?>
+        </div>
 
         <div class="advertisment pt-5 d-lg-block d-none">
             <p class="text-center">ADVERTISMENT</p>

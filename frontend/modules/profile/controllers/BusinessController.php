@@ -2,6 +2,8 @@
 
 namespace frontend\modules\profile\controllers;
 
+use Yii;
+use yii\web\UploadedFile;
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
 use common\models\operator\form\SafariOperatorRequestForm;
@@ -15,8 +17,6 @@ use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
 use common\models\SafariOperatorRequestSearch;
 use frontend\controllers\FrontendBaseController;
-use Yii;
-use yii\web\UploadedFile;
 
 /**
  * BusinessController.
@@ -30,14 +30,8 @@ class BusinessController extends FrontendBaseController
      */
     public function actionIndex()
     {
-        if (!Yii::$app->user->identity) {
-            \Yii::$app->response->redirect('/site/login')->send();
-        } else {
-            if (Yii::$app->user->identity->is_safari_operator != 1) {
-                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
-            } elseif (Yii::$app->user->identity->id != $this->module->user()->id) {
-                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action.');
-            }
+        if (Yii::$app->user->identity->is_safari_operator != 1) {
+            return $this->redirect(['/']);
         }
 
         $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id])->limit(1)->one();
@@ -80,7 +74,6 @@ class BusinessController extends FrontendBaseController
 
     public function actionFlagview($id)
     {
-
         $searchModel = new SafariOperatorRatingReportSearch();
         $searchModel->safari_operator_rating_id = $id;
         $searchModel->status = 1;
@@ -97,8 +90,14 @@ class BusinessController extends FrontendBaseController
         }
     }
 
-    public function actionEditRequest($safari_operator_id)
+    public function actionEditRequest()
     {
+        $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->id])->limit(1)->one();
+        if (!$safari_operator) {
+            return $this->redirect(['/profile']);
+        }
+        $safari_operator_id = $safari_operator->id;
+
         $searchModel = new SafariOperatorRequestSearch();
         $searchModel->safari_operator_id = $safari_operator_id;
         $searchModel->user_id = Yii::$app->user->identity->id;
@@ -110,7 +109,7 @@ class BusinessController extends FrontendBaseController
         $model = new SafariOperatorRequestForm($safari_operator_model);
         $model->user_id = Yii::$app->user->identity->id;
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->action_url = '/profile/business/edit-request?safari_operator_id=' . $safari_operator_id . '';
+        $model->action_url = '/profile/business/edit-request';
         $model->action_validate_url = '/profile/business/validate?safari_operator_id=' . $safari_operator_id . '';
         $model->referrer_url = \Yii::$app->request->referrer;
 
@@ -184,5 +183,20 @@ class BusinessController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+    /**
+     * Business Request
+     */
+    public function actionRequest()
+    {
+        $user = Yii::$app->user->identity;
+        $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->orderby(['id' => SORT_DESC])->one();
+        if (!$business_request) {
+            Yii::$app->session->setFlash('success', 'No Business Request Found!');
+            return $this->redirect(['/profile']);
+        }
+
+        return $this->render('request', ['user' => $user, 'safari_operator_request' => $business_request]);
     }
 }

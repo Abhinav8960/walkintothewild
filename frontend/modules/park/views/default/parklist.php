@@ -125,21 +125,33 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div id="ajaxSafariParkData" class="">
                     <?php
                     $pjax = \yii\widgets\Pjax::begin();
-                    echo \yii\widgets\ListView::widget([
-                        'dataProvider' => $dataProvider,
-                        'options' => ['class' => 'list-view-park row view-content mt-20 mla-mp-card-wrapper'],
-                        'itemView' => function ($model) {
-                            return $this->render('_item', ['model' => $model]);
-                        },
-                        'summary' => true,
-                        'itemOptions' => [
-                            'tag' => false //if you want to avoid extra div's
-                        ],
-                        'layout' => '{items}<div class="pagination-wrap" style="display:none">{pager}</div>',
-                        'pager' => [],
-                    ]);
+
+                    // Retrieve models from data provider
+                    $models = $dataProvider->getModels();
+
+                    if (!empty($models)) {
+                        // Render ListView if there are models
+                        echo \yii\widgets\ListView::widget([
+                            'dataProvider' => $dataProvider,
+                            'options' => ['class' => 'list-view-park row view-content mt-20 mla-mp-card-wrapper'],
+                            'itemView' => function ($model) {
+                                return $this->render('_item', ['model' => $model]);
+                            },
+                            'summary' => false, // Disable summary (including "No results found")
+                            'itemOptions' => [
+                                'tag' => false // if you want to avoid extra div's
+                            ],
+                            'layout' => '{items}<div class="pagination-wrap" style="display:none">{pager}</div>',
+                            'pager' => [],
+                        ]);
+                    } else {
+                        // Handle case where no data is available
+                        echo '<div class="no-results-found">No results found.</div>';
+                    }
+
                     \yii\widgets\Pjax::end();
                     ?>
+
                 </div>
                 <div class="col-md-12 loader text-center" style="display: none;">
                     <i class="fas fa-spinner fa-spin fa-3x"></i>
@@ -159,34 +171,51 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 
 <?php
-$js = '
+// Assuming $models is passed as JSON-encoded data from your Yii controller or view
+$modelsJson = json_encode($models);
+
+$js = <<<JS
 $(document).ready(function() {
     var win = $(window);
+    var isLoading = false; // Flag to prevent multiple simultaneous Ajax requests
+    var models = $modelsJson; // Models data from PHP
+
     win.scroll(function() {
-        console.log($(document).height() , win.height() , win.scrollTop());
-        if ($(document).height() - win.height() == win.scrollTop()) {
+        if (!isLoading && ($(document).height() - win.height() <= win.scrollTop() + 100)) {
             $(".loader").show();
-            if ($(".pagination .next a:first").attr("href")) {
-                var timeDelay = 500;           // MILLISECONDS (5 SECONDS).
-                setTimeout(loadPage, timeDelay);  // MAKE THE AJAX CALL AFTER A FEW SECONDS DELAY.
+            isLoading = true; // Set loading flag to true to prevent multiple requests
+
+            var nextPageUrl = $(".pagination .next a:first").attr("href");
+            if (nextPageUrl && models.length > 0) { // Check if there are more pages and models exist
+                setTimeout(function() {
+                    loadPage(nextPageUrl);
+                }, 500); // Delay for 500 milliseconds before making the Ajax call
+            } else {
+                isLoading = false; // Reset loading flag if no more models to load
             }
         }
     });
 
-    function loadPage() {
+    function loadPage(url) {
         $.ajax({
-            url: $(".pagination .next a:first").attr("href"),
+            url: url,
             beforeSend: function(xhr) {},
-            success: function(text) {
+            success: function(response) {
                 $(".loader").hide();
-                var html = $(text);
+                var html = $(response);
                 $("#w0").append(html.find(".list-view-park").html());
-                $("body").find(".pagination").html(html.find(".pagination").html());
+                $(".pagination").html(html.find(".pagination").html());
                 $(".parklistcount").text($(".list-view-park .parking_Box").length);
+                isLoading = false; // Reset loading flag after successful load
+            },
+            error: function(xhr, status, error) {
+                console.error("Ajax request failed: " + error);
+                isLoading = false; // Reset loading flag on error
             }
         });
     }
 });
-';
+JS;
+
 $this->registerJs($js);
 ?>

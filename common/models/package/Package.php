@@ -157,4 +157,14 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
+
+
+
+    /**
+     * Parks List
+     */
+    public function getPackagepark()
+    {
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
 }

@@ -132,6 +132,10 @@ use yii\helpers\Html;
             </div>
 
         </div>
+        <div class="col-lg-6">
+            <label for="" class="Modal_label">Tour Duration</label>
+            <?= $form->field($model, 'tour_duration')->textInput()->label(false) ?>
+        </div>
         <div class="col-lg-12 ">
             <div class="textarea">
                 <?= $form->field($model, 'safari_plan')->textarea(['row' => 4, 'placeholder' => 'Write about your plan'])->label(false) ?>

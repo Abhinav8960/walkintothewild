@@ -263,8 +263,7 @@ $this->params['title'] = $this->title;
                   <div class="sharesafri-card tourpackage">
                     <div class="flotingdate">
                       <div class="icons text-center">
-                        <p class="mb-0">Jul</p>
-                        <p class="mb-0">06</p>
+                      <p class="mb-0">3N/4D</p>     
                       </div>
                     </div>
                     <div class="shareimg">
@@ -286,15 +285,22 @@ $this->params['title'] = $this->title;
                       </div>
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
-                        <div class="orgnizer_tour d-flex gap-3 pt-2">
+                        <div class="orgnizer_tour d-flex justify-content-between pt-2">
                           <div class="icons_restro">
                             <i class="fa-solid fa-building"></i>
+                            <p class="mb-0">5 Safaris</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-car"></i>
+                            <p class="mb-0">Pick & Drop</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-utensils"></i>
+                            <p class="mb-0">Meals</p>
+                          </div>
+                          <div class="icons_restro">
+                          <i class="fa-solid fa-car-side"></i>
+                          <p class="mb-0">Premium</p>
                           </div>
                         </div>
                       </div>
@@ -322,8 +328,7 @@ $this->params['title'] = $this->title;
                   <div class="sharesafri-card tourpackage">
                     <div class="flotingdate">
                       <div class="icons text-center">
-                        <p class="mb-0">Jul</p>
-                        <p class="mb-0">06</p>
+                      <p class="mb-0">3N/4D</p>     
                       </div>
                     </div>
                     <div class="shareimg">
@@ -345,15 +350,22 @@ $this->params['title'] = $this->title;
                       </div>
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
-                        <div class="orgnizer_tour d-flex gap-3 pt-2">
+                        <div class="orgnizer_tour d-flex justify-content-between pt-2">
                           <div class="icons_restro">
                             <i class="fa-solid fa-building"></i>
+                            <p class="mb-0">5 Safaris</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-car"></i>
+                            <p class="mb-0">Pick & Drop</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-utensils"></i>
+                            <p class="mb-0">Meals</p>
+                          </div>
+                          <div class="icons_restro">
+                          <i class="fa-solid fa-car-side"></i>
+                          <p class="mb-0">Premium</p>
                           </div>
                         </div>
                       </div>
@@ -381,8 +393,7 @@ $this->params['title'] = $this->title;
                   <div class="sharesafri-card tourpackage">
                     <div class="flotingdate">
                       <div class="icons text-center">
-                        <p class="mb-0">Jul</p>
-                        <p class="mb-0">06</p>
+                      <p class="mb-0">3N/4D</p>     
                       </div>
                     </div>
                     <div class="shareimg">
@@ -404,15 +415,22 @@ $this->params['title'] = $this->title;
                       </div>
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
-                        <div class="orgnizer_tour d-flex gap-3 pt-2">
+                        <div class="orgnizer_tour d-flex justify-content-between pt-2">
                           <div class="icons_restro">
                             <i class="fa-solid fa-building"></i>
+                            <p class="mb-0">5 Safaris</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-car"></i>
+                            <p class="mb-0">Pick & Drop</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-utensils"></i>
+                            <p class="mb-0">Meals</p>
+                          </div>
+                          <div class="icons_restro">
+                          <i class="fa-solid fa-car-side"></i>
+                          <p class="mb-0">Premium</p>
                           </div>
                         </div>
                       </div>
@@ -440,8 +458,7 @@ $this->params['title'] = $this->title;
                   <div class="sharesafri-card tourpackage">
                     <div class="flotingdate">
                       <div class="icons text-center">
-                        <p class="mb-0">Jul</p>
-                        <p class="mb-0">06</p>
+                      <p class="mb-0">3N/4D</p>     
                       </div>
                     </div>
                     <div class="shareimg">
@@ -463,15 +480,22 @@ $this->params['title'] = $this->title;
                       </div>
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
-                        <div class="orgnizer_tour d-flex gap-3 pt-2">
+                        <div class="orgnizer_tour d-flex justify-content-between pt-2">
                           <div class="icons_restro">
                             <i class="fa-solid fa-building"></i>
+                            <p class="mb-0">5 Safaris</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-car"></i>
+                            <p class="mb-0">Pick & Drop</p>
                           </div>
                           <div class="icons_restro">
                             <i class="fa-solid fa-utensils"></i>
+                            <p class="mb-0">Meals</p>
+                          </div>
+                          <div class="icons_restro">
+                          <i class="fa-solid fa-car-side"></i>
+                          <p class="mb-0">Premium</p>
                           </div>
                         </div>
                       </div>

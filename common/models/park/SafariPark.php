@@ -11,6 +11,7 @@ use common\models\master\airport\MasterAirport;
 use common\models\master\country\MasterCountry;
 use common\models\master\location\MasterLocation;
 use common\models\master\railwaystation\MasterRailwayStation;
+use common\models\suggestions\SafariSuggestions;
 
 /**
  * This is the model class for table "park".
@@ -304,6 +305,11 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     public function getAccomodations()
     {
         return $this->hasMany(SafariParkAccomodation::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_accomodation.status' => 1]);
+    }
+
+    public function getSuggestions()
+    {
+        return $this->hasMany(SafariSuggestions::className(), ['park_id' => 'id'])->andWhere(['safari_suggestions.status' => 1]);
     }
 
 

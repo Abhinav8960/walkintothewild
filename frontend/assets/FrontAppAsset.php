@@ -36,7 +36,7 @@ class FrontAppAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap5\BootstrapAsset',
-        'bedezign\yii2\audit\web\JSLoggingAsset',
+        // 'bedezign\yii2\audit\web\JSLoggingAsset',
 
     ];
 }
