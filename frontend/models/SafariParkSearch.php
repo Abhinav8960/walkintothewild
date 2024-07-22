@@ -19,6 +19,7 @@ class SafariParkSearch extends SafariPark
     public $session_id;
     public $bonus_experience_id;
     public $custom_sort_by;
+    public $safari_park_id;
 
 
     /**
@@ -27,7 +28,7 @@ class SafariParkSearch extends SafariPark
     public function rules()
     {
         return [
-            [['short_description', 'long_description', 'meta_description', 'meta_keywords', 'id'], 'safe'],
+            [['short_description', 'long_description', 'meta_description', 'meta_keywords', 'safari_park_id'], 'safe'],
             [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_most_demanding', 'is_shared_safari'], 'safe'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'safe'],
             [['latitude', 'longitude', 'custom_sort_by'], 'safe'],
@@ -148,6 +149,10 @@ class SafariParkSearch extends SafariPark
 
         if ($this->master_location_id && $this->master_location_id != 0) {
             $query->andFilterWhere(['safari_park.master_location_id' => $this->master_location_id]);
+        }
+
+        if ($this->safari_park_id && $this->safari_park_id != 0) {
+            $query->andFilterWhere(['safari_park.id' => $this->safari_park_id]);
         }
 
 

@@ -176,7 +176,7 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-        <?= $form->field($model, 'host_type')->hiddenInput(['value' => $model->host_type])->label(false); ?>
+        <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>

@@ -95,7 +95,7 @@ $recentposts = ArticleSearch::recentpost();
                                             <?php } ?>
                                         </div>
                                         <div class="me-3 float-md-end">
-                                            <?php if (Yii::$app->user->identity) { ?>
+                                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->account_type != 1) { ?>
                                                 <button class="btn_newsafari departureBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                                             <?php } ?>
                                         </div>
