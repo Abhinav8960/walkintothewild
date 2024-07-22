@@ -54,7 +54,7 @@ $this->params['title'] = $this->title;
                         'label' => 'Request Url',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->request_url;
+                            return $model->request_full_url;
                         }
                     ],
                     [

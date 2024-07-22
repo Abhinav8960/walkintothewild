@@ -23,7 +23,7 @@ class FrontendRequestLog extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'frontend_request';
+        return 'site_frontend_request';
     }
 
     /**

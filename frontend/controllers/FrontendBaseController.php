@@ -62,11 +62,6 @@ class FrontendBaseController extends Controller
             $slug = $request->queryParams['slug'];
         }
 
-        $full_url = $request->absoluteUrl;
-        $url_withour_domain = $request->pathInfo;
-        $method = $request->getMethod();
-        $ip_address = $request->getRemoteIP();
-        
         $request_url = $request->pathInfo;
         if (strpos($request_url, 'storage') === false){
             $model = new FrontendRequestLog();
@@ -74,9 +69,10 @@ class FrontendBaseController extends Controller
             $model->slug = $slug;
             $model->route = $route;
             $model->request_url = $request->pathInfo;
+            $model->request_full_url = $request->absoluteUrl;
             $model->request_type = $request->method;
             $model->request_parameter = json_encode($request->queryParams);
-            $model->user_ip = $ip_address;
+            $model->user_ip = $request->getRemoteIP();
             $model->request_data = json_encode($request->post());
             $model->request_code = $response->statusCode;
             $model->is_server_error = $response->isServerError;
