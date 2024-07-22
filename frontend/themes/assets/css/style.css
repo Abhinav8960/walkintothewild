@@ -359,6 +359,7 @@ a {
     background-size: cover;
     height: 447px;
     width: 100%;
+    border-radius: 10px;
     position: relative;
 }
 
@@ -455,12 +456,18 @@ a {
 
 .joinshareView .btn_shareView {
 
-    background-color: var(--background-yellow);
+    background-color: var(--colorwhite);
     color: var(--background-primary);
     font-weight: 500;
-    font-size: 18px;
-    padding: 5px 30px;
+    font-size: 16px;
+    padding: 8px 25px;
     border-radius: 20px;
+}
+.btn_shareView.pakage{
+
+    background-color: var(--background-primary);
+    color: var(--colorwhite);
+    padding: 8px 25px;
 }
 
 .title_top h4 {
@@ -1188,14 +1195,19 @@ figure {
 
 .artical_cards .lower-content .artical-info li {
     position: relative;
-    display: -webkit-box;
+    /* display: -webkit-box;
     display: -ms-flexbox;
-    display: flex;
+    display: flex; */
     gap: 5px;
-
+    list-style: none;
+/* 
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center;
+    align-items: center; */
+}
+.artical_cards .lower-content .artical-info{
+
+    padding-left: 0;
 }
 
 .artical-info li {
@@ -1207,6 +1219,7 @@ figure {
 
     color: var(--background-yellow) !important;
     font-size: 14px;
+    margin-right: 7px;
 
 }
 
@@ -1219,7 +1232,7 @@ figure {
 }
 
 .artical_cards .lower-content .artical-info li a {
-    display: inline-block;
+    /* display: inline-block; */
     color: #9C9C9C;
     font-family: "Roboto", sans-serif !important;
     font-size: 14px;
@@ -1227,7 +1240,7 @@ figure {
 }
 .artical-info a{
 
-    display: inline-block;
+    /* display: inline-block; */
     color: #9C9C9C;
     font-family: "Roboto", sans-serif !important;
     font-size: 14px;
@@ -3210,13 +3223,13 @@ figure {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     float: left;
-    background-color: #676262;
-    color: #fef6f675;
-    width: 130px;
+    background-color: var(--colorwhite);
+    color: #040404;
+    width: 160px;
     font-family: "Roboto", sans-serif;
     text-align: center;
-    /* padding: 4px 6px; */
-    border-radius: 5px;
+    padding: 4px 6px;
+    border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3233,7 +3246,7 @@ figure {
 } */
 
 .tab-block .tab-mnu .active {
-    background-color: #fff;
+    background-color: var(--background-yellow);
     color: var(--background-primary);
     cursor: default;
     font-weight: 600;
@@ -4862,3 +4875,39 @@ a.desc:after {
     color: #4B4B4B;
     font-size: 14px ;
     font-weight: 500;}
+
+    .PackageBox_home{
+
+        border: 1px solid #7070704D;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 20px 30px;
+    }
+    .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle {
+
+     width: 160px;
+    }
+    .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle {
+
+        width: 238px;
+        padding-left: 57px;
+       }
+       .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle {
+
+        width: 238px;
+        padding-left: 57px;
+       }
+       .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .dropdown-toggle {
+
+        width: 238px;
+        padding-left: 57px;
+       }
+    .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle{
+
+        padding-left: 20px;
+    }
+
+    .planSearch_box  .placeholder_select.loc{
+
+        left: 14%;
+    }

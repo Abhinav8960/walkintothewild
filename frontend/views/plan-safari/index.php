@@ -172,79 +172,83 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <?php } ?>
 
 <?php if ($packages) { ?>
-
     <section class="sharesafri">
-        <div class="container-lg padditg_mobile filter-wrapper">
+        <div class="container-lg ">
             <div class="row justify-content-center">
                 <div class="col-xl-11 px-md-1 px-0">
-                    <div class=" home px-lg-0 px-2" style="padding-right: 0.25rem !important;padding-left: 0.25rem !important;background-size: cover;height: 447px;width: 100%;position: relative;">
-                        <div class="safarishareBox py-3" style="left:0% !important;">
-                            <div class="row justify-content-left">
-                                <div class="col-xxl-8 col-lg-12 col-xl-8">
-                                    <div class="title_safari JoinPadding d-flex justify-content-left justify-content-xl-between align-items-left flex-wrap">
-                                        <h4 class="text-center" style="color:var(--background-primary) !important;">Discover The Best Safari Deal</h4>
-                                        <div class="joinshareView mt-xl-0 mt-3" style="margin-right: 49px !important;">
-                                            <a href="/package" class="btn_shareView">View All</a>
-                                        </div>
+                    <div class="PackageBox_home py-3">
+                        <div class="row justify-content-left">
+                            <div class="col-xxl-12 col-lg-12 col-xl-12">
+                                <div class="title_safari JoinPadding d-flex justify-content-left justify-content-xl-between align-items-left flex-wrap">
+                                    <h4 class="text-center" style="color:var(--background-primary) !important;">Discover The Best Safari Deal</h4>
+                                    <div class="joinshareView mt-xl-0 mt-3">
+                                        <a href="/package" class="btn_shareView pakage">View All</a>
                                     </div>
                                 </div>
-
                             </div>
-                            <div class="row pt-4 justify-content-center gx-lg-5">
-                                <?php if ($packages) {
-                                    foreach ($packages as $package) { ?>
-                                        <div class="col mb-4">
-                                            <div class="col mb-4 padding_righ">
-                                                <div class="sharesafri-card tourpackage">
-                                                    <div class="flotingdate">
-                                                        <div class="icons text-center">
-                                                            <p class="mb-0">Jul</p>
-                                                            <p class="mb-0">06</p>
+
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
+                            <?php if ($packages) {
+                                foreach ($packages as $package) { ?>
+                                   
+                                        <div class="col mb-lg-0 mb-3 padding_righ">
+                                            <div class="sharesafri-card tourpackage">
+                                                <div class="flotingdate">
+                                                    <div class="icons text-center">
+                                                        <p class="mb-0">3N/4D</p>
+                                                    </div>
+                                                </div>
+                                                <div class="shareimg">
+                                                    <a href="/package/<?= $package->package_slug ?>">
+                                                        <img src="<?= $package->imagepath ?>" alt=""></a>
+                                                </div>
+                                                <div class="card_body">
+                                                    <div class="top_seats">
+                                                        <div class="safari d-flex justify-content-between ">
+                                                            <div class="safarinum d-flex gap-2 align-items-center ">
+                                                                <p class="text_safari">NIGHTS</p>
+                                                                <h6 class="number-safari"><?= $package->no_of_night ?></h6>
+                                                            </div>
+                                                            <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
+                                                                <p class="text_safari">SAFARIES</p>
+                                                                <h6 class="number-safari"><?= $package->no_of_safari ?></h6>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="shareimg">
-                                                        <a href="/package/<?= $package->package_slug ?>">
-                                                            <img src="<?= $package->imagepath ?>" alt=""></a>
+                                                    <div class="titleDate">
+                                                        <h6 class="pt-1"><a href=""><?= $package->package_name ?> </a></h6>
+                                                        <div class="orgnizer_tour d-flex justify-content-between pt-2">
+                                                            <div class="icons_restro">
+                                                            <i class="fa-solid fa-car-side"></i>
+                                                                <p class="mb-0">5 Safaris</p>
+                                                            </div>
+                                                            <div class="icons_restro">
+                                                                <i class="fa-solid fa-car"></i>
+                                                                <p class="mb-0">Pick & Drop</p>
+                                                            </div>
+                                                            <div class="icons_restro">
+                                                                <i class="fa-solid fa-utensils"></i>
+                                                                <p class="mb-0">Meals</p>
+                                                            </div>
+                                                            <div class="icons_restro">
+                                                          
+                                                                <i class="fa-solid fa-building"></i>
+                                                                <p class="mb-0">Premium</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="card_body">
-                                                        <div class="top_seats">
-                                                            <div class="safari d-flex justify-content-between ">
-                                                                <div class="safarinum d-flex gap-2 align-items-center ">
-                                                                    <p class="text_safari">NIGHTS</p>
-                                                                    <h6 class="number-safari"><?= $package->no_of_night ?></h6>
-                                                                </div>
-                                                                <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                                    <p class="text_safari">SAFARIES</p>
-                                                                    <h6 class="number-safari"><?= $package->no_of_safari ?></h6>
-                                                                </div>
+                                                    <div class="footer_card row pb-2 px-2 align-items-center">
+                                                        <div class="col-7">
+                                                            <div class="safaritourlogo">
+                                                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
                                                             </div>
                                                         </div>
-                                                        <div class="titleDate">
-                                                            <h6 class="pt-1"><a href=""><?= $package->package_name ?> </a></h6>
-                                                            <div class="orgnizer_tour d-flex gap-3 pt-2">
-                                                                <div class="icons_restro">
-                                                                    <i class="fa-solid fa-building"></i>
-                                                                </div>
-                                                                <div class="icons_restro">
-                                                                    <i class="fa-solid fa-car"></i>
-                                                                </div>
-                                                                <div class="icons_restro">
-                                                                    <i class="fa-solid fa-utensils"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="footer_card row pb-2 px-2 align-items-center">
-                                                            <div class="col-6">
-                                                                <div class="safaritourlogo">
-                                                                    <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <div class="safari text-center">
-                                                                    <div class="joinsafari package">
-                                                                        <h6 class=" titlePrice"><?= $package->cost_per_person ?> + GST </h6>
-                                                                        <a href="/package/<?= $package->package_slug ?>">View Details</a>
-                                                                    </div>
+                                                        <div class="col-5">
+                                                            <div class="safari text-center">
+                                                                <div class="joinsafari package">
+                                                                    <h6 class=" titlePrice"><?= $package->cost_per_person ?> + GST </h6>
+                                                                    <a href="/package/<?= $package->package_slug ?>">View Details</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -252,18 +256,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 </div>
                                             </div>
                                         </div>
-                                <?php }
-                                } ?>
-                            </div>
+                                   
+                            <?php }
+                            } ?>
                         </div>
                     </div>
-
                 </div>
+
             </div>
 
         </div>
-
-
     </section>
 <?php } ?>
 
