@@ -3,6 +3,8 @@
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
+use common\models\UserWishlist;
+
 
 $this->title = 'Package';
 $this->params['title'] = $this->title;
@@ -113,11 +115,21 @@ $this->params['title'] = $this->title;
                           <p class="mb-0">3N/4D</p>
                         </div>
                       </div>
-                       <div class="floating-watchlist">
+                      <div class="floating-watchlist">
                         <div class="heart_bx">
-                        <i class="fa-regular fa-heart"></i>
+                          <?php
+                          $class = '';
+                          if (Yii::$app->user->identity) {
+                            $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
+                            if ($wishlist) {
+                          ?>
+                              <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                            <?php } else { ?>
+                              <a href="/package/wishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
+                          <?php }
+                          } ?>
                         </div>
-                       </div>
+                      </div>
                       <div class="shareimg">
                         <a href="/package/<?= $model->package_slug ?>">
                           <img src="http://app.walkintothewild.io/assets/5a869828/img/blog_details01.jpg" alt=""></a>
