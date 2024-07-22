@@ -47,12 +47,6 @@
 											</div> Plan Safari
 									</a>
 								</li>
-								<!-- <li class="nav-item <?= in_array($active_url, array(
-																"/article/default/index",
-																"/article/default/view",
-															)) ? "active" : "" ?>">
-									<a class="nav-link" href="/article"> <img src="<?= $this->params['baseurl'] ?>/img/Articlestipsicon.png" alt="" class="me-1 d-lg-inline-flex d-none"> ARTICLES & TIPS</a>
-								</li> -->
 								<li class="nav-item text-center <?= (in_array($active_url, array("/package/default/index", "/package/default/view")) || str_starts_with($active_url, "/package")) ? "active" : "" ?>">
 
 									<a href="/package" class="nav-link">
@@ -68,24 +62,6 @@
 											<img src="<?= $this->params['baseurl'] ?>/img/safaric.png" alt="" width="32">
 										</div>Shared Safari
 									</a>
-								</li>
-
-
-
-								<!-- <a href="/sharedsafari" class="sahreSafari desktop text-lg-center  <?= (in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) || str_starts_with($active_url, "/sharedsafari")) ? "active" : "" ?>">
-									<div class="card-img">
-										<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
-									</div>
-									<h5>Shared Safari</h5>
-								</a> -->
-								<!-- <a href="/package" class="sahreSafari desktop text-lg-center  <?= (in_array($active_url, array("/package/default/index", "/package/default/view")) || str_starts_with($active_url, "/package")) ? "active" : "" ?>">
-									<div class="card-img">
-										<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
-									</div>
-									<h5>Packages</h5>
-								</a> -->
-								<li>
-
 								</li>
 							</ul>
 
