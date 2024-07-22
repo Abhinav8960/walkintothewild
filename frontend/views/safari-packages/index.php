@@ -70,7 +70,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="title_web">
-                    <h2>TOP SAFARI DEALS</h2>
+                    <h2 class="pb-1">TOP SAFARI DEALS</h2>
                 </div>
             </div>
         </div>
@@ -78,8 +78,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     <section class="articals_wrapper">
         <div class="container-lg">
             <div class="row justify-content-center">
-                <div class="col-xl-11">
-                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5 px-2">
+                <div class="col-xl-11 px-xl-4">
+                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-4 px-2">
                         <?php if ($packages) {
                             foreach ($packages as $package) { ?>
                                 <div class="col mb-lg-0 mb-3 ">
@@ -91,10 +91,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         </div>
                                         <div class="shareimg">
                                             <a href="/package/<?= $package->package_slug ?>">
-                                                <img src="<?= $package->imagepath ?>" alt=""></a>
+                                                <img src="http://app.walkintothewild.io/storage/safaripark/41/logo1718180001.jpg" alt=""></a>
                                         </div>
                                         <div class="card_body">
-                                            <div class="top_seats">
+                                            <!-- <div class="top_seats">
                                                 <div class="safari d-flex justify-content-between ">
                                                     <div class="safarinum d-flex gap-2 align-items-center ">
                                                         <p class="text_safari">NIGHTS</p>
@@ -105,7 +105,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         <h6 class="number-safari"><?= $package->no_of_safari ?></h6>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="titleDate">
                                                 <h6 class="pt-1"><a href=""><?= $package->package_name ?> </a></h6>
                                                 <div class="orgnizer_tour d-flex justify-content-between pt-2">

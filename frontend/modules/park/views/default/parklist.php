@@ -42,6 +42,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
     </div>
 <?php } else { ?>

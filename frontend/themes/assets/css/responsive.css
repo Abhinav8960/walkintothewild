@@ -1,5 +1,18 @@
 @media only screen and (min-width:1600px) {
 
+    .padding_setCard{
+        padding: 0px 70px;
+    }
+    .padding_setCard .shareimg{
+
+        height: 190px;
+    }
+
+    .tourpackage .shareimg{
+        height: 200px;
+
+    }
+
     .postthumbnail img{
 
      height: 56px;
@@ -346,6 +359,10 @@ line-height: 19px;
     .dropdown-toggle {
 
         font-size: 14px;
+    }
+    .tourpackage .shareimg{
+        height: 200px;
+
     }
 
     .shareimg {
