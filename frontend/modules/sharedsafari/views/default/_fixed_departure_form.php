@@ -28,7 +28,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-md-6 mb-1">
             <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->textInput()->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
         </div>
 
         <div class="col-md-6 mb-1">
@@ -80,7 +80,7 @@ use yii\helpers\Html;
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Tour Duration</label>
-                    <?= $form->field($model, 'tour_duration')->textInput()->label(false) ?>
+                    <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Total Seat</label>

@@ -103,7 +103,7 @@ use yii\helpers\Html;
 
         <div class="col-md-6 mb-1">
             <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->textInput()->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
         </div>
 
         <div class="col-md-12">
@@ -134,7 +134,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-lg-6">
             <label for="" class="Modal_label">Tour Duration</label>
-            <?= $form->field($model, 'tour_duration')->textInput()->label(false) ?>
+            <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
         </div>
         <div class="col-lg-12 ">
             <div class="textarea">
