@@ -30,7 +30,7 @@ class ArticleController extends FrontendBaseController
     {
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
-        $articles = Article::find()->where(['user_id' => $user->id])->all();
+        $articles = Article::find()->where(['user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
         return $this->render(
             'index',
             [
@@ -100,7 +100,7 @@ class ArticleController extends FrontendBaseController
                             }
                         }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['/profile/article/index', 'user_handle' => $user->user_handle]);
                     }
                 }
             }
