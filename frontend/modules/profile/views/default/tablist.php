@@ -44,7 +44,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-lg-4 ">
                 <div class="d-flex align-items-center m-1 mx-auto align-items-center justify-content-center">
                     <?php if (Yii::$app->user->identity->id != $user->id) {
-                        if (UserFollow::find()->where(['follow_user_id' => Yii::$app->user->identity->id, 'user_id' => $user->id, 'status' => '1'])->one()) { ?>
+                        if (UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id, 'status' => '1'])->one()) { ?>
                             <a href="<?= Url::toRoute(['/profile/default/unfollow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Unfollow</a>
                         <?php } else { ?>
                             <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Follow</a>

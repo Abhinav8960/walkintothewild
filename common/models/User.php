@@ -377,12 +377,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getUserfollowers()
     {
-        return $this->hasMany(UserFollow::class, ['user_id' => 'id']);
+        return $this->hasMany(UserFollow::class, ['follow_user_id' => 'id']);
     }
 
     public function getUserfollowings()
     {
-        return $this->hasMany(UserFollow::class, ['follow_user_id' => 'id']);
+        return $this->hasMany(UserFollow::class, ['user_id' => 'id']);
     }
 
     public function getSharesafari()
