@@ -1,6 +1,14 @@
 <?php
-$this->title = 'Your Wishlist';
 
+use common\models\package\Package;
+use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariIntrested;
+use common\models\UserWishlist;
+use yii\helpers\Url;
+
+$this->title = 'Your Wishlist';
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="container mt-5 mb-5">
@@ -21,10 +29,212 @@ $this->title = 'Your Wishlist';
 
                 <div class="tab-content m-3" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-packages" role="tabpanel" aria-labelledby="pills-packages-tab">
-                        No Packages found in wishlist
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                            <?php if ($packages) {
+                                foreach ($packages as $package) {
+                                    $package_model = Package::find()->where(['id' => $package->id])->limit(1)->one();
+                            ?>
+                                    <div class="col mb-4 padding_righ">
+                                        <div class="sharesafri-card tourpackage">
+                                            <div class="flotingdate">
+                                                <div class="icons text-center">
+                                                    <p class="mb-0">3N/4D</p>
+                                                </div>
+                                            </div>
+                                            <div class="floating-watchlist">
+                                                <?php
+                                                if (Yii::$app->user->identity) { ?>
+                                                    <div class="heart_bx">
+                                                        <?php
+                                                        $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package_model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
+                                                        if ($wishlist) {
+                                                        ?>
+                                                            <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                        <?php } else { ?>
+                                                            <a href="/package/wishlist/<?= $package_model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
+                                                        <?php }
+                                                        ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="shareimg">
+                                                <a href="/package/<?= $package_model->package_slug ?>">
+                                                    <img src="http://app.walkintothewild.io/assets/5a869828/img/blog_details01.jpg" alt=""></a>
+                                            </div>
+                                            <div class="card_body">
+                                                <div class="top_seats">
+                                                    <div class="safari d-flex justify-content-between ">
+                                                        <div class="safarinum d-flex gap-2 align-items-center ">
+                                                            <p class="text_safari">NIGHTS</p>
+                                                            <h6 class="number-safari"><?= $package_model->no_of_night ?></h6>
+                                                        </div>
+                                                        <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
+                                                            <p class="text_safari">SAFARIES</p>
+                                                            <h6 class="number-safari"><?= $package_model->no_of_safari ?></h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="titleDate">
+                                                    <h6 class="pt-1"><a href=""><?= $package_model->package_name ?> </a></h6>
+                                                    <div class="orgnizer_tour d-flex justify-content-between pt-2">
+                                                        <div class="icons_restro">
+                                                            <i class="fa-solid fa-car-side"></i>
+                                                            <p class="mb-0">5 Safaris</p>
+                                                        </div>
+                                                        <div class="icons_restro">
+                                                            <i class="fa-solid fa-car"></i>
+                                                            <p class="mb-0">Pick & Drop</p>
+                                                        </div>
+                                                        <div class="icons_restro">
+                                                            <i class="fa-solid fa-utensils"></i>
+                                                            <p class="mb-0">Meals</p>
+                                                        </div>
+                                                        <div class="icons_restro">
+
+                                                            <i class="fa-solid fa-building"></i>
+                                                            <p class="mb-0">Premium</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="footer_card row pb-2 px-2 align-items-center">
+                                                    <div class="col-6">
+                                                        <div class="safaritourlogo">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="safari text-center">
+                                                            <div class="joinsafari package">
+                                                                <h6 class=" titlePrice"><?= $package_model->cost_per_person ?> + GST </h6>
+                                                                <a href="/package/<?= $package_model->package_slug ?>">View Details</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php }
+                            } else {
+                                echo 'No Shared Safari found in wishlist';
+                            } ?>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="pills-shared-safari" role="tabpanel" aria-labelledby="pills-shared-safari-tab">
-                        No Shared Safari found in wishlist
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+
+                            <?php if ($share_safaries) {
+                                foreach ($share_safaries as $share_safari) {
+                                    $share_safari_model = ShareSafari::find()->where(['id' => $share_safari->id])->limit(1)->one();
+
+                            ?>
+                                    <div class="col mb-4 padding_righ">
+                                        <div class="sharesafri-card">
+                                            <div class="flotingdate">
+                                                <div class="icons text-center">
+                                                    <p class="mb-0"><?= date('M', strtotime($share_safari_model->start_date)) ?></p>
+                                                    <p class="mb-0"><?= date('d', strtotime($share_safari_model->start_date)) ?></p>
+                                                </div>
+                                            </div>
+                                            <div class="floating-watchlist">
+                                                <?php
+                                                if (Yii::$app->user->identity) { ?>
+                                                    <div class="heart_bx">
+                                                        <?php
+                                                        $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari_model->id, 'item_type_id' => 2, 'status' => 1])->limit(1)->one();
+                                                        if ($wishlist) {
+                                                        ?>
+                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari_model->slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                        <?php } else { ?>
+                                                            <a href="/sharedsafari/wishlist/<?= $share_safari_model->slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
+                                                        <?php }
+                                                        ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="shareimg">
+                                                <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari_model->slug]) ?>"><img src="<?= $share_safari_model->sharedimagepath ? $share_safari_model->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                                            </div>
+                                            <div class="card_body">
+                                                <?php
+                                                $class = '';
+                                                if (Yii::$app->user->identity) {
+                                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari_model->id, 'status' => 1])->limit(1)->one();
+                                                    if ($share_safari_intrested) {
+                                                        $class = 'background-color: #007BFF;';
+                                                    }
+                                                } ?>
+                                                <div class="top_seats" style='<?= $class ?>'>
+                                                    <div class="safari d-flex justify-content-between ">
+                                                        <div class="safarinum d-flex gap-2 align-items-center ">
+                                                            <p class="text_safari">SAFARI</p>
+                                                            <h6 class="number-safari"><?= $share_safari_model->no_of_safari ?></h6>
+                                                        </div>
+                                                        <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
+                                                            <p class="text_safari">SEATS</p>
+                                                            <h6 class="number-safari"><?= $share_safari_model->share_seat ?></h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="titleDate">
+                                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari_model->slug]) ?>"><?= $share_safari_model->park->title ?></a></h6>
+                                                    <div class="orgnizer">
+                                                        <p>Organized by: <strong><?= $share_safari_model->user->name ?></strong></p>
+                                                    </div>
+                                                </div>
+                                                <div class="footer_card row pb-2 px-2 align-items-center">
+                                                    <div class="col-6">
+                                                        <div class="users">
+                                                            <?php if ($interests = $share_safari_model->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                                                                $count = $share_safari_model->getIntrested()->count();
+                                                                $avatar_count = 3;
+                                                                foreach ($interests as $interest) {
+                                                            ?>
+                                                                    <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                                                                <?php
+                                                                };
+                                                                $count = $share_safari_model->getIntrested()->count();
+                                                                $avatar_count = 3;
+                                                                $data = $count - $avatar_count;
+                                                                if ($data > 3) {  ?>
+                                                                    <div class="roundes_countuser">
+                                                                        <?= $data ?>+
+                                                                    </div>
+                                                                <?php }
+                                                            } else { ?>
+                                                                <img src="<?= $share_safari_model->user && $share_safari_model->user->avatar <> '' ? $share_safari_model->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                                                            <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="safari text-center">
+                                                            <div class="joinsafari">
+                                                                <?php if ($share_safari_model->status == 2) { ?>
+                                                                    <a href="#">Closed Safari</a>
+                                                                    <?php } else {
+                                                                    if (Yii::$app->user->identity) {
+                                                                        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari_model->id, 'status' => 1])->limit(1)->one();
+                                                                        if ($share_safari_intrested) { ?>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari_model->slug]) ?>" style="background-color: #007BFF;">Leave Safari</a>
+                                                                        <?php } else if ($share_safari_model->host_user_id != Yii::$app->user->identity->id) { ?>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari_model->slug]) ?>">Join Safari</a>
+                                                                        <?php  }
+                                                                    } else { ?>
+                                                                        <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari_model->slug]) ?>">Join Safari</a>
+                                                                <?php }
+                                                                } ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php }
+                            } else {
+                                echo 'No Shared Safari found in wishlist';
+                            } ?>
+                        </div>
                     </div>
                 </div>
             </div>
