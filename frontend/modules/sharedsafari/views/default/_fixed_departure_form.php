@@ -27,8 +27,9 @@ use yii\helpers\Html;
             ])->label(false) ?>
         </div>
         <div class="col-md-6 mb-1">
-            <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <label for="" class="Modal_label">Number of Safaris (1-10)</label>
+            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <p>Value: <span id="safariseat"><?= $model->no_of_safari ?></span></p>
         </div>
 
         <div class="col-md-6 mb-1">
@@ -79,8 +80,9 @@ use yii\helpers\Html;
         <div class="col-lg-12">
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
-                    <label for="" class="Modal_label">Tour Duration</label>
-                    <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+                    <label for="" class="Modal_label">Tour Duration (1-10)</label>
+                    <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+                    <p>Value: <span id="tour"><?= $model->tour_duration ?></span></p>
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Total Seat</label>
@@ -105,7 +107,18 @@ use yii\helpers\Html;
 $script = <<< JS
           $("#createdepartureform-start_date").on("change", function(){
           $("#createdepartureform-end_date").attr("min", $(this).val());
-          });    
+          });   
+          $("#createdepartureform-tour_duration").on("input",function()
+          {
+            var selectedValue = $(this).val();
+            $("#tour").html(selectedValue);
+          });
+
+          $("#createdepartureform-no_of_safari").on("input",function()
+          {
+            var selectedValue = $(this).val();
+            $("#safariseat").html(selectedValue);
+          }); 
 JS;
 $this->registerJs($script);
 ?>
