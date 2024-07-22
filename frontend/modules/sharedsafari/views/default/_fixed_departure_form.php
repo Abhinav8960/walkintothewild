@@ -28,7 +28,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-md-6 mb-1">
             <label for="" class="Modal_label">Number of Safaris (1-10)</label>
-            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 0])->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 1])->label(false) ?>
             <p>Value: <span id="safariseat"><?= $model->no_of_safari ?></span></p>
         </div>
 
@@ -81,7 +81,7 @@ use yii\helpers\Html;
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Tour Duration (1-10)</label>
-                    <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider', 'value' => ($model->tour_duration) ? $model->tour_duration : 0])->label(false) ?>
+                    <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->tour_duration) ? $model->tour_duration : 1])->label(false) ?>
                     <p>Value: <span id="tour"><?= $model->tour_duration ?></span></p>
                 </div>
                 <div class="selects w-100">
