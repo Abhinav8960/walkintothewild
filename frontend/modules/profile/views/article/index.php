@@ -25,7 +25,7 @@ $this->params['title'] = $this->title;
                         </div>
                         <?php if ($articles) {
                             foreach ($articles as $article) {  ?>
-                                <div class="col-4 mb-5 mt-4" style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
+                                <div class="col-md-6 mb-5 mt-4" style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
                                     <div class="artical_cards h-100">
                                         <div class="image-box">
                                             <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
