@@ -21,7 +21,7 @@ $animalfilteroption = GeneralModel::animalfilteroption();
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
 <div class="row gx-0 justify-content-center " >
-    <div class=" col-xl-10 planSearch_box">
+    <div class=" col-xl-9 planSearch_box">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
