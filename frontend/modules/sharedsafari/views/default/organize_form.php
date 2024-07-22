@@ -102,8 +102,9 @@ use yii\helpers\Html;
         </div>
 
         <div class="col-md-6 mb-1">
-            <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <label for="" class="Modal_label">Number of Safaris (1-10)</label>
+            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <p>Value: <span id="safariseat"><?= $model->no_of_safari ?></span></p>
         </div>
 
         <div class="col-md-12">
@@ -133,8 +134,9 @@ use yii\helpers\Html;
 
         </div>
         <div class="col-lg-6">
-            <label for="" class="Modal_label">Tour Duration</label>
-            <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 0, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <label for="" class="Modal_label">Tour Duration(1-10)</label>
+            <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <p>Value: <span id="tour"><?= $model->tour_duration ?></span></p>
         </div>
         <div class="col-lg-12 ">
             <div class="textarea">
@@ -200,6 +202,18 @@ $script = <<< JS
 
           $("#sharedsafariform-start_date").on("change", function(){
           $("#sharedsafariform-end_date").attr("min", $(this).val());
+          });
+
+          $("#sharedsafariform-tour_duration").on("input",function()
+          {
+            var selectedValue = $(this).val();
+            $("#tour").html(selectedValue);
+          });
+
+          $("#sharedsafariform-no_of_safari").on("input",function()
+          {
+            var selectedValue = $(this).val();
+            $("#safariseat").html(selectedValue);
           });
           
 JS;
