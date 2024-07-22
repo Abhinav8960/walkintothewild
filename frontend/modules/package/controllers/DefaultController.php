@@ -11,10 +11,12 @@ use Yii;
 use yii\web\UploadedFile;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageSearch;
+use common\models\UserWishlist;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\PackageCommentForm;
 use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -187,5 +189,66 @@ class DefaultController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($packagemodel);
         }
+    }
+
+
+    /**
+     * Add To Wishlist Package
+     */
+    public function actionWishlist($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (empty($package)) {
+            return $this->redirect(['/package']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        if ($package) {
+            if (Yii::$app->user->identity) {
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1])->one();
+                if (!$wishlist) {
+                    $wishlist = new UserWishlist();
+                }
+                $wishlist->user_id = Yii::$app->user->identity->id;
+                $wishlist->item_id = $package->id;
+                $wishlist->item_type_id = 1;
+                $wishlist->item_type = 'package';
+                $wishlist->status = 1;
+                if ($wishlist->save(false)) {
+                    Yii::$app->session->setFlash('success', 'You added ' . $package->package_name . ' to wishlist ');
+                } else {
+                    Yii::$app->session->setFlash('error', 'You can not add this package to wishlist currently!');
+                }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug])]);
+            }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+        }
+        return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+    }
+
+    public function actionUnwishlist($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (empty($package)) {
+            return $this->redirect(['/package']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        if ($package) {
+            if (Yii::$app->user->identity) {
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1])->one();
+                if ($wishlist) {
+                    $wishlist->status = 1;
+                    if ($wishlist->save(false)) {
+                        Yii::$app->session->setFlash('success', 'You removed ' . $package->package_name . ' from wishlist ');
+                    } else {
+                        Yii::$app->session->setFlash('error', 'You can not add this package to wishlist currently!');
+                    }
+                }
+            } else {
+                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug])]);
+            }
+            return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+        }
+        return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
     }
 }

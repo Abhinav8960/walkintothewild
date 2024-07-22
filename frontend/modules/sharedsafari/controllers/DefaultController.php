@@ -483,29 +483,24 @@ class DefaultController extends FrontendBaseController
         echo "<option value=''>Select Shared Seat</option>";
         if ($total_seat == 2) {
             echo "<option value='1'>1</option>";
-            echo "<option value='4'>2</option>";
         } elseif ($total_seat == 3) {
             echo "<option value='1'>1</option>";
             echo "<option value='2'>2</option>";
-            echo "<option value='3'>3</option>";
         } elseif ($total_seat == 4) {
             echo "<option value='1'>1</option>";
             echo "<option value='2'>2</option>";
             echo "<option value='3'>3</option>";
-            echo "<option value='4'>4</option>";
         } elseif ($total_seat == 5) {
             echo "<option value='1'>1</option>";
             echo "<option value='2'>2</option>";
             echo "<option value='3'>3</option>";
             echo "<option value='4'>4</option>";
-            echo "<option value='5'>5</option>";
         } elseif ($total_seat == 6) {
             echo "<option value='1'>1</option>";
             echo "<option value='2'>2</option>";
             echo "<option value='3'>3</option>";
             echo "<option value='4'>4</option>";
             echo "<option value='5'>5</option>";
-            echo "<option value='6'>6</option>";
         }
     }
 
@@ -516,7 +511,7 @@ class DefaultController extends FrontendBaseController
             $model->status = 2;
             $model->save(false);
             Yii::$app->session->setFlash('success', 'Thank You!!');
-            return $this->redirect(['view', ['slug' => $slug]]);
+            return $this->redirect(Yii::$app->request->referrer);
         }
     }
 
