@@ -33,6 +33,8 @@ class DefaultController extends FrontendBaseController
      */
     public function actionIndex()
     {
+
+        return $this->redirect('/');
         $searchModel = new SafariParkSearch();
         $searchModel->master_location_id = 7;
         $searchModel->session_id = 1;
