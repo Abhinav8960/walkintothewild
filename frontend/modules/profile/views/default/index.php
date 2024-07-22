@@ -55,7 +55,7 @@ $this->params['title'] = $this->title;
 
             <div class="card mt-2 mb-2">
                 <div class="card-body">
-                    <h5>Shared Safari</h5>
+                    <h5>Organized Shared Safari <?= $model_count ?></h5>
                     <?php if ($model) {
                         foreach ($model as $share_safari) {
                     ?>
