@@ -5029,3 +5029,9 @@ a.desc:after {
 
     left: 18% !important;
 } */
+
+.initial_headers i{
+
+    font-size: 25px;
+    color: #fff;
+}
