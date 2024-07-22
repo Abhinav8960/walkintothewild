@@ -32,7 +32,7 @@
 						</div>
 						<div class="offcanvas-body pt-2  position-relative">
 							<ul class="navbar-nav menu-navbar-nav align-items-center">
-								<li class="nav-item text-center  
+								<li class="nav-item text-lg-center  
 							<?= in_array($active_url, array(
 								"/",
 								"/park/default/index",
@@ -47,7 +47,7 @@
 											</div> Plan Safari
 									</a>
 								</li>
-								<li class="nav-item text-center <?= (in_array($active_url, array("/package/default/index", "/package/default/view")) || str_starts_with($active_url, "/package")) ? "active" : "" ?>">
+								<li class="nav-item text-lg-center <?= (in_array($active_url, array("/package/default/index", "/package/default/view")) || str_starts_with($active_url, "/package")) ? "active" : "" ?>">
 
 									<a href="/package" class="nav-link">
 										<div class="card-img">
@@ -55,7 +55,7 @@
 										</div>Safari Packages
 									</a>
 								</li>
-								<li class="nav-item text-center <?= (in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) || str_starts_with($active_url, "/sharedsafari")) ? "active" : "" ?>">
+								<li class="nav-item text-lg-center <?= (in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) || str_starts_with($active_url, "/sharedsafari")) ? "active" : "" ?>">
 
 									<a href="/sharedsafari" class="nav-link">
 										<div class="card-img">
