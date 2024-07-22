@@ -50,7 +50,7 @@ class ShareSafariSearch extends ShareSafari
      */
     public function search($params, $pagination = true)
     {
-        $query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]])->andWhere(['>=', 'start_date', date("Y-m-d")]);
+        $query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_APPROVED]])->andWhere(['>=', 'start_date', date("Y-m-d")]);
 
         // add conditions that should always apply here
 
