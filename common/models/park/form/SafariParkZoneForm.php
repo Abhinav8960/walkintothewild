@@ -60,7 +60,22 @@ class SafariParkZoneForm extends model
             [['safari_park_id', 'master_zone_type_id', 'status'], 'integer'],
             [['zone_name', 'entry_gate_name'], 'string', 'max' => 255],
             [['entry_gate_latitude', 'entry_gate_longitude'], 'string', 'max' => 50],
-            [['master_zone_type_name'], 'safe']
+            [['master_zone_type_name'], 'safe'],
+            [
+                'zone_name', 'unique', 'when' => function ($model, $attribute) {
+                    return strtolower($this->safari_park_zone_model->$attribute) != strtolower($model->$attribute);
+                },
+                'targetClass' => SafariParkZone::className(), 'targetAttribute' => ['safari_park_id', 'zone_name'],
+                'message' => 'This Zone Name has already been taken'
+            ],
+            [
+                'entry_gate_name', 'unique', 'when' => function ($model, $attribute) {
+                    return strtolower($this->safari_park_zone_model->$attribute) != strtolower($model->$attribute);
+                },
+                'targetClass' => SafariParkZone::className(), 'targetAttribute' => ['safari_park_id', 'entry_gate_name'],
+                'message' => 'This Entry Gate Name has already been taken'
+            ],
+
         ];
     }
 
