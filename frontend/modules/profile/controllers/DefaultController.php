@@ -65,4 +65,25 @@ class DefaultController extends FrontendBaseController
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
+
+
+    /**
+     * User Follower
+     */
+    public function actionFollower($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+
+        return $this->render('follower', ['user' => $user]);
+    }
+
+    /**
+     * User Following
+     */
+    public function actionFollowing($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+
+        return $this->render('following', ['user' => $user]);
+    }
 }
