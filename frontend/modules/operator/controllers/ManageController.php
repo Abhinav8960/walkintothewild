@@ -73,6 +73,66 @@ class ManageController extends FrontendBaseController
 
 
     /**
+     * Park List of Operator
+     */
+    public function actionQuote()
+    {
+        $safari_operator = $this->operatormodel();
+
+
+        return $this->render('quote', ['safari_operator' => $safari_operator]);
+    }
+
+
+    /**
+     * Park List of Operator
+     */
+    public function actionReview()
+    {
+        $safari_operator = $this->operatormodel();
+
+
+        return $this->render('review', ['safari_operator' => $safari_operator]);
+    }
+
+
+    /**
+     * Park List of Operator
+     */
+    public function actionFollower()
+    {
+        $safari_operator = $this->operatormodel();
+
+
+        return $this->render('follower', ['safari_operator' => $safari_operator]);
+    }
+
+
+
+    /**
+     * Park List of Operator
+     */
+    public function actionSharedsafari()
+    {
+        $safari_operator = $this->operatormodel();
+
+
+        return $this->render('sharedsafari', ['safari_operator' => $safari_operator]);
+    }
+
+    /**
+     * Park List of Operator
+     */
+    public function actionPackage()
+    {
+        $safari_operator = $this->operatormodel();
+
+
+        return $this->render('package', ['safari_operator' => $safari_operator]);
+    }
+
+
+    /**
      * Check if Currect user is a Operator
      */
     protected function operatormodel()

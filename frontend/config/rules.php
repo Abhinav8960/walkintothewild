@@ -45,7 +45,8 @@ return [
     '/sharedsafari/wishlist/<slug>' => '/sharedsafari/default/wishlist', //sharedsafari page url
     '/sharedsafari/unwishlist/<slug>' => '/sharedsafari/default/unwishlist', //sharedsafari page url
 
-    
+    '/operator/manage/sharedsafari' => '/operator/manage/sharedsafari',
+    '/operator/manage/package' => '/operator/manage/package',
     '/operator/manage' => '/operator/manage/index', //operator manage
     '/operator/manage/park' => '/operator/manage/park', //operator manage
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
