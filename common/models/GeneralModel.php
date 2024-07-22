@@ -935,4 +935,30 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
         return $options;
     }
+
+
+    public static function wishlisttype()
+    {
+        $return = [
+            '1' => 'Safari Package',
+            '2' => 'Shared Safari',
+        ];
+        return $return;
+    }
+
+    public static function userwishlist($item_id, $item_type_id, $item_type)
+    {
+
+        $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $item_id, 'item_type_id' => $item_type_id])->one();
+        if (!$wishlist) {
+            $wishlist = new UserWishlist();
+        }
+        $wishlist->user_id = Yii::$app->user->identity->id;
+        $wishlist->item_id = $item_id;
+        $wishlist->item_type_id = $item_type_id;
+        $wishlist->item_type = $item_type;
+        $wishlist->status = 1;
+        $wishlist->save(false);
+        return $wishlist;
+    }
 }

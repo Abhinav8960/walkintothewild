@@ -11,6 +11,7 @@ use common\models\park\SafariParkRating;
  */
 class SafariParkRatingSearch extends SafariParkRating
 {
+    public $custom_sort_by;
     /**
      * {@inheritdoc}
      */
@@ -22,6 +23,8 @@ class SafariParkRatingSearch extends SafariParkRating
             [['review', 'user_agent'], 'string', 'max' => 512],
             [['user_device', 'user_platform', 'user_platform_version', 'user_browser'], 'string', 'max' => 50],
             [['user_browser_version', 'user_ip_address'], 'string', 'max' => 20],
+            [['custom_sort_by'], 'safe']
+
         ];
     }
 
@@ -57,6 +60,27 @@ class SafariParkRatingSearch extends SafariParkRating
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+
+
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == 'newest') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['created_at' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == 'highest') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['rating' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == 'lowest') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['rating' => SORT_ASC]
+                ];
+            }
+        } else {
+            $dataProvider->sort = [
+                'defaultOrder' => ['created_at' => SORT_DESC]
+            ];
         }
 
         // grid filtering conditions

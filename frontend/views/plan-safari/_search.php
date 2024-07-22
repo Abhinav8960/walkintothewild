@@ -114,7 +114,7 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->id]) ? $parkoption[$model->id] : 'Any / All' ?>
+                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <div class="dropdown-item" data-value="">Any / All</div>
@@ -122,7 +122,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
-                    <?= $form->field($model, 'id')->dropDownList(
+                    <?= $form->field($model, 'safari_park_id')->dropDownList(
                         $parkoption,
                         [
                             'class' => "form-select form-select-lg hidden-select",
