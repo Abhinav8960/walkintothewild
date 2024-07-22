@@ -14,11 +14,15 @@ $this->params['title'] = $this->title;
         <div class="col-8">
             <div class="card mt-2">
                 <div class="card-body">
-                    <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                        <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
-                    <?php } ?>
-
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between">
+                                <h5>My Articles</h5>
+                                <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                    <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
+                                <?php } ?>
+                            </div>
+                        </div>
                         <?php if ($articles) {
                             foreach ($articles as $article) {  ?>
                                 <div class="col-4 mb-5 mt-4" style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
