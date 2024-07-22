@@ -125,25 +125,6 @@ use yii\helpers\ArrayHelper;
                 )->label(false); ?>
             </div>
         </div>
-        <div class="title_filter mb-3">
-            <h6>Organizer</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Safari Tour Operator</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Wildlife Photographer</label>
-
-            </div>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <input type="checkbox" name="" id="text" class="checkbox_design">
-                <label for="text" class=" text_check">Wildlife Influencer</label>
-
-            </div>
-
-        </div>
         <?php ActiveForm::end(); ?>
 
     </div>

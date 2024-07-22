@@ -57,7 +57,7 @@ $this->params['title'] = $this->title;
         </div>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mb-4">
       <div class="col-xl-11 col-lg-12">
         <div class="row my-4 justify-content-center">
           <?= $this->render('_select_filter', [
