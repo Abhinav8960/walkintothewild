@@ -63,7 +63,7 @@ $this->params['title'] = $this->title;
                     <?php if ($model) {
                         foreach ($model as $share_safari) {
                     ?>
-                            <div class="col-6 mb-4 padding_righ">
+                            <div class="col-md-12 mb-4">
                                 <div class="sharesafri-card">
                                     <div class="flotingdate">
                                         <div class="icons text-center">
