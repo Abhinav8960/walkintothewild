@@ -5029,3 +5029,33 @@ a.desc:after {
 
     left: 18% !important;
 } */
+
+.initial_headers i{
+
+    font-size: 25px;
+    color: #fff;
+}
+.offcanvas-body .nav-item .nav-link{
+
+    padding: 0;
+}
+
+.heart_bx{
+
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+.heart_bx i{
+
+    font-size: 18px;
+}
+.floating-watchlist{
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}

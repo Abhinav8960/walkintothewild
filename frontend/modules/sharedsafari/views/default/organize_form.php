@@ -103,7 +103,7 @@ use yii\helpers\Html;
 
         <div class="col-md-6 mb-1">
             <label for="" class="Modal_label">Number of Safaris (1-10)</label>
-            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 1])->label(false) ?>
             <p>Value: <span id="safariseat"><?= $model->no_of_safari ?></span></p>
         </div>
 
@@ -135,7 +135,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-lg-6">
             <label for="" class="Modal_label">Tour Duration(1-10)</label>
-            <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider'])->label(false) ?>
+            <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->tour_duration) ? $model->tour_duration : 1,])->label(false) ?>
             <p>Value: <span id="tour"><?= $model->tour_duration ?></span></p>
         </div>
         <div class="col-lg-12 ">
@@ -148,12 +148,7 @@ use yii\helpers\Html;
     </div>
     <div class="row mt-2 pe-0">
         <div class="col-lg-12">
-            <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
-                <?= $form->field($model, 'host_type')->hiddenInput(['value' => 4])->label(false); ?>
-            <?php } else {  ?>
-                <label for="" class="Modal_label">You Are?</label>
-                <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
-            <?php } ?>
+
 
             <?php if (!Yii::$app->user->identity->is_safari_operator) { ?>
                 <label for="" class="Modal_label">Your Social Media Url/ Website Url</label>
@@ -181,6 +176,7 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
+        <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
@@ -197,7 +193,6 @@ use yii\helpers\Html;
 </div>
 <?php ActiveForm::end() ?>
 <?php
-
 $script = <<< JS
 
           $("#sharedsafariform-start_date").on("change", function(){

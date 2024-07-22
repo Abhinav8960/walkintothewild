@@ -14,6 +14,7 @@ use common\models\park\SafariParkRating;
 use common\models\park\SafariParkRatingSearch;
 use common\models\sharesafari\ShareSafari;
 use common\models\suggestions\form\SafariSuggestionsForm;
+use common\models\suggestions\SafariSuggestions;
 use frontend\models\SafariParkSearch;
 use frontend\models\SafariOperatorSearch;
 use frontend\controllers\FrontendBaseController;
@@ -144,6 +145,52 @@ class DefaultController extends FrontendBaseController
         );
     }
 
+    public function actionReviewlist($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/parklist']);
+            // throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+
+        $searchModel = new SafariParkRatingSearch();
+        $searchModel->safari_park_id = $model->id;
+        $searchModel->status = 1;
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $reviews = $dataProvider->getModels();
+
+        return $this->render(
+            'reviewlist',
+            [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'device' => $this->device(),
+                'reviews' => $reviews
+            ]
+        );
+    }
+
+    public function actionContributionlist($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/parklist']);
+            // throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+
+        $suggestions = SafariSuggestions::find()->where(['park_id' => $model->id, 'status' => 1])->all();
+
+        return $this->render(
+            'contributionlist',
+            [
+                'model' => $model,
+                'suggestions' => $suggestions
+            ]
+        );
+    }
 
     /**
      * Suggestion Model
