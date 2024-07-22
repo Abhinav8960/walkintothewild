@@ -55,12 +55,9 @@ use yii\helpers\Html;
             <label for="" class="Modal_label">Stay Category</label>
             <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => ' Budget', '2' => 'Economical', '3' => 'Premium'], ['class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
-        <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
-            <?= $form->field($model, 'host_type')->hiddenInput(['value' => 4])->label(false); ?>
-        <?php } else {  ?>
-            <label for="" class="Modal_label">You Are?</label>
-            <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
-        <?php } ?>
+
+
+
         <div class="col-lg-6 mb-2">
             <label for="" class="Modal_label">Cost Per Person (INR)</label>
             <div class="d-flex gap-3 align-items-center">
@@ -91,6 +88,8 @@ use yii\helpers\Html;
 
             </div>
         </div>
+
+        <?= $form->field($model, 'host_type')->hiddenInput(['value' => $model->host_type])->label(false); ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>

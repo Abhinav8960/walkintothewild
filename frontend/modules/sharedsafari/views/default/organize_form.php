@@ -148,12 +148,7 @@ use yii\helpers\Html;
     </div>
     <div class="row mt-2 pe-0">
         <div class="col-lg-12">
-            <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
-                <?= $form->field($model, 'host_type')->hiddenInput(['value' => 4])->label(false); ?>
-            <?php } else {  ?>
-                <label for="" class="Modal_label">You Are?</label>
-                <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
-            <?php } ?>
+
 
             <?php if (!Yii::$app->user->identity->is_safari_operator) { ?>
                 <label for="" class="Modal_label">Your Social Media Url/ Website Url</label>
@@ -181,6 +176,7 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
+        <?= $form->field($model, 'host_type')->hiddenInput(['value' => $model->host_type])->label(false); ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
