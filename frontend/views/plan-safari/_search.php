@@ -16,11 +16,11 @@ use common\models\GeneralModel;
     ],
 ]);
 $locationoption = GeneralModel::getAllLocation();
-$safarisessionoption = GeneralModel::safarisessionoption();
 $animalfilteroption = GeneralModel::animalfilteroption();
+$parkoption = GeneralModel::safariparkoption();
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
-<div class="row gx-0 justify-content-center " >
+<div class="row gx-0 justify-content-center ">
     <div class=" col-xl-10 planSearch_box">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
@@ -81,8 +81,8 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
 
             </div>
-          
-       
+
+
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
@@ -113,16 +113,16 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($safarisessionoption[$model->session_id]) ? $safarisessionoption[$model->session_id] : 'Any / All' ?>
+                        <?= isset($parkoption[$model->id]) ? $parkoption[$model->id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <div class="dropdown-item" data-value="">Any / All</div>
-                        <?php foreach ($safarisessionoption as $value => $label) : ?>
+                        <?php foreach ($parkoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
-                    <?= $form->field($model, 'session_id')->dropDownList(
-                        $safarisessionoption,
+                    <?= $form->field($model, 'id')->dropDownList(
+                        $parkoption,
                         [
                             'class' => "form-select form-select-lg hidden-select",
                             'aria-label' => "Large select example",
