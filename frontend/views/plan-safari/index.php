@@ -79,14 +79,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="col-xxl-9 col-lg-12 col-xl-9">
                                     <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
                                         <h4 class="text-center ps-4">Discover and Join 100+ Shared Safaris</h4>
-                                        <div class="joinshareView mt-xl-0 mt-3" style="margin-right: 49px !important;">
+                                        <div class="joinshareView mt-xl-0 mt-3 pe-lg-4">
                                             <a href="/sharedsafari" class="btn_shareView">View All</a>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="row postion_setsfari px-5">
+                            <div class="row postion_setsfari  pe-lg-4 ps-lg-5">
                                 <div class="col-3"></div>
                                 <?php foreach ($shared_safaries as $share_safari) { ?>
                                     <div class="col-lg-3 col-sm-5 col-xxl-3 col-md-4 mb-4 ">

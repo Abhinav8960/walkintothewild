@@ -238,7 +238,7 @@ line-height: 19px;
 
     .sharesafribg {
 
-        height: 500px;
+        height: 368px;
 
     }
  
@@ -1118,7 +1118,7 @@ display: none;
     }
     .header_wrapper {
 
-        line-height: 70px;
+        line-height: 50px !important;
     }
     .flex-set{
 
