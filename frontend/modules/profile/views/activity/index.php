@@ -17,21 +17,12 @@ $this->params['title'] = $this->title;
                 <div class="col-8">
                     <div class="card">
                         <div class="card-body">
-
+                            No Activity Found!
                         </div>
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="card mt-2">
-                        <div class="card-body">
-                            <h5>Following</h5>
-                            <?php if ($followings = $user->userfollowings) {
-                                foreach ($followings as $following) { ?>
-                                    <img src="<?= $following->user->profile_image <> '' ?  $following->user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle" width="25" height="25">
-                            <?php }
-                            } ?>
-                        </div>
-                    </div>
+                    <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
                 </div>
             </div>
 
