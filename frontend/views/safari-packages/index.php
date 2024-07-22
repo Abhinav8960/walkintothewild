@@ -79,7 +79,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="container-lg">
             <div class="row justify-content-center">
                 <div class="col-xl-11">
-                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
+                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5 px-2">
                         <?php if ($packages) {
                             foreach ($packages as $package) { ?>
                                 <div class="col mb-lg-0 mb-3 ">
