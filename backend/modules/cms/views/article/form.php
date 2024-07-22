@@ -164,6 +164,12 @@ $this->params['title'] = $this->title;
                         <div class="col-md-4">
                             <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
                         </div>
+
+                        <?php if ($model->article_model->user_id) { ?>
+                            <div class="col-md-4">
+                                <?= $form->field($model, 'is_approved')->radioList([1 => 'Yes', 0 => 'No']) ?>
+                            </div>
+                        <?php } ?>
                     <?php } ?>
                 </div>
                 <hr>

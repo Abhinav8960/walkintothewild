@@ -42,6 +42,7 @@ class ArticleForm extends \yii\base\Model
     public $feature_image;
     public $article_topics;
     public $article_model;
+    public $is_approved;
     public $action_url;
     public $action_validate_url;
 
@@ -73,6 +74,7 @@ class ArticleForm extends \yii\base\Model
             $this->approval_required = $this->article_model->approval_required;
             $this->is_schedule = $this->article_model->is_schedule;
             $this->publish_date_time = $this->article_model->publish_date_time;
+            $this->is_approved = $this->article_model->is_approved;
             $this->status = $this->article_model->status;
             // $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
 
@@ -90,12 +92,12 @@ class ArticleForm extends \yii\base\Model
         $scenarios['create'] = [
             'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
-            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics', 'is_approved'
         ];
         $scenarios['update'] = [
             'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
-            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics', 'is_approved'
         ];
         return $scenarios;
     }
@@ -206,6 +208,7 @@ class ArticleForm extends \yii\base\Model
         $this->article_model->approval_required = $this->approval_required;
         $this->article_model->is_schedule = $this->is_schedule;
         $this->article_model->publish_date_time = $this->publish_date_time;
+        $this->article_model->is_approved = $this->is_approved;
         $this->article_model->status = $this->status;
     }
 
