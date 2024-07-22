@@ -47,6 +47,7 @@ body {
         display: none !important;
        
     } */
+    background-color: #F5F5F5;
 }
 
 body::-webkit-scrollbar {
