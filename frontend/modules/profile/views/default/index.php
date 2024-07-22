@@ -14,7 +14,7 @@ $this->params['title'] = $this->title;
 <div class="container mb-5">
     <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active', 'user' => $user]) ?>
     <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
             <div class="card mt-2 mb-4">
                 <div class="card-body">
                     <h6>About</h6>
@@ -36,27 +36,23 @@ $this->params['title'] = $this->title;
                     <?php } ?>
                 </div>
             </div>
-        </div>
-        <div class="col-4">
-            <?= $this->render('_following_card', ['user' => $user]) ?>
-        </div>
-        <div class="col-8">
+
             <div class="card mt-2 mb-2">
                 <div class="card-body">
                     <h5>Share Safari Experience</h5>
                 </div>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
+            <?= $this->render('_following_card', ['user' => $user]) ?>
+
             <div class="card mt-2 mb-2">
                 <div class="card-body">
                     <h5>Instagram</h5>
                 </div>
             </div>
-        </div>
-        <div class="col-8">
-        </div>
-        <div class="col-4">
+
+
             <div class="card mt-2 mb-2">
                 <div class="card-body">
                     <h5>Shared Safari</h5>
