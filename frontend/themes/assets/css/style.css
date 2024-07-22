@@ -4845,3 +4845,20 @@ a.desc:after {
 {
     text-decoration: none;
 }
+
+.sharesafri-card.tourpackage .flotingdate{
+
+    height: auto;
+    width: auto;
+    padding: 1px 10px;
+}
+.icons_restro{
+
+    text-align: center;
+    padding-top: 10px;
+}
+.icons_restro p{
+
+    color: #4B4B4B;
+    font-size: 14px ;
+    font-weight: 500;}
