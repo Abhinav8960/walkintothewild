@@ -9,24 +9,14 @@
 	$active_url = "/" . Yii::$app->requestedRoute;
 	?>
 	<!-- main-header -->
-	<header class="header_wrapper" >
+	<header class="header_wrapper">
 		<nav class="navbar navbar-expand-lg ">
 			<div class="container-fluid">
 				<a href="/">
 					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="210px" class="logo">
 				</a>
 				<div class="d-flex align-items-center">
-					<a href="/sharedsafari" class="sahreSafari mobile text-center <?= in_array($active_url, array("/sharedsafari", "/sharesafari")) ? "active" : "" ?>">
-						<div class="card-img ">
-							<img src="<?= $this->params['baseurl'] ?>/img/ShareSafariIcon.png" alt="">
-						</div>
-						<h5>Shared Safari</h5>
-					</a>
-
-					<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-						<i class="fa-solid fa-bars"></i>
-					</button>
-
+				
 					<div class="offcanvas offcanvas-end header_canvas" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 						<div class="offcanvas-header ps-1">
 							<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
@@ -51,9 +41,10 @@
 							)) ? "active" : "" ?>">
 
 									<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>">
-										<div class="d"><div class="card-img">
-											<img src="<?= $this->params['baseurl'] ?>/img/Plan.png" alt="" width="20">
-										</div> Plan Safari
+										<div class="d">
+											<div class="card-img">
+												<img src="<?= $this->params['baseurl'] ?>/img/Plan.png" alt="" width="20">
+											</div> Plan Safari
 									</a>
 								</li>
 								<!-- <li class="nav-item <?= in_array($active_url, array(
@@ -127,71 +118,74 @@
 								</div>
 							</div>
 						</div>
-					    </div>
-						<div class="d-flex gap-4 align-items-center justify-content-end initial_headers">
+					</div>
+				</div>
+				<div class="d-flex gap-4 align-items-center justify-content-end initial_headers">
+
 						<div class="notification pt-2"><i class="fa-solid fa-bell"></i></div>
 						<div class="massge pt-2"><i class="fa-solid fa-envelope"></i></div>
 						<div class="proilewrapper">
-						<div class="profile">
-							<div class="img-box2">
-								<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="25" height="25">
+							<div class="profile">
+								<div class="img-box2">
+									<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="25" height="25">
 
+								</div>
+							</div>
+							<div class="menuprofile">
+								<ul>
+									<?php if (!Yii::$app->user->identity) { ?>
+										<li>
+											<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+										</li>
+									<?php } else { ?>
+										<?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
+											<li>
+												<a class="" target="_blank" href="<?= Yii::$app->params['backend_url'] ?>">
+													<i class="fa-solid fa-cog"></i>
+													Manage</a>
+											</li>
+										<?php } ?>
+										<li>
+											<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
+												<i class="fa-solid fa-user"></i>
+												Profile</a>
+										</li>
+										<li>
+											<a class="" href="/account">
+												<i class="fa-solid fa-cog"></i>
+												Account Setting</a>
+										</li>
+										<li>
+											<a class="" href="#">
+												<i class="fa-solid fa-message"></i>
+												Messages</a>
+										</li>
+										<li>
+											<a class="" href="/profile/search">
+												<i class="fa-solid fa-search"></i>
+												Search Profile</a>
+										</li>
+										<li>
+											<a class="" href="/account/wishlist">
+												<i class="fa-solid fa-heart"></i>
+												Whishlist</a>
+										</li>
+										<li>
+											<a class="" href="/site/logout">
+												<i class="fa-solid fa-arrow-right-from-bracket"></i>
+												Log Out</a>
+										</li>
+
+									<?php } ?>
+
+
+								</ul>
 							</div>
 						</div>
-						<div class="menuprofile">
-							<ul>
-								<?php if (!Yii::$app->user->identity) { ?>
-									<li>
-										<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
-									</li>
-								<?php } else { ?>
-									<?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
-										<li>
-											<a class="" target="_blank" href="<?= Yii::$app->params['backend_url'] ?>">
-												<i class="fa-solid fa-cog"></i>
-												Manage</a>
-										</li>
-									<?php } ?>
-									<li>
-										<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
-											<i class="fa-solid fa-user"></i>
-											Profile</a>
-									</li>
-									<li>
-										<a class="" href="/account">
-											<i class="fa-solid fa-cog"></i>
-											Account Setting</a>
-									</li>
-									<li>
-										<a class="" href="#">
-											<i class="fa-solid fa-message"></i>
-											Messages</a>
-									</li>
-									<li>
-										<a class="" href="/profile/search">
-											<i class="fa-solid fa-search"></i>
-											Search Profile</a>
-									</li>
-									<li>
-										<a class="" href="/account/wishlist">
-											<i class="fa-solid fa-heart"></i>
-											Whishlist</a>
-									</li>
-									<li>
-										<a class="" href="/site/logout">
-											<i class="fa-solid fa-arrow-right-from-bracket"></i>
-											Log Out</a>
-									</li>
-
-								<?php } ?>
-
-
-							</ul>
-						</div>
+						<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+						<i class="fa-solid fa-bars"></i>
+					</button>
 					</div>
-						</div>
-					
-				</div>
 			</div>
 		</nav>
 	</header>
