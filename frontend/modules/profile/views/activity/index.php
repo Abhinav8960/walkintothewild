@@ -1,4 +1,14 @@
-<div class="container">
+<?php
+
+use yii\helpers\Url;
+
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
+$this->title = $user->name . ' | Activity';
+$this->params['title'] = $this->title;
+?>
+<div class="container mb-5">
     <?= $this->render('@frontend/modules/profile/views/default/tablist', ['activity' => 'active', 'user' => $user]) ?>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
@@ -7,7 +17,7 @@
                 <div class="col-8">
                     <div class="card">
                         <div class="card-body">
-                            
+
                         </div>
                     </div>
                 </div>

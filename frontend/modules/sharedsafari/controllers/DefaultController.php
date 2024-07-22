@@ -57,6 +57,9 @@ class DefaultController extends FrontendBaseController
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->type = 1;
+        $model->host_type = Yii::$app->user->identity->account_type;
+
+
         $model->action_url = '/sharedsafari/default/organize-safari';
         $model->action_validate_url = '/sharedsafari/default/validate';
         if ($this->request->isPost) {
@@ -522,6 +525,7 @@ class DefaultController extends FrontendBaseController
         $model = new CreateDepartureForm();
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->type = 2;
+        $model->host_type = Yii::$app->user->identity->account_type;
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->action_url = '/sharedsafari/default/create-fixed-departure';
         $model->action_validate_url = '/sharedsafari/default/departure-validate';

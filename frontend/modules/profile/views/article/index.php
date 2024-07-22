@@ -5,12 +5,11 @@ use yii\helpers\Url;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-
-$this->title = 'Article';
+$this->title = $user->name . ' | Article';
 $this->params['title'] = $this->title;
 ?>
-<div class="container">
-    <?= $this->render('@frontend/modules/profile/views/default/tablist', ['article' => 'article', 'user' => $user]) ?>
+<div class="container mb-5">
+    <?= $this->render('@frontend/modules/profile/views/default/tablist', ['article' => 'active', 'user' => $user]) ?>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
 
@@ -42,6 +41,8 @@ $this->params['title'] = $this->title;
                                             </div>
                                         </div>
                                 <?php }
+                                }else{
+                                    echo 'No Article Found!';
                                 } ?>
                             </div>
 
