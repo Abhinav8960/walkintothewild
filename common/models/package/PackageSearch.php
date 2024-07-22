@@ -3,6 +3,7 @@
 namespace common\models\package;
 
 use common\models\package\Package;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -71,8 +72,6 @@ class PackageSearch extends Package
         $query->andFilterWhere([
             'id' => $this->id,
             'no_of_day' => $this->no_of_day,
-            'no_of_night' => $this->no_of_night,
-            'no_of_safari' => $this->no_of_safari,
             'start_location' => $this->start_location,
             'end_location' => $this->end_location,
             'stay_category_id' => $this->stay_category_id,
@@ -93,28 +92,25 @@ class PackageSearch extends Package
 
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);
 
+        if ($this->estimated_price_filter) {
+            $dataProvider->query->andFilterWhere(['between', 'cost_per_person', 1000, $this->estimated_price_filter]);
+        }
+
+        if ($this->no_of_night) {
+            $dataProvider->query->andFilterWhere(['between', 'no_of_night', 0, $this->no_of_night]);
+        }
+
+        if ($this->no_of_safari) {
+            $dataProvider->query->andFilterWhere(['between', 'no_of_safari', 0, $this->no_of_safari]);
+        }
+
 
         if ($this->month_id) {
             $query->andWhere("MONTH(start_date)=" . $this->month_id);
             // $query->andWhere("MONTH(start_date)=" . $this->month_id . " OR MONTH(end_date)=" . $this->month_id);
         }
 
-        if ($this->estimated_price_filter) {
-            $price_query = "";
-            foreach ((array)$this->estimated_price_filter as $price_filter) {
-                if ($price_filter == 1) {
-                    $price_query .= "cost_per_person >= 0 AND cost_per_person <= 5000 OR cost_per_person >= 0 AND cost_per_person <= 5000 OR ";
-                } else if ($price_filter == 2) {
-                    $price_query .= "cost_per_person >= 5000 AND cost_per_person <= 10000 OR cost_per_person >= 5000 AND cost_per_person <= 10000 OR ";
-                } else if ($price_filter == 3) {
-                    $price_query .= "cost_per_person >= 10000 AND cost_per_person >= 15000 OR cost_per_person >= 10000 AND cost_per_person >= 15000 OR ";
-                }
-            }
-            if ($price_query <> '') {
-                $price_query = substr($price_query, 0, -3);
-                $query->andWhere($price_query);
-            }
-        }
+
 
 
         if ($this->park_id) {
