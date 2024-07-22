@@ -11,6 +11,7 @@ use frontend\models\ArticleSearch;
 use common\models\cms\banner\Banner;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
+use common\models\UserWishlist;
 
 $this->title = 'Share Safari';
 $this->params['breadcrumbs'][] = $this->title;
@@ -138,6 +139,22 @@ $recentposts = ArticleSearch::recentpost();
                                                     <p class="mb-0"><?= date('M', strtotime($share_safari->start_date)) ?></p>
                                                     <p class="mb-0"><?= date('d', strtotime($share_safari->start_date)) ?></p>
                                                 </div>
+                                            </div>
+                                            <div class="floating-watchlist">
+                                                <?php
+                                                if (Yii::$app->user->identity) { ?>
+                                                    <div class="heart_bx">
+                                                        <?php
+                                                        $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2, 'status' => 1])->limit(1)->one();
+                                                        if ($wishlist) {
+                                                        ?>
+                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                        <?php } else { ?>
+                                                            <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
+                                                        <?php }
+                                                        ?>
+                                                    </div>
+                                                <?php } ?>
                                             </div>
                                             <div class="shareimg">
                                                 <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
