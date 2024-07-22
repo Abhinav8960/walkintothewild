@@ -409,7 +409,7 @@ a {
     /* -webkit-box-shadow: 0px 3px 6px #00000029;
     box-shadow: 0px 3px 6px #00000029; */
     border-radius: 10px;
-    border: 1px solid #0000004D;
+    border: 1px solid #7070704D;
 
 }
 
@@ -691,7 +691,8 @@ a {
 
 .top_seats {
 
-    background-color: #4B4B4B;
+    /* background-color: #4B4B4B; */
+    background-color:var(--background-primary);
     padding: 4px 20px;
 }
 
@@ -750,7 +751,7 @@ a {
     padding: 4px 14px;
     font-size: var(--fs-14);
     display: block;
-    background: #4B4B4B;
+    background: var(--background-primary);
     text-align: center;
     color: var(--colorwhite);
     border-radius: 20px;
@@ -760,6 +761,11 @@ a {
 .joinsafari a:hover {
 
     background-color: var(--background-orange);
+
+}
+.joinsafari.package a{
+
+    background-color: #4B4B4B;
 
 }
 
@@ -4730,8 +4736,8 @@ figure {
 
 .topSlider_tour .items_slider img {
 
-    height: 500px;
-    /* object-fit: cover; */
+    height: 410px;
+    object-fit: cover;
     border-radius: 10px;
 }
 

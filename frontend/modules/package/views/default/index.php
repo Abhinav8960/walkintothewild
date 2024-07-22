@@ -136,7 +136,7 @@ $this->params['title'] = $this->title;
                           <img src="http://app.walkintothewild.io/assets/5a869828/img/blog_details01.jpg" alt=""></a>
                       </div>
                       <div class="card_body">
-                        <div class="top_seats">
+                        <!-- <div class="top_seats">
                           <div class="safari d-flex justify-content-between ">
                             <div class="safarinum d-flex gap-2 align-items-center ">
                               <p class="text_safari">NIGHTS</p>
@@ -147,7 +147,7 @@ $this->params['title'] = $this->title;
                               <h6 class="number-safari"><?= $model->no_of_safari ?></h6>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="titleDate">
                           <h6 class="pt-1"><a href=""><?= $model->package_name ?> </a></h6>
                           <div class="orgnizer_tour d-flex justify-content-between pt-2">

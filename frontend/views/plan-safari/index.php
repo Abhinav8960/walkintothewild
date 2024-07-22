@@ -213,7 +213,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <img src="<?= $package->imagepath ?>" alt=""></a>
                                             </div>
                                             <div class="card_body">
-                                                <div class="top_seats">
+                                                <!-- <div class="top_seats">
                                                     <div class="safari d-flex justify-content-between ">
                                                         <div class="safarinum d-flex gap-2 align-items-center ">
                                                             <p class="text_safari">NIGHTS</p>
@@ -224,7 +224,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                             <h6 class="number-safari"><?= $package->no_of_safari ?></h6>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="titleDate">
                                                     <h6 class="pt-1"><a href=""><?= $package->package_name ?> </a></h6>
                                                     <div class="orgnizer_tour d-flex justify-content-between pt-2">
