@@ -58,7 +58,7 @@ class SharedSafariForm extends \yii\base\Model
             $this->total_seat =  $this->shared_safari_model->total_seat;
             $this->share_seat =  $this->shared_safari_model->share_seat;
             $this->website_url =  $this->shared_safari_model->website_url;
-            $this->tour_duration =  $this->shared_safari_departure_model->tour_duration;
+            $this->tour_duration =  $this->shared_safari_model->tour_duration;
             $this->status =  $this->shared_safari_model->status;
         }
     }
@@ -133,7 +133,7 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->share_seat = $this->share_seat;
         $this->shared_safari_model->website_url = $this->website_url;
 
-        $this->shared_safari_departure_model->tour_duration = $this->tour_duration;
+        $this->shared_safari_model->tour_duration = $this->tour_duration;
         $this->shared_safari_model->status = $this->status;
 
         if ($this->shared_safari_model->slug == '') {
