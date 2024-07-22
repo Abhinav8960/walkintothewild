@@ -2,7 +2,7 @@
 
 namespace frontend\modules\profile\controllers;
 
-
+use common\models\User;
 use frontend\controllers\FrontendBaseController;
 
 
@@ -16,8 +16,9 @@ class ActivityController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($user_handle)
     {
-        return $this->render('index', ['user' => $this->module->user()]);
+        $user = $this->findUserbyHandle($user_handle);
+        return $this->render('index', ['user' => $user]);
     }
 }

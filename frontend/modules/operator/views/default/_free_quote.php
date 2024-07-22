@@ -82,25 +82,32 @@ use yii\bootstrap5\ActiveForm;
                 </div>
             </div>
 
-            <div class="col-lg-3">
-                <div class="form-wrapper mb-3">
-                    <label for="">Full Name</label>
-                    <?= $form->field($model, 'full_name')->textInput(['class' => 'form-control', 'placeholder' => 'Your name'])->label(false) ?>
+            <?php if (empty(Yii::$app->user->identity)) { ?>
+                <div class="col-lg-3">
+                    <div class="form-wrapper mb-3">
+                        <label for="">Full Name</label>
+                        <?= $form->field($model, 'full_name')->textInput(['class' => 'form-control', 'placeholder' => 'Your name'])->label(false) ?>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="form-wrapper mb-3">
-                    <label for="">Email Address</label>
-                    <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => 'xyz@abc.com'])->label(false) ?>
+                <div class="col-lg-3">
+                    <div class="form-wrapper mb-3">
+                        <label for="">Email Address</label>
+                        <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => 'xyz@abc.com'])->label(false) ?>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3">
-                <div class="form-wrapper mb-3">
-                    <label for="">Phone Number</label>
-                    <?= $form->field($model, 'phone_no')->textInput(['class' => 'form-control', 'placeholder' => '0000000000'])->label(false) ?>
+                <div class="col-lg-3">
+                    <div class="form-wrapper mb-3">
+                        <label for="">Phone Number</label>
+                        <?= $form->field($model, 'phone_no')->textInput(['class' => 'form-control', 'placeholder' => '0000000000'])->label(false) ?>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 margi_top pt-lg-0 pb-3">
+            <?php } ?>
+            <?php if (!empty(Yii::$app->user->identity)) {
+                $class = "col-lg-12 margi_top pt-lg-0 pb-3 content-center";
+            } else {
+                $class = "col-lg-3 margi_top pt-lg-0 pb-3";
+            } ?>
+            <div class="<?= $class ?>">
                 <?= Html::submitButton('Send Request', ['class' => 'sent_btn']) ?>
             </div>
             <div class="col-12">

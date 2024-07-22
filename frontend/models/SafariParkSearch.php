@@ -85,7 +85,7 @@ class SafariParkSearch extends SafariPark
             ];
         } else {
             $dataProvider->sort = [
-                'defaultOrder' => ['title' => SORT_DESC]
+                'defaultOrder' => ['title' => SORT_ASC]
             ];
         }
 

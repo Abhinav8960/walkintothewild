@@ -3,6 +3,7 @@
 namespace frontend\modules\profile\controllers;
 
 use common\models\sharesafari\ShareSafari;
+use common\models\User;
 use common\models\UserFollow;
 use frontend\controllers\FrontendBaseController;
 use Yii;
@@ -17,13 +18,14 @@ class DefaultController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($user_handle)
     {
-        $model = ShareSafari::find()->where(['host_user_id' => $this->module->user()->id])->all();
+        $user = $this->findUserbyHandle($user_handle);
+        $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
         return $this->render(
             'index',
             [
-                'user' => $this->module->user(),
+                'user' => $user,
                 'model' => $model
             ]
         );

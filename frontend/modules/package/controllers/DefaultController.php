@@ -50,6 +50,11 @@ class DefaultController extends FrontendBaseController
      */
     public function actionCreate()
     {
+        if (Yii::$app->user->identity) {
+            if (Yii::$app->user->identity->is_safari_operator != 1 && Yii::$app->user->identity->account_type != 3) {
+                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
+            }
+        }
         $model = new PackageForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->owned_by_id = Yii::$app->user->identity->id;

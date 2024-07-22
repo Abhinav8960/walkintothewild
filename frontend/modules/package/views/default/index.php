@@ -61,7 +61,7 @@ $this->params['title'] = $this->title;
       <div class="col-xl-11 col-lg-12">
         <div class="row my-4 justify-content-center">
           <?= $this->render('_select_filter', [
-            'model' => $searchModel,
+            'searchModel' => $searchModel,
           ]) ?>
           <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
             <div class="row ">
@@ -71,9 +71,11 @@ $this->params['title'] = $this->title;
                   </div>
                   <div class="col-md-6 mt-md-0 mt-3">
                     <div class="right_button float-md-end">
-                      <?php if (Yii::$app->user->identity) { ?>
-                        <button class="btn_newsafari packageBtn" value="<?= \yii\helpers\Url::toRoute(['/package/default/create']) ?>">+ Create New Package</button>
-                      <?php } else {  ?>
+                      <?php if (Yii::$app->user->identity) {
+                        if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) { ?>
+                          <button class="btn_newsafari packageBtn" value="<?= \yii\helpers\Url::toRoute(['/package/default/create']) ?>">+ Create New Package</button>
+                        <?php }
+                      } else {  ?>
                         <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Create New Package</a>
                       <?php } ?>
                     </div>

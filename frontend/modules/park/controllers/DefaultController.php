@@ -10,6 +10,7 @@ use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariParkMonth;
 use common\models\master\animal\MasterRareAnimal;
+use common\models\park\SafariParkRating;
 use common\models\park\SafariParkRatingSearch;
 use common\models\sharesafari\ShareSafari;
 use common\models\suggestions\form\SafariSuggestionsForm;
@@ -315,6 +316,50 @@ class DefaultController extends FrontendBaseController
                 'model' => $model,
                 'park_id' => $park_id,
             ]);
+        }
+    }
+
+
+    public function actionReviewupdate($park_id, $user_id, $id)
+    {
+        $safari_park = SafariPark::find()->where(['id' => $park_id])->one();
+        $rating_model = SafariParkRating::find()->where(['user_id' => $user_id, 'safari_park_id' => $park_id, 'id' => $id])->one();
+        $model = new SafariParkReviewForm($rating_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->rating_model->save(false)) {
+                        $model->updateRatingintoTable($safari_park);
+                        Yii::$app->session->setFlash('success', 'Thanks for Edit Review!!');
+                        return $this->redirect([
+                            '/park/' . $safari_park->slug . ''
+                        ]);
+                    }
+                }
+            }
+        } else {
+            $model->rating_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_review_form', [
+                'model' => $model,
+                'park_id' => $park_id,
+            ]);
+        }
+    }
+
+
+    public function actionValidatereview($id = null)
+    {
+        $model = new SafariParkReviewForm();
+        if ($id != null) {
+            $rating_model = $this->findModel($id);
+            $model = new SafariParkReviewForm($rating_model);
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
         }
     }
 }

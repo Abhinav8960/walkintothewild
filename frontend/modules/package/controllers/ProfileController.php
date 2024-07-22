@@ -27,6 +27,11 @@ class ProfileController extends Controller
 {
     public function actionIndex($package_id)
     {
+        if (Yii::$app->user->identity) {
+            if (Yii::$app->user->identity->is_safari_operator != 1 && Yii::$app->user->identity->account_type != 3) {
+                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
+            }
+        }
         $package_model = $this->findModel($package_id);
         $model = new PackageForm($package_model);
         $model->scenario = 'update';

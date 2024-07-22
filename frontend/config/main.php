@@ -9,11 +9,15 @@ $params = array_merge(
     require __DIR__ . '/params-local.php'
 );
 
+$rules = array_merge(
+    require __DIR__ . '/rules.php',
+);
+
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
-    'defaultRoute' => '/park',
+    'defaultRoute' => '/plan-safari',
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'reCaptcha3' => [
@@ -101,65 +105,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-                '/park' => '/park/default/index', //home page url
-                '/park/<slug>' => '/park/default/view', //park view url
-
-                '/parklist/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',
-                '/parklist' => '/park/default/parklist', //park listing url
-                '/rareanimal/<slug>' => '/park/default/rareanimal', //park listing url
-
-                '/article' => '/article/default/index',
-                '/article/tag/<slug>' => '/article/default/tag',
-                [
-                    'pattern' => '/article/tag/<slug:\w+>',
-                    'route' => '/article/default/tag',
-                    'defaults' => ['slug' => '']
-                ],
-                '/article/topic/<slug>' => '/article/default/topic',
-                [
-                    'pattern' => '/article/topic/<slug:\w+>',
-                    'route' => '/article/default/topic',
-                    'defaults' => ['slug' => '']
-                ],
-                '/article/author/<slug>' => '/article/default/author',
-                [
-                    'pattern' => '/article/author/<slug:\w+>',
-                    'route' => '/article/default/author',
-                    'defaults' => ['slug' => '']
-                ],
-                '/article/<slug>' => '/article/default/view', //article view url
-
-
-
-                // Shared Safari URLs
-                '/sharedsafari' => '/sharedsafari/default/index',
-                '/sharedsafari/default/validate' => '/sharedsafari/default/validate',
-                '/sharedsafari/default/update' => '/sharedsafari/default/update',
-                '/sharedsafari/default/join' => '/sharedsafari/default/join',
-                '/sharedsafari/default/unjoin' => '/sharedsafari/default/unjoin',
-                '/sharedsafari/default/organize-safari' => '/sharedsafari/default/organize-safari',
-                '/sharedsafari/<slug>' => '/sharedsafari/default/view',
-
-
-                '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
-                '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
-                '/operator/<slug>' => '/operator/default/view', //operator view url
-                '/operator/resort/<id>' => '/operator/default/resort', //operator view url
-                '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
-                '/operator/review/<id>' => '/operator/default/review', //operator view url
-
-                '/package' => '/package/default/index', //package page url
-                '/package/<slug>' => '/package/default/view', //package page url
-                '/package/profile/<package_id>' => '/package/profile/index', //package profile  url          
-                '/package/profile/itinerary/<package_id>/<day>' => '/package/profile/itinerary', //package profile itenary url          
-                '/package/profile/inclusion/<package_id>' => '/package/profile/inclusion', //package profile inclusion url          
-                '/package/profile/getting-there/<package_id>' => '/package/profile/getting-there', //package profile getting-there url          
-                '/package/profile/policy-info/<package_id>' => '/package/profile/policy-info', //package profile policy-info url          
-                '/package/profile/faq/<package_id>' => '/package/profile/faq', //package profile faq url          
-                '/package/profile/create-faq/<package_id>' => '/package/profile/create-faq', //package profile create faq url          
-                '/package/profile/select-faq/<package_id>' => '/package/profile/select-faq', //package profile select faq url          
-            ],
+            'rules' => $rules,
         ],
         'mobileDetect' => [
             'class' => '\skeeks\yii2\mobiledetect\MobileDetect'
@@ -184,7 +130,10 @@ return [
         ],
         'profile' => [
             'class' => 'frontend\modules\profile\Module',
-        ]
+        ],
+        'account' => [
+            'class' => 'frontend\modules\account\Module',
+        ],
     ],
     'params' => $params,
 ];

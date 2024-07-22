@@ -8,6 +8,7 @@ use common\models\cms\article\ArticleAuthor;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\sharesafari\ShareSafari;
+use common\models\User;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\article\ArticleForm;
 use Yii;
@@ -24,14 +25,15 @@ class ArticleController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($user_handle)
     {
-        $model = ShareSafari::find()->where(['host_user_id' => $this->module->user()->id])->all();
-        $articles = Article::find()->where(['user_id' => $this->module->user()->id])->all();
+        $user = $this->findUserbyHandle($user_handle);
+        $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
+        $articles = Article::find()->where(['user_id' => $user->id])->all();
         return $this->render(
             'index',
             [
-                'user' => $this->module->user(),
+                'user' => $user,
                 'articles' => $articles,
                 'model' => $model
             ]
@@ -40,6 +42,7 @@ class ArticleController extends FrontendBaseController
 
     public function actionCreate()
     {
+
         $model = new ArticleForm();
         $model->action_url = '/profile/article/create';
         $model->action_validate_url = '/profile/article/validate';
