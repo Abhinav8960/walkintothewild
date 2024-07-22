@@ -70,19 +70,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="title_web">
-                    <h2>TOP SHARED SAFARI</h2>
+                    <h2 class="pb-1">TOP SHARED SAFARI</h2>
                 </div>
             </div>
         </div>
     </div>
     <section class="articals_wrapper">
-        <div class="container-fluid" style="padding-left: 255px !important;padding-right: 55px !important;">
+        <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4">
-                    </div>
-                    <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
-                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                <div class="col-xl-9 col-xxl-10 px-xxl-3  col-lg-12">
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5 padding_setCard">
                             <?php if ($shared_safaries) {
                                 foreach ($shared_safaries as $share_safari) { ?>
                                     <div class="col mb-4 padding_righ">
@@ -174,7 +171,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             <?php }
                             } ?>
                         </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>

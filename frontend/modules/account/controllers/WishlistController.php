@@ -2,6 +2,9 @@
 
 namespace frontend\modules\account\controllers;
 
+use common\models\UserWishlist;
+use Yii;
+
 /**
  * Wishlist controller for the `account` module
  */
@@ -13,6 +16,14 @@ class WishlistController extends \frontend\controllers\FrontendBaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $package = UserWishlist::find()->where(['item_type_id' => 1, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
+        $share_safaries = UserWishlist::find()->where(['item_type_id' => 2, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
+        return $this->render(
+            'index',
+            [
+                'packages' => $package,
+                'share_safaries' => $share_safaries,
+            ]
+        );
     }
 }
