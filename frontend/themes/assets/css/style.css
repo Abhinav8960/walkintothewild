@@ -2669,6 +2669,10 @@ figure {
 
     text-align: left !important;
 }
+.margi_top + .col-8{
+
+    width: 100%;
+}
 .margi_top
 
 .text_get p span {

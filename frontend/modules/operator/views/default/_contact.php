@@ -52,13 +52,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             ]) ?>
         </div>
     </div>
+    <div class="container-fluid">
     <?= $this->render('_view_navbar', ['active' => 'contact', 'operator' => $operator]) ?>
-   
+    </div>
 </section>
 <section class="touroprator_section ">
 <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-11 col-lg-12">
+            <div class="col-xl-9 col-lg-12">
                 <div class="row pt-5">
                     <div class="col-lg-9 col-md-8 col-xxl-10 col-xl-9 ">
                         <div class="tab-content_tour mb-4 active">

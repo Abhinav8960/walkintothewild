@@ -39,7 +39,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 <section class="articals_wrapper py-3">
     <div class="container-fluid">
-
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
                 <div class="advertisment ">
