@@ -8,28 +8,32 @@ $review_count = SafariOperatorRating::find()->where(['safari_operator_id' => $op
 $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->count();
 
 ?>
-<ul class="nav nav-tabs gap-5 mb-0" style="margin-left:140px;" role="tablist">
-    <li class="nav-item"><a class="nav-link <?= $active == 'package' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
-            Packages</i>
-        </a></li>
-    <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
-            Shared Safari</i>
-        </a></li>
-    <li class="nav-item"><a class="nav-link <?= $active == 'park' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
-            Parks</i>
-        </a></li>
-    <li class="nav-item"><a class="nav-link <?= $active == 'reviewlist' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
-            Review</i>
-        </a></li>
-    <li class="nav-item"><a class="nav-link <?= $active == 'article' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
-            Article</i>
-        </a></li>
-    <li class="nav-item"><a class="nav-link <?= $active == 'contact' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/contact', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
-            Contact</i>
-        </a></li>
-</ul>
-<hr class="m-0">
 
+<div class="row  mt-4 itenary_tabs justify-content-center">
+    <div class="col-lg-12 col-xl-10 safartabs position-relative">
+        <ul class="nav nav-tabs d-none d-lg-flex gap-2" role="tablist">
+            <li class="nav-item"><a class="nav-link <?= $active == 'package' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+                    Packages</i>
+                </a></li>
+            <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+                    Shared Safari</i>
+                </a></li>
+            <li class="nav-item"><a class="nav-link <?= $active == 'park' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+                    Parks</i>
+                </a></li>
+            <li class="nav-item"><a class="nav-link <?= $active == 'reviewlist' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+                    Review</i>
+                </a></li>
+            <li class="nav-item"><a class="nav-link <?= $active == 'article' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+                    Article</i>
+                </a></li>
+            <li class="nav-item"><a class="nav-link <?= $active == 'contact' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/contact', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+                    Contact</i>
+                </a></li>
+        </ul>
+
+    </div>
+</div>
 
 <style>
     /* Flex container styles */

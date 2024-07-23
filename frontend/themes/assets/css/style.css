@@ -923,6 +923,15 @@ a {
     padding: 20px;
     margin: 20px 0px;
 }
+.top_opratorsBox.logedin{
+
+    border: 1px solid #7070704D;
+    background-color: #fff;
+}
+.providerNamerating.tours .ratings p i{
+
+    color: #F7BF39;
+}
 
 .images_tour {
 
@@ -986,15 +995,31 @@ a {
 
 .follow_btn {
 
-    background: var(--background-yellow);
-    padding: 7px 24px;
+    background: #F5F5F5;
+    padding: 9px 30px;
     border-radius: 20px;
     color: var(--background-primary);
-    font-weight: 500;
-    font-size: var(--fs-14);
+    font-weight: 600;
+    font-size: var(--fs-12);
     text-transform: uppercase;
     border: 0;
     letter-spacing: 0.15px;
+    border: 1px solid #7070704D;
+    color: #152F1B;
+}
+.follow_massge {
+
+    background: #F5F5F5;
+    padding: 9px 30px;
+    border-radius: 20px;
+    color: var(--background-primary);
+    font-weight: 600;
+    font-size: var(--fs-12);
+    text-transform: uppercase;
+    border: 0;
+    letter-spacing: 0.15px;
+    border: 1px solid #7070704D;
+    color: #152F1B;
 }
 
 .safari-box {
@@ -2625,7 +2650,7 @@ figure {
 
 .sent_btn {
     background-color: var(--background-primary);
-    padding: 6px 20px;
+    padding: 6px 50px;
     width: 100%;
     display: block;
     color: var(--colorwhite);
@@ -2636,6 +2661,15 @@ figure {
 .margi_top {
     margin-top: 32px !important;
 }
+.margi_top .sent_btn{
+
+    width: 100% !important;
+}
+.content-center + .col-8 .text_get p{
+
+    text-align: left !important;
+}
+.margi_top
 
 .text_get p span {
 
