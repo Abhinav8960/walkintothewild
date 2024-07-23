@@ -47,7 +47,7 @@ class SitePagesController extends Controller
         if(count($content_types_data) > 0){
             $content_type["select_all"] = "Select All";
             foreach($content_types_data as $val){
-                $content_type[$val] = ucwords(str_replace("_", " ", $val));
+                $content_type[$val['content_type']] = ucwords(str_replace("_", " ", $val['content_type']));
             }
         }
 
