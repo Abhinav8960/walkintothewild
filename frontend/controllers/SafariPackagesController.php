@@ -59,7 +59,7 @@ class SafariPackagesController extends FrontendBaseController
                 if (!empty($value)) {
                     $url['PackageSearch[' . $key . ']'] = $value;
                 } else {
-                    $url['PackageSearch[' . $key . ']'] = 0;
+                    $url['PackageSearch[' . $key . ']'] = '';
                 }
             }
 

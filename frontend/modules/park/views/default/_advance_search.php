@@ -17,10 +17,10 @@ use common\models\GeneralModel;
 ]);
 $locationoption = GeneralModel::getAllLocation();
 $animalfilteroption = GeneralModel::animalfilteroption();
-$parkoption = GeneralModel::safariparkoption();
+$parkoption = GeneralModel::safariparkoption('slug');
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
-?>
+
 <div class="row gx-0 justify-content-center d-md-flex d-none desktop_search" id="desktop_search">
     <div class="close_button" id="desktop_close_button"><i class="fa-solid fa-xmark"></i></div>
     <div class=" col-xl-9 planSearch_box">
@@ -116,22 +116,24 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->id]) ? $parkoption[$model->id] : 'Any / All' ?>
+                        <?= isset($parkoption[$model->id]) ? $parkoption[$model->id] : 'Select Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <?php foreach ($parkoption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <div class="dropdown-item park_dropdown_item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
-                    <?= $form->field($model, 'id')->dropDownList(
-                        $parkoption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example",
-                            'prompt' => ''
+                    <?php
+                    //  $form->field($model, 'id')->dropDownList(
+                    //     $parkoption,
+                    //     [
+                    //         'class' => "form-select form-select-lg hidden-select",
+                    //         'aria-label' => "Large select example",
+                    //         'prompt' => ''
 
-                        ]
-                    )->label(false) ?>
+                    //     ]
+                    // )->label(false);
+                    ?>
                     <div class="placeholder_select">
                         <p>Select Park</p>
                     </div>
@@ -160,9 +162,9 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
-                <div class="select_boxes">
-                    <h6 class="fs-5" > <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?></h6>
-                </div>
+            <div class="select_boxes">
+                <h6 class="fs-5"> <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?></h6>
+            </div>
             <i class="fa-solid fa-chevron-right"></i>
             <div class="select_boxes">
                 <h6 class="fs-5"> <?= isset($safarisessionoption[$model->session_id]) ? $safarisessionoption[$model->session_id] : 'Any / All' ?></h6>
@@ -236,6 +238,13 @@ $(document).ready(function(){
             $('.dropdown-toggle').removeClass('open');
         }
     });
+});
+
+$('.park_dropdown_item').click(function(){
+    var value = $(this).data('value');
+    setTimeout(function () {
+        window.location.href = `/park/`+value+``;
+    }, 200);
 });
 
 $('#search_submit_btn').click(function(){

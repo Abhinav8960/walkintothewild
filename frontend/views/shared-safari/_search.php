@@ -1,8 +1,10 @@
 <?php
 
-use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 use common\models\GeneralModel;
+use common\models\park\SafariPark;
 ?>
 <?php $form = ActiveForm::begin([
     'options' => [
@@ -15,7 +17,7 @@ use common\models\GeneralModel;
         'template' => '{input}{error}',
     ],
 ]);
-$parkoption = GeneralModel::safariparkoption();
+$parkoption = ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title');//GeneralModel::safariparkoption();
 $monthoption = GeneralModel::monthoption();
 $estimatedpriceoption = GeneralModel::estimatedpriceoption();
 ?>

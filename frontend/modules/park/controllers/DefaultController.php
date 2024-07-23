@@ -77,6 +77,7 @@ class DefaultController extends FrontendBaseController
         $searchModel->session_id = 1;
         $searchModel->master_animal_id = 13;
         $searchModel->master_vehicle_id = 5;
+        $searchModel->id = $model->slug; // for show Selected Park name in search
         $dataProvider = $searchModel->search($this->request->queryParams);
 
 
