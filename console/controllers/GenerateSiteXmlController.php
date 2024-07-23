@@ -17,6 +17,7 @@ use common\models\operator\SafariOperator;
 use common\models\trierror\SitePages;
 use common\models\cms\article\ArticleAuthor;
 use common\models\sharesafari\ShareSafari;
+use common\models\trierror\SiteRobots;
 use yii\helpers\Url;
 
 /**
@@ -80,6 +81,14 @@ class GenerateSiteXmlController extends Controller
 
         //create robots.txt to make entry of sitemap_index.xml
         $content = "Sitemap: ".Yii::$app->params['FrontendWebUrl']."sitemap_index.xml";
+        $all_url = SiteRobots::find()->where(['status' => true])->all();
+        if(count($all_url) > 0){
+            $content .= "\nUser-agent: *";
+            foreach($all_url as $row){
+                $content .= "\n"."Disallow: : ".$row->url;
+            }
+        }
+        
         $fp = fopen(Yii::$app->params['siteMapDirectory']."/robots.txt","wb");
         fwrite($fp, $content);
         fclose($fp);
