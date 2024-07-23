@@ -16,7 +16,9 @@ use yii\helpers\Url;
             <h4 class="card-title font-weight-bold"><?= $user->name ?></h4>
             <h6 class="card-title"><?= $user->userhandle ?></h4>
                 <hr>
-                <a href="<?= Url::toRoute(['/profile/search/blocked', 'user_handle' => $user->user_handle]) ?>" class="join_btn text-center mt-sm-0 mt-2">Blocked</a>
+                <?php if (Yii::$app->user->id != $user->id) { ?>
+                    <a href="<?= Url::toRoute(['/profile/search/blocked', 'user_handle' => $user->user_handle]) ?>" class="join_btn text-center mt-sm-0 mt-2">Blocked</a>
+                <?php } ?>
         </div>
 
     </div>
