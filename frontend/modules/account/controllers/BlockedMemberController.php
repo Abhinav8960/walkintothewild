@@ -18,11 +18,9 @@ class BlockedMemberController extends \frontend\controllers\FrontendBaseControll
     public function actionIndex()
     {
         $user = Yii::$app->user->identity;
-        $model = BlockedModel::find()->where(['user_id' => $user->id])->all();
+        $model = BlockedModel::find()->where(['user_id' => $user->id, 'status' => 1])->all();
         return $this->render('index', [
             'model' => $model,
         ]);
     }
-
-
 }
