@@ -100,6 +100,7 @@ class SitePagesController extends Controller
         $model->status = 0;
         $model->save();
 
+        \Yii::$app->session->setFlash('success', 'Record delete successfully');
         return $this->redirect(['index']);
     }
 
