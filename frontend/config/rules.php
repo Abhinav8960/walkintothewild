@@ -74,6 +74,7 @@ return [
     '/profile/follower/<user_handle>' => '/profile/default/follower',
     '/profile/following/<user_handle>' => '/profile/default/following',
 
+
     '/profile/article/validate' => '/profile/article/validate',
     '/profile/article/create' => '/profile/article/create',
     '/profile/article/update/<slug>' => '/profile/article/update',
@@ -92,4 +93,8 @@ return [
     '/profile/activity/<user_handle>' => '/profile/activity/index',
     '/profile/photo/<user_handle>' => '/profile/photo/index',
     '/profile/contribution/<user_handle>' => '/profile/contribution/index',
+
+    '/profile/search' => '/profile/search/index',
+    '/profile/search/blocked/<user_handle>' => '/profile/search/blocked',
+    '/profile/search/unblocked/<id>' => '/profile/search/unblocked',
 ];

@@ -90,22 +90,5 @@ class DefaultController extends FrontendBaseController
         return $this->render('following', ['user' => $user]);
     }
 
-    public function actionBlocked($user_handle)
-    {
-        $user = $this->findUserbyHandle($user_handle);
-        $blocked_user = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
-        if ($blocked_user) {
-            $blocked_user->status = 2;
-            if ($blocked_user->save(false)) {
-                $model = new BlockedModel();
-                $model->user_id = $blocked_user->user_id;
-                $model->blocked_user_id = $blocked_user->follow_user_id;
-                if ($model->save(false)) {
-                    Yii::$app->session->setFlash('success', "Blocked Successfully!!");
-                    return $this->redirect(Yii::$app->request->referrer);
-                }
-            };
-        }
-        return $this->redirect(Yii::$app->request->referrer);
-    }
+    
 }

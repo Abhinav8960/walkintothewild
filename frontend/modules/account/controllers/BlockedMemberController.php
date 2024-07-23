@@ -3,6 +3,7 @@
 namespace frontend\modules\account\controllers;
 
 use common\models\BlockedModel;
+use common\models\UserFollow;
 use Yii;
 
 /**
@@ -22,4 +23,6 @@ class BlockedMemberController extends \frontend\controllers\FrontendBaseControll
             'model' => $model,
         ]);
     }
+
+
 }
