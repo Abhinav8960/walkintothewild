@@ -14,7 +14,7 @@ class SitemapController extends FrontendBaseController
      */
     public function actionIndex()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."sitemap_index.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."sitemap_index.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
@@ -22,7 +22,7 @@ class SitemapController extends FrontendBaseController
 
     public function actionArticle()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."article.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."article.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
@@ -30,7 +30,7 @@ class SitemapController extends FrontendBaseController
     
     public function actionArticle_category()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."article_category.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."article_category.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
@@ -38,7 +38,7 @@ class SitemapController extends FrontendBaseController
     
     public function actionAuthors()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."authors.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."authors.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
@@ -46,7 +46,7 @@ class SitemapController extends FrontendBaseController
 
     public function actionPark()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."park.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."park.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
@@ -54,7 +54,7 @@ class SitemapController extends FrontendBaseController
 
     public function actionSafari_operator()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."safari_operator.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."safari_operator.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
@@ -62,7 +62,7 @@ class SitemapController extends FrontendBaseController
 
     public function actionShared_safari()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."shared_safari.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."shared_safari.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
@@ -70,7 +70,7 @@ class SitemapController extends FrontendBaseController
 
     public function actionWalkintothewild_pages()
     {
-      $filepath = \Yii::$app->params['datapath']."sitemap/"."walkintothewild_pages.xml";
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."walkintothewild_pages.xml";
       \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
