@@ -840,6 +840,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/default/front-index")) ? "active" : "" ?>" href="/trierror/default/front-index">Frontend Error Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Frontend Request Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-pages")) ? "active" : "" ?>" href="/trierror/site-pages">Site Pages</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-robots")) ? "active" : "" ?>" href="/trierror/site-robots">Robots Pages</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
