@@ -30,7 +30,7 @@ class SafaritourRegistrationController extends FrontendBaseController
         if (Yii::$app->user->identity) {
             $model = SafariOperator::findOne(['user_id' => Yii::$app->user->identity->id]);
             if ($model) {
-                return $this->redirect(['/profile/business/index']);
+                return $this->redirect(['/manage']);
             }
 
             if (!in_array(Yii::$app->user->identity->account_type, [2, 3])) {

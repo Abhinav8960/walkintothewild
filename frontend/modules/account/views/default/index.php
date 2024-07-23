@@ -45,7 +45,7 @@ $this->title = 'Account Settings';
                             <div class="col-md-6">
                                 <?php
                                 $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer/Photographer', 3 => 'Safari Operator'];
-                                if (Yii::$app->user->identity->is_safari_operator == 1) {
+                                if (Yii::$app->user->identity->is_safari_operator == 1 && !in_array($model->account_type, [1])) {
                                     echo 'Account Type <br> <b>' . (isset($account_type[$model->account_type]) ? $account_type[$model->account_type] : $model->account_type) . '</b>';
                                 } else { ?>
                                     <?= $form->field($model, 'account_type')->radioList($account_type) ?>
