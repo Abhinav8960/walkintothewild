@@ -43,7 +43,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
             <div class="col-lg-4 ">
                 <div class="d-flex align-items-center m-1 mx-auto align-items-center justify-content-center">
-                    <?php if (Yii::$app->user->identity->id != $user->id) {
+                    <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $user->id) {
                         if (UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id, 'status' => '1'])->one()) { ?>
                             <a href="<?= Url::toRoute(['/profile/default/unfollow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Unfollow</a>
                         <?php } else { ?>
@@ -89,7 +89,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
-            <?php if (Yii::$app->user->identity->id == $user->id) {
+            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                 if ($user->is_safari_operator == 1) { ?>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Manage Business</a></li>
                     <?php } else if (in_array($user->account_type, [2, 3])) {
