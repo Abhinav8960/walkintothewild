@@ -59,14 +59,12 @@ class GenerateSiteXmlController extends Controller
         //get article site pages
         $additional_sitemap = [];
         $additional_sitemap[] = $this->static_pages($backend_actual_url);
-        /*
         $additional_sitemap[] = $this->get_safari_operator_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_park_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_category_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_shared_safari_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_author_site_pages($backend_actual_url);
-        */
         //$additional_sitemap[] = $this->get_article_tags_site_pages($backend_actual_url);
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
