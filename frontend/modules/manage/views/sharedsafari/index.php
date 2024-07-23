@@ -38,8 +38,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'contentOptions' => ['style' => 'width: 10%;'],
                                             'format' => 'raw',
                                             'value' => function ($model) {
-
-                                                return $model->park->title;
+                                                return Html::a($model->park->title, ['/sharedsafari/default/view', 'slug' => $model->slug]);
                                             }
                                         ],
                                         [
