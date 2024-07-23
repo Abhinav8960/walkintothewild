@@ -2850,7 +2850,8 @@ figure {
     background-color: transparent;
     border: 1px solid var(--colorBlack);
     border-radius: 20px;
-    padding: 6px 30px;
+    padding: 5px 30px;
+    font-size: 14px;
     margin: 8px 10px 0px 0px;
     color: #000000 !important;
 }
@@ -5290,4 +5291,40 @@ border-top-right-radius: 0;
 .itenary_text ul li{
 
     font-size: 14px;
+}
+
+.parksImgireview img{
+
+    width: 100%;
+    height: 200px !important;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+}
+.footer_safariname{
+
+    background-color: var(--background-primary);
+    padding: 10px 8px ;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.footer_safariname h6{
+
+    color: #fff;
+    margin-bottom: 0;
+    font-size: 14px;
+ 
+}
+
+.safriComments .userRatingTitle .nameRating{
+
+    font-size: 18px;
+    color: #000000;
+}
+.safriComments .sortBy{
+
+
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 0;
 }

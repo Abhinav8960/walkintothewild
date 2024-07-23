@@ -6,7 +6,7 @@
 	use yii\helpers\Url;
 	?>
 	<!-- main-header -->
-	<header class="header_wrapper navigation_hide " style="line-height: 62px;">
+	<header class="header_wrapper navigation_hide d-flex align-items-center" >
 		<div class="container-fluid">
 			<div class="row justify-content-between align-items-center">
 				<div class="col-2 ">
