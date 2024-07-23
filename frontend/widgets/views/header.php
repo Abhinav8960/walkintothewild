@@ -13,7 +13,7 @@
 		<nav class="navbar navbar-expand-lg ">
 			<div class="container-fluid">
 				<a href="/">
-					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="210px" class="logo">
+					<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="180px" class="logo">
 				</a>
 				<div class="d-flex align-items-center">
 
