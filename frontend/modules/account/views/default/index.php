@@ -56,7 +56,7 @@ $this->title = 'Account Settings';
                                 <?= $form->field($model, 'user_handle')->textInput(['maxlength' => true, 'placeholder' => 'User Name']) ?>
                             </div>
                             <div class="col-md-6">
-                                <?= $form->field($model, 'date_of_birth')->textInput(['type' => 'date', 'placeholder' => 'Select D.O.B']) ?>
+                                <?= $form->field($model, 'date_of_birth')->textInput(['type' => 'date', 'max' => date("Y-m-d", strtotime("-18 year", time())), 'placeholder' => 'Select D.O.B']) ?>
                             </div>
                             <div class="col-md-6">
                                 <?= $form->field($model, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female', '3' => 'Others'], ['prompt' => 'Select Gender']) ?>
