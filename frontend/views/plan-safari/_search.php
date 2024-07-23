@@ -26,10 +26,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?>
+                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Select Region' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">All India</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Region</div> -->
                         <?php foreach ($locationoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -55,10 +55,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?>
+                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Animal</div> -->
                         <?php foreach ($animalfilteroption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -84,10 +84,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Any / All' ?>
+                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Safari Mode</div> -->
                         <?php foreach ($vehicleoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -114,7 +114,7 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Park' ?>
+                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Safari Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <?php foreach ($parkoption as $value => $label) : ?>

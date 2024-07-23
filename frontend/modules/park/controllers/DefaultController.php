@@ -73,10 +73,10 @@ class DefaultController extends FrontendBaseController
             // throw new NotFoundHttpException('The requested page does not exist.');
         }
         $searchModel = new SafariParkSearch();
-        $searchModel->master_location_id = 7;
-        $searchModel->session_id = 1;
-        $searchModel->master_animal_id = 13;
-        $searchModel->master_vehicle_id = 5;
+        // $searchModel->master_location_id = 7;
+        // $searchModel->session_id = 1;
+        // $searchModel->master_animal_id = 13;
+        // $searchModel->master_vehicle_id = 5;
         $searchModel->id = $model->slug; // for show Selected Park name in search
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -256,7 +256,7 @@ class DefaultController extends FrontendBaseController
      * Renders the index view for the module
      * @return string
      */
-    public function actionParklist($master_location_id = 7, $session_id = 1, $master_animal_id = 13, $master_vehicle_id = 5)
+    public function actionParklist($master_location_id = null, $session_id = null, $master_animal_id = null, $master_vehicle_id = null)
     {
         $searchModel = new SafariParkSearch();
         if ($master_location_id) {

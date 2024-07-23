@@ -30,9 +30,9 @@ use common\models\park\SafariPark;
             <h4>Select</h4>
         </div>
         <div class="title_filter ">
-            <h6>Park</h6>
+            <h6>Safari Park</h6>
             <div class="input_check ">
-                <?= $form->field($searchModel, 'park_id')->dropDownlist(ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'All Park'])->label(false) ?>
+                <?= $form->field($searchModel, 'park_id')->dropDownlist(ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'Select Safari Park'])->label(false) ?>
             </div>
         </div>
         <div class="title_filter mb-3">

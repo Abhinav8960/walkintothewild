@@ -27,7 +27,7 @@ $estimatedpriceoption = GeneralModel::estimatedpriceoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->park_id]) ? $parkoption[$model->park_id] : 'Select Park' ?>
+                        <?= isset($parkoption[$model->park_id]) ? $parkoption[$model->park_id] : 'Select Safari Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <!-- <div class="dropdown-item" data-value="">Select Park</div> -->
@@ -54,10 +54,10 @@ $estimatedpriceoption = GeneralModel::estimatedpriceoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($monthoption[$model->month_id]) ? $monthoption[$model->month_id] : 'Any / All' ?>
+                        <?= isset($monthoption[$model->month_id]) ? $monthoption[$model->month_id] : 'Select Month' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Month</div> -->
                         <?php foreach ($monthoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -80,10 +80,10 @@ $estimatedpriceoption = GeneralModel::estimatedpriceoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($estimatedpriceoption[$model->estimated_price_filter]) ? $estimatedpriceoption[$model->estimated_price_filter] : 'Any / All' ?>
+                        <?= isset($estimatedpriceoption[$model->estimated_price_filter]) ? $estimatedpriceoption[$model->estimated_price_filter] : 'Select Budget' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Budget</div> -->
                         <?php foreach ($estimatedpriceoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>

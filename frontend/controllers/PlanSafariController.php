@@ -23,10 +23,10 @@ class PlanSafariController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new SafariParkSearch();
-        $searchModel->master_location_id = 7;
-        $searchModel->session_id = 1;
-        $searchModel->master_animal_id = 13;
-        $searchModel->master_vehicle_id = 5;
+        // $searchModel->master_location_id = 7;
+        // $searchModel->session_id = 1;
+        // $searchModel->master_animal_id = 13;
+        // $searchModel->master_vehicle_id = 5;
         $dataProvider = $searchModel->search($this->request->queryParams, false);
 
 
