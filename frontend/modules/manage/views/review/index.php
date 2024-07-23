@@ -8,7 +8,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 
 ?>
 
-<div class="container mt-5 mb-5">
+<div class="container-fluid mt-5 mb-5">
     <div class="row mb-5">
         <div class="col-md-12">
             <h5><?= $this->title ?></h5>
