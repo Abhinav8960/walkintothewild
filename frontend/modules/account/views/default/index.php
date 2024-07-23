@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
+use function PHPSTORM_META\type;
+
 $this->title = 'Account Settings';
 
 ?>
@@ -53,9 +55,15 @@ $this->title = 'Account Settings';
                             <div class="col-md-6">
                                 <?= $form->field($model, 'user_handle')->textInput(['maxlength' => true, 'placeholder' => 'User Name']) ?>
                             </div>
+                            <div class="col-md-6">
+                                <?= $form->field($model, 'date_of_birth')->textInput(['type' => 'date', 'placeholder' => 'Select D.O.B']) ?>
+                            </div>
+                            <div class="col-md-6">
+                                <?= $form->field($model, 'gender')->dropDownList(['1' => 'Male', '2' => 'Female', '3' => 'Others'], ['prompt' => 'Select Gender']) ?>
+                            </div>
 
                             <div class="col-md-12">
-                                <?= $form->field($model, 'user_bio')->textarea(['rows' => 2, 'maxlength'=>true,'placeholder' => 'Profile Description eg: Wildlife | Nature']) ?>
+                                <?= $form->field($model, 'user_bio')->textarea(['rows' => 2, 'maxlength' => true, 'placeholder' => 'Profile Description eg: Wildlife | Nature']) ?>
                             </div>
 
 
