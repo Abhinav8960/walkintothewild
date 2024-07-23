@@ -1,14 +1,14 @@
 <?php
 
 return [
-    //'/sitemap_index.xml' => '/sitemap',
-    //'/article.xml' => '/sitemap/article',
-    //'/article_category.xml' => '/sitemap/article_category',
-    //'/authors.xml' => '/sitemap/authors',
-    //'/park.xml' => '/sitemap/park',
-    //'/safari_operator.xml' => '/sitemap/safari_operator',
-    //'/shared_safari.xml' => '/sitemap/shared_safari',
-    //'/walkintothewild_pages.xml' => '/sitemap/walkintothewild_pages',
+    '/sitemap_index.xml' => '/sitemap',
+    '/article.xml' => '/sitemap/article',
+    '/article_category.xml' => '/sitemap/article_category',
+    '/authors.xml' => '/sitemap/authors',
+    '/park.xml' => '/sitemap/park',
+    '/safari_operator.xml' => '/sitemap/safari_operator',
+    '/shared_safari.xml' => '/sitemap/shared_safari',
+    '/walkintothewild_pages.xml' => '/sitemap/walkintothewild_pages',
     '/home' => '/plan-safari', //home Page url
     '/park' => '/park/default/index', //home-old page url
     '/park/<slug>' => '/park/default/view', //park view url
