@@ -70,13 +70,13 @@ $this->params['title'] = $this->title;
                             </div>
                             <div class="col-lg-7 mt-4">
                                 <div class="row">
-                                    <div class="col-lg-12 mb-2">
+                                    <!-- <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Category <span>*</span></label>
                                             <?= $form->field($model, 'category_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category', 'data-label' => 'Category'])->label(false) ?>
 
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-12 mb-2">
                                         <div class="formInput">
                                             <label for="">Address <span>*</span></label>

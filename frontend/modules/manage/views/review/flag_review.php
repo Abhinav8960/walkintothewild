@@ -5,12 +5,6 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 $this->title = 'Safari Tour Operator ';
-$this->params['breadcrumbs_home_url'] = '/operator/safari-operator';
-$this->params['breadcrumbs'][] =  ['label' => 'Operator', 'url' => '#'];
-$this->params['breadcrumbs'][] = 'View';
-$this->params['title'] = $this->title;
-
-
 ?>
 <div class="card">
     <div class="card-body">
@@ -18,33 +12,19 @@ $this->params['title'] = $this->title;
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width: 3%;'],
+                    ],
                     [
                         'label' => 'User',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($user = $model->user) {
-                                return Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name;
+                                return Html::a(Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name, ['/profile/default/index', 'user_handle' => $user->user_handle]);
                             }
                             return $model->user_id;
-                        }
-                    ],
-
-                    [
-                        'label' => 'Safari Operator',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return  isset($model->safari_operator_id) ? GeneralModel::safariparkoperatoroption()[$model->safari_operator_id] : '';
-                        }
-                    ],
-                    [
-                        'label' => 'Park',
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return  isset($model->park_id) ? GeneralModel::safariparkoption()[$model->park_id] : '';
                         }
                     ],
                     [
@@ -71,13 +51,9 @@ $this->params['title'] = $this->title;
                             return $model->report_detail;
                         }
                     ],
-
-
-
                 ],
             ]);
             ?>
         </div>
     </div>
-
 </div>

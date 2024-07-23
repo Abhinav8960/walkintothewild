@@ -119,7 +119,7 @@ return [
         'article' => [
             'class' => 'frontend\modules\article\Module',
         ],
-        'operator' => [
+        'operator' => [ // Safari Operator Public Page
             'class' => 'frontend\modules\operator\Module',
         ],
         'sharedsafari' => [
@@ -128,11 +128,24 @@ return [
         'package' => [
             'class' => 'frontend\modules\package\Module',
         ],
-        'profile' => [
+        'profile' => [ // User Profile
             'class' => 'frontend\modules\profile\Module',
         ],
-        'account' => [
+        'account' => [ // User Account Related Settings
             'class' => 'frontend\modules\account\Module',
+        ],
+        'manage' => [ // Operator Businesss Page Manage
+            'class' => 'frontend\modules\manage\Module',
+        ],
+    ],
+    'container' => [
+        'definitions' => [
+            \yii\widgets\LinkPager::class => \yii\bootstrap5\LinkPager::class,
+            'yii\bootstrap5\LinkPager' => [
+                'firstPageLabel' => 'First',
+                'lastPageLabel' => 'Last',
+                'options' => ['class' => 'pagination pagination-primary mg-sm-b-0']
+            ],
         ],
     ],
     'params' => $params,

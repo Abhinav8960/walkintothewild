@@ -1,8 +1,8 @@
 <?php
 
-use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use common\models\GeneralModel;
 
 ?>
 <div class="card">
@@ -84,14 +84,13 @@ use yii\grid\GridView;
                         'template' => '{view}&nbsp',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                return  Html::a('View
                                 ', ['viewrequest', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
+                                    'class' => 'btn btn-info',
                                     'title' => 'View',
 
                                 ]);
                             },
-
                         ]
                     ],
                 ],
