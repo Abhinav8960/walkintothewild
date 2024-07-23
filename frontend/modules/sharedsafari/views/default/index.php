@@ -96,8 +96,8 @@ $recentposts = ArticleSearch::recentpost();
                                             <?php } ?>
                                         </div>
                                         <div class="me-3 float-md-end">
-                                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->account_type != 1) { ?>
-                                                <button class="btn_newsafari departureBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/create-fixed-departure']) ?>">+ Create Fixed Departure </button>
+                                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) { ?>
+                                                <a class="btn_newsafari" href="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari']) ?>">+ Create Fixed Departure </a>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -267,19 +267,7 @@ $recentposts = ArticleSearch::recentpost();
     </div>
 </div>
 
-<div class="modal fade _standard-text" id="departure-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a New Fixed Departure</h1>
-                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
-            </div>
-            <div class="modal-body px-2 pt-0">
-                <div id='modalContent'></div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <?php
@@ -293,15 +281,6 @@ function organizefunction() {
 }
 organizefunction();
 
-function departurefunction() {
-	$('.departureBtn').on('click', function () {
-        $('#departure-modal').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-}
-departurefunction();
-             
 JS;
 $this->registerJs($script);
 ?>
