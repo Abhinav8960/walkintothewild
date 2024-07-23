@@ -6,7 +6,7 @@
 	use yii\helpers\Url;
 	?>
 	<!-- main-header -->
-	<header class="header_wrapper navigation_hide d-flex align-items-center" >
+	<header class="header_wrapper navigation_hide d-flex align-items-center">
 		<div class="container-fluid">
 			<div class="row justify-content-between align-items-center">
 				<div class="col-2 ">
@@ -32,13 +32,22 @@
 											<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 										</li>
 									<?php } else { ?>
-										<?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
+										<!-- <?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
 											<li>
 												<a class="" target="_blank" href="<?= Yii::$app->params['backend_url'] ?>">
 													<i class="fa-solid fa-cog"></i>
 													Manage</a>
 											</li>
-										<?php } ?>
+										<?php } ?> -->
+										<?php
+										if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
+											<li>
+												<a class="" href="/manage">
+													<i class="fa-solid fa-cog"></i>
+													Manage Business</a>
+											</li>
+										<?php }
+										?>
 										<li>
 											<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
 												<i class="fa-solid fa-user"></i>
