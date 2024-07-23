@@ -1,25 +1,28 @@
 <?php
 
-use common\models\GeneralModel;
-use kartik\select2\Select2;
 use yii\helpers\Html;
+use yii\grid\GridView;
+use kartik\select2\Select2;
 use yii\bootstrap5\ActiveForm;
-
-$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
-$this->params['baseurl'] = $webasset->baseUrl;
-
-$this->title = 'Edit Info';
-$this->params['breadcrumbs_home_url'] = '/';
-$this->params['breadcrumbs'][] = ['label' => 'Edit', 'url' => '#'];
-$this->params['title'] = $this->title;
-
+use common\models\GeneralModel;
 
 ?>
-<div class="container">
-    <?= $this->render('@frontend/modules/profile/views/default/tablist', ['business' => 'active', 'user' => $user, 'show_links' => true]) ?>
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
 
+
+<?php
+$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+
+?>
+
+<div class="container mt-5 mb-5">
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <h5><?= $this->title ?></h5>
+        </div>
+        <div class="col-md-3">
+            <?= $this->render('_sidebar', ['active' => 'profile']); ?>
+        </div>
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
                     <?php $form = ActiveForm::begin([
@@ -131,7 +134,7 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
 
-            <?= $this->render('update', ['dataProvider' => $dataProvider]); ?>
+            <?= $this->render('_previous_request', ['dataProvider' => $dataProvider]) ?>
         </div>
     </div>
 </div>
