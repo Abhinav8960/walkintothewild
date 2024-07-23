@@ -20,7 +20,7 @@ $this->params['title'] = $this->title;
             foreach ($userfollowers as $userfollower) { ?>
                 <div class="col-md-3">
                     <section class="mx-auto" style="max-width: 23rem;">
-                        <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
+                        <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->follower]);  ?>
                     </section>
                 </div>
         <?php  }

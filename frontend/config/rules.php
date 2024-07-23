@@ -73,6 +73,7 @@ return [
     '/profile/user/<user_handle>' => '/profile/default/index',
     '/profile/follower/<user_handle>' => '/profile/default/follower',
     '/profile/following/<user_handle>' => '/profile/default/following',
+    '/profile/blocked/<user_handle>' => '/profile/default/blocked',
 
     '/profile/article/validate' => '/profile/article/validate',
     '/profile/article/create' => '/profile/article/create',
