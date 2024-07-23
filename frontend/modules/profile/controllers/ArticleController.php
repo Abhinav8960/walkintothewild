@@ -30,7 +30,11 @@ class ArticleController extends FrontendBaseController
     {
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
-        $articles = Article::find()->where(['user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
+        if (Yii::$app->user->identity->id == $user->id) {
+            $articles = Article::find()->where(['user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
+        } else {
+            $articles = Article::find()->where(['user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+        }
         return $this->render(
             'index',
             [

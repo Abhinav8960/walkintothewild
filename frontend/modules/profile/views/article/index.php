@@ -17,7 +17,7 @@ $this->params['title'] = $this->title;
                     <div class="row">
                         <div class="col-md-12">
                             <div class="d-flex justify-content-between">
-                                <h5>My Articles</h5>
+                                <h5>Articles</h5>
                                 <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                     <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
                                 <?php } ?>
@@ -28,7 +28,10 @@ $this->params['title'] = $this->title;
                                 <div class="col-md-6 mb-5 mt-4" style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
                                     <div class="artical_cards h-100">
                                         <div class="image-box">
-                                            <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
+                                            <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                                <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
+                                            <?php } ?>
+
                                             <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                                             </figure>
                                         </div>
@@ -80,7 +83,7 @@ $this->params['title'] = $this->title;
                             <?php if ($model) {
                                 foreach ($model as $share_safari) {
                             ?>
-                                    <div class="col-6 mb-4 padding_righ">
+                                    <div class="col-md-12 mb-4 padding_righ">
                                         <div class="sharesafri-card">
                                             <div class="flotingdate">
                                                 <div class="icons text-center">
