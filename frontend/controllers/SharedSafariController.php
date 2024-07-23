@@ -52,7 +52,7 @@ class SharedSafariController extends FrontendBaseController
                 if (!empty($value)) {
                     $url['ShareSafariSearch[' . $key . ']'] = $value;
                 } else {
-                    $url['ShareSafariSearch[' . $key . ']'] = 0;
+                    $url['ShareSafariSearch[' . $key . ']'] = '';
                 }
             }
 

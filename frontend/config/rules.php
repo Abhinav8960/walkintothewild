@@ -59,6 +59,8 @@ return [
     '/operator/review/<id>' => '/operator/default/review', //operator view url
     '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
     '/operator/<slug>/package' => '/operator/default/package', //operator view url
+    '/operator/<slug>/article' => '/operator/default/article', //operator view url
+    '/operator/<slug>/contact' => '/operator/default/contact', //operator view url
     '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
     '/operator/<slug>' => '/operator/default/view', //operator view url
 
@@ -103,4 +105,14 @@ return [
     '/profile/search' => '/profile/search/index',
     '/profile/search/blocked/<user_handle>' => '/profile/search/blocked',
     '/profile/search/unblocked/<id>' => '/profile/search/unblocked',
+
+
+    '/manage/package/update/<package_id>' => '/manage/package/update',
+    '/manage/package/itinerary/<package_id>/<day>' => '/manage/package/itinerary', //package profile itenary url          
+    '/manage/package/inclusion/<package_id>' => '/manage/package/inclusion', //package profile inclusion url          
+    '/manage/package/getting-there/<package_id>' => '/manage/package/getting-there', //package profile getting-there url          
+    '/manage/package/policy-info/<package_id>' => '/manage/package/policy-info', //package profile policy-info url          
+    '/manage/package/faq/<package_id>' => '/manage/package/faq', //package profile faq url          
+    '/manage/package/create-faq/<package_id>' => '/manage/package/create-faq', //package profile create faq url          
+    '/manage/package/select-faq/<package_id>' => '/manage/package/select-faq',
 ];

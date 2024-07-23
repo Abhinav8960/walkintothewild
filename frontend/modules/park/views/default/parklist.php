@@ -176,7 +176,7 @@ $(document).ready(function() {
     var models = $modelsJson; // Models data from PHP
 
     win.scroll(function() {
-        if (!isLoading && ($(document).height() - win.height() <= win.scrollTop() + 100)) {
+        if (!isLoading && ($(document).height() - win.height() <= win.scrollTop() + 1500)) {
             $(".loader").show();
             isLoading = true; // Set loading flag to true to prevent multiple requests
 

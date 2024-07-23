@@ -17,19 +17,19 @@ use common\models\GeneralModel;
 ]);
 $locationoption = GeneralModel::getAllLocation();
 $animalfilteroption = GeneralModel::animalfilteroption();
-$parkoption = GeneralModel::safariparkoption();
+$parkoption = GeneralModel::safariparkoption('slug');
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
-<div class="row gx-0 justify-content-center " >
+<div class="row gx-0 justify-content-center ">
     <div class=" col-xl-9 planSearch_box">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?>
+                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Select Region' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">All India</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Region</div> -->
                         <?php foreach ($locationoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -55,10 +55,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?>
+                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Animal</div> -->
                         <?php foreach ($animalfilteroption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -84,10 +84,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Any / All' ?>
+                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Safari Mode</div> -->
                         <?php foreach ($vehicleoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -114,22 +114,24 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Park' ?>
+                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Safari Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <?php foreach ($parkoption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <div class="dropdown-item park_dropdown_item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
-                    <?= $form->field($model, 'safari_park_id')->dropDownList(
-                        $parkoption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example",
-                            'prompt' => ''
+                    <?php
+                    //  $form->field($model, 'safari_park_id')->dropDownList(
+                    //     $parkoption,
+                    //     [
+                    //         'class' => "form-select form-select-lg hidden-select",
+                    //         'aria-label' => "Large select example",
+                    //         'prompt' => ''
 
-                        ]
-                    )->label(false) ?>
+                    //     ]
+                    // )->label(false);
+                    ?>
                     <div class="placeholder_select">
                         <p>Select Park</p>
                     </div>
@@ -198,6 +200,13 @@ $(document).ready(function(){
             $('.dropdown-toggle').removeClass('open');
         }
     });
+});
+
+$('.park_dropdown_item').click(function(){
+    var value = $(this).data('value');
+    setTimeout(function () {
+        window.location.href = `/park/`+value+``;
+    }, 200);
 });
 
 $('#search_submit_btn').click(function(){

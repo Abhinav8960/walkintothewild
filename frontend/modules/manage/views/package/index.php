@@ -8,7 +8,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 
 ?>
 
-<div class="container mt-5 mb-5">
+<div class="container-fluid mt-5 mb-5">
     <div class="row mb-5">
         <div class="col-md-12 d-flex justify-content-between">
             <h5><?= $this->title ?></h5>
@@ -82,6 +82,14 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'dateTime',
                                             'value' => function ($model) {
                                                 return $model->created_at;
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'Action',
+                                            'format' => 'raw',
+                                            'contentOptions' => ['style' => 'width: 5%;'],
+                                            'value' => function ($model) {
+                                                return   Html::a('Update', [Url::toRoute(['update', 'package_id' => $model->id]), 'class' => 'btn btn_newsafari departureBtn', 'title' => 'Update']);
                                             }
                                         ],
                                     ],

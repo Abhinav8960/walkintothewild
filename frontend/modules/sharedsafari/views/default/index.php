@@ -95,11 +95,11 @@ $recentposts = ArticleSearch::recentpost();
                                                     Safari</a>
                                             <?php } ?>
                                         </div>
-                                        <div class="me-3 float-md-end">
+                                        <!-- <div class="me-3 float-md-end">
                                             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) { ?>
                                                 <a class="btn_newsafari" href="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari']) ?>">+ Create Fixed Departure </a>
                                             <?php } ?>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
 

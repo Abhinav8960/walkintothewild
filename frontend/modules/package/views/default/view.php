@@ -317,7 +317,7 @@ $this->params['title'] = $this->title;
                     </div>
                     <?php
                     if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) {
-                        if (Yii::$app->user->identity->id == $package->owned_by_id) {
+                        if (true || Yii::$app->user->identity->id == $package->owned_by_id) {
                     ?>
 
                             <div class="right_button py-lg-5 py-3 d-lg-block d-none">

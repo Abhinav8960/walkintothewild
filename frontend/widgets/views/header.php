@@ -40,7 +40,7 @@
 								// "/park/default/view",
 							)) ? "active" : "" ?>">
 
-									<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/parklist']) ?>">
+									<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/']) ?>">
 										<div class="d">
 											<div class="card-img">
 												<img src="<?= $this->params['baseurl'] ?>/img/Plan.png" alt="" width="20">
