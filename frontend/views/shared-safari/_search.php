@@ -1,8 +1,10 @@
 <?php
 
-use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 use common\models\GeneralModel;
+use common\models\park\SafariPark;
 ?>
 <?php $form = ActiveForm::begin([
     'options' => [
@@ -15,7 +17,7 @@ use common\models\GeneralModel;
         'template' => '{input}{error}',
     ],
 ]);
-$parkoption = GeneralModel::safariparkoption();
+$parkoption = ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title');//GeneralModel::safariparkoption();
 $monthoption = GeneralModel::monthoption();
 $estimatedpriceoption = GeneralModel::estimatedpriceoption();
 ?>
@@ -25,10 +27,10 @@ $estimatedpriceoption = GeneralModel::estimatedpriceoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->park_id]) ? $parkoption[$model->park_id] : 'All Park' ?>
+                        <?= isset($parkoption[$model->park_id]) ? $parkoption[$model->park_id] : 'Select Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">All Park</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Park</div> -->
                         <?php foreach ($parkoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>

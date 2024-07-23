@@ -444,7 +444,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
         // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 2])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
-    public static function safariparkoption()
+    public static function safariparkoption($column = 'id')
     {
 
         $query = SafariPark::find()
@@ -456,7 +456,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $parks = $query->all();
 
         // Use ArrayHelper::map to create the key-value pairs
-        $result = ArrayHelper::map($parks, 'id', 'title');
+        $result = ArrayHelper::map($parks, $column, 'title');
         return $result;
         // return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE, 'park_type_id' => 1])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }

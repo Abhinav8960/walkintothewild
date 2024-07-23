@@ -334,9 +334,19 @@ line-height: 19px;
 
         line-height: 22px;
     }
-    .range-label span{
+    .range-label span,.text_safari{
 
         font-size: 12px;
+    }
+    .menuprofile ul li a{
+        font-size: 12px; 
+    }
+    .form-control{
+        font-size: 12px;
+    }
+    .btn_newsafari{
+
+        font-size: 14px;
     }
     .heading-footer h6{
 
@@ -355,7 +365,7 @@ line-height: 19px;
 
         font-size: 14px;
     }
-    .parks_text p{
+    .parks_text p,.joinsafari a{
 
         font-size: 12px;
     }

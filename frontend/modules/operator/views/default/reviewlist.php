@@ -62,11 +62,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="row justify-content-center">
             <div class="col-xl-9 col-lg-12">
                 <div class="row pt-5">
-                    <div class="col-lg-9 col-md-8 col-xxl-10 col-xl-9 ">
+                    <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-md-8">
-                                    <div class="comments_safari operator_comment">
+                                <div class="col-xxl-8 col-lg-8">
+                                    <div class="comments_safari operator_comment bg-white safriComments">
                                         <div class="commentsOther  position-relative">
                                             <div class=" d-flex justify-content-between flex-wrap">
                                                 <?php if ($reviews) { ?>
@@ -94,11 +94,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php } ?>
 
 
-                                                <div class="whiteReview mt-2">
+                                                <div class="whiteReview mt-2 ">
                                                     <?php if (Yii::$app->user->identity) { ?>
-                                                        <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
+                                                        <button class="follow_btn writeAReviewBtn text-capitlize" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
                                                     <?php } else { ?>
-                                                        <a class="btn_review" href="/site/auth?authclient=google">Please Login to Review</a>
+                                                        <a class="follow_btn" href="/site/auth?authclient=google">Please Login to Review</a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
@@ -167,12 +167,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5>Organized Safari <?= count($organized_by); ?></h5>
-                                            <div class="row">
-                                                <?php if ($organized_by) {
+                                <div class="col-xxl-4 col-lg-4">
+                                <div class="request_quote ">
+                                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                                        Organized Safari <?= count($organized_by); ?></button>
+                                        <div class="interst_wrapper pt-3 px-md-5 bg-white">
+                                            <div class="row justify-content-center">
+                                            <?php if ($organized_by) {
                                                     foreach ($organized_by as $share_safari) {
                                                 ?>
                                                         <div class="col-md-12 mb-4 padding_righ">
@@ -244,7 +245,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php }
                                                 } ?>
                                             </div>
+                                      
+                                            <div class="col-12">
+                                                <div class="safari text-end">
+                                                    <div class="viewAllreview">
+                                                        <a href="">View All</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
