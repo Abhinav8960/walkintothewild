@@ -2,22 +2,23 @@
 
 namespace frontend\modules\package\controllers;
 
-use common\interfaces\StatusInterface;
-use common\models\package\form\PackageForm;
-use common\models\package\Package;
-use common\models\package\PackageFaqSearch;
-use common\models\package\PackageFeature;
 use Yii;
+use yii\helpers\Url;
 use yii\web\UploadedFile;
-use common\models\package\PackageSafariPark;
-use common\models\package\PackageSearch;
 use common\models\UserWishlist;
-use frontend\controllers\FrontendBaseController;
-use frontend\models\PackageCommentForm;
+use common\models\package\Package;
+use yii\web\NotFoundHttpException;
 use frontend\models\PackageQuoteForm;
 use frontend\models\PackageReplyForm;
-use yii\helpers\Url;
-use yii\web\NotFoundHttpException;
+use common\interfaces\StatusInterface;
+use frontend\models\PackageCommentForm;
+use common\models\package\PackageSearch;
+use common\models\package\PackageFeature;
+use common\models\operator\SafariOperator;
+use common\models\package\form\PackageForm;
+use common\models\package\PackageFaqSearch;
+use common\models\package\PackageSafariPark;
+use frontend\controllers\FrontendBaseController;
 
 /**
  * DefaultController.
@@ -57,10 +58,12 @@ class DefaultController extends FrontendBaseController
                 throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
             }
         }
+        $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id])->limit(1)->one();
         $model = new PackageForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->owned_by_id = Yii::$app->user->identity->id;
+        $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
+
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

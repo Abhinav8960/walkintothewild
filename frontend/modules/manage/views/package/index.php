@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Url;
+use yii\helpers\Html;
+use yii\grid\GridView;
 
 $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 
@@ -22,6 +24,69 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <div class="table-responsive">
+                                <?= GridView::widget([
+                                    'dataProvider' => $dataProvider,
+                                    'columns' => [
+                                        [
+                                            'class' => 'yii\grid\SerialColumn',
+                                            'contentOptions' => ['style' => 'width: 2%;'],
+                                        ],
+                                        [
+                                            'label' => 'Package Name',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return Html::a($model->package_name, ['/package/default/view', 'slug' => $model->package_slug]);
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'No of Day',
+                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->no_of_day;
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'No of Safari',
+                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->no_of_safari;
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'Start Date',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->start_date;
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'End Date',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->end_date;
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'Price',
+                                            'format' => 'raw',
+                                            'value' => function ($model) {
+                                                return $model->cost_per_person;
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'Created At',
+                                            'contentOptions' => ['style' => 'width: 5%;'],
+                                            'format' => 'dateTime',
+                                            'value' => function ($model) {
+                                                return $model->created_at;
+                                            }
+                                        ],
+                                    ],
+                                ]); ?>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace frontend\modules\manage\controllers;
 
+use common\models\package\Package;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -18,6 +19,19 @@ class PackageController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        return $this->render('index', ['safari_operator' => $safari_operator]);
+        $query = Package::find()->where([
+            'owned_by_id' => $safari_operator->id,
+            'status' => 1
+        ]);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('index', [
+            'safari_operator' => $safari_operator,
+            'dataProvider' => $dataProvider
+        ]);
     }
 }
