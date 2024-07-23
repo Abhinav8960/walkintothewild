@@ -1,13 +1,14 @@
 <?php
 
+use yii\helpers\Url;
+use yii\helpers\Html;
+
+use yii\bootstrap5\ActiveForm;
+use common\models\GeneralModel;
+use common\models\UserWishlist;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
-
-use common\models\GeneralModel;
 use common\models\operator\SafariOperatorRating;
-use yii\bootstrap5\ActiveForm;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 
@@ -64,51 +65,125 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-lg-9 col-md-8 col-xxl-10 col-xl-9 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-md-8">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h1>Packages</h1>
+                                            <div class="row">
+                                                <?php if ($operator_packages) {
+                                                    foreach ($operator_packages as $model) { ?>
+                                                        <div class="col-md-6 mb-4 padding_righ">
+                                                            <div class="sharesafri-card tourpackage">
+                                                                <div class="flotingdate">
+                                                                    <div class="icons text-center">
+                                                                        <p class="mb-0">3N/4D</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="floating-watchlist">
+                                                                    <?php
+                                                                    if (Yii::$app->user->identity) { ?>
+                                                                        <div class="heart_bx">
+                                                                            <?php
+                                                                            $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
+                                                                            if ($wishlist) {
+                                                                            ?>
+                                                                                <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                                            <?php } else { ?>
+                                                                                <a href="/package/wishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
+                                                                            <?php }
+                                                                            ?>
+                                                                        </div>
+                                                                    <?php } ?>
+                                                                </div>
+                                                                <div class="shareimg">
+                                                                    <a href="/package/<?= $model->package_slug ?>">
+                                                                        <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt=""></a>
+                                                                </div>
+                                                                <div class="card_body">
+                                                                    <div class="titleDate">
+                                                                        <h6 class="pt-1"><a href=""><?= $model->package_name ?> </a></h6>
+                                                                        <div class="orgnizer_tour d-flex justify-content-between pt-2">
+                                                                            <div class="icons_restro">
+                                                                                <i class="fa-solid fa-car-side"></i>
+                                                                                <p class="mb-0">5 Safaris</p>
+                                                                            </div>
+                                                                            <div class="icons_restro">
+                                                                                <i class="fa-solid fa-car"></i>
+                                                                                <p class="mb-0">Pick & Drop</p>
+                                                                            </div>
+                                                                            <div class="icons_restro">
+                                                                                <i class="fa-solid fa-utensils"></i>
+                                                                                <p class="mb-0">Meals</p>
+                                                                            </div>
+                                                                            <div class="icons_restro">
+
+                                                                                <i class="fa-solid fa-building"></i>
+                                                                                <p class="mb-0">Premium</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="footer_card row pb-2 px-2 align-items-center">
+                                                                        <div class="col-7">
+                                                                            <div class="safaritourlogo">
+                                                                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-5">
+                                                                            <div class="safari text-center">
+                                                                                <div class="joinsafari package">
+                                                                                    <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>
+                                                                                    <a href="/package/<?= $model->package_slug ?>">View Details</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                <?php }
+                                                } ?>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="col-12 mb-2">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <?php if ($reviews) { ?>
-                                                    <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
-                                                    if ($avg) { ?>
-                                                        <h4>Operator Rating <?= round($avg, 1) ?></h4>
-                                                    <?php } ?>
+                                <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <?php if ($reviews) { ?>
+                                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
+                                                if ($avg) { ?>
+                                                    <h4>Operator Rating <?= round($avg, 1) ?></h4>
                                                 <?php } ?>
-                                                <div class="comments_safari operator_comment">
-                                                    <div id="review-list">
-                                                        <?php
-                                                        if ($reviews) {
-                                                            foreach ($reviews as $review) {  ?>
-                                                                <div class="commentsOther  position-relative">
-                                                                    <div class="postcomment  pt-3">
-                                                                        <div class="text_com">
-                                                                            <h6 class="nameavatr"><?= $review->park->title ?></h6>
-                                                                            <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
+                                            <?php } ?>
+                                            <div class="comments_safari operator_comment">
+                                                <div id="review-list">
+                                                    <?php
+                                                    if ($reviews) {
+                                                        foreach ($reviews as $review) {  ?>
+                                                            <div class="commentsOther  position-relative">
+                                                                <div class="postcomment  pt-3">
+                                                                    <div class="text_com">
+                                                                        <h6 class="nameavatr"><?= $review->park->title ?></h6>
+                                                                        <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
 
-                                                                                <div class="ratings">
-                                                                                    <p class="mb-0">
-                                                                                        <?php if ($rating_count = $review->rating) {
-                                                                                            for ($i = 1; $i <= $rating_count; $i++) { ?>
-                                                                                                <i class="fa-solid fa-star"></i>
-                                                                                            <?php }
+                                                                            <div class="ratings">
+                                                                                <p class="mb-0">
+                                                                                    <?php if ($rating_count = $review->rating) {
+                                                                                        for ($i = 1; $i <= $rating_count; $i++) { ?>
+                                                                                            <i class="fa-solid fa-star"></i>
+                                                                                        <?php }
 
-                                                                                            for ($i = $rating_count; $i < 5; $i++) { ?>
-                                                                                                <i class='far fa-star'></i>
-                                                                                        <?php
-                                                                                            }
-                                                                                        } ?>
-                                                                                    </p>
-                                                                                </div>
+                                                                                        for ($i = $rating_count; $i < 5; $i++) { ?>
+                                                                                            <i class='far fa-star'></i>
+                                                                                    <?php
+                                                                                        }
+                                                                                    } ?>
+                                                                                </p>
+                                                                            </div>
 
-                                                                                <div class="googlerating">
-                                                                                    <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                            <div class="googlerating">
+                                                                                <p class="mb-0"> <?= $review->user->name ?></p>
 
                                                                                 </div>
                                                                             </div>
@@ -134,15 +209,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="card">
+                                        <div class="card mb-2">
                                             <div class="card-body">
-
-                                                <div class="card-body">
+                                                <div class="row">
                                                     <h5>Organized Safari <?= count($organized_by); ?></h5>
                                                     <?php if ($organized_by) {
                                                         foreach ($organized_by as $share_safari) {
                                                     ?>
-                                                            <div class="col-6 mb-4 padding_righ">
+                                                            <div class="col-md-12 mb-4 padding_righ">
                                                                 <div class="sharesafri-card">
                                                                     <div class="flotingdate">
                                                                         <div class="icons text-center">

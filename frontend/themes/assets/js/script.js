@@ -166,18 +166,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-let flashMessageTimeout;
-window.addEventListener('scroll', function () {
-    const flashMessage = document.getElementById('flashMessage');
-    flashMessage.style.display = 'block';
+// let flashMessageTimeout;
+// window.addEventListener('scroll', function () {
+//     const flashMessage = document.getElementById('flashMessage');
+//     flashMessage.style.display = 'block';
 
-    if (flashMessageTimeout) {
-        clearTimeout(flashMessageTimeout);
-    }
-    flashMessageTimeout = setTimeout(function () {
-        flashMessage.style.display = 'none';
-    }, 2000);
-});
+//     if (flashMessageTimeout) {
+//         clearTimeout(flashMessageTimeout);
+//     }
+//     flashMessageTimeout = setTimeout(function () {
+//         flashMessage.style.display = 'none';
+//     }, 2000);
+// });
 document.addEventListener('DOMContentLoaded', function () {
     let profile = document.querySelector('.profile');
     let menu = document.querySelector('.menuprofile');

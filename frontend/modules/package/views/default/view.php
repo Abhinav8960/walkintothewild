@@ -106,7 +106,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -130,7 +130,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset($package->stay_category_id) ? GeneralModel::packageoption()[$package->stay_category_id] : '' ?></p>
