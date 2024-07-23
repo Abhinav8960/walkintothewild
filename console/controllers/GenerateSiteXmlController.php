@@ -50,8 +50,11 @@ class GenerateSiteXmlController extends Controller
      */
     public function actionIndex()
     {
-        $backend_actual_url = \Yii::$app->getBasePath(true);
-        $backend_actual_url = str_replace("console", "frontend/web", $backend_actual_url);
+        $backend_actual_url = Yii::$app->params['datapath']."sitemap";
+        if (!file_exists($backend_actual_url)) {
+            mkdir($backend_actual_url);
+            chmod($backend_actual_url, 0777);
+        }
 
         //get article site pages
         $additional_sitemap = [];
@@ -63,7 +66,7 @@ class GenerateSiteXmlController extends Controller
         $additional_sitemap[] = $this->get_article_category_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_shared_safari_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_author_site_pages($backend_actual_url);
-
+        
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
         $xml_content .= "<sitemapindex xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
@@ -93,7 +96,9 @@ class GenerateSiteXmlController extends Controller
             }
         }
         
-        $fp = fopen($backend_actual_url."/robots.txt","w");
+        $robots_actual_url = \Yii::$app->getBasePath(true);
+        $robots_actual_url = str_replace("console", "frontend/web", $robots_actual_url);
+        $fp = fopen($robots_actual_url."/robots.txt","w");
         fwrite($fp, $content);
         fclose($fp);
 
@@ -122,7 +127,8 @@ class GenerateSiteXmlController extends Controller
             $xml_content .= "</urlset>";
 
             $fileName = "walkintothewild_pages.xml";
-            $myFile = $backend_actual_url."/".$fileName;
+            echo $myFile = $backend_actual_url."/".$fileName;
+            
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
