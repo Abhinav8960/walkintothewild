@@ -39,7 +39,7 @@ class SitePagesController extends Controller
      */
     public function actionIndex()
     {
-        $content_types_data = \yii\helpers\ArrayHelper::map(SitePages::find()->orderBy('content_type', 'asc')->groupBy('content_type')->all(), 'id', 'content_type');
+        $content_types_data = \yii\helpers\ArrayHelper::map(SitePages::find()->select(['id', 'content_type'])->orderBy('content_type', 'asc')->groupBy('content_type')->all(), 'id', 'content_type');
         $content_type = [];
         if(count($content_types_data) > 0){
             $content_type["select_all"] = "Select All";
