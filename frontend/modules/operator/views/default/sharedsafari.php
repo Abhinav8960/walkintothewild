@@ -54,14 +54,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             ]) ?>
         </div>
     </div>
-    <?= $this->render('_view_navbar', ['active' => 'sharedsafari', 'operator' => $operator]) ?>
-  
+    <div class="container-fluid">
+        <?= $this->render('_view_navbar', ['active' => 'sharedsafari', 'operator' => $operator]) ?>
+    </div>
   
 </section>
 <section class="touroprator_section ">
 <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-11 col-lg-12">
+            <div class="col-xl-9 col-lg-12">
                 <div class="row pt-5 pb-4">
                     <div class="col-lg-9 col-md-9 col-xxl-10 col-xl-9">
                         <div class="row">
