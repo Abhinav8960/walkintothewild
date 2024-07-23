@@ -26,7 +26,7 @@ $this->title = 'Account Settings';
                                 <tbody>
                                     <td><?= $blocked_user->user->name ?></td>
                                     <td><?= date('Y-m-d', $blocked_user->created_at) ?></td>
-                                    <td><a class="btn_newsafari btn-sm" href="<?= Url::toRoute(['unblocked', 'id' => $blocked_user->blocked_user_id]) ?>">Unblocked</a></td>
+                                    <td><a class="btn_newsafari btn-sm" href="<?= Url::toRoute(['/profile/search/unblocked', 'id' => $blocked_user->blocked_user_id]) ?>">Unblocked</a></td>
                                 </tbody>
 
                             </table>

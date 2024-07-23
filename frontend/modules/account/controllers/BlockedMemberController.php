@@ -25,20 +25,4 @@ class BlockedMemberController extends \frontend\controllers\FrontendBaseControll
     }
 
 
-    public function actionUnblocked($id)
-    {
-        $blocked_model = BlockedModel::find()->where(['blocked_user_id' => $id])->limit(1)->one();
-        if ($blocked_model) {
-            $blocked_model->delete();
-            $follow_model = UserFollow::find()->where(['follow_user_id' => $id])->limit(1)->one();
-            if ($follow_model) {
-                $follow_model->status = 1;
-                if ($follow_model->save(false)) {
-                    Yii::$app->session->setFlash('success', "Unblocked Successfully!!");
-                    return $this->redirect(Yii::$app->request->referrer);
-                };
-            }
-        }
-        return $this->redirect(Yii::$app->request->referrer);
-    }
 }
