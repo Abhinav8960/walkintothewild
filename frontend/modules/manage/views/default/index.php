@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use common\models\GeneralModel;
 
@@ -28,8 +29,12 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 
 <div class="container mt-5 mb-5">
     <div class="row mb-5">
-        <div class="col-md-12">
+        <div class="col-md-12 d-flex justify-content-between">
             <h5><?= $this->title ?></h5>
+            <div class="d-flex justify-content-between">
+                <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $safari_operator->slug]) ?>" class="btn btn-success" target="_blank"><i class="fa fa-eye"></i> View as Member</a> &nbsp;
+                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn btn-primary"><i class="fa fa-edit"></i> Update Request</a>
+            </div>
         </div>
         <div class="col-md-3">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
@@ -38,10 +43,12 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-3">
                             <?php if ($safari_operator->imagepath) { ?>
-                                <img src="<?= $safari_operator->imagepath ?>" style="width:100%;" class="mb-2">
+                                <img src="<?= $safari_operator->imagepath ?>" style="width:auto; max-width:100%;" class="mb-2">
                             <?php } ?>
+                        </div>
+                        <div class="col-md-9">
                             <div class="text-box">
                                 <p>
                                     <span>Business Name:</span><?= $safari_operator->business_name ?>

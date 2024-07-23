@@ -31,28 +31,32 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
         </div>
 <?php }
 } ?>
-<?php if (Yii::$app->user->id) {  ?>
-    <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-    <div class="comments-persons">
-        <div class="postcomment d-flex gap-3">
-            <div class="avatar">
-                <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
-            </div>
-            <div class="text-area">
-                <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>
+<?php if (Yii::$app->user->id) {
+    if ($article->comment_allowed == 1) {  ?>
+        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+        <div class="comments-persons">
+            <div class="postcomment d-flex gap-3">
+                <div class="avatar">
+                    <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                </div>
+                <div class="text-area">
+                    <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row justify-content-end comments-persons">
-        <div class="col-12 col-sm-8 col-md-6">
-            <div class="comment_button float-end ">
-                <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
+        <div class="row justify-content-end comments-persons">
+            <div class="col-12 col-sm-8 col-md-6">
+                <div class="comment_button float-end ">
+                    <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
+                </div>
             </div>
         </div>
-    </div>
-    <?php ActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
 <?php } else {
+        echo 'Comment are not allowed!!!';
+    }
+} else {
     echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
 } ?>
 

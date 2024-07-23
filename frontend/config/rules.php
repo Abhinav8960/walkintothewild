@@ -45,14 +45,11 @@ return [
     '/sharedsafari/wishlist/<slug>' => '/sharedsafari/default/wishlist', //sharedsafari page url
     '/sharedsafari/unwishlist/<slug>' => '/sharedsafari/default/unwishlist', //sharedsafari page url
 
-    '/operator/manage/sharedsafari' => '/operator/manage/sharedsafari',
-    '/operator/manage/package' => '/operator/manage/package',
-    '/operator/manage' => '/operator/manage/index', //operator manage
-    '/operator/manage/park' => '/operator/manage/park', //operator manage
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
     '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
     '/operator/review/<id>' => '/operator/default/review', //operator view url
     '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
+    '/operator/<slug>/package' => '/operator/default/package', //operator view url
     '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
     '/operator/<slug>' => '/operator/default/view', //operator view url
 
