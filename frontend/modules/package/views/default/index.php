@@ -33,7 +33,7 @@ $this->params['title'] = $this->title;
     </div>
   </section>
 </div>
-<section class="articals_wrapper margin-setposi py-3">
+<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff;">
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-lg-8">
@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
           <?= $this->render('_select_filter', [
             'searchModel' => $searchModel,
           ]) ?>
-          <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
+          <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
               <div class="col-12  mb-xl-5 mb-3">
                 <div class="row justify-content-between">
@@ -105,7 +105,7 @@ $this->params['title'] = $this->title;
                 </div>
               </div>
             </div>
-            <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+            <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
               <?php if ($models) {
                 foreach ($models as $model) { ?>
                   <div class="col mb-4 padding_righ">
@@ -171,12 +171,12 @@ $this->params['title'] = $this->title;
                           </div>
                         </div>
                         <div class="footer_card row pb-2 px-2 align-items-center">
-                          <div class="col-6">
+                          <div class="col-7">
                             <div class="safaritourlogo">
                               <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
                             </div>
                           </div>
-                          <div class="col-6">
+                          <div class="col-5">
                             <div class="safari text-center">
                               <div class="joinsafari package">
                                 <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>

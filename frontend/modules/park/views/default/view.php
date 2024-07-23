@@ -59,7 +59,7 @@ if ($model->meta_title != '') {
             </div>
 </section>
 
-<section class="articals_wrapper py-3 ">
+<section class="articals_wrapper py-3 " style="background-color: #fff;">
     <div class="container-fluid">
         <div class="row py-3">
             <div class="col-12">

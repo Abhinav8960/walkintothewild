@@ -406,10 +406,10 @@ a {
 .sharesafri-card {
 
     position: relative;
-    /* -webkit-box-shadow: 0px 3px 6px #00000029;
-    box-shadow: 0px 3px 6px #00000029; */
+    -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029;
     border-radius: 10px;
-    border: 1px solid #7070704D;
+    /* border: 1px solid #7070704D; */
 
 }
 
@@ -423,8 +423,8 @@ a {
 
 .sharesafri-card .card_body {
 
-    /* background: #F5F5F5; */
-    background-color: #fff;
+    background: #F5F5F5;
+    /* background-color: #fff; */
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -442,6 +442,16 @@ a {
     background-color: #F5F5F5;
     border-radius: 10px;
     padding: 20px 14px 25px 14px;
+}
+.sharesafri-card.tourpackage{
+
+    border: 1px solid #7070704D;
+    box-shadow: none;
+}
+
+.sharesafri-card.tourpackage .card_body{
+
+    background-color: #fff;
 }
 
 .JoinPadding {
@@ -5064,4 +5074,54 @@ a.desc:after {
     position: absolute;
     top: 7px;
     left: 7px;
+}
+.range-label{
+
+    padding-top: 8px;
+}
+
+.parkrevieBtn{
+
+    padding: 6px 20px;
+    font-weight: 600;
+    color: #152F1B;
+    font-size: var(--fs-16);
+    border: 1px solid #7070704D;
+    border-radius: 20px;
+    background-color: #F5F5F5;
+}
+.googlerating.names h6{
+
+    color: #000000;
+}
+
+.ratings.colors p i{
+
+    color: #F7BF39;
+}
+.colors_p .suggest{
+
+    color: #000000;
+    padding-top: 4px;
+}
+.viewAllreview a{
+
+    padding: 6px 20px;
+    font-weight: 600;
+    color: #152F1B;
+    font-size: var(--fs-16);
+    border: 1px solid #7070704D;
+    border-radius: 20px;
+    background-color: #F5F5F5; 
+}
+.itenary_text.boldsText h6{
+
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.itenary_text.boldsText p{
+
+    font-size: 14px;
 }
