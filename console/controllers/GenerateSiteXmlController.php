@@ -50,7 +50,7 @@ class GenerateSiteXmlController extends Controller
      */
     public function actionIndex()
     {
-        $backend_actual_url = Yii::$app->params['datapath']."sitemap";
+        $backend_actual_url = Yii::$app->params['datapath']."/sitemap";
         if (!file_exists($backend_actual_url)) {
             mkdir($backend_actual_url);
             chmod($backend_actual_url, 0777);
