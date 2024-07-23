@@ -12,8 +12,8 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
     <div class="row mb-5">
         <div class="col-md-12 d-flex justify-content-between">
             <h5><?= $this->title ?></h5>
-            <div class="right_button float-md-end">
-                <a href="#<?= Url::toRoute(['/manage/package/create']) ?>" class="btn_newsafari packageBtn"><i class="fa fa-plus"></i> Create New Package</a>
+            <div class="right_button float-md-end mb-2">
+                <button class="btn_newsafari packageBtn" value="<?= Url::toRoute(['/manage/package/create']) ?>"><i class="fa fa-plus"></i> Create New Package</button>
             </div>
         </div>
         <div class="col-md-3">
@@ -94,3 +94,31 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
         </div>
     </div>
 </div>
+<div class="modal fade _standard-text" id="package-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Package</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+function organizefunction() {
+	$('.packageBtn').on('click', function () {
+        $('#package-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+             
+JS;
+$this->registerJs($script);
+?>

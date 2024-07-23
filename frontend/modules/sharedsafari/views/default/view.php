@@ -264,14 +264,11 @@ $this->params['title'] = $this->title;
                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                             Safari</button>
-                    <?php } else if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
+                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                             Fixed Departure</button>
-                    <?php } elseif (Yii::$app->user->identity) { ?>
-                        <button class="btn_newsafari organizeBtn w-100" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
-                            Safari</button>
-                    <?php } else {  ?>
-                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
+                    <?php } else if (!Yii::$app->user->identity) {  ?>
+                        <a class="btn_newsafari organizeBtn w-100" href="/site/auth?authclient=google">+ Organize a New
                             Safari</a>
                     <?php } ?>
 

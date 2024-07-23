@@ -50,16 +50,19 @@ class GenerateSiteXmlController extends Controller
      */
     public function actionIndex()
     {
+        $backend_actual_url = \Yii::$app->getBasePath(true);
+        $backend_actual_url = str_replace("console", "frontend/web", $backend_actual_url);
+
         //get article site pages
         $additional_sitemap = [];
-        $additional_sitemap[] = $this->static_pages();
-        $additional_sitemap[] = $this->get_safari_operator_pages();
-        $additional_sitemap[] = $this->get_park_site_pages();
-        //$additional_sitemap[] = $this->get_article_tags_site_pages();
-        $additional_sitemap[] = $this->get_article_site_pages();
-        $additional_sitemap[] = $this->get_article_category_site_pages();
-        $additional_sitemap[] = $this->get_shared_safari_site_pages();
-        $additional_sitemap[] = $this->get_author_site_pages();
+        $additional_sitemap[] = $this->static_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_safari_operator_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_park_site_pages($backend_actual_url);
+        //$additional_sitemap[] = $this->get_article_tags_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_article_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_article_category_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_shared_safari_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_author_site_pages($backend_actual_url);
 
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
@@ -74,13 +77,14 @@ class GenerateSiteXmlController extends Controller
         }
         $xml_content .= "</sitemapindex>";
 
-        $myFile = Yii::$app->params['siteMapDirectory']."/sitemap_index.xml";
+        $myFile = $backend_actual_url."/sitemap_index.xml";
         $fh = fopen($myFile, 'w') or die("can't open file"); 
         fwrite($fh, $xml_content);
         fclose($fh);
+        //chmod($fh, 0777);
 
         //create robots.txt to make entry of sitemap_index.xml
-        $content = "Sitemap: ".Yii::$app->params['FrontendWebUrl']."sitemap_index.xml";
+        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap_index.xml";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
         if(count($all_url) > 0){
             $content .= "\nUser-agent: *";
@@ -89,15 +93,15 @@ class GenerateSiteXmlController extends Controller
             }
         }
         
-        $fp = fopen(Yii::$app->params['siteMapDirectory']."/robots.txt","wb");
+        $fp = fopen($backend_actual_url."/robots.txt","w");
         fwrite($fp, $content);
         fclose($fp);
 
         echo "complete sitemap createion";
     }
 
-    protected function static_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function static_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
         
         $manual_pages = SitePages::find()->select(['id', 'url', 'created_at'])->where(['status' => true])->andWhere(['content_type' => 'manual_url'])->asArray()->all();
 
@@ -118,7 +122,7 @@ class GenerateSiteXmlController extends Controller
             $xml_content .= "</urlset>";
 
             $fileName = "walkintothewild_pages.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -129,8 +133,8 @@ class GenerateSiteXmlController extends Controller
         return '';
     }
 
-    protected function get_safari_operator_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function get_safari_operator_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
         
         $safari_operators = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
@@ -163,7 +167,7 @@ class GenerateSiteXmlController extends Controller
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_safari_operator_site_pages)->execute();
 
             $fileName = "safari_operator.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -174,8 +178,8 @@ class GenerateSiteXmlController extends Controller
         return '';
     }
 
-    protected function get_park_site_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function get_park_site_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
 
         $parks = Park::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
@@ -209,7 +213,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "park.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -218,8 +222,8 @@ class GenerateSiteXmlController extends Controller
         return '';
     }
 
-    protected function get_article_tags_site_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function get_article_tags_site_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
         
         //fetch article xml pages from article category
         $article_tags = MasterArticleTag::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
@@ -254,7 +258,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article_tag.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -264,8 +268,8 @@ class GenerateSiteXmlController extends Controller
         return '';
     }
 
-    protected function get_article_site_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function get_article_site_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
 
         $articles = Article::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
@@ -298,7 +302,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -308,8 +312,8 @@ class GenerateSiteXmlController extends Controller
         return '';
     }
 
-    protected function get_article_category_site_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function get_article_category_site_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
         
         $articles_category = MasterArticleTopic::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
@@ -343,7 +347,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article_category.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -353,8 +357,8 @@ class GenerateSiteXmlController extends Controller
         return '';       
     }
 
-    protected function get_shared_safari_site_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function get_shared_safari_site_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
 
         $shared_safari = ShareSafari::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
@@ -387,7 +391,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "shared_safari.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -397,8 +401,8 @@ class GenerateSiteXmlController extends Controller
         return '';
     }
 
-    protected function get_author_site_pages(){
-        $base_url = Yii::$app->params['FrontendWebUrl'];
+    protected function get_author_site_pages($backend_actual_url){
+        $base_url = Yii::$app->params['frontend_url'];
 
         $authors = ArticleAuthor::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
@@ -432,7 +436,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "authors.xml";
-            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $myFile = $backend_actual_url."/".$fileName;
             $fh = fopen($myFile, 'w') or die("can't open file"); 
             fwrite($fh, $xml_content);
             fclose($fh);

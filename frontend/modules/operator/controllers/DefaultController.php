@@ -193,7 +193,7 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
+        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->id, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE])->all();
 
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();

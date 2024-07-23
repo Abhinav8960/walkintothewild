@@ -114,7 +114,7 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Any / All' ?>
+                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <?php foreach ($parkoption as $value => $label) : ?>
