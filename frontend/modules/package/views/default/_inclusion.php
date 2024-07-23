@@ -22,7 +22,7 @@
                 foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
                     <div class="row mb-3">
                         <div class="col-sm-3">
-                            <label class="control-label"><?= $optionLabel ?></label>
+                            <label class="control-label font_sizes"><?= $optionLabel ?></label>
                         </div>
                         <div class="col-sm-9">
                             <div class="form-check form-check-inline">
