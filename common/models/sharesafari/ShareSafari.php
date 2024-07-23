@@ -2,6 +2,7 @@
 
 namespace common\models\sharesafari;
 
+use common\models\operator\SafariOperator;
 use Yii;
 use common\models\User;
 use common\models\park\SafariPark;
@@ -105,10 +106,20 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 
+    public function getParklist()
+    {
+        return $this->hasMany(ShareSafariParklist::className(), ['id' => 'share_safari_id']);
+    }
+
 
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'host_user_id']);
+    }
+
+    public function getSafarioperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'host_user_id']);
     }
 
 

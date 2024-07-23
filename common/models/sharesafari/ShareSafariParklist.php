@@ -2,6 +2,7 @@
 
 namespace common\models\sharesafari;
 
+use common\models\park\SafariPark;
 use common\models\User;
 use Yii;
 
@@ -70,5 +71,10 @@ class ShareSafariParklist extends \yii\db\ActiveRecord
     public function getSharesafari()
     {
         return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 }

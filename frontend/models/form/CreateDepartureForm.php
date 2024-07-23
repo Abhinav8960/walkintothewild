@@ -122,7 +122,7 @@ class CreateDepartureForm extends \yii\base\Model
         }
 
         if ($this->shared_safari_departure_model->slug == '') {
-            $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_departure_model->user->name));
+            $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_departure_model->safarioperator->business_name));
             $string = preg_replace('/[^A-Za-z0-9\-]/', '', $without_space_string);
             $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_departure_model->host_user_id . time() . '-shared-safari';
             $this->shared_safari_departure_model->slug = $slug;
