@@ -25,10 +25,10 @@ $estimatedpriceoption = GeneralModel::estimatedpriceoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->park_id]) ? $parkoption[$model->park_id] : 'All Park' ?>
+                        <?= isset($parkoption[$model->park_id]) ? $parkoption[$model->park_id] : 'Select Park' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">All Park</div>
+                        <!-- <div class="dropdown-item" data-value="">Select Park</div> -->
                         <?php foreach ($parkoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
