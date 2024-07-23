@@ -15,23 +15,25 @@ $this->title = 'Account Settings';
             <div class="card">
                 <div class="card-body">
                     <h6>Blocked User</h6>
-                    <?php if ($model) {
-                        foreach ($model as $blocked_user) { ?>
-                            <table class="table">
-                                <thead>
-                                    <th>Name</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
-                                </thead>
+                    <table class="table">
+                        <thead>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </thead>
+                        <?php if ($model) {
+                            foreach ($model as $blocked_user) { ?>
+
                                 <tbody>
                                     <td><?= $blocked_user->user->name ?></td>
                                     <td><?= date('Y-m-d', $blocked_user->created_at) ?></td>
                                     <td><a class="btn_newsafari btn-sm" href="<?= Url::toRoute(['/profile/search/unblocked', 'id' => $blocked_user->blocked_user_id]) ?>">Unblocked</a></td>
                                 </tbody>
 
-                            </table>
-                    <?php }
-                    } ?>
+
+                        <?php }
+                        } ?>
+                    </table>
                 </div>
             </div>
 
