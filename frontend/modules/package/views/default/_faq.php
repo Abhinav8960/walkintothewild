@@ -4,7 +4,7 @@
     }
 </style>
 
-<div class="accordion" id="faqAccordion">
+<div class="accordion inner_accordion" id="faqAccordion">
     <?php if ($faqs) : ?>
         <?php $i = 0; ?>
         <?php foreach ($faqs as $faq) : ?>

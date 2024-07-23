@@ -105,14 +105,31 @@
     }
   
 }
-/* @media(max-width:1500px){
+@media(max-width:1500px){
 
-    .sharesafribg {
+    p{
 
-        height: 430px !important;
-
+        font-size: 12px;
     }
-} */
+
+    .googlerating.names h6,.title_filter h6{
+
+        font-size: 14px !important;
+    }
+    .colors_p .suggest{
+
+        font-size: 12px;
+    }
+    .title_top h4{
+
+        font-size: 14px;
+    }
+    .parkrevieBtn,.viewAllreview a,.itenary_text.boldsText p,.input_check label{
+
+
+        font-size: 12px !important;
+    }
+}
 @media(min-width:1500px){
    
     .container-fluid {
@@ -181,6 +198,7 @@ line-height: 19px;
     .single-image img{
 
         height: 89% !important;
+        min-height:298px;
         object-fit: cover;
     }
     .slider_safariimg{
@@ -284,6 +302,50 @@ line-height: 19px;
 
 
 @media only screen and (max-width: 1500px) and (min-width: 991px) {
+    .banner_section-inner .headingBnner_inner h1{
+
+        font-size: 30px;
+    }
+    .topSlider_tour .items_slider img{
+
+        height: 350px;
+    }
+    .logo{
+
+        width: 180px;
+    }
+    .menu-navbar-nav .nav-item .nav-link,.input_check .form-select{
+
+        font-size: 12px;
+    }
+    .initial_headers i{
+
+        font-size: 20px;
+    }
+    .titlePrice,.titleDate h6 a,.footer_listing li a{
+
+        font-size: 14px;
+    }
+    .joinsafari.package a,.icons_restro p,.icons p:last-child{
+
+        font-size: 12px;
+    }
+    .header_wrapper{
+
+        line-height: 22px;
+    }
+    .range-label span{
+
+        font-size: 12px;
+    }
+    .heading-footer h6{
+
+        font-size: 19px;
+    }
+    .sharesafri-card.tourpackage .orgnizer_tour .icons_restro i{
+
+        font-size: 16px;
+    }
     .artical_cards .lower-content {
 
         padding: 31px 15px 25px 15px;
@@ -295,7 +357,7 @@ line-height: 19px;
     }
     .parks_text p{
 
-        font-size: 13px;
+        font-size: 12px;
     }
     .logo_provide2{
 
@@ -388,11 +450,11 @@ line-height: 19px;
 
     .seelctes_text p {
 
-        font-size: 13px;
+        font-size: 12px;
     }
     .pname{
 
-        font-size: 15px;
+        font-size: 14px;
     }
     .googlerating p {
         font-size: 11px;

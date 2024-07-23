@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 <div class="col-lg-12">
-    <div class="getquote_box">
+    <div class="getquote_box bg-white border_setgetting">
         <?php
         $form = ActiveForm::begin([
             'id' => 'quoteform',
@@ -21,31 +21,26 @@ use yii\widgets\ActiveForm;
         <div class="row ">
             <div class="col-lg-12">
                 <div class="form-wrapper d-flex gap-3">
-                    <div class="input-group2">
+                    <div class="input-group2 ">
                         <label for="travelers">Travelers</label>
                         <div class="number-input position-relative">
                             <?= $form->field($packagemodel, 'travelers')->textInput(['class' => 'form-control', 'id' => "travelers", 'value' => 0])->label(false) ?>
-                            <div class="bton_updown">
+                            <!-- <div class="bton_updown">
                                 <button onclick="increment('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
                                 <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="col-lg-12">
-                <div class="form-wrapper">
+                    <div class="form-wrapper">
                     <label for="start-date">Start Date</label>
                     <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control'])->label(false) ?>
                 </div>
+                </div>
             </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-lg-12">
-                <?= Html::submitButton('Send Request', ['class' => 'sent_btn']) ?>
+            <div class="col-lg-12 mt-3">
+                <?= Html::submitButton('Get a free quote', ['class' => 'sent_btn rounded-2']) ?>
             </div>
-            <div class="col-12">
+            <div class="col-12 pt-2">
                 <div class="text_get">
                     <p><span>*</span>Your request will be sent directly to the operator, but you can also contact them directly if you prefer.</p>
                 </div>

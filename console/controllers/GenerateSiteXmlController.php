@@ -17,6 +17,7 @@ use common\models\operator\SafariOperator;
 use common\models\trierror\SitePages;
 use common\models\cms\article\ArticleAuthor;
 use common\models\sharesafari\ShareSafari;
+use common\models\trierror\SiteRobots;
 use yii\helpers\Url;
 
 /**
@@ -80,6 +81,14 @@ class GenerateSiteXmlController extends Controller
 
         //create robots.txt to make entry of sitemap_index.xml
         $content = "Sitemap: ".Yii::$app->params['FrontendWebUrl']."sitemap_index.xml";
+        $all_url = SiteRobots::find()->where(['status' => true])->all();
+        if(count($all_url) > 0){
+            $content .= "\nUser-agent: *";
+            foreach($all_url as $row){
+                $content .= "\n"."Disallow: : ".$row->url;
+            }
+        }
+        
         $fp = fopen(Yii::$app->params['siteMapDirectory']."/robots.txt","wb");
         fwrite($fp, $content);
         fclose($fp);
@@ -89,32 +98,35 @@ class GenerateSiteXmlController extends Controller
 
     protected function static_pages(){
         $base_url = Yii::$app->params['FrontendWebUrl'];
-        $url_array = [
-            $base_url,
-            $base_url.'parklist',
-            $base_url.'article',
-            $base_url.'package',
-            $base_url.'birdingtour-registration',
-            $base_url.'contact',
-        ];
+        
+        $manual_pages = SitePages::find()->select(['id', 'url', 'created_at'])->where(['status' => true])->andWhere(['content_type' => 'manual_url'])->asArray()->all();
 
-        $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
-        $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
-        foreach($url_array as $page){
-            $xml_content .= "<url>";
-            $xml_content .= "<loc>".$page."</loc>";
-            //$xml_content .= "<lastmod>".date('Y-m-d', $operator['updated_at'])."</lastmod>";
-            $xml_content .= "<priority>0.9</priority>";
-            $xml_content .= "</url>";
+        if(count($manual_pages) > 0){
+            $insert_safari_operator_site_pages = [];
+
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+            foreach($manual_pages as $manual){
+                $url = $manual['url'];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$manual['url']."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', strtotime($manual['created_at']))."</lastmod>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
+            }
+            $xml_content .= "</urlset>";
+
+            $fileName = "walkintothewild_pages.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url.$fileName;
         }
-        $xml_content .= "</urlset>";
-        $fileName = "walktintothewild.xml";
-        $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
-        $fh = fopen($myFile, 'w') or die("can't open file"); 
-        fwrite($fh, $xml_content);
-        fclose($fh);
 
-        return $base_url.$fileName;
+        return '';
     }
 
     protected function get_safari_operator_pages(){

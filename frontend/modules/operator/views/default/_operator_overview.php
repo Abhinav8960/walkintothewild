@@ -6,12 +6,12 @@ use common\models\operator\SafariOperatorFollow;
 
 ?>
 
-<div class="row justify-content-center">
-    <div class="col-xl-11 col-lg-12">
-        <div class="top_opratorsBox">
+<div class="row justify-content-center pt-4">
+    <div class="col-xl-9 col-lg-12">
+        <div class="top_opratorsBox logedin">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="tourLogoes pe-xl-5">
+                    <div class="tourLogoes ">
                         <div class="images_tour">
                             <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="">
                             <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
@@ -21,10 +21,10 @@ use common\models\operator\SafariOperatorFollow;
                                 <p><?= count($operator->park) ?></p>
                                 <p>Parks</p>
                             </div>
-                            <!-- <div class="parks_text text-center">
-                                        <p>0</p>
-                                        <p>Resorts</p>
-                                    </div> -->
+                            <div class="parks_text text-center">
+                                <p>0</p>
+                                <p>Packages</p>
+                            </div>
                             <div class="parks_text text-center">
                                 <p>0</p>
                                 <p>Shared Safari</p>
@@ -32,30 +32,34 @@ use common\models\operator\SafariOperatorFollow;
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6  border-right  border_bottom_mobile pt-lg-0 pt-3">
+                <div class="col-lg-9 border_bottom_mobile pt-lg-0 pt-3">
                     <div class="provider_details">
-                        <div class="title_tours d-flex flex-wrap align-items-center gap-md-2 gap-xxl-3">
+                        <div class="title_tours d-flex justify-content-between align-items-center gap-md-2 gap-xxl-3">
                             <h3><?= $operator->business_name ?></h3>
                             <!-- <span class="d-sm-block d-none">|</span> -->
-                            <div class="follow mb-lg-2 mb-xxl-0 mb-2">
-
-                                <?php if (Yii::$app->user->identity) {
-                                    $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id, 'status' => 1])->limit(1)->one();
-                                    if ($operator_follow) { ?>
-                                        <a class="follow_btn" href="/operator/default/unfollow?id=<?= $operator->id ?>"><i class="fa fa-heart me-1"></i> UNFOLLOW</a>
-                                    <?php } else { ?>
-                                        <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"><i class="fa-regular fa-heart me-1"></i> FOLLOW</a>
-                                    <?php  }
-                                } else { ?>
-                                    <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"><i class="fa-regular fa-heart me-1"></i> FOLLOW</a>
-                                <?php } ?>
+                            <div class="follow_massage d-flex gap-3">
+                                <div class="follow mb-lg-2 mb-xxl-0 mb-2">
+                                    <?php if (Yii::$app->user->identity) {
+                                        $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id, 'status' => 1])->limit(1)->one();
+                                        if ($operator_follow) { ?>
+                                            <a class="follow_btn" href="/operator/default/unfollow?id=<?= $operator->id ?>"></i> UNFOLLOW</a>
+                                        <?php } else { ?>
+                                            <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"> FOLLOW</a>
+                                        <?php  }
+                                    } else { ?>
+                                        <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"> FOLLOW</a>
+                                    <?php } ?>
+                                </div>
+                                <div class="message">
+                                    <a href="" class="follow_massge">Message</a>
+                                </div>
                             </div>
+
                         </div>
                         <div class="title_tours">
-                            <p class="pb-sm-0 "> Safari Tour Operator</p>
+                            <p class="pb-sm-0 pt-2"> Safari Tour Operator</p>
                         </div>
-
-                        <div class="providerNamerating d-flex flex-wrap gap-4 align-items-center pb-3 pt-2">
+                        <div class="providerNamerating tours d-flex flex-wrap gap-4 align-items-center pb-3 pt-1">
                             <div class="ratings">
                                 <p class="mb-0"><?= round($operator->google_rating, 1) ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
                             </div>
@@ -69,7 +73,7 @@ use common\models\operator\SafariOperatorFollow;
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 px-lg-4 px-xl-3 px-xxl-5 px-2  pt-lg-0 pt-3 flex-set ">
+                <!-- <div class="col-lg-3 px-lg-4 px-xl-3 px-xxl-5 px-2  pt-lg-0 pt-3 flex-set ">
                     <div class="contact_p">
                         <p>Contact</p>
                     </div>
@@ -110,7 +114,7 @@ use common\models\operator\SafariOperatorFollow;
                     <div class="websitebtn pt-lg-3 <?= $operator->website ? '' : 'no-link-found' ?>">
                         <a href="<?= $operator->website ? $operator->website : '#' ?>">OFFICIAL WEBSITE</a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

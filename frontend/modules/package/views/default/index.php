@@ -33,7 +33,7 @@ $this->params['title'] = $this->title;
     </div>
   </section>
 </div>
-<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff;">
+<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 270px !important; padding-top:30px;">
   <div class="container-fluid">
     <div class="row justify-content-center">
       <div class="col-lg-8">
@@ -133,7 +133,7 @@ $this->params['title'] = $this->title;
                       </div>
                       <div class="shareimg">
                         <a href="/package/<?= $model->package_slug ?>">
-                          <img src="http://app.walkintothewild.io/assets/5a869828/img/blog_details01.jpg" alt=""></a>
+                          <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt=""></a>
                       </div>
                       <div class="card_body">
                         <!-- <div class="top_seats">

@@ -166,18 +166,18 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-let flashMessageTimeout;
-window.addEventListener('scroll', function () {
-    const flashMessage = document.getElementById('flashMessage');
-    flashMessage.style.display = 'block';
+// let flashMessageTimeout;
+// window.addEventListener('scroll', function () {
+//     const flashMessage = document.getElementById('flashMessage');
+//     flashMessage.style.display = 'block';
 
-    if (flashMessageTimeout) {
-        clearTimeout(flashMessageTimeout);
-    }
-    flashMessageTimeout = setTimeout(function () {
-        flashMessage.style.display = 'none';
-    }, 2000);
-});
+//     if (flashMessageTimeout) {
+//         clearTimeout(flashMessageTimeout);
+//     }
+//     flashMessageTimeout = setTimeout(function () {
+//         flashMessage.style.display = 'none';
+//     }, 2000);
+// });
 document.addEventListener('DOMContentLoaded', function () {
     let profile = document.querySelector('.profile');
     let menu = document.querySelector('.menuprofile');
@@ -373,35 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-const fileUpload = document.getElementById('fileupload');
-const uploadText = document.getElementById('uploadText');
-const browslogow3 = document.getElementById('browslogow3');
 
-fileUpload.addEventListener('change', function () {
-    if (fileUpload.files.length > 0) {
-        const file = fileUpload.files[0];
-
-        const img = document.createElement('img');
-        img.style.maxWidth = '100%';
-        img.style.maxHeight = '100%';
-
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-
-        // Clear any existing images before appending the new one
-        const existingImg = browslogow3.querySelector('img');
-        if (existingImg) {
-            browslogow3.removeChild(existingImg);
-        }
-
-        browslogow3.appendChild(img);
-        // Hide the uploadText when an image is uploaded
-        uploadText.style.display = 'none';
-    }
-});
 
 
 document.addEventListener("DOMContentLoaded", function () {
