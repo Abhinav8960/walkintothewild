@@ -89,7 +89,7 @@ class FrontendBaseController extends Controller
             $model->browser_version = $agent->version($agent->browser());
             $model->save(false);
         }
-        //start code to each request trace by sonu shokeen
+        //end code to each request trace by sonu shokeen
 
         if (in_array($action->id, $this->action_ids)) {
             $this->savePageViews();

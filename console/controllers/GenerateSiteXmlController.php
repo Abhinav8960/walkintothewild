@@ -50,173 +50,383 @@ class GenerateSiteXmlController extends Controller
     public function actionIndex()
     {
         //get article site pages
-        $this->get_article_site_pages();
-        $this->get_article_category_site_pages();
-        $this->get_article_tags_site_pages();
-        $this->get_park_site_pages();
-        $this->get_safari_operator_pages();
-        $this->get_shared_safari_site_pages();
+        $additional_sitemap = [];
+        $additional_sitemap[] = $this->static_pages();
+        $additional_sitemap[] = $this->get_safari_operator_pages();
+        $additional_sitemap[] = $this->get_park_site_pages();
+        //$additional_sitemap[] = $this->get_article_tags_site_pages();
+        $additional_sitemap[] = $this->get_article_site_pages();
+        $additional_sitemap[] = $this->get_article_category_site_pages();
+        $additional_sitemap[] = $this->get_shared_safari_site_pages();
+        $additional_sitemap[] = $this->get_author_site_pages();
+
+        //create site_index file
+        $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+        $xml_content .= "<sitemapindex xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+        foreach($additional_sitemap as $sitemap){
+            if(!empty($sitemap)){
+                $xml_content .= "<sitemap>";
+                $xml_content .= "<loc>".$sitemap."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d')."</lastmod>";
+                $xml_content .= "</sitemap>";
+            }
+        }
+        $xml_content .= "</sitemapindex>";
+
+        $myFile = Yii::$app->params['siteMapDirectory']."/sitemap_index.xml";
+        $fh = fopen($myFile, 'w') or die("can't open file"); 
+        fwrite($fh, $xml_content);
+        fclose($fh);
+
+        //create robots.txt to make entry of sitemap_index.xml
+        $content = "Sitemap: ".Yii::$app->params['FrontendWebUrl']."sitemap_index.xml";
+        $fp = fopen(Yii::$app->params['siteMapDirectory']."/robots.txt","wb");
+        fwrite($fp, $content);
+        fclose($fp);
+
+        echo "complete sitemap createion";
+    }
+
+    protected function static_pages(){
+        $base_url = Yii::$app->params['FrontendWebUrl'];
+        $url_array = [
+            $base_url,
+            $base_url.'parklist',
+            $base_url.'article',
+            $base_url.'package',
+            $base_url.'birdingtour-registration',
+            $base_url.'contact',
+        ];
+
+        $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+        $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+        foreach($url_array as $page){
+            $xml_content .= "<url>";
+            $xml_content .= "<loc>".$page."</loc>";
+            //$xml_content .= "<lastmod>".date('Y-m-d', $operator['updated_at'])."</lastmod>";
+            $xml_content .= "<priority>0.9</priority>";
+            $xml_content .= "</url>";
+        }
+        $xml_content .= "</urlset>";
+        $fileName = "walktintothewild.xml";
+        $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+        $fh = fopen($myFile, 'w') or die("can't open file"); 
+        fwrite($fh, $xml_content);
+        fclose($fh);
+
+        return $base_url.$fileName;
     }
 
     protected function get_safari_operator_pages(){
-        $base_url = 'http://walkintothewild_frontend/';
+        $base_url = Yii::$app->params['FrontendWebUrl'];
         
         $safari_operators = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'safari_operator', 'status' => true]);
         if(count($safari_operators) > 0){
             $insert_safari_operator_site_pages = [];
+
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
             foreach($safari_operators as $operator){
+                $url = $base_url.'operator/'.$operator['slug'];
                 $insert_safari_operator_site_pages[] = [
                     'content_id' => $operator['id'],
                     'content_type' => 'safari_operator',
                     'slug' => $operator['slug'],
-                    'url' => $base_url.'operator/'.$operator['slug'],
+                    'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s', $operator['updated_at']),
                     'counter' => $operator['total_view'],
                 ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$url."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', $operator['updated_at'])."</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
             }
+            $xml_content .= "</urlset>";
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_safari_operator_site_pages)->execute();
+
+            $fileName = "safari_operator.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url.$fileName;
         }
+
+        return '';
     }
 
     protected function get_park_site_pages(){
-        $base_url = 'http://walkintothewild_frontend/';
+        $base_url = Yii::$app->params['FrontendWebUrl'];
 
         $parks = Park::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'parks', 'status' => true]);
         if(count($parks) > 0){
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
             $insert_parks_site_pages = [];
             foreach($parks as $park){
+                $url = $base_url.'park/'.$park['slug'];
+                    
                 $insert_parks_site_pages[] = [
                     'content_id' => $park['id'],
                     'content_type' => 'parks',
                     'slug' => $park['slug'],
-                    'url' => $base_url.'park/'.$park['slug'],
+                    'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s', $park['updated_at']),
                     'counter' => $park['total_view'],
                 ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$url."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', $park['updated_at'])."</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
             }
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_parks_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "park.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+            return $base_url.$fileName;
         }
+        return '';
     }
 
     protected function get_article_tags_site_pages(){
-        $base_url = 'http://walkintothewild_frontend/';
+        $base_url = Yii::$app->params['FrontendWebUrl'];
         
         //fetch article xml pages from article category
         $article_tags = MasterArticleTag::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'article_tag', 'status' => true]);
         if(count($article_tags) > 0){
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
             $insert_article_tag_site_pages = [];
             foreach($article_tags as $tag){
+                $url = $base_url.'article/tag/'.$tag['slug'];
+
                 $insert_article_tag_site_pages[] = [
                     'content_id' => $tag['id'],
                     'content_type' => 'article_tag',
                     'slug' => $tag['slug'],
-                    'url' => $base_url.'article/tag/'.$tag['slug'],
+                    'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s', $tag['updated_at']),
                     'counter' => $tag['total_view'],
                 ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$url."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', $tag['updated_at'])."</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
             }
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_article_tag_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "article_tag.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url.$fileName;
         }
+        return '';
     }
 
     protected function get_article_site_pages(){
-        $base_url = 'http://walkintothewild_frontend/';
+        $base_url = Yii::$app->params['FrontendWebUrl'];
 
         $articles = Article::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'article', 'status' => true]);
         if(count($articles) > 0){
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
             $insert_article_site_pages = [];
             foreach($articles as $article){
+                $url = $base_url.'article/'.$article['slug'];
+
                 $insert_article_site_pages[] = [
                     'content_id' => $article['id'],
                     'content_type' => 'article',
                     'slug' => $article['slug'],
-                    'url' => $base_url.'article/'.$article['slug'],
+                    'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s', $article['updated_at']),
                     'counter' => $article['total_view'],
                 ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$url."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', $article['updated_at'])."</lastmod>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
             }
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_article_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "article.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url.$fileName;
         }
+        return '';
     }
 
     protected function get_article_category_site_pages(){
-        $base_url = 'http://walkintothewild_frontend/';
+        $base_url = Yii::$app->params['FrontendWebUrl'];
         
         $articles_category = MasterArticleTopic::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'article_category', 'status' => true]);
         if(count($articles_category) > 0){
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
             $insert_article_category_site_pages = [];
             foreach($articles_category as $category){
+                $url = $base_url.'article/topic/'.$category['slug'];
+
                 $insert_article_category_site_pages[] = [
                     'content_id' => $category['id'],
                     'content_type' => 'article_category',
                     'slug' => $category['slug'],
-                    'url' => $base_url.'article/topic/'.$category['slug'],
+                    'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s', $category['updated_at']),
                     'counter' => $category['total_view'],
                 ];
-            }   
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$url."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', $category['updated_at'])."</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
+            }
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_article_category_site_pages)->execute();
-        }        
+
+            $xml_content .= "</urlset>";
+            $fileName = "article_category.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url.$fileName;
+        } 
+        return '';       
     }
 
     protected function get_shared_safari_site_pages(){
-        $base_url = 'http://walkintothewild_frontend/';
+        $base_url = Yii::$app->params['FrontendWebUrl'];
 
         $shared_safari = ShareSafari::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'shared_safari', 'status' => true]);
         if(count($shared_safari) > 0){
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
             $insert_article_site_pages = [];
             foreach($shared_safari as $safari){
+                $url = $base_url.'sharedsafari/'.$safari['slug'];
                 $insert_article_site_pages[] = [
                     'content_id' => $safari['id'],
                     'content_type' => 'shared_safari',
                     'slug' => $safari['slug'],
-                    'url' => $base_url.'sharedsafari/'.$safari['slug'],
+                    'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s', $safari['updated_at']),
                     'counter' => $safari['total_view'],
                 ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$url."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', $safari['updated_at'])."</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
             }
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_article_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "shared_safari.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url.$fileName;
         }
+        return '';
     }
 
     protected function get_author_site_pages(){
-        $base_url = 'http://walkintothewild_frontend/';
+        $base_url = Yii::$app->params['FrontendWebUrl'];
 
         $authors = ArticleAuthor::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'authors', 'status' => true]);
         if(count($authors) > 0){
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
             $insert_article_site_pages = [];
             foreach($authors as $author){
+                $url = $base_url.'article/author/'.$author['slug'];
+
                 $insert_article_site_pages[] = [
                     'content_id' => $author['id'],
                     'content_type' => 'authors',
                     'slug' => $author['slug'],
-                    'url' => $base_url.'article/author/'.$author['slug'],
+                    'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s', $author['updated_at']),
                     'counter' => $author['total_view'],
                 ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>".$url."</loc>";
+                $xml_content .= "<lastmod>".date('Y-m-d', $author['updated_at'])."</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
             }
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_article_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "authors.xml";
+            $myFile = Yii::$app->params['siteMapDirectory']."/".$fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url.$fileName;
         }
+        return '';
     }
 }
