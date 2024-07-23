@@ -76,12 +76,20 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <h6>Website : <?= $operator->website ?>
                                             </h6>
                                             <br>
-                                            <h6>Social Media</h6>
-                                            <p>Instagram : <?= $operator->instagram_url ?></p>
-                                            <p>Facebook : <?= $operator->facebook_url ?></p>
-                                            <p>Youtube : <?= $operator->youtube_link ?></p>
+                                            <?php if ($operator->instagram_url <> '' || $operator->facebook_url <> '' || $operator->youtube_link <> '') { ?>
+                                                <h6>Social Media</h6>
+                                                <?php if ($operator->instagram_url <> '') { ?>
+                                                    <p>Instagram : <?= $operator->instagram_url ?></p>
+                                                <?php } ?>
+                                                <?php if ($operator->facebook_url <> '') {  ?>
+                                                    <p>Facebook : <?= $operator->facebook_url ?></p>
+                                                <?php } ?>
+                                                <?php if ($operator->youtube_link <> '') { ?>
+                                                    <p>Youtube : <?= $operator->youtube_link ?></p>
+                                                <?php } ?>
+                                            <?php } ?>
                                             <hr>
-                                            <button class="rounded-pill">Report Profile</button>
+                                            <button class="rounded-pill btn btn-dark">Report Profile</button>
                                         </div>
                                     </div>
                                 </div>
@@ -127,7 +135,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                                 </div>
                                                                             </div>
                                                                             <p><?= $review->review ?> &nbsp;
-                                                                                
+
                                                                             </p>
                                                                         </div>
                                                                     </div>

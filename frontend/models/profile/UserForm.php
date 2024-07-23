@@ -26,6 +26,9 @@ class UserForm extends Model
     public $user_bio;
     public $account_type;
 
+    public $gender;
+    public $date_of_birth;
+
     public function __construct(User $user_model = null)
     {
         $this->user_model = Yii::createObject([
@@ -43,6 +46,8 @@ class UserForm extends Model
             $this->about = $this->user_model->about;
             $this->user_bio = $this->user_model->user_bio;
             $this->account_type = $this->user_model->account_type;
+            $this->gender = $this->user_model->gender;
+            $this->date_of_birth = $this->user_model->date_of_birth;
         }
     }
 
@@ -87,6 +92,9 @@ class UserForm extends Model
                 'maxSize' => 250 * 1024
             ],
 
+            ['gender', 'integer'],
+            ['date_of_birth', 'safe'],
+
 
         ];
     }
@@ -105,7 +113,9 @@ class UserForm extends Model
             'insta_url' => 'Instagram',
             'about' => 'About',
             'account_type' => 'Account Type',
-            'user_bio' => 'User Bio'
+            'user_bio' => 'User Bio',
+            'gender' => 'Gender',
+            'date_of_birth' => 'D.O.B',
 
         ];
     }
@@ -122,6 +132,8 @@ class UserForm extends Model
         $this->user_model->about = $this->about;
         $this->user_model->user_bio = $this->user_bio;
         $this->user_model->account_type = $this->account_type;
+        $this->user_model->gender = $this->gender;
+        $this->user_model->date_of_birth = $this->date_of_birth;
     }
 
 

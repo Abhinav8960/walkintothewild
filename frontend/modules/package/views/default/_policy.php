@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
-        <div class="safri_tour">
+    <div class="col-lg-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
+        <div class="safri_tour sticky-top">
             <div class="topics_listing">
                 <ul id="tabList">
                     <li><a class="tab-items active_safri" data-tab="tab21">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-xxl-10 col-xl-9">
+    <div class="col-lg-8 col-xxl-9 col-xl-9">
         <div class="tab-content_tour active " id="tab21">
             <!-- Safari Parks content goes here -->
             <div class="row">
@@ -34,7 +34,7 @@
                         <div class="card-body">
                             <?php if ($package->package_terms_condtition) { ?>
                                 <div class="itenary-title">
-                                    <h6 class="fs-5 pb-2">Terms & Condtition</h6>
+                                    <h6 class="fs-6 fw-bold pb-2">Terms & Condtition</h6>
                                 </div>
                             <?php } ?>
                             <div class="itenary_text">

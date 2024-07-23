@@ -124,7 +124,7 @@
 									<?php
 									if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
 										<li>
-											<a class="" href="/operator/manage">
+											<a class="" href="/manage">
 												<i class="fa-solid fa-cog"></i>
 												Manage Business</a>
 										</li>

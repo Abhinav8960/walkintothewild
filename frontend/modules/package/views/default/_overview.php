@@ -1,14 +1,4 @@
-<div class="row">
-    <div class="col-lg-12 mb-3">
-        <div class="itenary-title">
-            <h6 class="fs-5 pb-2">ABOUT TRIP / OVERVIEW</h6>
-        </div>
-        <div class="itenary_text">
 
-            <p><?= $package->package_description ?></p>
-        </div>
-    </div>
-</div>
 <div class="row pt-4">
     <div class="col-12 inner_accordion">
         <div class="accordion accordion-flush" id="accordionFlushExample">

@@ -51,7 +51,7 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
         <div class="title_filter mb-3">
-            <h6 class="pb-0">Tour Duration</h6>
+            <h6 class="">Tour Duration</h6>
             <div class="rangetours range">
                 <?= $form->field($searchModel, 'no_of_night')->textInput([
                     'maxlength' => true,
@@ -68,7 +68,7 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
         <div class="title_filter mb-3">
-            <h6 class="pb-0">Total Safaris</h6>
+            <h6 class="">Total Safaris</h6>
             <div class="rangetours range">
                 <?= $form->field($searchModel, 'no_of_safari')->textInput([
                     'maxlength' => true,
@@ -85,7 +85,7 @@ use yii\helpers\ArrayHelper;
             </div>
         </div>
         <div class="title_filter mb-3">
-            <h6 class="pb-0">Cost (Per Person)</h6>
+            <h6 class="">Cost (Per Person)</h6>
             <div class="rangetours range">
                 <?= $form->field($searchModel, 'estimated_price_filter')->textInput([
                     'maxlength' => true,

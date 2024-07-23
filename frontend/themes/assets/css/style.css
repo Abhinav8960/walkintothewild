@@ -4689,16 +4689,94 @@ figure {
 
     background: #ffffff !important;
 }
+.itenary_tabs .safartabs .nav-tabs .nav-link.active{
+
+    background-color: transparent !important;
+    border: 0 !important;
+    color: #1E1E1E !important;
+    font-weight: 600 !important;
+    border-bottom: 3px solid var(--background-primary) !important;
+    padding-bottom: 10px !important;
+}
+.itenary_tabs .safartabs .nav-tabs .nav-link{
+
+    color: #1E1E1E !important;
+    border: 0 !important;
+    background: #fff !important;
+    opacity: 1 !important;
+    font-weight: 500 !important;
+    padding: 0 !important;
+    padding-bottom: 10px !important;
+}
+.itenary_tabs .safartabs .nav-tabs{
+
+    gap: 50px !important;
+}
+.itenary_tabs .safartabs .nav-tabs .nav-link:hover{
+
+    padding: 0 !important;
+    padding-bottom: 10px !important;
+    border-color: white;
+}
+.itenary_tabs .safartabs .nav-tabs .nav-link:focus{
+
+    padding: 0 !important;
+    padding-bottom: 10px !important;
+    border-color: white; 
+}
+.itenary_tabs .safartabs .nav-tabs .nav-link:focus-visible{
+
+    box-shadow: none !important;
+    outline: 0 !important;
+}
+
+.itenary_tabs .safartabs .accordion-item{
+
+border: 0;
+background-color: transparent !important;
+border-radius: 09;
+}
+.itenary_tabs .safartabs .accordion-item .accordion-collapse.bg-set{
+
+    background-color: #fff;
+    border: 1px solid #0000004D;
+    border-radius: 10px;
+}
+
 
 .inner_accordion .accordion-button {
 
-    background-color: var(--background-primary) !important;
-    color: var(--colorwhite);
+    background-color: var(--colorwhite) !important;
+    color: var(--colorBlack);
     border-bottom: 0 !important;
     font-family: var(--bs-body-font-family);
     font-weight: 600;
     font-size: 16px;
-    padding: 11px 10px;
+    padding: 14px 10px;
+    border-radius: 10px 10px 0px 0px !important;
+    border-top:1px solid #7070704D ;
+    border-left: 1px solid #7070704D;
+    border-right: 1px solid #7070704D;
+   
+}
+.inner_accordion .accordion-button.collapsed{
+
+    border-radius: 10px !important;
+    border: 1px solid #7070704D !important;
+}
+
+.inner_accordion .accordion-collapse{
+
+    background-color: #fff;
+    /* border: 1px solid #0000004D; */
+    border-radius: 0px 0px 10px 10px !important;
+    border-bottom:1px solid #7070704D ;
+    border-left: 1px solid #7070704D;
+    border-right: 1px solid #7070704D;
+}
+.inner_accordion .accordion-button:not(.collapsed){
+
+    box-shadow: none;
 }
 
 .inner_accordion .accordion-item {
@@ -4710,7 +4788,7 @@ figure {
 
 .inner_accordion .accordion-button::after {
 
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='%23ffffff' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3E%3C/svg%3E") !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='%23000000' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3E%3C/svg%3E") !important;
 }
 
 .text_wrapperite p {
@@ -4762,13 +4840,15 @@ figure {
 .packageSfari .wrapper-skybgsafri {
 
     border-radius: 0px 0px 10px 10px;
+    background: #fff;
 }
 
 .packageSfari .imagesSafari img {
     max-height: 300px;
     height: 400px;
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 10px 10px;
     object-fit: cover;
+    margin-bottom: 10px;
 }
 
 
@@ -5124,4 +5204,44 @@ a.desc:after {
 .itenary_text.boldsText p{
 
     font-size: 14px;
+}
+
+.mobile_didplay_block .join_btn{
+    padding: 11px 48px;
+    color: #152F1B;
+    font-weight: 600;
+}
+.text_safaripackage p{
+
+    color: #151C2C;
+    font-weight: 500;
+}
+
+.control-label.font_sizes{
+
+    font-weight: 600;
+    color: #09422D;
+}
+
+.height_set .form-check-input{
+
+    border: 1px solid var(--background-primary) !important;
+    cursor: pointer;
+}
+.height_set .form-check-input:checked{
+
+    background-color: var(--background-primary ) !important;
+}
+.height_set .form-check-input:focus{
+
+    box-shadow: none;
+}
+
+
+
+.border_setgetting{
+
+border: 1px solid var(--background-primary);
+border-top-left-radius: 0;
+border-top-right-radius: 0;
 }

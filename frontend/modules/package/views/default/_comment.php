@@ -5,11 +5,12 @@ use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
 
 ?>
-<div class="col-lg-9 order-lg-1 order-2">
-    <?php if ($parent_comments = $package->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
+
+<div class="bg-white p-3 rounded-3 mb-5">
+<?php if ($parent_comments = $package->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
     ?>
-        <div class="comments_safari">
-            <div class="commentsOther  position-relative">
+        <div class="comments_safari border-0 ">
+            <div class="commentsOther  position-relative ps-3 ">
                 <?php if ($parent_comments = $package->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
                     foreach ($parent_comments as $comments) {
                         $replies = $comments->getReplies()->where(['status' => 1])->all();
@@ -92,6 +93,9 @@ use yii\helpers\Url;
         } ?>
     <?php } ?>
 </div>
+
+  
+
 <script>
     function toggleReplyForm(link) {
         var target = link.getAttribute('data-target');

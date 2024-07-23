@@ -9,7 +9,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
             <h5><?= $this->title ?></h5>
         </div>
         <div class="col-md-3">
-            <?= $this->render('_sidebar', ['active' => 'sharedsafari']); ?>
+            <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'user']); ?>
         </div>
         <div class="col-md-9">
             <div class="card">
