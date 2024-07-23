@@ -13,26 +13,26 @@ $this->params['title'] = $this->title;
 
 
 
-    <section class="banner_section-inner  position-relative">
-        <picture class="position-relative">
-            <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
-            <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
-        </picture>
-        <div class="banner_searchBox">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="headingBnner_inner">
-                            <h1><?= $package->package_name ?></h1>
-                            <p class="text-center text-white">Organized by <?= isset($package->user) ? $package->user->name : '' ?></p>
-                        </div>
+<section class="banner_section-inner  position-relative">
+    <picture class="position-relative">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
+    </picture>
+    <div class="banner_searchBox">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="headingBnner_inner">
+                        <h1><?= $package->package_name ?></h1>
+                        <p class="text-center text-white">Organized by <?= isset($package->user) ? $package->user->name : '' ?></p>
                     </div>
                 </div>
             </div>
-
         </div>
-    </section>
-<section class="safari_wrapper  bg-white pt-4" >
+
+    </div>
+</section>
+<section class="safari_wrapper  bg-white pt-4">
     <div class="container-lg">
         <div class="row my-4 packageSfari">
             <div class="col-12">
@@ -71,7 +71,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_night ?> Nights , <?= $package->no_of_day ?> Days</p>
@@ -81,7 +81,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -95,7 +95,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_safari ?> Shared Safari
@@ -120,7 +120,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                        <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">Photography Special</p>
@@ -306,14 +306,14 @@ $this->params['title'] = $this->title;
             <div class="col-xl-3 col-lg-3">
                 <?php if (Yii::$app->user->identity) { ?>
                     <div class="request_quote">
-                    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                        Request Quote</button>
-                    <div class="interst_wrapper p-0 bg-white">
-                        <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
-                            <?= $this->render('_quote', ['packagemodel' => $packagemodel]) ?>
+                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                            Request Quote</button>
+                        <div class="interst_wrapper p-0 bg-white">
+                            <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
+                                <?= $this->render('_quote', ['packagemodel' => $packagemodel]) ?>
 
+                            </div>
                         </div>
-                    </div>
                     </div>
                     <?php
                     if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) {

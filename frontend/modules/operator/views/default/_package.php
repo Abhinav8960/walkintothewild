@@ -42,9 +42,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </section>
-<section class="touroprator_section">
+<section class="touroprator_section bg-white">
     <div class="container-fluid">
-
         <?= $this->render('_operator_overview', ['operator' => $operator]) ?>
 
         <div class="row justify-content-center  mb-4">
@@ -53,9 +52,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 'operator' => $operator,
             ]) ?>
         </div>
-
     </div>
     <?= $this->render('_view_navbar', ['active' => 'package', 'operator' => $operator]) ?>
+
+</section>
+<section class="touroprator_section">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-11 col-lg-12">
@@ -112,7 +113,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                                 </div>
                                                                             </div>
                                                                             <p><?= $review->review ?> &nbsp;
-                                                                               
+
                                                                             </p>
                                                                         </div>
                                                                     </div>
