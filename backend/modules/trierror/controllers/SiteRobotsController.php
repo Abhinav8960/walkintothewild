@@ -97,7 +97,7 @@ class SiteRobotsController extends Controller
 
     protected function create_robots_txt(){
         //recreae robots.txt
-        $content = "Sitemap: ".Yii::$app->params['FrontendWebUrl']."sitemap_index.xml";
+        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap_index.xml";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
         if(count($all_url) > 0){
             $content .= "\nUser-agent: *";
@@ -105,10 +105,14 @@ class SiteRobotsController extends Controller
                 $content .= "\n"."Disallow: : ".$row->url;
             }
         }
-        
-        $fp = fopen(Yii::$app->params['siteMapDirectory']."/robots.txt","wb");
+
+        $backend_actual_url = \Yii::getAlias('@webroot');
+        $backend_actual_url = str_replace("backend", "frontend", $backend_actual_url)."/";
+        $filepath = $backend_actual_url."/robots.txt";
+        $fp = fopen($filepath, "w");
         fwrite($fp, $content);
         fclose($fp);
+        chmod($filepath, 0777);
     }
 
     public function actionDelete($id)
