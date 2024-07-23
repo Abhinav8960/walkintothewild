@@ -306,6 +306,46 @@ line-height: 19px;
 
         font-size: 30px;
     }
+    .topSlider_tour .items_slider img{
+
+        height: 350px;
+    }
+    .logo{
+
+        width: 180px;
+    }
+    .menu-navbar-nav .nav-item .nav-link,.input_check .form-select{
+
+        font-size: 12px;
+    }
+    .initial_headers i{
+
+        font-size: 20px;
+    }
+    .titlePrice,.titleDate h6 a,.footer_listing li a{
+
+        font-size: 14px;
+    }
+    .joinsafari.package a,.icons_restro p,.icons p:last-child{
+
+        font-size: 12px;
+    }
+    .header_wrapper{
+
+        line-height: 22px;
+    }
+    .range-label span{
+
+        font-size: 12px;
+    }
+    .heading-footer h6{
+
+        font-size: 19px;
+    }
+    .sharesafri-card.tourpackage .orgnizer_tour .icons_restro i{
+
+        font-size: 16px;
+    }
     .artical_cards .lower-content {
 
         padding: 31px 15px 25px 15px;

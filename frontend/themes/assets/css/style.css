@@ -5245,3 +5245,11 @@ border: 1px solid var(--background-primary);
 border-top-left-radius: 0;
 border-top-right-radius: 0;
 }
+.itenary_text p{
+
+    overflow-wrap: anywhere;
+}
+.itenary_text ul li{
+
+    font-size: 14px;
+}

@@ -12,7 +12,7 @@ $this->params['title'] = $this->title;
 ?>
 
 
-<div class="fixedbanner">
+
     <section class="banner_section-inner  position-relative">
         <picture class="position-relative">
             <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
@@ -32,11 +32,7 @@ $this->params['title'] = $this->title;
 
         </div>
     </section>
-</div>
-
-
-
-<section class="safari_wrapper margin-setposi   bg-white " style="margin-top: 270px !important; padding-top:20px;">
+<section class="safari_wrapper  bg-white pt-4" >
     <div class="container-lg">
         <div class="row my-4 packageSfari">
             <div class="col-12">
@@ -75,7 +71,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/hotel_forest_location.png" alt="">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_night ?> Nights , <?= $package->no_of_day ?> Days</p>
@@ -85,7 +81,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/gypsycanter.png" alt="">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -99,7 +95,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_safari ?> Shared Safari
@@ -124,10 +120,10 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                        <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0">Vlogging</p>
+                                            <p class="mb-0">Photography Special</p>
                                         </div>
                                     </div>
                                 </div>
