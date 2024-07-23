@@ -1,0 +1,86 @@
+<?php
+
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
+use common\models\trierror\FrontendRequestLog;
+use common\models\trierror\SitePages;
+use common\models\trierror\SearchSitePages;
+
+
+/** @var yii\web\View $this */
+/** @var common\models\trierror\FrontendRequestLogSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
+
+$this->title = 'Site Pages';
+$this->params['breadcrumbs_home_url'] = '/';
+$this->params['breadcrumbs'][] =  ['label' => 'trierror', 'url' => '#'];
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['title'] = $this->title;
+$this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'btn btn-orange', 'title' => 'Add New URL', 'style' => 'margin-right: 2px;']);
+?>
+
+<div class="card">
+    <div class="card-body">
+        <?php echo $this->render('_search', ['model' => $searchModel, 'content_type' => $content_type]); ?>
+        <div id="w1-button" class="mb-3"></div>
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                //'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'label' => 'Content Type',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return ucwords(str_replace("_", " ", $model->content_type));
+                        }
+                    ],
+                    [
+                        'label' => 'Url',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->url;
+                        }
+                    ],
+                    [
+                        'label' => 'Last Updated',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date('d-m-Y', strtotime($model->last_update_at));
+                        }
+                    ],
+                    [
+                        'label' => 'Views',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->counter;
+                        }
+                    ],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'template' => '{delete}',
+                        'buttons' => [
+                            'delete' => function ($url, $model) {
+                                if($model->content_type == 'manual_url'){
+                                    return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                                        'class' => 'btn p-0 change-menuicon',
+                                        'title' => 'Delete',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to delete this record ?',
+                                            'method' => 'post',
+                                        ],
+                                    ]);
+                                }
+                            },
+                        ]
+                    ],
+                ],
+            ]); ?>
+        </div>
+    </div>
+</div>
