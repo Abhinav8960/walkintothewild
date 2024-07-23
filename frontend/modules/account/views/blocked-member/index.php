@@ -1,4 +1,7 @@
 <?php
+
+use yii\helpers\Url;
+
 $this->title = 'Account Settings';
 
 ?>
@@ -10,8 +13,36 @@ $this->title = 'Account Settings';
         </div>
         <div class="col-md-9">
             <div class="card">
-                Blocked Members
+                <div class="card-body">
+                    <h6>Blocked User</h6>
+                    <?php if ($model) {
+                        foreach ($model as $blocked_user) { ?>
+                            <table class="table">
+                                <thead>
+                                    <th>Name</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </thead>
+                                <tbody>
+                                    <td><?= $blocked_user->user->name ?></td>
+                                    <td><?= date('Y-m-d', $blocked_user->created_at) ?></td>
+                                    <td><a class="btn_newsafari btn-sm" href="<?= Url::toRoute(['/profile/search/unblocked', 'id' => $blocked_user->blocked_user_id]) ?>">Unblocked</a></td>
+                                </tbody>
+
+                            </table>
+                    <?php }
+                    } ?>
+                </div>
             </div>
+
+
         </div>
     </div>
 </div>
+
+<style>
+    .btn_newsafari {
+
+        padding: 5px 20px !important;
+    }
+</style>

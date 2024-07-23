@@ -1,18 +1,13 @@
 <?php
 
 use common\models\GeneralModel;
-use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
-/** @var yii\web\View $this */
-
-$this->title = 'Create Article';
-$this->params['title'] = $this->title;
 ?>
+<div class="col-md-12">
 
-<div class="container">
-    <div class="card m-5">
+    <div class="card">
         <div class="card-body">
             <?php $form = ActiveForm::begin([
                 'id' => 'article-form',
@@ -25,17 +20,10 @@ $this->params['title'] = $this->title;
             ]); ?>
 
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <?= $form->field($model, 'title')->textInput([
                         'maxlength' => true,
                         'placeholder' => 'Enter Article Title',
-                    ]) ?>
-                </div>
-                <div class="col-md-6">
-                    <?= $form->field($model, 'slug')->textInput([
-                        'maxlength' => true,
-                        'placeholder' => 'Enter Slug',
-                        'readonly' => isset($model->article_model->id) ? true : false,
                     ]) ?>
                 </div>
             </div>
@@ -69,36 +57,22 @@ $this->params['title'] = $this->title;
             </div>
 
             <div class="row">
-                <?= $form->field($model, 'description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
-
+                <?= $form->field($model, 'description')->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
 
             <div class="row">
-                <?= $form->field($model, 'article_date')->input('date', ['class' => 'form-control']) ?>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <?= $form->field($model, 'publish_date_time')->widget(DateTimePicker::classname(), [
-                        'options' => ['placeholder' => 'Enter Start date ...',],
-                        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
-                        'pickerIcon' => '<i class="fa fa-calendar text-primary"></i>',
-                        'removeIcon' => '<i class="fa fa-trash text-danger"></i>',
-                        'pluginOptions' => [
-                            'startDate' => date('Y-m-d'),
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd hh:ii'
-                        ]
-                    ])->label('Start Date/Time'); ?>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'comment_allowed')->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
                 </div>
-                <div class="col-6"><?= $form->field($model, 'comment_allowed')->dropDownList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?></div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'slug')->textInput([
+                        'maxlength' => true,
+                        'placeholder' => 'Enter Slug',
+                        'readonly' => isset($model->article_model->id) ? true : false,
+                    ]) ?>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-4"><?= $form->field($model, 'meta_title')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Title']) ?></div>
-                <div class="col-md-4"><?= $form->field($model, 'meta_keywords')->textInput(['maxlength' => true, 'placeholder' => 'Enter Meta Keyword']) ?></div>
-                <div class="col-md-6"> <?= $form->field($model, 'meta_description')->textarea() ?></div>
-            </div>
-            <hr>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -107,14 +81,14 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
 
-
         </div>
         <?php ActiveForm::end(); ?>
     </div>
 </div>
 
 <?php
-$script = <<< JS
+if (!isset($model->article_model->id)) {
+    $script = <<< JS
     $(function(){
         // Function to generate slug from title
         function slugify(text) {
@@ -141,5 +115,6 @@ $script = <<< JS
         }
     });
 JS;
-$this->registerJs($script);
+    $this->registerJs($script);
+}
 ?>

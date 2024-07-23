@@ -2,6 +2,7 @@
 
 namespace frontend\modules\profile\controllers;
 
+use common\models\BlockedModel;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
 use common\models\UserFollow;
@@ -21,12 +22,14 @@ class DefaultController extends FrontendBaseController
     public function actionIndex($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
+        $model = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
+        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
         return $this->render(
             'index',
             [
                 'user' => $user,
-                'model' => $model
+                'model' => $model,
+                'model_count' => $model_count
             ]
         );
     }
@@ -38,12 +41,12 @@ class DefaultController extends FrontendBaseController
                 Yii::$app->session->setFlash('error', "You can't follow yourself!");
                 return $this->redirect(Yii::$app->request->referrer);
             }
-            $follower = UserFollow::find()->where(['follow_user_id' => Yii::$app->user->identity->id, 'user_id' => $id])->one();
+            $follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $id])->one();
             if (!$follower) {
                 $follower = new UserFollow();
             }
-            $follower->follow_user_id = Yii::$app->user->identity->id;
-            $follower->user_id = $id;
+            $follower->user_id = Yii::$app->user->identity->id;
+            $follower->follow_user_id = $id;
             $follower->status = 1;
             $follower->save(false);
             Yii::$app->session->setFlash('success', "Follow Successfully!!");
@@ -55,9 +58,9 @@ class DefaultController extends FrontendBaseController
     public function actionUnfollow($id)
     {
         if (Yii::$app->user->identity) {
-            $follower = UserFollow::find()->where(['follow_user_id' => Yii::$app->user->identity->id, 'user_id' => $id])->one();
-            $follower->follow_user_id = Yii::$app->user->identity->id;
-            $follower->user_id = $id;
+            $follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $id])->one();
+            $follower->user_id = Yii::$app->user->identity->id;
+            $follower->follow_user_id = $id;
             $follower->status = 0;
             $follower->save(false);
             Yii::$app->session->setFlash('success', "Unfollow Successfully!!");
@@ -65,4 +68,27 @@ class DefaultController extends FrontendBaseController
         }
         return $this->redirect(Yii::$app->request->referrer);
     }
+
+
+    /**
+     * User Follower
+     */
+    public function actionFollower($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+
+        return $this->render('follower', ['user' => $user]);
+    }
+
+    /**
+     * User Following
+     */
+    public function actionFollowing($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+
+        return $this->render('following', ['user' => $user]);
+    }
+
+    
 }

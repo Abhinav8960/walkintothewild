@@ -55,6 +55,11 @@ $this->title = 'Account Settings';
                             </div>
 
                             <div class="col-md-12">
+                                <?= $form->field($model, 'user_bio')->textarea(['rows' => 2, 'maxlength'=>true,'placeholder' => 'Profile Description eg: Wildlife | Nature']) ?>
+                            </div>
+
+
+                            <div class="col-md-12">
                                 <?= $form->field($model, 'about')->textarea(['rows' => 6, 'placeholder' => 'About']) ?>
                             </div>
 

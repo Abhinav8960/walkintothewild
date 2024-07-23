@@ -3,17 +3,18 @@
 namespace frontend\modules\profile\controllers;
 
 
-use common\models\cms\article\Article;
-use common\models\cms\article\ArticleAuthor;
-use common\models\cms\article\ArticleTag;
-use common\models\cms\article\ArticleTopic;
-use common\models\sharesafari\ShareSafari;
-use common\models\User;
-use frontend\controllers\FrontendBaseController;
-use frontend\models\article\ArticleForm;
 use Yii;
-use yii\web\NotFoundHttpException;
+use yii\helpers\Url;
+use common\models\User;
 use yii\web\UploadedFile;
+use yii\web\NotFoundHttpException;
+use common\models\cms\article\Article;
+use frontend\models\article\ArticleForm;
+use common\models\cms\article\ArticleTag;
+use common\models\sharesafari\ShareSafari;
+use common\models\cms\article\ArticleTopic;
+use common\models\cms\article\ArticleAuthor;
+use frontend\controllers\FrontendBaseController;
 
 /**
  * ArticleController.
@@ -29,7 +30,7 @@ class ArticleController extends FrontendBaseController
     {
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
-        $articles = Article::find()->where(['user_id' => $user->id])->all();
+        $articles = Article::find()->where(['user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
         return $this->render(
             'index',
             [
@@ -42,18 +43,21 @@ class ArticleController extends FrontendBaseController
 
     public function actionCreate()
     {
-
+        $user = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
         $model = new ArticleForm();
         $model->action_url = '/profile/article/create';
         $model->action_validate_url = '/profile/article/validate';
         $model->status = Article::STATUS_SUSPEND;
         $model->scenario = 'create';
+        $model->article_date = date('Y-m-d');
+        $model->publish_date_time = date('Y-m-d h:i:s');
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
                 $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
+                    $model->meta_title = $model->title;
                     $model->initializeForm();
                     if ($model->article_model->save(false)) {
                         $model->uploadFile();
@@ -96,7 +100,7 @@ class ArticleController extends FrontendBaseController
                             }
                         }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['/profile/article/index', 'user_handle' => $user->user_handle]);
                     }
                 }
             }
@@ -104,22 +108,17 @@ class ArticleController extends FrontendBaseController
             $model->article_model->loadDefaultValues();
         }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_form', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('_form', [
-                'model' => $model,
-            ]);
-        }
+        return $this->render('create', [
+            'model' => $model,
+            'user' => $user,
+        ]);
     }
 
-    public function actionValidate($id = null)
+    public function actionValidate($slug = null)
     {
         $model = new ArticleForm();
-        if ($id != null) {
-            $formmodel = $this->findModel($id);
+        if ($slug != null) {
+            $formmodel = $this->findModel($slug);
             $model = new ArticleForm($formmodel);
         }
 
@@ -132,13 +131,13 @@ class ArticleController extends FrontendBaseController
     /**
      * Finds the Article model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
+     * @param int $slug ID
      * @return Article the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($slug)
     {
-        if (($model = Article::findOne(['id' => $id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
+        if (($model = Article::findOne(['slug' => $slug, 'user_id' => Yii::$app->user->identity->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -152,13 +151,13 @@ class ArticleController extends FrontendBaseController
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($slug)
     {
-        $article_model = $this->findModel($id);
+        $article_model = $this->findModel($slug);
+        $user = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
         $model = new ArticleForm($article_model);
-        $model->action_url = '/profile/article/update?id=' . $id;
-        $model->action_validate_url = '/profile/article/validate?id=' . $id;
-        $model->status = Article::STATUS_SUSPEND;
+        $model->action_url = Url::toRoute(['/profile/article/update', 'slug' => $slug]);
+        $model->action_validate_url = Url::toRoute(['/profile/article/validate', 'slug' => $slug]);
         $model->is_approved = 0;
         $model->scenario = 'update';
 
@@ -166,13 +165,18 @@ class ArticleController extends FrontendBaseController
             if ($model->load($this->request->post())) {
                 $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
                 if ($model->validate()) {
+                    $model->meta_title = $model->title;
                     $model->initializeForm();
+                    // Inactive if Anything is changed into form
+                    if ($model->article_model->dirtyattributes) {
+                        $model->article_model->status = Article::STATUS_SUSPEND;
+                    }
                     if ($model->article_model->save(false)) {
                         $model->uploadFile();
 
                         $articleTopics = $model->article_topics;
                         if ($articleTopics) {
-                            ArticleTopic::deleteAll(['article_id' => $id]);
+                            ArticleTopic::deleteAll(['article_id' => $article_model->id]);
                             foreach ($articleTopics as $articleT) {
                                 $articleTopic = new ArticleTopic();
                                 $articleTopic->article_id = $model->article_model->id;
@@ -183,7 +187,7 @@ class ArticleController extends FrontendBaseController
 
                         $articleTags = $model->article_tags;
                         if ($articleTags) {
-                            ArticleTag::deleteAll(['article_id' => $id]);
+                            ArticleTag::deleteAll(['article_id' => $article_model->id]);
                             foreach ($articleTags as $articleT) {
                                 $articleTag = new ArticleTag();
                                 $articleTag->article_id = $model->article_model->id;
@@ -193,7 +197,7 @@ class ArticleController extends FrontendBaseController
                         }
 
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['/profile/article/index', 'user_handle' => $user->user_handle]);
                     }
                 }
             }
@@ -201,14 +205,9 @@ class ArticleController extends FrontendBaseController
             $model->article_model->loadDefaultValues();
         }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('_form', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('_form', [
-                'model' => $model,
-            ]);
-        }
+        return $this->render('update', [
+            'model' => $model,
+            'user' => $user,
+        ]);
     }
 }

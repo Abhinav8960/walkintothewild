@@ -12,34 +12,28 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
 
 
 <div class="filter-wrapper custoM-inputs d-lg-block d-none mb-2">
-    <div class="title_top pb-4">
-        <h4>Park Review</h4>
-        <?php if ($reviews) { ?>
+<?php if ($reviews) { ?>
+    <div class="title_top pb-2">
             <div class="userRatingTitle">
-                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
+                <div class="providerNamerating d-flex  justify-content-between  align-items-center">
+                 <h4 class="mb-0">Park Review</h4>
                     <div class="ratings">
                         <?php $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $safari_model->id])->average('rating');
                         if ($avg) { ?>
-                            <p class="mb-0">
+                            <h5 class="mb-0 fs-5 ">
                                 <?= round($avg, 1) ?>
-                                <?= GeneralModel::review_rating($avg); ?>
-                            </p>
+                                <!-- <?= GeneralModel::review_rating($avg); ?> -->
+                            </h5>
                         <?php } ?>
                     </div>
-                    <?php $count = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $safari_model->id])->count(); {
-                        if ($count) { ?>
-                            <div class="googlerating">
-                                <p class="mb-0"><?= $count . " " ?>Reviews</p>
-                            </div>
-                    <?php }
-                    } ?>
                 </div>
             </div>
-        <?php } ?>
+      
     </div>
+    <?php } ?>
     <?php if (Yii::$app->user->id) {  ?>
         <div class="title_filter mb-2">
-            <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $safari_model->id]) ?>" class="btn_newsafari writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
+            <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $safari_model->id]) ?>" class="parkrevieBtn writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
         </div>
     <?php } else {
         echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for giving your review';
@@ -52,10 +46,12 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
             if ($reviews) {
                 foreach ($reviews as $review) {  ?>
                     <div class="postcomment  pt-3">
-                        <div class="text_com">
-                            <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
-
-                                <div class="ratings">
+                        <div class="text_com colors_p">
+                            <div class="providerNamerating ">
+                            <div class="googlerating names">
+                                    <h6 class="mb-0 fs-6 pb-0"> <?= $review->user->name ?></h6>
+                                </div>
+                                <div class="ratings colors">
                                     <p class="mb-0">
                                         <?php if ($rating_count = $review->rating) {
                                             for ($i = 1; $i <= $rating_count; $i++) { ?>
@@ -69,13 +65,9 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
                                         } ?>
                                     </p>
                                 </div>
-
-                                <div class="googlerating">
-                                    <p class="mb-0"> <?= $review->user->name ?></p>
-
-                                </div>
+ 
                             </div>
-                            <p><?= $review->review ?> &nbsp;
+                            <p class="suggest"><?= $review->review ?> &nbsp;
                                 <?php if (Yii::$app->user->id == $review->user_id) { ?>
                                     <span class="writeSuggestionBtn" value="<?= Url::toRoute(['/park/default/reviewupdate', 'park_id' => $safari_model->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
                                 <?php } ?>
@@ -87,5 +79,14 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
             } ?>
         </div>
     </div>
+    <?php if (count($reviews) >= 5) { ?>
 
+        <div class="col-12">
+            <div class="safari text-end">
+                <div class="viewAllreview">
+                    <a href="/park/reviewlist/<?= $safari_model->slug ?>">View All</a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 </div>

@@ -6,11 +6,6 @@ use common\models\registration\SafariOperatorRequest;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-
-
-$this->title = 'Profile';
-$this->params['title'] = $this->title;
-
 ?>
 
 <div class="card overflow-hidden mt-2">
@@ -31,9 +26,9 @@ $this->params['title'] = $this->title;
                 <div class="text-center">
                     <h6 class="mb-0"><?= $user->userhandle ?></h6>
                 </div>
-                <?php if ($user->about <> '') { ?>
+                <?php if ($user->user_bio <> '') { ?>
                     <div class="text-center">
-                        <p class="mb-0"><?= $user->about ?></p>
+                        <p class="mb-0"><?= $user->user_bio ?></p>
                     </div>
                 <?php } ?>
             </div>
@@ -41,20 +36,22 @@ $this->params['title'] = $this->title;
         <div class="row">
             <div class="col-lg-4 ">
                 <div class="d-flex align-items-center m-1">
-                    <p class="mb-1 m-4"><?= $user->getUserfollowers()->where(['status' => 1])->count(); ?> Followers</p>
-                    <p class="mb-1 m-4"><?= $user->getUserfollowings()->where(['status' => 1])->count(); ?> Following</p>
+                    <p class="mb-1 m-4"><a href="<?= Url::toRoute(['/profile/default/follower', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowers()->where(['status' => 1])->count(); ?> Followers</a></p>
+                    <p class="mb-1 m-4"><a href="<?= Url::toRoute(['/profile/default/following', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowings()->where(['status' => 1])->count(); ?> Following</a></p>
                 </div>
             </div>
 
             <div class="col-lg-4 ">
                 <div class="d-flex align-items-center m-1 mx-auto align-items-center justify-content-center">
                     <?php if (Yii::$app->user->identity->id != $user->id) {
-                        if (UserFollow::find()->where(['follow_user_id' => Yii::$app->user->identity->id, 'user_id' => $user->id, 'status' => '1'])->one()) { ?>
+                        if (UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id, 'status' => '1'])->one()) { ?>
                             <a href="<?= Url::toRoute(['/profile/default/unfollow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Unfollow</a>
                         <?php } else { ?>
                             <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="btn btn-light m-2">Follow</a>
                         <?php } ?>
                         <a href="#" class="btn btn-light m-2">Message</a>
+                    <?php } else { ?>
+                        <a href="<?= Url::toRoute(['/account', 'id' =>  $user->id]) ?>" class="btn btn-light m-2"><i class="fa fa-edit"></i> Edit Profile</a>
                     <?php } ?>
 
                 </div>
@@ -87,14 +84,14 @@ $this->params['title'] = $this->title;
         <hr>
         <ul class="nav nav-pills mb-2 ms-2">
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
-            <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Share Safari</a></li>
+            <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safari</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
             <?php if (Yii::$app->user->identity->id == $user->id) {
                 if ($user->is_safari_operator == 1) { ?>
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/profile/business', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
+                    <li class="nav-item"><a href="<?= Url::toRoute(['/operator/manage', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($business) ? $business : '' ?>">Business</a></li>
                     <?php } else if (in_array($user->account_type, [2, 3])) {
                     $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->one();
                     if ($business_request) { ?>

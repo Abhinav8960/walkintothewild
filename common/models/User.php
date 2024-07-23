@@ -67,7 +67,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name'], 'safe'],
-            ['user_handle', 'safe']
+            [['user_handle', 'user_bio'], 'safe']
         ];
     }
 
@@ -377,12 +377,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getUserfollowers()
     {
-        return $this->hasMany(UserFollow::class, ['user_id' => 'id']);
+        return $this->hasMany(UserFollow::class, ['follow_user_id' => 'id']);
     }
 
     public function getUserfollowings()
     {
-        return $this->hasMany(UserFollow::class, ['follow_user_id' => 'id']);
+        return $this->hasMany(UserFollow::class, ['user_id' => 'id']);
     }
 
     public function getSharesafari()

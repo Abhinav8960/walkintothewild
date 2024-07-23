@@ -39,21 +39,35 @@ if ($model->meta_title != '') {
         <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 " alt="banner">
     </picture>
     <div class="banner_searchBox">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="headingBnner_inner">
-                        <h1><?= $model->title ?></h1>
+                <div class="container-lg">
+                    <div class="row">
+                        <div class="col-12 ">
+                            <div class="tab-block" id="tab-block">
+                                <div class="tab-cont">
+                                    <div class="tab-pane">
+                                        <div class="row gx-0">
+                                            <?= $this->render('_advance_search', [
+                                                'model' => $searchModel,
+                                            ]) ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    </div>
 </section>
 
-<section class="articals_wrapper py-3 ">
+<section class="articals_wrapper py-3 " style="background-color: #fff;">
     <div class="container-fluid">
+        <div class="row py-3">
+            <div class="col-12">
+                <div class="title_heading text-center">
+                    <h1 class="fs-2"><?= $model->title ?></h1>
+                </div>
+            </div>
+        </div>
         <div class="row mb-4  justify-content-center mt-4">
             <div class="col-lg-12 col-xl-10 safartabs position-relative">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
@@ -75,7 +89,7 @@ if ($model->meta_title != '') {
                 <div id="flashMessage">
                     submit correction if found wrong information!
                 </div>
-                <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+                <ul class="nav nav-tabs d-none d-lg-flex gap-2 align-items-baseline" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">OVERVIEW</button>
                     </li>

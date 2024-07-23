@@ -16,13 +16,14 @@ use common\models\GeneralModel;
     ],
 ]);
 $locationoption = GeneralModel::getAllLocation();
-$safarisessionoption = GeneralModel::safarisessionoption();
 $animalfilteroption = GeneralModel::animalfilteroption();
+$parkoption = GeneralModel::safariparkoption();
 $vehicleoption = GeneralModel::vehicleoption();
+?>
 ?>
 <div class="row gx-0 justify-content-center d-md-flex d-none desktop_search" id="desktop_search">
     <div class="close_button" id="desktop_close_button"><i class="fa-solid fa-xmark"></i></div>
-    <div class="col-xl-10">
+    <div class=" col-xl-9 planSearch_box">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
@@ -44,41 +45,12 @@ $vehicleoption = GeneralModel::vehicleoption();
                         ]
                     )->label(false) ?>
 
-                    <div class="placeholder_select">
+                    <div class="placeholder_select loc">
                         <p>Location</p>
                     </div>
-                    <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
-                    </div>
-                </div>
-
-            </div>
-            <div class="select_boxes position-relative">
-                <div class="dropdown-container">
-                    <div class="dropdown-toggle">
-                        <?= isset($safarisessionoption[$model->session_id]) ? $safarisessionoption[$model->session_id] : 'Any / All' ?>
-                    </div>
-                    <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
-                        <?php foreach ($safarisessionoption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?= $form->field($model, 'session_id')->dropDownList(
-                        $safarisessionoption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example",
-                            'prompt' => ''
-
-                        ]
-                    )->label(false) ?>
-                    <div class="placeholder_select">
-                        <p>Safari seasion</p>
-                    </div>
-                    <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
-                    </div>
+                    <!-- <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/plans.png" alt="">
+                    </div> -->
                 </div>
 
             </div>
@@ -105,9 +77,9 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <div class="placeholder_select">
                         <p>Animal</p>
                     </div>
-                    <div class="icons_select">
+                    <!-- <div class="icons_select">
                         <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
@@ -133,10 +105,41 @@ $vehicleoption = GeneralModel::vehicleoption();
                     <div class="placeholder_select">
                         <p>Vehicle</p>
                     </div>
-                    <div class="icons_select">
+                    <!-- <div class="icons_select">
                         <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
-                    </div>
+                    </div> -->
                 </div>
+                <div class="OrBox">
+                    <p>OR</p>
+                </div>
+            </div>
+            <div class="select_boxes position-relative">
+                <div class="dropdown-container">
+                    <div class="dropdown-toggle">
+                        <?= isset($parkoption[$model->id]) ? $parkoption[$model->id] : 'Any / All' ?>
+                    </div>
+                    <div class="dropdown custom_dropdown">
+                        <?php foreach ($parkoption as $value => $label) : ?>
+                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?= $form->field($model, 'id')->dropDownList(
+                        $parkoption,
+                        [
+                            'class' => "form-select form-select-lg hidden-select",
+                            'aria-label' => "Large select example",
+                            'prompt' => ''
+
+                        ]
+                    )->label(false) ?>
+                    <div class="placeholder_select">
+                        <p>Select Park</p>
+                    </div>
+                    <!-- <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
+                    </div> -->
+                </div>
+
             </div>
         </div>
     </div>

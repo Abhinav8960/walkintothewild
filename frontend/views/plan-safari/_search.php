@@ -47,7 +47,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <p>Location</p>
                     </div>
                     <!-- <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/location_7508941.png" alt="">
+                        <img src="<?= $this->params['baseurl'] ?>/img/plans.png" alt="">
                     </div> -->
                 </div>
 
@@ -81,8 +81,6 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
 
             </div>
-
-
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
@@ -109,19 +107,21 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                     </div> -->
                 </div>
+                <div class="OrBox">
+                    <p>OR</p>
+                </div>
             </div>
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($parkoption[$model->id]) ? $parkoption[$model->id] : 'Any / All' ?>
+                        <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($parkoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
                     </div>
-                    <?= $form->field($model, 'id')->dropDownList(
+                    <?= $form->field($model, 'safari_park_id')->dropDownList(
                         $parkoption,
                         [
                             'class' => "form-select form-select-lg hidden-select",

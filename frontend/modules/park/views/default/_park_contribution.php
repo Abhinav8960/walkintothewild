@@ -18,24 +18,26 @@ $suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id,
     <?php if (Yii::$app->user->id) {  ?>
 
         <div class="title_filter mb-3">
-            <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $safari_model->id]) ?>" class="btn_newsafari writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">Suggest Correction </button>
+            <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $safari_model->id]) ?>" class="parkrevieBtn writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">Suggest Correction </button>
         </div>
     <?php } else {
         echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for giving your contribution';
     } ?>
     <div class="title_filter mb-2">
-        <div class="input_check d-flex gap-3 align-items-center">
+        <div class="">
             <?php
             if ($suggestions) {
                 foreach ($suggestions as $suggestion) {
             ?>
-                    <div class="comments-persons">
+                    <div class="comments-persons mb-2">
                         <div class="postcomment">
-                            <div class="itenary-title">
-                                <h6 class="nameavatr"><?= isset($suggestion->name) ? $suggestion->name : '' ?></h6>
+                            <div class="googlerating names">
+                                <h6 class=" mb-0 fs-6 pb-2"><?= isset($suggestion->name) ? $suggestion->name : '' ?></h6>
                             </div>
-                            <div class="itenary_text">
-                                <p><?= isset($suggestion->master_suggestion_id) ? GeneralModel::suggestioncategory()[$suggestion->master_suggestion_id] : '' ?><br><?= isset($suggestion->details) ? $suggestion->details : '' ?></p>
+                            <div class="itenary_text boldsText">
+                                <h6 ><?= isset($suggestion->master_suggestion_id) ? GeneralModel::suggestioncategory()[$suggestion->master_suggestion_id] : '' ?>
+                               </h6>
+                               <p class="mb-0"> <?= isset($suggestion->details) ? $suggestion->details : '' ?></p>
                             </div>
                         </div>
                     </div>
@@ -43,5 +45,14 @@ $suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id,
             } ?>
         </div>
     </div>
+    <?php if (count($suggestions) >= 5) { ?>
 
+        <div class="col-12">
+            <div class="safari text-center">
+                <div class="joinsafari">
+                    <a href="/park/contributionlist/<?= $safari_model->slug ?>">View All</a>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 </div>

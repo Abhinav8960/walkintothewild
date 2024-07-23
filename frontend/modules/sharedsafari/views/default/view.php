@@ -50,9 +50,9 @@ $this->params['title'] = $this->title;
         </div>
         <div class="row my-4">
             <div class="col-12">
-                <div class="btn_set float-end">
+                <!-- <div class="btn_set float-end">
                     <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'share_safari_id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
-                </div>
+                </div> -->
                 <div class="wrapper-skybgsafri">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
@@ -266,7 +266,7 @@ $this->params['title'] = $this->title;
                             Safari</button>
                     <?php } else if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                            Safari</button>
+                            Fixed Departure</button>
                     <?php } elseif (Yii::$app->user->identity) { ?>
                         <button class="btn_newsafari organizeBtn w-100" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                             Safari</button>
@@ -317,7 +317,7 @@ $this->params['title'] = $this->title;
 
         </div>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-3 g-lg-5 mb-5 pb-5">
-            <?php $rand_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_COMPLETED]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderBy('RAND()')->limit(5)->all();
+            <?php $rand_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderBy('RAND()')->limit(5)->all();
             foreach ($rand_safari as $safari) { ?>
                 <div class="col mb-4 padding_right">
                     <div class="sharesafri-card">
@@ -328,7 +328,7 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                         <div class="shareimg">
-                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $safari->slug]) ?>"><img src="<?= $safari->sharedimagepath ? $safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                         </div>
                         <div class="card_body">
                             <div class="top_seats">
@@ -369,6 +369,8 @@ $this->params['title'] = $this->title;
                                             <div class="roundes_countuser">
                                                 <?= $data ?>+
                                             </div>
+                                        <?php  } else { ?>
+                                            <img src="<?= $safari->user && $safari->user->avatar <> '' ? $safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -381,7 +383,7 @@ $this->params['title'] = $this->title;
                                                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $safari->id, 'status' => 1])->limit(1)->one();
                                                 if ($share_safari_intrested) { ?>
                                                     <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $safari->slug]) ?>">Leave Safari</a>
-                                                <?php } else { ?>
+                                                <?php } else if ($safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                     <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $safari->slug]) ?>">Join Safari</a>
                                                 <?php  }
                                             } else { ?>

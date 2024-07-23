@@ -20,7 +20,7 @@ $monthoption = GeneralModel::monthoption();
 $estimatedpriceoption = GeneralModel::estimatedpriceoption();
 ?>
 <div class="row gx-0 justify-content-center ">
-    <div class=" col-xl-10">
+    <div class=" col-xl-9  safari_searchpackage">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">

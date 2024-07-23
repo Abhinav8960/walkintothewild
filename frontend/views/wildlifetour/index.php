@@ -271,7 +271,7 @@ $this->params['title'] = $this->title;
                         <img src="http://app.walkintothewild.io/storage/safaripark/1/logo1718179650.jpg" alt=""></a>
                     </div>
                     <div class="card_body">
-                      <div class="top_seats">
+                      <!-- <div class="top_seats">
                         <div class="safari d-flex justify-content-between ">
                           <div class="safarinum d-flex gap-2 align-items-center ">
                             <p class="text_safari">NIGHTS</p>
@@ -282,7 +282,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
                         <div class="orgnizer_tour d-flex justify-content-between pt-2">
@@ -336,7 +336,7 @@ $this->params['title'] = $this->title;
                         <img src="http://app.walkintothewild.io/storage/safaripark/1/logo1718179650.jpg" alt=""></a>
                     </div>
                     <div class="card_body">
-                      <div class="top_seats">
+                      <!-- <div class="top_seats">
                         <div class="safari d-flex justify-content-between ">
                           <div class="safarinum d-flex gap-2 align-items-center ">
                             <p class="text_safari">NIGHTS</p>
@@ -347,7 +347,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
                         <div class="orgnizer_tour d-flex justify-content-between pt-2">
@@ -401,7 +401,7 @@ $this->params['title'] = $this->title;
                         <img src="http://app.walkintothewild.io/storage/safaripark/1/logo1718179650.jpg" alt=""></a>
                     </div>
                     <div class="card_body">
-                      <div class="top_seats">
+                      <!-- <div class="top_seats">
                         <div class="safari d-flex justify-content-between ">
                           <div class="safarinum d-flex gap-2 align-items-center ">
                             <p class="text_safari">NIGHTS</p>
@@ -412,7 +412,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
                         <div class="orgnizer_tour d-flex justify-content-between pt-2">
@@ -466,7 +466,7 @@ $this->params['title'] = $this->title;
                         <img src="http://app.walkintothewild.io/storage/safaripark/1/logo1718179650.jpg" alt=""></a>
                     </div>
                     <div class="card_body">
-                      <div class="top_seats">
+                      <!-- <div class="top_seats">
                         <div class="safari d-flex justify-content-between ">
                           <div class="safarinum d-flex gap-2 align-items-center ">
                             <p class="text_safari">NIGHTS</p>
@@ -477,7 +477,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                       <div class="titleDate">
                         <h6 class="pt-1"><a href="">Bandhavgarh Tiger Reserve + 2 Parks </a></h6>
                         <div class="orgnizer_tour d-flex justify-content-between pt-2">

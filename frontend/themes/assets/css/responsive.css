@@ -1,5 +1,18 @@
 @media only screen and (min-width:1600px) {
 
+    .padding_setCard{
+        padding: 0px 70px;
+    }
+    .padding_setCard .shareimg{
+
+        height: 190px;
+    }
+
+    .tourpackage .shareimg{
+        height: 200px;
+
+    }
+
     .postthumbnail img{
 
      height: 56px;
@@ -238,7 +251,7 @@ line-height: 19px;
 
     .sharesafribg {
 
-        height: 500px;
+        height: 368px;
 
     }
  
@@ -346,6 +359,10 @@ line-height: 19px;
     .dropdown-toggle {
 
         font-size: 14px;
+    }
+    .tourpackage .shareimg{
+        height: 200px;
+
     }
 
     .shareimg {
@@ -768,7 +785,7 @@ display: none;
     }
     .navbar-nav {
 
-        gap: 32px;
+        gap: 60px;
     }
     .padding-setDes{
 
@@ -1118,7 +1135,7 @@ display: none;
     }
     .header_wrapper {
 
-        line-height: 70px;
+        line-height: 50px !important;
     }
     .flex-set{
 

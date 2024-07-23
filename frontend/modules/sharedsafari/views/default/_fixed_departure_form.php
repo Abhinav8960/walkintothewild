@@ -27,8 +27,9 @@ use yii\helpers\Html;
             ])->label(false) ?>
         </div>
         <div class="col-md-6 mb-1">
-            <label for="" class="Modal_label">Number of Safaris</label>
-            <?= $form->field($model, 'no_of_safari')->textInput()->label(false) ?>
+            <label for="" class="Modal_label">Number of Safaris (1-10)</label>
+            <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 1])->label(false) ?>
+            <p>Value: <span id="safariseat"><?= $model->no_of_safari ?></span></p>
         </div>
 
         <div class="col-md-6 mb-1">
@@ -54,12 +55,9 @@ use yii\helpers\Html;
             <label for="" class="Modal_label">Stay Category</label>
             <?= $form->field($model, 'stay_category_id')->dropDownList(['1' => ' Budget', '2' => 'Economical', '3' => 'Premium'], ['class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
-        <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
-            <?= $form->field($model, 'host_type')->hiddenInput(['value' => 4])->label(false); ?>
-        <?php } else {  ?>
-            <label for="" class="Modal_label">You Are?</label>
-            <?= $form->field($model, 'host_type')->dropDownList(['1' => 'Individual', '2' => 'Wildlife Photographer', '3' => 'Wildlife Influencer'], ['prompt' => 'Select Who you Are?', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
-        <?php } ?>
+
+
+
         <div class="col-lg-6 mb-2">
             <label for="" class="Modal_label">Cost Per Person (INR)</label>
             <div class="d-flex gap-3 align-items-center">
@@ -79,8 +77,9 @@ use yii\helpers\Html;
         <div class="col-lg-12">
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
-                    <label for="" class="Modal_label">Tour Duration</label>
-                    <?= $form->field($model, 'tour_duration')->textInput()->label(false) ?>
+                    <label for="" class="Modal_label">Tour Duration (1-10)</label>
+                    <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->tour_duration) ? $model->tour_duration : 1])->label(false) ?>
+                    <p>Value: <span id="tour"><?= $model->tour_duration ?></span></p>
                 </div>
                 <div class="selects w-100">
                     <label for="" class="Modal_label">Total Seat</label>
@@ -89,6 +88,8 @@ use yii\helpers\Html;
 
             </div>
         </div>
+
+        <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
                 <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
@@ -105,7 +106,18 @@ use yii\helpers\Html;
 $script = <<< JS
           $("#createdepartureform-start_date").on("change", function(){
           $("#createdepartureform-end_date").attr("min", $(this).val());
-          });    
+          });   
+          $("#createdepartureform-tour_duration").on("input",function()
+          {
+            var selectedValue = $(this).val();
+            $("#tour").html(selectedValue);
+          });
+
+          $("#createdepartureform-no_of_safari").on("input",function()
+          {
+            var selectedValue = $(this).val();
+            $("#safariseat").html(selectedValue);
+          }); 
 JS;
 $this->registerJs($script);
 ?>

@@ -2,9 +2,11 @@
 
 namespace frontend\modules\profile\controllers;
 
+use common\models\BlockedModel;
 use common\models\User;
+use common\models\UserFollow;
 use frontend\controllers\FrontendBaseController;
-
+use Yii;
 
 /**
  * SearchController.
@@ -20,5 +22,42 @@ class SearchController extends FrontendBaseController
     {
         $user_list = User::find()->where(['status' => 10])->andWhere("user_handle IS NOT NULL")->all();
         return $this->render('index', ['user_list' => $user_list]);
+    }
+
+
+    public function actionUnblocked($id)
+    {
+        $blocked_model = BlockedModel::find()->where(['blocked_user_id' => $id])->limit(1)->one();
+        if ($blocked_model) {
+            $blocked_model->delete();
+            $follow_model = UserFollow::find()->where(['follow_user_id' => $id])->limit(1)->one();
+            if ($follow_model) {
+                $follow_model->status = 1;
+                if ($follow_model->save(false)) {
+                    Yii::$app->session->setFlash('success', "Unblocked Successfully!!");
+                    return $this->redirect(Yii::$app->request->referrer);
+                };
+            }
+        }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionBlocked($user_handle)
+    {
+        $user = $this->findUserbyHandle($user_handle);
+        $blocked_user = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+        if ($blocked_user) {
+            $blocked_user->status = 2;
+            if ($blocked_user->save(false)) {
+                $model = new BlockedModel();
+                $model->user_id = $blocked_user->user_id;
+                $model->blocked_user_id = $blocked_user->follow_user_id;
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', "Blocked Successfully!!");
+                    return $this->redirect(Yii::$app->request->referrer);
+                }
+            };
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

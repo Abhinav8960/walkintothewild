@@ -37,13 +37,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="tab-block" id="tab-block">
                         <ul class="tab-mnu">
                             <a href="/plan-safari">
-                                <li>Plan Safari</li>
+                                <li> <img src="<?= $this->params['baseurl'] ?>/img/plans.png" alt="" width="30" class="me-2"> Plan Safari</li>
                             </a>
                             <a href="/safari-packages">
-                                <li>Safari Packages</li>
+                                <li> <img src="<?= $this->params['baseurl'] ?>/img/package.png" alt="" width="30" class="me-1" style="padding:6px;">Safari Packages</li>
                             </a>
                             <a href="/shared-safari">
-                                <li class="active">Shared Safari</li>
+                                <li class="active"> <img src="<?= $this->params['baseurl'] ?>/img/car_852639.png" alt="" width="30" class="me-1" style="padding:6px;">Shared Safari</li>
                             </a>
                         </ul>
 
@@ -70,19 +70,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="row justify-content-center">
             <div class="col-12">
                 <div class="title_web">
-                    <h2>TOP SHARED SAFARI</h2>
+                    <h2 class="pb-1">TOP SHARED SAFARI</h2>
                 </div>
             </div>
         </div>
     </div>
     <section class="articals_wrapper">
-        <div class="container-fluid" style="padding-left: 255px !important;padding-right: 55px !important;">
+        <div class="container-fluid">
             <div class="row justify-content-center">
-                <div class="col-xl-12 col-lg-12">
-                    <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4">
-                    </div>
-                    <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
-                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                <div class="col-xl-9 col-xxl-10 px-xxl-3  col-lg-12">
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5 padding_setCard">
                             <?php if ($shared_safaries) {
                                 foreach ($shared_safaries as $share_safari) { ?>
                                     <div class="col mb-4 padding_righ">
@@ -97,7 +94,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                             </div>
                                             <div class="card_body">
-                                                <div class="top_seats">
+                                                <?php
+                                                $class = '';
+                                                if (Yii::$app->user->identity) {
+                                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                    if ($share_safari_intrested) {
+                                                        $class = 'background-color: #007BFF !important;';
+                                                    }
+                                                } ?>
+                                                <div class="top_seats" style='<?= $class ?>'>
                                                     <div class="safari d-flex justify-content-between ">
                                                         <div class="safarinum d-flex gap-2 align-items-center ">
                                                             <p class="text_safari">SAFARI</p>
@@ -148,7 +153,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     if (Yii::$app->user->identity) {
                                                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                                         if ($share_safari_intrested) { ?>
-                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color: #007BFF !important;">Leave Safari</a>
                                                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                                             <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
                                                                         <?php  }
@@ -166,18 +171,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             <?php }
                             } ?>
                         </div>
-                    </div>
+                  
                 </div>
             </div>
         </div>
     </section>
-    <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="joinshareView mt-xl-0 mt-3">
-                <a href="/sharedsafari" class="btn_shareView">View All</a>
-            </div>
-        </div>
-    </div>
 <?php } ?>
 
 <section class="safariduring_sesons">

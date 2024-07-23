@@ -19,9 +19,8 @@ class Header extends Widget
     public function run()
     {
         $active_url = "/" . Yii::$app->requestedRoute;
-        if (in_array($active_url, array("/safaritour-registration", "/birdingtour-registration","/thankyou"))) {
+        if (in_array($active_url, array("/", "/plan-safari", "/safari-packages", "/shared-safari"))) {
             return $this->render('initialheader');
-        } else if (in_array($active_url, array("/coming-soon"))) {
         } else {
             return $this->render('header');
         }

@@ -11,6 +11,7 @@ use frontend\models\ArticleSearch;
 use common\models\cms\banner\Banner;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
+use common\models\UserWishlist;
 
 $this->title = 'Share Safari';
 $this->params['breadcrumbs'][] = $this->title;
@@ -95,7 +96,7 @@ $recentposts = ArticleSearch::recentpost();
                                             <?php } ?>
                                         </div>
                                         <div class="me-3 float-md-end">
-                                            <?php if (Yii::$app->user->identity) { ?>
+                                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->account_type != 1) { ?>
                                                 <button class="btn_newsafari departureBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                                             <?php } ?>
                                         </div>
@@ -139,11 +140,35 @@ $recentposts = ArticleSearch::recentpost();
                                                     <p class="mb-0"><?= date('d', strtotime($share_safari->start_date)) ?></p>
                                                 </div>
                                             </div>
+                                            <div class="floating-watchlist">
+                                                <?php
+                                                if (Yii::$app->user->identity) { ?>
+                                                    <div class="heart_bx">
+                                                        <?php
+                                                        $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2, 'status' => 1])->limit(1)->one();
+                                                        if ($wishlist) {
+                                                        ?>
+                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                        <?php } else { ?>
+                                                            <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
+                                                        <?php }
+                                                        ?>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
                                             <div class="shareimg">
                                                 <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                             </div>
                                             <div class="card_body">
-                                                <div class="top_seats">
+                                                <?php
+                                                $class = '';
+                                                if (Yii::$app->user->identity) {
+                                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                    if ($share_safari_intrested) {
+                                                        $class = 'background-color: #007BFF;';
+                                                    }
+                                                } ?>
+                                                <div class="top_seats" style='<?= $class ?>'>
                                                     <div class="safari d-flex justify-content-between ">
                                                         <div class="safarinum d-flex gap-2 align-items-center ">
                                                             <p class="text_safari">SAFARI</p>
@@ -194,7 +219,7 @@ $recentposts = ArticleSearch::recentpost();
                                                                     if (Yii::$app->user->identity) {
                                                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                                         if ($share_safari_intrested) { ?>
-                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>">Leave Safari</a>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color: #007BFF;">Leave Safari</a>
                                                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                                             <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
                                                                         <?php  }
