@@ -53,7 +53,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
     <div class="container-fluid">
-    <?= $this->render('_view_navbar', ['active' => 'article', 'operator' => $operator]) ?>
+        <?= $this->render('_view_navbar', ['active' => 'article', 'operator' => $operator]) ?>
     </div>
 
 </section>
@@ -62,81 +62,85 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="row justify-content-center">
             <div class="col-xl-9 col-lg-12">
                 <div class="row pt-5">
-                    <div class="col-lg-9 col-md-8 col-xxl-10 col-xl-9 ">
+                    <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-xxl-8 col-lg-8">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h1>Article</h1>
+                                            <h6 class="fs-5 fw-bold">Article</h6>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="card mb-2">
-                                        <div class="card-body">
+                                <div class="col-xxl-4 col-lg-4">
+                                    <div class="request_quote">
+                                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
                                             <?php if ($reviews) { ?>
                                                 <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
                                                 if ($avg) { ?>
-                                                    <h4>Operator Rating <?= round($avg, 1) ?></h4>
+                                                    Operator Rating <?= round($avg, 1) ?>
                                                 <?php } ?>
-                                            <?php } ?>
-                                            <div class="comments_safari operator_comment">
-                                                <div id="review-list">
-                                                    <?php
-                                                    if ($reviews) {
-                                                        foreach ($reviews as $review) {  ?>
-                                                            <div class="commentsOther  position-relative">
-                                                                <div class="postcomment  pt-3">
-                                                                    <div class="text_com">
-                                                                        <h6 class="nameavatr"><?= $review->park->title ?></h6>
-                                                                        <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
-
-                                                                            <div class="ratings">
-                                                                                <p class="mb-0">
-                                                                                    <?php if ($rating_count = $review->rating) {
-                                                                                        for ($i = 1; $i <= $rating_count; $i++) { ?>
-                                                                                            <i class="fa-solid fa-star"></i>
-                                                                                        <?php }
-
-                                                                                        for ($i = $rating_count; $i < 5; $i++) { ?>
-                                                                                            <i class='far fa-star'></i>
-                                                                                    <?php
-                                                                                        }
-                                                                                    } ?>
-                                                                                </p>
-                                                                            </div>
-
-                                                                            <div class="googlerating">
-                                                                                <p class="mb-0"> <?= $review->user->name ?></p>
-
-                                                                            </div>
+                                            <?php } ?></button>
+                                        <div class="interst_wrapper pt-1 px-3 bg-white">
+                                            <div id="review-list">
+                                                <?php
+                                                if ($reviews) {
+                                                    foreach ($reviews as $review) {  ?>
+                                                        <div class="commentsOther2  position-relative">
+                                                            <div class="postcomment  pt-3">
+                                                                <div class="text_com colors_p">
+                                                                    <div class="providerNamerating ">
+                                                                        <div class="googlerating names">
+                                                                            <h6 class="mb-0 fs-6 pb-0"><?= $review->user->name ?></h6>
                                                                         </div>
-                                                                        <p><?= $review->review ?> &nbsp;
+                                                                        <div class="ratings colors">
+                                                                            <p class="mb-0">
+                                                                                <?php if ($rating_count = $review->rating) {
+                                                                                    for ($i = 1; $i <= $rating_count; $i++) { ?>
+                                                                                        <i class="fa-solid fa-star"></i>
+                                                                                    <?php }
 
-                                                                        </p>
+                                                                                    for ($i = $rating_count; $i < 5; $i++) { ?>
+                                                                                        <i class='far fa-star'></i>
+                                                                                <?php
+                                                                                    }
+                                                                                } ?>
+                                                                            </p>
+                                                                        </div>
+
                                                                     </div>
+                                                                    <p class="suggest"><?= $review->review ?> &nbsp;</span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
-                                                    <?php
-                                                        }
-                                                    } ?>
-                                                    <div class="whiteReview m-2">
-                                                        <?php if (Yii::$app->user->identity) { ?>
-                                                            <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
-                                                        <?php } else { ?>
-                                                            <a class="btn_review" href="/site/auth?authclient=google">Please Login to Review</a>
-                                                        <?php } ?>
+
+                                                        </div>
+                                                <?php
+                                                    }
+                                                } ?>
+                                                <!-- <div class="whiteReview m-2">
+                                                <?php if (Yii::$app->user->identity) { ?>
+                                                    <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
+                                                <?php } else { ?>
+                                                    <a class="btn_review" href="/site/auth?authclient=google">Please Login to Review</a>
+                                                <?php } ?>
+                                            </div> -->
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="safari text-end">
+                                                    <div class="viewAllreview">
+                                                        <a href="">View All</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        </form>
                                     </div>
-                                    <div class="card">
-                                        <div class="card-body">
-
-                                            <div class="row">
-                                                <h5>Organized Safari <?= count($organized_by); ?></h5>
+                                    <div class="request_quote mt-4">
+                                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                                            Organized Safari <?= count($organized_by); ?></button>
+                                        <div class="interst_wrapper pt-3 px-md-5 bg-white">
+                                            <div class="row justify-content-center">
                                                 <?php if ($organized_by) {
                                                     foreach ($organized_by as $share_safari) {
                                                 ?>
@@ -210,8 +214,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 } ?>
                                             </div>
 
+                                            <div class="col-12">
+                                                <div class="safari text-end">
+                                                    <div class="viewAllreview">
+                                                        <a href="">View All</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                        </form>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
