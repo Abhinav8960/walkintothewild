@@ -35,7 +35,7 @@
     .desktop_postion {
 
         position: absolute;
-        bottom: 4px;
+        bottom: -12px;
         width: 100%;
     }
 

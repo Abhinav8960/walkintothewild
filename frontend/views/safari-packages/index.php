@@ -35,7 +35,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
                 <div class="col-12 pt-4">
                     <div class="tab-block" id="tab-block">
-                        <ul class="tab-mnu">
+                        <!-- <ul class="tab-mnu">
                             <a href="/plan-safari">
                                 <li><img src="<?= $this->params['baseurl'] ?>/img/plans.png" alt="" width="30" class="me-2"> Plan Safari</li>
                             </a>
@@ -45,7 +45,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             <a href="/shared-safari">
                                 <li> <img src="<?= $this->params['baseurl'] ?>/img/car_852639.png" alt="" width="30" class="me-1" style="padding:6px;"> Shared Safari</li>
                             </a>
-                        </ul>
+                        </ul> -->
 
                         <div class="tab-cont">
                             <div class="tab-pane">
