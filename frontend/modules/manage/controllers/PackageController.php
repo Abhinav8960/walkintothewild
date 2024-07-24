@@ -8,11 +8,13 @@ use yii\web\UploadedFile;
 use common\interfaces\StatusInterface;
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
+use common\models\package\form\PackageCommentActionForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
 use common\models\package\Package;
 use common\models\package\PackageComment;
+use common\models\package\PackageCommentReport;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
@@ -543,5 +545,43 @@ class PackageController extends FrontendBaseController
         if (($model = PackageDay::findOne(['package_id' => $package_id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
+    }
+
+
+    public function actionFlag($id)
+    {
+
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => [1, 20]]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('flag', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionEdit($id)
+    {
+        $comment_action_model = PackageCommentReport::find()->where(['id' => $id])->limit(1)->one();
+        $model = new PackageCommentActionForm($comment_action_model);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->comment_action_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                        return $this->redirect(['/manage/package/comment?package_id=' . $comment_action_model->package_id . '']);
+                    }
+                }
+            }
+        } else {
+            $model->comment_action_model->loadDefaultValues();
+        }
+        return $this->renderAjax('edit', [
+            'model' => $model,
+        ]);
     }
 }

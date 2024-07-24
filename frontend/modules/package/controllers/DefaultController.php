@@ -16,10 +16,12 @@ use common\models\package\PackageSearch;
 use common\models\package\PackageFeature;
 use common\models\operator\SafariOperator;
 use common\models\package\form\PackageForm;
+use common\models\package\PackageComment;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\form\PackageEnquiryForm;
+use frontend\models\PackageCommentReportForm;
 
 /**
  * DefaultController.
@@ -287,6 +289,59 @@ class DefaultController extends FrontendBaseController
             return $this->renderAjax('_enquiry_form', [
                 'model' => $model
             ]);
+        }
+    }
+
+
+    public function actionFlag($slug, $package_comment_id)
+    {
+        $package = Package::find()->where(['package_slug' => $slug])->one();
+        if (!$package) {
+            return $this->redirect(['/package']);
+        }
+
+        $comments = PackageComment::find()->where(['id' => $package_comment_id])->limit(1)->one();
+
+        $model = new PackageCommentReportForm();
+        $model->package_id = $package->id;
+        $model->package_comment_id = $package_comment_id;
+
+        $model->action_url = '/package/default';
+        $model->action_validate_url = '/package/default/validateflag';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->flag_model->save(false)) {
+                        $comments->flaged = 1;
+                        $comments->save(false);
+                        Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
+                        return $this->redirect(['/package/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+                    }
+                }
+            }
+        } else {
+            $model->flag_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_flag_form', [
+                'model' => $model,
+                'slug' => $slug,
+                'comments' => $comments,
+            ]);
+        }
+    }
+
+    public function actionValidateflag($id = null)
+    {
+        $model = new PackageCommentReportForm();
+        if ($id != null) {
+            $flag_model = $this->findModel($id);
+            $model = new PackageCommentReportForm($flag_model);
+        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
         }
     }
 }
