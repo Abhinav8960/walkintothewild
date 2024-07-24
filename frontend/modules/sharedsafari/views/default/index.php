@@ -183,7 +183,7 @@ $recentposts = ArticleSearch::recentpost();
                                                 <div class="titleDate">
                                                     <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= $share_safari->park->title ?></a></h6>
                                                     <div class="orgnizer">
-                                                        <p>Organized by: <strong><?= $share_safari->user->name ?></strong></p>
+                                                        <p>Organized by: <strong><?= isset($share_safari->user) ? $share_safari->user->name : '' ?></strong></p>
                                                     </div>
                                                 </div>
                                                 <div class="footer_card row pb-2 px-2 align-items-center">
