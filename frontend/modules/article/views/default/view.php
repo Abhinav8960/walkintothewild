@@ -153,43 +153,11 @@ if ($article->meta_title != '') {
     </div>
     </div>
 </section>
-<section class="safariduring_sesons">
+<section class="safariduring_sesons pb-5 mb-5">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 
-<section class="bg_sky pb-5">
-    <div class="container-lg pb-5">
-        <div class="row pb-3">
-            <div class="col-lg-6 mb-5 mb-lg-4">
-                <div class="registration_img position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner1.png" alt="" class="w-100" loading="lazy">
-                    <div class="registratin_text text-center">
-                        <h6>Register your business as a <br>Safari Tour Operator</h6>
 
-                        <div class="btn_r">
-                            <a href="/safaritour-registration" class="btn_registrtion">Register Now</a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 mb-5 mb-lg-4">
-                <div class="registration_img  position-relative">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Registration-banner2.png" alt="" class="w-100" loading="lazy">
-                    <div class="registratin_text text-center">
-                        <h6>Register your business as a <br>Birding Tour Operator</h6>
-
-                        <div class="btn_r">
-                            <a href="/birdingtour-registration" class="btn_registrtion">Register Now</a>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
 
 <div class="modal fade" id="modalFlag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
