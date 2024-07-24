@@ -78,7 +78,7 @@
 												<li>
 													<a class="" href="/manage">
 														<i class="fa-solid fa-cog"></i>
-														Manage Safari Tour Busines</a>
+														Manage Safari Tour Business</a>
 												</li>
 											<?php }
 											?>
@@ -155,7 +155,7 @@
 										<li>
 											<a class="" href="/manage">
 												<i class="fa-solid fa-cog"></i>
-												Manage Safari Tour Busines</a>
+												Manage Safari Tour Business</a>
 										</li>
 									<?php }
 									?>
