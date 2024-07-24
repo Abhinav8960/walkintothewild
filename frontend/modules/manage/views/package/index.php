@@ -13,7 +13,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
         <div class="col-md-12 d-flex justify-content-between">
             <h5><?= $this->title ?></h5>
             <div class="right_button float-md-end mb-2">
-                <button class="btn_newsafari packageBtn" value="<?= Url::toRoute(['/manage/package/create']) ?>"><i class="fa fa-plus"></i> Create New Package</button>
+                <button class="btn_newsafari packageBtn join_btn" value="<?= Url::toRoute(['/manage/package/create']) ?>"><i class="fa fa-plus"></i> Create New Package</button>
             </div>
         </div>
         <div class="col-md-2">
@@ -34,6 +34,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                         ],
                                         [
                                             'label' => 'Package Name',
+                                            'contentOptions' => ['style' => 'width: 10%;'],
                                             'format' => 'raw',
                                             'value' => function ($model) {
                                                 return Html::a($model->package_name, ['/package/default/view', 'slug' => $model->package_slug]);
@@ -57,6 +58,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                         ],
                                         [
                                             'label' => 'Start Date',
+                                            'contentOptions' => ['style' => 'width: 10%;'],
                                             'format' => 'raw',
                                             'value' => function ($model) {
                                                 return $model->start_date;
@@ -64,6 +66,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                         ],
                                         [
                                             'label' => 'End Date',
+                                            'contentOptions' => ['style' => 'width: 10%;'],
                                             'format' => 'raw',
                                             'value' => function ($model) {
                                                 return $model->end_date;
@@ -71,6 +74,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                         ],
                                         [
                                             'label' => 'Price',
+                                            'contentOptions' => ['style' => 'width: 10%;'],
                                             'format' => 'raw',
                                             'value' => function ($model) {
                                                 return $model->cost_per_person;
@@ -85,11 +89,19 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             }
                                         ],
                                         [
-                                            'label' => 'Action',
+                                            'label' => 'View',
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('Update', [Url::toRoute(['update', 'package_id' => $model->id])], ['class' => 'btn btn-info', 'title' => 'Update']);
+                                                return   Html::a('View', [Url::toRoute(['view', 'package_id' => $model->id])], ['class' => 'btn btn-info', 'title' => 'View']);
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'Update',
+                                            'format' => 'raw',
+                                            'contentOptions' => ['style' => 'width: 5%;'],
+                                            'value' => function ($model) {
+                                                return   Html::a('Update', [Url::toRoute(['update', 'package_id' => $model->id])], ['class' => 'btn btn-info join_btn', 'title' => 'Update']);
                                             }
                                         ],
                                     ],

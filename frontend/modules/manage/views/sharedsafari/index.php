@@ -12,8 +12,8 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
         <div class="col-md-12">
             <div class="d-flex justify-content-between">
                 <h5><?= $this->title ?></h5>
-                <div class="d-flex">
-                    <button class="btn_newsafari departureBtn" value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
+                <div class="d-flex mb-2">
+                    <button class="btn_newsafari departureBtn join_btn" value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                 </div>
             </div>
         </div>
@@ -90,11 +90,19 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             }
                                         ],
                                         [
-                                            'label' => 'Action',
+                                            'label' => 'View',
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::Button('Update', ['value' => Url::toRoute(['update-fixed-departure', 'slug' => $model->slug]), 'class' => 'btn btn_newsafari departureBtn', 'title' => 'Update']);
+                                                return   Html::a('View', [Url::toRoute(['view', 'id' => $model->id])], ['class' => 'btn btn-info', 'title' => 'View']);
+                                            }
+                                        ],
+                                        [
+                                            'label' => 'Update',
+                                            'format' => 'raw',
+                                            'contentOptions' => ['style' => 'width: 5%;'],
+                                            'value' => function ($model) {
+                                                return   Html::Button('Update', ['value' => Url::toRoute(['update-fixed-departure', 'slug' => $model->slug]), 'class' => 'btn join_btn departureBtn', 'title' => 'Update']);
                                             }
                                         ],
                                     ],

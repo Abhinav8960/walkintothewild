@@ -17,6 +17,7 @@ use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
+use common\models\package\PackageQuoteSearch;
 use common\models\package\PackageSafariPark;
 use frontend\controllers\FrontendBaseController;
 
@@ -421,6 +422,43 @@ class PackageController extends FrontendBaseController
         }
     }
 
+
+
+    public function actionView($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $searchModel = new PackageQuoteSearch();
+        $searchModel->package_id = $package_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = $dataProvider->getModels();
+
+        return $this->render('view', [
+            'package_model' => $package_model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'model' => $model,
+        ]);
+    }
+
+    public function actionComment($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+
+        return $this->render('comment', [
+            'package_model' => $package_model,
+
+        ]);
+    }
+    public function actionBookNow($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+
+
+        return $this->render('book_now', [
+            'package_model' => $package_model,
+
+        ]);
+    }
 
     public function actionActive($id)
     {

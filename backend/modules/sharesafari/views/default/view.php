@@ -42,7 +42,7 @@ $this->params['title'] = $this->title;
                                 <div class="date_bx">
                                     <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                 </div>
-                                <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->website_url <> '' ? $share_safari->website_url : '#' ?>" <?= $share_safari->website_url <> '' ? 'target="_blank"' : '' ?>><strong><?= $share_safari->user->name ?>
+                                <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->website_url <> '' ? $share_safari->website_url : '#' ?>" <?= $share_safari->website_url <> '' ? 'target="_blank"' : '' ?>><strong><?= isset($share_safari->user) ? $share_safari->user->name : '' ?>
                                             (<?= $share_safari->hosttype ?>)</strong></a></p>
 
                             </div>
@@ -168,7 +168,7 @@ $this->params['title'] = $this->title;
                                 <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                             </div>
                             <div class="text_com">
-                                <h6 class="nameavatr"><?= $share_safari->user->name ?></h6>
+                                <h6 class="nameavatr"><?= isset($share_safari->user) ? $share_safari->user->name : '' ?></h6>
                                 <?php if ($share_safari->safari_plan) { ?>
                                     <p><?= $share_safari->safari_plan; ?></p>
                                 <?php } ?>
