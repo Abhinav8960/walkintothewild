@@ -118,9 +118,13 @@ $this->params['title'] = $this->title;
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
                                         </div>
-                                        <div class="text-form">
-                                            <p class="mb-0">Photography Special</p>
-                                        </div>
+                                        <?php if ($package->packagefeatures) {
+                                            foreach ($package->packagefeatures as $features) { ?>
+                                                <div class="text-form">
+                                                    <p class="mb-0"><?= $features->featurename->title ?></p>
+                                                </div>
+                                        <?php }
+                                        } ?>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6  mb-3">
@@ -164,7 +168,7 @@ $this->params['title'] = $this->title;
                                     <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $package->cost_per_person ?> +GST</h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <a class="join_btn  mt-sm-0 mt-2" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalenquiry" data-bs-whatever="@mdo">Book Now</a>
+                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>
                                 </div>
                             </div>
 
@@ -362,85 +366,26 @@ $this->params['title'] = $this->title;
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered  modal-md">
         <div class="modal-content">
-            <!-- <div class="modal-header justify-content-center">
-      
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div> -->
             <div class="modal-body">
                 <h1 class="modal-title fs-5 text-center pb-3" id="exampleModalLabel">Enquire</h1>
-                <form>
-                    <div class="row ">
-                        <div class="col-lg-4 mb-3">
-                            <div class="form-wrapper d-flex gap-3">
-                                <div class="input-group2">
-                                    <label for="travelers">Travelers</label>
-                                    <div class="number-input position-relative">
-                                        <input type="number" id="travelers" value="6" class="form-control">
-                                        <div class="bton_updown">
-                                            <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
-                                            <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-3">
-                            <div class="form-wrapper">
-                                <label for="">Start Date</label>
-                                <input type="date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 mb-3">
-                            <div class="form-wrapper">
-                                <label for="">End Date</label>
-                                <input type="date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-lg-12 mb">
-                            <div class="form-wrapper mb-3">
-                                <label for="">Full Name</label>
-                                <input type="text" class="form-control" placeholder="Your name">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-wrapper mb-3">
-                                <label for="">Email Address</label>
-                                <input type="text" class="form-control" placeholder="xyz@abc.com">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-wrapper mb-3">
-                                <label for="">Phone Number</label>
-                                <input type="text" class="form-control" placeholder="+91">
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="col-md-7">
-                            <div class="text_get termsConditioncheck d-flex gap-2">
-                                <input type="checkbox" id="chekcs">
-                                <label for="chekcs">I agree to the terms and conditions.</label>
-                            </div>
-                        </div>
-                        <div class="col-md-5  pt-lg-0 pt-3">
-                            <button class="sent_btn">Send Request</button>
-                        </div>
-                    </div>
-                </form>
             </div>
-            <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div> -->
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
         </div>
     </div>
 </div>
 
 <?php
 $script = <<< JS
-
+function enquiryfunction() {
+	$('.enquiryBtn').on('click', function () {
+        $('#exampleModalenquiry').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+enquiryfunction();
        
 JS;
 $this->registerJs($script);

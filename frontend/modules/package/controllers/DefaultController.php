@@ -19,6 +19,7 @@ use common\models\package\form\PackageForm;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
 use frontend\controllers\FrontendBaseController;
+use frontend\models\form\PackageEnquiryForm;
 
 /**
  * DefaultController.
@@ -253,5 +254,39 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+    }
+
+
+    public function actionEnquiry($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $model = new PackageEnquiryForm();
+        $model->safari_operator_id =  $package->owned_by_id;
+        $model->package_id = $package->id;
+        $model->user_id = Yii::$app->user->identity->id;
+        $model->status = 1;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_enquiry_model->save(false)) {
+                        Yii::$app->session->setFlash('success', 'Request Sent Successfully!');
+                        return $this->redirect(['view', 'slug' => $package->package_slug]);
+                    }
+                }
+            }
+        } else {
+            $model->package_enquiry_model->loadDefaultValues();
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_enquiry_form', [
+                'model' => $model
+            ]);
+        } else {
+            return $this->renderAjax('_enquiry_form', [
+                'model' => $model
+            ]);
+        }
     }
 }
