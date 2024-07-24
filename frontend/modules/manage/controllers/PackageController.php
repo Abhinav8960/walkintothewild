@@ -12,6 +12,7 @@ use common\models\package\form\PackageCommentActionForm;
 use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
+use common\models\package\form\PackageGalleryForm;
 use common\models\package\Package;
 use common\models\package\PackageComment;
 use common\models\package\PackageCommentReport;
@@ -20,6 +21,8 @@ use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
+use common\models\package\PackageGallery;
+use common\models\package\PackageGallerySearch;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageQuoteSearch;
 use common\models\package\PackageSafariPark;
@@ -591,5 +594,67 @@ class PackageController extends FrontendBaseController
         return $this->renderAjax('edit', [
             'model' => $model,
         ]);
+    }
+
+
+
+    public function actionGallery($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $searchModel = new PackageGallerySearch();
+        $searchModel->package_id = $package_id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        return $this->render('gallery', [
+            'package_model' => $package_model,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCreateGallery($package_id, $id = null)
+    {
+        $package_model = $this->findModel($package_id);
+        if ($id) {
+            $package_gallery_model = $this->findModelgallery($id);
+            $model = new PackageGalleryForm($package_gallery_model);
+        } else {
+            $model = new PackageGalleryForm();
+            $model->package_id = $package_id;
+        }
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->image = UploadedFile::getInstance($model, 'image');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_gallery_model->save(false)) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        return $this->redirect(['gallery', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_gallery_model->loadDefaultValues();
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_gallery', [
+                'model' => $model,
+                'package_model' => $package_model,
+            ]);
+        }
+    }
+
+
+    protected function findModelgallery($id)
+    {
+        if (($model = PackageGallery::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
