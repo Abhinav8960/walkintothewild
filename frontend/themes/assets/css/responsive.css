@@ -106,6 +106,25 @@
   
 }
 @media(max-width:1500px){
+    .dropdown-toggle{
+
+        height: 60px;
+        line-height: 9px;
+    }
+    .tab-mnu a{
+
+        font-size: 14px;
+    }
+    .serch_btn button{
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+    .OrBox{
+
+        width: 30px;
+        height: 30px;
+        right: -17px;
+    }
 
     .form_review .form-group .form-select{
         font-size: 14px;
