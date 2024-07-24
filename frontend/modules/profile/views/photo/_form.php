@@ -10,8 +10,7 @@ use yii\bootstrap5\ActiveForm;
     <div class="card">
         <div class="card-body">
             <?php $form = ActiveForm::begin([
-                'id' => 'article-form',
-                'method' => 'POST',
+                'id' => 'photo-form',
                 'enableAjaxValidation' => true,
                 'enableClientValidation' => false,
                 'enableClientScript' => true,
@@ -21,12 +20,7 @@ use yii\bootstrap5\ActiveForm;
 
             <div class="row">
                 <div class="col-md-12">
-                    <div class="browslogow3" id="browslogow3">
-                        <div class="text" id="uploadText">Browse Logo <br><span class="span_title"> (JPEG /JPG or PNG / 250 KB)</span></div>
-                        <?= $form->field($model, 'file')->fileInput(['class' => 'fileupload', 'id' => 'fileupload'])->label(false) ?>
-
-                        <!-- <input id="fileupload" type="file" class="fileupload" /> -->
-                    </div>
+                    <?= $form->field($model, 'file')->fileInput()->label('Photo (JPEG /JPG or PNG / 250 KB)') ?>
                 </div>
                 <div class="col-md-12">
                     <?= $form->field($model, 'caption')->textInput([
@@ -36,9 +30,15 @@ use yii\bootstrap5\ActiveForm;
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <?= Html::submitButton('Save', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                <div class="col-lg-12 ">
+                    <div class="creat-safri d-flex justify-content-end">
+                        <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                        <?php if (isset($model->user_photo_model->id)) { ?>
+                            <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                        <?php } else {  ?>
+                            <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                        <?php } ?>
+
                     </div>
                 </div>
             </div>
