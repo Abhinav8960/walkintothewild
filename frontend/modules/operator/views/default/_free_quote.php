@@ -103,14 +103,14 @@ use yii\bootstrap5\ActiveForm;
                 </div>
             <?php } ?>
             <?php if (!empty(Yii::$app->user->identity)) {
-                $class = "col-lg-4 order-2 pt-lg-0  content-center";
+                $class = "col-lg-3 order-2 pt-lg-0  content-center";
             } else {
                 $class = "col-lg-3 margi_top pt-lg-0 pb-3";
             } ?>
             <div class="<?= $class ?>">
                 <?= Html::submitButton('Send Request', ['class' => 'sent_btn w-auto float-end']) ?>
             </div>
-            <div class="col-8 order-1">
+            <div class="col-9 order-1">
                 <div class="text_get">
                     <p class=""><span>*</span>Your request will be sent directly to the operator, but you can
                         also contact them directly if you prefer.</p>
