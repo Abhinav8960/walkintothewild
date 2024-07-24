@@ -5408,3 +5408,17 @@ border-top-right-radius: 0;
     height: 20px;
     font-size: 12px;
 }
+
+.withoutlogedin{
+
+    opacity: 0.4;
+    user-select: none;
+}
+
+.logininfo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+}
