@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
 ?>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
+
 <div class="col-md-12">
 
     <div class="card">
@@ -85,6 +87,18 @@ use yii\bootstrap5\ActiveForm;
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('articleform-description');
+JS;
+$this->registerJs($script);
+?>
+
 
 <?php
 if (!isset($model->article_model->id)) {
