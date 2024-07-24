@@ -89,7 +89,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="row pt-5 itenary_tabs justify-content-center">
-            <div class="col-xxl-11 safartabs ">
+            <div class="col-xxl-11 safartabs d-flex justify-content-between">
                 <ul class="nav nav-tabs">
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safari</a></li>
@@ -112,6 +112,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         ?>
                     <?php } ?>
                 </ul>
+                <div class="sharerbtn">
+                <a href="" class="follow_massge rounded-2 text-capitalize"><i class="fa-solid fa-share"></i> Share Profile</a>
+                </div>
             </div>
         </div>
     </div>
