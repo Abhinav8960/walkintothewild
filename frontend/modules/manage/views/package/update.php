@@ -17,10 +17,10 @@ $this->params['title'] = $this->title;
                 <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn btn-success mb-2" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
                     <div class="row">

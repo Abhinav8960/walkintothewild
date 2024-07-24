@@ -13,11 +13,14 @@ $this->params['title'] = $this->title;
     <div class="row mb-5">
         <div class="col-md-12 d-flex justify-content-between">
             <h5><?= $this->title ?></h5>
+            <div class="d-flex justify-content-between">
+                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn btn-success mb-2" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
+            </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -32,7 +35,7 @@ $this->params['title'] = $this->title;
                                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingOne">
-                                                <a class="accordion-button"  href="<?= Url::toRoute(['/manage/package/itinerary', 'package_id' => $package_model->id, 'day' => $i]) ?>">
+                                                <a class="accordion-button" href="<?= Url::toRoute(['/manage/package/itinerary', 'package_id' => $package_model->id, 'day' => $i]) ?>">
                                                     Day <?= $i ?>
                                                 </a>
                                             </h2>
