@@ -14,6 +14,7 @@ use common\models\trierror\SitePages;
 use common\models\cms\article\ArticleAuthor;
 use common\models\sharesafari\ShareSafari;
 
+
 /**
  * Main Controller for YII Console
  */
@@ -160,5 +161,9 @@ class ContentCounterController extends Controller
             }
         }
     }    
+  }
+
+  public function actionUntracedRequest(){
+
   }
 }

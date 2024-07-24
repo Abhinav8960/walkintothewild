@@ -19,6 +19,8 @@ use common\models\GeneralModel;
  */
 class ArticleForm extends \yii\base\Model
 {
+    public $user_id;
+    public $user_type;
     public $title;
     public $sub_title;
     public $slug;
@@ -76,6 +78,8 @@ class ArticleForm extends \yii\base\Model
             $this->publish_date_time = $this->article_model->publish_date_time;
             $this->is_approved = $this->article_model->is_approved;
             $this->status = $this->article_model->status;
+            $this->user_id = $this->article_model->user_id;
+            $this->user_type = $this->article_model->user_type;
             // $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
 
             $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
@@ -90,12 +94,12 @@ class ArticleForm extends \yii\base\Model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
+            'user_type', 'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics', 'is_approved'
         ];
         $scenarios['update'] = [
-            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
+            'user_type', 'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics', 'is_approved'
         ];
@@ -105,7 +109,7 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics'], 'required'],
+            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics', 'user_type', 'user_id'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id'], 'integer'],
             [['description', 'meta_description'], 'string'],
@@ -210,6 +214,8 @@ class ArticleForm extends \yii\base\Model
         $this->article_model->publish_date_time = $this->publish_date_time;
         $this->article_model->is_approved = $this->is_approved;
         $this->article_model->status = $this->status;
+        $this->article_model->user_id = $this->user_id;
+        $this->article_model->user_type = $this->user_type;
     }
 
     /**

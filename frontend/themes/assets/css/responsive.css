@@ -106,6 +106,32 @@
   
 }
 @media(max-width:1500px){
+    .parksImgireview img{
+
+        height: 170px !important;
+    }
+    .dropdown-toggle{
+
+        height: 60px;
+        line-height: 9px;
+    }
+    .tab-mnu a{
+
+        font-size: 14px;
+    }
+    .safrititles h5{
+        font-size: 20px;
+    }
+    .serch_btn button{
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+    .OrBox{
+
+        width: 30px;
+        height: 30px;
+        right: -17px;
+    }
 
     .form_review .form-group .form-select{
         font-size: 14px;
@@ -323,6 +349,10 @@ line-height: 19px;
     .banner_section-inner .headingBnner_inner h1{
 
         font-size: 30px;
+    }
+    .banner_section-inner .headingBnner_inner p{
+
+        font-size: 19px;
     }
     .number-input button{
 
@@ -2078,6 +2108,7 @@ font-size: 15px;
 
         font-size: 20px;
     }
+   
 }
 @media only screen and (max-width: 576px) and (min-width: 427px){
 

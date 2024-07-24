@@ -36,29 +36,26 @@ $this->params['title'] = $this->title;
 
     </div>
 </section>
-<section class="safari_wrapper py-3">
+<section class="safari_wrapper bg-white py-3">
     <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="col-lg-7 mb-4 pb-lg-0 pb-2">
-                <div class="advertisment ">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box">
-
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="row my-4">
             <div class="col-12">
                 <!-- <div class="btn_set float-end">
                     <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'share_safari_id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
                 </div> -->
-                <div class="wrapper-skybgsafri">
+                <div class="wrapper-skybgsafri bg-white">
+                    <div class="row packageSfari pb-3">
+                        <div class="col-12">
+                            <div class="imagesSafari">
+                                <img src="/assets/5a869828/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                            </div>
+                        </div>
+                    </div>
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <div class="safritimg">
+                                    <div class="safritimg innerImg">
                                         <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
@@ -68,7 +65,7 @@ $this->params['title'] = $this->title;
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->website_url <> '' ? $share_safari->website_url : '#' ?>" <?= $share_safari->website_url <> '' ? 'target="_blank"' : '' ?>><strong><?= $share_safari->user->name ?>
+                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->website_url <> '' ? $share_safari->website_url : '#' ?>" <?= $share_safari->website_url <> '' ? 'target="_blank"' : '' ?>><strong><?= isset($share_safari->user) ? $share_safari->user->name : '' ?>
                                                     (<?= $share_safari->hosttype ?>)</strong></a></p>
 
                                     </div>
@@ -77,22 +74,46 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
-                            <div class="btn_wrap d-flex flex-column ">
+                            <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
+                                    <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
+                                        'class' => 'join_btn text-center mt-sm-0 mt-2 d-block',
+                                        'style' => 'background-color:green; color:white;',
+                                        'data' => [
+                                            'confirm' => 'Are you sure you want to Completed this Safari?',
+                                            'method' => 'post',
+                                        ],
+                                    ]) ?>
+                                <?php } ?>
 
                                 <?php if ($share_safari->status == 2) { ?>
-                                    <a class="join_btn text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
+                                    <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
                                     <?php } else {
                                     if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                         if ($share_safari_intrested) { ?>
-                                            <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
-                                        <?php } else { ?>
-                                            <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
+                                        <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
                                         <?php }
                                     } else { ?>
-                                        <a class="join_btn text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
                                 <?php }
                                 } ?>
+
+                            </div>
+                            <div class="right_button  mt-2">
+                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
+                                    <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                        Safari</button>
+                                <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
+                                    <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                        Fixed Departure</button>
+                                <?php } else if (!Yii::$app->user->identity) {  ?>
+                                    <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
+                                        Safari</a>
+                                <?php } ?>
+
 
                             </div>
                         </div>
@@ -202,32 +223,49 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                         <div class="col-lg-6 d-lg-block  mobile_didplay_block">
-                            <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
-                                    <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
-                                        'class' => 'join_btn text-center mt-sm-0 mt-2',
-                                        'style' => 'background-color:green; color:white;',
-                                        'data' => [
-                                            'confirm' => 'Are you sure you want to Completed this Safari?',
-                                            'method' => 'post',
-                                        ],
-                                    ]) ?>
-                                <?php } ?>
+                            <div class="btn_wrap float-lg-end pt-lg-0 pt-3 d-flex gap-2 align-items-center">
+                                <div class="right_button  ">
+                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
+                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                            Safari</button>
+                                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
+                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                            Fixed Departure</button>
+                                    <?php } else if (!Yii::$app->user->identity) {  ?>
+                                        <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
+                                            Safari</a>
+                                    <?php } ?>
 
-                                <?php if ($share_safari->status == 2) { ?>
-                                    <a class="join_btn text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
-                                    <?php } else {
-                                    if (Yii::$app->user->identity) {
-                                        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                                        if ($share_safari_intrested) { ?>
-                                            <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
-                                        <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                            <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
-                                        <?php }
-                                    } else { ?>
-                                        <a class="join_btn text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
-                                <?php }
-                                } ?>
+
+                                </div>
+                                <div class="btns-safaries">
+                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
+                                        <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
+                                            'class' => 'join_btn text-center mt-sm-0 mt-2',
+                                            'style' => 'background-color:green; color:white;',
+                                            'data' => [
+                                                'confirm' => 'Are you sure you want to Completed this Safari?',
+                                                'method' => 'post',
+                                            ],
+                                        ]) ?>
+                                    <?php } ?>
+
+                                    <?php if ($share_safari->status == 2) { ?>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
+                                        <?php } else {
+                                        if (Yii::$app->user->identity) {
+                                            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                            if ($share_safari_intrested) { ?>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
+                                            <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
+                                            <?php }
+                                        } else { ?>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
+                                    <?php }
+                                    } ?>
+                                </div>
+
 
                             </div>
 
@@ -236,15 +274,18 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
         </div>
-        <div class="row">
-
+    </div>
+</section>
+<section class="safari_wrapper py-5">
+    <div class="container-lg">
+        <div class="row mb-5 pb-5">
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
 
 
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
-                <button class="intested_btn interestBtn " value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
+                <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
-                <div class="interst_wrapper">
+                <div class="interst_wrapper bg-white " style="min-height: 200px;">
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
@@ -260,26 +301,7 @@ $this->params['title'] = $this->title;
                         } ?>
                     </div>
                 </div>
-                <div class="right_button py-lg-5 py-3 d-lg-block d-none">
-                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
-                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                            Safari</button>
-                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
-                        <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                            Fixed Departure</button>
-                    <?php } else if (!Yii::$app->user->identity) {  ?>
-                        <a class="btn_newsafari organizeBtn w-100" href="/site/auth?authclient=google">+ Organize a New
-                            Safari</a>
-                    <?php } ?>
 
-
-                </div>
-                <div class="advertisment d-lg-block d-none">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box-2">
-
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row">
@@ -300,105 +322,7 @@ $this->params['title'] = $this->title;
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="container-fluid">
-        <div class="row mt-4 pt-4">
-            <div class="col-12">
-                <div class="col-12">
-                    <div class="title_web">
-                        <h2>Shared safaris <br>you might be interested </h2>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 g-3 g-lg-5 mb-5 pb-5">
-            <?php $rand_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE]])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderBy('RAND()')->limit(5)->all();
-            foreach ($rand_safari as $safari) { ?>
-                <div class="col mb-4 padding_right">
-                    <div class="sharesafri-card">
-                        <div class="flotingdate">
-                            <div class="icons text-center">
-                                <p class="mb-0"><?= date('M', strtotime($safari->start_date)) ?></p>
-                                <p class="mb-0"><?= date('d', strtotime($safari->start_date)) ?></p>
-                            </div>
-                        </div>
-                        <div class="shareimg">
-                            <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $safari->slug]) ?>"><img src="<?= $safari->sharedimagepath ? $safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
-                        </div>
-                        <div class="card_body">
-                            <div class="top_seats">
-                                <div class="safari d-flex justify-content-between ">
-                                    <div class="safarinum d-flex gap-2 align-items-center ">
-                                        <p class="text_safari">SAFARI</p>
-                                        <h6 class="number-safari"><?= $safari->no_of_safari ?></h6>
-                                    </div>
-                                    <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                        <p class="text_safari">SEATS</p>
-                                        <h6 class="number-safari"><?= $safari->share_seat ?></h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="titleDate">
-                                <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $safari->slug]) ?>"><?= $safari->park->title ?></a></h6>
-                                <div class="orgnizer">
-                                    <p>Organized by: <strong><?= $safari->user->name ?></strong></p>
-                                </div>
-                            </div>
-                            <div class="footer_card row pb-2 px-2 align-items-center">
-
-                                <div class="col-6">
-                                    <div class="users">
-                                        <?php if ($interests = $safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
-                                            $count = $safari->getIntrested()->count();
-                                            $avatar_count = 3;
-                                            foreach ($interests as $interest) {
-                                        ?>
-                                                <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
-                                            <?php
-                                            }
-                                        };
-                                        $count = $safari->getIntrested()->count();
-                                        $avatar_count = 3;
-                                        $data = $count - $avatar_count;
-                                        if ($data > 3) {  ?>
-                                            <div class="roundes_countuser">
-                                                <?= $data ?>+
-                                            </div>
-                                        <?php  } else { ?>
-                                            <img src="<?= $safari->user && $safari->user->avatar <> '' ? $safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="safari text-center">
-
-
-                                        <div class="joinsafari">
-                                            <?php if (Yii::$app->user->identity) {
-                                                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $safari->id, 'status' => 1])->limit(1)->one();
-                                                if ($share_safari_intrested) { ?>
-                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $safari->slug]) ?>">Leave Safari</a>
-                                                <?php } else if ($safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $safari->slug]) ?>">Join Safari</a>
-                                                <?php  }
-                                            } else { ?>
-                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $safari->slug]) ?>">Join Safari</a>
-                                            <?php } ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-
-        </div>
-
-    </div>
-
 </section>
 
 <!-- Modal -->
