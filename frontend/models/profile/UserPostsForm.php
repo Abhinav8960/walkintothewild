@@ -42,7 +42,7 @@ class UserPostsForm extends Model
     public function rules()
     {
         return [
-            [['file', 'caption'], 'required'],
+            [['caption'], 'required'],
             [['file'], 'safe'],
             [
                 ['file'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
