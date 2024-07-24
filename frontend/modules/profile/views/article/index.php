@@ -17,7 +17,7 @@ $this->params['title'] = $this->title;
                     <div class="row">
                         <div class="col-md-12">
                             <div class="d-flex justify-content-between">
-                                <h5>Articles</h5>
+                                <h5>Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h5>
                                 <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                     <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
                                 <?php } ?>

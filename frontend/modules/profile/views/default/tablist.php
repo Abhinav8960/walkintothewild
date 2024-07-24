@@ -88,7 +88,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
-            <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photo</a></li>
+            <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                 if ($user->is_safari_operator == 1) { ?>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link <?= isset($business) ? $business : '' ?> btn btn-warning" target="_blank">Manage Safari Tour Business <i class="fa fa-external-link"></i></a></li>

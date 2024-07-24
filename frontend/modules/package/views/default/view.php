@@ -320,13 +320,13 @@ $this->params['title'] = $this->title;
                         if (true || Yii::$app->user->identity->id == $package->owned_by_id) {
                     ?>
 
-                            <div class="right_button py-lg-5 py-3 d-lg-block d-none">
+                            <!-- <div class="right_button py-lg-5 py-3 d-lg-block d-none">
                                 <a class="btn_newsafari organizeBtn w-100" href="/package/profile/<?= $package->id ?>"><i class="fas fa-edit me-1"></i>Update Package</a>
-                            </div>
+                            </div> -->
                     <?php }
                     } ?>
                 <?php } else { ?>
-                    <p>Please Login to Request Quote</p>
+                    <!-- <p>Please Login to Request Quote</p> -->
                 <?php } ?>
 
                 <div class="request_quote mt-4">
