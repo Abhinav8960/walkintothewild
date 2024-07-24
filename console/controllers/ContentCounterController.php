@@ -13,7 +13,7 @@ use common\models\operator\SafariOperator;
 use common\models\trierror\SitePages;
 use common\models\cms\article\ArticleAuthor;
 use common\models\sharesafari\ShareSafari;
-
+use common\models\trierror\SiteUntracedRequest;
 
 /**
  * Main Controller for YII Console
@@ -163,7 +163,19 @@ class ContentCounterController extends Controller
     }    
   }
 
-  public function actionUntracedRequest(){
+  public function actionUntracedRequest(){    
+    $connection = \Yii::$app->getDb();
+    $command = $connection->createCommand("SELECT DISTINCT(request_full_url) FROM site_frontend_request WHERE request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_pages) AND request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_untraced_request)");
+    $un_traced_record = $command->queryAll();
+    if(count($un_traced_record) > 0){
+      $temp_array = [];
+      foreach($un_traced_record as $record){
+        $temp_array[] = [
+          'url' => $record['request_full_url']
+        ];
+      }
 
+      \Yii::$app->db->createCommand()->batchInsert('site_untraced_request', ['url'], $temp_array)->execute();
+    }
   }
 }
