@@ -75,4 +75,11 @@ class SitemapController extends FrontendBaseController
       \Yii::$app->response->headers->add('Content-Type', 'text/xml');
       return file_get_contents($filepath);
     }
+
+    public function actionArticle_tag(){
+      $filepath = \Yii::$app->params['datapath']."/"."sitemap/"."article_tag.xml";
+      \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+      \Yii::$app->response->headers->add('Content-Type', 'text/xml');
+      return file_get_contents($filepath);
+    }
 }
