@@ -11,20 +11,19 @@ $this->params['title'] = $this->title;
 ?>
 
 
-<div class="container">
+<div class="container pt-5 mt-5">
     <div class="row mt-2">
-        <h3>Search Profile</h3>
+        <div class="col-12">
+            <h3 class="fs-4">Search Profile</h3>
+        </div>
     </div>
-    <div class="row">
+    <div class="row mb-5 pb-5">
         <?php foreach ($user_list as $user) { ?>
-            <div class="col-md-3">
-                <section class="mx-auto my-5" style="max-width: 23rem;">
-                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $user]);  ?>
-                </section>
+            <div class="col-md-3 mb-4">
+                <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $user]);  ?>
             </div>
         <?php } ?>
     </div>
-
 </div>
 
 <style>

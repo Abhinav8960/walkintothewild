@@ -12,6 +12,7 @@ use common\models\package\form\PackageFaqForm;
 use common\models\package\form\PackageFaqSelectForm;
 use common\models\package\form\PackageForm;
 use common\models\package\Package;
+use common\models\package\PackageComment;
 use common\models\package\PackageDay;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
@@ -19,7 +20,9 @@ use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageQuoteSearch;
 use common\models\package\PackageSafariPark;
+use common\models\sharesafari\ShareSafariComment;
 use frontend\controllers\FrontendBaseController;
+use yii\data\ActiveDataProvider;
 
 /**
  * Default controller for the `manage` module
@@ -444,11 +447,37 @@ class PackageController extends FrontendBaseController
     {
         $package_model = $this->findModel($package_id);
 
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  PackageComment::find()->where(['package_id' => $package_id, 'status' => 1])->andWhere(['parent_id' => null]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
         return $this->render('comment', [
             'package_model' => $package_model,
+            'dataProvider' => $dataProvider,
 
         ]);
     }
+
+
+    public function actionReplies($id)
+    {
+        $comment = PackageComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
+        $package_model = $this->findModel($comment->package_id);
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  $comment->getReplies()->where(['status' => 1]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('replies', [
+            'package_model' => $package_model,
+            'dataProvider' => $dataProvider,
+
+        ]);
+    }
+
     public function actionBookNow($package_id)
     {
         $package_model = $this->findModel($package_id);

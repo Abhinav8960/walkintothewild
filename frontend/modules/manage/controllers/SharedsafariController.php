@@ -2,12 +2,17 @@
 
 namespace frontend\modules\manage\controllers;
 
+use common\models\sharesafari\form\ShareSafariCommentActionForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\sharesafari\ShareSafariCommentSearch;
+use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariParklist;
 use frontend\models\form\CreateDepartureForm;
+use yii\web\NotFoundHttpException;
 
 /**
  * Default controller for the `manage` module
@@ -146,5 +151,85 @@ class SharedsafariController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+
+    public function actionView($id)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+
+
+        $safari_interested = ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => 1]);
+        $safari_interested_provider = new ActiveDataProvider([
+            'query' => $safari_interested,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+        ]);
+        return $this->render('view', [
+            'safari_operator' => $safari_operator,
+            'shared_safari_model' => $shared_safari_model,
+            'safari_interested_provider' => $safari_interested_provider,
+        ]);
+    }
+
+    public function actionComment($id)
+    {
+        $safari_operator = $this->module->operatormodel();
+        $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+
+
+
+        $searchModel = new ShareSafariCommentSearch();
+        $searchModel->share_safari_id = $id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('comment', [
+            'safari_operator' => $safari_operator,
+            'shared_safari_model' => $shared_safari_model,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+
+    public function actionEdit($id)
+    {
+        $comment_action_model = ShareSafariCommentReport::find()->where(['id' => $id])->limit(1)->one();
+        $model = new ShareSafariCommentActionForm($comment_action_model);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->comment_action_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                        return $this->redirect(['/manage/sharedsafari/comment?id=' . $comment_action_model->share_safari_id . '']);
+                    }
+                }
+            }
+        } else {
+            $model->comment_action_model->loadDefaultValues();
+        }
+        return $this->renderAjax('edit', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionFlag($id)
+    {
+
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id, 'status' => [1, 20]]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('flag', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
