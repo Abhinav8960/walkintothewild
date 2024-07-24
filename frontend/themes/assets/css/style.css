@@ -2650,7 +2650,7 @@ figure {
 
 .sent_btn {
     background-color: var(--background-primary);
-    padding: 6px 50px;
+    padding: 6px 35px;
     width: 100%;
     display: block;
     color: var(--colorwhite);
@@ -2665,11 +2665,11 @@ figure {
 
     width: 100% !important;
 }
-.content-center + .col-8 .text_get p{
+.content-center + .col-9 .text_get p{
 
     text-align: left !important;
 }
-.margi_top + .col-8{
+.margi_top + .col-9{
 
     width: 100%;
 }
@@ -4568,6 +4568,12 @@ figure {
     border-radius: 20px !important;
     padding: 6px 30px !important;
     margin: 8px 10px 0px 0px;
+    font-size: 14px;
+}
+
+.form_review .form-group .form-select:focus{
+
+    box-shadow: none;
 }
 
 .flags_reply .flagBtn {
@@ -5327,4 +5333,41 @@ border-top-right-radius: 0;
     font-weight: 600;
     color: #000000;
     margin-bottom: 0;
+}
+
+.modal_enquiry .modal-content{
+    background-color: var(--background-yellow);
+}
+.termsConditioncheck input[type="checkbox"]{
+
+    width: 18px;
+    height: 18px;
+    accent-color: var(--background-primary);
+
+}
+.termsConditioncheck label{
+
+    font-style: italic;
+    font-weight: 500;
+    flex: 1;
+    font-size: 14px;
+}
+.modal_enquiry .modal-title{
+
+    color: var(--background-primary);
+}
+
+.items_img img{
+
+    height: 250px;
+    object-fit: cover;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.photoSlider.owl-theme .owl-dots{
+
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
 }

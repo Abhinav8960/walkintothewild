@@ -90,7 +90,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php } ?>
                                             <?php } ?>
                                             <hr>
-                                            <button class="rounded-pill btn btn-dark">Report Profile</button>
+                                            <div class="viewAllreview">
+                                               <a href="">Report Page</a>
+                                            </div>
+                                            <!-- <button class="rounded-pill btn btn-dark"></button> -->
                                         </div>
                                     </div>
                                 </div>
