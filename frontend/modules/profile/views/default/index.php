@@ -47,7 +47,7 @@ $this->params['title'] = $this->title;
 
                         <div class="card mt-2 mb-2">
                             <div class="card-body">
-                                <h5>Share Safari Experience</h5>
+                                <h6 class="fs-6 fw-bold">Share Safari Experience</h6>
                             </div>
                         </div>
                     </div>

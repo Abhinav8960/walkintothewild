@@ -24,62 +24,57 @@ $this->params['title'] = $this->title;
                     <div class="col-xxl-11 mb-5">
                         <div class="row">
                             <div class="col-lg-8">
-                                <div class="card mt-2 mb-4">
+                                <div class="card  mb-4">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Photos</h5>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h6 class="fs-6 fw-bold">Shared Photos</h6>
                                                     <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                        <button class="join_btn photoBtn text-center mt-sm-0 mt-2" value="<?= Url::toRoute(['/profile/photo/create']) ?>">Add photo</button>
+                                                        <button class="follow_btn photoBtn text-center mt-sm-0 mt-2" value="<?= Url::toRoute(['/profile/photo/create']) ?>">+ Add photo</button>
                                                     <?php } ?>
                                                 </div>
-                                            </div>
-                                            <div class="col-xxl-12 col-lg-12 mt-2">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <div class="tab-content_tour active">
-                                                            <div class="row">
-                                                                <?php
-                                                                if ($userposts) {
-                                                                    foreach ($userposts as $userpost) {
-                                                                ?>
-                                                                        <div class="col-md-5 col-lg-3 gap-2 mt-2 mb-2">
-                                                                            <div class="parksImgireview h-100">
-                                                                                <div class="floating-watchlist">
-                                                                                    <?php
-                                                                                    if (Yii::$app->user->identity) {
-                                                                                        if (Yii::$app->user->identity->id == $userpost->user_id) { ?>
-                                                                                            <div class="heart_bx">
-                                                                                                <?= Html::a('<i class="fa-solid fa-trash"></i>', ['delete', 'id' => $userpost->id], [
-                                                                                                    'class' => 'btn btn-danger',
-                                                                                                    'data' => [
-                                                                                                        'confirm' => 'Are you sure you want to delete this photo?',
-                                                                                                        'method' => 'post',
-                                                                                                    ],
-                                                                                                ]) ?>
-                                                                                            </div>
-                                                                                    <?php }
-                                                                                    } ?>
-                                                                                </div>
-                                                                                <img src="<?= isset($userpost->file) ? $userpost->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
-                                                                                <div class="footer_safariname">
-                                                                                    <h6 class=""><?= $userpost->caption ?></h6>
-                                                                                </div>
-                                                                            </div>
-
+                                                <div class="tab-content_tour active">
+                                                    <div class="row">
+                                                        <?php
+                                                        if ($userposts) {
+                                                            foreach ($userposts as $userpost) {
+                                                        ?>
+                                                                <div class="col-md-6 col-lg-4 gap-2 mt-2 mb-2">
+                                                                    <div class="parksImgireview h-100 position-relative">
+                                                                        <div class="floating-watchlist">
+                                                                            <?php
+                                                                            if (Yii::$app->user->identity) {
+                                                                                if (Yii::$app->user->identity->id == $userpost->user_id) { ?>
+                                                                                    <div class="heart_bx">
+                                                                                        <?= Html::a('<i class="fa-solid fa-trash"></i>', ['delete', 'id' => $userpost->id], [
+                                                                                            'class' => 'btn btn-danger',
+                                                                                            'data' => [
+                                                                                                'confirm' => 'Are you sure you want to delete this photo?',
+                                                                                                'method' => 'post',
+                                                                                            ],
+                                                                                        ]) ?>
+                                                                                    </div>
+                                                                            <?php }
+                                                                            } ?>
                                                                         </div>
-                                                                    <?php }
-                                                                } else { ?>
-                                                                    <div class="col-6">
-                                                                        No Photo added!
+                                                                        <img src="<?= isset($userpost->file) ? $userpost->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                                                        <div class="footer_safariname">
+                                                                            <h6 class=""><?= $userpost->caption ?></h6>
+                                                                        </div>
                                                                     </div>
-                                                                <?php } ?>
+
+                                                                </div>
+                                                            <?php }
+                                                        } else { ?>
+                                                            <div class="col-6">
+                                                                No Photo added!
                                                             </div>
-                                                        </div>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div>
+                                
                                         </div>
                                     </div>
                                 </div>

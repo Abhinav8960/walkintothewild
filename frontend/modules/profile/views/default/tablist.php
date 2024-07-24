@@ -25,7 +25,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
                 <div class="text-center">
-                    <h5 class="fs-5 mb-0 fw-semibold"><?= $user->name ?></h5>
+                    <h6 class="fs-3 mb-0 fw-semibold"><?= $user->name ?></h6>
                 </div>
                 <div class="text-center">
                     <h6 class="mb-0"><?= $user->userhandle ?></h6>

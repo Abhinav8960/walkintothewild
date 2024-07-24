@@ -26,7 +26,7 @@ $this->params['title'] = $this->title;
                                         <div class="d-flex justify-content-between">
                                             <h6 class="fs-6 fw-bold">Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h6>
                                             <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
+                                                <a class="follow_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -53,7 +53,7 @@ $this->params['title'] = $this->title;
                                             </div>
                                     <?php }
                                     } else {
-                                        echo 'No Article Found!';
+                                        echo '<p class="px-3 mb-0">No Article Found!</p>';
                                     } ?>
                                 </div>
 
