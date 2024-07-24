@@ -16,7 +16,7 @@ use yii\helpers\Url;
                             <img src="<?= $package->user && $package->user->avatar <> '' ? $package->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                         </div>
                         <div class="text_com">
-                            <h6 class="nameavatr"><?= $package->user->name ?></h6>
+                            <h6 class="nameavatri"><?= isset($package->user) ? $package->user->name : '' ?></h6>
                             <?php if ($package->package_description) { ?>
                                 <p><?= $package->package_description; ?></p>
                             <?php } ?>

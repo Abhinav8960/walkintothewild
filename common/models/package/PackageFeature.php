@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\master\packagefeature\MasterPackagefeature;
 use Yii;
 
 /**
@@ -45,7 +46,7 @@ class PackageFeature extends \yii\db\ActiveRecord implements \common\interfaces\
             ],
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -73,5 +74,10 @@ class PackageFeature extends \yii\db\ActiveRecord implements \common\interfaces\
             'updated_by' => 'Updated By',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    public function getFeaturename()
+    {
+        return $this->hasOne(MasterPackagefeature::class, ['id' => 'feature_id']);
     }
 }
