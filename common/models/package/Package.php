@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\operator\SafariOperator;
 use common\models\User;
 use Yii;
 
@@ -156,6 +157,11 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
+    }
+
+    public function getSafarioperator()
+    {
+        return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
     }
 
 
