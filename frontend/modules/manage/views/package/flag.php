@@ -1,10 +1,21 @@
 <?php
 
+
+/* @var $this yii\web\View */
+/* @var $model common\models\corporate\Corporate */
+
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->title = 'Share Safari Comment';
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['title'] = $this->title;
+
+$this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
+
 ?>
+
 <div class="table-responsive">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -21,62 +32,49 @@ use yii\helpers\Url;
                     return date('Y-m-d', $model->created_at);
                 }
             ],
+
             [
-                'label' => 'Comment',
+                'label' => 'Flagged Reason',
                 'contentOptions' => ['style' => 'width: 10%;'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->comment;
+                    return  $model->reportreason->reason;
                 }
+
             ],
+
             [
-                'label' => 'Creator Name',
+                'label' => 'Flagged Detail',
                 'contentOptions' => ['style' => 'width: 10%;'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return $model->user->name;
+                    return  $model->report_detail;
                 }
             ],
 
-
             [
-                'label' => 'Replies',
+                'label' => 'Action',
                 'contentOptions' => ['style' => 'width: 10%;'],
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Html::button('View Replies', [
-                        'value' => Url::toRoute(['replies', 'id' => $model->id]),
-                        'class' => 'btn btn-warning choose-option mb-2',
+                    return Html::button('Edit', [
+                        'value' => Url::toRoute(['edit', 'id' => $model->id]),
+                        'class' => 'btn btn-warning flag-action mb-2',
                         'title' => 'Edit'
                     ]);
-                }
-            ],
-            [
-                'label' => 'Flages',
-                'contentOptions' => ['style' => 'width: 10%;'],
-                'format' => 'raw',
-                'value' => function ($model) {
-                    if ($model->flaged == 1) {
-                        return Html::button('View Flag', [
-                            'value' => Url::toRoute(['flag', 'id' => $model->id]),
-                            'class' => 'btn btn-warning choose-option mb-2',
-                            'title' => 'Edit'
-                        ]);
-                    } else {
-                        return "";
-                    }
                 }
             ],
 
         ],
     ]); ?>
 </div>
-<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered">
+
+<div class="modal fade" id="modalFlag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header flageHeader">
                 <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Replies
+                    Flag
                 </h6>
             </div>
 
@@ -91,9 +89,8 @@ use yii\helpers\Url;
 <?php
 $script = <<< JS
 
-
-    $('.choose-option').on('click', function () {
-        $('#modalAction').modal('show')
+    $('.flag-action').on('click', function () {
+        $('#modalFlag').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));
 	});

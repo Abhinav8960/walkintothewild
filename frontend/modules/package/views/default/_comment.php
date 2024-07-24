@@ -16,6 +16,12 @@ use yii\helpers\Url;
 
             ?>
                     <div class="one_box">
+                        <div class="objec-flgs">
+                            <?php if (Yii::$app->user->id) {  ?>
+                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
+                            <?php } ?>
+
+                        </div>
                         <div class="postcomment d-flex gap-2 pt-3 w-100">
                             <div class="avatar">
                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
@@ -45,7 +51,9 @@ use yii\helpers\Url;
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>
                                                     </div>
-
+                                                    <?php if (Yii::$app->user->id) {  ?>
+                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
+                                                    <?php } ?>
                                                 </div>
                                             </div>
                                         </div>
