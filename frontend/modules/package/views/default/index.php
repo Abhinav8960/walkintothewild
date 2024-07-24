@@ -36,7 +36,7 @@ $this->params['title'] = $this->title;
 <section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 270px !important; padding-top:30px;">
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-lg-8">
+      <div class="col-lg-10">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
             <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="w-100">
@@ -67,17 +67,6 @@ $this->params['title'] = $this->title;
           ]) ?>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
-              <div class="col-12  mb-xl-5 mb-3">
-                <div class="row justify-content-between">
-                  <div class="col-md-5">
-                  </div>
-                  <div class="col-md-6 mt-md-0 mt-3">
-                   
-                  </div>
-                </div>
-
-
-              </div>
               <div class="col-12">
                 <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100">
                   <div class="left_text">
