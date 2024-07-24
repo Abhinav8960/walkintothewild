@@ -30,7 +30,11 @@ class PlanSafariController extends FrontendBaseController
         $dataProvider = $searchModel->search($this->request->queryParams, false);
 
 
-        $featured_articles = Article::find()->where(['status' => Article::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
+        $featured_articles = Article::find()
+            // ->where(['status' => Article::STATUS_ACTIVE])
+            ->where(['!=', 'sequence', ''])
+            ->andWhere("status=1 AND (user_type=3 OR is_approved=1)")
+            ->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
         $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE])->limit(3)->orderby("RAND()")->all();
         $packages = Package::find()->where(['status' => Package::STATUS_ACTIVE])->limit(3)->orderby("RAND()")->all();
 

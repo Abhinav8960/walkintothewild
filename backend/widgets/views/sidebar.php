@@ -402,6 +402,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/article/update",
 											"/cms/article/create",
 											"/cms/article/comment",
+											"/cms/article-by-user/index",
+											"/cms/article-by-user/update",
+											"/cms/article-by-user/create",
+											"/cms/article-by-user/comment",
 											"/cms/banner",
 											"/cms/about",
 											"/cms/disclaimer",
@@ -432,6 +436,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/article/update",
 														"/cms/article/create",
 														"/cms/article/comment",
+														"/cms/article-by-user/index",
+														"/cms/article-by-user/update",
+														"/cms/article-by-user/create",
+														"/cms/article-by-user/comment",
 														"/cms/faqcategory",
 														"/cms/faqs",
 														"/cms/about/index",
@@ -459,6 +467,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/article/update",
 													"/cms/article/create",
 													"/cms/article/comment",
+													"/cms/article-by-user/index",
+													"/cms/article-by-user/update",
+													"/cms/article-by-user/create",
+													"/cms/article-by-user/comment",
 													"/cms/banner",
 													"/cms/about",
 													"/cms/disclaimer",
@@ -485,6 +497,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/article/update",
 																				"/cms/article/create",
 																				"/cms/article/comment",
+																				"/cms/article-by-user/index",
+																				"/cms/article-by-user/update",
+																				"/cms/article-by-user/create",
+																				"/cms/article-by-user/comment",
 																				"/cms/banner",
 																				"/cms/about",
 																				"/cms/disclaimer",
@@ -515,6 +531,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/article/update",
 														"/cms/article/create",
 														"/cms/article/comment",
+														"/cms/article-by-user/index",
+														"/cms/article-by-user/update",
+														"/cms/article-by-user/create",
+														"/cms/article-by-user/comment",
 													)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Article</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
@@ -532,6 +552,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																"/cms/article/update",
 																"/cms/article/create",
 																"/cms/article/comment",
+																"/cms/article-by-user/index",
+																"/cms/article-by-user/update",
+																"/cms/article-by-user/create",
+																"/cms/article-by-user/comment",
 															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																							"/cms",
 																							"/cms/article-category/index",
@@ -547,6 +571,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																							"/cms/article/update",
 																							"/cms/article/create",
 																							"/cms/article/comment",
+																							"/cms/article-by-user/index",
+																							"/cms/article-by-user/update",
+																							"/cms/article-by-user/create",
+																							"/cms/article-by-user/comment",
 																						)) ? "display: block;" : "display: none;" ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/article-category/index",
@@ -569,6 +597,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																			"/cms/article/update",
 																			"/cms/article/create"
 																		)) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/cms/article-by-user/comment",
+																			"/cms/article-by-user/index",
+																			"/cms/article-by-user/update",
+																			"/cms/article-by-user/create"
+																		)) ? "active" : "" ?>" href="/cms/article-by-user/index">Article By User</a></li>
 
 								</ul>
 							</li>

@@ -55,7 +55,7 @@ $this->params['title'] = $this->title;
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
-                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/manage/package']) ?>" target="_blank"><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></a></p>
+                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $package->safarioperator->slug]) ?>" target="_blank"><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></a></p>
 
                                     </div>
 

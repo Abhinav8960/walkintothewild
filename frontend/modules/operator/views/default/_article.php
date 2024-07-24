@@ -69,6 +69,36 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="card">
                                         <div class="card-body">
                                             <h6 class="fs-5 fw-bold">Article</h6>
+                                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3  gx-xxl-5 gx-lg-4 ">
+                                                <?php if ($articles) {
+                                                    foreach ($articles as $article) { ?>
+                                                        <div class="col mb-5">
+                                                            <div class="artical_cards h-100">
+                                                                <div class="image-box">
+                                                                    <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                                                    </figure>
+                                                                </div>
+                                                                <div class="lower-content">
+                                                                    <ul class="artical-info ">
+                                                                        <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $article->articleAuthor ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
+
+                                                                    </ul>
+                                                                    <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><?= $article->title ?> </a></h3>
+
+                                                                    <div class="artical-info justify-content-center">
+                                                                        <a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a>
+
+                                                                        <span style="color: #9C9C9C;"><i class="fa-solid fa-calendar-days me-1" style="color:#f9d600;"></i><?= date('M d, Y', strtotime($article->article_date)) ?></span>
+                                                                    </div>
+
+
+                                                                </div>
+                                                                <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
+                                                            </div>
+                                                        </div>
+                                                <?php }
+                                                } ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

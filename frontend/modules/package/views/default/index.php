@@ -72,15 +72,7 @@ $this->params['title'] = $this->title;
                   <div class="col-md-5">
                   </div>
                   <div class="col-md-6 mt-md-0 mt-3">
-                    <div class="right_button float-md-end">
-                      <?php if (Yii::$app->user->identity) {
-                        if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) { ?>
-                          <!-- <button class="btn_newsafari packageBtn" value="<?= \yii\helpers\Url::toRoute(['/package/default/create']) ?>">+ Create New Package</button> -->
-                        <?php }
-                      } else {  ?>
-                        <!-- <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Create New Package</a> -->
-                      <?php } ?>
-                    </div>
+                   
                   </div>
                 </div>
 
@@ -153,7 +145,7 @@ $this->params['title'] = $this->title;
                           <div class="orgnizer_tour d-flex justify-content-between pt-2">
                             <div class="icons_restro">
                               <i class="fa-solid fa-car-side"></i>
-                              <p class="mb-0">5 Safaris</p>
+                              <p class="mb-0"><?= $model->no_of_safari ?>Safaris</p>
                             </div>
                             <div class="icons_restro">
                               <i class="fa-solid fa-car"></i>
@@ -166,14 +158,14 @@ $this->params['title'] = $this->title;
                             <div class="icons_restro">
 
                               <i class="fa-solid fa-building"></i>
-                              <p class="mb-0">Premium</p>
+                              <p class="mb-0"><?= $model->packagerange->title ?></p>
                             </div>
                           </div>
                         </div>
                         <div class="footer_card row pb-2 px-2 align-items-center">
                           <div class="col-7">
                             <div class="safaritourlogo">
-                              <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                              <img src="<?= isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-25">
                             </div>
                           </div>
                           <div class="col-5">

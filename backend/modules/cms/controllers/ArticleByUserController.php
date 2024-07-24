@@ -33,6 +33,9 @@ class ArticleByUserController extends Controller
         $searchModel = new ArticleSearch();
         $searchModel->status = StatusInterface::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['not', ['user_id' => null]]);
+        $dataProvider->query->andWhere("user_type=1 OR user_type=2");
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -40,61 +43,6 @@ class ArticleByUserController extends Controller
         ]);
     }
 
-    /**
-     * Create Article Author
-     * 
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new ArticleForm();
-        $model->action_url = '/cms/article/create';
-        $model->action_validate_url = '/cms/article/validate';
-        $model->status = Article::STATUS_ACTIVE;
-        $model->scenario = 'create';
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-
-                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
-                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->article_model->save(false)) {
-                        $model->uploadFile();
-
-                        $articleTopics = $model->article_topics;
-                        if ($articleTopics) {
-                            foreach ($articleTopics as $articleT) {
-                                $articleTopic = new ArticleTopic();
-                                $articleTopic->article_id = $model->article_model->id;
-                                $articleTopic->master_article_topic_id = $articleT;
-                                $articleTopic->save(false);
-                            }
-                        }
-
-                        $articleTags = $model->article_tags;
-                        if ($articleTags) {
-                            foreach ($articleTags as $articleT) {
-                                $articleTag = new ArticleTag();
-                                $articleTag->article_id = $model->article_model->id;
-                                $articleTag->master_article_tag_id = $articleT;
-                                $articleTag->save(false);
-                            }
-                        }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/cms/article/index']);
-                    }
-                }
-            }
-        } else {
-            $model->article_model->loadDefaultValues();
-        }
-
-        return $this->render('form', [
-            'model' => $model,
-        ]);
-    }
 
 
     /**
@@ -108,8 +56,8 @@ class ArticleByUserController extends Controller
     {
         $article_model = $this->findModel($id);
         $model = new ArticleForm($article_model);
-        $model->action_url = '/cms/article/update?id=' . $id;
-        $model->action_validate_url = '/cms/article/validate?id=' . $id;
+        $model->action_url = '/cms/article-by-user/update?id=' . $id;
+        $model->action_validate_url = '/cms/article-by-user/validate?id=' . $id;
 
         $model->scenario = 'update';
 
@@ -146,7 +94,7 @@ class ArticleByUserController extends Controller
                         }
 
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['/cms/article/index']);
+                        return $this->redirect(['/cms/article-by-user/index']);
                     }
                 }
             }

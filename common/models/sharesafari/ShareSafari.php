@@ -147,4 +147,24 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
         $options = [1 => 'Individual', 2 => 'Wildlife Photographer', 3 => 'Wildlife Influencer', 4 => 'Safari Tour Operator'];
         return isset($options[$this->host_type]) ? $options[$this->host_type] : $this->host_type;
     }
+
+
+
+    public function getOrganizedbyname()
+    {
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return $this->user->name;
+        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return isset($this->safarioperator->business_name) ? $this->safarioperator->business_name : "";
+        }
+    }
+
+    public function getOrganizedbyprofileurl()
+    {
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return \yii\helpers\Url::toRoute(['/profile/default/view', 'user_handle' => $this->user->user_handle]);
+        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return \yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $this->safarioperator->slug]);
+        }
+    }
 }
