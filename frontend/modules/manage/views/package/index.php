@@ -89,7 +89,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('Update', [Url::toRoute(['update', 'package_id' => $model->id]), 'class' => 'btn btn_newsafari departureBtn', 'title' => 'Update']);
+                                                return   Html::a('Update', [Url::toRoute(['update', 'package_id' => $model->id])], ['class' => 'btn btn-info', 'title' => 'Update']);
                                             }
                                         ],
                                     ],
