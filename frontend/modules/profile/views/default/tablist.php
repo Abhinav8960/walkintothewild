@@ -36,7 +36,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 <?php } ?>
             </div>
-            <div class="col-lg-8 ">
+            <div class="col-lg-7 " style="z-index: 10;">
                 <div class="follow_massage d-flex justify-content-center mt-4 gap-3 align-items-center">
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $user->id) {
                         if (UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id, 'status' => '1'])->one()) { ?>
