@@ -44,7 +44,7 @@
 											<li>
 												<a class="" href="/manage">
 													<i class="fa-solid fa-cog"></i>
-													Manage Business</a>
+													Manage Safari Tour Busines</a>
 											</li>
 										<?php }
 										?>
