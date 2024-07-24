@@ -5086,29 +5086,34 @@ a.desc:after {
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle {
-
-    width: 160px;
+    width: 331px;
+    padding-left: 57px;
+    border-radius: 10px;
 }
+.planSearch_box .select_searcjBox .select_boxes:nth-child(1) .placeholder_select {
+
+    left: 6% !important;
+ }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle {
 
     width: 230px;
     padding-left: 38px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle {
 
     width: 230px;
     padding-left: 38px;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .dropdown-toggle {
 
-    width: 331px;
-    padding-left: 57px;
-    border-radius: 10px;
+    width: 160px;
+    padding-left: 27px;
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle {
@@ -5116,7 +5121,7 @@ a.desc:after {
     padding-left: 20px;
 }
 
-.planSearch_box .placeholder_select.loc {
+.planSearch_box .placeholder_select.loc{
 
     left: 14%;
 }
@@ -5510,4 +5515,9 @@ border-top-right-radius: 0;
 .profileDetails img{
 
     box-shadow: 0px 3px 6px #00000029;
+}
+.btn-close {
+    opacity: 1;
+
+    --bs-btn-close-bg:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='35' height='35' fill='%23ffffff' class='bi bi-x-lg' viewBox='0 0 16 16'%3E%3Cpath d='M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z'/%3E%3C/svg%3E") !important;
 }
