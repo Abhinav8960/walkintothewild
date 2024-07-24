@@ -10,8 +10,14 @@ $this->title = $user->name . ' | Photo';
 $this->params['title'] = $this->title;
 ?>
 
-<div class="container mb-5">
+<section class="profile-wrapper">
+    <div class="container mb-5">
     <?= $this->render('@frontend/modules/profile/views/default/tablist', ['photo' => 'active', 'user' => $user]) ?>
+
+    </div>
+</section>
+<section>
+<div class="container mb-5">
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
             <div class="card mt-2 mb-4">
@@ -76,6 +82,8 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+</section>
+
 
 
 

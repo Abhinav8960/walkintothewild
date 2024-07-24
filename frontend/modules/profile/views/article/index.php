@@ -8,82 +8,77 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $this->title = $user->name . ' | Article';
 $this->params['title'] = $this->title;
 ?>
-<div class="container mb-5">
-    <?= $this->render('@frontend/modules/profile/views/default/tablist', ['article' => 'active', 'user' => $user]) ?>
-    <div class="row">
-        <div class="col-8">
-            <div class="card mt-2">
-                <div class="card-body">
+<section class="profile-wrapper">
+    <div class="container mb-5">
+        <?= $this->render('@frontend/modules/profile/views/default/tablist', ['article' => 'active', 'user' => $user]) ?>
+    </div>
+</section>
+<section>
+    <div class="container mb-5">
+    <div class="row justify-content-center mb-5">
+                    <div class="col-xxl-11 mb-5">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="d-flex justify-content-between">
-                                <h5>Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h5>
-                                <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                    <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
-                                <?php } ?>
+            <div class="col-lg-8">
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="d-flex justify-content-between">
+                                    <h5>Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h5>
+                                    <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                        <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
+                                    <?php } ?>
+                                </div>
                             </div>
-                        </div>
-                        <?php if ($articles) {
-                            foreach ($articles as $article) {  ?>
-                                <div class="col-md-6 mb-5 mt-4" style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
-                                    <div class="artical_cards h-100">
-                                        <div class="image-box">
-                                            <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
-                                            <?php } ?>
+                            <?php if ($articles) {
+                                foreach ($articles as $article) {  ?>
+                                    <div class="col-md-6 mb-5 mt-4" style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
+                                        <div class="artical_cards h-100">
+                                            <div class="image-box">
+                                                <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                                    <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
+                                                <?php } ?>
 
-                                            <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
-                                            </figure>
-                                        </div>
-                                        <div class="lower-content">
-                                            <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><?= $article->title ?> </a></h3>
-                                            <div class="artical-info justify-content-center">
-                                                <a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a>
+                                                <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                                </figure>
                                             </div>
+                                            <div class="lower-content">
+                                                <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><?= $article->title ?> </a></h3>
+                                                <div class="artical-info justify-content-center">
+                                                    <a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a>
+                                                </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                        <?php }
-                        } else {
-                            echo 'No Article Found!';
-                        } ?>
+                            <?php }
+                            } else {
+                                echo 'No Article Found!';
+                            } ?>
+                        </div>
+
+
                     </div>
-
-
                 </div>
             </div>
-        </div>
+            <div class="col-lg-4">
+                <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
+                <div class="request_quote mt-4">
+                    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                        Instagram</button>
+                    <div class="interst_wrapper pt-3 px-md-5 bg-white">
 
-        <div class="col-4">
-            <div class="row">
-                <div class="col-12">
-                    <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
-                </div>
-                <div class="col-12">
-                    <div class="card mt-2">
-                        <div class="card-body">
-                            <h5>Advertisement</h5>
-                        </div>
                     </div>
                 </div>
-
-                <div class="col-12">
-                    <div class="card mt-2">
-                        <div class="card-body">
-                            <h5>Instagram</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="card mt-2 mb-2">
-                        <div class="card-body">
-                            <h5>Organized Shared Safari <?= count($model) ?></h5>
-                            <?php if ($model) {
-                                foreach ($model as $share_safari) {
-                            ?>
-                                    <div class="col-md-12 mb-4 padding_righ">
+                <div class="request_quote mt-4">
+                    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                        Organized Shared Safari <?= $model_count ?></button>
+                    <div class="interst_wrapper pt-3 px-md-5 bg-white">
+                        <?php if ($model) {
+                            foreach ($model as $share_safari) {
+                        ?>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-12 mb-4">
                                         <div class="sharesafri-card">
                                             <div class="flotingdate">
                                                 <div class="icons text-center">
@@ -149,13 +144,16 @@ $this->params['title'] = $this->title;
                                             </div>
                                         </div>
                                     </div>
-                            <?php }
-                            } ?>
-                        </div>
+                                </div>
+                        <?php }
+                        } ?>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
+                    </div>
+                </div>
+       
     </div>
-</div>
+</section>
