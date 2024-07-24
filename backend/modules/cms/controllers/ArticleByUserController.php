@@ -43,61 +43,6 @@ class ArticleByUserController extends Controller
         ]);
     }
 
-    /**
-     * Create Article Author
-     * 
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new ArticleForm();
-        $model->action_url = '/cms/article-by-user/create';
-        $model->action_validate_url = '/cms/article-by-user/validate';
-        $model->status = Article::STATUS_ACTIVE;
-        $model->scenario = 'create';
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-
-                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
-                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->article_model->save(false)) {
-                        $model->uploadFile();
-
-                        $articleTopics = $model->article_topics;
-                        if ($articleTopics) {
-                            foreach ($articleTopics as $articleT) {
-                                $articleTopic = new ArticleTopic();
-                                $articleTopic->article_id = $model->article_model->id;
-                                $articleTopic->master_article_topic_id = $articleT;
-                                $articleTopic->save(false);
-                            }
-                        }
-
-                        $articleTags = $model->article_tags;
-                        if ($articleTags) {
-                            foreach ($articleTags as $articleT) {
-                                $articleTag = new ArticleTag();
-                                $articleTag->article_id = $model->article_model->id;
-                                $articleTag->master_article_tag_id = $articleT;
-                                $articleTag->save(false);
-                            }
-                        }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/cms/article-by-user/index']);
-                    }
-                }
-            }
-        } else {
-            $model->article_model->loadDefaultValues();
-        }
-
-        return $this->render('form', [
-            'model' => $model,
-        ]);
-    }
 
 
     /**

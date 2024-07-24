@@ -66,11 +66,6 @@ $this->params['title'] = $this->title;
                         ]) ?>
                     </div>
 
-                    <div class="col-md-4">
-                        <?= $form->field($model, 'article_author_id')->dropDownList(GeneralModel::authoroption(), ['prompt' => '--Select Author Name--']) ?>
-                    </div>
-
-
                     <div class="col-md-4 select_width">
                         <?= $form->field($model, 'article_tags')->widget(\kartik\select2\Select2::classname(), [
                             'data' => GeneralModel::tagoption(),

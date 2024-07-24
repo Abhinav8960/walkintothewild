@@ -25,7 +25,7 @@ use common\models\GeneralModel;
     </div>
     <div class="col-md-2">
         <?= $form->field($model, 'article_author_id')->dropDownList(
-            GeneralModel::authoroption(),
+            GeneralModel::userauthoroption(),
             [
                 'prompt' => 'Select Author',
             ]

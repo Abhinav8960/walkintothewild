@@ -51,7 +51,6 @@ class ArticleController extends Controller
         $model = new ArticleForm();
         $model->action_url = '/cms/article/create';
         $model->action_validate_url = '/cms/article/validate';
-        $model->user_id = Yii::$app->user->identity->id;
         $model->user_type = Article::USER_TYPE_ADMIN;
         $model->status = Article::STATUS_ACTIVE;
         $model->scenario = 'create';
