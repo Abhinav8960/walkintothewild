@@ -86,7 +86,7 @@ $this->title = $individual_user->name . ' | Chat';
                             <div class="chat-send-message-form">
                                 <form id="chatmessageform" method="post">
                                     <div class="d-flex">
-                                        <input type="text" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message">
+                                        <input type="text" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off">
                                         <i class="fa fa-paper-plane chat-sendbtn" id="message_sent_btn"></i>
                                     </div>
                                     <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
@@ -113,12 +113,10 @@ function sendmessage(){
         success:function(data){
             console.log(data);
             $('#chat-message').val('');
-            // window.location.href = data;
             location.reload();
         },
         dataType:'html'
-    });
-    
+    });   
 }
 
 $('.submit_on_enter').keydown(function(event) {
