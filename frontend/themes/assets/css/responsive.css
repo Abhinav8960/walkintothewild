@@ -106,6 +106,10 @@
   
 }
 @media(max-width:1500px){
+    .parksImgireview img{
+
+        height: 170px !important;
+    }
     .dropdown-toggle{
 
         height: 60px;
@@ -114,6 +118,9 @@
     .tab-mnu a{
 
         font-size: 14px;
+    }
+    .safrititles h5{
+        font-size: 20px;
     }
     .serch_btn button{
         padding-top: 16px;
