@@ -52,6 +52,29 @@ if ($('.topSlider_tour').length) {
         }
     });
 }
+if ($('.photoSlider').length) {
+    $('.photoSlider').owlCarousel({
+        loop: true,
+        margin: 0,
+        dots: true,
+        nav: false,
+        smartSpeed: 500,
+        autoplay: 300,
+        // navText: ['<span class="fal fa-angle-left"></span>', '<span class="fal fa-angle-right"></span>'],
+        responsive: {
+            0: {
+                items: 1
+            },
+            480: {
+                items: 1
+            },
+            600: {
+                items: 1
+            }
+
+        }
+    });
+}
 
 
 // if ($('.opratios-slider').length) {

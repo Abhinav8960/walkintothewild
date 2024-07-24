@@ -19,10 +19,10 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
         <div class="col-md-12">
             <h5><?= $this->title ?></h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
                     <?php $form = ActiveForm::begin([

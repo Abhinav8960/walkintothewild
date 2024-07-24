@@ -20,9 +20,9 @@ use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
 /**
- * Article Controller for the `blog` module
+ * ArticleByUser Controller for the `blog` module
  */
-class ArticleController extends Controller
+class ArticleByUserController extends Controller
 {
     /**
      * Renders the index view for the module
@@ -50,7 +50,6 @@ class ArticleController extends Controller
         $model = new ArticleForm();
         $model->action_url = '/cms/article/create';
         $model->action_validate_url = '/cms/article/validate';
-        $model->user_type = Article::USER_TYPE_ADMIN;
         $model->status = Article::STATUS_ACTIVE;
         $model->scenario = 'create';
 

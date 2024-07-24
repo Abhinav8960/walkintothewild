@@ -31,9 +31,9 @@ class ArticleController extends FrontendBaseController
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
         if (Yii::$app->user->identity->id == $user->id) {
-            $articles = Article::find()->where(['user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
+            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
         } else {
-            $articles = Article::find()->where(['user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         }
         return $this->render(
             'index',
@@ -51,7 +51,9 @@ class ArticleController extends FrontendBaseController
         $model = new ArticleForm();
         $model->action_url = '/profile/article/create';
         $model->action_validate_url = '/profile/article/validate';
-        $model->status = Article::STATUS_SUSPEND;
+        $model->status = Article::STATUS_ACTIVE;
+        $model->user_id = Yii::$app->user->identity->id;
+        $model->user_type = Article::USER_TYPE_INDIVIDUAL;
         $model->scenario = 'create';
         $model->article_date = date('Y-m-d');
         $model->publish_date_time = date('Y-m-d h:i:s');
@@ -69,7 +71,7 @@ class ArticleController extends FrontendBaseController
                         /**
                          * Here is the concept of generating article_author_id and author_name and first save in Article Author
                          */
-                        $author = ArticleAuthor::find()->where(['user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+                        $author = ArticleAuthor::find()->where(['user_type' => ArticleAuthor::AUTHOR_TYPE_INDIVIDUAL, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
                         if (!$author) {
                             $author = new ArticleAuthor();
                         }
@@ -141,7 +143,7 @@ class ArticleController extends FrontendBaseController
      */
     protected function findModel($slug)
     {
-        if (($model = Article::findOne(['slug' => $slug, 'user_id' => Yii::$app->user->identity->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
+        if (($model = Article::findOne(['slug' => $slug, 'user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => Yii::$app->user->identity->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

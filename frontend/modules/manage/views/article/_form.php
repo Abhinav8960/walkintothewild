@@ -1,0 +1,120 @@
+<?php
+
+use common\models\GeneralModel;
+use yii\helpers\Html;
+use yii\bootstrap5\ActiveForm;
+
+?>
+<div class="col-md-12">
+
+    <div class="card">
+        <div class="card-body">
+            <?php $form = ActiveForm::begin([
+                'id' => 'article-form',
+                'method' => 'POST',
+                'enableAjaxValidation' => true,
+                'enableClientValidation' => false,
+                'enableClientScript' => true,
+                'action' => $model->action_url,
+                'validationUrl' => $model->action_validate_url,
+            ]); ?>
+
+            <div class="row">
+                <div class="col-md-9">
+                    <?= $form->field($model, 'title')->textInput([
+                        'maxlength' => true,
+                        'placeholder' => 'Enter Article Title',
+                    ]) ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <?= $form->field($model, 'article_tags')->widget(\kartik\select2\Select2::classname(), [
+                        'data' => GeneralModel::tagoption(),
+                        'options' => ['placeholder' => 'Select', 'multiple' => true],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])->label('Article Tag') ?>
+                </div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'article_topics')->widget(\kartik\select2\Select2::classname(), [
+                        'data' => GeneralModel::topicoption(),
+                        'options' => ['placeholder' => 'Select', 'multiple' => true],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])->label('Article Topics') ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <?= $form->field($model, 'banner_image')->fileInput()->label('Article Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                </div>
+            </div>
+
+            <div class="row">
+                <?= $form->field($model, 'description')->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description') ?>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <?= $form->field($model, 'comment_allowed')->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
+                </div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'slug')->textInput([
+                        'maxlength' => true,
+                        'placeholder' => 'Enter Slug',
+                        'readonly' => isset($model->article_model->id) ? true : false,
+                    ]) ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <?= Html::submitButton('Save', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <?php ActiveForm::end(); ?>
+    </div>
+</div>
+
+<?php
+if (!isset($model->article_model->id)) {
+    $script = <<< JS
+    $(function(){
+        // Function to generate slug from title
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
+        }
+
+        // Handle title change to update slug
+        $('#articleform-title').on('input', function() {
+            var title = $(this).val();
+            var slug = slugify(title);
+            $('#articleform-slug').val(slug);
+        });
+
+        // Initialize slug when editing existing record
+        if (!$('#articleform-slug').val() && $('#articleform-title').val()) {
+            var title = $('#articleform-title').val();
+            var slug = slugify(title);
+            $('#articleform-slug').val(slug);
+        }
+    });
+JS;
+    $this->registerJs($script);
+}
+?>
