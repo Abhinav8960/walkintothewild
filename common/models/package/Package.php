@@ -180,6 +180,11 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return $this->hasOne(MetaPackageRange::class, ['id' => 'stay_category_id']);
     }
 
+    public function getPackagegallery()
+    {
+        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id']);
+    }
+
     public function getPackagedaynightlabels()
     {
         $options = [

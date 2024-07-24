@@ -4,6 +4,7 @@ use common\models\GeneralModel;
 use common\models\package\PackageIncluded;
 use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
+use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -13,40 +14,33 @@ AppAsset::register($this);
 $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
 ?>
-<section class="safari_wrapper">
+<section class="safari_wrapper  bg-white pt-4">
     <div class="container-lg">
         <div class="row my-4 packageSfari">
             <div class="col-12">
                 <div class="imagesSafari">
-                    <img src="<?= $this->params['baseurl'] ?>/img/FESHwr.jpg" alt="" class="w-100">
+                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
                 </div>
-                <div class="wrapper-skybgsafri">
+                <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="images_tour select_safrai">
-                                        <img src="<?= $package->imagepath ?>" alt="">
+                                        <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
                                     </div>
                                 </div>
                                 <div class="col-lg-8 pt-sm-0 pt-3">
                                     <div class="safrititles">
-                                        <h5 class="fs-4"><a href="/park/satpura-tiger-reserve">Satpura Tiger Reserve </a></h5>
-                                        <div class="date_bx">
+                                        <h5 class="fs-4"><?= $package->package_name ?></h5>
+                                        <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
-                                        </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="https:/adasdsad.asdp" target="_blank"><strong><?= isset($package->user) ? $package->user->name : '' ?></strong></a></p>
+                                        </div> -->
+                                        <p class="mb-0 ">Organized by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></p>
 
                                     </div>
 
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-lg-none mobile_didplay_none">
-                            <div class="btn_wrap d-flex flex-column ">
-
-                                <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=vikas-chaudhary-8eb1ec-251720186292-shared-safari">Join Safari</a>
-
                             </div>
                         </div>
                         <div class="col-lg-5 pt-lg-0 pt-4">
@@ -54,7 +48,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/hotel_forest_location.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_night ?> Nights , <?= $package->no_of_day ?> Days</p>
@@ -64,7 +58,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/gypsycanter.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -78,7 +72,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_safari ?> Shared Safari
@@ -89,7 +83,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -103,17 +97,21 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
                                         </div>
-                                        <div class="text-form">
-                                            <p class="mb-0">Vlogging</p>
-                                        </div>
+                                        <?php if ($package->packagefeatures) {
+                                            foreach ($package->packagefeatures as $features) { ?>
+                                                <div class="text-form">
+                                                    <p class="mb-0"><?= $features->featurename->title ?></p>
+                                                </div>
+                                        <?php }
+                                        } ?>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="http://app.walkintothewild.io/assets/5a869828/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset($package->stay_category_id) ? GeneralModel::packageoption()[$package->stay_category_id] : '' ?></p>
@@ -123,20 +121,22 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-md-4 align-items-center gx-4">
-
+                    <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
                         <div class="col-lg-7">
                             <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-3">
+                                    <?php
+                                    $shared_url = urlencode(Url::to('', true));
+                                    ?>
                                     <ul>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fstaging.walkintothewild.in%2Fsharedsafari%2Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
+                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
                                         </li>
-                                        <li><a href="https://wa.me/?text=http%3A%2F%2Fstaging.walkintothewild.in%2Fsharedsafari%2Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
+                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
                                         </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fstaging.walkintothewild.in%2Fsharedsafari%2Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
+                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
                                         </li>
-                                        <li><a href="https://www.instagram.com/?url=http%253A%252F%252Fstaging.walkintothewild.in%252Fsharedsafari%252Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
+                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
                                         </li>
 
                                     </ul>
@@ -146,339 +146,168 @@ $this->params['title'] = $this->title;
                         <div class="col-lg-5 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="pakageCost">
-                                    <h6 class="fs-4 mb-0"><?= $package->cost_per_person ?> +GST</h6>
+                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $package->cost_per_person ?> +GST</h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <a class="join_btn  mt-sm-0 mt-2" href="#">Book Now</a>
+                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>
                                 </div>
                             </div>
+
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pt-4">
+                            <div class="text_safaripackage">
+                                <p><?= $package->package_description ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row  mt-4 itenary_tabs">
+                        <div class="col-lg-12 col-xl-11 safartabs position-relative">
+                            <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
+                                </li>
+
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#getting-there" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">GETTING THERE</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
+                                </li>
+                            </ul>
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row mb-4 mt-5 justify-content-center mt-4 itenary_tabs">
-            <div class="col-lg-12 col-xl-11 safartabs position-relative">
-                <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">EXCLUSIONS</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#howto-reach-pan" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">TERMS & CONDITIONS</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
-                    </li>
-
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="accomodation-tab" data-bs-toggle="tab" data-bs-target="#accomodation-tab-pane" type="button" role="tab" aria-controls="accomodation-tab-pane" aria-selected="false" tabindex="-1">ACCOMODATION</button>
-                    </li>
-                </ul>
+    </div>
+</section>
+<section class="safari_wrapper mb-5">
+    <div class="container-lg">
+        <div class="row mb-5  mt-4 itenary_tabs">
+            <div class="col-lg-9 col-xl-9 safartabs position-relative">
                 <div class="tab-content accordion" id="myTabContent">
-                    <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Overview</button>
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+                        <div id="collapseOne" class="accordion-collapse bg-set collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
                             <div class="accordion-body p-3">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="itenary-title">
-                                            <h6 class="fs-5 pb-2">ABOUT TRIP / OVERVIEW</h6>
-                                        </div>
-                                        <div class="itenary_text">
-
-                                            <p><?= $package->package_description ?></p>
-                                        </div>
+                                <div class="col-lg-12 mb-3">
+                                    <div class="itenary-title">
+                                        <h6 class="fs-6 fw-bold pb-2">ABOUT TRIP / OVERVIEW</h6>
                                     </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="itenary-title">
-                                            <h6 class="fs-5 pb-2">LOCATION</h6>
-                                        </div>
-                                        <div class="itenary_text">
-                                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.627337221733!2d77.36012777632219!3d28.61095457567664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d054809ac1cc3%3A0xf081c1e27610b8f2!2sTriline%20Infotech%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1720531973102!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row pt-4">
-                                    <div class="col-12 inner_accordion">
-                                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                                            <?php if ($package->packagedays) {
-                                                $packagedays = $package->packagedays;
-                                                foreach ($packagedays as $packageday) { ?>
-                                                    <div class="accordion-item">
-                                                        <h2 class="accordion-header" id="flush-heading<?= $packageday->day ?>">
-                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $packageday->day ?>" aria-expanded="false" aria-controls="flush-collapse<?= $packageday->day ?>">
-                                                                DAY <?= $packageday->day ?> - <?= $packageday->day_title ?>
-                                                            </button>
-                                                        </h2>
-                                                        <div id="flush-collapse<?= $packageday->day ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $packageday->day ?>" data-bs-parent="#accordionFlushExample">
-                                                            <div class="accordion-body">
-                                                                <div class="wrap_days">
-                                                                    <div class="row">
-                                                                        <div class="col-12">
-                                                                            <div class="days_title">
-                                                                                <h4 class="fs-5">Nights jim corbett tiger</h4>
-                                                                            </div>
-                                                                            <div class="text_wrapperite">
-                                                                                <p><?= $packageday->day_description ?></p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-lg-4 mb-3">
-                                                                            <div class="titles_locations">
-                                                                                <h6 class="fs-5">Start Location</h6>
-                                                                                <p><?= $packageday->start_location ?></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4 mb-3">
-                                                                            <div class="titles_locations">
-                                                                                <h6 class="fs-5">End Location</h6>
-                                                                                <p><?= $packageday->end_location ?></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-4 mb-3">
-                                                                            <div class="titles_locations">
-                                                                                <h6 class="fs-5">Hotel Stay Home</h6>
-                                                                                <p><?= $packageday->hotel_name ?></p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-12">
-                                                                            <div class="titles_locations">
-                                                                                <h6 class="fs-5">Meal</h6>
-                                                                                <div class="mealchecks d-flex gap-4 align-items-center">
-                                                                                    <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                                                        <input type="checkbox" id="check" <?= ($packageday->meal_breakfast == 1) ? 'checked' : '' ?>>
-                                                                                        <label for="check">Breackfast</label>
-                                                                                    </div>
-                                                                                    <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                                                        <input type="checkbox" id="check2" <?= ($packageday->meal_lunch == 1) ? 'checked' : '' ?>>
-                                                                                        <label for="check2">Lunch</label>
-                                                                                    </div>
-                                                                                    <div class="inputsCheck mb-2 d-flex  align-items-center gap-2 ">
-                                                                                        <input type="checkbox" id="check3" <?= ($packageday->meal_dinner == 1) ? 'checked' : '' ?>>
-                                                                                        <label for="check3">Dinner</label>
-                                                                                    </div>
-                                                                                    <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                                                        <input type="checkbox" id="check4" <?= ($packageday->meal_breakfast == 1 && $packageday->meal_lunch == 1 && $packageday->meal_dinner == 1) ? 'checked' : '' ?>>
-                                                                                        <label for="check4">All</label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="titles_locations pt-4">
-                                                                        <h6 class="fs-5">Images</h6>
-                                                                    </div>
-
-                                                                    <div class="row pt-2">
-                                                                        <div class="col-lg-4 mb-2">
-                                                                            <div class="hotelImages">
-                                                                                <img src="<?= isset($packageday->day_image) ? $packageday->imagepath : $this->params['baseurl'] . '/img/FESHwr.jpg' ?>" alt="" class="w-100">
-                                                                            </div>
-                                                                        </div>
-                                                                        <?php
-
-                                                                        $latitude = $packageday->latitude;
-                                                                        $longitude = $packageday->longitude;
-
-                                                                        $mapUrl = "https://www.google.com/maps?q={$latitude},{$longitude}&hl=es;z=14&output=embed";
-
-                                                                        if (!empty($latitude) && !empty($longitude)) {
-                                                                        ?>
-                                                                            <div class="col-lg-4 mb-2">
-                                                                                <div class="hotelImages">
-
-                                                                                    <iframe width="400" height="200" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
-                                                                                    </iframe>
-                                                                                </div>
-                                                                            </div>
-                                                                        <?php } ?>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            <?php }
-                                            } ?>
-                                        </div>
+                                    <div class="itenary_text">
+                                        <p><?= $package->package_description ?></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <?= $this->render('_overview', ['package' => $package]) ?>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+
+                    <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                About Park
+                                INCLUSION
                             </button>
                         </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
+                        <div id="collapseTwo" class="accordion-collapse collapse  bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
                             <div class="accordion-body height_set">
-                                <div class="itenary_text">
-                                    <p><?= $package->package_inclusion ?></p>
-                                </div>
+                                <?= $this->render('_inclusion', ['package' => $package]) ?>
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                FLORA &amp; FAUNA
+                    <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
+                        <h2 class="accordion-header d-lg-none" id="headingFour">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                GETTING THERE
                             </button>
                         </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingThree" data-bs-parent="#myTabContent">
+                        <div id="collapseFour" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                             <div class="accordion-body height_set">
-                                <div class="itenary_text">
-                                    <p><?= $package->package_exclusion ?></p>
-                                </div>
+                                <?= $this->render('_getting_there', ['package' => $package]) ?>
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item" id="howto-reach-pan" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
+                    <div class="tab-pane fade accordion-item mb-3" id="policy" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                HOW TO REACH
+                                POLICY INFO
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                        <div id="collapseFour" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                             <div class="accordion-body height_set">
-                                <?php if ($package->package_terms_condtition) { ?>
-                                    <div class="itenary-title">
-                                        <h6 class="fs-5 pb-2">Terms <Cc:ie></Cc:ie>ondtition</h6>
-                                    </div>
-                                <?php } ?>
-                                <div class="itenary_text">
-                                    <p><?= $package->package_terms_condtition ?></p>
-                                </div>
-
-                                <?php if ($package->privacy_policy) { ?>
-                                    <div class="itenary-title">
-                                        <h6 class="fs-5 pb-2">Privacy Policy</h6>
-                                    </div>
-                                <?php } ?>
-                                <div class="itenary_text">
-                                    <p><?= $package->privacy_policy ?></p>
-                                </div>
-                                <?php if ($package->change_policy) { ?>
-                                    <div class="itenary-title">
-                                        <h6 class="fs-5 pb-2">Change Policy</h6>
-                                    </div>
-                                <?php } ?>
-                                <div class="itenary_text">
-                                    <p><?= $package->change_policy ?></p>
-                                </div>
-                                <?php if ($package->what_you_must_carry) { ?>
-                                    <div class="itenary-title">
-                                        <h6 class="fs-5 pb-2">What You Must Carry</h6>
-                                    </div>
-                                <?php } ?>
-                                <div class="itenary_text">
-                                    <p><?= $package->what_you_must_carry ?></p>
-                                </div>
-                                <?php if ($package->date_change_policy) { ?>
-                                    <div class="itenary-title">
-                                        <h6 class="fs-5 pb-2">Date Change Policy</h6>
-                                    </div>
-                                <?php } ?>
-                                <div class="itenary_text">
-                                    <p><?= $package->date_change_policy ?></p>
-                                </div>
-                                <?php if ($package->refund_policy) { ?>
-                                    <div class="itenary-title">
-                                        <h6 class="fs-5 pb-2">Refund Policy</h6>
-                                    </div>
-                                <?php } ?>
-                                <div class="itenary_text">
-                                    <p><?= $package->refund_policy ?></p>
-                                </div>
+                                <?= $this->render('_policy', ['package' => $package]) ?>
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab" tabindex="0">
+                    <div class="tab-pane fade accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingFive">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                                 FAQ
                             </button>
                         </h2>
-                        <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
+                        <div id="collapseFive" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
                             <div class="accordion-body height_set">
-
-                                <?php if ($faqs) {
-                                    $i = 1;
-                                    foreach ($faqs as $faq) {
-                                ?>
-                                        <div class="itenary-title">
-                                            <h6 class="fs-5 pb-2"><?= $i . '. ' ?> <?= $faq->question ?></h6>
-                                        </div>
-                                        <div class="itenary_text">
-                                            <p><?= $faq->answer ?></p>
-                                        </div>
-                                <?php
-                                        $i++;
-                                    }
-                                } ?>
-                            </div>
-                        </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
-                    </div>
-                    <div class="tab-pane fade accordion-item" id="accomodation-tab-pane" role="tabpanel" aria-labelledby="accomodation-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFive">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                                ACCOMODATION
-                            </button>
-                        </h2>
-                        <div id="collapseSix" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set">
-
-
+                                <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
-
-
-            </div>
-        </div>
-        <div class="row mb-4 mt-5 justify-content-center mt-4 itenary_tabs">
-
-            <?= $this->render('_comment', ['package' => $package]) ?>
-        </div>
-        <div class="row mb-4 mt-5 justify-content-center mt-4 itenary_tabs">
-            <div class="col-lg-9 mb-3 mt-5">
-                <div class="itenary-title">
-                    <h6 class="fs-5 pb-2">Disclaimer</h6>
+                <div class="desclaimers pb-3">
+                    <div class="itenary-title">
+                        <h6 class="fs-5 pb-2">Disclaimer</h6>
+                    </div>
+                    <div class="itenary_text">
+                        <ul>
+                            <li>This tour is operated by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> and not by Walk Into The Wild.</li>
+                            <li><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                            <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
+                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> will propose a suitable alternative.</li>
+                            <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="itenary_text">
-                    <ul>
-                        <li>This tour is operated by Eagle Safaris and not by Walk Into The Wild.</li>
-                        <li>Eagle Safaris reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
-                        <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                        <li>In the event that accommodations are fully booked, Eagle Safaris will propose a suitable alternative.</li>
-                        <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
-                    </ul>
-                </div>
+                <?= $this->render('_comment', ['package' => $package]) ?>
             </div>
+            <?php if ($package->packagegallery) {
+                $galleries = $package->packagegallery;
+            ?>
+                <div class="col-xl-3 col-lg-3 mb-5 pb-4">
+                    <div class="request_quote">
+                        <div class="request_quote mt-4">
+                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                                Photo Gallery 10</button>
+                            <div class="interst_wrapper p-0 bg-white">
+                                <div class="photoSlider owl-carousel owl-theme">
+                                    <?php foreach ($galleries as $gallery) { ?>
+                                        <div class="items_img">
+                                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
-    </div>
-
-
 </section>
 
 <?php

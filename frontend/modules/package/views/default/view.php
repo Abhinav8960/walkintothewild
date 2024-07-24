@@ -331,33 +331,24 @@ $this->params['title'] = $this->title;
                     <?php } else { ?>
                         <!-- <p>Please Login to Request Quote</p> -->
                     <?php } ?>
-
-                    <div class="request_quote mt-4">
-                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                            Photo Gallery 10</button>
-                        <div class="interst_wrapper p-0 bg-white">
-                            <div class="photoSlider owl-carousel owl-theme">
-                                <div class="items_img">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
-                                </div>
-                                <div class="items_img">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
-                                </div>
-                                <div class="items_img">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
-                                </div>
-                                <div class="items_img">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
-                                </div>
-                                <div class="items_img">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
-                                </div>
-                                <div class="items_img">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                    <?php if ($package->packagegallery) {
+                        $galleries = $package->packagegallery;
+                    ?>
+                        <div class="request_quote mt-4">
+                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                                Photo Gallery 10</button>
+                            <div class="interst_wrapper p-0 bg-white">
+                                <div class="photoSlider owl-carousel owl-theme">
+                                    <?php foreach ($galleries as $gallery) { ?>
+                                        <div class="items_img">
+                                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
+
                     </div>
             </div>
         </div>
