@@ -99,6 +99,7 @@ return [
 
     '/profile/share-safari/<user_handle>' => '/profile/share-safari/index',
     '/profile/activity/<user_handle>' => '/profile/activity/index',
+    '/profile/photo/create' => '/profile/photo/create',
     '/profile/photo/<user_handle>' => '/profile/photo/index',
     '/profile/contribution/<user_handle>' => '/profile/contribution/index',
 

@@ -121,3 +121,16 @@ use yii\bootstrap5\ActiveForm;
     </div>
 
 </div>
+<script>
+    function increment(id) {
+        let input = document.getElementById(id);
+        input.value = parseInt(input.value) + 1;
+    }
+
+    function decrement(id) {
+        let input = document.getElementById(id);
+        if (parseInt(input.value) > 0) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+</script>
