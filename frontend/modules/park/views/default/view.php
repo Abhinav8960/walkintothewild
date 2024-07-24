@@ -194,6 +194,18 @@ function writesuggestionfunction() {
 writesuggestionfunction();
 
 
+let flashMessageTimeout;
+window.addEventListener('scroll', function () {
+    const flashMessage = document.getElementById('flashMessage');
+    flashMessage.style.display = 'block';
+
+    if (flashMessageTimeout) {
+        clearTimeout(flashMessageTimeout);
+    }
+    flashMessageTimeout = setTimeout(function () {
+        flashMessage.style.display = 'none';
+    }, 2000);
+});
              
 JS;
 $this->registerJs($script);

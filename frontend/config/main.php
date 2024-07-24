@@ -137,6 +137,9 @@ return [
         'manage' => [ // Operator Businesss Page Manage
             'class' => 'frontend\modules\manage\Module',
         ],
+        'chat' => [ // Chating and Messaging Module
+            'class' => 'frontend\modules\chat\Module',
+        ],
     ],
     'container' => [
         'definitions' => [

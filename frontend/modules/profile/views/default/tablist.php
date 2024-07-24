@@ -44,7 +44,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <?php } else { ?>
                             <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="follow_btn ">Follow</a>
                         <?php } ?>
-                        <a href="#" class="follow_massge">Message</a>
+                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="follow_massge">Message</a>
                     <?php } else { ?>
                         <a href="<?= Url::toRoute(['/account', 'id' =>  $user->id]) ?>" class="follow_massge rounded-2"><i class="fa fa-edit"></i> Edit Profile</a>
                     <?php } ?>
@@ -113,7 +113,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <?php } ?>
                 </ul>
                 <div class="sharerbtn">
-                <a href="" class="follow_massge rounded-2 text-capitalize"><i class="fa-solid fa-share"></i> Share Profile</a>
+                    <a href="" class="follow_massge rounded-2 text-capitalize"><i class="fa-solid fa-share"></i> Share Profile</a>
                 </div>
             </div>
         </div>
