@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
 use common\models\User;
 use Yii;
@@ -172,5 +173,33 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     public function getPackagepark()
     {
         return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
+
+    public function getPackagerange()
+    {
+        return $this->hasOne(MetaPackageRange::class, ['id' => 'stay_category_id']);
+    }
+
+    public function getPackagedaynightlabels()
+    {
+        $options = [
+            1 => '0N/1D',
+            2 => '1N/2D',
+            3 => '2N/3D',
+            4 => '3N/4D',
+            5 => '4N/5D',
+            6 => '5N/6D',
+            7 => '6N/7D',
+            8 => '7N/8D',
+            9 => '8N/9D',
+            10 => '9N/10D',
+            11 => '10N/11D',
+            12 => '11N/12D',
+            13 => '12N/13D',
+            14 => '13N/14D',
+            15 => '14N/15D',
+        ];
+
+        return isset($options[$this->no_of_day]) ? $options[$this->no_of_day] : "";
     }
 }

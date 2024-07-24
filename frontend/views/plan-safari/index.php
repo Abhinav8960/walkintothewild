@@ -205,7 +205,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <div class="sharesafri-card tourpackage">
                                             <div class="flotingdate">
                                                 <div class="icons text-center">
-                                                    <p class="mb-0">3N/4D</p>
+                                                    <p class="mb-0"><?= isset($package->no_of_day) ? $package->packagedaynightlabels : " " ?> </p>
                                                 </div>
                                             </div>
                                             <div class="shareimg">
@@ -230,7 +230,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <div class="orgnizer_tour d-flex justify-content-between pt-2">
                                                         <div class="icons_restro">
                                                             <i class="fa-solid fa-car-side"></i>
-                                                            <p class="mb-0">5 Safaris</p>
+                                                            <p class="mb-0"><?= $package->no_of_safari ?> Safaris</p>
                                                         </div>
                                                         <div class="icons_restro">
                                                             <i class="fa-solid fa-car"></i>
@@ -243,14 +243,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         <div class="icons_restro">
 
                                                             <i class="fa-solid fa-building"></i>
-                                                            <p class="mb-0">Premium</p>
+                                                            <p class="mb-0"><?= $package->packagerange->title ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="footer_card row pb-2 px-2 align-items-center">
                                                     <div class="col-7">
                                                         <div class="safaritourlogo">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                            <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
                                                         </div>
                                                     </div>
                                                     <div class="col-5">

@@ -46,7 +46,7 @@ $this->params['title'] = $this->title;
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="images_tour select_safrai">
-                                        <img src="<?= isset($package->safarioperator->business_name) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
+                                        <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
                                     </div>
                                 </div>
                                 <div class="col-lg-8 pt-sm-0 pt-3">
