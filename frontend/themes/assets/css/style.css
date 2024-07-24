@@ -1538,7 +1538,12 @@ figure {
 
     height: 100px;
 }
-.banner_section-inner.packagebnner .headingBnner_inner h1{
+.banner_section-inner.packagedetails .banner_search{
+
+    height: 150px;
+}
+.banner_section-inner.packagebnner .headingBnner_inner h1,
+.banner_section-inner.packagedetails .headingBnner_inner h1{
 
 font-size: 36px;
 }

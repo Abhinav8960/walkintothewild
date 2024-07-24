@@ -14,18 +14,18 @@ $this->params['title'] = $this->title;
 
 
 
-<section class="banner_section-inner  position-relative">
+<section class="banner_section-inner packagedetails  position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
         <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
     </picture>
-    <div class="banner_searchBox">
+    <div class="banner_searchBox ">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1><?= $package->package_name ?></h1>
-                        <p class="text-center text-white">Organized by <?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></p>
+                        <h1 class="mb-0"><?= $package->package_name ?></h1>
+                        <p class="text-center text-white mb-0">Organized by <?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></p>
                     </div>
                 </div>
             </div>
