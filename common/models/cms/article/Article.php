@@ -34,6 +34,10 @@ use Yii;
 class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use \common\traits\CommanRelationship;
+
+    const USER_TYPE_INDIVIDUAL = 1;
+    const USER_TYPE_SAFARI_OPERATOR = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -79,7 +83,7 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         return [
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
-            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'user_id', 'user_type', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['publish_date_time', 'article_date'], 'safe'],
             [['title', 'banner_image', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
