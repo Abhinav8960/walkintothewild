@@ -107,14 +107,32 @@
 }
 @media(max-width:1500px){
 
+    .form_review .form-group .form-select{
+        font-size: 14px;
+    }
+    .sent_btn{
+
+        padding: 4px 35px;
+    }
+    .content-center + .col-8 .text_get p{
+
+        font-size: 14px;
+    }
+  
+
     p{
 
         font-size: 12px;
     }
 
-    .googlerating.names h6,.title_filter h6{
+    .googlerating.names h6,.title_filter h6,.form-wrapper label{
 
         font-size: 14px !important;
+    }
+    .getquote_box .form-select{
+
+        padding: 6px ;
+        font-size: 14px;
     }
     .colors_p .suggest{
 
@@ -305,6 +323,10 @@ line-height: 19px;
     .banner_section-inner .headingBnner_inner h1{
 
         font-size: 30px;
+    }
+    .number-input button{
+
+        line-height: 16px;
     }
     .topSlider_tour .items_slider img{
 

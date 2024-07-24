@@ -75,10 +75,10 @@ $this->params['title'] = $this->title;
                     <div class="right_button float-md-end">
                       <?php if (Yii::$app->user->identity) {
                         if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) { ?>
-                          <button class="btn_newsafari packageBtn" value="<?= \yii\helpers\Url::toRoute(['/package/default/create']) ?>">+ Create New Package</button>
+                          <!-- <button class="btn_newsafari packageBtn" value="<?= \yii\helpers\Url::toRoute(['/package/default/create']) ?>">+ Create New Package</button> -->
                         <?php }
                       } else {  ?>
-                        <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Create New Package</a>
+                        <!-- <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Create New Package</a> -->
                       <?php } ?>
                     </div>
                   </div>

@@ -165,7 +165,7 @@ $this->params['title'] = $this->title;
                                     <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $package->cost_per_person ?> +GST</h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <a class="join_btn  mt-sm-0 mt-2" href="#">Book Now</a>
+                                    <a class="join_btn  mt-sm-0 mt-2" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalenquiry" data-bs-whatever="@mdo">Book Now</a>
                                 </div>
                             </div>
 
@@ -303,7 +303,7 @@ $this->params['title'] = $this->title;
                 </div>
                 <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
             </div>
-            <div class="col-xl-3 col-lg-3">
+            <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <?php if (Yii::$app->user->identity) { ?>
                     <div class="request_quote">
                         <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
@@ -314,24 +314,130 @@ $this->params['title'] = $this->title;
 
                             </div>
                         </div>
-                    </div>
+                 
                     <?php
                     if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) {
                         if (true || Yii::$app->user->identity->id == $package->owned_by_id) {
                     ?>
 
-                            <div class="right_button py-lg-5 py-3 d-lg-block d-none">
+                            <!-- <div class="right_button py-lg-5 py-3 d-lg-block d-none">
                                 <a class="btn_newsafari organizeBtn w-100" href="/package/profile/<?= $package->id ?>"><i class="fas fa-edit me-1"></i>Update Package</a>
-                            </div>
+                            </div> -->
                     <?php }
                     } ?>
                 <?php } else { ?>
-                    <p>Please Login to Request Quote</p>
+                    <!-- <p>Please Login to Request Quote</p> -->
                 <?php } ?>
+
+                <div class="request_quote mt-4">
+                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                        Photo Gallery 10</button>
+                        <div class="interst_wrapper p-0 bg-white">
+                            <div class="photoSlider owl-carousel owl-theme">
+                                <div class="items_img">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                </div>
+                                <div class="items_img">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                </div>
+                                <div class="items_img">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                </div>
+                                <div class="items_img">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                </div>
+                                <div class="items_img">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                </div>
+                                <div class="items_img">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
 </section>
+
+<div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  modal-md">
+        <div class="modal-content">
+            <!-- <div class="modal-header justify-content-center">
+      
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div> -->
+            <div class="modal-body">
+                <h1 class="modal-title fs-5 text-center pb-3" id="exampleModalLabel">Enquire</h1>
+                <form>
+                    <div class="row ">
+                        <div class="col-lg-4 mb-3">
+                            <div class="form-wrapper d-flex gap-3">
+                                <div class="input-group2">
+                                    <label for="travelers">Travelers</label>
+                                    <div class="number-input position-relative">
+                                        <input type="number" id="travelers" value="6" class="form-control">
+                                        <div class="bton_updown">
+                                            <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
+                                            <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <div class="form-wrapper">
+                                <label for="">Start Date</label>
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 mb-3">
+                            <div class="form-wrapper">
+                                <label for="">End Date</label>
+                                <input type="date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb">
+                            <div class="form-wrapper mb-3">
+                                <label for="">Full Name</label>
+                                <input type="text" class="form-control" placeholder="Your name">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-wrapper mb-3">
+                                <label for="">Email Address</label>
+                                <input type="text" class="form-control" placeholder="xyz@abc.com">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-wrapper mb-3">
+                                <label for="">Phone Number</label>
+                                <input type="text" class="form-control" placeholder="+91">
+                            </div>
+                        </div>
+                    
+                      
+                    </div>
+                    <div class="row align-items-center">
+                    <div class="col-md-7">
+                            <div class="text_get termsConditioncheck d-flex gap-2">
+                                <input type="checkbox" id="chekcs">
+                                <label for="chekcs">I agree to the terms and conditions.</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5  pt-lg-0 pt-3">
+                            <button class="sent_btn">Send Request</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div> -->
+        </div>
+    </div>
+</div>
 
 <?php
 $script = <<< JS
