@@ -30,9 +30,10 @@ $this->params['title'] = $this->title;
                         <div class="col-md-12">
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                    <div class="col-6">
-                                        No Comment added!
-                                    </div>
+                                    <?= $this->render('_comment_list', [
+                                        'package_model' => $package_model,
+                                        'dataProvider' => $dataProvider
+                                    ]) ?>
                                 </div>
                             </div>
                         </div>
