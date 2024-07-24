@@ -33,6 +33,9 @@ class ArticleByUserController extends Controller
         $searchModel = new ArticleSearch();
         $searchModel->status = StatusInterface::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere(['not', ['user_id' => null]]);
+        $dataProvider->query->andWhere("user_type=1 OR user_type=2");
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -48,8 +51,8 @@ class ArticleByUserController extends Controller
     public function actionCreate()
     {
         $model = new ArticleForm();
-        $model->action_url = '/cms/article/create';
-        $model->action_validate_url = '/cms/article/validate';
+        $model->action_url = '/cms/article-by-user/create';
+        $model->action_validate_url = '/cms/article-by-user/validate';
         $model->status = Article::STATUS_ACTIVE;
         $model->scenario = 'create';
 
@@ -83,7 +86,7 @@ class ArticleByUserController extends Controller
                             }
                         }
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/cms/article/index']);
+                        return $this->redirect(['/cms/article-by-user/index']);
                     }
                 }
             }
@@ -108,8 +111,8 @@ class ArticleByUserController extends Controller
     {
         $article_model = $this->findModel($id);
         $model = new ArticleForm($article_model);
-        $model->action_url = '/cms/article/update?id=' . $id;
-        $model->action_validate_url = '/cms/article/validate?id=' . $id;
+        $model->action_url = '/cms/article-by-user/update?id=' . $id;
+        $model->action_validate_url = '/cms/article-by-user/validate?id=' . $id;
 
         $model->scenario = 'update';
 
@@ -146,7 +149,7 @@ class ArticleByUserController extends Controller
                         }
 
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['/cms/article/index']);
+                        return $this->redirect(['/cms/article-by-user/index']);
                     }
                 }
             }

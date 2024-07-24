@@ -112,13 +112,17 @@ class ArticleSearch extends Article
                         $additional_query->andWhere(['like', 'master_article_topic.slug', $slug]);
                     }]);
                 }])
-                ->andWhere(['article.status' => self::STATUS_ACTIVE]) // Filters by active status
+                // ->andWhere(['article.status' => self::STATUS_ACTIVE]) // Filters by active status
                 ->andWhere("is_schedule = 0 OR DATE(publish_date_time) <= '" . date('Y-m-d') . "'") // Filters by publication date
+                ->andWhere("article.status=1 AND (user_type=3 OR is_approved=1)")
                 ->orderBy('RAND()') // Orders the results randomly
                 ->limit(3) // Limits the number of results to 3
                 ->all(); // Retrieves all matching records
         } else {
-            return Article::find()->andWhere(['article.status' => [self::STATUS_ACTIVE]])->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
+            return Article::find()
+                // ->andWhere(['article.status' => [self::STATUS_ACTIVE]])
+                ->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
+                ->andWhere("status=1 AND (user_type=3 OR is_approved=1)")
                 ->orderBy('RAND()') // Order by random
                 ->limit(3)
                 ->all();
