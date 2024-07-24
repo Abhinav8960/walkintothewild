@@ -16,10 +16,10 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                 <button class="btn_newsafari packageBtn" value="<?= Url::toRoute(['/manage/package/create']) ?>"><i class="fa fa-plus"></i> Create New Package</button>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
