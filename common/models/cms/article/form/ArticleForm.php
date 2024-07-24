@@ -94,12 +94,12 @@ class ArticleForm extends \yii\base\Model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
+            'user_type', 'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics', 'is_approved'
         ];
         $scenarios['update'] = [
-            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
+            'user_type', 'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
             'article_date', 'long_description', 'article_author_id', 'author_name', 'meta_title', 'meta_description', 'comment_allowed',
             'approval_required', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics', 'is_approved'
         ];
@@ -109,7 +109,7 @@ class ArticleForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics'], 'required'],
+            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics', 'user_type', 'user_id'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status', 'article_author_id'], 'integer'],
             [['description', 'meta_description'], 'string'],

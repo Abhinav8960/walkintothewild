@@ -86,7 +86,7 @@ class GenerateSiteXmlController extends Controller
         //chmod($fh, 0777);
 
         //create robots.txt to make entry of sitemap_index.xml
-        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap";
+        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap_index.xml";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
         if(count($all_url) > 0){
             $content .= "\nUser-agent: *";

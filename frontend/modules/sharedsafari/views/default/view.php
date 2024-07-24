@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->website_url <> '' ? $share_safari->website_url : '#' ?>" <?= $share_safari->website_url <> '' ? 'target="_blank"' : '' ?>><strong><?= $share_safari->user->name ?>
+                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->website_url <> '' ? $share_safari->website_url : '#' ?>" <?= $share_safari->website_url <> '' ? 'target="_blank"' : '' ?>><strong><?= isset($share_safari->user) ? $share_safari->user->name : '' ?>
                                                     (<?= $share_safari->hosttype ?>)</strong></a></p>
 
                                     </div>
@@ -103,19 +103,19 @@ $this->params['title'] = $this->title;
 
                             </div>
                             <div class="right_button  mt-2">
-                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Safari</button>
-                                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Fixed Departure</button>
-                                    <?php } else if (!Yii::$app->user->identity) {  ?>
-                                        <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
-                                            Safari</a>
-                                    <?php } ?>
+                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
+                                    <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                        Safari</button>
+                                <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
+                                    <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                        Fixed Departure</button>
+                                <?php } else if (!Yii::$app->user->identity) {  ?>
+                                    <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
+                                        Safari</a>
+                                <?php } ?>
 
 
-                                </div>
+                            </div>
                         </div>
                         <div class="col-lg-5 pt-lg-0 pt-4">
                             <div class="row px-sm-4 px-0">

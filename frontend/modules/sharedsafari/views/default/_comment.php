@@ -8,8 +8,8 @@ use yii\helpers\Url;
 ?>
 
 <div class="col-lg-9 order-lg-1 order-2 mb-5">
-      <div class="formbg">
-      <div class="comments_safari bg-white">
+    <div class="formbg">
+        <div class="comments_safari bg-white">
             <div class="top_replysafari">
                 <?php if ($share_safari->host_user_id) { ?>
                     <div class="comments-persons">
@@ -18,7 +18,7 @@ use yii\helpers\Url;
                                 <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                             </div>
                             <div class="text_com">
-                                <h6 class="nameavatr"><?= $share_safari->user->name ?></h6>
+                                <h6 class="nameavatr"><?= isset($share_safari->user) ? $share_safari->user->name : '' ?></h6>
                                 <?php if ($share_safari->safari_plan) { ?>
                                     <p><?= $share_safari->safari_plan; ?></p>
                                 <?php } ?>
@@ -115,22 +115,22 @@ use yii\helpers\Url;
             </div>
         </div>
         <?php if ($share_safari->status == 2) {
-        echo '<p class="px-3 pt-2">Comment Closed for this Safari...</p>' ?>
+            echo '<p class="px-3 pt-2">Comment Closed for this Safari...</p>' ?>
+            <?php } else {
+            if (Yii::$app->user->id) {
+                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id) { ?>
+                    <?= $this->render('_comment_form', ['model' => $model]) ?>
         <?php } else {
-        if (Yii::$app->user->id) {
-            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-            if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id) { ?>
-                <?= $this->render('_comment_form', ['model' => $model]) ?>
-    <?php } else {
-                echo '<p class="px-3 pt-2">Please Join in for start Comment</p>';
+                    echo '<p class="px-3 pt-2">Please Join in for start Comment</p>';
+                }
+            } else {
+                echo '<p class="px-3 pt-2">Please <a href="/site/auth?authclient=google" class="sign_intext">Sign In</a> for start Comment</p>';
             }
-        } else {
-            echo '<p class="px-3 pt-2">Please <a href="/site/auth?authclient=google" class="sign_intext">Sign In</a> for start Comment</p>';
-        }
-    } ?>
-      </div>
+        } ?>
+    </div>
 
-    
+
 
 
 </div>
