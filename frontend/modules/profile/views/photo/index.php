@@ -1,5 +1,6 @@
 <?php
 
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -16,13 +17,93 @@ $this->params['title'] = $this->title;
             <div class="card mt-2 mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
-                            No Photo added!
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between">
+                                <h5>Photos</h5>
+                                <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                    <button class="join_btn photoBtn text-center mt-sm-0 mt-2" value="<?= Url::toRoute(['/profile/photo/create']) ?>">Add photo</button>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="col-xxl-12 col-lg-12 mt-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="tab-content_tour active">
+                                        <div class="row">
+                                            <?php
+                                            if ($userposts) {
+                                                foreach ($userposts as $userpost) {
+                                            ?>
+                                                    <div class="col-md-5 col-lg-3 gap-2 mt-2 mb-2">
+                                                        <div class="parksImgireview h-100">
+                                                            <div class="floating-watchlist">
+                                                                <?php
+                                                                if (Yii::$app->user->identity) {
+                                                                    if (Yii::$app->user->identity->id == $userpost->user_id) { ?>
+                                                                        <div class="heart_bx">
+                                                                            <?= Html::a('<i class="fa-solid fa-trash"></i>', ['delete', 'id' => $userpost->id], [
+                                                                                'class' => 'btn btn-danger',
+                                                                                'data' => [
+                                                                                    'confirm' => 'Are you sure you want to delete this photo?',
+                                                                                    'method' => 'post',
+                                                                                ],
+                                                                            ]) ?>
+                                                                        </div>
+                                                                <?php }
+                                                                } ?>
+                                                            </div>
+                                                            <img src="<?= isset($userpost->file) ? $userpost->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                                            <div class="footer_safariname">
+                                                                <h6 class=""><?= $userpost->caption ?></h6>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                <?php }
+                                            } else { ?>
+                                                <div class="col-6">
+                                                    No Photo added!
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade _standard-text" id="package-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add a New Photo</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+function organizefunction() {
+	$('.photoBtn').on('click', function () {
+        $('#package-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+             
+JS;
+$this->registerJs($script);
+?>

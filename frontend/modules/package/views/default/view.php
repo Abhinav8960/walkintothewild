@@ -2,6 +2,7 @@
 
 use common\models\GeneralModel;
 use common\models\package\PackageIncluded;
+use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -24,7 +25,7 @@ $this->params['title'] = $this->title;
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1><?= $package->package_name ?></h1>
-                        <p class="text-center text-white">Organized by <?= isset($package->user) ? $package->user->name : '' ?></p>
+                        <p class="text-center text-white">Organized by <?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></p>
                     </div>
                 </div>
             </div>
@@ -37,7 +38,7 @@ $this->params['title'] = $this->title;
         <div class="row my-4 packageSfari">
             <div class="col-12">
                 <div class="imagesSafari">
-                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
                 </div>
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
@@ -45,25 +46,20 @@ $this->params['title'] = $this->title;
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="images_tour select_safrai">
-                                        <img src="<?= $package->imagepath ?>" alt="">
+                                        <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
                                     </div>
                                 </div>
                                 <div class="col-lg-8 pt-sm-0 pt-3">
                                     <div class="safrititles">
-                                        <h5 class="fs-4"><a href="/park/satpura-tiger-reserve">Satpura Tiger Reserve </a></h5>
+                                        <h5 class="fs-4"><?= $package->package_name ?></h5>
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
-                                        <p class="mb-0 ">Organized by <a href="https:/adasdsad.asdp" target="_blank"><strong><?= isset($package->user) ? $package->user->name : '' ?></strong></a></p>
+                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/manage/package']) ?>" target="_blank"><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></a></p>
 
                                     </div>
 
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 d-lg-none mobile_didplay_none">
-                            <div class="btn_wrap d-flex flex-column ">
-                                <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=vikas-chaudhary-8eb1ec-251720186292-shared-safari">Join Safari</a>
                             </div>
                         </div>
                         <div class="col-lg-5 pt-lg-0 pt-4">
@@ -145,14 +141,17 @@ $this->params['title'] = $this->title;
                             <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-3">
+                                    <?php
+                                    $shared_url = urlencode(Url::to('', true));
+                                    ?>
                                     <ul>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fstaging.walkintothewild.in%2Fsharedsafari%2Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
+                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
                                         </li>
-                                        <li><a href="https://wa.me/?text=http%3A%2F%2Fstaging.walkintothewild.in%2Fsharedsafari%2Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
+                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
                                         </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=http%3A%2F%2Fstaging.walkintothewild.in%2Fsharedsafari%2Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
+                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
                                         </li>
-                                        <li><a href="https://www.instagram.com/?url=http%253A%252F%252Fstaging.walkintothewild.in%252Fsharedsafari%252Fvikas-chaudhary-8eb1ec-251720186292-shared-safari" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
+                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
                                         </li>
 
                                     </ul>
@@ -176,7 +175,7 @@ $this->params['title'] = $this->title;
                     <div class="row">
                         <div class="col-12 pt-4">
                             <div class="text_safaripackage">
-                                <p>Five Tiger Reserve Tour covers all the tiger reserves of Madhya Pradesh and is ideal for a wildlife enthusiast not wanting to miss out anything. This tour covers Panna - Bandhavgarh - Kanha - Pench – Satpura national parks spreading across the complete length & breadth of the state. This is a holistic wildlife experience offering the very best of Central India. Trip not only offers high chance of Royal Bengal Tiger but also provides with an opportunity to explore the diverse flora & fauna of Central India with each park offering a unique habitat.</p>
+                                <p><?= $package->package_description ?></p>
                             </div>
                         </div>
                     </div>
@@ -293,10 +292,10 @@ $this->params['title'] = $this->title;
                     </div>
                     <div class="itenary_text">
                         <ul>
-                            <li>This tour is operated by Eagle Safaris and not by Walk Into The Wild.</li>
-                            <li>Eagle Safaris reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                            <li>This tour is operated by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> and not by Walk Into The Wild.</li>
+                            <li><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
                             <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                            <li>In the event that accommodations are fully booked, Eagle Safaris will propose a suitable alternative.</li>
+                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> will propose a suitable alternative.</li>
                             <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
                         </ul>
                     </div>
@@ -314,50 +313,50 @@ $this->params['title'] = $this->title;
 
                             </div>
                         </div>
-                 
-                    <?php
-                    if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) {
-                        if (true || Yii::$app->user->identity->id == $package->owned_by_id) {
-                    ?>
 
-                            <!-- <div class="right_button py-lg-5 py-3 d-lg-block d-none">
+                        <?php
+                        if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) {
+                            if (true || Yii::$app->user->identity->id == $package->owned_by_id) {
+                        ?>
+
+                                <!-- <div class="right_button py-lg-5 py-3 d-lg-block d-none">
                                 <a class="btn_newsafari organizeBtn w-100" href="/package/profile/<?= $package->id ?>"><i class="fas fa-edit me-1"></i>Update Package</a>
                             </div> -->
-                    <?php }
-                    } ?>
-                <?php } else { ?>
-                    <!-- <p>Please Login to Request Quote</p> -->
-                <?php } ?>
+                        <?php }
+                        } ?>
+                    <?php } else { ?>
+                        <!-- <p>Please Login to Request Quote</p> -->
+                    <?php } ?>
 
-                <div class="request_quote mt-4">
+                    <div class="request_quote mt-4">
                         <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                        Photo Gallery 10</button>
+                            Photo Gallery 10</button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="photoSlider owl-carousel owl-theme">
                                 <div class="items_img">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
                                 </div>
                                 <div class="items_img">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
                                 </div>
                                 <div class="items_img">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
                                 </div>
                                 <div class="items_img">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
                                 </div>
                                 <div class="items_img">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
                                 </div>
                                 <div class="items_img">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" width="100%">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </div>
             </div>
         </div>
-    </div>
 </section>
 
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -415,11 +414,11 @@ $this->params['title'] = $this->title;
                                 <input type="text" class="form-control" placeholder="+91">
                             </div>
                         </div>
-                    
-                      
+
+
                     </div>
                     <div class="row align-items-center">
-                    <div class="col-md-7">
+                        <div class="col-md-7">
                             <div class="text_get termsConditioncheck d-flex gap-2">
                                 <input type="checkbox" id="chekcs">
                                 <label for="chekcs">I agree to the terms and conditions.</label>

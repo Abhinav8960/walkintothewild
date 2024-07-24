@@ -48,13 +48,25 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            [
-                'class' => SluggableBehavior::class,
-                'attribute' => 'name',
-                'slugAttribute' => 'user_handle',
-                'ensureUnique' => true,
-            ],
+            // [
+            //     'class' => SluggableBehavior::class,
+            //     'attribute' => 'name',
+            //     'slugAttribute' => 'user_handle',
+            //     'ensureUnique' => true,
+            // ],
             TimestampBehavior::class,
+            'slug' => [
+                'class' => 'skeeks\yii2\slug\SlugBehavior',
+                'slugAttribute' => 'user_handle', //The attribute to be generated
+                'attribute' => 'name', //The attribute from which will be generated
+                'maxLength' => 255,
+                'ensureUnique' => true,
+                'slugifyOptions' => [
+                    'lowercase' => true,
+                    'separator' => '_',
+                    'trim' => true
+                ]
+            ]
         ];
     }
 

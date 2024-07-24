@@ -22,6 +22,9 @@ class ArticleAuthor extends \yii\db\ActiveRecord implements \common\interfaces\S
 {
     use \common\traits\CommanRelationship;
 
+    const AUTHOR_TYPE_INDIVIDUAL = 1;
+    const AUTHOR_TYPE_SAFARI_OPERATOR = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -52,7 +55,7 @@ class ArticleAuthor extends \yii\db\ActiveRecord implements \common\interfaces\S
     {
         return [
             [['author_name', 'slug'], 'required'],
-            [['created_at', 'created_by', 'updated_by', 'updated_at', 'status'], 'integer'],
+            [['created_at', 'created_by', 'updated_by', 'updated_at', 'status', 'user_type'], 'integer'],
             [['author_name', 'author_image'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
         ];

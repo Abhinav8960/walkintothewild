@@ -19,6 +19,8 @@ use common\models\GeneralModel;
  */
 class ArticleForm extends \yii\base\Model
 {
+    public $user_id;
+    public $user_type;
     public $title;
     public $sub_title;
     public $slug;
@@ -76,6 +78,8 @@ class ArticleForm extends \yii\base\Model
             $this->publish_date_time = $this->article_model->publish_date_time;
             $this->is_approved = $this->article_model->is_approved;
             $this->status = $this->article_model->status;
+            $this->user_id = $this->article_model->user_id;
+            $this->user_type = $this->article_model->user_type;
             // $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['corporate_id' => $this->article_model->corporate_id, 'master_blog_id' => $this->article_model->id, 'status' => 1])->column();
 
             $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
@@ -210,6 +214,8 @@ class ArticleForm extends \yii\base\Model
         $this->article_model->publish_date_time = $this->publish_date_time;
         $this->article_model->is_approved = $this->is_approved;
         $this->article_model->status = $this->status;
+        $this->article_model->user_id = $this->user_id;
+        $this->article_model->user_type = $this->user_type;
     }
 
     /**

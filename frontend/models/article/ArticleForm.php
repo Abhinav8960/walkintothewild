@@ -13,6 +13,7 @@ use yii\base\Model;
 class ArticleForm extends Model
 {
     public $user_id;
+    public $user_type;
     public $title;
     public $sub_title;
     public $slug;
@@ -67,6 +68,8 @@ class ArticleForm extends Model
             $this->is_approved = $this->article_model->is_approved;
             $this->is_schedule = $this->article_model->is_schedule;
             $this->publish_date_time = $this->article_model->publish_date_time;
+            $this->user_id = $this->article_model->user_id;
+            $this->user_type = $this->article_model->user_type;
             $this->status = $this->article_model->status;
 
             $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
@@ -80,11 +83,12 @@ class ArticleForm extends Model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
+            'user_type', 'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
             'article_date', 'long_description', 'meta_title', 'meta_description', 'comment_allowed',
             'is_approved', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
         ];
         $scenarios['update'] = [
+            'user_type', 'user_id',
             'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
             'article_date', 'long_description', 'meta_title', 'meta_description', 'comment_allowed',
             'is_approved', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
@@ -95,7 +99,7 @@ class ArticleForm extends Model
     public function rules()
     {
         return [
-            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics'], 'required'],
+            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics', 'user_type', 'user_id'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['is_approved'], 'default', 'value' => 0],
             [['status', 'article_author_id'], 'integer'],
@@ -178,7 +182,8 @@ class ArticleForm extends Model
      */
     public function initializeForm()
     {
-        $this->article_model->user_id = Yii::$app->user->identity->id;
+        $this->article_model->user_id = $this->user_id;
+        $this->article_model->user_type = $this->user_type;
         $this->article_model->title = $this->title;
         $this->article_model->sub_title = $this->sub_title;
         $this->article_model->slug = $this->slug;
@@ -224,6 +229,5 @@ class ArticleForm extends Model
                 $this->article_model->save(false);
             }
         }
-
     }
 }

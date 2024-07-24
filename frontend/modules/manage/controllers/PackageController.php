@@ -2,6 +2,9 @@
 
 namespace frontend\modules\manage\controllers;
 
+use Yii;
+use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 use common\interfaces\StatusInterface;
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
@@ -16,9 +19,6 @@ use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use frontend\controllers\FrontendBaseController;
-use Yii;
-use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
 /**
  * Default controller for the `manage` module

@@ -89,7 +89,7 @@ $this->params['title'] = $this->title;
               <div class="col-12">
                 <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100">
                   <div class="left_text">
-                    <p>There are currently <strong><?= count($models) ?></strong> active shared safaris created by individuals</p>
+                    <p>There are currently <strong><?= count($models) ?></strong> active package.</p>
                   </div>
                   <div class="right-select">
                     <div class="input_check pb-0">
@@ -112,7 +112,7 @@ $this->params['title'] = $this->title;
                     <div class="sharesafri-card tourpackage">
                       <div class="flotingdate">
                         <div class="icons text-center">
-                          <p class="mb-0">3N/4D</p>
+                          <p class="mb-0"><?= isset($model->no_of_day) ? $model->packagedaynightlabels : " " ?> </p>
                         </div>
                       </div>
                       <div class="floating-watchlist">
@@ -133,7 +133,7 @@ $this->params['title'] = $this->title;
                       </div>
                       <div class="shareimg">
                         <a href="/package/<?= $model->package_slug ?>">
-                          <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt=""></a>
+                          <img src="<?= isset($model->package_image) ? $model->imagepath : $this->params['baseurl'] . '/img/blog_details01.jpg' ?>" alt=""></a>
                       </div>
                       <div class="card_body">
                         <!-- <div class="top_seats">
