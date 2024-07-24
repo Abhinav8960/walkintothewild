@@ -40,7 +40,7 @@ class PhotoController extends FrontendBaseController
         $model->action_validate_url = '/profile/photo/validate';
         $model->user_id = $user->id;
         $model->type_of_post = 1;   // 1 stands for post type photo
-        $model->status = UserPosts::STATUS_SUSPEND;
+        $model->status = UserPosts::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

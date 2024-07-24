@@ -51,7 +51,7 @@ class ArticleController extends FrontendBaseController
         $model = new ArticleForm();
         $model->action_url = '/profile/article/create';
         $model->action_validate_url = '/profile/article/validate';
-        $model->status = Article::STATUS_SUSPEND;
+        $model->status = Article::STATUS_ACTIVE;
         $model->user_id = Yii::$app->user->identity->id;
         $model->user_type = Article::USER_TYPE_INDIVIDUAL;
         $model->scenario = 'create';
