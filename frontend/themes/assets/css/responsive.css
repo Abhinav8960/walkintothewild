@@ -175,6 +175,12 @@
     }
 }
 @media(min-width:1500px){
+
+    .padding_added{
+
+        padding-left: 70px !important;
+        padding-right: 70px !important;
+    }
    
     .container-fluid {
 
