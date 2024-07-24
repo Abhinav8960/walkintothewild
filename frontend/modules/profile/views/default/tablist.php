@@ -36,7 +36,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 <?php } ?>
             </div>
-            <div class="col-lg-8 ">
+            <div class="col-lg-7 " style="z-index: 10;">
                 <div class="follow_massage d-flex justify-content-center mt-4 gap-3 align-items-center">
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $user->id) {
                         if (UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id, 'status' => '1'])->one()) { ?>
@@ -89,7 +89,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="row pt-5 itenary_tabs justify-content-center">
-            <div class="col-xxl-11 safartabs ">
+            <div class="col-xxl-11 safartabs d-flex justify-content-between">
                 <ul class="nav nav-tabs">
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safari</a></li>
@@ -112,6 +112,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         ?>
                     <?php } ?>
                 </ul>
+                <div class="sharerbtn">
+                <a href="" class="follow_massge rounded-2 text-capitalize"><i class="fa-solid fa-share"></i> Share Profile</a>
+                </div>
             </div>
         </div>
     </div>
