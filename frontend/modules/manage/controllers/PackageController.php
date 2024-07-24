@@ -471,7 +471,7 @@ class PackageController extends FrontendBaseController
                 'pageSize' => 20,
             ],
         ]);
-        return $this->render('replies', [
+        return $this->renderAjax('replies', [
             'package_model' => $package_model,
             'dataProvider' => $dataProvider,
 
