@@ -16,6 +16,7 @@ use common\models\package\Package;
 use common\models\package\PackageComment;
 use common\models\package\PackageCommentReport;
 use common\models\package\PackageDay;
+use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
@@ -483,10 +484,17 @@ class PackageController extends FrontendBaseController
     public function actionBookNow($package_id)
     {
         $package_model = $this->findModel($package_id);
+        $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status']);
 
-
+        $enquire_provider = new ActiveDataProvider([
+            'query' => $enquiries,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
         return $this->render('book_now', [
             'package_model' => $package_model,
+            'enquire_provider' => $enquire_provider,
 
         ]);
     }

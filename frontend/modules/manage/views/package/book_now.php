@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $model apps\models\employee\Employee */
 
+use yii\grid\GridView;
 use yii\helpers\Url;
 
 $this->title = 'Package : ' . $package_model->package_name . '';
@@ -30,8 +31,72 @@ $this->params['title'] = $this->title;
                         <div class="col-md-12">
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                    <div class="col-6">
-                                        No Bookings Done!
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <?= GridView::widget([
+                                                    'dataProvider' => $enquire_provider,
+                                                    'columns' => [
+                                                        [
+                                                            'class' => 'yii\grid\SerialColumn',
+                                                            'contentOptions' => ['style' => 'width: 5%;'],
+                                                        ],
+                                                        [
+                                                            'label' => 'Name',
+                                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                                            'format' => 'raw',
+                                                            'value' => function ($model) {
+                                                                return $model->name;
+                                                            }
+                                                        ],
+                                                        [
+                                                            'label' => 'Email',
+                                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                                            'format' => 'raw',
+                                                            'value' => function ($model) {
+                                                                return $model->email_address;
+                                                            }
+                                                        ],
+                                                        [
+                                                            'label' => 'No. of travelers',
+                                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                                            'format' => 'raw',
+                                                            'value' => function ($model) {
+                                                                return $model->no_of_travelers;
+                                                            }
+                                                        ],
+                                                        [
+                                                            'label' => 'Start Date',
+                                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                                            'format' => 'raw',
+                                                            'value' => function ($model) {
+                                                                return $model->start_date;
+                                                            }
+                                                        ],
+
+                                                        [
+                                                            'label' => 'End Date',
+                                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                                            'format' => 'raw',
+                                                            'value' => function ($model) {
+                                                                return $model->end_date;
+                                                            }
+                                                        ],
+
+
+                                                        [
+                                                            'label' => 'Phone',
+                                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                                            'format' => 'raw',
+                                                            'value' => function ($model) {
+                                                                return $model->phone;
+                                                            }
+                                                        ],
+
+                                                    ],
+                                                ]); ?>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
