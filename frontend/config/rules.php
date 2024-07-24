@@ -118,7 +118,8 @@ return [
     '/manage/package/faq/<package_id>' => '/manage/package/faq', //package profile faq url          
     '/manage/package/create-faq/<package_id>' => '/manage/package/create-faq', //package profile create faq url          
     '/manage/package/select-faq/<package_id>' => '/manage/package/select-faq',
-
+    '/manage/package/gallery/<package_id>' => '/manage/package/gallery', //package profile faq url          
+    '/manage/package/create-gallery/<package_id>' => '/manage/package/create-gallery', //package profile create faq url          
 
     // Chat Routes
     '/chat/message/<user_handle>' => '/chat/default/message',

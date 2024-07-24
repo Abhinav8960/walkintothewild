@@ -17,4 +17,7 @@
     <li class="nav-item" role="presentation">
         <a href="/manage/package/faq/<?= $package->id ?>" class="nav-link <?= isset($faq_active) ? $faq_active : '' ?>" id="map-tab">FAQ</a>
     </li>
+    <li class="nav-item" role="presentation">
+        <a href="/manage/package/gallery/<?= $package->id ?>" class="nav-link <?= isset($gallery_active) ? $gallery_active : '' ?>" id="map-tab">Gallery</a>
+    </li>
 </ul>
