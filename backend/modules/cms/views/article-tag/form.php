@@ -69,3 +69,35 @@ $this->params['title'] = $this->title;
         <?php ActiveForm::end(); ?>
     </div>
 </div>
+
+
+<?php
+$script = <<< JS
+    $(function(){
+        // Function to generate slug from title
+        function slugify(text) {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with -
+                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                .replace(/^-+/, '')             // Trim - from start of text
+                .replace(/-+$/, '');            // Trim - from end of text
+        }
+
+        // Handle title change to update slug
+        $('#masterarticletagform-title').on('input', function() {
+            var tag_name = $(this).val();
+            var tag_slug = slugify(tag_name);
+            $('#masterarticletagform-slug').val(tag_slug);
+        });
+
+        // Initialize slug when editing existing record
+        if (!$('#packageform-slug').val() && $('#masterarticletagform-title').val()) {
+            var tag_name = $('#masterarticletagform-title').val();
+            var tag_slug = slugify(tag_name);
+            $('#masterarticletagform-slug').val(tag_slug);
+        }
+    });
+JS;
+$this->registerJs($script);
+?>
