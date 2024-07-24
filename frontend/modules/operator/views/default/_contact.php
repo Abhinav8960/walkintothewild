@@ -103,7 +103,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                             <span><?= $operator->facebook_url ?></span>
                                                         </p>
                                                     </div>
-                                                  
+
                                                 <?php } ?>
                                                 <?php if ($operator->youtube_link <> '') { ?>
                                                     <div class="links_sociels d-flex gap-2">
@@ -118,6 +118,31 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <div class="viewAllreview">
                                                 <a href="">Report Page</a>
                                             </div>
+                                            <!-- <button class="rounded-pill btn btn-dark"></button> -->
+                                        </div>
+                                    </div>
+                                    <div class="card position-relative" style="min-height: 350px;">
+                                        <div class="card-body">
+                                            <div class="withoutlogedin">
+                                                <h6 class="fs-6 fw-bold">Contact Details</h6>
+                                                <div class="contaicts d-flex gap-2">
+                                                    <strong>Phone :</strong>
+                                                    <p class="mb-0"> 98xxxxxxxx</p>
+                                                </div>
+                                                <div class="contaicts d-flex gap-2">
+                                                    <strong>Email :</strong>
+                                                    <p> xxxxx@gmail.com</p>
+                                                </div>
+                                            </div>
+                                          
+                                            <div class="logininfo text-center">
+                                                <h6>Please log in to view the tour <br> operator's contact information.</h6>
+                                                <div class="viewAllreview">
+                                                <a href="">Login</a>
+                                            </div>
+                                            </div>
+
+                                           
                                             <!-- <button class="rounded-pill btn btn-dark"></button> -->
                                         </div>
                                     </div>
