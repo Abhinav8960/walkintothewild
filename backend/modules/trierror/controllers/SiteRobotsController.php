@@ -97,7 +97,7 @@ class SiteRobotsController extends Controller
 
     protected function create_robots_txt(){
         //recreae robots.txt
-        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap_index.xml";
+        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
         if(count($all_url) > 0){
             $content .= "\nUser-agent: *";
