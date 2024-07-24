@@ -33,6 +33,7 @@ class ArticleController extends Controller
         $searchModel = new ArticleSearch();
         $searchModel->status = StatusInterface::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere("user_type=3");
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -50,7 +51,6 @@ class ArticleController extends Controller
         $model = new ArticleForm();
         $model->action_url = '/cms/article/create';
         $model->action_validate_url = '/cms/article/validate';
-        $model->user_id = Yii::$app->user->identity->id;
         $model->user_type = Article::USER_TYPE_ADMIN;
         $model->status = Article::STATUS_ACTIVE;
         $model->scenario = 'create';

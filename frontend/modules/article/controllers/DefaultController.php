@@ -34,6 +34,7 @@ class DefaultController extends FrontendBaseController
     {
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->andWhere("status=1 AND (user_type=3 OR is_approved=1)");
 
         return $this->render('index', [
             'searchModel' => $searchModel,
