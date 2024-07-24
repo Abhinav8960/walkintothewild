@@ -112,7 +112,7 @@ $this->params['title'] = $this->title;
                     <div class="sharesafri-card tourpackage">
                       <div class="flotingdate">
                         <div class="icons text-center">
-                          <p class="mb-0">3N/4D</p>
+                          <p class="mb-0"><?= isset($model->no_of_day) ? $model->packagedaynightlabels : " " ?> </p>
                         </div>
                       </div>
                       <div class="floating-watchlist">
