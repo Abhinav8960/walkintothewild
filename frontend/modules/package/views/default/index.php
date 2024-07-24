@@ -36,7 +36,7 @@ $this->params['title'] = $this->title;
 <section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 270px !important; padding-top:30px;">
   <div class="container-fluid">
     <div class="row justify-content-center">
-      <div class="col-lg-10">
+      <div class="col-lg-9">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
             <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="w-100">
