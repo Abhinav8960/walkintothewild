@@ -53,7 +53,7 @@ $this->title = 'Account Settings';
                             </div>
 
                             <div class="col-md-6">
-                                <?= $form->field($model, 'user_handle')->textInput(['maxlength' => true, 'placeholder' => 'User Name']) ?>
+                                <?= $form->field($model, 'user_handle')->textInput(['maxlength' => true, 'placeholder' => 'User Name'])->hint('<i>Allowed Character: az09_</i>') ?>
                             </div>
                             <div class="col-md-6">
                                 <?= $form->field($model, 'date_of_birth')->textInput(['type' => 'date', 'max' => date("Y-m-d", strtotime("-18 year", time())), 'placeholder' => 'Select D.O.B']) ?>
