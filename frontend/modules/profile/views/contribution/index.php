@@ -10,26 +10,38 @@ $this->params['title'] = $this->title;
 ?>
 <section class="profile-wrapper">
     <div class="container mb-5">
-    <?= $this->render('@frontend/modules/profile/views/default/tablist', ['contribution' => 'active', 'user' => $user]) ?>
+        <?= $this->render('@frontend/modules/profile/views/default/tablist', ['contribution' => 'active', 'user' => $user]) ?>
 
     </div>
 </section>
 
 <section>
-<div class="container mb-5">
-
-    <div class="tab-content" id="pills-tabContent">
-        <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
-            <div class="card mt-2 mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-6">
-                            No Contribution Found!
+    <div class="container mb-5">
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-xxl-11 mb-5">
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="card mt-2 mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                No Contribution Found!
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                            <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
+                            </div>
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-</div>
 </section>
