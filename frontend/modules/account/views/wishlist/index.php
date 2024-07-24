@@ -54,24 +54,24 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     <img src="<?= isset($package_model->package_image) ? $package_model->imagepath : $this->params['baseurl'] . '/img/blog_details01.jpg' ?>" alt=""></a>
                                             </div>
                                             <div class="card_body">
-                                                <div class="top_seats">
-                                                    <div class="safari d-flex justify-content-between ">
-                                                        <div class="safarinum d-flex gap-2 align-items-center ">
-                                                            <p class="text_safari">NIGHTS</p>
-                                                            <h6 class="number-safari"><?= $package_model->no_of_night ?></h6>
-                                                        </div>
-                                                        <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                            <p class="text_safari">SAFARIES</p>
-                                                            <h6 class="number-safari"><?= $package_model->no_of_safari ?></h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <!-- <div class="top_seats">
+                          <div class="safari d-flex justify-content-between ">
+                            <div class="safarinum d-flex gap-2 align-items-center ">
+                              <p class="text_safari">NIGHTS</p>
+                              <h6 class="number-safari"><?= $package_model->no_of_night ?></h6>
+                            </div>
+                            <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
+                              <p class="text_safari">SAFARIES</p>
+                              <h6 class="number-safari"><?= $package_model->no_of_safari ?></h6>
+                            </div>
+                          </div>
+                        </div> -->
                                                 <div class="titleDate">
                                                     <h6 class="pt-1"><a href=""><?= $package_model->package_name ?> </a></h6>
                                                     <div class="orgnizer_tour d-flex justify-content-between pt-2">
                                                         <div class="icons_restro">
                                                             <i class="fa-solid fa-car-side"></i>
-                                                            <p class="mb-0">5 Safaris</p>
+                                                            <p class="mb-0"><?= $package_model->no_of_safari ?>Safaris</p>
                                                         </div>
                                                         <div class="icons_restro">
                                                             <i class="fa-solid fa-car"></i>
@@ -84,14 +84,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         <div class="icons_restro">
 
                                                             <i class="fa-solid fa-building"></i>
-                                                            <p class="mb-0">Premium</p>
+                                                            <p class="mb-0"><?= $package_model->packagerange->title ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="footer_card row pb-2 px-2 align-items-center">
                                                     <div class="col-6">
                                                         <div class="safaritourlogo">
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
+                                                            <img src="<?= isset($package_model->safarioperator->imagepath) ? $package_model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-25">
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
