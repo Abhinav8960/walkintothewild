@@ -291,7 +291,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
             </div>
              <!-- mobile responsive icons end -->
         </div>
-        <div class="row ">
+        <div class="row pt-2">
             <div class="col-lg-12 col-xl-6 mb-3 mb-xl-0">
                 <div class="row gx-2 <?= in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
                     <div class="col-sm-3 mb-sm-0 mb-3 ">

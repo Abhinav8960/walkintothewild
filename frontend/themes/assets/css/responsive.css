@@ -176,11 +176,7 @@
 }
 @media(min-width:1500px){
 
-    .padding_added{
-
-        padding-left: 70px !important;
-        padding-right: 70px !important;
-    }
+   
    
     .container-fluid {
 
@@ -245,6 +241,11 @@ line-height: 19px;
 }
 
 @media(min-width:1400px) {
+    .padding_added{
+
+        padding-left: 70px !important;
+        padding-right: 70px !important;
+    }
     .single-image img{
 
         height: 89% !important;
