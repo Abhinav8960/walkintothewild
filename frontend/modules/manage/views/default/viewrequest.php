@@ -32,10 +32,10 @@ $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
         <div class="col-md-12">
             <h5><?= $this->title ?></h5>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
                     <div class="row mt-2 mb-5">
