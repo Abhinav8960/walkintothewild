@@ -11,6 +11,7 @@ use frontend\models\SafariParkSearch;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorSearch;
 use common\models\operator\SafariOperator;
+use common\models\cms\article\Article;
 use common\models\sharesafari\ShareSafari;
 use frontend\models\SafariOperatorReviewForm;
 use common\models\operator\SafariOperatorPark;
@@ -90,6 +91,9 @@ class DefaultController extends FrontendBaseController
         $reviews = $ratingdataProvider->getModels();
 
         $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
+
+
+
 
 
         return $this->render(
@@ -510,6 +514,22 @@ class DefaultController extends FrontendBaseController
         $reviews = $ratingdataProvider->getModels();
         $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
 
+
+
+        $query = Article::find()->where([
+            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'user_id' => $operator->id
+        ]);
+        $articledataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => ['defaultOrder' => [
+                'id' => SORT_DESC
+            ]]
+        ]);
+        $articles = $articledataProvider->getModels();
+
         return $this->render(
             '_article',
             [
@@ -517,6 +537,7 @@ class DefaultController extends FrontendBaseController
                 'model' => $model,
                 'organized_by' => $organized_by,
                 'reviews' => $reviews,
+                'articles' => $articles,
             ]
         );
     }

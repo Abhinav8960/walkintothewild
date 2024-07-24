@@ -56,6 +56,12 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-6">
                     <?= $form->field($model, 'banner_image')->fileInput()->label('Article Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                 </div>
+                <?php
+                if ($model->article_model->banner_image) { ?>
+                    <div class="col-md-6">
+                        <?php echo '<img src="' . $model->article_model->bannerimagepath . '" width="75" height="75"></img>'; ?>
+                    </div>
+                <?php } ?>
             </div>
 
             <div class="row">
