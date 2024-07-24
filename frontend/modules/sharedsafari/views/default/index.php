@@ -88,7 +88,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="col-md-6 mt-md-0 mt-3">
                                         <div class="right_button float-md-end">
                                             <?php if (Yii::$app->user->identity) { ?>
-                                                <button class="btn_newsafari organizeBtn" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                                                <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                                                     Safari</button>
                                             <?php } else {  ?>
                                                 <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
