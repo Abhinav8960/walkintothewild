@@ -9,6 +9,7 @@ return [
     '/safari_operator.xml' => '/sitemap/safari_operator',
     '/shared_safari.xml' => '/sitemap/shared_safari',
     '/walkintothewild_pages.xml' => '/sitemap/walkintothewild_pages',
+    '/article_tag.xml' => '/sitemap/article_tag',
     '/home' => '/plan-safari', //home Page url
     '/park' => '/park/default/index', //home-old page url
     '/park/<slug>' => '/park/default/view', //park view url
