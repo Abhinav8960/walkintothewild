@@ -8,8 +8,7 @@ use yii\helpers\Html;
 
 $this->title = 'Package : ' . $package_model->package_name . '';
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::Button('+ Add FAQ', ['value' => "Url::toRoute(['/manage/package/create-faq','package_id' => $package_model->id])", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
-$this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "Url::toRoute(['/manage/package/select-faq','package_id' => $package_model->id])", 'class' => 'btn popupButton btn-orange', 'title' => 'Select FAQ']);
+
 
 ?>
 
