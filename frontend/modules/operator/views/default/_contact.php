@@ -53,11 +53,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
     <div class="container-fluid">
-    <?= $this->render('_view_navbar', ['active' => 'contact', 'operator' => $operator]) ?>
+        <?= $this->render('_view_navbar', ['active' => 'contact', 'operator' => $operator]) ?>
     </div>
 </section>
 <section class="touroprator_section ">
-<div class="container-fluid" id="viewcontent">
+    <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-9 col-lg-12">
                 <div class="row pt-5">
@@ -67,31 +67,56 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="col-xxl-8 col-lg-8">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6>Address</h6>
-                                            <p><?= $operator->register_comapany_name ?></p>
+                                            <h6 class="fs-6 fw-bold">Address</h6>
+                                            <h6 class="mb-0 cmpny_name"><?= $operator->register_comapany_name ?></h6>
                                             <p><?= $operator->address ?></p>
-                                            <h6>Contact Details</h6>
-                                            <p>Phone no : <?= $operator->phone_no ?></p>
-                                            <h6>Email : <?= $operator->email ?>
-                                            </h6>
-                                            <h6>Website : <?= $operator->website ?>
-                                            </h6>
+                                            <h6 class="fs-6 fw-bold">Contact Details</h6>
+                                            <div class="contaicts d-flex gap-2">
+                                                <strong>Phone :</strong>
+                                                <p> <?= $operator->phone_no ?></p>
+                                            </div>
+                                            <div class="contaicts d-flex gap-2">
+                                                <strong>Email :</strong>
+                                                <p> <?= $operator->email ?></p>
+                                            </div>
+                                            <div class="contaicts d-flex gap-2">
+                                                <strong>Website :</strong>
+                                                <p><?= $operator->website ?></p>
+                                            </div>
                                             <br>
                                             <?php if ($operator->instagram_url <> '' || $operator->facebook_url <> '' || $operator->youtube_link <> '') { ?>
-                                                <h6>Social Media</h6>
+                                                <h6 class="fs-6 fw-bold"> Social Media</h6>
                                                 <?php if ($operator->instagram_url <> '') { ?>
-                                                    <p>Instagram : <?= $operator->instagram_url ?></p>
+                                                    <div class="links_sociels d-flex gap-2">
+                                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-instagram me-1"></i></a>
+                                                        <p>Instragram
+                                                            <span><?= $operator->instagram_url ?></span>
+                                                        </p>
+                                                    </div>
                                                 <?php } ?>
+
+
                                                 <?php if ($operator->facebook_url <> '') {  ?>
-                                                    <p>Facebook : <?= $operator->facebook_url ?></p>
+                                                    <div class="links_sociels d-flex gap-2">
+                                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-facebook-f me-1"></i></a>
+                                                        <p>Facebook
+                                                            <span><?= $operator->facebook_url ?></span>
+                                                        </p>
+                                                    </div>
+                                                  
                                                 <?php } ?>
                                                 <?php if ($operator->youtube_link <> '') { ?>
-                                                    <p>Youtube : <?= $operator->youtube_link ?></p>
+                                                    <div class="links_sociels d-flex gap-2">
+                                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-youtube me-1"></i></a>
+                                                        <p>Youtube
+                                                            <span><?= $operator->youtube_link ?></span>
+                                                        </p>
+                                                    </div>
                                                 <?php } ?>
                                             <?php } ?>
                                             <hr>
                                             <div class="viewAllreview">
-                                               <a href="">Report Page</a>
+                                                <a href="">Report Page</a>
                                             </div>
                                             <!-- <button class="rounded-pill btn btn-dark"></button> -->
                                         </div>
