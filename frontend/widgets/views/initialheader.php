@@ -59,7 +59,7 @@
 												Account Setting</a>
 										</li>
 										<li>
-											<a class="" href="#">
+											<a class="" href="/chat">
 												<i class="fa-solid fa-message"></i>
 												Messages</a>
 										</li>
