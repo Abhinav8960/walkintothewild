@@ -4,9 +4,12 @@ use yii\helpers\Url;
 
 ?>
 
-<a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>">
 
     <div class="card_profile card h-100 position-relative">
+        <div class="dots-blockbox">
+          <i class="fa-solid fa-ellipsis"></i>
+        </div>
+        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>">
         <div class="card-up cover_profile">
             <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" style="width: 100%; height: 130px;">
         </div>
@@ -25,6 +28,6 @@ use yii\helpers\Url;
                     <?php } ?>
             </div>
         </div>
+        </a>
     </div>
 
-</a>
