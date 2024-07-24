@@ -6,7 +6,7 @@ use yii\helpers\Html;
 ?>
 
 <?php $form = ActiveForm::begin(['id' => 'comment-form']); ?>
-<div class="comments-persons pe-0 pt-4">
+<div class="comments-persons px-3 pt-4">
     <div class="postcomment d-flex gap-3">
         <div class="avatar">
             <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
@@ -16,7 +16,7 @@ use yii\helpers\Html;
         </div>
     </div>
 </div>
-<div class="row justify-content-end pt-3">
+<div class="row justify-content-end pt-3 pe-3">
     <div class="col-lg-9 col-xl-8">
         <div class="post_text">
             <p>Commenting on this thread will notify all event attendees via email and will also be visible to
@@ -25,7 +25,7 @@ use yii\helpers\Html;
     </div>
     <div class="col-lg-4 col-xl-3 ">
         <div class="comment_button float-end mb-lg-0 mb-3">
-            <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
+            <?= Html::submitButton('Post Comment', ['class' => 'post-comment newbg']) ?>
         </div>
     </div>
 </div>

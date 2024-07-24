@@ -324,6 +324,10 @@ line-height: 19px;
 
         font-size: 30px;
     }
+    .banner_section-inner .headingBnner_inner p{
+
+        font-size: 19px;
+    }
     .number-input button{
 
         line-height: 16px;
@@ -2078,6 +2082,7 @@ font-size: 15px;
 
         font-size: 20px;
     }
+   
 }
 @media only screen and (max-width: 576px) and (min-width: 427px){
 
