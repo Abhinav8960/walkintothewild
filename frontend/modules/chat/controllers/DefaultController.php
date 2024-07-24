@@ -52,24 +52,26 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                 $login_user = Yii::$app->user->identity;
                 $message = $chat_model['message'];
 
-                $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->limit(1)->one();
-                if (!$chat) {
-                    $chat = new Chat();
-                }
-                $chat->generateChatHash();
-                $chat->user_id = $login_user->id;
-                $chat->recipient_user_id = $individual_user->id;
-                $chat->last_message = $message;
-                $chat->last_message_at = time();
-                $chat->status = 1;
-                if ($chat->save()) {
-                    $chat_message = new ChatMessage();
-                    $chat_message->chat_id = $chat->id;
-                    $chat_message->message = $message;
-                    $chat_message->status = 1;
-                    if ($chat_message->save()) {
-                        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-                        return ['status' => true, 'message' => 'Message Sent'];
+                if ($message <> '') {
+                    $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->limit(1)->one();
+                    if (!$chat) {
+                        $chat = new Chat();
+                    }
+                    $chat->generateChatHash();
+                    $chat->user_id = $login_user->id;
+                    $chat->recipient_user_id = $individual_user->id;
+                    $chat->last_message = $message;
+                    $chat->last_message_at = time();
+                    $chat->status = 1;
+                    if ($chat->save()) {
+                        $chat_message = new ChatMessage();
+                        $chat_message->chat_id = $chat->id;
+                        $chat_message->message = $message;
+                        $chat_message->status = 1;
+                        if ($chat_message->save()) {
+                            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                            return ['status' => true, 'message' => 'Message Sent'];
+                        }
                     }
                 }
             }
