@@ -5453,3 +5453,35 @@ border-top-right-radius: 0;
     border-radius: 10px;
     border: 1px solid #7070704D;
 }
+
+.profile-wrapper{
+
+    background-color: var(--colorwhite) !important;
+}
+
+.profile_coverbnner .banner-cover{
+
+    width: 100%;
+    border-radius: 10px;
+    height: 300px;
+}
+
+.profile_img{
+
+    box-shadow: 0px 3px 6px #00000029;
+}
+.flowers-content p{
+
+    color: #1E1E1E;
+    font-weight: 500;
+    margin-right: 50px;
+  
+}
+.flowers-content p a{
+
+    color: #1E1E1E;
+    font-size: 16px;
+}
+.margin_n5{
+    margin-top: -37px;
+}

@@ -35,12 +35,16 @@ class ArticleController extends FrontendBaseController
         } else {
             $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         }
+        $sharesafrimodel = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
+        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
         return $this->render(
             'index',
             [
                 'user' => $user,
                 'articles' => $articles,
-                'model' => $model
+                'model' => $model,
+                'sharesafrimodel' => $sharesafrimodel,
+                'model_count' => $model_count
             ]
         );
     }
