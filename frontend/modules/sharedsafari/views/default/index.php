@@ -26,10 +26,10 @@ $recentposts = ArticleSearch::recentpost();
 
 ?>
 
-<section class="banner_section-inner position-relative">
+<section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= $this->params['baseurl'] ?>/img/banner-share.png" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/banner-share.png" class="d-block w-100 " alt="banner">
+        <img src="<?= $this->params['baseurl'] ?>/img/banner-share.png" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container">
@@ -37,8 +37,8 @@ $recentposts = ArticleSearch::recentpost();
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1>Join or Organize a Sharing Safari</h1>
-                        <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
-                            Their Adventures</p>
+                        <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
+                            Their Adventures</p> -->
                     </div>
                 </div>
             </div>
@@ -62,6 +62,15 @@ $recentposts = ArticleSearch::recentpost();
             <div class="col-xl-11 col-lg-12">
                 <div class="row">
                     <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4">
+                        <div class="right_button mb-3">
+                            <?php if (Yii::$app->user->identity) { ?>
+                                <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                                    Safari</button>
+                            <?php } else {  ?>
+                                <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
+                                    Safari</a>
+                            <?php } ?>
+                        </div>
                         <div id="targetDiv">
                             <?= $this->render('filter_search', [
                                 'searchModel' => $searchModel,
@@ -70,7 +79,6 @@ $recentposts = ArticleSearch::recentpost();
                             ]) ?>
 
                         </div>
-
                         <div class="advertisment pt-md-5 ">
                             <p class="text-center">ADVERTISMENT</p>
                             <div class="advertisment_box-2">
@@ -80,21 +88,13 @@ $recentposts = ArticleSearch::recentpost();
                     </div>
                     <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
                         <div class="row ">
-                            <div class="col-12  mb-xl-5 mb-3">
+                            <div class="col-12  mb-xl-4 mb-3">
                                 <div class="row justify-content-between">
-                                    <div class="col-md-5">
+                                    <div class="col-md-12">
                                         <?= $this->render('_date_search', ['searchModel' => $searchModel]) ?>
                                     </div>
                                     <div class="col-md-6 mt-md-0 mt-3">
-                                        <div class="right_button float-md-end">
-                                            <?php if (Yii::$app->user->identity) { ?>
-                                                <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
-                                                    Safari</button>
-                                            <?php } else {  ?>
-                                                <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
-                                                    Safari</a>
-                                            <?php } ?>
-                                        </div>
+
                                         <!-- <div class="me-3 float-md-end">
                                             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) { ?>
                                                 <a class="btn_newsafari" href="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari']) ?>">+ Create Fixed Departure </a>
@@ -102,8 +102,18 @@ $recentposts = ArticleSearch::recentpost();
                                         </div> -->
                                     </div>
                                 </div>
-
-
+                                <div class="tag-container">
+                                    <div class="tag">Bandhavgarh Tiger Reserve <span class="close-btn">×</span></div>
+                                    <div class="tag">October <span class="close-btn">×</span></div>
+                                    <div class="tag">Economical <span class="close-btn">×</span></div>
+                                    <div class="tag">2 Nights <span class="close-btn">×</span></div>
+                                    <div class="tag">3 Safaris <span class="close-btn">×</span></div>
+                                    <div class="tag">Rs. 2500 - 5000 <span class="close-btn">×</span></div>
+                                    <div class="tag">Private Room <span class="close-btn">×</span></div>
+                                    <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                                    <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                                    <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                                </div>
                             </div>
                             <div class="col-12">
                                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
