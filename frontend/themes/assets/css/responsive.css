@@ -32,18 +32,18 @@
         object-fit: cover;
     }
 
-    .desktop_postion {
+    /* .desktop_postion {
 
         position: absolute;
         bottom: -12px;
         width: 100%;
-    }
+    } */
 
-    .seelctes_text {
+    /* .seelctes_text {
 
         height: 155px !important;
         overflow: hidden;
-    }
+    } */
 
     /* .artical_cards {
 
