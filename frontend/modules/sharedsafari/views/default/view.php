@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" <?= $share_safari->organizedbyprofileurl <> '' ? 'target="_blank"' : '' ?>><strong><?= $share_safari->organizedbyname ?></strong></a></p>
+                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
 
                                     </div>
 
