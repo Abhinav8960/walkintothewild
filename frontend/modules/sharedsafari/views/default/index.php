@@ -67,7 +67,7 @@ $recentposts = ArticleSearch::recentpost();
                                 <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                                     Safari</button>
                             <?php } else {  ?>
-                                <a class="join_btn ms-sm-3 mt-sm-0 mt-2" href="/site/auth?authclient=google">+ Organize a New
+                                <a class="btn_newsafari organizeBtn newbg" href="/site/auth?authclient=google">+ Organize a New
                                     Safari</a>
                             <?php } ?>
                         </div>
