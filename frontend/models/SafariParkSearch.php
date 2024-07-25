@@ -78,7 +78,7 @@ class SafariParkSearch extends SafariPark
         // Sorting based on custom_sort_by attribute
         if ($this->custom_sort_by == 'most-demanding') {
             $dataProvider->sort = [
-                'defaultOrder' => ['is_most_demanding' => SORT_DESC]
+                'defaultOrder' => ['is_most_demanding' => SORT_DESC, 'title' => SORT_ASC]
             ];
         } else if ($this->custom_sort_by == 'shared-safari') {
             $dataProvider->sort = [
@@ -86,7 +86,7 @@ class SafariParkSearch extends SafariPark
             ];
         } else {
             $dataProvider->sort = [
-                'defaultOrder' => ['title' => SORT_ASC]
+                'defaultOrder' => ['is_most_demanding' => SORT_DESC, 'title' => SORT_ASC]
             ];
         }
 
