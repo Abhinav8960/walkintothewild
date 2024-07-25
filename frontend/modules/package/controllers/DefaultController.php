@@ -136,13 +136,13 @@ class DefaultController extends FrontendBaseController
         }
         if ($package) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
                 if (!$wishlist) {
                     $wishlist = new UserWishlist();
                 }
                 $wishlist->user_id = Yii::$app->user->identity->id;
                 $wishlist->item_id = $package->id;
-                $wishlist->item_type_id = 1;
+                $wishlist->item_type_id = UserWishlist::SAFARI_PACKAGE;
                 $wishlist->item_type = 'package';
                 $wishlist->status = 1;
                 if ($wishlist->save(false)) {
@@ -153,21 +153,21 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
     }
 
     public function actionUnwishlist($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         if ($package) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
                 if ($wishlist) {
                     $wishlist->status = 0;
                     if ($wishlist->save(false)) {
@@ -179,7 +179,7 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
     }

@@ -578,7 +578,7 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
     }
@@ -604,7 +604,7 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
     }
