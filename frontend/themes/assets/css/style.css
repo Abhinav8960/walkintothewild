@@ -400,6 +400,7 @@ a {
     height: 100%;
     -o-object-fit: cover;
     object-fit: cover;
+    object-position: top;
     border-radius: 10px 10px 0px 0px;
 }
 
@@ -5346,9 +5347,13 @@ a.desc:after {
 }
 
 .mobile_didplay_block .join_btn{
-    padding: 6px 30px;
+    padding: 11px 30px;
     color: #152F1B;
     font-weight: 600;
+}
+.join_btn.enquiryBtn{
+
+    padding: 6px 30px;
 }
 .text_safaripackage p{
 
