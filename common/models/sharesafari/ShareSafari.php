@@ -167,4 +167,9 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
             return \yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $this->safarioperator->slug]);
         }
     }
+
+    public function getSharesafariIncludeds()
+    {
+        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+    }
 }

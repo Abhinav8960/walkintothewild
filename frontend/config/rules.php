@@ -121,6 +121,18 @@ return [
     '/manage/package/gallery/<package_id>' => '/manage/package/gallery', //package profile faq url          
     '/manage/package/create-gallery/<package_id>' => '/manage/package/create-gallery', //package profile create faq url          
 
+
+    '/manage/sharedsafari/update-fixed-departure/<share_safari_id>' => '/manage/sharedsafari/update-fixed-departure',
+    '/manage/sharedsafari/itinerary/<share_safari_id>/<day>' => '/manage/sharedsafari/itinerary', //sharedsafari profile itenary url          
+    '/manage/sharedsafari/inclusion/<share_safari_id>' => '/manage/sharedsafari/inclusion', //sharedsafari profile inclusion url          
+    '/manage/sharedsafari/getting-there/<share_safari_id>' => '/manage/sharedsafari/getting-there', //sharedsafari profile getting-there url          
+    '/manage/sharedsafari/policy-info/<share_safari_id>' => '/manage/sharedsafari/policy-info', //sharedsafari profile policy-info url          
+    '/manage/sharedsafari/faq/<share_safari_id>' => '/manage/sharedsafari/faq', //sharedsafari profile faq url          
+    '/manage/sharedsafari/create-faq/<share_safari_id>' => '/manage/sharedsafari/create-faq', //sharedsafari profile create faq url          
+    '/manage/sharedsafari/select-faq/<share_safari_id>' => '/manage/sharedsafari/select-faq',
+    '/manage/sharedsafari/gallery/<share_safari_id>' => '/manage/sharedsafari/gallery', //sharedsafari profile faq url          
+    '/manage/sharedsafari/create-gallery/<share_safari_id>' => '/manage/sharedsafari/create-gallery', //sharedsafari profile create faq url          
+
     // Chat Routes
     '/chat/message/<user_handle>' => '/chat/default/message',
 ];

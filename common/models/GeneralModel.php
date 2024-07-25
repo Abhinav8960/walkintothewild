@@ -50,6 +50,7 @@ use common\models\package\PackageFaq;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
 use common\models\park\SafariPark;
+use common\models\sharesafari\ShareSafariFaq;
 use frontend\models\registration\BirdingOperatorRequest;
 use frontend\models\registration\BirdingOperatorRequestPark;
 use frontend\models\registration\SafariOperatorRequestActivities;
@@ -927,6 +928,34 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $existingFaqIds = PackageFaq::find()
             ->select('faq_id')
             ->where(['package_id' => $packageId, 'status' => self::STATUS_ACTIVE])
+            ->column();
+
+        // Prepare an array to store FAQs that are not yet associated with the package
+        $options = [];
+
+        foreach ($faqs as $faq) {
+            // Check if the FAQ ID is not already associated with the package
+            if (!in_array($faq->id, $existingFaqIds)) {
+                $options[$faq->id] = $faq->question;
+            }
+        }
+
+        return $options;
+    }
+
+
+    public static function mastersharesafarifaqoption($sharesafariId)
+    {
+        // Get all active FAQs
+        $faqs = MasterFaq::find()
+            ->where(['status' => self::STATUS_ACTIVE])
+            ->orderBy(['question' => SORT_ASC])
+            ->all();
+
+        // Get the IDs of FAQs already associated with the given package
+        $existingFaqIds = ShareSafariFaq::find()
+            ->select('faq_id')
+            ->where(['share_safari_id' => $sharesafariId, 'status' => self::STATUS_ACTIVE])
             ->column();
 
         // Prepare an array to store FAQs that are not yet associated with the package
