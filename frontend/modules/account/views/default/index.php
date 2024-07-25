@@ -11,6 +11,9 @@ $this->title = 'Account Settings';
 
 <div class="container mt-5 mb-5">
     <div class="row mb-5">
+        <div class="col-12">
+        <h6 class="fs-3 fw-bold">Account Settings</h6>
+        </div>
         <div class="col-md-3">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>

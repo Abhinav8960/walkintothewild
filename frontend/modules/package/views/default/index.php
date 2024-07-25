@@ -123,7 +123,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
                             if ($wishlist) {
                             ?>
-                              <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                              <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
                             <?php } else { ?>
                               <a href="/package/wishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
                             <?php }

@@ -5711,6 +5711,13 @@ border-top-right-radius: 0;
     font-size: 16px;
 }
 
+.account-settingside{
+
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+}
+
 
 
 
