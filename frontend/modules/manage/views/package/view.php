@@ -11,8 +11,8 @@ $this->params['title'] = $this->title;
 
 <div class="container-fluid mt-5 mb-5">
     <div class="row mb-5">
-        <div class="col-md-12 d-flex justify-content-between">
-            <h5><?= $this->title ?></h5>
+        <div class="col-md-12 d-flex justify-content-between mb-4">
+        <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
             <div class="d-flex justify-content-between">
                 <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn btn-success mb-2" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
             </div>

@@ -13,7 +13,7 @@ $this->params['title'] = $this->title;
 <div class="container pt-5 mt-5">
     <div class="row mt-2">
         <div class="col-12">
-            <h3 class="fs-4">Search Profile</h3>
+            <h6 class="fs-3 fw-bold mb-3">Search Profile</h6>
         </div>
     </div>
     <div class="row mb-5 pb-5">

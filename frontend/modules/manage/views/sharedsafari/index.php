@@ -10,10 +10,10 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 <div class="container-fluid mt-5 mb-5">
     <div class="row mb-5">
         <div class="col-md-12">
-            <div class="d-flex justify-content-between">
-                <h5><?= $this->title ?></h5>
+            <div class="d-flex justify-content-between mb-4 align-items-center">
+              <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
                 <div class="d-flex mb-2">
-                    <button class="btn_newsafari departureBtn join_btn" value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
+                    <button class="btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                 </div>
             </div>
         </div>
@@ -21,11 +21,11 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
         </div>
         <div class="col-md-10">
-            <div class="card">
+            <div class="card account-settingside ">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive table_design_manage">
                                 <?= GridView::widget([
                                     'dataProvider' => $fixed_safari_provider,
                                     'columns' => [
