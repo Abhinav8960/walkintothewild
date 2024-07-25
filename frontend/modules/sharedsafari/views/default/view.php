@@ -47,7 +47,7 @@ $this->params['title'] = $this->title;
                     <div class="row packageSfari pb-3">
                         <div class="col-12">
                             <div class="imagesSafari">
-                                <img src="/assets/5a869828/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
                             </div>
                         </div>
                     </div>
