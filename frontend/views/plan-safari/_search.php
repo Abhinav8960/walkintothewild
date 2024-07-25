@@ -23,9 +23,9 @@ $vehicleoption = GeneralModel::vehicleoption();
 <div class="row gx-0 justify-content-center ">
     <div class=" col-xl-9 planSearch_box">
         <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
-           
-          
-          
+
+
+
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
@@ -51,67 +51,10 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <p>Select Park</p>
                     </div>
                     <div class="OrBox">
-                    <p>OR</p>
-                </div>
+                        <p>OR</p>
+                    </div>
                     <!-- <div class="icons_select">
                         <img src="<?= $this->params['baseurl'] ?>/img/calendar_747310.png" alt="">
-                    </div> -->
-                </div>
-
-            </div>
-            <div class="select_boxes position-relative">
-                <div class="dropdown-container">
-                    <div class="dropdown-toggle">
-                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?>
-                    </div>
-                    <div class="dropdown custom_dropdown">
-                        <!-- <div class="dropdown-item" data-value="">Select Safari Mode</div> -->
-                        <?php foreach ($vehicleoption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?= $form->field($model, 'master_vehicle_id')->dropDownList(
-                        $vehicleoption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example",
-                            'prompt' => ''
-                        ]
-                    )->label(false) ?>
-                    <div class="placeholder_select">
-                        <p>Vehicle</p>
-                    </div>
-                    <!-- <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
-                    </div> -->
-                </div>
-               
-            </div>
-            <div class="select_boxes position-relative">
-                <div class="dropdown-container">
-                    <div class="dropdown-toggle">
-                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
-                    </div>
-                    <div class="dropdown custom_dropdown">
-                        <!-- <div class="dropdown-item" data-value="">Select Animal</div> -->
-                        <?php foreach ($animalfilteroption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
-                    </div>
-                    <?= $form->field($model, 'master_animal_id')->dropDownList(
-                        $animalfilteroption,
-                        [
-                            'class' => "form-select form-select-lg hidden-select",
-                            'aria-label' => "Large select example",
-                            'prompt' => ''
-                        ]
-                    )->label(false) ?>
-
-                    <div class="placeholder_select">
-                        <p>Animal</p>
-                    </div>
-                    <!-- <div class="icons_select">
-                        <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
                     </div> -->
                 </div>
 
@@ -145,6 +88,65 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
 
             </div>
+            
+            <div class="select_boxes position-relative">
+                <div class="dropdown-container">
+                    <div class="dropdown-toggle">
+                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
+                    </div>
+                    <div class="dropdown custom_dropdown">
+                        <!-- <div class="dropdown-item" data-value="">Select Animal</div> -->
+                        <?php foreach ($animalfilteroption as $value => $label) : ?>
+                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?= $form->field($model, 'master_animal_id')->dropDownList(
+                        $animalfilteroption,
+                        [
+                            'class' => "form-select form-select-lg hidden-select",
+                            'aria-label' => "Large select example",
+                            'prompt' => ''
+                        ]
+                    )->label(false) ?>
+
+                    <div class="placeholder_select">
+                        <p>Animal</p>
+                    </div>
+                    <!-- <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/safaritigericon.png" alt="">
+                    </div> -->
+                </div>
+
+            </div>
+            <div class="select_boxes position-relative">
+                <div class="dropdown-container">
+                    <div class="dropdown-toggle">
+                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?>
+                    </div>
+                    <div class="dropdown custom_dropdown">
+                        <!-- <div class="dropdown-item" data-value="">Select Safari Mode</div> -->
+                        <?php foreach ($vehicleoption as $value => $label) : ?>
+                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?= $form->field($model, 'master_vehicle_id')->dropDownList(
+                        $vehicleoption,
+                        [
+                            'class' => "form-select form-select-lg hidden-select",
+                            'aria-label' => "Large select example",
+                            'prompt' => ''
+                        ]
+                    )->label(false) ?>
+                    <div class="placeholder_select">
+                        <p>Vehicle</p>
+                    </div>
+                    <!-- <div class="icons_select">
+                        <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
+                    </div> -->
+                </div>
+
+            </div>
+        
         </div>
     </div>
     <div class=" col-xl-1">

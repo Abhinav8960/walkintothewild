@@ -5158,8 +5158,8 @@ a.desc:after {
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle {
 
-    width: 230px;
-    padding-left: 38px;
+    width: 160px;
+    padding-left: 27px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 }
@@ -5173,8 +5173,10 @@ a.desc:after {
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .dropdown-toggle {
 
-    width: 160px;
-    padding-left: 27px;
+
+    width: 230px;
+    padding-left: 38px;
+ 
 }
 
 .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle {

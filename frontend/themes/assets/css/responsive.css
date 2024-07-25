@@ -106,6 +106,14 @@
   
 }
 @media(max-width:1500px){
+    .placeholder_select{
+
+        top: 9px;
+    }
+    .placeholder_select p{
+
+        font-size: 14px;
+    }
     .nav.nav-tabs {
         border-bottom: 0;
         margin-bottom: -0.7px;
