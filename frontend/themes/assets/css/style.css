@@ -2684,7 +2684,7 @@ font-size: 36px;
     color: white;
     border: none;
     padding: 0px 7px;
-    line-height: 19px;
+    line-height: 17px;
 
 }
 
@@ -4931,7 +4931,7 @@ border-radius: 09;
 
     font-size: 14px;
     border: 1px solid #0000004D;
-    background-color: transparent;
+    /* background-color: transparent; */
 }
 .custom-row {
     display: flex;
@@ -5454,6 +5454,11 @@ border-top-right-radius: 0;
 .modal_enquiry .modal-title{
 
     color: var(--background-primary);
+}
+.safaritourlogo img{
+
+    aspect-ratio: 16/4;
+    object-fit: cover;
 }
 
 .items_img img{

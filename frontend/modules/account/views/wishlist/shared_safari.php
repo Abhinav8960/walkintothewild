@@ -44,7 +44,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari_model->id, 'item_type_id' => 2, 'status' => 1])->limit(1)->one();
                                                         if ($wishlist) {
                                                         ?>
-                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari_model->slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari_model->slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
                                                         <?php } else { ?>
                                                             <a href="/sharedsafari/wishlist/<?= $share_safari_model->slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
                                                         <?php }

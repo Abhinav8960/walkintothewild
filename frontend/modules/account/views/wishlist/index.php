@@ -41,7 +41,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package_model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
                                                         if ($wishlist) {
                                                         ?>
-                                                            <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                            <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
                                                         <?php } else { ?>
                                                             <a href="/package/wishlist/<?= $package_model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
                                                         <?php }

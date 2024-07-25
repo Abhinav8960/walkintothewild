@@ -61,10 +61,10 @@
         object-fit: cover;
     }
 
-    .top_opratorsBox .tourLogoes {
+    /* .top_opratorsBox .tourLogoes {
 
         padding: 0px 13px 0px 8px;
-    }
+    } */
     .searchSafari_wraper .row .col-xl-3 {
         width: auto !important;
     }
