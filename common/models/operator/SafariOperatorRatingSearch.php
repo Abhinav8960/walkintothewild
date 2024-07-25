@@ -4,6 +4,7 @@ namespace common\models\operator;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * SafariOperatorRatingSearch represents the model behind the search form of `common\models\operator\SafariOperatorRating`.
@@ -101,5 +102,10 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
 
 
         return $dataProvider;
+    }
+
+    public static function getOperatorlist()
+    {
+        return ArrayHelper::map(SafariOperator::find()->where(['status' => 1])->andWhere("id IN (SELECT Distinct safari_operator_id FROM safari_operator_rating)")->all(), 'id', 'business_name');
     }
 }
