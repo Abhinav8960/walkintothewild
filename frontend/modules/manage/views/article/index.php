@@ -10,21 +10,21 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 
 <div class="container-fluid mt-5 mb-5">
     <div class="row mb-5">
-        <div class="col-md-12 d-flex justify-content-between">
-            <h5><?= $this->title ?></h5>
+        <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center">
+        <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
             <div class="d-flex justify-content-between">
-                <a href="<?= Url::toRoute(['/manage/article/create']) ?>" class="btn btn-success" target="_blank"><i class="fa fa-plus"></i> Create Article</a> &nbsp;
+                <a href="<?= Url::toRoute(['/manage/article/create']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" target="_blank"><i class="fa fa-plus"></i> Create Article</a> &nbsp;
             </div>
         </div>
         <div class="col-md-2">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'article']); ?>
         </div>
         <div class="col-md-10">
-            <div class="card">
+            <div class="card account-settingside">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive table_design_manage">
                                 <?= GridView::widget([
                                     'dataProvider' => $dataProvider,
                                     'columns' => [

@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+<ul class="nav nav-tabs d-none d-lg-flex gap-2 ps-3" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <a href="/manage/sharedsafari/view?id=<?= $share_safari->id ?>" class="nav-link <?= isset($interested_active) ? $interested_active : '' ?>" id="home-tab">Interested</a>
     </li>

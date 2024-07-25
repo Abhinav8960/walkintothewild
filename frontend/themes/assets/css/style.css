@@ -5772,3 +5772,20 @@ border-top-right-radius: 0;
     --bs-tooltip-color: #000 !important;
 
   }
+
+  .table_design_manage table tr th{
+
+    background-color: var(--background-primary);
+    color: var(--colorwhite);
+   padding: 10px;
+    /* width: 100%; */
+  }
+
+  .table_design_manage table thead tr th:last-child
+   {
+    border-radius: 0px 5px 0px 0px;
+}
+.table_design_manage table thead tr th:first-child
+{
+ border-radius: 5px 0px 0px 0px;
+}
