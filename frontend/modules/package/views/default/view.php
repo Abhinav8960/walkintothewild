@@ -1,5 +1,7 @@
 <?php
 
+use common\interfaces\Constants;
+use common\models\cms\banner\Banner;
 use common\models\GeneralModel;
 use common\models\package\PackageIncluded;
 use yii\helpers\Url;
@@ -10,6 +12,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package : ' . $package->package_name;
 $this->params['title'] = $this->title;
+
+$page_constant = Constants::PACKAGE_VIEW;
+$banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->limit(1)->one();
 ?>
 
 
@@ -119,17 +124,17 @@ $this->params['title'] = $this->title;
                                             <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
                                         </div>
                                         <div class="d-flex w-100 flex-wrap gap-2">
-                                        <?php if ($package->packagefeatures) {
-                                            foreach ($package->packagefeatures as $features) { ?>
-                                            
-                                            <div class="text-form ">
-                                                    <p class="mb-0"><?= $features->featurename->title ?></p>
-                                                </div>
-                                           
-                                             
-                                        <?php }
-                                        } ?>
-                                         </div>
+                                            <?php if ($package->packagefeatures) {
+                                                foreach ($package->packagefeatures as $features) { ?>
+
+                                                    <div class="text-form ">
+                                                        <p class="mb-0"><?= $features->featurename->title ?></p>
+                                                    </div>
+
+
+                                            <?php }
+                                            } ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6  mb-3">

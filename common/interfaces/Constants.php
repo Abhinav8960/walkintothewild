@@ -16,4 +16,6 @@ interface Constants
     const   ARTICLE_DETAIL   = 8;
     const   TERM_CONDITION   = 9;
     const   ACCOMODATION     = 10;
+    const   PACKAGE_LIST     = 11;
+    const   PACKAGE_VIEW     = 12;
 }

@@ -3,11 +3,15 @@
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
+use common\interfaces\Constants;
+use common\models\cms\banner\Banner;
 use common\models\UserWishlist;
 
 
 $this->title = 'Package';
 $this->params['title'] = $this->title;
+$page_constant = Constants::PACKAGE_LIST;
+$banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->limit(1)->one();
 ?>
 
 
