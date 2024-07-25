@@ -28,6 +28,10 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-6">
                 <?= $form->field($model, 'entry_gate_longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter']) ?>
             </div>
+            <div class="col-md-6" <?php if ($model->master_zone_type_id != 1) { ?>style="display:none;" <?php } ?> id="is_open_in_monsoon">
+                <?= $form->field($model, 'is_open_in_monsoon')->radioList([1 => 'Yes', 0 => 'No']) ?>
+            </div>
+
             <?php if ($model->safari_park_zone_model->id) { ?>
                 <div class="col-md-6">
                     <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
@@ -46,3 +50,20 @@ use yii\bootstrap5\ActiveForm;
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$script = <<< JS
+    $(function(){
+
+        $("#safariparkzoneform-master_zone_type_id").on("change",function(){
+            var selectedValue = $("#safariparkzoneform-master_zone_type_id").val();
+            if(selectedValue ==1){
+                document.getElementById("is_open_in_monsoon").style.display= "block";
+            }else{
+                document.getElementById("is_open_in_monsoon").style.display= "none";
+            }
+        });
+    });
+JS;
+$this->registerJs($script);
+?>

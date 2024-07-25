@@ -17,9 +17,9 @@ $this->title = 'Account Settings';
         <div class="col-md-3">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-9">
-            <div class="card account-settingside">
-                <ul class="nav nav-pills mb-3 m-3 border-bottom pb-3" id="pills-tab" role="tablist">
+        <div class="col-md-9 itenary_tabs">
+            <div class="card account-settingside safartabs">
+                <ul class="nav nav-tabs mb-3 m-3 border-bottom " id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="pills-general-information-tab" data-bs-toggle="pill" data-bs-target="#pills-general-information" type="button" role="tab" aria-controls="pills-general-information" aria-selected="true">General Information</button>
                     </li>

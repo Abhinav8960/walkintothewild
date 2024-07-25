@@ -30,9 +30,16 @@ foreach ($activies as $key => $role) {
 $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
 
 ?>
-
-<div class="container">
+<section class="profile-wrapper">
+    <div class="container mb-5">
     <?= $this->render('@frontend/modules/profile/views/default/tablist', ['business' => 'active', 'user' => $user]) ?>
+    </div>
+</section>
+
+<section>
+<div class="container">
+<div class="row justify-content-center mb-5 pb-5">
+    <div class="col-xl-11">
     <div class="card">
         <div class="card-body">
             <div class="row mt-2 mb-5">
@@ -147,5 +154,9 @@ $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
             </div>
         </div>
     </div>
+    </div>
+</div>
+  
 
 </div>
+</section>

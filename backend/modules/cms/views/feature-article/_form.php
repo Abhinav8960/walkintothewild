@@ -16,7 +16,7 @@ use yii\web\View;
             <thead>
                 <tr>
                     <th style="width: 5%!important;">Sr. No.</th>
-                    <th >Article</th>
+                    <th>Article</th>
                 </tr>
             </thead>
             <tbody>

@@ -157,7 +157,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                 </div>
             </div>
             <!-- mobile responsive icons -->
-             <div class="col-12 ">
+            <div class="col-12 ">
                 <div class="row pt-3 desktop_hideDiv border_top2">
                     <div class="col-md-6 col-sm-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
@@ -289,7 +289,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     </div>
                 </div>
             </div>
-             <!-- mobile responsive icons end -->
+            <!-- mobile responsive icons end -->
         </div>
         <div class="row pt-2">
             <div class="col-lg-12 col-xl-6 mb-3 mb-xl-0">
@@ -311,8 +311,13 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                                 </thead>
                                 <tbody>
                                     <?php if ($model->corezones) {
-                                        foreach ($model->corezones as $corezone) { ?>
-                                            <tr>
+                                        foreach ($model->corezones as $corezone) {
+                                            $class = '';
+                                            if ($corezone->is_open_in_monsoon == 1) {
+                                                $class = 'zone_active';
+                                            }
+                                    ?>
+                                            <tr class="<?= $class ?>">
                                                 <td><?= $corezone->zone_name ?></td>
                                                 <td><?= $corezone->entry_gate_name ?></td>
                                             </tr>

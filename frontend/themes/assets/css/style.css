@@ -2242,6 +2242,10 @@ font-size: 36px;
     color: #cbcbcb;
 }
 
+.zone_active td {
+    background-color: #127729 !important;
+    color: var(--colorwhite) !important;
+}
 .tabledesigncore table td {
 
     position: relative;
@@ -5757,4 +5761,14 @@ border-top-right-radius: 0;
 
     border-radius: 10px !important;
 }
+.itenary_tabs .nav-tabs .nav-link{
 
+    font-size: 16px;
+}
+
+
+.custom-tooltip {
+    --bs-tooltip-bg: var(--background-yellow) !important;
+    --bs-tooltip-color: #000 !important;
+
+  }
