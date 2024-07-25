@@ -199,6 +199,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             8 => 'Article Detail',
             9 => 'Term & Condition',
             10 => 'Accomodation',
+            11 => 'Package List',
+            10 => 'Package View',
         ];
     }
 
