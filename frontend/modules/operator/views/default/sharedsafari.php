@@ -57,10 +57,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     <div class="container-fluid">
         <?= $this->render('_view_navbar', ['active' => 'sharedsafari', 'operator' => $operator]) ?>
     </div>
-  
+
 </section>
 <section class="touroprator_section ">
-<div class="container-fluid" id="viewcontent">
+    <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-9 col-lg-12">
                 <div class="row pt-5 pb-4">
@@ -157,71 +157,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 </div>
                             </div>
                             <div class="col-xxl-4 col-lg-4">
-                            <div class="request_quote">
-                                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                            <?php if ($reviews) { ?>
-                                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
-                                                if ($avg) { ?>
-                                                    Operator Rating <?= round($avg, 1) ?>
-                                                <?php } ?>
-                                            <?php } ?></button>
-                                        <div class="interst_wrapper pt-1 px-3 bg-white">
-                                            <div id="review-list">
-                                                <?php
-                                                if ($reviews) {
-                                                    foreach ($reviews as $review) {  ?>
-                                                        <div class="commentsOther2  position-relative">
-                                                            <div class="postcomment  pt-3">
-                                                                <div class="text_com colors_p">
-                                                                    <div class="providerNamerating ">
-                                                                        <div class="googlerating names">
-                                                                            <h6 class="mb-0 fs-6 pb-0"><?= $review->user->name ?></h6>
-                                                                        </div>
-                                                                        <div class="ratings colors">
-                                                                            <p class="mb-0">
-                                                                                <?php if ($rating_count = $review->rating) {
-                                                                                    for ($i = 1; $i <= $rating_count; $i++) { ?>
-                                                                                        <i class="fa-solid fa-star"></i>
-                                                                                    <?php }
-
-                                                                                    for ($i = $rating_count; $i < 5; $i++) { ?>
-                                                                                        <i class='far fa-star'></i>
-                                                                                <?php
-                                                                                    }
-                                                                                } ?>
-                                                                            </p>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <p class="suggest"><?= $review->review ?> &nbsp;</span>
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                <?php
-                                                    }
-                                                } ?>
-                                                <!-- <div class="whiteReview m-2">
-                                                <?php if (Yii::$app->user->identity) { ?>
-                                                    <button class="btn_review writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
-                                                <?php } else { ?>
-                                                    <a class="btn_review" href="/site/auth?authclient=google">Please Login to Review</a>
-                                                <?php } ?>
-                                            </div> -->
-                                            </div>
-                                            <div class="col-12">
-                                                <div class="safari text-end">
-                                                    <div class="viewAllreview">
-                                                        <a href="">View All</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        </form>
-                                        
-                                    </div>
-                              
+                                <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
                             </div>
                         </div>
                     </div>
