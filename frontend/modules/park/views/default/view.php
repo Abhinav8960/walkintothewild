@@ -64,8 +64,8 @@ if ($model->meta_title != '') {
         <div class="row mb-4  justify-content-center mt-4 padding_added">
             <div class="col-lg-12 col-xl-10 safartabs position-relative">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
-                    <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion pe-1 writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="30" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                    <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion pe-1 writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3" >
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="30" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve" data-bs-type="info"   data-bs-custom-class="custom-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title=" submit correction if found wrong information!">
                             <g>
                                 <path d="M507.494 426.066 282.864 53.537a31.372 31.372 0 0 0-53.73 0L4.506 426.066a31.37 31.37 0 0 0 26.864 47.569h449.259a31.372 31.372 0 0 0 26.865-47.569zM256.167 167.227c12.901 0 23.817 7.278 23.817 20.178 0 39.363-4.631 95.929-4.631 135.292 0 10.255-11.247 14.554-19.186 14.554-10.584 0-19.516-4.3-19.516-14.554 0-39.363-4.63-95.929-4.63-135.292 0-12.9 10.584-20.178 24.146-20.178zm.331 243.791c-14.554 0-25.471-11.908-25.471-25.47 0-13.893 10.916-25.47 25.471-25.47 13.562 0 25.14 11.577 25.14 25.47 0 13.562-11.578 25.47-25.14 25.47z" fill="#585757" opacity="1" data-original="#000000" class=""></path>
                             </g>
