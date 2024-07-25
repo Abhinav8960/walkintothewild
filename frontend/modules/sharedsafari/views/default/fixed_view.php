@@ -338,17 +338,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
-            </div>
-        </div>
-</section>
-
-<section class="safari_wrapper py-5">
-    <div class="container-lg">
-        <div class="row mb-5 pb-5">
-            <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
-
-
-            <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
                 <div class="interst_wrapper bg-white " style="min-height: 200px;">
@@ -367,7 +356,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         } ?>
                     </div>
                 </div>
+            </div>
+        </div>
+</section>
 
+<section class="safari_wrapper py-5">
+    <div class="container-lg">
+        <div class="row mb-5 pb-5">
+            <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+            <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <?php if ($share_safari->sharesafarigallery) {
                     $galleries = $share_safari->sharesafarigallery;
                 ?>
