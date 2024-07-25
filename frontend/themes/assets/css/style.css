@@ -5718,11 +5718,43 @@ border-top-right-radius: 0;
 
 .account-settingside{
 
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.form-inputssetting .form-control{
+
+    padding: 10px ;
+}
+.form-inputssetting .form-select{
+
+    padding: 10px ;
+}
+.form-inputssetting .form-control,
+.form-inputssetting .form-select{
+
+    box-shadow: none;
+}
+.typeaccount .form-check .form-check-input{
+
+    border-color: var(--background-primary) !important;
+    cursor: pointer;
+}
+.typeaccount .form-check .form-check-input:checked{
+
+    background-color: var(--background-primary) !important;
+    accent-color: var(--background-primary);
+    border-color: var(--background-primary) !important;
 }
 
+.form-inputssetting .form-label{
 
+    font-size: var(--fs-16);
+    color: var(--background-primary);
+    padding-bottom: 5px;
+    margin-bottom: 0;
+    font-weight: 600;
+}
+.card.account-settingside{
 
+    border-radius: 10px !important;
+}
 
