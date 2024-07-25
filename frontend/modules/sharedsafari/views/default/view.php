@@ -47,7 +47,7 @@ $this->params['title'] = $this->title;
                     <div class="row packageSfari pb-3">
                         <div class="col-12">
                             <div class="imagesSafari">
-                                <img src="/assets/5a869828/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@ $this->params['title'] = $this->title;
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" <?= $share_safari->organizedbyprofileurl <> '' ? 'target="_blank"' : '' ?>><strong><?= $share_safari->organizedbyname ?></strong></a></p>
+                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
 
                                     </div>
 

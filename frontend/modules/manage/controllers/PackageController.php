@@ -487,7 +487,7 @@ class PackageController extends FrontendBaseController
     public function actionBookNow($package_id)
     {
         $package_model = $this->findModel($package_id);
-        $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status']);
+        $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
 
         $enquire_provider = new ActiveDataProvider([
             'query' => $enquiries,

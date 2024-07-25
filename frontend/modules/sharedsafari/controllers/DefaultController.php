@@ -58,7 +58,7 @@ class DefaultController extends FrontendBaseController
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->type = 1;
-        $model->host_type = Yii::$app->user->identity->account_type;
+        $model->host_type = 1; //Yii::$app->user->identity->account_type;
         if ($login_user = Yii::$app->user->identity) {
             if ($login_user->x_url <> '') {
                 $model->website_url = $login_user->x_url;

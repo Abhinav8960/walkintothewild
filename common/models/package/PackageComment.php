@@ -83,4 +83,16 @@ class PackageComment extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function getPackage()
+    {
+        return $this->hasOne(Package::className(), ['id' => 'package_id']);
+    }
+
+
+    public function getReports()
+    {
+        return $this->hasMany(PackageCommentReport::className(), ['package_comment_id' => 'id']);
+    }
+
 }

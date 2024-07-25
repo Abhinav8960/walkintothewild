@@ -48,10 +48,14 @@ class PackageEnquiryForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['safari_operator_id', 'package_id', 'user_id', 'no_of_travelers', 'status'], 'integer'],
+            [['no_of_travelers', 'start_date', 'end_date', 'name', 'email_address'], 'required'],
+            [['safari_operator_id', 'package_id', 'user_id', 'no_of_travelers', 'status', 'phone'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
             [['name', 'email_address'], 'string', 'max' => 512],
-            [['phone'], 'string', 'max' => 12],
+            [['phone'], 'string', 'max' => 10],
+            ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>='],
+            ['no_of_travelers', 'integer', 'min' => 1],
+
         ];
     }
 

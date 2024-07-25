@@ -61,9 +61,9 @@ return [
     '/operator/<slug>/package' => '/operator/default/package', //operator view url
     '/operator/<slug>/article' => '/operator/default/article', //operator view url
     '/operator/<slug>/contact' => '/operator/default/contact', //operator view url
-    '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
+    // '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
     '/operator/<slug>/park' => '/operator/default/view', //operator view url
-    '/operator/<slug>' => '/operator/default/package', //operator view url
+    '/operator/<slug>' => '/operator/default/sharedsafari', //operator view url
 
     '/package' => '/package/default/index', //package page url
     '/package/<slug>' => '/package/default/view', //package page url

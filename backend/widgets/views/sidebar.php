@@ -757,6 +757,42 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						</ul>
 					</li>
 
+
+					<li class="slide <?= in_array($active_url, array(
+											"/flag/article/index",
+
+											"/flag/operator/index",
+
+											"/flag/package/index",
+
+											"/flag/share-safari/index"
+										)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/flag/article/index",
+														"/flag/operator/index",
+														"/flag/share-safari/index",
+														"/flag/package/index",
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Flag</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/flag/operator/index",
+														)) ? "active" : "" ?>" href="/flag/operator/index">Operator Comments</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/flag/package/index",
+														)) ? "active" : "" ?>" href="/flag/package/index">Package Comments</a></li>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/flag/share-safari/index",
+														)) ? "active" : "" ?>" href="/flag/share-safari/index">Share Safari</a></li>
+
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/flag/article/index",
+														)) ? "active" : "" ?>" href="/flag/article/index">Article Comments</a></li>
+
+
+						</ul>
+					</li>
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
