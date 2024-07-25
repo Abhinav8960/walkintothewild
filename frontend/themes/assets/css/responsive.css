@@ -106,6 +106,15 @@
   
 }
 @media(max-width:1500px){
+    .nav.nav-tabs {
+        border-bottom: 0;
+        margin-bottom: -0.7px;
+    }
+    .tag{
+
+        font-size: 14px;
+        padding: 2px 15px;
+    }
     .parksImgireview img{
 
         height: 170px !important;
@@ -353,6 +362,10 @@ line-height: 19px;
 
 
 @media only screen and (max-width: 1500px) and (min-width: 991px) {
+    .banner_section-inner.packagebnner .headingBnner_inner h1{
+
+        font-size: 30px;
+    }
     .banner_section-inner .headingBnner_inner h1{
 
         font-size: 30px;
@@ -367,7 +380,7 @@ line-height: 19px;
     }
     .topSlider_tour .items_slider img{
 
-        height: 320px;
+        height: 300px;
     }
     .logo{
 
@@ -509,11 +522,18 @@ line-height: 19px;
     .coreZone h3,
     .bufferzone h3 {
 
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .custoM-inputs .title_filter .input_check .form-check {
 
+        font-size: 14px;
+    }
+    .tabledesigncore table td,.tabledesignbuffer table td{
+
+        font-size: 12px;
+    }
+    .tabledesigncore table th,.tabledesignbuffer table th{
         font-size: 14px;
     }
 
@@ -1154,6 +1174,9 @@ display: none;
     }
 }
 @media (max-width: 991px) {
+    .banner_section-inner.packagebnner .headingBnner_inner h1{
+        font-size: 28px;
+    }
  
     .mobile_didplay_none .join_btn{
         padding: 9px 35px !important;
@@ -1446,6 +1469,9 @@ display: none;
 }
 
 @media only screen and (max-width:767px) {
+    .tag {
+        font-size: 14px;
+    }
     .postthumbnail img{
 
         height: 50px;
@@ -2157,6 +2183,12 @@ font-size: 15px;
     .dropdown-container .dropdown-toggle {
 
         width: 386px!important;
+    }
+}
+
+@media (max-width: 480px) {
+    .tag {
+        font-size: 12px;
     }
 }
 

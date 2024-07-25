@@ -91,7 +91,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <div class="footer_card row pb-2 px-2 align-items-center">
                                                     <div class="col-6">
                                                         <div class="safaritourlogo">
-                                                            <img src="<?= isset($package_model->safarioperator->imagepath) ? $package_model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-25">
+                                                            <img src="<?= isset($package_model->safarioperator->imagepath) ? $package_model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
                                                         </div>
                                                     </div>
                                                     <div class="col-6">

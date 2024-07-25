@@ -12,7 +12,7 @@ $this->params['title'] = $this->title;
 
 
 <div class="fixedbanner">
-  <section class="banner_section-inner  position-relative">
+  <section class="banner_section-inner packagebnner  position-relative">
     <picture class="position-relative">
       <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
       <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
@@ -33,33 +33,34 @@ $this->params['title'] = $this->title;
     </div>
   </section>
 </div>
-<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 270px !important; padding-top:30px;">
-  <div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-lg-9">
+<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 170px !important; padding-top:30px;">
+  <div class="container-fluid pt-3">
+    <div class="custom-row">
+      <div class="custom-col">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="w-100">
+            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="custom-image">
           </div>
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/soonbanner.jpg" alt="" class="w-100">
+            <img src="<?= $this->params['baseurl'] ?>/img/soonbanner.jpg" alt="" class="custom-image">
           </div>
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="w-100">
+            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="custom-image">
           </div>
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="w-100">
+            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="custom-image">
           </div>
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="w-100">
+            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="custom-image">
           </div>
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="w-100">
+            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="custom-image">
           </div>
         </div>
       </div>
     </div>
-    <div class="row justify-content-center mb-4">
+
+    <div class="row justify-content-center mb-4 pt-3">
       <div class="col-xl-11 col-lg-12">
         <div class="row my-4 justify-content-center">
           <?= $this->render('_select_filter', [
@@ -67,6 +68,20 @@ $this->params['title'] = $this->title;
           ]) ?>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
+              <div class="col-12  mb-xl-4 mb-3">
+                <div class="tag-container">
+                  <div class="tag">Bandhavgarh Tiger Reserve <span class="close-btn">×</span></div>
+                  <div class="tag">October <span class="close-btn">×</span></div>
+                  <div class="tag">Economical <span class="close-btn">×</span></div>
+                  <div class="tag">2 Nights <span class="close-btn">×</span></div>
+                  <div class="tag">3 Safaris <span class="close-btn">×</span></div>
+                  <div class="tag">Rs. 2500 - 5000 <span class="close-btn">×</span></div>
+                  <div class="tag">Private Room <span class="close-btn">×</span></div>
+                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                </div>
+              </div>
               <div class="col-12">
                 <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100">
                   <div class="left_text">
@@ -154,7 +169,7 @@ $this->params['title'] = $this->title;
                         <div class="footer_card row pb-2 px-2 align-items-center">
                           <div class="col-7">
                             <div class="safaritourlogo">
-                              <img src="<?= isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-25">
+                              <img src="<?= isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
                             </div>
                           </div>
                           <div class="col-5">

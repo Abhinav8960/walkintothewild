@@ -10,7 +10,6 @@ $this->title = 'Search Profile';
 $this->params['title'] = $this->title;
 ?>
 
-
 <div class="container pt-5 mt-5">
     <div class="row mt-2">
         <div class="col-12">
