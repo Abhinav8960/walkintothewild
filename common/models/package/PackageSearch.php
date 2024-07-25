@@ -2,10 +2,12 @@
 
 namespace common\models\package;
 
-use common\models\package\Package;
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
+use common\models\package\Package;
+use common\models\park\SafariPark;
 
 /**
  * PackageSearch represents the model behind the search form of `common\models\package\Package`.
@@ -24,12 +26,12 @@ class PackageSearch extends Package
     public function rules()
     {
         return [
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'string'],
-            [['package_name'], 'string', 'max' => 512],
-            [['package_slug'], 'string', 'max' => 720],
-            [['package_image'], 'string', 'max' => 255],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['cost_per_person'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'safe'],
+            [['package_name'], 'safe'],
+            [['package_slug'], 'safe'],
+            [['package_image'], 'safe'],
             [['park_id', 'month_id', 'estimated_price_filter', 'package_feature', 'package_include'], 'safe']
         ];
     }
@@ -133,5 +135,10 @@ class PackageSearch extends Package
         }
 
         return $dataProvider;
+    }
+
+    public function getParkoption()
+    {
+        return ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere("id IN (SELECT distinct park_id FROM package_safari_park WHERE status=1)")->all(), 'id', 'title');
     }
 }
