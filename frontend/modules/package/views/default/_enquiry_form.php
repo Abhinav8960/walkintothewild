@@ -18,7 +18,7 @@ use yii\helpers\Html;
             <div class="input-group2">
                 <label for="travelers">Travelers</label>
                 <div class="number-input position-relative">
-                    <?= $form->field($model, 'no_of_travelers')->textInput(['type' => 'number', 'class' => 'form-control'])->label(false); ?>
+                    <?= $form->field($model, 'no_of_travelers')->textInput(['type' => 'number', 'min' => 1, 'class' => 'form-control'])->label(false); ?>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@ use yii\helpers\Html;
 <div class="row align-items-center">
     <div class="col-md-7">
         <div class="text_get termsConditioncheck d-flex gap-2">
-            <input type="checkbox" id="chekcs">
+            <input type="checkbox" id="chekcs" required>
             <label for="chekcs">I agree to the terms and conditions.</label>
         </div>
     </div>
