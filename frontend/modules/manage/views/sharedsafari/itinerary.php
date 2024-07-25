@@ -122,14 +122,14 @@ $this->params['title'] = $this->title;
                                                                 <div class="row">
                                                                     <?php if ($model->share_safari_day_model->day_image) { ?>
                                                                         <div class="col-md-3">
-                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Share Safari Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                                                                         </div>
                                                                         <div class="col-md-1">
                                                                             <?= Html::img($model->share_safari_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
                                                                         </div>
                                                                     <?php } else { ?>
                                                                         <div class="col-md-3">
-                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Share Safari Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                                                                         </div>
                                                                     <?php } ?>
                                                                 </div>
