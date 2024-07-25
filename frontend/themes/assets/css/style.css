@@ -3245,6 +3245,8 @@ font-size: 36px;
 
     margin-bottom: 0 !important;
     color: var(--background-primary);
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .placeholder_select,
@@ -4155,10 +4157,10 @@ font-size: 36px;
     padding: 38px 20px 10px 64px;
     font-family: "Roboto", sans-serif;
     background-image: none !important;
-    font-size: 17px;
+    font-size: 14px;
     /* color: #707070; */
-    color: var(--background-primary);
-    font-weight: 600;
+    color: #09422d85;
+    font-weight: 500;
     border-radius: 0;
     width: 265px;
     overflow: hidden;
