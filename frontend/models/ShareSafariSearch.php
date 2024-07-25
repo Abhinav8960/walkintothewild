@@ -58,7 +58,7 @@ class ShareSafariSearch extends ShareSafari
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
-            'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]],
 
         ]);
 
@@ -138,15 +138,15 @@ class ShareSafariSearch extends ShareSafari
                 ];
             } else if ($this->custom_sort_by == '2') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
+                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
                 ];
             } else if ($this->custom_sort_by == '3') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
+                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
                 ];
             } else if ($this->custom_sort_by == '4') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['estimate_price_min' => SORT_DESC]
+                    'defaultOrder' => ['estimate_price_min' => SORT_ASC]
                 ];
             }
         }
