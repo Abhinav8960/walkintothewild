@@ -179,8 +179,8 @@ $this->params['title'] = $this->title;
                             <div class="col-lg-12">
 
 
-                                <label for="" class="Modal_label">Your Social Media Url/ Website Url</label>
-                                <?= $form->field($model, 'website_url')->textInput()->label(false); ?>
+                                <!-- <label for="" class="Modal_label">Your Social Media Url/ Website Url</label>
+                                <?= $form->field($model, 'website_url')->textInput()->label(false); ?> -->
 
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="selects w-100">
