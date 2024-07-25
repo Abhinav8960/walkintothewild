@@ -7,9 +7,9 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 
 ?>
-<div class="card">
+<div class="card ">
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive table_design_manage">
             <?= GridView::widget([
                 'dataProvider' => $safari_interested_provider,
                 'columns' => [
