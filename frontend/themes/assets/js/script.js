@@ -52,29 +52,29 @@ if ($('.topSlider_tour').length) {
         }
     });
 }
-if ($('.photoSlider').length) {
-    $('.photoSlider').owlCarousel({
-        loop: true,
-        margin: 0,
-        dots: true,
-        nav: false,
-        smartSpeed: 500,
-        autoplay: 300,
-        // navText: ['<span class="fal fa-angle-left"></span>', '<span class="fal fa-angle-right"></span>'],
-        responsive: {
-            0: {
-                items: 1
-            },
-            480: {
-                items: 1
-            },
-            600: {
-                items: 1
-            }
+// if ($('.photoSlider').length) {
+//     $('.photoSlider').owlCarousel({
+//         loop: true,
+//         margin: 0,
+//         dots: true,
+//         nav: false,
+//         smartSpeed: 500,
+//         autoplay: 300,
+//         // navText: ['<span class="fal fa-angle-left"></span>', '<span class="fal fa-angle-right"></span>'],
+//         responsive: {
+//             0: {
+//                 items: 1
+//             },
+//             480: {
+//                 items: 1
+//             },
+//             600: {
+//                 items: 1
+//             }
 
-        }
-    });
-}
+//         }
+//     });
+// }
 
 
 // if ($('.opratios-slider').length) {
@@ -153,6 +153,39 @@ $(document).ready(function () {
         });
     } else {
         $slider.addClass('single-image');
+    }
+});
+$(document).ready(function () {
+    var $slider = $('.photoSlider');
+    var itemCount = $slider.children().length;
+
+    if (itemCount > 1) {
+        $slider.owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: false,
+            dots: true,
+            autoplay: true,
+            responsiveClass: true,
+            smartSpeed: 900,
+            // navText: ["<i class='fa fa-chevron-left'></i>", "<i class='fa fa-chevron-right'></i>"],
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                900: {
+                    items: 1
+                },
+                1024: {
+                    items: 1
+                }
+            }
+        });
+    } else {
+        $slider.addClass('single-imageSlider');
     }
 });
 

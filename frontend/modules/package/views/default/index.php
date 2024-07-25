@@ -155,7 +155,7 @@ $this->params['title'] = $this->title;
                         <div class="footer_card row pb-2 px-2 align-items-center">
                           <div class="col-7">
                             <div class="safaritourlogo">
-                              <img src="<?= isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-25">
+                              <img src="<?= isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
                             </div>
                           </div>
                           <div class="col-5">

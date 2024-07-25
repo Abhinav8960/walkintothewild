@@ -77,7 +77,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -102,7 +102,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -118,19 +118,24 @@ $this->params['title'] = $this->title;
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
                                         </div>
+                                        <div class="d-flex w-100 flex-wrap gap-2">
                                         <?php if ($package->packagefeatures) {
                                             foreach ($package->packagefeatures as $features) { ?>
-                                                <div class="text-form">
+                                            
+                                            <div class="text-form ">
                                                     <p class="mb-0"><?= $features->featurename->title ?></p>
                                                 </div>
+                                           
+                                             
                                         <?php }
                                         } ?>
+                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset($package->stay_category_id) ? GeneralModel::packageoption()[$package->stay_category_id] : '' ?></p>

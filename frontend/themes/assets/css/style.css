@@ -358,7 +358,7 @@ a {
     background: url('../img/bg-safriee.png');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 375px;
+    height: 415px;
     width: 100%;
     border-radius: 10px;
     position: relative;
@@ -1890,6 +1890,7 @@ font-size: 36px;
 .safrititles h5 {
 
     font-size: var(--fs-23);
+    color: var(--background-primary);
 
 }
 
@@ -1936,9 +1937,9 @@ font-size: 36px;
 .text-form p {
 
     margin-bottom: 0;
-    font-weight: 500;
+    font-weight: 400;
     font-size: var(--fs-14);
-    color: var(--background-primary);
+    color: #151C2C;
 }
 
 .contact_p p {
@@ -2486,7 +2487,7 @@ font-size: 36px;
 
 .logo_provide2 {
 
-    height: 150px;
+    height: 145px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -4036,6 +4037,7 @@ font-size: 36px;
 .safridetails_form .text-form {
 
     flex: 1;
+    margin: auto;
 }
 
 .postcomment .text_com {
@@ -4062,6 +4064,11 @@ font-size: 36px;
     display: block;
     margin: 0 auto;
     /* Center the image */
+}
+.owl-carousel.single-imageSlider {
+
+    display: block !important;
+    margin: 0 auto;
 }
 
 .seelctes_text p {
@@ -4968,7 +4975,7 @@ border-radius: 09;
 
 .packageSfari .imagesSafari img {
     max-height: 300px;
-    height: 400px;
+    height: 300px;
     border-radius: 10px 10px;
     object-fit: cover;
     margin-bottom: 10px;
@@ -5335,7 +5342,7 @@ a.desc:after {
 }
 
 .mobile_didplay_block .join_btn{
-    padding: 11px 30px;
+    padding: 6px 30px;
     color: #152F1B;
     font-weight: 600;
 }

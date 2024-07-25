@@ -106,6 +106,10 @@
   
 }
 @media(max-width:1500px){
+    .nav.nav-tabs {
+        border-bottom: 0;
+        margin-bottom: -0.7px;
+    }
     .tag{
 
         font-size: 14px;

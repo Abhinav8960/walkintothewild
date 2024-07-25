@@ -83,7 +83,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
