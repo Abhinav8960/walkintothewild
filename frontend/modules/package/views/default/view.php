@@ -86,7 +86,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
-                                                            $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 6, 'selection' => 1, 'status' => 1])->limit(1)->one();
+                                                            $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
                                                             echo ($pick_drop_includes) ? 'Pick & Drop' : '';
                                                             ?></p>
@@ -118,22 +118,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6  mb-3">
+                                <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
                                         </div>
-                                        <div class="d-flex w-100 flex-wrap gap-2">
-                                            <?php if ($package->packagefeatures) {
-                                                foreach ($package->packagefeatures as $features) { ?>
+                                        <div class="text-form">
+                                            <p class="mb-0"><?php
+                                                            $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                    <div class="text-form ">
-                                                        <p class="mb-0"><?= $features->featurename->title ?></p>
-                                                    </div>
-
-
-                                            <?php }
-                                            } ?>
+                                                            echo ($package_includes) ? 'Camera Fee' : '';
+                                                            ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,6 +142,23 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </div>
                                     </div>
                                 </div>
+                                <!-- <div class="col-12 col-sm-12  mb-3">
+                                    <div class="safridetails_form d-flex gap-3 ">
+                                        <div class="d-flex w-100 flex-wrap gap-2">
+                                            <?php if ($package->packagefeatures) {
+                                                foreach ($package->packagefeatures as $features) { ?>
+
+                                                    <div class="text-form ">
+                                                        <p class="mb-0"><?= $features->featurename->title ?></p>
+                                                    </div>
+
+
+                                            <?php }
+                                            } ?>
+                                        </div>
+                                    </div>
+                                </div> -->
+
                             </div>
                         </div>
                     </div>
