@@ -213,18 +213,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <img src="<?= $package->imagepath ?>" alt=""></a>
                                             </div>
                                             <div class="card_body">
-                                                <!-- <div class="top_seats">
-                                                    <div class="safari d-flex justify-content-between ">
-                                                        <div class="safarinum d-flex gap-2 align-items-center ">
-                                                            <p class="text_safari">NIGHTS</p>
-                                                            <h6 class="number-safari"><?= $package->no_of_night ?></h6>
-                                                        </div>
-                                                        <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                            <p class="text_safari">SAFARIES</p>
-                                                            <h6 class="number-safari"><?= $package->no_of_safari ?></h6>
-                                                        </div>
-                                                    </div>
-                                                </div> -->
                                                 <div class="titleDate">
                                                     <h6 class="pt-1"><a href=""><?= $package->package_name ?> </a></h6>
                                                     <div class="orgnizer_tour d-flex justify-content-between pt-2">
@@ -234,11 +222,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         </div>
                                                         <div class="icons_restro">
                                                             <i class="fa-solid fa-car"></i>
-                                                            <p class="mb-0">Pick & Drop</p>
+                                                            <p class="mb-0"><?= $package->pickanddrop ?></p>
                                                         </div>
                                                         <div class="icons_restro">
                                                             <i class="fa-solid fa-utensils"></i>
-                                                            <p class="mb-0">Meals</p>
+                                                            <p class="mb-0"><?= $package->meals ?></p>
                                                         </div>
                                                         <div class="icons_restro">
 

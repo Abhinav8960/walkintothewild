@@ -19,6 +19,7 @@ class PackageSearch extends Package
     public $estimated_price_filter;
     public $package_feature;
     public $package_include;
+    public $custom_sort_by;
 
     /**
      * {@inheritdoc}
@@ -32,7 +33,7 @@ class PackageSearch extends Package
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
             [['package_image'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter', 'package_feature', 'package_include'], 'safe']
+            [['park_id', 'month_id', 'estimated_price_filter', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
         ];
     }
 
@@ -60,6 +61,7 @@ class PackageSearch extends Package
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -132,6 +134,27 @@ class PackageSearch extends Package
             $query->joinwith(['packagefeatures' => function ($package_feature_query) {
                 $package_feature_query->andFilterWhere(['feature_id' => $this->package_feature]);
             }]);
+        }
+
+
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == '1') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['created_at' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '2') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '3') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '4') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['cost_per_person' => SORT_ASC]
+                ];
+            }
         }
 
         return $dataProvider;

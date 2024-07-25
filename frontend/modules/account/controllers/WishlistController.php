@@ -16,11 +16,11 @@ class WishlistController extends \frontend\controllers\FrontendBaseController
      */
     public function actionIndex()
     {
-        $package = UserWishlist::find()->where(['item_type_id' => 1, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
+        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
         return $this->render(
             'index',
             [
-                'packages' => $package,
+                'wishlist_items' => $wishlist_items,
             ]
         );
     }
@@ -31,11 +31,11 @@ class WishlistController extends \frontend\controllers\FrontendBaseController
      */
     public function actionShareSafari()
     {
-        $share_safaries = UserWishlist::find()->where(['item_type_id' => 2, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
+        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
         return $this->render(
             'shared_safari',
             [
-                'share_safaries' => $share_safaries,
+                'wishlist_items' => $wishlist_items,
             ]
         );
     }

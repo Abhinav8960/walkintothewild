@@ -561,13 +561,13 @@ class DefaultController extends FrontendBaseController
         }
         if ($share_safari) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
                 if (!$wishlist) {
                     $wishlist = new UserWishlist();
                 }
                 $wishlist->user_id = Yii::$app->user->identity->id;
                 $wishlist->item_id = $share_safari->id;
-                $wishlist->item_type_id = 2;
+                $wishlist->item_type_id = UserWishlist::SHARED_SAFARI;
                 $wishlist->item_type = 'share-safari';
                 $wishlist->status = 1;
                 if ($wishlist->save(false)) {
@@ -578,21 +578,21 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
     }
 
     public function actionUnwishlist($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         if ($share_safari) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
                 if ($wishlist) {
                     $wishlist->status = 0;
                     if ($wishlist->save(false)) {
@@ -604,7 +604,7 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
     }

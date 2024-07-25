@@ -131,17 +131,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                   <div class="left_text">
                     <p>There are currently <strong><?= count($models) ?></strong> active package.</p>
                   </div>
-                  <div class="right-select">
-                    <div class="input_check pb-0">
+                  <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
 
-                      <select class="form-select mb-3" aria-label="Default select example">
-                        <option selected>Sort By: Created Recently</option>
-                        <option value="1">January</option>
-                        <option value="2">Febraury</option>
-                        <option value="3">March</option>
-                      </select>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -176,32 +167,20 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                           <img src="<?= isset($model->package_image) ? $model->imagepath : $this->params['baseurl'] . '/img/blog_details01.jpg' ?>" alt=""></a>
                       </div>
                       <div class="card_body">
-                        <!-- <div class="top_seats">
-                          <div class="safari d-flex justify-content-between ">
-                            <div class="safarinum d-flex gap-2 align-items-center ">
-                              <p class="text_safari">NIGHTS</p>
-                              <h6 class="number-safari"><?= $model->no_of_night ?></h6>
-                            </div>
-                            <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                              <p class="text_safari">SAFARIES</p>
-                              <h6 class="number-safari"><?= $model->no_of_safari ?></h6>
-                            </div>
-                          </div>
-                        </div> -->
                         <div class="titleDate">
                           <h6 class="pt-1"><a href=""><?= $model->package_name ?> </a></h6>
                           <div class="orgnizer_tour d-flex justify-content-between pt-2">
                             <div class="icons_restro">
                               <i class="fa-solid fa-car-side"></i>
-                              <p class="mb-0"><?= $model->no_of_safari ?>Safaris</p>
+                              <p class="mb-0"><?= $model->no_of_safari ?> Safaris</p>
                             </div>
                             <div class="icons_restro">
                               <i class="fa-solid fa-car"></i>
-                              <p class="mb-0">Pick & Drop</p>
+                              <p class="mb-0"><?= $model->pickanddrop ?></p>
                             </div>
                             <div class="icons_restro">
                               <i class="fa-solid fa-utensils"></i>
-                              <p class="mb-0">Meals</p>
+                              <p class="mb-0"><?= $model->meals ?></p>
                             </div>
                             <div class="icons_restro">
 
