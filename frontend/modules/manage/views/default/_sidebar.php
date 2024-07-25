@@ -13,5 +13,5 @@ use yii\helpers\Url;
     <a href="<?= Url::toRoute(['/manage/sharedsafari']) ?>" class="nav-link mb-2 <?= $active == 'sharedsafari' ? 'active' : '' ?>">Shared Safari</a>
     <a href="<?= Url::toRoute(['/manage/package']) ?>" class="nav-link mb-2 <?= $active == 'package' ? 'active' : '' ?>">Packages</a>
     <a href="<?= Url::toRoute(['/manage/article']) ?>" class="nav-link mb-2 <?= $active == 'article' ? 'active' : '' ?>">Articles</a>
-    <a href="<?= Url::toRoute(['/manage/user']) ?>" class="nav-link mb-2 <?= $active == 'user' ? 'active' : '' ?>">Users</a>
+    <!-- <a href="<?= Url::toRoute(['/manage/user']) ?>" class="nav-link mb-2 <?= $active == 'user' ? 'active' : '' ?>">Users</a> -->
 </div>
