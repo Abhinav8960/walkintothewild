@@ -25,8 +25,9 @@ use common\models\User;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class ShareSafariIntrested extends \yii\db\ActiveRecord
+class ShareSafariIntrested extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
      */

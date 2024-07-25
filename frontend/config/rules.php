@@ -57,7 +57,7 @@ return [
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
     '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
     '/operator/review/<id>' => '/operator/default/review', //operator view url
-    // '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
+    '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
     '/operator/<slug>/package' => '/operator/default/package', //operator view url
     '/operator/<slug>/article' => '/operator/default/article', //operator view url
     '/operator/<slug>/contact' => '/operator/default/contact', //operator view url
@@ -69,15 +69,6 @@ return [
     '/package/<slug>' => '/package/default/view', //package page url
     '/package/wishlist/<slug>' => '/package/default/wishlist', //package page url
     '/package/unwishlist/<slug>' => '/package/default/unwishlist', //package page url
-    '/package/profile/<package_id>' => '/package/profile/index', //package profile  url          
-    '/package/profile/itinerary/<package_id>/<day>' => '/package/profile/itinerary', //package profile itenary url          
-    '/package/profile/inclusion/<package_id>' => '/package/profile/inclusion', //package profile inclusion url          
-    '/package/profile/getting-there/<package_id>' => '/package/profile/getting-there', //package profile getting-there url          
-    '/package/profile/policy-info/<package_id>' => '/package/profile/policy-info', //package profile policy-info url          
-    '/package/profile/faq/<package_id>' => '/package/profile/faq', //package profile faq url          
-    '/package/profile/create-faq/<package_id>' => '/package/profile/create-faq', //package profile create faq url          
-    '/package/profile/select-faq/<package_id>' => '/package/profile/select-faq', //package profile select faq url     
-
 
     '/profile/user/<user_handle>' => '/profile/default/index',
     '/profile/follower/<user_handle>' => '/profile/default/follower',
@@ -121,6 +112,18 @@ return [
     '/manage/package/select-faq/<package_id>' => '/manage/package/select-faq',
     '/manage/package/gallery/<package_id>' => '/manage/package/gallery', //package profile faq url          
     '/manage/package/create-gallery/<package_id>' => '/manage/package/create-gallery', //package profile create faq url          
+
+
+    '/manage/sharedsafari/update-fixed-departure/<share_safari_id>' => '/manage/sharedsafari/update-fixed-departure',
+    '/manage/sharedsafari/itinerary/<share_safari_id>/<day>' => '/manage/sharedsafari/itinerary', //sharedsafari profile itenary url          
+    '/manage/sharedsafari/inclusion/<share_safari_id>' => '/manage/sharedsafari/inclusion', //sharedsafari profile inclusion url          
+    '/manage/sharedsafari/getting-there/<share_safari_id>' => '/manage/sharedsafari/getting-there', //sharedsafari profile getting-there url          
+    '/manage/sharedsafari/policy-info/<share_safari_id>' => '/manage/sharedsafari/policy-info', //sharedsafari profile policy-info url          
+    '/manage/sharedsafari/faq/<share_safari_id>' => '/manage/sharedsafari/faq', //sharedsafari profile faq url          
+    '/manage/sharedsafari/create-faq/<share_safari_id>' => '/manage/sharedsafari/create-faq', //sharedsafari profile create faq url          
+    '/manage/sharedsafari/select-faq/<share_safari_id>' => '/manage/sharedsafari/select-faq',
+    '/manage/sharedsafari/gallery/<share_safari_id>' => '/manage/sharedsafari/gallery', //sharedsafari profile faq url          
+    '/manage/sharedsafari/create-gallery/<share_safari_id>' => '/manage/sharedsafari/create-gallery', //sharedsafari profile create faq url          
 
     // Chat Routes
     '/chat/message/<user_handle>' => '/chat/default/message',

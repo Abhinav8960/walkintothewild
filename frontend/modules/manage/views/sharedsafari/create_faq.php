@@ -7,11 +7,6 @@ use yii\bootstrap5\ActiveForm;
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirport $model */
 /** @var yii\widgets\ActiveForm $form */
-
-$this->title = 'Package : ' . $package_model->package_name . '';
-$this->params['breadcrumbs_home_url'] = '#';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['title'] = $this->title;
 ?>
 <?php $form = ActiveForm::begin([
     'id' => 'author-form',

@@ -84,17 +84,6 @@ class DefaultController extends FrontendBaseController
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
             return $this->redirect(['/operator/default/view',  'slug' => $slug]);
         }
-        $ratingsearchModel = new SafariOperatorRatingSearch();
-        $ratingsearchModel->safari_operator_id = $operator->id;
-        $ratingsearchModel->status = 1;
-        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
-        $reviews = $ratingdataProvider->getModels();
-
-        $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
-
-
-
-
 
         return $this->render(
             'view',
@@ -102,8 +91,6 @@ class DefaultController extends FrontendBaseController
                 'operator' => $operator,
                 'model' => $model,
                 'operator_parks' => $operator_parks,
-                'reviews' => $reviews,
-                'organized_by' => $organized_by,
             ]
         );
     }
@@ -123,22 +110,12 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
         }
 
-        $ratingsearchModel = new SafariOperatorRatingSearch();
-        $ratingsearchModel->safari_operator_id = $operator->id;
-        $ratingsearchModel->status = 1;
-        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
-        $reviews = $ratingdataProvider->getModels();
-
-        $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
-
         return $this->render(
-            '_package',
+            'package',
             [
                 'operator' => $operator,
-                'reviews' => $reviews,
                 'model' => $model,
                 'operator_packages' => $operator_packages,
-                'organized_by' => $organized_by,
             ]
         );
     }
@@ -208,13 +185,6 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
         }
 
-        $ratingsearchModel = new SafariOperatorRatingSearch();
-        $ratingsearchModel->safari_operator_id = $operator->id;
-        $ratingsearchModel->status = 1;
-        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
-        $reviews = $ratingdataProvider->getModels();
-
-
         return $this->render(
             'sharedsafari',
             [
@@ -222,7 +192,6 @@ class DefaultController extends FrontendBaseController
                 'model' => $model,
                 'operator_parks' => $operator_parks,
                 'shared_safaries' => $shared_safaries,
-                'reviews' => $reviews,
             ]
         );
     }
@@ -504,17 +473,8 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/operator/default/validate';
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+            return $this->redirect(['/operator/default/article',  'slug' => $slug]);
         }
-
-        $ratingsearchModel = new SafariOperatorRatingSearch();
-        $ratingsearchModel->safari_operator_id = $operator->id;
-        $ratingsearchModel->status = 1;
-        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
-        $reviews = $ratingdataProvider->getModels();
-        $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
-
-
 
         $query = Article::find()->where([
             'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'user_id' => $operator->id
@@ -531,12 +491,10 @@ class DefaultController extends FrontendBaseController
         $articles = $articledataProvider->getModels();
 
         return $this->render(
-            '_article',
+            'article',
             [
                 'operator' => $operator,
                 'model' => $model,
-                'organized_by' => $organized_by,
-                'reviews' => $reviews,
                 'articles' => $articles,
             ]
         );
@@ -563,10 +521,10 @@ class DefaultController extends FrontendBaseController
         $ratingsearchModel->status = 1;
         $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
         $reviews = $ratingdataProvider->getModels();
-        $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
+        $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->limit(3)->all();
 
         return $this->render(
-            '_contact',
+            'contact',
             [
                 'operator' => $operator,
                 'model' => $model,

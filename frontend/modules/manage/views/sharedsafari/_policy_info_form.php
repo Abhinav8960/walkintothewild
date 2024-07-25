@@ -21,7 +21,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="card">
     <div class="card-body">
 
-        <div class="container-fluid">
+        <div class="container-fluid-fluid">
             <div class="row">
                 <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                     <div class="safri_tour">
@@ -54,7 +54,7 @@ use yii\bootstrap5\ActiveForm;
                         <!-- Safari Parks content goes here -->
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Package Terms Condtition'])->label(false) ?>
+                                <?= $form->field($model, 'share_safari_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Terms Condtition'])->label(false) ?>
                             </div>
                         </div>
                     </div>
@@ -62,7 +62,7 @@ use yii\bootstrap5\ActiveForm;
                         <!-- Safari Parks content goes here -->
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Privacy Policy'])->label(false) ?>
+                                <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Privacy Policy'])->label(false) ?>
                             </div>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ use yii\bootstrap5\ActiveForm;
                         <!-- Safari Parks content goes here -->
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Change Policy'])->label(false) ?>
+                                <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Change Policy'])->label(false) ?>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@ use yii\bootstrap5\ActiveForm;
                         <div class="searchSafari_parks mb-4">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label(false) ?>
+                                    <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Share Safari What You Must Carry'])->label(false) ?>
                                 </div>
                             </div>
                         </div>
@@ -90,14 +90,14 @@ use yii\bootstrap5\ActiveForm;
                     <div class="tab-content_tour" id="tab25">
                         <!-- Shared Safari content goes here -->
                         <div class="row">
-                            <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Date Change Policy'])->label(false) ?>
+                            <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Date Change Policy'])->label(false) ?>
                         </div>
                     </div>
 
                     <div class="tab-content_tour mb-4" id="tab26">
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Refund Policy'])->label(false) ?>
+                                <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Refund Policy'])->label(false) ?>
                             </div>
                         </div>
                     </div>
@@ -125,12 +125,12 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-bulleteditor('packageform-package_terms_condtition');
-bulleteditor('packageform-privacy_policy');
-bulleteditor('packageform-change_policy');
-bulleteditor('packageform-what_you_must_carry');
-bulleteditor('packageform-date_change_policy');
-bulleteditor('packageform-refund_policy');
+bulleteditor('createdepartureform-share_safari_terms_condtition');
+bulleteditor('createdepartureform-privacy_policy');
+bulleteditor('createdepartureform-change_policy');
+bulleteditor('createdepartureform-what_you_must_carry');
+bulleteditor('createdepartureform-date_change_policy');
+bulleteditor('createdepartureform-refund_policy');
 JS;
 $this->registerJs($script);
 ?>

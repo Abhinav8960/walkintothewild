@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Package Getting There'])->label('Package Getting There') ?>
+                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Getting There'])->label('Share Safari Getting There') ?>
             </div>
         </div>
         <hr>
@@ -46,7 +46,7 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-bulleteditor('packageform-getting_there');
+bulleteditor('createdepartureform-getting_there');
 JS;
 $this->registerJs($script);
 ?>

@@ -31,7 +31,7 @@ use yii\bootstrap5\ActiveForm;
                                 <label class="control-label"><?= $optionLabel ?></label>
                             </div>
                             <div class="col-sm-9">
-                                <?= $form->field($model, 'package_included[' . $optionValue . ']')->radioList(
+                                <?= $form->field($model, 'share_safari_included[' . $optionValue . ']')->radioList(
                                     [
                                         '1' => 'Include',
                                         '2' => 'Exclude',
@@ -56,10 +56,10 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'package_inclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Inclusion'])->label('Package Inclusion') ?>
+                <?= $form->field($model, 'share_safari_inclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Inclusion'])->label('Share Safari Inclusion') ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Exclusion'])->label('Package Exclusion') ?>
+                <?= $form->field($model, 'share_safari_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Exclusion'])->label('Share Safari Exclusion') ?>
             </div>
         </div>
         <hr>
@@ -81,8 +81,8 @@ use yii\bootstrap5\ActiveForm;
 </style>
 <?php
 $script = <<< JS
-bulleteditor('packageform-package_inclusion');
-bulleteditor('packageform-package_exclusion');
+bulleteditor('createdepartureform-share_safari_inclusion');
+bulleteditor('createdepartureform-share_safari_exclusion');
 JS;
 $this->registerJs($script);
 ?>
