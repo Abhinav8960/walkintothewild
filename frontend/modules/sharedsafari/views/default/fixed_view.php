@@ -233,7 +233,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-lg-12 col-xl-11 safartabs position-relative">
                             <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
+                                    <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">Discussion</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
@@ -263,7 +266,26 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         <div class="row mb-5  mt-4 itenary_tabs">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
                 <div class="tab-content accordion" id="myTabContent">
-                    <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab" tabindex="0">
+                        <h2 class="accordion-header d-lg-none" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse bg-set collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+                            <div class="accordion-body p-3">
+                                <div class="col-lg-12 mb-3">
+                                    <div class="itenary-title">
+                                        <h6 class="fs-6 fw-bold pb-2">Discussion</h6>
+                                    </div>
+                                    <div class="itenary_text">
+                                        <p><?= $share_safari->safari_plan ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+                        <!-- Rendered on 2024-07-09 13:16:37 -->
+                    </div>
+                    <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
                         </h2>
@@ -356,15 +378,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         } ?>
                     </div>
                 </div>
-            </div>
-        </div>
-</section>
-
-<section class="safari_wrapper py-5">
-    <div class="container-lg">
-        <div class="row mb-5 pb-5">
-            <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
-            <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <?php if ($share_safari->sharesafarigallery) {
                     $galleries = $share_safari->sharesafarigallery;
                 ?>
@@ -384,26 +397,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <?php } ?>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="footer_intrst d-lg-none d-block">
-                    <div class="right_button py-lg-5 py-3">
-                        <?php if ($share_safari->host_user_id == Yii::$app->user->id) { ?>
-                            <button class="btn_newsafari organizeBtn w-100" value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                Safari</button>
-                        <?php } elseif (Yii::$app->user->identity) { ?>
-                            <button class="btn_newsafari organizeBtn w-100" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
-                                Safari</button>
-                        <?php } else {  ?>
-                            <a class="join_btn ms-sm-3 mt-sm-0 mt-2 w-100" href="/site/auth?authclient=google">+ Organize a New
-                                Safari</a>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
+
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered  modal-md">
         <div class="modal-content">
