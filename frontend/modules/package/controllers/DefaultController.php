@@ -191,9 +191,9 @@ class DefaultController extends FrontendBaseController
         $model = new PackageEnquiryForm();
         $model->safari_operator_id =  $package->owned_by_id;
         $model->package_id = $package->id;
-        $model->user_id = Yii::$app->user->identity->id;
         $model->status = 1;
-        if(Yii::$app->user->identity){
+        if (Yii::$app->user->identity) {
+            $model->user_id = Yii::$app->user->identity->id;
             $model->name = Yii::$app->user->identity->name;
             $model->email_address = Yii::$app->user->identity->email;
             $model->phone = Yii::$app->user->identity->mobile_no;
