@@ -10,7 +10,7 @@ use common\models\User;
 /**
  * ChatSearch represents the model behind the search form of `common\models\Chat`.
  */
-class ChatSearch extends \Yii\base\Model
+class ChatSearch extends User
 {
     /**
      * {@inheritdoc}
