@@ -54,45 +54,28 @@ $this->params['title'] = $this->title;
                     <div class="<?= $show_banner ? 'card-body' : '' ?>">
                         <div class="row">
 
-                            <?php if (Yii::$app->user->identity->is_safari_operator) { ?>
-                                <div class="col-12 mb-2">
-                                    <label for="" class="Modal_label">Select a Safari Park</label>
-                                    <?= $form->field($model, 'park_id')->dropDownList(
-                                        GeneralModel::operatorsafariparkoption(Yii::$app->user->identity),
-                                        [
-                                            'prompt' => 'Select a Safari Park',
-                                            'class' => 'form-select form-select-lg mb-3',
-                                            'onchange' => '
-                        $.get( "' . Yii::$app->urlManager->createUrl('/sharedsafari/default/getparkimage?id=') . '"+$(this).val(), function( data ) {
-                            $( "#park_image").attr( "src",data );
-                            })'
-                                        ]
-                                    )->label(false) ?>
-                                </div>
-                            <?php } else { ?>
-                                <div class="col-12 mb-2">
-                                    <label for="" class="Modal_label">Select a Safari Park</label>
-                                    <?= $form->field($model, 'park_id')->dropDownList(
-                                        ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'),
-                                        [
-                                            'prompt' => 'Select a Safari Park',
-                                            'class' => 'form-select form-select-lg mb-3',
-                                            'onchange' => '
-                    $.get( "' . Yii::$app->urlManager->createUrl('/sharedsafari/default/getparkimage?id=') . '"+$(this).val(), function( data ) {
-                        $( "#park_image").attr( "src",data );
-                        })'
-                                        ]
-                                    )->label(false) ?>
-                                </div>
-                            <?php } ?>
-
-
+                            <div class="col-12 mb-2">
+                                <label for="" class="Modal_label">Select a Safari Park</label>
+                                <?= $form->field($model, 'park_id')->dropDownList(
+                                    ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'),
+                                    [
+                                        'prompt' => 'Select a Safari Park',
+                                        'class' => 'form-select form-select-lg mb-3',
+                                        'onchange' => '
+                                            $.get( "' . Yii::$app->urlManager->createUrl('/sharedsafari/default/getparkimage?id=') . '"+$(this).val(), function( data ) {
+                                                $( "#park_image").attr( "src",data );
+                                                })'
+                                    ]
+                                )->label(false) ?>
+                            </div>
 
                             <?php
                             if ($model->shared_safari_model->image) { ?>
                                 <div class="col-md-3">
                                     <label for="" class="Modal_label">Current Display Image</label>
-                                    <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                                    <?php echo '<
+                                     src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image"></
+                                    >'; ?>
                                 </div>
 
                                 <div class="col-6 mb-2">
@@ -108,7 +91,7 @@ $this->params['title'] = $this->title;
                                 if ($model->shared_safari_model->park_id) { ?>
                                     <div class="col-sm-3">
                                         <label for="" class="Modal_label">Current Display Image</label>
-                                        <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px"></img>'; ?>
+                                        <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image"></img>'; ?>
                                     </div>
                                 <?php } else { ?>
                                     <div class="col-sm-3 mb-2">
@@ -128,14 +111,13 @@ $this->params['title'] = $this->title;
 
                             <div class="col-md-6 mb-1">
                                 <label for="" class="Modal_label">Theme</label>
-                                <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                                <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Theme', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 
                             </div>
 
                             <div class="col-md-6 mb-1">
                                 <label for="" class="Modal_label">Number of Safaris (1-10)</label>
-                                <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 1])->label(false) ?>
-                                <p>Value: <span id="safariseat"><?= $model->no_of_safari ?></span></p>
+                                <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 1])->label(false)->hint('No of Safaris : <span id="safariseat">'.$model->no_of_safari.'</span>') ?>
                             </div>
 
                             <div class="col-md-12">
@@ -164,11 +146,11 @@ $this->params['title'] = $this->title;
                                 </div>
 
                             </div>
-                            <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                 <label for="" class="Modal_label">Tour Duration(1-10)</label>
                                 <?= $form->field($model, 'tour_duration')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->tour_duration) ? $model->tour_duration : 1,])->label(false) ?>
                                 <p>Value: <span id="tour"><?= $model->tour_duration ?></span></p>
-                            </div>
+                            </div> -->
                             <div class="col-lg-12 ">
                                 <div class="textarea">
                                     <?= $form->field($model, 'safari_plan')->textarea(['row' => 4, 'placeholder' => 'Write about your plan'])->label(false) ?>

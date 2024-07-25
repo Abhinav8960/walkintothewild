@@ -24,7 +24,6 @@ use yii\widgets\ActiveForm;
     <div class="input_check pb-0 mb-2">
         <?= $form->field($searchModel, 'custom_sort_by')->dropDownlist(
             GeneralModel::relevantoption(),
-            ['prompt' => 'Sort By: Created Recently']
         )->label(false); ?>
     </div>
 </div>
