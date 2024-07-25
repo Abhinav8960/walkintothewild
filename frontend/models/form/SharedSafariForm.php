@@ -66,14 +66,14 @@ class SharedSafariForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id','tour_duration', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
-            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'tour_duration','no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status', 'type'], 'integer'],
+            [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
+            [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'tour_duration', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status', 'type'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
-            [
-                ['website_url'], 'required', 'when' => function ($model) {
-                    return $model->host_type != 4;
-                }
-            ],
+            // [
+            //     ['website_url'], 'required', 'when' => function ($model) {
+            //         return $model->host_type != 4;
+            //     }
+            // ],
             [['safari_plan'], 'string'],
             [['shared_safari_image'], 'image', 'extensions' => ['png', 'jpeg', 'jpg'],],
             ['estimate_price_max', 'compare', 'compareAttribute' => 'estimate_price_min', 'operator' => '>='],
@@ -133,7 +133,8 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->share_seat = $this->share_seat;
         $this->shared_safari_model->website_url = $this->website_url;
 
-        $this->shared_safari_model->tour_duration = $this->tour_duration;
+
+        $this->shared_safari_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24)));
         $this->shared_safari_model->status = $this->status;
 
         if ($this->shared_safari_model->slug == '') {

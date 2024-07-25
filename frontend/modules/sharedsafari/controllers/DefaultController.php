@@ -59,7 +59,17 @@ class DefaultController extends FrontendBaseController
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->type = 1;
         $model->host_type = Yii::$app->user->identity->account_type;
-
+        if ($login_user = Yii::$app->user->identity) {
+            if ($login_user->x_url <> '') {
+                $model->website_url = $login_user->x_url;
+            }
+            if ($login_user->insta_url <> '') {
+                $model->website_url = $login_user->insta_url;
+            }
+            if ($login_user->facebook_url <> '') {
+                $model->website_url = $login_user->facebook_url;
+            }
+        }
 
         $model->action_url = '/sharedsafari/default/organize-safari';
         $model->action_validate_url = '/sharedsafari/default/validate';
@@ -90,10 +100,12 @@ class DefaultController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('organize_form', [
                 'model' => $model,
+                'show_banner' => false,
             ]);
         } else {
             return $this->render('organize_form', [
                 'model' => $model,
+                'show_banner' => true,
             ]);
         }
     }
@@ -137,10 +149,12 @@ class DefaultController extends FrontendBaseController
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('organize_form', [
                 'model' => $model,
+                'show_banner' => false,
             ]);
         } else {
             return $this->render('organize_form', [
                 'model' => $model,
+                'show_banner' => true,
             ]);
         }
     }
@@ -516,7 +530,7 @@ class DefaultController extends FrontendBaseController
         }
     }
 
-    
+
 
 
     /**

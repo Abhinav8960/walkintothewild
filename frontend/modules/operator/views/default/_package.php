@@ -89,7 +89,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                             $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
                                                                             if ($wishlist) {
                                                                             ?>
-                                                                                <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                                                <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
                                                                             <?php } else { ?>
                                                                                 <a href="/package/wishlist/<?= $model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
                                                                             <?php }
@@ -143,6 +143,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                             </div>
                                                         </div>
                                                 <?php }
+                                                } else {
+                                                    echo '<p class="noData">No Package Found!</p>';
                                                 } ?>
                                             </div>
                                         </div>
@@ -216,10 +218,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <!-- Rendered on 2024-07-23 12:19:05 -->
                                     <div class="request_quote mt-4">
                                         <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                        Organized Safari <?= count($organized_by); ?></button>
+                                            Organized Safari <?= count($organized_by); ?></button>
                                         <div class="interst_wrapper pt-3 px-md-5 bg-white">
                                             <div class="row justify-content-center">
-                                            <?php if ($organized_by) {
+                                                <?php if ($organized_by) {
                                                     foreach ($organized_by as $share_safari) {
                                                 ?>
                                                         <div class="col-md-12 mb-4 padding_righ">
@@ -291,7 +293,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php }
                                                 } ?>
                                             </div>
-                                      
+
                                             <div class="col-12">
                                                 <div class="safari text-end">
                                                     <div class="viewAllreview">

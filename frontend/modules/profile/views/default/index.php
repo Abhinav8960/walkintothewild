@@ -31,16 +31,37 @@ $this->params['title'] = $this->title;
                                 <?php } ?>
                                 <h6>Social Media</h6>
                                 <?php if ($user->facebook_url) { ?>
-                                    <a href="<?= $user->facebook_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i> <?= $user->facebook_url; ?></a>
+                                    <div class="links_sociels d-flex gap-2">
+                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-facebook-f me-1"></i></a>
+                                        <p>Facebook
+                                            <span> <a href="<?= $user->facebook_url; ?>" target="_blank" class="iconSize"><?= $user->facebook_url; ?></a></span>
+                                        </p>
+                                    </div>
                                 <?php } ?>
                                 <?php if ($user->whatsapp_url) { ?>
-                                    <a href="<?= $user->whatsapp_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i> <?= $user->whatsapp_url; ?></a>
+                                    <div class="links_sociels d-flex gap-2">
+                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-whatsapp me-1"></i></a>
+                                        <p>Whatsapp
+                                            <span> <a href="<?= $user->whatsapp_url; ?>" target="_blank" class="iconSize"><?= $user->whatsapp_url; ?></a></span>
+                                        </p>
+                                    </div>
                                 <?php } ?>
                                 <?php if ($user->x_url) { ?>
-                                    <a href="<?= $user->x_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i><?= $user->x_url; ?></a>
+                                    <div class="links_sociels d-flex gap-2">
+                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-x-twitter me-1"></i></a>
+                                        <p>Twitter
+                                            <span> <a href="<?= $user->x_url; ?>" target="_blank" class="iconSize"><?= $user->x_url; ?></a></span>
+                                        </p>
+                                    </div>
                                 <?php } ?>
                                 <?php if ($user->insta_url) { ?>
-                                    <a href="<?= $user->insta_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i> <?= $user->insta_url; ?></a>
+                                    <div class="links_sociels d-flex gap-2">
+                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-instagram me-1"></i></a>
+                                        <p>Instagram
+                                            <span><a href="<?= $user->insta_url; ?>" target="_blank" class="iconSize"> <?= $user->insta_url; ?></a></span>
+                                        </p>
+                                    </div>
+
                                 <?php } ?>
                             </div>
                         </div>

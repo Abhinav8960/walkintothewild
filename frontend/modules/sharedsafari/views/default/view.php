@@ -16,10 +16,10 @@ $this->title = 'Safari Tour Operator Registration';
 $this->params['title'] = $this->title;
 ?>
 
-<section class="banner_section-inner position-relative">
+<section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= $this->params['baseurl'] ?>/img/NewBanner_big.png" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/NewBanner_big.png" class="d-block w-100 " alt="banner">
+        <img src="<?= $this->params['baseurl'] ?>/img/NewBanner_big.png" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container">
@@ -27,8 +27,8 @@ $this->params['title'] = $this->title;
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1>Join or Organize a Sharing Safari</h1>
-                        <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
-                            Their Adventures</p>
+                        <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
+                            Their Adventures</p> -->
                     </div>
                 </div>
             </div>

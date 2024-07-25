@@ -57,12 +57,13 @@ return [
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
     '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
     '/operator/review/<id>' => '/operator/default/review', //operator view url
-    '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
+    // '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
     '/operator/<slug>/package' => '/operator/default/package', //operator view url
     '/operator/<slug>/article' => '/operator/default/article', //operator view url
     '/operator/<slug>/contact' => '/operator/default/contact', //operator view url
     '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
-    '/operator/<slug>' => '/operator/default/view', //operator view url
+    '/operator/<slug>/park' => '/operator/default/view', //operator view url
+    '/operator/<slug>' => '/operator/default/package', //operator view url
 
     '/package' => '/package/default/index', //package page url
     '/package/<slug>' => '/package/default/view', //package page url

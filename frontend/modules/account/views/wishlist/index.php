@@ -21,7 +21,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <?= $this->render('@frontend/modules/account/views/wishlist/_navbar', ['package' => 'active']) ?>
                 <div class="tab-content m-3" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-packages" role="tabpanel" aria-labelledby="pills-packages-tab">
-                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
                             <?php if ($packages) {
                                 foreach ($packages as $package) {
                                     $package_model = Package::find()->where(['id' => $package->id])->limit(1)->one();
@@ -41,7 +41,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package_model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
                                                         if ($wishlist) {
                                                         ?>
-                                                            <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:black;"><i class="fa-solid fa-heart"></i></a>
+                                                            <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
                                                         <?php } else { ?>
                                                             <a href="/package/wishlist/<?= $package_model->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
                                                         <?php }
