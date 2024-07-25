@@ -25,9 +25,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <div class="tab-pane fade show active" id="pills-shared-safari" role="tabpanel" aria-labelledby="pills-shared-safari-tab">
                                 <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
 
-                                    <?php if ($share_safaries) {
-                                        foreach ($share_safaries as $share_safari) {
-                                            $share_safari_model = ShareSafari::find()->where(['id' => $share_safari->id])->limit(1)->one();
+                                    <?php if ($wishlist_items) {
+                                        foreach ($wishlist_items as $wishlist_item) {
+                                            $share_safari_model = ShareSafari::find()->where(['id' => $wishlist_item->item_id])->limit(1)->one();
                                             if (!$share_safari_model) {
                                                 continue;
                                             }
@@ -42,12 +42,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         </div>
                                                     </div>
                                                     <div class="floating-watchlist">
-                                                        <?php
-                                                        if (Yii::$app->user->identity) { ?>
-                                                            <div class="heart_bx">
-                                                                <a href="/sharedsafari/unwishlist/<?= $share_safari_model->slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
-                                                            </div>
-                                                        <?php } ?>
+                                                        <div class="heart_bx">
+                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari_model->slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
+                                                        </div>
                                                     </div>
                                                     <div class="shareimg">
                                                         <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari_model->slug]) ?>"><img src="<?= $share_safari_model->sharedimagepath ? $share_safari_model->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
@@ -76,7 +73,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         <div class="titleDate">
                                                             <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari_model->slug]) ?>"><?= $share_safari_model->park->title ?></a></h6>
                                                             <div class="orgnizer">
-                                                                <p>Organized by: <strong><?= $share_safari_model->user->name ?></strong></p>
+                                                                <p>Organized by: <strong><?= $share_safari_model->organizedbyname ?></strong></p>
                                                             </div>
                                                         </div>
                                                         <div class="footer_card row pb-2 px-2 align-items-center">

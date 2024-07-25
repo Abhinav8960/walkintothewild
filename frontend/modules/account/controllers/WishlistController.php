@@ -31,11 +31,11 @@ class WishlistController extends \frontend\controllers\FrontendBaseController
      */
     public function actionShareSafari()
     {
-        $share_safaries = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
+        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
         return $this->render(
             'shared_safari',
             [
-                'share_safaries' => $share_safaries,
+                'wishlist_items' => $wishlist_items,
             ]
         );
     }

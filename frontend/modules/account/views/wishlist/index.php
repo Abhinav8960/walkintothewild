@@ -40,12 +40,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </div>
                                                 </div>
                                                 <div class="floating-watchlist">
-                                                    <?php
-                                                    if (Yii::$app->user->identity) { ?>
-                                                        <div class="heart_bx">
-                                                            <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
-                                                        </div>
-                                                    <?php } ?>
+                                                    <div class="heart_bx">
+                                                        <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
+                                                    </div>
                                                 </div>
                                                 <div class="shareimg">
                                                     <a href="/package/<?= $package_model->package_slug ?>">
