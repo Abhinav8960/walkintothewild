@@ -47,80 +47,6 @@ class DefaultController extends FrontendBaseController
     }
 
 
-
-
-    /**
-     * Create SeatType.
-     * 
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        if (Yii::$app->user->identity) {
-            if (Yii::$app->user->identity->is_safari_operator != 1 && Yii::$app->user->identity->account_type != 3) {
-                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
-            }
-        }
-        $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id])->limit(1)->one();
-        $model = new PackageForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->owned_by_id = $safari_operator->id;
-        $model->scenario = 'create';
-
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->package_image = UploadedFile::getInstance($model, 'package_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_model->save(false)) {
-                        $model->uploadFile();
-
-                        $package_feature = $model->package_feature;
-                        if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_feature as $feature) {
-                                $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
-                                $packagefeature->feature_id = $feature;
-                                $packagefeature->save(false);
-                            }
-                        }
-
-
-                        $package_park = $model->package_park;
-                        if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_park as $park) {
-                                $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->park_id = $park;
-                                $packagesafaripark->save(false);
-                            }
-                        }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['index']);
-                    }
-                }
-            }
-        } else {
-            $model->package_model->loadDefaultValues();
-        }
-
-
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-
     /**
      * Renders the index view for the module
      * @return string
@@ -267,6 +193,11 @@ class DefaultController extends FrontendBaseController
         $model->package_id = $package->id;
         $model->user_id = Yii::$app->user->identity->id;
         $model->status = 1;
+        if(Yii::$app->user->identity){
+            $model->name = Yii::$app->user->identity->name;
+            $model->email_address = Yii::$app->user->identity->email;
+            $model->phone = Yii::$app->user->identity->mobile_no;
+        }
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
