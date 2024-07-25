@@ -6,6 +6,7 @@ use Yii;
 use common\models\User;
 use common\models\chat\Chat;
 use common\models\chat\ChatMessage;
+use common\models\chat\ChatSearch;
 
 /**
  * Default controller for the `chat` module
@@ -18,8 +19,16 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
      */
     public function actionIndex()
     {
+        $searchModel = new ChatSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $user_list = User::find()->where("user_handle IS NOT NULL")->all();
-        return $this->render('index', ['user_list' => $user_list]);
+        return $this->render(
+            'index',
+            [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]
+        );
     }
 
     /**
@@ -28,14 +37,13 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
     public function actionMessage($user_handle)
     {
         $individual_user = $this->individualuser($user_handle);
-
         $login_user = Yii::$app->user->identity;
         $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->orderby(['last_message_at' => SORT_DESC])->all();
 
         return $this->render('message', [
             'individual_user' => $individual_user,
             'active_chat_list' => $active_chat_list,
-            'login_user' => $login_user
+            'login_user' => $login_user,
         ]);
     }
 

@@ -103,16 +103,66 @@ $recentposts = ArticleSearch::recentpost();
                                     </div>
                                 </div>
                                 <div class="tag-container">
-                                    <div class="tag">Bandhavgarh Tiger Reserve <span class="close-btn">×</span></div>
-                                    <div class="tag">October <span class="close-btn">×</span></div>
-                                    <div class="tag">Economical <span class="close-btn">×</span></div>
-                                    <div class="tag">2 Nights <span class="close-btn">×</span></div>
-                                    <div class="tag">3 Safaris <span class="close-btn">×</span></div>
-                                    <div class="tag">Rs. 2500 - 5000 <span class="close-btn">×</span></div>
-                                    <div class="tag">Private Room <span class="close-btn">×</span></div>
-                                    <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
-                                    <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
-                                    <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+
+                                    <?php if ($searchModel->park_id) {
+                                        $selected_park = $searchModel->parkoption[$searchModel->park_id];
+                                        if ($selected_park) { ?>
+                                            <div class="tag"><?= $selected_park ?> <span class="close-btn remove_dropdown_filter" data-attribute="park_id">×</span></div>
+                                    <?php }
+                                    } ?>
+
+                                    <?php if ($searchModel->month_id) {
+                                        $selected_month = GeneralModel::monthoption()[$searchModel->month_id];
+                                        if ($selected_month) { ?>
+                                            <div class="tag"><?= $selected_month ?> <span class="close-btn remove_dropdown_filter" data-attribute="month_id">×</span></div>
+                                    <?php }
+                                    } ?>
+
+
+                                    <?php if ($searchModel->stay_category_id) {
+                                        foreach ($searchModel->stay_category_id as  $stay_category_id) {
+                                            $selected_price = GeneralModel::budgetoption()[$stay_category_id];
+                                            if ($selected_price) {
+                                    ?>
+                                                <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $stay_category_id ?>" data-attribute="stay_category_id">×</span></div>
+
+                                    <?php }
+                                        }
+                                    } ?>
+
+                                    <?php if ($searchModel->estimated_price_filter) {
+                                        foreach ($searchModel->estimated_price_filter as  $estimated_price_filter) {
+                                            $selected_price = GeneralModel::estimatedpriceoption()[$estimated_price_filter];
+                                            if ($selected_price) {
+                                    ?>
+                                                <div class="tag">Rs. <?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $estimated_price_filter ?>" data-attribute="estimated_price_filter">×</span></div>
+
+                                    <?php }
+                                        }
+                                    } ?>
+
+                                    <?php if ($searchModel->host_type) {
+                                        foreach ($searchModel->host_type as  $host_type) {
+                                            $selected_price = GeneralModel::hostoption()[$host_type];
+                                            if ($selected_price) {
+                                    ?>
+                                                <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $host_type ?>" data-attribute="host_type">×</span></div>
+
+                                    <?php }
+                                        }
+                                    } ?>
+
+
+                                    <?php if ($searchModel->share_safari_agenda_id) {
+                                        foreach ($searchModel->share_safari_agenda_id as  $share_safari_agenda_id) {
+                                            $selected_price = GeneralModel::agendaoption()[$share_safari_agenda_id];
+                                            if ($selected_price) {
+                                    ?>
+                                                <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $share_safari_agenda_id ?>" data-attribute="share_safari_agenda_id">×</span></div>
+
+                                    <?php }
+                                        }
+                                    } ?>
                                 </div>
                             </div>
                             <div class="col-12">

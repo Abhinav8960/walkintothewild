@@ -3,9 +3,10 @@
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
+use common\models\GeneralModel;
+use common\models\UserWishlist;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
-use common\models\UserWishlist;
 
 
 $this->title = 'Package';
@@ -74,16 +75,55 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="row ">
               <div class="col-12  mb-xl-4 mb-3">
                 <div class="tag-container">
-                  <div class="tag">Bandhavgarh Tiger Reserve <span class="close-btn">×</span></div>
-                  <div class="tag">October <span class="close-btn">×</span></div>
-                  <div class="tag">Economical <span class="close-btn">×</span></div>
-                  <div class="tag">2 Nights <span class="close-btn">×</span></div>
-                  <div class="tag">3 Safaris <span class="close-btn">×</span></div>
-                  <div class="tag">Rs. 2500 - 5000 <span class="close-btn">×</span></div>
-                  <div class="tag">Private Room <span class="close-btn">×</span></div>
-                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
-                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
-                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+
+                  <?php if ($searchModel->park_id) {
+                    $selected_park = $searchModel->parkoption[$searchModel->park_id];
+                    if ($selected_park) { ?>
+                      <div class="tag"><?= $selected_park ?> <span class="close-btn remove_dropdown_filter" data-attribute="park_id">×</span></div>
+                  <?php }
+                  } ?>
+
+                  <?php if ($searchModel->month_id) {
+                    $selected_month = GeneralModel::monthoption()[$searchModel->month_id];
+                    if ($selected_month) { ?>
+                      <div class="tag"><?= $selected_month ?> <span class="close-btn remove_dropdown_filter" data-attribute="month_id">×</span></div>
+                  <?php }
+                  } ?>
+
+                  <?php if ($searchModel->stay_category_id) {
+                    foreach ($searchModel->stay_category_id as  $stay_category_id) {
+                      $selected_price = GeneralModel::budgetoption()[$stay_category_id];
+                      if ($selected_price) {
+                  ?>
+                        <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $stay_category_id ?>" data-attribute="stay_category_id">×</span></div>
+
+                  <?php }
+                    }
+                  } ?>
+
+
+                  <?php if ($searchModel->package_feature) {
+                    foreach ($searchModel->package_feature as  $package_feature) {
+                      $selected_price = GeneralModel::packagefeatureoption()[$package_feature];
+                      if ($selected_price) {
+                  ?>
+                        <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $package_feature ?>" data-attribute="package_feature">×</span></div>
+
+                  <?php }
+                    }
+                  } ?>
+
+                  <?php if ($searchModel->package_include) {
+                    foreach ($searchModel->package_include as  $package_include) {
+                      $selected_price = GeneralModel::packageincludeoption()[$package_include];
+                      if ($selected_price) {
+                  ?>
+                        <div class="tag"><?= $selected_price ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $package_include ?>" data-attribute="package_include">×</span></div>
+
+                  <?php }
+                    }
+                  } ?>
+
                 </div>
               </div>
               <div class="col-12">

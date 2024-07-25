@@ -94,11 +94,11 @@
 													<i class="fa-solid fa-cog"></i>
 													Account Setting</a>
 											</li>
-											<li>
+											<!-- <li>
 												<a class="" href="/chat">
 													<i class="fa-solid fa-message"></i>
 													Messages</a>
-											</li>
+											</li> -->
 											<li>
 												<a class="" href="/profile/search">
 													<i class="fa-solid fa-search"></i>
@@ -128,7 +128,9 @@
 				<div class="d-flex gap-4 align-items-center justify-content-end initial_headers">
 
 					<div class="notification pt-2"><i class="fa-solid fa-bell"></i></div>
-					<div class="massge pt-2"><i class="fa-solid fa-envelope"></i></div>
+					<div class="massge pt-2">
+						<a href="/chat"><i class="fa-solid fa-envelope"></i></a>
+					</div>
 					<div class="proilewrapper">
 						<div class="profile">
 							<div class="img-box2">
@@ -171,11 +173,11 @@
 											<i class="fa-solid fa-cog"></i>
 											Account Setting</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a class="" href="/chat">
 											<i class="fa-solid fa-message"></i>
 											Messages</a>
-									</li>
+									</li> -->
 									<li>
 										<a class="" href="/profile/search">
 											<i class="fa-solid fa-search"></i>

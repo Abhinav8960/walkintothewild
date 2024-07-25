@@ -32,7 +32,7 @@ use common\models\park\SafariPark;
         <div class="title_filter ">
             <h6>Safari Park</h6>
             <div class="input_check ">
-                <?= $form->field($searchModel, 'park_id')->dropDownlist(ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'Select Safari Park'])->label(false) ?>
+                <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>
             </div>
         </div>
         <div class="title_filter mb-3">
@@ -141,7 +141,7 @@ use common\models\park\SafariPark;
                     <div class="title_filter">
 
                         <div class="input_check ">
-                            <?= $form->field($searchModel, 'park_id')->dropDownlist(GeneralModel::safariparkoption(), ['prompt' => 'Select Park'])->label(false) ?>
+                            <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Park'])->label(false) ?>
                         </div>
                     </div>
                 </div>
@@ -285,7 +285,28 @@ $script = <<< JS
         $("#side-search-form").attr("data-pjax", "true");    
         $(this).closest('form').submit();
        
-    }); 
+    });
+    
+
+    $('.remove_dropdown_filter').click(function(){
+        data_attribute = $(this).attr('data-attribute');
+        $("#sharesafarisearch-"+data_attribute+" option:selected").remove();
+        $("#side-search-form").attr("data-pjax", "true");    
+        $('#side-search-form').submit();
+    });
+
+    $('.remove_checkbox_filter').click(function(){
+        data_id = $(this).attr('data-id');
+        data_attribute = $(this).attr('data-attribute');
+        $.each($('input[name="ShareSafariSearch['+data_attribute+'][]"]:checked'), function(){ 
+            if($(this).val()===data_id){
+                $(this).prop('checked', false);
+                $("#side-search-form").attr("data-pjax", "true");    
+                $('#side-search-form').submit();
+            }
+        });
+    });
+    
 JS;
 $this->registerJs($script);
 ?>

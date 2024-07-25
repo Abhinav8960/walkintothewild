@@ -143,10 +143,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                             <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                             <p>Parks</p>
                                                         </div>
-                                                        <!-- <div class="parks_text text-center">
+                                                        <div class="parks_text text-center">
                                                             <p>0</p>
-                                                            <p>Resorts</p>
-                                                        </div> -->
+                                                            <p>Packages</p>
+                                                        </div>
                                                         <div class="parks_text text-center">
                                                             <p>0</p>
                                                             <p>Shared Safari</p>

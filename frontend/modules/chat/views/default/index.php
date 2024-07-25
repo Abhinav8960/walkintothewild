@@ -22,14 +22,17 @@ $this->title = 'Chat';
                 <div class="card-body">
                     <div class="row">
                         <div class="col-3">
-                            <?php if ($user_list) {
-                                foreach ($user_list as $user) { ?>
-                                    <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link">
+                            <div class="chat-search-user">
+                                <?= $this->render('_search', ['searchModel' => $searchModel]) ?>
+                            </div>
+                            <?php if ($dataProvider) {
+                                foreach ($dataProvider->models as $model) { ?>
+                                    <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $model->user_handle]) ?>" class="chat-link">
                                         <div class="chat-sidebar-user-card">
                                             <div class="d-flex chat-user_message">
-                                                <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
+                                                <img src="<?= $model->avatar <> '' ? $model->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
                                                 <div class="chat-user_name">
-                                                    <h6><?= $user->name ?></h6>
+                                                    <h6><?= $model->name ?></h6>
                                                 </div>
                                             </div>
                                         </div>

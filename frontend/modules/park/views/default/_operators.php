@@ -123,10 +123,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                 <p>Parks</p>
                                             </div>
-                                            <!-- <div class="parks_text text-center">
+                                            <div class="parks_text text-center">
                                                 <p>0</p>
-                                                <p>Resorts</p>
-                                            </div> -->
+                                                <p>Packages</p>
+                                            </div>
                                             <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Shared Safari</p>
@@ -282,10 +282,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
                                                 <p>Parks</p>
                                             </div>
-                                            <!-- <div class="parks_text text-center">
+                                            <div class="parks_text text-center">
                                                 <p>0</p>
-                                                <p>Resorts</p>
-                                            </div> -->
+                                                <p>Packages</p>
+                                            </div>
                                             <div class="parks_text text-center">
                                                 <p>0</p>
                                                 <p>Shared Safari</p>
