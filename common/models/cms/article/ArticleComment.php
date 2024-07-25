@@ -77,6 +77,11 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    public function getArticle()
+    {
+        return $this->hasOne(Article::class, ['id' => 'article_id']);
+    }
+
     public function getStatusvalue()
     {
         if (isset($this->status)) {
@@ -89,5 +94,11 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
             }
         }
         return $this->status;
+    }
+
+
+    public function getReports()
+    {
+        return $this->hasMany(ArticleCommentReport::className(), ['article_comment_id' => 'id']);
     }
 }
