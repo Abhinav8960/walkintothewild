@@ -11,16 +11,24 @@ $this->params['baseurl'] = $webasset->baseUrl;
 <div class="profile_coverbnner mt-5 pt-5">
     <div class="container-lg">
         <div class="row justify-content-center">
-            <div class="col-xxl-10 banner-cover">
+            <div class="col-xxl-10 banner-cover position-relative">
                 <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
+                <label for="coverImageUpload" class="coverbtns">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Cover Picture
+                </label>
+                <input type="file" id="coverImageUpload" style="display: none;" accept="image/*">
             </div>
         </div>
         <div class="row align-items-center justify-content-center">
             <div class="mt-n5">
-                <div class="d-flex align-items-center justify-content-center mb-2">
+                <div class="d-flex align-items-center justify-content-center mb-4">
                     <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle">
-                        <div class="border border-4 border-white d-flex align-items-center justify-content-center rounded-circle overflow-hidden profile_img" style="width: 150px; height: 150px;" ;="">
+                        <div class="border border-4 border-white d-flex align-items-center justify-content-center  profile_img">
                             <img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
+                            <label for="profileImageUpload" class="camera-icon">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            <input type="file" id="profileImageUpload" style="display: none;" accept="image/*">
                         </div>
                     </div>
                 </div>
@@ -129,3 +137,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
         background-image: linear-gradient(#09422dfc, #f9d600);
     } */
 </style>
+
+<script>
+    document.getElementById('profileImageUpload').addEventListener('change', function(event) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.querySelector('.profile_img img').src = e.target.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+    document.getElementById('coverImageUpload').addEventListener('change', function(event) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.querySelector('.banner-cover img').src = e.target.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    });
+</script>
