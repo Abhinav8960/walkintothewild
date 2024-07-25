@@ -12,14 +12,14 @@ $this->title = 'Account Settings';
 <div class="container mt-5 mb-5">
     <div class="row mb-5">
         <div class="col-12">
-        <h6 class="fs-3 fw-bold">Account Settings</h6>
+        <h6 class="fs-3 fw-bold mb-4">Account Settings</h6>
         </div>
         <div class="col-md-3">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
         <div class="col-md-9">
-            <div class="card">
-                <ul class="nav nav-pills mb-3 m-3" id="pills-tab" role="tablist">
+            <div class="card account-settingside">
+                <ul class="nav nav-pills mb-3 m-3 border-bottom pb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="pills-general-information-tab" data-bs-toggle="pill" data-bs-target="#pills-general-information" type="button" role="tab" aria-controls="pills-general-information" aria-selected="true">General Information</button>
                     </li>
@@ -34,7 +34,7 @@ $this->title = 'Account Settings';
                     'id' => 'user-form',
                     'method' => 'POST',
                 ]); ?>
-                <div class="tab-content m-3" id="pills-tabContent">
+                <div class="tab-content m-3 form-inputssetting" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-general-information" role="tabpanel" aria-labelledby="pills-general-information-tab">
                         <div class="row">
                             <div class="col-md-6">
@@ -45,7 +45,7 @@ $this->title = 'Account Settings';
                                 <?= $form->field($model, 'mobile_no')->textInput(['maxlength' => true, 'placeholder' => 'Mobile Number']) ?>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6 typeaccount">
                                 <?php
                                 $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer/Photographer', 3 => 'Safari Operator'];
                                 if (Yii::$app->user->identity->is_safari_operator == 1 && !in_array($model->account_type, [1])) {
@@ -89,29 +89,29 @@ $this->title = 'Account Settings';
                             </div>
 
                             <div class="col-md-12">
-                                <?= Html::submitButton('Save Changes', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                                <?= Html::submitButton('Save Changes', ['class' => 'post-comment']) ?>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-profile-photo" role="tabpanel" aria-labelledby="pills-profile-photo-tab">
+                    <div class="tab-pane fade " id="pills-profile-photo" role="tabpanel" aria-labelledby="pills-profile-photo-tab" style="min-height:500px">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <?= $form->field($model, 'profile_image')->fileInput() ?>
                             </div>
 
                             <div class="col-md-12">
-                                <?= Html::submitButton('Save Changes', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                                <?= Html::submitButton('Save Changes', ['class' => 'post-comment']) ?>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-cover-photo" role="tabpanel" aria-labelledby="pills-cover-photo-tab">
+                    <div class="tab-pane fade" id="pills-cover-photo" role="tabpanel" aria-labelledby="pills-cover-photo-tab" style="min-height:500px">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <?= $form->field($model, 'cover_image')->fileInput() ?>
                             </div>
 
                             <div class="col-md-12">
-                                <?= Html::submitButton('Save Changes', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                                <?= Html::submitButton('Save Changes', ['class' => 'post-comment']) ?>
                             </div>
                         </div>
 

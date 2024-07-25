@@ -48,8 +48,8 @@ $suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id,
         <?php if (count($suggestions) >= 1) { ?>
 
             <div class="col-12">
-                <div class="safari text-center">
-                    <div class="joinsafari">
+                <div class="safari text-end">
+                    <div class="viewAllreview">
                         <a href="/park/contributionlist/<?= $safari_model->slug ?>">View All</a>
                     </div>
                 </div>

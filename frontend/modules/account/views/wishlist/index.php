@@ -12,11 +12,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="container mt-5 mb-5">
-    <div class="card">
-        <div class="row mb-5">
-            <div class="col-md-12 m-3 mt-2">
-                <h5>Wishlist</h5>
+    <div class="row">
+    <div class="col-md-12  mt-2">
+                <h6 class="fs-3 fw-bold mb-4">Wishlist</h6>
             </div>
+    </div>
+    <div class="col-12">
+    <div class="card mb-5">
+        <div class="row mb-5">
             <div class="col-md-12">
                 <?= $this->render('@frontend/modules/account/views/wishlist/_navbar', ['package' => 'active']) ?>
                 <div class="tab-content m-3" id="pills-tabContent">
@@ -116,4 +119,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
     </div>
+    </div>
+   
 </div>

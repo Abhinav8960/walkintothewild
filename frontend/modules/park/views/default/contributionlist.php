@@ -134,7 +134,7 @@ if ($model->meta_title != '') {
         </div>
         <div class="row my-4 justify-content-center" id="safari_tour_operator_container">
             <div class="col-lg-12 col-xl-10">
-                <div class="row pt-5">
+                <div class="row pt-2 mb-5">
                     <div class="col-lg-12 col-md-11 col-xxl-12 col-xl-10 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
@@ -173,18 +173,19 @@ if ($model->meta_title != '') {
                                             </div>
                                         </div>
 
-                                        <div id="review-list">
+                                        <div id="review-list" class="px-5 pb-3">
                                             <?php
                                             if ($suggestions) {
                                                 foreach ($suggestions as $suggestion) {
                                             ?>
                                                     <div class="comments-persons">
                                                         <div class="postcomment">
-                                                            <div class="itenary-title">
-                                                                <h6 class="nameavatr"><?= isset($suggestion->name) ? $suggestion->name : '' ?></h6>
+                                                            <div class="googlerating names">
+                                                                <h6 class=" mb-0 fs-6 pb-2"><?= isset($suggestion->name) ? $suggestion->name : '' ?></h6>
                                                             </div>
-                                                            <div class="itenary_text">
-                                                                <p><?= isset($suggestion->master_suggestion_id) ? GeneralModel::suggestioncategory()[$suggestion->master_suggestion_id] : '' ?><br><?= isset($suggestion->details) ? $suggestion->details : '' ?></p>
+                                                            <div class="itenary_text boldsText">
+                                                                <h6 style="color: #09422D;"><?= isset($suggestion->master_suggestion_id) ? GeneralModel::suggestioncategory()[$suggestion->master_suggestion_id] : '' ?></h6>
+                                                                <p class="mb-0" ><?= isset($suggestion->details) ? $suggestion->details : '' ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
