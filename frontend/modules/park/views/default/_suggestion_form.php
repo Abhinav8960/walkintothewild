@@ -32,7 +32,7 @@ use common\models\GeneralModel;
 
     </div>
     <div class="row mt-2 pe-0">
-        <div class="col-lg-12">
+        <!-- <div class="col-lg-12">
             <label for="" class="Modal_label">You Are?</label>
             <?= $form->field($model, 'you_are_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Who You Are?', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
         </div>
@@ -48,7 +48,7 @@ use common\models\GeneralModel;
         <div class="col-lg-8 mt-2">
             <label for="" class="Modal_label">Email</label>
             <?= $form->field($model, 'email')->textinput(['placeholder' => 'Email'])->label(false) ?>
-        </div>
+        </div> -->
 
 
 
