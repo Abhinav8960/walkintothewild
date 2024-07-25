@@ -59,7 +59,7 @@ class SafariSuggestionsForm extends Model
     public function rules()
     {
         return [
-            [['master_suggestion_id', 'you_are_id', 'details'], 'required'],
+            [['master_suggestion_id', 'details'], 'required'],
             [['status', 'park_id'], 'integer'],
             [['details'], 'string'],
             [['details'], 'validateMaxWords', 'params' => ['max' => 500]],

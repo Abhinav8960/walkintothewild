@@ -93,32 +93,34 @@ class DefaultController extends FrontendBaseController
 
 
 
-        $request = Yii::$app->request;
-        $ip_address = $request->getRemoteIP();
+        // $request = Yii::$app->request;
+        // $ip_address = $request->getRemoteIP();
 
-        $suggestionmodel = new SafariSuggestionsForm();
-        $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
-        $suggestionmodel->park_id = isset($model) ? $model->id : '';
-        $suggestionmodel->ip_address = $ip_address;
-        $suggestionmodel->action_url = '/park/' . $slug . '';
-        $suggestionmodel->action_validate_url = '/park/default/validate';
+        // $suggestionmodel = new SafariSuggestionsForm();
+        // $suggestionmodel->name = Yii::$app->user->identity->name;
+        // $suggestionmodel->email = Yii::$app->user->identity->email;
+        // $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
+        // $suggestionmodel->park_id = isset($model) ? $model->id : '';
+        // $suggestionmodel->ip_address = $ip_address;
+        // $suggestionmodel->action_url = '/park/' . $slug . '';
+        // $suggestionmodel->action_validate_url = '/park/default/validate';
 
-        if ($this->request->isPost) {
-            if ($suggestionmodel->load($this->request->post())) {
-                if ($suggestionmodel->validate()) {
-                    $suggestionmodel->initializeForm();
-                    if ($suggestionmodel->safari_suggestion_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/park/' . $slug . '']);
-                    }
-                } else {
-                    print_r($suggestionmodel->errors);
-                    exit;
-                }
-            }
-        } else {
-            $suggestionmodel->safari_suggestion_model->loadDefaultValues();
-        }
+        // if ($this->request->isPost) {
+        //     if ($suggestionmodel->load($this->request->post())) {
+        //         if ($suggestionmodel->validate()) {
+        //             $suggestionmodel->initializeForm();
+        //             if ($suggestionmodel->safari_suggestion_model->save(false)) {
+        //                 \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+        //                 return $this->redirect(['/park/' . $slug . '']);
+        //             }
+        //         } else {
+        //             print_r($suggestionmodel->errors);
+        //             exit;
+        //         }
+        //     }
+        // } else {
+        //     $suggestionmodel->safari_suggestion_model->loadDefaultValues();
+        // }
 
 
 
@@ -136,7 +138,7 @@ class DefaultController extends FrontendBaseController
                 // 'last_month' => $last_month,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-                'suggestionmodel' => $suggestionmodel,
+                // 'suggestionmodel' => $suggestionmodel,
 
                 'operatorsearchModel' => $operatorsearchModel,
                 'operatordataProvider' => $operatordataProvider,
@@ -204,6 +206,9 @@ class DefaultController extends FrontendBaseController
         $model = new SafariSuggestionsForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->park_id = $park_id;
+        $model->name = Yii::$app->user->identity->name;
+        $model->email = Yii::$app->user->identity->email;
+        $model->phone = Yii::$app->user->identity->mobile_no;
         $model->ip_address = Yii::$app->request->getRemoteIP();
         $model->action_url = '/park/default/suggestion?park_id=' . $safari_park->id . '';
         $model->action_validate_url = '/park/default/validate';

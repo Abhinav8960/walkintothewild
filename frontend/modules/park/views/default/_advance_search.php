@@ -126,7 +126,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <!-- <div class="dropdown-item" data-value="">Select Safari Mode</div> -->
+                        <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($vehicleoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
