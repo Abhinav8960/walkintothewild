@@ -164,7 +164,7 @@ if ($model->meta_title != '') {
                                                     <?php if (Yii::$app->user->id) {  ?>
 
                                                         <div class="title_filter mb-3">
-                                                            <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn_newsafari writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">Suggest Correction </button>
+                                                            <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="parkrevieBtn writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3">Suggest Correction </button>
                                                         </div>
                                                     <?php } else {
                                                         echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for giving your contribution';

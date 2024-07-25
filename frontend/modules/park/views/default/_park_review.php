@@ -20,10 +20,10 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
                     <div class="ratings">
                         <?php $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $safari_model->id])->average('rating');
                         if ($avg) { ?>
-                            <h5 class="mb-0 fs-5 ">
+                            <h4 class="mb-0  ">
                                 <?= round($avg, 1) ?>
                                 <!-- <?= GeneralModel::review_rating($avg); ?> -->
-                            </h5>
+                            </h4>
                         <?php } ?>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
             } ?>
         </div>
     </div>
-    <?php if (count($reviews) >= 5) { ?>
+    <?php if (count($reviews) >= 1) { ?>
 
         <div class="col-12">
             <div class="safari text-end">
