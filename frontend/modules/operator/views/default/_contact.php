@@ -65,87 +65,93 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
                                 <div class="col-xxl-8 col-lg-8">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h6 class="fs-6 fw-bold">Address</h6>
-                                            <h6 class="mb-0 cmpny_name"><?= $operator->register_comapany_name ?></h6>
-                                            <p><?= $operator->address ?></p>
-                                            <h6 class="fs-6 fw-bold">Contact Details</h6>
-                                            <div class="contaicts d-flex gap-2">
-                                                <strong>Phone :</strong>
-                                                <p> <?= $operator->phone_no ?></p>
-                                            </div>
-                                            <div class="contaicts d-flex gap-2">
-                                                <strong>Email :</strong>
-                                                <p> <?= $operator->email ?></p>
-                                            </div>
-                                            <div class="contaicts d-flex gap-2">
-                                                <strong>Website :</strong>
-                                                <p><?= $operator->website ?></p>
-                                            </div>
-                                            <br>
-                                            <?php if ($operator->instagram_url <> '' || $operator->facebook_url <> '' || $operator->youtube_link <> '') { ?>
-                                                <h6 class="fs-6 fw-bold"> Social Media</h6>
-                                                <?php if ($operator->instagram_url <> '') { ?>
-                                                    <div class="links_sociels d-flex gap-2">
-                                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-instagram me-1"></i></a>
-                                                        <p>Instragram
-                                                            <span><?= $operator->instagram_url ?></span>
-                                                        </p>
-                                                    </div>
-                                                <?php } ?>
 
-
-                                                <?php if ($operator->facebook_url <> '') {  ?>
-                                                    <div class="links_sociels d-flex gap-2">
-                                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-facebook-f me-1"></i></a>
-                                                        <p>Facebook
-                                                            <span><?= $operator->facebook_url ?></span>
-                                                        </p>
-                                                    </div>
-
-                                                <?php } ?>
-                                                <?php if ($operator->youtube_link <> '') { ?>
-                                                    <div class="links_sociels d-flex gap-2">
-                                                        <a href="" class="iconSize sizecontact"><i class="fa-brands fa-youtube me-1"></i></a>
-                                                        <p>Youtube
-                                                            <span><?= $operator->youtube_link ?></span>
-                                                        </p>
-                                                    </div>
-                                                <?php } ?>
-                                            <?php } ?>
-                                            <hr>
-                                            <div class="viewAllreview">
-                                                <a href="">Report Page</a>
-                                            </div>
-                                            <!-- <button class="rounded-pill btn btn-dark"></button> -->
-                                        </div>
-                                    </div>
-                                    <div class="card position-relative" style="min-height: 350px;">
-                                        <div class="card-body">
-                                            <div class="withoutlogedin">
+                                    <?php if (Yii::$app->user->identity) { ?>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="fs-6 fw-bold">Address</h6>
+                                                <h6 class="mb-0 cmpny_name"><?= $operator->register_comapany_name ?></h6>
+                                                <p><?= $operator->address ?></p>
                                                 <h6 class="fs-6 fw-bold">Contact Details</h6>
                                                 <div class="contaicts d-flex gap-2">
                                                     <strong>Phone :</strong>
-                                                    <p class="mb-0"> 98xxxxxxxx</p>
+                                                    <p> <?= $operator->phone_no ?></p>
                                                 </div>
                                                 <div class="contaicts d-flex gap-2">
                                                     <strong>Email :</strong>
-                                                    <p> xxxxx@gmail.com</p>
+                                                    <p> <?= $operator->email ?></p>
                                                 </div>
-                                            </div>
-                                          
-                                            <div class="logininfo text-center">
-                                                <h6>Please log in to view the tour <br> operator's contact information.</h6>
-                                                <div class="viewAllreview">
-                                                <a href="">Login</a>
-                                            </div>
-                                            </div>
+                                                <div class="contaicts d-flex gap-2">
+                                                    <strong>Website :</strong>
+                                                    <p><?= $operator->website ?></p>
+                                                </div>
+                                                <br>
+                                                <?php if ($operator->instagram_url <> '' || $operator->facebook_url <> '' || $operator->youtube_link <> '') { ?>
+                                                    <h6 class="fs-6 fw-bold"> Social Media</h6>
+                                                    <?php if ($operator->instagram_url <> '') { ?>
+                                                        <div class="links_sociels d-flex gap-2">
+                                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-instagram me-1"></i></a>
+                                                            <p>Instragram
+                                                                <span><?= $operator->instagram_url ?></span>
+                                                            </p>
+                                                        </div>
+                                                    <?php } ?>
 
-                                           
-                                            <!-- <button class="rounded-pill btn btn-dark"></button> -->
+
+                                                    <?php if ($operator->facebook_url <> '') {  ?>
+                                                        <div class="links_sociels d-flex gap-2">
+                                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-facebook-f me-1"></i></a>
+                                                            <p>Facebook
+                                                                <span><?= $operator->facebook_url ?></span>
+                                                            </p>
+                                                        </div>
+
+                                                    <?php } ?>
+                                                    <?php if ($operator->youtube_link <> '') { ?>
+                                                        <div class="links_sociels d-flex gap-2">
+                                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-youtube me-1"></i></a>
+                                                            <p>Youtube
+                                                                <span><?= $operator->youtube_link ?></span>
+                                                            </p>
+                                                        </div>
+                                                    <?php } ?>
+                                                <?php } ?>
+                                                <hr>
+                                                <div class="viewAllreview">
+                                                    <a href="">Report Page</a>
+                                                </div>
+                                                <!-- <button class="rounded-pill btn btn-dark"></button> -->
+                                            </div>
                                         </div>
-                                    </div>
+
+                                    <?php } else { ?>
+
+                                        <div class="card position-relative" style="min-height: 350px;">
+                                            <div class="card-body">
+                                                <div class="withoutlogedin">
+                                                    <h6 class="fs-6 fw-bold">Contact Details</h6>
+                                                    <div class="contaicts d-flex gap-2">
+                                                        <strong>Phone :</strong>
+                                                        <p class="mb-0"> 98xxxxxxxx</p>
+                                                    </div>
+                                                    <div class="contaicts d-flex gap-2">
+                                                        <strong>Email :</strong>
+                                                        <p> xxxxx@gmail.com</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="logininfo text-center">
+                                                    <h6>Please log in to view the tour <br> operator's contact information.</h6>
+                                                    <div class="viewAllreview">
+                                                        <a href="/site/auth?authclient=google">Login</a>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- <button class="rounded-pill btn btn-dark"></button> -->
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="col-xxl-4 col-lg-4">
                                     <div class="request_quote">
