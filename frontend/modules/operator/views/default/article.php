@@ -68,7 +68,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="col-md-8">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h6 class="fs-5 fw-bold">Article</h6>
+                                            <h6 class="fs-5 fw-bold"><?= $operator->business_name ?> Published <?= count($articles) ?> Article</h6>
                                             <div class="row">
                                                 <?php if ($articles) {
                                                     foreach ($articles as $article) { ?>

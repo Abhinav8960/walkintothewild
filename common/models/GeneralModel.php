@@ -400,12 +400,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterCity::find()->where(['state_id' => $master_state_id, 'status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
     }
 
-
-    public static function parkoption()
-    {
-        return ArrayHelper::map(Park::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
-    }
-
     public static function faqoption()
     {
         return ArrayHelper::map(Faq::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
@@ -438,7 +432,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function birdingparkoption()
     {
         $query = BirdingPark::find()
-            ->where(['status' => Park::STATUS_ACTIVE])
+            ->where(['status' => BirdingPark::STATUS_ACTIVE])
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
@@ -455,7 +449,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
 
         $query = SafariPark::find()
-            ->where(['status' => Park::STATUS_ACTIVE])
+            ->where(['status' => SafariPark::STATUS_ACTIVE])
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
@@ -583,7 +577,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
 
         $query = Article::find()
-            ->where(['status' => self::STATUS_ACTIVE])
+            // ->where(['status' => self::STATUS_ACTIVE])
+            ->where("status=1 AND (user_type=3 OR is_approved=1)")
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
@@ -597,7 +592,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function safariParkRareExoticOption()
     {
-        $query = SafariPark::find()->where(['safari_park.status' => Park::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC]);
+        $query = SafariPark::find()->where(['safari_park.status' => SafariPark::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC]);
 
         $query->joinwith(['rareanimals' => function ($query) {
             $query->andFilterWhere(['safari_park_rare_animal.status' => 1]);
