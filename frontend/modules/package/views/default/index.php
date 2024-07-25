@@ -60,7 +60,7 @@ $this->params['title'] = $this->title;
       </div>
     </div>
 
-    <div class="row justify-content-center mb-4">
+    <div class="row justify-content-center mb-4 pt-3">
       <div class="col-xl-11 col-lg-12">
         <div class="row my-4 justify-content-center">
           <?= $this->render('_select_filter', [
@@ -68,6 +68,20 @@ $this->params['title'] = $this->title;
           ]) ?>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
+              <div class="col-12  mb-xl-4 mb-3">
+                <div class="tag-container">
+                  <div class="tag">Bandhavgarh Tiger Reserve <span class="close-btn">×</span></div>
+                  <div class="tag">October <span class="close-btn">×</span></div>
+                  <div class="tag">Economical <span class="close-btn">×</span></div>
+                  <div class="tag">2 Nights <span class="close-btn">×</span></div>
+                  <div class="tag">3 Safaris <span class="close-btn">×</span></div>
+                  <div class="tag">Rs. 2500 - 5000 <span class="close-btn">×</span></div>
+                  <div class="tag">Private Room <span class="close-btn">×</span></div>
+                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                  <div class="tag">Wildlife Influencer <span class="close-btn">×</span></div>
+                </div>
+              </div>
               <div class="col-12">
                 <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100">
                   <div class="left_text">

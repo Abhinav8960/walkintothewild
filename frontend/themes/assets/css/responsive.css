@@ -522,11 +522,18 @@ line-height: 19px;
     .coreZone h3,
     .bufferzone h3 {
 
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .custoM-inputs .title_filter .input_check .form-check {
 
+        font-size: 14px;
+    }
+    .tabledesigncore table td,.tabledesignbuffer table td{
+
+        font-size: 12px;
+    }
+    .tabledesigncore table th,.tabledesignbuffer table th{
         font-size: 14px;
     }
 
