@@ -108,7 +108,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 foreach ($operators as $operator) {
                             ?>
                                     <div class="col-lg-6 col-md-6 col-sm-6 col-xl-4 col-xxl-3 mb-3">
-                                        <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="oprators_boxes">
+                                        <a href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug]) ?>" class="oprators_boxes">
                                             <div class="listingSafari ">
                                                 <?php if ($operator->is_highlighted) { ?>
                                                     <div class="higlighted">
@@ -153,7 +153,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         </div>
                                                     </div>
                                                     <div class="get_quote text-center">
-                                                        <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="get_quote_btn">GET A FREE QUOTE</a>
+                                                        <a href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug]) ?>" class="get_quote_btn">GET A FREE QUOTE</a>
                                                     </div>
                                                 </div>
                                             </div>
