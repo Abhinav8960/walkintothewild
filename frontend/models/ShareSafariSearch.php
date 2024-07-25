@@ -3,7 +3,10 @@
 namespace frontend\models;
 
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
+use common\models\GeneralModel;
 use yii\data\ActiveDataProvider;
+use common\models\park\SafariPark;
 use common\models\sharesafari\ShareSafari;
 
 /**
@@ -165,5 +168,11 @@ class ShareSafariSearch extends ShareSafari
         }
 
         return $dataProvider;
+    }
+
+
+    public function getParkoption()
+    {
+        return ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title');
     }
 }
