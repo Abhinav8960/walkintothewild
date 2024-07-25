@@ -172,4 +172,14 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     {
         return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
     }
+
+    public function getSharesafaridays()
+    {
+        return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id']);
+    }
+
+    public function getSharesafarigallery()
+    {
+        return $this->hasMany(ShareSafariGallery::className(), ['share_safari_id' => 'id']);
+    }
 }

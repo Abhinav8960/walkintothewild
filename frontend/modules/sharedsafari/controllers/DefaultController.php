@@ -13,6 +13,7 @@ use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\sharesafari\ShareSafariFaqSearch;
 use frontend\models\form\SharedSafariForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\controllers\FrontendBaseController;
@@ -198,11 +199,26 @@ class DefaultController extends FrontendBaseController
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
-        return $this->render('view', [
-            'share_safari' => $share_safari,
-            'model' => $model,
-            'replymodel' => $replymodel,
-        ]);
+        if ($share_safari->type == 1) {
+            return $this->render('view', [
+                'share_safari' => $share_safari,
+                'model' => $model,
+                'replymodel' => $replymodel,
+            ]);
+        } else {
+
+            $searchModel = new ShareSafariFaqSearch();
+            $searchModel->share_safari_id = $share_safari->id;
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+            $faqs = $dataProvider->getModels();
+
+            return $this->render('fixed_view', [
+                'share_safari' => $share_safari,
+                'model' => $model,
+                'replymodel' => $replymodel,
+                'faqs' => $faqs,
+            ]);
+        }
     }
 
 
