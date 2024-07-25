@@ -2242,6 +2242,10 @@ font-size: 36px;
     color: #cbcbcb;
 }
 
+.zone_active td {
+    background-color: #127729 !important;
+    color: var(--colorwhite) !important;
+}
 .tabledesigncore table td {
 
     position: relative;
