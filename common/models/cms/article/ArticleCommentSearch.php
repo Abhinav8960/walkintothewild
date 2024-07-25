@@ -80,6 +80,6 @@ class ArticleCommentSearch extends ArticleComment
 
     public static function getArticlelist()
     {
-        return ArrayHelper::map(Article::find()->where(['status' => 1])->andWhere("id IN (SELECT Distinct article_id FROM article_comment)")->all(), 'id', 'title');
+        return ArrayHelper::map(Article::find()->where(['status' => [1, 2]])->andWhere("id IN (SELECT Distinct article_id FROM article_comment)")->all(), 'id', 'title');
     }
 }
