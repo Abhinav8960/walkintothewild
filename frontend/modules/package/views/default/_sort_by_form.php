@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <?php $form = ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
-        'id' => 'search-form'
+        'id' => 'custom_sort_by_form'
     ],
     'action' => ['index'],
     'method' => 'get',
@@ -23,7 +23,15 @@ use yii\widgets\ActiveForm;
 <div class="right-select">
     <div class="input_check pb-0 mb-2">
         <?= $form->field($searchModel, 'custom_sort_by')->dropDownlist(
-            GeneralModel::relevantoption(),
+            [
+                // '1' => 'Created Recently',
+                '2' => 'Less Safaris',
+                '3' => 'More Safaris',
+                '4' => 'cheapest',
+
+
+            ],
+            ['prompt' => 'Created Recently']
         )->label(false); ?>
     </div>
 </div>
@@ -31,13 +39,13 @@ use yii\widgets\ActiveForm;
 
 <?php
 
-$script = <<< JS
-          
-    $('form').on('change', function(){
-        $("#side-search-form").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
-       
-    }); 
-JS;
-$this->registerJs($script);
+// $script = <<< JS
+
+//     $('form').on('change', function(){
+//         $("#side-search-form").attr("data-pjax", "true");    
+//         $(this).closest('form').submit();
+
+//     }); 
+// JS;
+// $this->registerJs($script);
 ?>

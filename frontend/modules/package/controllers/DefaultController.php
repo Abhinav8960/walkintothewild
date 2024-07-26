@@ -275,4 +275,28 @@ class DefaultController extends FrontendBaseController
             return \yii\widgets\ActiveForm::validate($model);
         }
     }
+
+     /**
+     * Get Redirect URL
+     */
+    public function actionGeturl()
+    {
+        if (Yii::$app->request->isPost) {
+            // Initialize URL with the base route
+            $url = ['/package'];
+
+            // Loop through the payload parameters
+            foreach (Yii::$app->request->post('PackageSearch') as $key => $value) {
+                // Only add parameters that are not empty
+                if (!empty($value)) {
+                    $url['PackageSearch[' . $key . ']'] = $value;
+                } else {
+                    // $url['SafariParkSearch[' . $key . ']'] = 0;
+                }
+            }
+
+            // Construct the redirect URL
+            return \yii\helpers\Url::to($url);
+        }
+    }
 }
