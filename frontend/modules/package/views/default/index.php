@@ -148,7 +148,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                       </div>
                       <div class="floating-watchlist">
                         <?php
-                        if (Yii::$app->user->identity) { ?>
+                        if (false && Yii::$app->user->identity) { ?>
                           <div class="heart_bx">
                             <?php
                             $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
