@@ -25,6 +25,7 @@ class SafariSuggestionsForm extends Model
     public $phone;
     public $name;
     public $status;
+    public $is_approved;
     public $status_option = [];
     public $safari_suggestion_model;
     public $action_url;
@@ -48,6 +49,7 @@ class SafariSuggestionsForm extends Model
             $this->phone = $this->safari_suggestion_model->phone;
             $this->name = $this->safari_suggestion_model->name;
             $this->status = $this->safari_suggestion_model->status;
+            $this->is_approved = $this->safari_suggestion_model->is_approved;
         }
 
         $this->status_option = GeneralModel::statusOption();
@@ -64,6 +66,7 @@ class SafariSuggestionsForm extends Model
             [['details'], 'string'],
             [['details'], 'validateMaxWords', 'params' => ['max' => 500]],
             [['status'], 'default', 'value' => 1],
+            [['is_approved'], 'default', 'value' => 0],
             [['details'], 'safe'],
             [['user_agent', 'email', 'name'], 'string', 'max' => 255],
             [['ip_address'], 'string', 'max' => 45],
@@ -112,5 +115,6 @@ class SafariSuggestionsForm extends Model
         $this->safari_suggestion_model->phone = $this->phone;
         $this->safari_suggestion_model->name = $this->name;
         $this->safari_suggestion_model->status = $this->status;
+        $this->safari_suggestion_model->is_approved = $this->is_approved;
     }
 }

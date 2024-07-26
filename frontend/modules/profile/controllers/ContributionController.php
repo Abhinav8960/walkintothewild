@@ -2,6 +2,7 @@
 
 namespace frontend\modules\profile\controllers;
 
+use common\models\suggestions\SafariSuggestions;
 use common\models\User;
 use frontend\controllers\FrontendBaseController;
 
@@ -19,6 +20,11 @@ class ContributionController extends FrontendBaseController
     public function actionIndex($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        return $this->render('index', ['user' => $user]);
+        $suggestions = SafariSuggestions::find()->where(['created_by' => $user->id, 'status' => 1])->all();
+
+        return $this->render('index', [
+            'user' => $user,
+            'suggestions' => $suggestions
+        ]);
     }
 }

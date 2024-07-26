@@ -5,7 +5,7 @@ use common\models\suggestions\SafariSuggestions;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
 
-$suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id, 'status' => 1])->all();
+$suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id, 'status' => 1, 'is_approved' => 1])->all();
 ?>
 
 

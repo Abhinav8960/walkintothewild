@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 use yii\grid\GridView;
 
-$this->title = 'Safari Park Gallery';
+$this->title = 'Safari Park Suggestions';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -53,6 +53,35 @@ $this->params['title'] = $this->title;
                                         'value' => function ($model) {
                                             return $model->statuslabel;
                                         }
+                                    ],
+                                    [
+                                        'class' => 'yii\grid\ActionColumn',
+                                        'header' => "Actions",
+                                        'contentOptions' => ['style' => 'width: 20%;'],
+                                        'template' => '{approve}',
+                                        'buttons' => [
+                                            'approve' => function ($url, $model) {
+                                                if ($model->is_approved == 0) {
+                                                    return  Html::a('Approve', ['approve', 'id' => $model->id], [
+                                                        'class' => 'btn btn-success',
+                                                        'title' => 'approve',
+                                                        'data' => [
+                                                            'confirm' => 'Are you sure you want to approve  this suggestion?',
+                                                            'method' => 'post',
+                                                        ],
+                                                    ]);
+                                                } else {
+                                                    return  Html::a('Disapprove', ['disapprove', 'id' => $model->id], [
+                                                        'class' => 'btn btn-danger',
+                                                        'title' => 'Disapprove',
+                                                        'data' => [
+                                                            'confirm' => 'Are you sure you want to disapprove this suggestion?',
+                                                            'method' => 'post',
+                                                        ],
+                                                    ]);
+                                                }
+                                            },
+                                        ]
                                     ],
                                 ],
                             ]); ?>

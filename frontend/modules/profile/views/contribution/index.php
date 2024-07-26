@@ -1,5 +1,6 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -26,15 +27,36 @@ $this->params['title'] = $this->title;
                                 <div class="card mt-2 mb-4">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-6">
-                                                No Contribution Found!
-                                            </div>
+                                            <?php
+                                            if ($suggestions) {
+                                                foreach ($suggestions as $suggestion) { ?>
+                                                    <div class="col-12">
+                                                        <div class="comments-persons mb-2">
+                                                            <div class="postcomment">
+                                                                <div class="googlerating names">
+                                                                    <h6 class=" mb-0 fs-6 pb-2"><?= isset($suggestion->master_suggestion_id) ? GeneralModel::suggestioncategory()[$suggestion->master_suggestion_id] : '' ?></h6>
+                                                                </div>
+                                                                <div class="itenary_text boldsText">
+                                                                    <h6><?= isset($suggestion->park_id) ? GeneralModel::safariparkoption()[$suggestion->park_id] : '' ?>
+                                                                    </h6>
+                                                                    <p class="mb-0"> <?= isset($suggestion->details) ? $suggestion->details : '' ?></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                <?php }
+                                            } else { ?>
+                                                <div class="col-6">
+                                                    <p>No Contribution Found</p>
+                                                </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                            <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
+                                <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
                             </div>
                         </div>
 
