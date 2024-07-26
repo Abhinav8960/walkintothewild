@@ -8,25 +8,30 @@ use yii\widgets\ActiveForm;
         'id' => 'Searchform'
     ],
     'method' => 'get',
-    'action' => '/chat/default/index',
 ]); ?>
 
-<?= $form->field($searchModel, 'name')->textInput(['class' => 'form-control', 'placeholder' => 'Search', 'autocomplete' => 'off'])->label(false) ?>
+<?= $form->field($searchModel, 'name')->textInput(['class' => 'form-control', 'placeholder' => 'Search', 'autocomplete' => 'off', 'autofocus' => $autofocus])->label(false) ?>
 <?php ActiveForm::end(); ?>
 
 <?php
 $js = <<<JS
-  $('form').on('change', function(){
+  $('#Searchform').on('change', function(){
         $("#Searchform").attr("data-pjax", "true");    
         $(this).closest('form').submit();
     }); 
-    $('form input[type=text]').on('keyup', function(){
+    $('#chatsearch-name').on('keyup', function(){
         setTimeout(() => {
             $("#Searchform").attr("data-pjax", "true");    
             $(this).closest('form').submit();
-        }, 100);
+        }, 200);
        
     }); 
+
+    var fieldInput = $('#chatsearch-name');
+    var fldLength= fieldInput.val().length;
+    if(fldLength>=1){
+        fieldInput[0].setSelectionRange(fldLength, fldLength);
+    }
 
 JS;
 $this->registerJs($js);
