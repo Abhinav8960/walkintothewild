@@ -1,10 +1,11 @@
 <?php
 
+use yii\helpers\Url;
+use common\models\GeneralModel;
+use common\models\UserWishlist;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
-use common\models\GeneralModel;
 use common\models\package\PackageIncluded;
-use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -56,11 +57,24 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="col-lg-8 pt-sm-0 pt-3">
                                     <div class="safrititles">
-                                        <h5 class="fs-4"><?= $package->package_name ?></h5>
+                                        <h5 class="fs-4"><?= $package->package_name ?>
+                                            <?php
+                                            if (Yii::$app->user->identity) { ?>
+                                                <?php
+                                                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
+                                                if ($wishlist) {
+                                                ?>
+                                                    <a href="/package/unwishlist/<?= $package->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
+                                                <?php } else { ?>
+                                                    <a href="/package/wishlist/<?= $package->package_slug ?>" style="color:black;"><i class="fa-regular fa-heart"></i></a>
+                                                <?php }
+                                                ?>
+                                            <?php } ?>
+                                        </h5>
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
-                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $package->safarioperator->slug]) ?>" target="_blank"><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong></a></p>
+                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>"><strong><?= isset($package->safarioperator) ? $package->safarioperator->business_name : '' ?></strong></a></p>
 
                                     </div>
 
