@@ -110,4 +110,8 @@ use yii\helpers\Url;
         border-bottom-left-radius: 8px 8px;
         padding: 3px;
     }
+
+    #message_sent_btn {
+        cursor: pointer;
+    }
 </style>
