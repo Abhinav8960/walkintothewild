@@ -8,7 +8,8 @@ use common\models\trierror\FrontendRequestLogSearch;
 use common\models\cms\article\Article;
 use common\models\cms\article\MasterArticleTopic;
 use common\models\cms\article\MasterArticleTag;
-use common\models\park\Park;
+//use common\models\park\Park;
+use common\models\park\SafariPark;
 use common\models\operator\SafariOperator;
 use common\models\trierror\SitePages;
 use common\models\cms\article\ArticleAuthor;
@@ -108,7 +109,7 @@ class ContentCounterController extends Controller
 
     if (count($park_slugs)) {
       foreach ($park_slugs as $park) {
-        $park_model = Park::find()->where(['slug' => $park['slug']])->one();
+        $park_model = SafariPark::find()->where(['slug' => $park['slug']])->one();
         if (!empty($park_model)) {
           $park_model->total_view += $park['pending_view'];
           if ($park_model->save()) {

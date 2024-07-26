@@ -12,7 +12,8 @@ use common\models\trierror\FrontendRequestLogSearch;
 use common\models\cms\article\Article;
 use common\models\cms\article\MasterArticleTopic;
 use common\models\cms\article\MasterArticleTag;
-use common\models\park\Park;
+//use common\models\park\Park;
+use common\models\park\SafariPark;
 use common\models\operator\SafariOperator;
 use common\models\trierror\SitePages;
 use common\models\cms\article\ArticleAuthor;
@@ -190,7 +191,7 @@ class GenerateSiteXmlController extends Controller
     {
         $base_url = Yii::$app->params['frontend_url'];
 
-        $parks = Park::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
+        $parks = SafariPark::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'parks', 'status' => true]);
         if (count($parks) > 0) {
@@ -221,7 +222,7 @@ class GenerateSiteXmlController extends Controller
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_parks_site_pages)->execute();
 
             $xml_content .= "</urlset>";
-            $fileName = "park.xml";
+            $fileName = "safari_park.xml";
             $myFile = $backend_actual_url . "/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
