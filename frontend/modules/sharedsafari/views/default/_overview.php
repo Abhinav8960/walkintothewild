@@ -47,19 +47,19 @@
                                                 <h6 class="fs-5">Meal</h6>
                                                 <div class="mealchecks d-flex gap-4 align-items-center">
                                                     <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check" <?= ($share_safariday->meal_breakfast == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check" <?= ($share_safariday->meal_breakfast == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check">Breackfast</label>
                                                     </div>
                                                     <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check2" <?= ($share_safariday->meal_lunch == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check2" <?= ($share_safariday->meal_lunch == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check2">Lunch</label>
                                                     </div>
                                                     <div class="inputsCheck mb-2 d-flex  align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check3" <?= ($share_safariday->meal_dinner == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check3" <?= ($share_safariday->meal_dinner == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check3">Dinner</label>
                                                     </div>
                                                     <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check4" <?= ($share_safariday->meal_breakfast == 1 && $share_safariday->meal_lunch == 1 && $share_safariday->meal_dinner == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check4" <?= ($share_safariday->meal_breakfast == 1 && $share_safariday->meal_lunch == 1 && $share_safariday->meal_dinner == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check4">All</label>
                                                     </div>
                                                 </div>

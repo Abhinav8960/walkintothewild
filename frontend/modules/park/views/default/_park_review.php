@@ -12,11 +12,11 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
 
 
 <div class="filter-wrapper custoM-inputs d-lg-block d-none mb-2">
-<?php if ($reviews) { ?>
-    <div class="title_top pb-2">
+    <?php if ($reviews) { ?>
+        <div class="title_top pb-2">
             <div class="userRatingTitle">
                 <div class="providerNamerating d-flex  justify-content-between  align-items-center">
-                 <h4 class="mb-0">Park Review</h4>
+                    <h4 class="mb-0">Park Review</h4>
                     <div class="ratings">
                         <?php $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $safari_model->id])->average('rating');
                         if ($avg) { ?>
@@ -28,8 +28,8 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
                     </div>
                 </div>
             </div>
-      
-    </div>
+
+        </div>
     <?php } ?>
     <?php if (Yii::$app->user->id) {  ?>
         <div class="title_filter mb-2">
@@ -48,7 +48,7 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
                     <div class="postcomment  pt-3">
                         <div class="text_com colors_p">
                             <div class="providerNamerating ">
-                            <div class="googlerating names">
+                                <div class="googlerating names">
                                     <h6 class="mb-0 fs-6 pb-0"> <?= $review->user->name ?></h6>
                                 </div>
                                 <div class="ratings colors">
@@ -65,7 +65,7 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
                                         } ?>
                                     </p>
                                 </div>
- 
+
                             </div>
                             <p class="suggest"><?= $review->review ?> &nbsp;
                                 <?php if (Yii::$app->user->id == $review->user_id) { ?>
@@ -84,7 +84,7 @@ $reviews = SafariParkRating::find()->where(['safari_park_id' => $safari_model->i
         <div class="col-12">
             <div class="safari text-end">
                 <div class="viewAllreview">
-                    <a href="/park/reviewlist/<?= $safari_model->slug ?>">View All</a>
+                    <a href="/park/<?= $safari_model->slug ?>/reviewlist">View All</a>
                 </div>
             </div>
         </div>

@@ -13,8 +13,8 @@ return [
     '/home' => '/plan-safari', //home Page url
     '/park' => '/park/default/index', //home-old page url
     '/park/<slug>' => '/park/default/view', //park view url
-    '/park/reviewlist/<slug>' => '/park/default/reviewlist', //park view url
-    '/park/contributionlist/<slug>' => '/park/default/contributionlist', //park view url
+    '/park/<slug>/reviewlist' => '/park/default/reviewlist', //park view url
+    '/park/<slug>/contributionlist' => '/park/default/contributionlist', //park view url
 
     '/parklist/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',
     '/parklist' => '/park/default/parklist', //park listing url

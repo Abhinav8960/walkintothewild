@@ -1,4 +1,3 @@
-
 <div class="row pt-4">
     <div class="col-12 inner_accordion">
         <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -48,19 +47,19 @@
                                                 <h6 class="fs-5">Meal</h6>
                                                 <div class="mealchecks d-flex gap-4 align-items-center">
                                                     <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check" <?= ($packageday->meal_breakfast == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check" <?= ($packageday->meal_breakfast == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check">Breackfast</label>
                                                     </div>
                                                     <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check2" <?= ($packageday->meal_lunch == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check2" <?= ($packageday->meal_lunch == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check2">Lunch</label>
                                                     </div>
                                                     <div class="inputsCheck mb-2 d-flex  align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check3" <?= ($packageday->meal_dinner == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check3" <?= ($packageday->meal_dinner == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check3">Dinner</label>
                                                     </div>
                                                     <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
-                                                        <input type="checkbox" id="check4" <?= ($packageday->meal_breakfast == 1 && $packageday->meal_lunch == 1 && $packageday->meal_dinner == 1) ? 'checked' : '' ?>>
+                                                        <input type="checkbox" id="check4" <?= ($packageday->meal_breakfast == 1 && $packageday->meal_lunch == 1 && $packageday->meal_dinner == 1) ? 'checked' : '' ?> onclick="return false;">
                                                         <label for="check4">All</label>
                                                     </div>
                                                 </div>
