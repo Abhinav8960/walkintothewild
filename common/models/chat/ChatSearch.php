@@ -58,7 +58,7 @@ class ChatSearch extends \Yii\base\Model
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'user.name', $this->name]);
         return $dataProvider;
     }
 
@@ -71,7 +71,7 @@ class ChatSearch extends \Yii\base\Model
      */
     public function chatsearch($params, $pagination = true)
     {
-        $query = Chat::find()->where(['status' => 1])->andwhere('user_id =' . Yii::$app->user->identity->id . ' OR recipient_user_id=' . Yii::$app->user->identity->id)->orderby(['last_message_at' => SORT_DESC]);
+        $query = Chat::find()->where(['chat.status' => 1])->andwhere('chat.user_id =' . Yii::$app->user->identity->id . ' OR chat.recipient_user_id=' . Yii::$app->user->identity->id)->orderby(['chat.last_message_at' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -88,7 +88,12 @@ class ChatSearch extends \Yii\base\Model
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        if ($this->name) {
+            $query->joinwith(['user' => function ($user_query) {
+                $user_query->andFilterWhere(['like', 'user.name', $this->name]);
+            }]);
+        }
+
         return $dataProvider;
     }
 }

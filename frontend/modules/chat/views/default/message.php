@@ -24,10 +24,10 @@ $this->title = $individual_user->name . ' | Chat';
                     <div class="row">
                         <div class="col-3 chat-card-sidebar">
                             <div class="chat-search-user">
-                                <input type="search" name="search_user" class="form-control" placeholder="Search">
+                                <?= $this->render('_message_search', ['searchModel' => $searchModel, 'login_user' => $login_user]) ?>
                             </div>
-                            <?php if ($active_chat_list) {
-                                foreach ($active_chat_list as $active_chat) {
+                            <?php if ($dataProvider) {
+                                foreach ($dataProvider->getModels() as $active_chat) {
                                     if ($active_chat->user_id == $login_user->id) {
                                         $user = $active_chat->recipient;
                                     } else {
