@@ -16,7 +16,8 @@ class PackageSearch extends Package
 {
     public $park_id;
     public $month_id;
-    public $estimated_price_filter;
+    public $estimated_price_filter_min;
+    public $estimated_price_filter_max;
     public $package_feature;
     public $package_include;
     public $custom_sort_by;
@@ -33,7 +34,7 @@ class PackageSearch extends Package
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
             [['package_image'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
+            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
         ];
     }
 
@@ -96,8 +97,8 @@ class PackageSearch extends Package
 
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);
 
-        if ($this->estimated_price_filter) {
-            $dataProvider->query->andFilterWhere(['between', 'cost_per_person', 1000, $this->estimated_price_filter]);
+        if ($this->estimated_price_filter_min && $this->estimated_price_filter_max) {
+            $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
         }
 
         if ($this->no_of_night) {
