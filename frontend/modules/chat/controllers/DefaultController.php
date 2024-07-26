@@ -38,12 +38,16 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
     {
         $individual_user = $this->individualuser($user_handle);
         $login_user = Yii::$app->user->identity;
+        $searchModel = new ChatSearch();
+        $dataProvider = $searchModel->chatsearch(Yii::$app->request->queryParams);
         $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->orderby(['last_message_at' => SORT_DESC])->all();
 
         return $this->render('message', [
             'individual_user' => $individual_user,
             'active_chat_list' => $active_chat_list,
             'login_user' => $login_user,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 
