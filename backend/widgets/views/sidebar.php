@@ -1,7 +1,6 @@
 <!-- BEGIN #sidebar -->
 <?php
 $active_url = "/" . Yii::$app->requestedRoute;
-
 ?>
 
 <!-- main-sidebar -->
@@ -9,18 +8,18 @@ $active_url = "/" . Yii::$app->requestedRoute;
 	<aside class="app-sidebar ">
 		<div class="main-sidebar-header active" style="background: #09422D !important;">
 			<a class="header-logo active" href="/">
-				<img src="/theme/img/logo.png" class="main-logo  desktop-logo" alt="logo">
-				<img src="/theme/img/2.jpg" class="main-logo  desktop-dark" alt="logo">
-				<img src="/theme/img/2.jpg" class="main-logo  mobile-logo" alt="logo">
-				<img src="/theme/img/2.jpg" class="main-logo  mobile-dark" alt="logo">
+				<img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-logo" alt="logo">
+				<img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  desktop-dark" alt="logo">
+				<img src="<?= $this->params['baseurl'] ?>/img/sidebar_logo.png" class="main-logo  mobile-logo" alt="logo">
+				<img src="<?= $this->params['baseurl'] ?>/img/logo.png" class="main-logo  mobile-dark" alt="logo">
 			</a>
 		</div>
 		<div class="main-sidemenu">
-			<div class="slide-left disabled" id="slide-left"><img src="/theme/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
+			<div class="slide-left disabled" id="slide-left"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
 			<ul class="side-menu">
 
 				<li class="slide">
-					<a class="side-menu__item" href="/"><img src="/theme/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
+					<a class="side-menu__item" href="/"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
@@ -88,7 +87,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/master/share-safari-reason/index",
 																				"/master/share-safari-reason/create",
 																				"/master/share-safari-reason/update",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
 
@@ -190,7 +189,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/meta/other-wildlife-activities",
 																				"/meta/animal-type",
 																				"/meta/bird-type",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Meta</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/wild-life-type")) ? "active" : "" ?>" href="/meta/wild-life-type">Wild Life Type</a></li>
@@ -321,7 +320,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/park/operator-quote/index",
 																				"/park/operator-quote/view",
 																				"/park/safari-suggestion/index"
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -451,7 +450,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/feature-article/index",
 																				"/cms/feature-rare-exotic/index",
 																				"/cms/feature-tag/index",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 																		"/cms",
 																		"/cms/article-category/index",
@@ -689,7 +688,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/registration/birding-operator-tour/view",
 																				"/registration/birding-operator-tour/create",
 																				"/registration/birding-operator-tour/update",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/material-symbols-light_app-registration.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Registrations</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/material-symbols-light_app-registration.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Registrations</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Registrations</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -720,7 +719,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/operator/safari-operator/index/view",
 																				"/operator/birding-operator/index",
 																				"/operator/birding-operator/index/view",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -742,7 +741,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/pendingapproval/article-comment/index",
 																				"/pendingapproval/article-comment/view",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Pending Approvals</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Pending Approvals</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Pending Approvals</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -759,36 +758,36 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 
 					<li class="slide <?= in_array($active_url, array(
-											"/flag/article/index",
+															"/flag/article/index",
 
-											"/flag/operator/index",
+															"/flag/operator/index",
 
-											"/flag/package/index",
+															"/flag/package/index",
 
-											"/flag/share-safari/index"
-										)) ? "is-expanded" : "" ?>">
+															"/flag/share-safari/index"
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/flag/article/index",
-														"/flag/operator/index",
-														"/flag/share-safari/index",
-														"/flag/package/index",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/flag/article/index",
+																				"/flag/operator/index",
+																				"/flag/share-safari/index",
+																				"/flag/package/index",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Flag</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/flag/operator/index",
-														)) ? "active" : "" ?>" href="/flag/operator/index">Operator Comments</a></li>
+																					"/flag/operator/index",
+																				)) ? "active" : "" ?>" href="/flag/operator/index">Operator Comments</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/flag/package/index",
-														)) ? "active" : "" ?>" href="/flag/package/index">Package Comments</a></li>
+																					"/flag/package/index",
+																				)) ? "active" : "" ?>" href="/flag/package/index">Package Comments</a></li>
 
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/flag/share-safari/index",
-														)) ? "active" : "" ?>" href="/flag/share-safari/index">Share Safari</a></li>
+																					"/flag/share-safari/index",
+																				)) ? "active" : "" ?>" href="/flag/share-safari/index">Share Safari</a></li>
 
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/flag/article/index",
-														)) ? "active" : "" ?>" href="/flag/article/index">Article Comments</a></li>
+																					"/flag/article/index",
+																				)) ? "active" : "" ?>" href="/flag/article/index">Article Comments</a></li>
 
 
 						</ul>
@@ -797,7 +796,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php if (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
 					<li class="slide <?= str_starts_with($active_url, '/operatordashboard') ? "is-expanded" : "" ?>">
-						<a class="side-menu__item <?= str_starts_with($active_url, '/operatordashboard') ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
+						<a class="side-menu__item <?= str_starts_with($active_url, '/operatordashboard') ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -850,7 +849,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/sharesafari/default/view",
 																				// "/sharesafari/request/index",
 																				// "/sharesafari/request/view",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
 							<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
@@ -888,7 +887,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/package/profile/faq",
 																				"/package/profile/create-faq",
 																				"/package/profile/faq-update",
-																			)) ? "active" : "" ?>" href="/package/default/index"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
+																			)) ? "active" : "" ?>" href="/package/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
 					</li>
 				<?php endif; ?>
 
@@ -902,7 +901,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/log/default/index",
 																				"/trierror",
 																				"/log/default/front-index",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
@@ -921,7 +920,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 
 					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Progress Tracking</span><i class="angle fe fe-chevron-right"></i></a>
+						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Progress Tracking</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
 							<li><a class="slide-item" href="#">Report</a></li>
@@ -947,7 +946,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/portalsetting/default/clear-assets",
 																				"/portalsetting/default/clear-cache",
 																				"/portalsetting/pageview/index"
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Portal Settings</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/index")) ? "active" : "" ?>" href="/portalsetting/default/index">Php Info</a></li>
@@ -964,13 +963,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/user",
 																				"/user/default/index",
-																			)) ? "active" : "" ?>" href="/user/default/index"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
+																			)) ? "active" : "" ?>" href="/user/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 					</li>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/contact",
-														"/contact/default/index",
-													)) ? "active" : "" ?>" href="/contact/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Contacts</span></a>
+																				"/contact",
+																				"/contact/default/index",
+																			)) ? "active" : "" ?>" href="/contact/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Contacts</span></a>
 					</li>
 				<?php endif; ?>
 
@@ -1013,7 +1012,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/article/article/create",
 																				"/article/article/update",
 																				"/article/article/view",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -1049,7 +1048,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php endif; ?>
 
 				<li class="slide">
-					<a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="/theme/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
+					<a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
 						<span class="side-menu__label">Logout</span></a>
 				</li>
 
