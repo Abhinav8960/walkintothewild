@@ -608,4 +608,29 @@ class DefaultController extends FrontendBaseController
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
     }
+
+
+    /**
+     * Get Redirect URL
+     */
+    public function actionGeturl()
+    {
+        if (Yii::$app->request->isPost) {
+            // Initialize URL with the base route
+            $url = ['/sharedsafari'];
+
+            // Loop through the payload parameters
+            foreach (Yii::$app->request->post('ShareSafariSearch') as $key => $value) {
+                // Only add parameters that are not empty
+                if (!empty($value)) {
+                    $url['ShareSafariSearch[' . $key . ']'] = $value;
+                } else {
+                    // $url['ShareSafariSearch[' . $key . ']'] = 0;
+                }
+            }
+
+            // Construct the redirect URL
+            return \yii\helpers\Url::to($url);
+        }
+    }
 }

@@ -281,18 +281,20 @@ use common\models\park\SafariPark;
 
 $script = <<< JS
           
-    $('form').on('change', function(){
-        $("#side-search-form").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
+    // $('form').on('change', function(){
+    //     $("#side-search-form").attr("data-pjax", "true");    
+    //     $(this).closest('form').submit();
        
-    });
+    // });
     
 
     $('.remove_dropdown_filter').click(function(){
         data_attribute = $(this).attr('data-attribute');
         $("#sharesafarisearch-"+data_attribute+" option:selected").remove();
-        $("#side-search-form").attr("data-pjax", "true");    
-        $('#side-search-form').submit();
+        // $("#side-search-form").attr("data-pjax", "true");    
+        // $('#side-search-form').submit();
+        $("#sharesafarisearch-"+data_attribute+"").trigger('change');
+
     });
 
     $('.remove_checkbox_filter').click(function(){
@@ -301,12 +303,46 @@ $script = <<< JS
         $.each($('input[name="ShareSafariSearch['+data_attribute+'][]"]:checked'), function(){ 
             if($(this).val()===data_id){
                 $(this).prop('checked', false);
-                $("#side-search-form").attr("data-pjax", "true");    
-                $('#side-search-form').submit();
+                $("#sharesafarisearch-"+data_attribute+"").trigger('change');
+
+                // $("#side-search-form").attr("data-pjax", "true");    
+                // $('#side-search-form').submit();
             }
         });
     });
     
+JS;
+$this->registerJs($script);
+?>
+
+
+<?php
+$script = <<< JS
+    $('form').on('change', function(){
+        // $("#Searchform").attr("data-pjax", "true");    
+        // $(this).closest('form').submit();
+        reloadpage();
+    });
+
+
+    $('#sharesafarisearch-custom_sort_by').on('change', function(){
+        // $("#Searchform").attr("data-pjax", "true");    
+        // $(this).closest('form').submit();
+        reloadpage();
+    });
+
+    function reloadpage(){
+        $.ajax({
+            type: 'POST',
+            url: '/sharedsafari/default/geturl',
+            data:$("#side-search-form,#search-form, #custom_sort_by_form").serialize(),
+            success:function(data){
+                console.log(data);
+                window.location.href = data;
+            },
+            dataType:'html'
+        });
+    }
 JS;
 $this->registerJs($script);
 ?>

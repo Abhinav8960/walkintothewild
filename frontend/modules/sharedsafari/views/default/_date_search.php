@@ -29,13 +29,13 @@ use yii\widgets\ActiveForm;
 
 <?php
 
-$script = <<< JS
+// $script = <<< JS
           
-    $('form').on('change', function(){
-        $("#side-search-form").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
+//     $('form').on('change', function(){
+//         $("#side-search-form").attr("data-pjax", "true");    
+//         $(this).closest('form').submit();
        
-    }); 
-JS;
-$this->registerJs($script);
+//     }); 
+// JS;
+// $this->registerJs($script);
 ?>

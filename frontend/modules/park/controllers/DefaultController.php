@@ -327,7 +327,7 @@ class DefaultController extends FrontendBaseController
                 if (!empty($value)) {
                     $url['SafariParkSearch[' . $key . ']'] = $value;
                 } else {
-                    $url['SafariParkSearch[' . $key . ']'] = 0;
+                    // $url['SafariParkSearch[' . $key . ']'] = 0;
                 }
             }
 
