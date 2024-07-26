@@ -8,6 +8,10 @@ use yii\widgets\ActiveForm;
 /** @var common\models\master\airport\MasterAirportSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
+
+<?php $this->registerJsFile('https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js'); ?>
+<?php $this->registerCssFile('https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css'); ?>
+
 <?php $form = ActiveForm::begin([
     'options' => [
         'data-pjax' => true,
@@ -18,18 +22,33 @@ use yii\widgets\ActiveForm;
         'template' => '{input}{error}',
     ],
 ]); ?>
-    <div class="row">
-        <div class="col-md-3">
-            <?= $form->field($model, 'user_id')->dropDownList(
+<div class="row">
+    <div class="col-md-3">
+        <?= $form->field($model, 'user_id')->dropDownList(
             yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
             [
                 'prompt' => 'Select User',
             ]
         ) ?>
-        </div><?php /*
-        <div class="col-md-3">
-            <?= $form->field($model, 'route') ?>
-        </div>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'request_group')->dropDownList(
+            $request_group_type,
+            [
+                'prompt' => 'Select Request Group',
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'request_code')->dropDownList(
+            $request_codes_list,
+            [
+                'prompt' => 'Select Response Code',
+            ]
+        ) ?>
+    </div><?php /*
         <div class="col-md-3">
             <?php  echo $form->field($model, 'request_code') ?>
         </div>
@@ -41,3 +60,21 @@ use yii\widgets\ActiveForm;
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+
+<?php
+$script = <<<JS
+    /*
+        $(document).ready(function() {
+            $('#datetime_rate_picker').daterangepicker({
+                timePicker: true,
+                startDate: moment().startOf('hour'),
+                endDate: moment().startOf('hour').add(32, 'hour'),
+                locale: {
+                format: 'M/DD hh:mm A'
+                }
+            });
+        });
+    */
+JS;
+$this->registerJs($script);
+?>

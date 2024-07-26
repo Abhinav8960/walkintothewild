@@ -12,7 +12,9 @@ use yii\helpers\Url;
 <style>
     .chat-card-sidebar {
         max-height: 80vh;
+        height: 80vh;
         overflow: scroll;
+        border-right: 2px solid #aaa;
     }
 
     .chat-card-sidebar::-webkit-scrollbar-thumb {

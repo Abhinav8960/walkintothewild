@@ -50,7 +50,7 @@ class GenerateSiteXmlController extends Controller
      */
     public function actionIndex()
     {
-        $backend_actual_url = Yii::$app->params['datapath']."/sitemap";
+        $backend_actual_url = Yii::$app->params['datapath'] . "/sitemap";
         if (!file_exists($backend_actual_url)) {
             mkdir($backend_actual_url);
             chmod($backend_actual_url, 0777);
@@ -66,92 +66,94 @@ class GenerateSiteXmlController extends Controller
         $additional_sitemap[] = $this->get_shared_safari_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_author_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_tags_site_pages($backend_actual_url);
-        
+
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
         $xml_content .= "<sitemapindex xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
-        foreach($additional_sitemap as $sitemap){
-            if(!empty($sitemap)){
+        foreach ($additional_sitemap as $sitemap) {
+            if (!empty($sitemap)) {
                 $xml_content .= "<sitemap>";
-                $xml_content .= "<loc>".$sitemap."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d')."</lastmod>";
+                $xml_content .= "<loc>" . $sitemap . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d') . "</lastmod>";
                 $xml_content .= "</sitemap>";
             }
         }
         $xml_content .= "</sitemapindex>";
 
-        $myFile = $backend_actual_url."/sitemap_index.xml";
-        $fh = fopen($myFile, 'w') or die("can't open file"); 
+        $myFile = $backend_actual_url . "/sitemap.xml";
+        $fh = fopen($myFile, 'w') or die("can't open file");
         fwrite($fh, $xml_content);
         fclose($fh);
         //chmod($fh, 0777);
 
         //create robots.txt to make entry of sitemap_index.xml
-        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap_index.xml";
+        $content = "Sitemap: " . Yii::$app->params['frontend_url'] . "storage/sitemap/sitemap.xml";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
-        if(count($all_url) > 0){
+        if (count($all_url) > 0) {
             $content .= "\nUser-agent: *";
-            foreach($all_url as $row){
-                $content .= "\n"."Disallow: : ".$row->url;
+            foreach ($all_url as $row) {
+                $content .= "\n" . "Disallow: : " . $row->url;
             }
         }
-        
+
         $robots_actual_url = \Yii::$app->getBasePath(true);
         $robots_actual_url = str_replace("console", "frontend/web", $robots_actual_url);
-        $fp = fopen($robots_actual_url."/robots.txt","w");
+        $fp = fopen($robots_actual_url . "/robots.txt", "w");
         fwrite($fp, $content);
         fclose($fp);
 
         //echo "complete sitemap createion";
     }
 
-    protected function static_pages($backend_actual_url){
+    protected function static_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
-        
+
         $manual_pages = SitePages::find()->select(['id', 'url', 'created_at'])->where(['status' => true])->andWhere(['content_type' => 'manual_url'])->asArray()->all();
 
-        if(count($manual_pages) > 0){
+        if (count($manual_pages) > 0) {
             $insert_safari_operator_site_pages = [];
 
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
-            foreach($manual_pages as $manual){
+            foreach ($manual_pages as $manual) {
                 $url = $manual['url'];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$manual['url']."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', strtotime($manual['created_at']))."</lastmod>";
+                $xml_content .= "<loc>" . $manual['url'] . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', strtotime($manual['created_at'])) . "</lastmod>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
             }
             $xml_content .= "</urlset>";
 
             $fileName = "walkintothewild_pages.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $myFile = $backend_actual_url . "/" . $fileName;
+
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url.$fileName;
+            return $base_url . "storage/sitemap/" . $fileName;
         }
 
         return '';
     }
 
-    protected function get_safari_operator_pages($backend_actual_url){
+    protected function get_safari_operator_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
-        
+
         $safari_operators = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'safari_operator', 'status' => true]);
-        if(count($safari_operators) > 0){
+        if (count($safari_operators) > 0) {
             $insert_safari_operator_site_pages = [];
 
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
-            foreach($safari_operators as $operator){
-                $url = $base_url.'operator/'.$operator['slug'];
+            foreach ($safari_operators as $operator) {
+                $url = $base_url . 'operator/' . $operator['slug'];
                 $insert_safari_operator_site_pages[] = [
                     'content_id' => $operator['id'],
                     'content_type' => 'safari_operator',
@@ -162,8 +164,8 @@ class GenerateSiteXmlController extends Controller
                 ];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$url."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', $operator['updated_at'])."</lastmod>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $operator['updated_at']) . "</lastmod>";
                 //$xml_content .= "<changefreq>weekly</changefreq>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
@@ -173,31 +175,32 @@ class GenerateSiteXmlController extends Controller
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_safari_operator_site_pages)->execute();
 
             $fileName = "safari_operator.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url.$fileName;
+            return $base_url . "storage/sitemap/" . $fileName;
         }
 
         return '';
     }
 
-    protected function get_park_site_pages($backend_actual_url){
+    protected function get_park_site_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
 
         $parks = Park::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'parks', 'status' => true]);
-        if(count($parks) > 0){
+        if (count($parks) > 0) {
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
 
             $insert_parks_site_pages = [];
-            foreach($parks as $park){
-                $url = $base_url.'park/'.$park['slug'];
-                    
+            foreach ($parks as $park) {
+                $url = $base_url . 'park/' . $park['slug'];
+
                 $insert_parks_site_pages[] = [
                     'content_id' => $park['id'],
                     'content_type' => 'parks',
@@ -208,8 +211,8 @@ class GenerateSiteXmlController extends Controller
                 ];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$url."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', $park['updated_at'])."</lastmod>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $park['updated_at']) . "</lastmod>";
                 //$xml_content .= "<changefreq>weekly</changefreq>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
@@ -219,29 +222,30 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "park.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
-            return $base_url.$fileName;
+            return $base_url . "storage/sitemap/" . $fileName;
         }
         return '';
     }
 
-    protected function get_article_tags_site_pages($backend_actual_url){
+    protected function get_article_tags_site_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
-        
+
         //fetch article xml pages from article category
         $article_tags = MasterArticleTag::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'article_tag', 'status' => true]);
-        if(count($article_tags) > 0){
+        if (count($article_tags) > 0) {
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
 
             $insert_article_tag_site_pages = [];
-            foreach($article_tags as $tag){
-                $url = $base_url.'article/tag/'.$tag['slug'];
+            foreach ($article_tags as $tag) {
+                $url = $base_url . 'article/tag/' . $tag['slug'];
 
                 $insert_article_tag_site_pages[] = [
                     'content_id' => $tag['id'],
@@ -253,8 +257,8 @@ class GenerateSiteXmlController extends Controller
                 ];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$url."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', $tag['updated_at'])."</lastmod>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $tag['updated_at']) . "</lastmod>";
                 //$xml_content .= "<changefreq>weekly</changefreq>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
@@ -264,29 +268,30 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article_tag.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url.$fileName;
+            return $base_url . "storage/sitemap/" . $fileName;
         }
         return '';
     }
 
-    protected function get_article_site_pages($backend_actual_url){
+    protected function get_article_site_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
 
         $articles = Article::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'article', 'status' => true]);
-        if(count($articles) > 0){
+        if (count($articles) > 0) {
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
 
             $insert_article_site_pages = [];
-            foreach($articles as $article){
-                $url = $base_url.'article/'.$article['slug'];
+            foreach ($articles as $article) {
+                $url = $base_url . 'article/' . $article['slug'];
 
                 $insert_article_site_pages[] = [
                     'content_id' => $article['id'],
@@ -298,8 +303,8 @@ class GenerateSiteXmlController extends Controller
                 ];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$url."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', $article['updated_at'])."</lastmod>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $article['updated_at']) . "</lastmod>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
             }
@@ -308,29 +313,30 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url.$fileName;
+            return $base_url . "storage/sitemap/" . $fileName;
         }
         return '';
     }
 
-    protected function get_article_category_site_pages($backend_actual_url){
+    protected function get_article_category_site_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
-        
+
         $articles_category = MasterArticleTopic::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'article_category', 'status' => true]);
-        if(count($articles_category) > 0){
+        if (count($articles_category) > 0) {
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
 
             $insert_article_category_site_pages = [];
-            foreach($articles_category as $category){
-                $url = $base_url.'article/topic/'.$category['slug'];
+            foreach ($articles_category as $category) {
+                $url = $base_url . 'article/topic/' . $category['slug'];
 
                 $insert_article_category_site_pages[] = [
                     'content_id' => $category['id'],
@@ -342,8 +348,8 @@ class GenerateSiteXmlController extends Controller
                 ];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$url."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', $category['updated_at'])."</lastmod>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $category['updated_at']) . "</lastmod>";
                 //$xml_content .= "<changefreq>weekly</changefreq>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
@@ -353,29 +359,30 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article_category.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url.$fileName;
-        } 
-        return '';       
+            return $base_url . "storage/sitemap/" . $fileName;
+        }
+        return '';
     }
 
-    protected function get_shared_safari_site_pages($backend_actual_url){
+    protected function get_shared_safari_site_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
 
         $shared_safari = ShareSafari::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'shared_safari', 'status' => true]);
-        if(count($shared_safari) > 0){
+        if (count($shared_safari) > 0) {
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
 
             $insert_article_site_pages = [];
-            foreach($shared_safari as $safari){
-                $url = $base_url.'sharedsafari/'.$safari['slug'];
+            foreach ($shared_safari as $safari) {
+                $url = $base_url . 'sharedsafari/' . $safari['slug'];
                 $insert_article_site_pages[] = [
                     'content_id' => $safari['id'],
                     'content_type' => 'shared_safari',
@@ -386,8 +393,8 @@ class GenerateSiteXmlController extends Controller
                 ];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$url."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', $safari['updated_at'])."</lastmod>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $safari['updated_at']) . "</lastmod>";
                 //$xml_content .= "<changefreq>weekly</changefreq>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
@@ -397,29 +404,30 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "shared_safari.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url.$fileName;
+            return $base_url . "storage/sitemap/" . $fileName;
         }
         return '';
     }
 
-    protected function get_author_site_pages($backend_actual_url){
+    protected function get_author_site_pages($backend_actual_url)
+    {
         $base_url = Yii::$app->params['frontend_url'];
 
         $authors = ArticleAuthor::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
 
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'authors', 'status' => true]);
-        if(count($authors) > 0){
+        if (count($authors) > 0) {
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
 
             $insert_article_site_pages = [];
-            foreach($authors as $author){
-                $url = $base_url.'article/author/'.$author['slug'];
+            foreach ($authors as $author) {
+                $url = $base_url . 'article/author/' . $author['slug'];
 
                 $insert_article_site_pages[] = [
                     'content_id' => $author['id'],
@@ -431,8 +439,8 @@ class GenerateSiteXmlController extends Controller
                 ];
 
                 $xml_content .= "<url>";
-                $xml_content .= "<loc>".$url."</loc>";
-                $xml_content .= "<lastmod>".date('Y-m-d', $author['updated_at'])."</lastmod>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $author['updated_at']) . "</lastmod>";
                 //$xml_content .= "<changefreq>weekly</changefreq>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
@@ -441,13 +449,13 @@ class GenerateSiteXmlController extends Controller
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_article_site_pages)->execute();
 
             $xml_content .= "</urlset>";
-            $fileName = "authors.xml";
-            $myFile = $backend_actual_url."/".$fileName;
-            $fh = fopen($myFile, 'w') or die("can't open file"); 
+            $fileName = "article_authors.xml";
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url.$fileName;
+            return $base_url . "storage/sitemap/" . $fileName;
         }
         return '';
     }

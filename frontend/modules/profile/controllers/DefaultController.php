@@ -5,8 +5,10 @@ namespace frontend\modules\profile\controllers;
 use common\models\BlockedModel;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
+use common\models\UserExperience;
 use common\models\UserFollow;
 use frontend\controllers\FrontendBaseController;
+use frontend\models\profile\UserExperienceForm;
 use frontend\models\profile\UserForm;
 use Yii;
 use yii\web\Response;
@@ -27,12 +29,14 @@ class DefaultController extends FrontendBaseController
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
         $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
+        $user_experiences = UserExperience::find()->where(['user_id' => $user->id, 'status' => UserExperience::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         return $this->render(
             'index',
             [
                 'user' => $user,
                 'model' => $model,
-                'model_count' => $model_count
+                'model_count' => $model_count,
+                'user_experiences' => $user_experiences
             ]
         );
     }
@@ -126,5 +130,64 @@ class DefaultController extends FrontendBaseController
                 return ['success' => false, 'message' => $user->errors];
             }
         }
+    }
+
+
+
+    public function actionCreate()
+    {
+        $user = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
+        $model = new UserExperienceForm();
+        $model->action_url = '/profile/default/create';
+        $model->action_validate_url = '/profile/default/validate';
+        $model->user_id = $user->id;
+        $model->status = UserExperience::STATUS_ACTIVE;
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->user_experience_model->save(false)) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['/profile/default/index', 'user_handle' => $user->user_handle]);
+                    }
+                } else {
+                    print_r($model->errors);
+                    die();
+                }
+            }
+        } else {
+            $model->user_experience_model->loadDefaultValues();
+        }
+
+        return $this->renderAjax('_form', [
+            'model' => $model,
+            'user' => $user,
+        ]);
+    }
+
+    public function actionValidate($slug = null)
+    {
+        $model = new UserExperienceForm();
+        if ($slug != null) {
+            $formmodel = $this->findModel($slug);
+            $model = new UserExperienceForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
+    public function actionDelete($id)
+    {
+        $model = UserExperience::find()->where(['id' => $id])->one();
+        $model->status = -1;
+        $model->save(false);
+        \Yii::$app->session->setFlash('success', 'Deleted Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 }

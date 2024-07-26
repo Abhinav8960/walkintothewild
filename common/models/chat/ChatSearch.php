@@ -44,13 +44,17 @@ class ChatSearch extends \Yii\base\Model
         $query = User::find()->where("user_handle IS NOT NULL");
 
         // add conditions that should always apply here
+        $this->load($params);
+
+        if ($this->name) {
+            $pagination = false;
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 15 : $pagination],
         ]);
 
-        $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -59,41 +63,6 @@ class ChatSearch extends \Yii\base\Model
         }
 
         $query->andFilterWhere(['like', 'user.name', $this->name]);
-        return $dataProvider;
-    }
-
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function chatsearch($params, $pagination = true)
-    {
-        $query = Chat::find()->where(['chat.status' => 1])->andwhere('chat.user_id =' . Yii::$app->user->identity->id . ' OR chat.recipient_user_id=' . Yii::$app->user->identity->id)->orderby(['chat.last_message_at' => SORT_DESC]);
-
-        // add conditions that should always apply here
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        if ($this->name) {
-            $query->joinwith(['user' => function ($user_query) {
-                $user_query->andFilterWhere(['like', 'user.name', $this->name]);
-            }]);
-        }
-
         return $dataProvider;
     }
 }

@@ -20,7 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'btn btn-orange', 'title' => 'Add New URL', 'style' => 'margin-right: 2px;']);
 ?>
-
+<style>
+    .table a {
+        color: #0000EE !important;
+    }
+</style>
 <div class="card">
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel, 'content_type' => $content_type]); ?>
@@ -39,10 +43,12 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         }
                     ],
                     [
-                        'label' => 'Url',
+                        'label' => 'URL',
                         'format' => 'raw',
+                        'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            return $model->url;
+                            $temp = "<a target='_blank' href='" . $model->url . "'>" . $model->url . "</a>";
+                            return $temp;
                         }
                     ],
                     [
@@ -66,7 +72,7 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         'template' => '{delete}',
                         'buttons' => [
                             'delete' => function ($url, $model) {
-                                if($model->content_type == 'manual_url'){
+                                if ($model->content_type == 'manual_url') {
                                     return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'Delete',

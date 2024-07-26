@@ -1,39 +1,30 @@
 <?php
 
+use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\trierror\SearchSiteRobots $model */
+/** @var common\models\master\airport\MasterAirportSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-
-<div class="site-robots-search">
-
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'url') ?>
-
-    <?= $form->field($model, 'status') ?>
-
-    <?= $form->field($model, 'created_at') ?>
-
-    <?= $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'data-pjax' => true,
+        'id' => 'Searchform'
+    ],
+    'method' => 'get',
+    'fieldConfig' => [
+        'template' => '{input}{error}',
+    ],
+]); ?>
+<div class="row">
+    <div class="col-md-9">
+        <?= $form->field($model, 'url')->textInput(["placeholder" => "Search by url"]) ?>
     </div>
+    <div class="col-md-3">
+        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
 
-    <?php ActiveForm::end(); ?>
-
+    </div>
 </div>
+<?php ActiveForm::end(); ?>

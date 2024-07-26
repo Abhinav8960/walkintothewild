@@ -1,5 +1,7 @@
 <?php
 
+use common\models\GeneralModel;
+use yii\helpers\Html;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -20,7 +22,7 @@ $this->params['title'] = $this->title;
 <section class="ta">
     <div class="container-lg">
         <div class="row justify-content-center">
-            <div class="col-xxl-11">
+            <div class="col-xxl-11 mb-5">
                 <div class="row">
                     <div class="col-xl-8">
                         <div class="card mt-2 mb-4">
@@ -66,9 +68,58 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
 
-                        <div class="card mt-2 mb-2">
+                        <div class="card mt-2 mb-5">
                             <div class="card-body">
-                                <h6 class="fs-6 fw-bold">Share Safari Experience</h6>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 class="fs-6 fw-bold">Share Safari Experience</h6>
+                                            <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                                <button class="follow_btn photoBtn text-center mt-sm-0 mt-2" value="<?= Url::toRoute(['/profile/user-experience']) ?>">+ Add Experience</button>
+                                            <?php } ?>
+                                        </div>
+                                        <div class="tab-content_tour active">
+                                            <div class="row">
+                                                <?php
+                                                if ($user_experiences) {
+                                                    foreach ($user_experiences as $user_experience) {
+                                                ?>
+                                                        <div class="col-md-6 col-lg-4 gap-2 mt-2 mb-2">
+                                                            <div class="parksImgireview h-100 position-relative">
+                                                                <div class="floating-watchlist">
+                                                                    <?php
+                                                                    if (Yii::$app->user->identity) {
+                                                                        if (Yii::$app->user->identity->id == $user_experience->user_id) { ?>
+                                                                            <div class="heart_bx">
+                                                                                <?= Html::a('<i class="fa-solid fa-trash"></i>', ['delete', 'id' => $user_experience->id], [
+                                                                                    'class' => 'btn btn-danger',
+                                                                                    'data' => [
+                                                                                        'confirm' => 'Are you sure you want to delete this photo?',
+                                                                                        'method' => 'post',
+                                                                                    ],
+                                                                                ]) ?>
+                                                                            </div>
+                                                                    <?php }
+                                                                    } ?>
+                                                                </div>
+                                                                <img src="<?= isset($user_experience->file) ? $user_experience->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                                                <div class="footer_safariname">
+                                                                    <h6 class=""><?= isset($user_experience->park_id) ? GeneralModel::safariparkoption()[$user_experience->park_id] : '' ?></h6>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    <?php }
+                                                } else { ?>
+                                                    <div class="col-6">
+                                                        No Photo added!
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -170,3 +221,34 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </section>
+
+
+
+<div class="modal fade _standard-text" id="package-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add a New Experience</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+function organizefunction() {
+	$('.photoBtn').on('click', function () {
+        $('#package-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+             
+JS;
+$this->registerJs($script);
+?>
