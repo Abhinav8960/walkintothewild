@@ -214,27 +214,25 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
                                     <?php }
                                     } ?>
+                                    <div class="right_button  mt-2">
+                                        <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
+                                            <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                                Safari</button>
+                                        <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
+                                            <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                                Fixed Departure</button>
+                                        <?php } else if (!Yii::$app->user->identity) {  ?>
+                                            <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
+                                                Safari</a>
+                                        <?php } ?>
 
+
+                                    </div>
                                 </div>
-                                <div class="right_button  mt-2">
-                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Safari</button>
-                                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Fixed Departure</button>
-                                    <?php } else if (!Yii::$app->user->identity) {  ?>
-                                        <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
-                                            Safari</a>
-                                    <?php } ?>
 
-
-                                </div>
                             </div>
 
                         </div>
-
-
                     </div>
                     <div class="row">
                         <div class="col-12 pt-4">
@@ -284,7 +282,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <h2 class="accordion-header d-lg-none" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse bg-set collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+                        <div id="collapseOne" class="accordion-collapse bg-set collapse show mb-3 d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
                             <div class="accordion-body p-3">
                                 <div class="col-lg-12 mb-3">
                                     <div class="itenary-title">
@@ -296,7 +294,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+                        <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">

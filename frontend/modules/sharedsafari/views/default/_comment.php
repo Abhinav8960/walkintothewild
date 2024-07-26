@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="col-lg-12 order-lg-1 order-2 mb-5">
+<div class="<?= isset($colsize) ? $colsize : 'col-lg-9' ?> order-lg-1 order-2 mb-5">
     <div class="formbg">
         <div class="comments_safari bg-white">
             <div class="top_replysafari">

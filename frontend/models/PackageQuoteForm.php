@@ -34,7 +34,7 @@ class PackageQuoteForm extends Model
     public function rules()
     {
         return [
-            [['travelers', 'pack_start_date'], 'required'],
+            [['travelers', 'pack_start_date'], 'required', 'message' => 'Required'],
         ];
     }
 
