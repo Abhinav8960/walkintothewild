@@ -383,7 +383,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 ?>
                     <div class="request_quote mt-4">
                         <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                            Photo Gallery 10</button>
+                            Photo Gallery <?= count($galleries) ?></button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="photoSlider owl-carousel owl-theme">
                                 <?php foreach ($galleries as $gallery) { ?>
