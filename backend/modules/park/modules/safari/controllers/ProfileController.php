@@ -30,6 +30,7 @@ use common\models\park\SafariParkVehicle;
 use common\models\park\SafariParkVehicleSearch;
 use common\models\park\SafariParkZone;
 use common\models\park\SafariParkZoneSearch;
+use common\models\suggestions\SafariSuggestions;
 use common\models\suggestions\SafariSuggestionsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -731,6 +732,26 @@ class ProfileController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+
+
+    public function actionDisapprove($id)
+    {
+        $model = SafariSuggestions::find()->where(['id' => $id])->limit(1)->one();
+        $model->is_approved = 0;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Suggestion disapprove Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionApprove($id)
+    {
+        $model = SafariSuggestions::find()->where(['id' => $id])->limit(1)->one();
+        $model->is_approved = StatusInterface::STATUS_ACTIVE;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Suggestion approved Successfully');
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
 

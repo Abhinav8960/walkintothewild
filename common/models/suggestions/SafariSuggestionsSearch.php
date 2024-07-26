@@ -17,7 +17,7 @@ class SafariSuggestionsSearch extends SafariSuggestions
     public function rules()
     {
         return [
-            [['park_id', 'master_suggestion_id', 'you_are_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['park_id', 'is_approved', 'master_suggestion_id', 'you_are_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['user_agent'], 'string', 'max' => 255],
             [['ip_address'], 'string', 'max' => 45],
         ];
@@ -61,6 +61,7 @@ class SafariSuggestionsSearch extends SafariSuggestions
         $query->andFilterWhere([
             'id' => $this->id,
             'park_id' => $this->park_id,
+            'is_approved' => $this->is_approved,
             'you_are_id' => $this->you_are_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

@@ -205,6 +205,7 @@ class DefaultController extends FrontendBaseController
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'id' => $park_id])->limit(1)->one();
         $model = new SafariSuggestionsForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->is_approved = 0;
         $model->park_id = $park_id;
         $model->name = Yii::$app->user->identity->name;
         $model->email = Yii::$app->user->identity->email;
