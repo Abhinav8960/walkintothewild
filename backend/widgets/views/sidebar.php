@@ -966,6 +966,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/user/default/index",
 													)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 					</li>
+					<li class="slide">
+						<a class="side-menu__item <?= in_array($active_url, array(
+														"/contact",
+														"/contact/default/index",
+													)) ? "active" : "" ?>" href="/contact/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Contacts</span></a>
+					</li>
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>

@@ -72,6 +72,9 @@ return [
         'flag' => [
             'class' => 'backend\modules\flag\Module',
         ],
+        'contact' => [
+            'class' => 'backend\modules\contact\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [
