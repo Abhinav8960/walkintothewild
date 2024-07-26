@@ -162,14 +162,24 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function getOrganizedbyprofileurl()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return \yii\helpers\Url::toRoute(['/profile/default/view', 'user_handle' => $this->user->user_handle]);
+            return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->user->user_handle]);
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return \yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $this->safarioperator->slug]);
+            return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->safarioperator->slug]);
         }
     }
 
     public function getSharesafariIncludeds()
     {
         return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+    }
+
+    public function getSharesafaridays()
+    {
+        return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id']);
+    }
+
+    public function getSharesafarigallery()
+    {
+        return $this->hasMany(ShareSafariGallery::className(), ['share_safari_id' => 'id']);
     }
 }

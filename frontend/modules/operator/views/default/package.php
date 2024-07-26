@@ -70,6 +70,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class=" col-xxl-8 col-lg-8">
                                     <div class="card">
                                         <div class="card-body">
+                                            <h6 class="fs-5 fw-bold"><?= $operator->business_name ?> Created <?= count($operator_packages) ?> Packages</h6>
                                             <div class="row gx-5 justify-content-center">
                                                 <?php if ($operator_packages) {
                                                     foreach ($operator_packages as $model) { ?>

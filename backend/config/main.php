@@ -69,6 +69,12 @@ return [
         'pendingapproval' => [
             'class' => 'backend\modules\pendingapproval\Module',
         ],
+        'flag' => [
+            'class' => 'backend\modules\flag\Module',
+        ],
+        'contact' => [
+            'class' => 'backend\modules\contact\Module',
+        ],
     ],
     'components' => [
         'reCaptcha3' => [

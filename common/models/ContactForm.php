@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -25,8 +26,9 @@ use Yii;
  * @property int|null $updated_by
  * @property int $status
  */
-class ContactForm extends \yii\db\ActiveRecord
+class ContactForm extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
     /**
      * {@inheritdoc}
      */

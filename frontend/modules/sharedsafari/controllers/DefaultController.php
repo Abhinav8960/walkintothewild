@@ -13,6 +13,7 @@ use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\sharesafari\ShareSafariFaqSearch;
 use frontend\models\form\SharedSafariForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\controllers\FrontendBaseController;
@@ -58,7 +59,7 @@ class DefaultController extends FrontendBaseController
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->type = 1;
-        $model->host_type = Yii::$app->user->identity->account_type;
+        $model->host_type = 1; //Yii::$app->user->identity->account_type;
         if ($login_user = Yii::$app->user->identity) {
             if ($login_user->x_url <> '') {
                 $model->website_url = $login_user->x_url;
@@ -198,11 +199,26 @@ class DefaultController extends FrontendBaseController
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
-        return $this->render('view', [
-            'share_safari' => $share_safari,
-            'model' => $model,
-            'replymodel' => $replymodel,
-        ]);
+        if ($share_safari->type == 1) {
+            return $this->render('view', [
+                'share_safari' => $share_safari,
+                'model' => $model,
+                'replymodel' => $replymodel,
+            ]);
+        } else {
+
+            $searchModel = new ShareSafariFaqSearch();
+            $searchModel->share_safari_id = $share_safari->id;
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+            $faqs = $dataProvider->getModels();
+
+            return $this->render('fixed_view', [
+                'share_safari' => $share_safari,
+                'model' => $model,
+                'replymodel' => $replymodel,
+                'faqs' => $faqs,
+            ]);
+        }
     }
 
 
@@ -545,13 +561,13 @@ class DefaultController extends FrontendBaseController
         }
         if ($share_safari) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
                 if (!$wishlist) {
                     $wishlist = new UserWishlist();
                 }
                 $wishlist->user_id = Yii::$app->user->identity->id;
                 $wishlist->item_id = $share_safari->id;
-                $wishlist->item_type_id = 2;
+                $wishlist->item_type_id = UserWishlist::SHARED_SAFARI;
                 $wishlist->item_type = 'share-safari';
                 $wishlist->status = 1;
                 if ($wishlist->save(false)) {
@@ -562,21 +578,21 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
     }
 
     public function actionUnwishlist($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         if ($share_safari) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => 2])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI])->one();
                 if ($wishlist) {
                     $wishlist->status = 0;
                     if ($wishlist->save(false)) {
@@ -588,8 +604,33 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+    }
+
+
+    /**
+     * Get Redirect URL
+     */
+    public function actionGeturl()
+    {
+        if (Yii::$app->request->isPost) {
+            // Initialize URL with the base route
+            $url = ['/sharedsafari'];
+
+            // Loop through the payload parameters
+            foreach (Yii::$app->request->post('ShareSafariSearch') as $key => $value) {
+                // Only add parameters that are not empty
+                if (!empty($value)) {
+                    $url['ShareSafariSearch[' . $key . ']'] = $value;
+                } else {
+                    // $url['ShareSafariSearch[' . $key . ']'] = 0;
+                }
+            }
+
+            // Construct the redirect URL
+            return \yii\helpers\Url::to($url);
+        }
     }
 }

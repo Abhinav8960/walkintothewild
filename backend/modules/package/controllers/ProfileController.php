@@ -11,6 +11,7 @@ use common\models\package\form\PackageForm;
 use common\models\package\form\PackageGalleryForm;
 use common\models\package\Package;
 use common\models\package\PackageDay;
+use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
@@ -20,6 +21,7 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageQuoteSearch;
 use common\models\package\PackageSafariPark;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -416,6 +418,24 @@ class ProfileController extends Controller
                 'package_model' => $package_model,
             ]);
         }
+    }
+
+    public function actionBookNow($package_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
+
+        $enquire_provider = new ActiveDataProvider([
+            'query' => $enquiries,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('book_now', [
+            'package_model' => $package_model,
+            'enquire_provider' => $enquire_provider,
+
+        ]);
     }
 
     public function actionActive($id)

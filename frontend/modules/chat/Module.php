@@ -2,6 +2,8 @@
 
 namespace frontend\modules\chat;
 
+use Yii;
+
 /**
  * chat module definition class
  */
@@ -20,5 +22,9 @@ class Module extends \yii\base\Module
         parent::init();
 
         // custom initialization code goes here
+        if (!isset(Yii::$app->user->identity)) {
+            return Yii::$app->getResponse()->redirect('/site/login')->send();
+            exit;
+        }
     }
 }

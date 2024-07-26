@@ -13,10 +13,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="row justify-content-center">
             <div class="col-xxl-10 banner-cover position-relative">
                 <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
-                <label for="coverImageUpload" class="coverbtns">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Cover Picture
-                </label>
-                <input type="file" id="coverImageUpload" style="display: none;" accept="image/*">
+                <?php if (Yii::$app->user->id == $user->id) { ?>
+                    <label for="coverImageUpload" class="coverbtns">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload Cover Picture
+                    </label>
+                    <input type="file" id="coverImageUpload" style="display: none;" accept="image/*">
+                <?php } ?>
             </div>
         </div>
         <div class="row align-items-center justify-content-center">
@@ -25,10 +27,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="linear-gradient d-flex align-items-center justify-content-center rounded-circle">
                         <div class="border border-4 border-white d-flex align-items-center justify-content-center  profile_img">
                             <img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
-                            <label for="profileImageUpload" class="camera-icon">
-                                <i class="fas fa-camera"></i>
-                            </label>
-                            <input type="file" id="profileImageUpload" style="display: none;" accept="image/*">
+                            <?php if (Yii::$app->user->id == $user->id) { ?>
+                                <label for="profileImageUpload" class="camera-icon">
+                                    <i class="fas fa-camera"></i>
+                                </label>
+                                <input type="file" id="profileImageUpload" style="display: none;" accept="image/*">
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -107,7 +111,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                         if ($user->is_safari_operator == 1) { ?>
-                            <li class="nav-item"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link <?= isset($business) ? $business : '' ?> btn btn-warning" target="_blank">Manage Safari Tour Business <i class="fa fa-external-link"></i></a></li>
+                            <li class="nav-item"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link <?= isset($business) ? $business : '' ?> " target="_blank">Manage Safari Tour Business <i class="fa fa-external-link"></i></a></li>
                             <?php } else if (in_array($user->account_type, [2, 3])) {
                             $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->one();
                             if ($business_request) { ?>
@@ -138,19 +142,105 @@ $this->params['baseurl'] = $webasset->baseUrl;
     } */
 </style>
 
-<script>
-    document.getElementById('profileImageUpload').addEventListener('change', function(event) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            document.querySelector('.profile_img img').src = e.target.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
+<?php
+$script = <<<JS
+         $(document).ready(function() {
+            $('#coverImageUpload').change(function(e){
+                    e.preventDefault();
+                    var formData = new FormData();
+                    formData.append('file', e.target.files[0]);
+                    $.ajax({
+                    url: '/profile/default/cover-upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        if(response.success==true){                        
+                            function success_notify(){
+                                return notif({
+                                    type: "success",
+                                    msg: "Cover Picture uploaded successfully",
+                                    position: "right",
+                                });
+                            }
+                            location.reload();
+                            }else{
+                                function success_notify(){
+                                    return notif({
+                                        type: "error",
+                                        msg: 'Error uploading Cover Picture ',
+                                        position: "right",
+                                    });
+                                }
+                        }
+                    
+                        // success_notify(); 
+                        location.reload();
+
+                    },
+                    error: function(xhr, status, error){
+                        function success_notify(){
+                            return notif({
+                                type: "error",
+                                msg: 'Error uploading Cover Picture : ' + error,
+                                position: "right",
+                            });
+                        }
+                
+                        success_notify(); 
+                        location.reload();
+                    }
+                });
+          });
+
+          $('#profileImageUpload').change(function(e){
+                    e.preventDefault();
+                    var formData = new FormData();
+                    formData.append('file', e.target.files[0]);
+                    $.ajax({
+                    url: '/profile/default/profile-upload', 
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        if(response.success==true){                        
+                            function success_notify(){
+                                return notif({
+                                    type: "success",
+                                    msg: "Profile Picture uploaded successfully",
+                                    position: "right",
+                                });
+                            }
+                            }else{
+                                function success_notify(){
+                                    return notif({
+                                        type: "error",
+                                        msg: 'Error uploading Profile Picture ',
+                                        position: "right",
+                                    });
+                                }
+                        }
+                        location.reload();
+                    
+                        success_notify(); 
+                    },
+                    error: function(xhr, status, error){
+                        function success_notify(){
+                            return notif({
+                                type: "error",
+                                msg: 'Error uploading Profile Picture : ' + error,
+                                position: "right",
+                            });
+                        }
+                        location.reload();
+                
+                        success_notify(); 
+                    }
+                });
+          });
     });
-    document.getElementById('coverImageUpload').addEventListener('change', function(event) {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            document.querySelector('.banner-cover img').src = e.target.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
-    });
-</script>
+JS;
+$this->registerJs($script);
+?>

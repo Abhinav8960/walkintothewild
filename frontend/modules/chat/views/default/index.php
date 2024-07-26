@@ -1,7 +1,6 @@
 <?php
 
-use yii\helpers\Url;
-use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -21,21 +20,20 @@ $this->title = 'Chat';
             <div class="card chat">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-3">
-                            <?php if ($user_list) {
-                                foreach ($user_list as $user) { ?>
-                                    <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link">
-                                        <div class="chat-sidebar-user-card">
-                                            <div class="d-flex chat-user_message">
-                                                <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
-                                                <div class="chat-user_name">
-                                                    <h6><?= $user->name ?></h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                            <?php }
-                            } ?>
+                        <div class="col-3 chat-card-sidebar">
+                            <?php
+                            Pjax::begin([
+                                'id' => 'grid-data',
+                                'enablePushState' => FALSE,
+                                'enableReplaceState' => FALSE,
+                                'timeout' => false,
+                            ]);
+                            ?>
+                            <div class="chat-search-user mb-2">
+                                <?= $this->render('_search', ['searchModel' => $searchModel, 'autofocus' => true]) ?>
+                            </div>
+                            <?= $this->render('_default_userlist', ['dataProvider' => $dataProvider]) ?>
+                            <?php Pjax::end(); ?>
                         </div>
                         <div class="col-9 text-center">
                             Select a User for Chat

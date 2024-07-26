@@ -7,7 +7,10 @@ use common\models\sharesafari\ShareSafari;
 use common\models\User;
 use common\models\UserFollow;
 use frontend\controllers\FrontendBaseController;
+use frontend\models\profile\UserForm;
 use Yii;
+use yii\web\Response;
+use yii\web\UploadedFile;
 
 /**
  * DefaultController.
@@ -90,5 +93,38 @@ class DefaultController extends FrontendBaseController
         return $this->render('following', ['user' => $user]);
     }
 
-    
+    public function actionCoverUpload()
+    {
+        if (Yii::$app->request->isAjax) {
+            $user_model = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
+            $user = new UserForm($user_model);
+            $user->cover_image = UploadedFile::getInstanceByName('file');
+            if ($user->validate() &&  $user->uploadFile()) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['success' => true, 'message' => 'Profile Image uploaded successfully'];
+            } else {
+
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['success' => false, 'message' => $user->errors];
+            }
+        }
+    }
+
+    public function actionProfileUpload()
+    {
+        if (Yii::$app->request->isAjax) {
+            $user_model = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
+            $user = new UserForm($user_model);
+            $user->profile_image = UploadedFile::getInstanceByName('file');
+            if ($user->validate() &&  $user->uploadFile()) {
+
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['success' => true, 'message' => 'Profile Image uploaded successfully'];
+            } else {
+
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ['success' => false, 'message' => $user->errors];
+            }
+        }
+    }
 }

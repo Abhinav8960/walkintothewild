@@ -5,7 +5,7 @@ use common\models\suggestions\SafariSuggestions;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
 
-$suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id, 'status' => 1])->all();
+$suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id, 'status' => 1, 'is_approved' => 1])->all();
 ?>
 
 
@@ -50,7 +50,7 @@ $suggestions = SafariSuggestions::find()->where(['park_id' => $safari_model->id,
             <div class="col-12">
                 <div class="safari text-end">
                     <div class="viewAllreview">
-                        <a href="/park/contributionlist/<?= $safari_model->slug ?>">View All</a>
+                        <a href="/park/<?= $safari_model->slug ?>/contributionlist">View All</a>
                     </div>
                 </div>
             </div>

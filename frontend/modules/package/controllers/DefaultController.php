@@ -47,80 +47,6 @@ class DefaultController extends FrontendBaseController
     }
 
 
-
-
-    /**
-     * Create SeatType.
-     * 
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        if (Yii::$app->user->identity) {
-            if (Yii::$app->user->identity->is_safari_operator != 1 && Yii::$app->user->identity->account_type != 3) {
-                throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Operator can View this page.');
-            }
-        }
-        $safari_operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id])->limit(1)->one();
-        $model = new PackageForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->owned_by_id = $safari_operator->id;
-        $model->scenario = 'create';
-
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->package_image = UploadedFile::getInstance($model, 'package_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_model->save(false)) {
-                        $model->uploadFile();
-
-                        $package_feature = $model->package_feature;
-                        if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_feature as $feature) {
-                                $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
-                                $packagefeature->feature_id = $feature;
-                                $packagefeature->save(false);
-                            }
-                        }
-
-
-                        $package_park = $model->package_park;
-                        if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_park as $park) {
-                                $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->park_id = $park;
-                                $packagesafaripark->save(false);
-                            }
-                        }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['index']);
-                    }
-                }
-            }
-        } else {
-            $model->package_model->loadDefaultValues();
-        }
-
-
-
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-
     /**
      * Renders the index view for the module
      * @return string
@@ -210,13 +136,13 @@ class DefaultController extends FrontendBaseController
         }
         if ($package) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
                 if (!$wishlist) {
                     $wishlist = new UserWishlist();
                 }
                 $wishlist->user_id = Yii::$app->user->identity->id;
                 $wishlist->item_id = $package->id;
-                $wishlist->item_type_id = 1;
+                $wishlist->item_type_id = UserWishlist::SAFARI_PACKAGE;
                 $wishlist->item_type = 'package';
                 $wishlist->status = 1;
                 if ($wishlist->save(false)) {
@@ -227,21 +153,21 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
     }
 
     public function actionUnwishlist($slug)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
         if ($package) {
             if (Yii::$app->user->identity) {
-                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1])->one();
+                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
                 if ($wishlist) {
                     $wishlist->status = 0;
                     if ($wishlist->save(false)) {
@@ -253,7 +179,7 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
+            return $this->redirect(Yii::$app->request->referrer);
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/index']));
     }
@@ -265,8 +191,13 @@ class DefaultController extends FrontendBaseController
         $model = new PackageEnquiryForm();
         $model->safari_operator_id =  $package->owned_by_id;
         $model->package_id = $package->id;
-        $model->user_id = Yii::$app->user->identity->id;
         $model->status = 1;
+        if (Yii::$app->user->identity) {
+            $model->user_id = Yii::$app->user->identity->id;
+            $model->name = Yii::$app->user->identity->name;
+            $model->email_address = Yii::$app->user->identity->email;
+            $model->phone = Yii::$app->user->identity->mobile_no;
+        }
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -342,6 +273,30 @@ class DefaultController extends FrontendBaseController
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
+     /**
+     * Get Redirect URL
+     */
+    public function actionGeturl()
+    {
+        if (Yii::$app->request->isPost) {
+            // Initialize URL with the base route
+            $url = ['/package'];
+
+            // Loop through the payload parameters
+            foreach (Yii::$app->request->post('PackageSearch') as $key => $value) {
+                // Only add parameters that are not empty
+                if (!empty($value)) {
+                    $url['PackageSearch[' . $key . ']'] = $value;
+                } else {
+                    // $url['SafariParkSearch[' . $key . ']'] = 0;
+                }
+            }
+
+            // Construct the redirect URL
+            return \yii\helpers\Url::to($url);
         }
     }
 }

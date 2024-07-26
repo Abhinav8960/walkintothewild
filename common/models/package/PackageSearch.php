@@ -2,10 +2,12 @@
 
 namespace common\models\package;
 
-use common\models\package\Package;
 use Yii;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
+use common\models\package\Package;
+use common\models\park\SafariPark;
 
 /**
  * PackageSearch represents the model behind the search form of `common\models\package\Package`.
@@ -17,6 +19,7 @@ class PackageSearch extends Package
     public $estimated_price_filter;
     public $package_feature;
     public $package_include;
+    public $custom_sort_by;
 
     /**
      * {@inheritdoc}
@@ -24,13 +27,13 @@ class PackageSearch extends Package
     public function rules()
     {
         return [
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'string'],
-            [['package_name'], 'string', 'max' => 512],
-            [['package_slug'], 'string', 'max' => 720],
-            [['package_image'], 'string', 'max' => 255],
-            [['park_id', 'month_id', 'estimated_price_filter', 'package_feature', 'package_include'], 'safe']
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
+            [['cost_per_person'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'safe'],
+            [['package_name'], 'safe'],
+            [['package_slug'], 'safe'],
+            [['package_image'], 'safe'],
+            [['park_id', 'month_id', 'estimated_price_filter', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
         ];
     }
 
@@ -58,6 +61,7 @@ class PackageSearch extends Package
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -132,6 +136,32 @@ class PackageSearch extends Package
             }]);
         }
 
+
+        if ($this->custom_sort_by) {
+            if ($this->custom_sort_by == '1') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['created_at' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '2') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '3') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['no_of_safari' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == '4') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['cost_per_person' => SORT_ASC]
+                ];
+            }
+        }
+
         return $dataProvider;
+    }
+
+    public function getParkoption()
+    {
+        return ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere("id IN (SELECT distinct park_id FROM package_safari_park WHERE status=1)")->all(), 'id', 'title');
     }
 }

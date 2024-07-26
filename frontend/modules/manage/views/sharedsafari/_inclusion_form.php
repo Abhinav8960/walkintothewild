@@ -20,7 +20,7 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 
 
-<div class="card">
+<div class="card ">
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">

@@ -25,7 +25,7 @@ use yii\helpers\ArrayHelper;
         <div class="title_filter mb-3">
             <h6>Safari Park</h6>
             <div class="input_check ">
-                <?= $form->field($searchModel, 'park_id')->dropDownlist(ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'), ['prompt' => 'Select Safari Park'])->label(false) ?>
+                <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>
             </div>
         </div>
         <div class="title_filter mb-3">
@@ -135,11 +135,66 @@ use yii\helpers\ArrayHelper;
 
 $script = <<< JS
           
-    $('form').on('change', function(){
-        $("#side-search-form").attr("data-pjax", "true");    
-        $(this).closest('form').submit();
+    // $('form').on('change', function(){
+    //     $("#side-search-form").attr("data-pjax", "true");    
+    //     $(this).closest('form').submit();
        
-    }); 
+    // }); 
+
+
+
+    $('.remove_dropdown_filter').click(function(){
+        data_attribute = $(this).attr('data-attribute');
+        $("#packagesearch-"+data_attribute+" option:selected").remove();
+        $("#packagesearch-"+data_attribute+"").trigger('change');
+        // $("#side-search-form").attr("data-pjax", "true");    
+        // $('#side-search-form').submit();
+    });
+
+    $('.remove_checkbox_filter').click(function(){
+        data_id = $(this).attr('data-id');
+        data_attribute = $(this).attr('data-attribute');
+        $.each($('input[name="PackageSearch['+data_attribute+'][]"]:checked'), function(){ 
+            if($(this).val()===data_id){
+                $(this).prop('checked', false);
+                // $("#side-search-form").attr("data-pjax", "true");    
+                // $('#side-search-form').submit();
+                $("#packagesearch-"+data_attribute+"").trigger('change');
+            }
+        });
+    });
+JS;
+$this->registerJs($script);
+?>
+
+
+<?php
+$script = <<< JS
+    $('form').on('change', function(){
+        // $("#Searchform").attr("data-pjax", "true");    
+        // $(this).closest('form').submit();
+        reloadpage();
+    });
+
+
+    $('#sharesafarisearch-custom_sort_by').on('change', function(){
+        // $("#Searchform").attr("data-pjax", "true");    
+        // $(this).closest('form').submit();
+        reloadpage();
+    });
+
+    function reloadpage(){
+        $.ajax({
+            type: 'POST',
+            url: '/package/default/geturl',
+            data:$("#side-search-form, #custom_sort_by_form").serialize(),
+            success:function(data){
+                console.log(data);
+                window.location.href = data;
+            },
+            dataType:'html'
+        });
+    }
 JS;
 $this->registerJs($script);
 ?>

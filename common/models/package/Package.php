@@ -207,4 +207,19 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
         return isset($options[$this->no_of_day]) ? $options[$this->no_of_day] : "";
     }
+
+
+    public function getPickanddrop()
+    {
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
+
+        return ($pick_drop_includes) ? 'Pick & Drop' : '';
+    }
+
+    public function getMeals()
+    {
+        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
+
+        return ($package_includes) ? 'All meals' : '';
+    }
 }

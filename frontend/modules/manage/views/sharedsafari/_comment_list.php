@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<div class="table-responsive">
+<div class="table-responsive table_design_manage">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [

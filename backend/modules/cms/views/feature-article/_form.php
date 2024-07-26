@@ -16,31 +16,22 @@ use yii\web\View;
             <thead>
                 <tr>
                     <th style="width: 5%!important;">Sr. No.</th>
-                    <th >Article</th>
+                    <th>Article</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-
-                $allArticles = Article::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
-                $countAllArticle = count($allArticles);
-
-                $length = '';
-                if ($countAllArticle < 8) {
-                    $length = $countAllArticle;
-                } else {
-                    $length = 8;
-                }
-
                 $form = ActiveForm::begin(['id' => 'article-sequence-form']);
-                for ($i = 1; $i <= $length; $i++) {
+                $article_ids = '0';
+                for ($i = 1; $i <= 10; $i++) {
                     $article = Article::find()->where(['sequence' => $i])->limit(1)->one();
                     $selectedArticleId = isset($article) ? $article->id : null;
+
                 ?>
                     <tr>
                         <td> <?= $i; ?></td>
                         <td> <?php
-                                echo Html::dropDownList("ArticleSequence[$i]", $selectedArticleId, GeneralModel::articleoption(), [
+                                echo Html::dropDownList("ArticleSequence[$i]", $selectedArticleId, GeneralModel::articleoption($article_ids), [
                                     'class' => 'article-dropdown',
                                     'data-index' => $i,
                                     'prompt' => 'Select',
@@ -48,47 +39,31 @@ use yii\web\View;
                                 ]);
                                 ?></td>
                     </tr>
-                <?php }
+                <?php if ($selectedArticleId) {
+                        $article_ids .= "," . $selectedArticleId;
+                    }
+                }
                 ActiveForm::end();
                 ?>
             </tbody>
         </table>
     </div>
 </div>
+
 <?php
 $url = Url::to(['/cms/feature-article/save-sequence']);
-$csrfToken = Yii::$app->request->csrfToken;
 $js = <<< JS
-function saveArticleSequence(select) {
-    var selectedIndex = select.selectedIndex;
-    var selectedValue = select.options[selectedIndex].value;
-    var index = select.getAttribute('data-index');
-    var formData = new FormData();
-    formData.append('sequenceIndex', index);
-    formData.append('articleId', selectedValue);
-    
-    fetch('$url', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRF-Token': '$csrfToken' // Include CSRF token in the request headers
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Sequence saved successfully:', data);
-        // You can perform any UI updates or show a success message here
-    })
-    .catch(error => {
-        console.error('There was a problem saving the sequence:', error);
-        // Handle errors or show an error message
+function saveArticleSequence(select) {    
+    $.ajax({
+        type: 'POST',
+        url: '{$url}',
+        data:$("#article-sequence-form").serialize(),
+        success:function(data){
+            location.reload();
+        },
+        dataType:'html'
     });
 }
 JS;
-$this->registerJs($js, View::POS_END); // Ensure script is placed at the end of the page
+$this->registerJs($js, View::POS_END);
 ?>
