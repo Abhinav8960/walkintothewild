@@ -49,12 +49,34 @@ class FrontendRequestLogController extends Controller
      */
     public function actionIndex()
     {
+        $request_code_data = FrontendRequestLog::find()->select('request_code')->distinct()->asArray()->all();
+
+        $request_codes_list = [];
+        if (count($request_code_data) > 0) {
+            $request_codes_list["0"] = "-- Select All --";
+            foreach ($request_code_data as $val) {
+                $request_codes_list[$val['request_code']] = ucwords(str_replace("_", " ", $val['request_code']));
+            }
+        }
+
+        $request_group_data = FrontendRequestLog::find()->select('request_group')->distinct()->asArray()->all();
+
+        $request_group_type = [];
+        if (count($request_group_data) > 0) {
+            $request_group_type["0"] = "Select All";
+            foreach ($request_group_data as $grp) {
+                $request_group_type[$grp['request_group']] = ucwords($grp['request_group']);
+            }
+        }
+
         $searchModel = new FrontendRequestLogSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'request_codes_list' => $request_codes_list,
+            'request_group_type' => $request_group_type
         ]);
     }
 

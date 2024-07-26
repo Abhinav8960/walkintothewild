@@ -18,7 +18,7 @@ class FrontendRequestLogSearch extends FrontendRequestLog
     {
         return [
             [['id', 'user_id', 'request_code', 'is_server_error', 'is_client_error', 'isAjax', 'is_count'], 'integer'],
-            [['user_ip', 'slug', 'route', 'request_url', 'request_type', 'request_parameter', 'request_data', 'response_error', 'device', 'system', 'platform', 'browser', 'browser_version', 'created_at'], 'safe'],
+            [['user_ip', 'slug', 'route', 'request_url', 'request_type', 'request_parameter', 'request_data', 'response_error', 'device', 'system', 'platform', 'browser', 'browser_version', 'created_at', 'request_group'], 'safe'],
         ];
     }
 
@@ -62,13 +62,20 @@ class FrontendRequestLogSearch extends FrontendRequestLog
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'request_code' => $this->request_code,
             'is_server_error' => $this->is_server_error,
             'is_client_error' => $this->is_client_error,
             'isAjax' => $this->isAjax,
             'is_count' => $this->is_count,
             'created_at' => $this->created_at,
         ]);
+
+        if (!empty($this->request_code)) {
+            $query->andFilterWhere(['like', 'request_code', $this->request_code]);
+        }
+
+        if (!empty($this->request_group)) {
+            $query->andFilterWhere(['like', 'request_group', $this->request_group]);
+        }
 
         $query->andFilterWhere(['like', 'user_ip', $this->user_ip])
             ->andFilterWhere(['like', 'slug', $this->slug])

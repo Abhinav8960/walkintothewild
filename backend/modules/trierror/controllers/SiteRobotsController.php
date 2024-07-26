@@ -76,7 +76,7 @@ class SiteRobotsController extends Controller
                     $postData = Yii::$app->request->post('SiteRobots');
                     //remove old entry
                     $isExist = SiteRobots::find()->where(['status' => 1])->andWhere(['url' => trim($postData['url'])])->one();
-                    if(!$isExist){
+                    if (!$isExist) {
                         $model->url = trim($postData['url']);
                         if ($model->save(false)) {
                             //record is update
@@ -95,20 +95,21 @@ class SiteRobotsController extends Controller
         ]);
     }
 
-    protected function create_robots_txt(){
+    protected function create_robots_txt()
+    {
         //recreae robots.txt
-        $content = "Sitemap: ".Yii::$app->params['frontend_url']."sitemap_index.xml";
+        $content = "Sitemap: " . Yii::$app->params['frontend_url'] . "storage/sitemap/sitemap.xml";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
-        if(count($all_url) > 0){
+        if (count($all_url) > 0) {
             $content .= "\nUser-agent: *";
-            foreach($all_url as $row){
-                $content .= "\n"."Disallow: : ".$row->url;
+            foreach ($all_url as $row) {
+                $content .= "\n" . "Disallow: : " . $row->url;
             }
         }
 
         $backend_actual_url = \Yii::getAlias('@webroot');
-        $backend_actual_url = str_replace("backend", "frontend", $backend_actual_url)."/";
-        $filepath = $backend_actual_url."/robots.txt";
+        $backend_actual_url = str_replace("backend", "frontend", $backend_actual_url) . "/";
+        $filepath = $backend_actual_url . "robots.txt";
         $fp = fopen($filepath, "w");
         fwrite($fp, $content);
         fclose($fp);

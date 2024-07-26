@@ -44,9 +44,9 @@ class SitePagesController extends Controller
         $content_types_data = SitePages::find()->select('content_type')->distinct()->asArray()->all();
 
         $content_type = [];
-        if(count($content_types_data) > 0){
+        if (count($content_types_data) > 0) {
             $content_type["select_all"] = "Select All";
-            foreach($content_types_data as $val){
+            foreach ($content_types_data as $val) {
                 $content_type[$val['content_type']] = ucwords(str_replace("_", " ", $val['content_type']));
             }
         }

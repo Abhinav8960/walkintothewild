@@ -3,6 +3,7 @@
 use yii\helpers\Url;
 use yii\grid\GridView;
 use common\models\chat\Chat;
+use yii\widgets\Pjax;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -23,18 +24,27 @@ $this->title = $individual_user->name . ' | Chat';
                 <div class="card-body">
                     <div class="row">
                         <div class="col-3 chat-card-sidebar">
-                            <div class="chat-search-user">
-                                <?= $this->render('_message_search', ['searchModel' => $searchModel, 'login_user' => $login_user]) ?>
+                            <?php
+
+                            Pjax::begin([
+                                'id' => 'grid-data',
+                                'enablePushState' => FALSE,
+                                'enableReplaceState' => FALSE,
+                                'timeout' => false,
+                            ]);
+                            ?>
+                            <div class="chat-search-user mb-2">
+                                <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false]) ?>
                             </div>
-                            <?php if ($dataProvider) {
-                                foreach ($dataProvider->getModels() as $active_chat) {
+                            <?php if ($searchModel->name == '' && $active_chat_list) {
+                                foreach ($active_chat_list as $active_chat) {
                                     if ($active_chat->user_id == $login_user->id) {
                                         $user = $active_chat->recipient;
                                     } else {
                                         $user = $active_chat->user;
                                     }
                             ?>
-                                    <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link">
+                                    <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
                                         <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
                                             <div class="d-flex chat-user_message">
                                                 <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
@@ -47,6 +57,12 @@ $this->title = $individual_user->name . ' | Chat';
                                     </a>
                             <?php }
                             } ?>
+                            <?php
+                            if ($searchModel->name) {
+                                echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                            }
+                            ?>
+                            <?php Pjax::end(); ?>
                         </div>
                         <div class="col-9">
                             <div class="d-flex chat-message-header justify-content-between">
