@@ -52,7 +52,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [
-                        'label' => 'Statusee',
+                        'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
