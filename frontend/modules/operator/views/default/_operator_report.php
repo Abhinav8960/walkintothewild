@@ -14,7 +14,11 @@ use yii\helpers\Html;
                 <?= $form->field($model, 'reason_id')->dropDownList(
                     [
                         '1' => 'Scam,Fraud, or False Information',
-                        '2' => 'Spam',
+                        'spam' => [
+                            '21' => 'Me',
+                            '22' => 'A business',
+                            '23' => 'Else',
+                        ],
                         '3' => 'Fake Page',
                         '4' => 'Other Form'
                     ],
