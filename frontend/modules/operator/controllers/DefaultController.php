@@ -2,6 +2,7 @@
 
 namespace frontend\modules\operator\controllers;
 
+use common\interfaces\StatusInterface;
 use Yii;
 use yii\helpers\Url;
 use common\models\GeneralModel;
@@ -12,6 +13,7 @@ use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorSearch;
 use common\models\operator\SafariOperator;
 use common\models\cms\article\Article;
+use common\models\operator\form\SafariOperatorReportProfileForm;
 use common\models\sharesafari\ShareSafari;
 use frontend\models\SafariOperatorReviewForm;
 use common\models\operator\SafariOperatorPark;
@@ -532,5 +534,41 @@ class DefaultController extends FrontendBaseController
                 'reviews' => $reviews,
             ]
         );
+    }
+
+
+    public function actionReportOperator($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $model = new SafariOperatorReportProfileForm();
+        $model->user_id = Yii::$app->user->identity->id;
+        $model->safari_operator_id = $operator->id;
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->report_model->save(false)) {
+                        Yii::$app->session->setFlash('success', 'Report Successfully!');
+                        return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+                    }
+                }
+            }
+        } else {
+            $model->report_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('_operator_report', [
+                'model' => $model
+            ]);
+        } else {
+            return $this->render('_operator_report', [
+                'model' => $model
+            ]);
+        }
     }
 }
