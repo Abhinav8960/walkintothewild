@@ -3,22 +3,23 @@
 namespace frontend\modules\park\controllers;
 
 use Yii;
-use yii\web\NotFoundHttpException;
+use yii\helpers\Url;
 use common\models\GeneralModel;
 use common\models\park\SafariPark;
+use yii\web\NotFoundHttpException;
+use frontend\models\SafariParkSearch;
 use common\interfaces\StatusInterface;
 use common\models\cms\article\Article;
 use common\models\park\SafariParkMonth;
-use common\models\master\animal\MasterRareAnimal;
 use common\models\park\SafariParkRating;
-use common\models\park\SafariParkRatingSearch;
-use common\models\sharesafari\ShareSafari;
-use common\models\suggestions\form\SafariSuggestionsForm;
-use common\models\suggestions\SafariSuggestions;
-use frontend\models\SafariParkSearch;
 use frontend\models\SafariOperatorSearch;
-use frontend\controllers\FrontendBaseController;
 use frontend\models\SafariParkReviewForm;
+use common\models\sharesafari\ShareSafari;
+use common\models\park\SafariParkRatingSearch;
+use common\models\suggestions\SafariSuggestions;
+use frontend\controllers\FrontendBaseController;
+use common\models\master\animal\MasterRareAnimal;
+use common\models\suggestions\form\SafariSuggestionsForm;
 
 /**
  * DefaultController.
@@ -150,7 +151,7 @@ class DefaultController extends FrontendBaseController
         );
     }
 
-    public function actionReviewlist($slug)
+    public function actionReviewlist($slug, $sort_by = null)
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
@@ -162,6 +163,7 @@ class DefaultController extends FrontendBaseController
         $searchModel = new SafariParkRatingSearch();
         $searchModel->safari_park_id = $model->id;
         $searchModel->status = 1;
+        $searchModel->custom_sort_by = $sort_by;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $reviews = $dataProvider->getModels();
 
@@ -358,9 +360,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->rating_model->save(false)) {
                         $model->updateRatingintoTable($safari_park);
                         Yii::$app->session->setFlash('success', 'Thanks for Review!!');
-                        return $this->redirect([
-                            '/park/' . $safari_park->slug . ''
-                        ]);
+                        return $this->redirect(Url::toRoute(['/park/default/reviewlist', 'slug' => $safari_park->slug, '#' => 'safari_tour_operator_container']));
                     }
                 }
             }

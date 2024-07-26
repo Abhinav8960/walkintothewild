@@ -43,7 +43,7 @@ if ($model->meta_title != '') {
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1><?= $model->title ?></h1>
+                        <h1><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" style="color:inherit;"><?= $model->title ?></a></h1>
                     </div>
                 </div>
             </div>
@@ -269,7 +269,9 @@ function writesuggestionfunction() {
 }
 writesuggestionfunction();
 
-
+$('html, body').animate({
+        'scrollTop' : $("#safari_tour_operator_container").position().top
+});
              
 JS;
 $this->registerJs($script);
