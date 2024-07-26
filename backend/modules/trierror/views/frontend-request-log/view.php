@@ -17,9 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
 
+<style>
+    .table a {
+        color: #0000EE !important;
+    }
+</style>
 <div class="card">
     <div class="card-body">
-        <?php //echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?php //echo $this->render('_search', ['model' => $searchModel]); 
+        ?>
         <div id="w1-button" class="mb-3"></div>
         <div class="table-responsive"><?php /*
             <p>
@@ -42,16 +48,31 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             $user_row = '-';
-                            if(!empty($model->user_id)){
-                                $user_row = $model->user->name." (".$model->user->mobile_no.")";
+                            if (!empty($model->user_id)) {
+                                $user_row = $model->user->name . " (" . $model->user->mobile_no . ")";
                             }
                             return $user_row;
+                        }
+                    ],
+                    [
+                        'label' => 'Type',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return ucwords($model->request_group);
                         }
                     ],
                     'user_ip',
                     'slug',
                     'route',
-                    'request_url',
+                    [
+                        'label' => 'Full URL',
+                        'format' => 'raw',
+                        'contentOptions' => ['style' => 'color:#000;'],
+                        'value' => function ($model) {
+                            $temp = "<a target='_blank' href='" . $model->request_full_url . "'>" . mb_strimwidth($model->request_full_url, 0, 100, ' ...') . "</a>";
+                            return $temp;
+                        }
+                    ],
                     'request_type',
                     'request_parameter',
                     'request_data',

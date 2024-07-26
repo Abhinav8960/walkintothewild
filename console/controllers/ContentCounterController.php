@@ -22,24 +22,34 @@ class ContentCounterController extends Controller
 {
   public function actionIndex()
   {
+    //make request log grouping
+    $this->make_request_grouping();
+
+    //move untraced request
+    $this->dump_untraced_request();
+
+    //make request 
+
     //article counter
     $article_slugs = FrontendRequestLog::find()
       ->select(['slug', 'route', 'COUNT(*) AS pending_view'])
       ->where(['not', ['slug' => null]])
       ->andWhere(['is_count' => false])
-      ->andWhere(['route' => 'article/default/view' ])
+      ->andWhere(['route' => 'article/default/view'])
       ->groupBy(['slug'])
       ->createCommand()
       ->queryAll();
 
-    if(count($article_slugs)){
-        foreach($article_slugs as $article){ 
-            $atricle_model = Article::find()->where(['slug' => $article['slug']])->one();
-            $atricle_model->total_view += $article['pending_view'];
-            if($atricle_model->save()){
-                FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $article['slug']]);
-            }
+    if (count($article_slugs)) {
+      foreach ($article_slugs as $article) {
+        $atricle_model = Article::find()->where(['slug' => $article['slug']])->one();
+        if (!empty($atricle_model)) {
+          $atricle_model->total_view += $article['pending_view'];
+          if ($atricle_model->save()) {
+            FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $article['slug']]);
+          }
         }
+      }
     }
 
     //topic counter
@@ -47,17 +57,19 @@ class ContentCounterController extends Controller
       ->select(['slug', 'route', 'COUNT(*) AS pending_view'])
       ->where(['not', ['slug' => null]])
       ->andWhere(['is_count' => false])
-      ->andWhere(['route' => 'article/default/topic' ])
+      ->andWhere(['route' => 'article/default/topic'])
       ->groupBy(['slug'])
       ->createCommand()
       ->queryAll();
 
-    if(count($topic_slugs)){
-      foreach($topic_slugs as $topic){ 
+    if (count($topic_slugs)) {
+      foreach ($topic_slugs as $topic) {
         $topic_model = MasterArticleTopic::find()->where(['slug' => $topic['slug']])->one();
-        $topic_model->total_view += $topic['pending_view'];
-        if($topic_model->save()){
+        if (!empty($topic_model)) {
+          $topic_model->total_view += $topic['pending_view'];
+          if ($topic_model->save()) {
             FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $topic['slug']]);
+          }
         }
       }
     }
@@ -67,17 +79,19 @@ class ContentCounterController extends Controller
       ->select(['slug', 'route', 'COUNT(*) AS pending_view'])
       ->where(['not', ['slug' => null]])
       ->andWhere(['is_count' => false])
-      ->andWhere(['route' => 'article/default/tag' ])
+      ->andWhere(['route' => 'article/default/tag'])
       ->groupBy(['slug'])
       ->createCommand()
       ->queryAll();
 
-    if(count($tag_slugs)){
-      foreach($tag_slugs as $tag){ 
+    if (count($tag_slugs)) {
+      foreach ($tag_slugs as $tag) {
         $tag_model = MasterArticleTag::find()->where(['slug' => $tag['slug']])->one();
-        $tag_model->total_view += $tag['pending_view'];
-        if($tag_model->save()){
+        if (!empty($tag_model)) {
+          $tag_model->total_view += $tag['pending_view'];
+          if ($tag_model->save()) {
             FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $tag['slug']]);
+          }
         }
       }
     }
@@ -92,12 +106,14 @@ class ContentCounterController extends Controller
       ->createCommand()
       ->queryAll();
 
-    if(count($park_slugs)){
-      foreach($park_slugs as $park){
+    if (count($park_slugs)) {
+      foreach ($park_slugs as $park) {
         $park_model = Park::find()->where(['slug' => $park['slug']])->one();
-        $park_model->total_view += $park['pending_view'];
-        if($park_model->save()){
-          FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $park['slug']]);
+        if (!empty($park_model)) {
+          $park_model->total_view += $park['pending_view'];
+          if ($park_model->save()) {
+            FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $park['slug']]);
+          }
         }
       }
     }
@@ -112,12 +128,14 @@ class ContentCounterController extends Controller
       ->createCommand()
       ->queryAll();
 
-    if(count($safari_operator_slug)){
-      foreach($safari_operator_slug as $operator){
+    if (count($safari_operator_slug)) {
+      foreach ($safari_operator_slug as $operator) {
         $operator_model = SafariOperator::find()->where(['slug' => $operator['slug']])->one();
-        $operator_model->total_view += $operator['pending_view'];
-        if($operator_model->save(false)){
-          FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $operator['slug']]);
+        if (!empty($operator_model)) {
+          $operator_model->total_view += $operator['pending_view'];
+          if ($operator_model->save(false)) {
+            FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $operator['slug']]);
+          }
         }
       }
     }
@@ -132,12 +150,14 @@ class ContentCounterController extends Controller
       ->createCommand()
       ->queryAll();
 
-    if(count($author_slug)){
-      foreach($author_slug as $author){ 
+    if (count($author_slug)) {
+      foreach ($author_slug as $author) {
         $author_model = ArticleAuthor::find()->where(['slug' => $author['slug']])->one();
-        $author_model->total_view += $author['pending_view'];
-        if($author_model->save()){
+        if (!empty($author_model)) {
+          $author_model->total_view += $author['pending_view'];
+          if ($author_model->save()) {
             FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $author['slug']]);
+          }
         }
       }
     }
@@ -152,24 +172,27 @@ class ContentCounterController extends Controller
       ->createCommand()
       ->queryAll();
 
-    if(count($shared_safari)){
-        foreach($shared_safari as $safari){ 
-            $shared_safari_model = ShareSafari::find()->where(['slug' => $safari['slug']])->one();
-            $shared_safari_model->total_view += $safari['pending_view'];
-            if($shared_safari_model->save()){
-                FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $safari['slug']]);
-            }
+    if (count($shared_safari)) {
+      foreach ($shared_safari as $safari) {
+        $shared_safari_model = ShareSafari::find()->where(['slug' => $safari['slug']])->one();
+        if (!empty($shared_safari_model)) {
+          $shared_safari_model->total_view += $safari['pending_view'];
+          if ($shared_safari_model->save()) {
+            FrontendRequestLog::updateAll(['is_count' => true], ['slug' => $safari['slug']]);
+          }
         }
-    }    
+      }
+    }
   }
 
-  public function actionUntracedRequest(){    
+  protected function dump_untraced_request()
+  {
     $connection = \Yii::$app->getDb();
     $command = $connection->createCommand("SELECT DISTINCT(request_full_url) FROM site_frontend_request WHERE request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_pages) AND request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_untraced_request)");
     $un_traced_record = $command->queryAll();
-    if(count($un_traced_record) > 0){
+    if (count($un_traced_record) > 0) {
       $temp_array = [];
-      foreach($un_traced_record as $record){
+      foreach ($un_traced_record as $record) {
         $temp_array[] = [
           'url' => $record['request_full_url']
         ];
@@ -177,5 +200,16 @@ class ContentCounterController extends Controller
 
       \Yii::$app->db->createCommand()->batchInsert('site_untraced_request', ['url'], $temp_array)->execute();
     }
+  }
+
+  protected function make_request_grouping()
+  {
+    $affectedRows = \Yii::$app->db->createCommand("UPDATE site_frontend_request SET request_group = SUBSTRING_INDEX(route, '/', 1) WHERE is_count = :val1")->bindValue(':val1', 0)->execute();
+
+    //make auth enty
+    $affectedRows = \Yii::$app->db->createCommand("UPDATE site_frontend_request SET request_group = 'login' WHERE is_count = :val1 AND route = :val2")->bindValue(':val1', 0)->bindValue(':val2', 'site/auth')->execute();
+
+    //make auth enty
+    $affectedRows = \Yii::$app->db->createCommand("UPDATE site_frontend_request SET request_group = 'other' WHERE is_count = :val1 AND route = :val2")->bindValue(':val1', 0)->bindValue(':val2', '')->execute();
   }
 }

@@ -9,129 +9,129 @@ $active_url = "/" . Yii::$app->requestedRoute;
 	<aside class="app-sidebar ">
 		<div class="main-sidebar-header active" style="background: #09422D !important;">
 			<a class="header-logo active" href="/">
-				<img src="/img/logo.png" class="main-logo  desktop-logo" alt="logo">
-				<img src="/img/2.jpg" class="main-logo  desktop-dark" alt="logo">
-				<img src="/img/2.jpg" class="main-logo  mobile-logo" alt="logo">
-				<img src="/img/2.jpg" class="main-logo  mobile-dark" alt="logo">
+				<img src="/theme/img/logo.png" class="main-logo  desktop-logo" alt="logo">
+				<img src="/theme/img/2.jpg" class="main-logo  desktop-dark" alt="logo">
+				<img src="/theme/img/2.jpg" class="main-logo  mobile-logo" alt="logo">
+				<img src="/theme/img/2.jpg" class="main-logo  mobile-dark" alt="logo">
 			</a>
 		</div>
 		<div class="main-sidemenu">
-			<div class="slide-left disabled" id="slide-left"><img src="/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
+			<div class="slide-left disabled" id="slide-left"><img src="/theme/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon"></div>
 			<ul class="side-menu">
 
 				<li class="slide">
-					<a class="side-menu__item" href="/"><img src="/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
+					<a class="side-menu__item" href="/"><img src="/theme/img/material-symbols-light_home-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Dashboard</span></a>
 				</li>
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/master",
-											"/master/rare-animal/index",
-											"/master/rare-animal/create",
-											"/master/rare-animal/update",
-											"/master/rare-animal/view",
-											"/master/animal/index",
-											"/master/animal/create",
-											"/master/animal/update",
-											"/master/bird/index",
-											"/master/vehicle/index",
-											"/master/state/index",
-											"/master/country/index",
-											"/master/city/index",
-											"/master/location/index",
-											"/master/railway-station/index",
-											"/master/airport/index",
-											"/master/bonus-experience/index",
-											"/master/email/index",
-											"/master/mail-template/index",
-											"/master/operator-category/index",
-											"/master/suggestion-category/index",
-											"master/bonus-experience",
-											"/master/packagefeature/index",
-											"/master/packagefeature/create",
-											"/master/packagefeature/update",
-											"/master/packageinclude/index",
-											"/master/packageinclude/create",
-											"/master/packageinclude/update",
-											"/master/share-safari-reason/index",
-											"/master/share-safari-reason/create",
-											"/master/share-safari-reason/update",
-										)) ? "is-expanded" : "" ?>">
+															"/master",
+															"/master/rare-animal/index",
+															"/master/rare-animal/create",
+															"/master/rare-animal/update",
+															"/master/rare-animal/view",
+															"/master/animal/index",
+															"/master/animal/create",
+															"/master/animal/update",
+															"/master/bird/index",
+															"/master/vehicle/index",
+															"/master/state/index",
+															"/master/country/index",
+															"/master/city/index",
+															"/master/location/index",
+															"/master/railway-station/index",
+															"/master/airport/index",
+															"/master/bonus-experience/index",
+															"/master/email/index",
+															"/master/mail-template/index",
+															"/master/operator-category/index",
+															"/master/suggestion-category/index",
+															"master/bonus-experience",
+															"/master/packagefeature/index",
+															"/master/packagefeature/create",
+															"/master/packagefeature/update",
+															"/master/packageinclude/index",
+															"/master/packageinclude/create",
+															"/master/packageinclude/update",
+															"/master/share-safari-reason/index",
+															"/master/share-safari-reason/create",
+															"/master/share-safari-reason/update",
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/master",
-														"/master/rare-animal/index",
-														"/master/rare-animal/create",
-														"/master/rare-animal/update",
-														"/master/rare-animal/view",
-														"/master/animal/index",
-														"/master/animal/create",
-														"/master/animal/update",
-														"/master/bird/index",
-														"/master/vehicle/index",
-														"/master/country/index",
-														"/master/state/index",
-														"/master/city/index",
-														"/master/location/index",
-														"/master/railway-station/index",
-														"/master/airport/index",
-														"/master/bonus-experience/index",
-														"/master/email/index",
-														"/master/mail-template/index",
-														"/master/operator-category/index",
-														"/master/suggestion-category/index",
-														"/master/packagefeature/index",
-														"/master/packagefeature/create",
-														"/master/packagefeature/update",
-														"/master/packageinclude/index",
-														"/master/packageinclude/create",
-														"/master/packageinclude/update",
-														"/master/share-safari-reason/index",
-														"/master/share-safari-reason/create",
-														"/master/share-safari-reason/update",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/master",
+																				"/master/rare-animal/index",
+																				"/master/rare-animal/create",
+																				"/master/rare-animal/update",
+																				"/master/rare-animal/view",
+																				"/master/animal/index",
+																				"/master/animal/create",
+																				"/master/animal/update",
+																				"/master/bird/index",
+																				"/master/vehicle/index",
+																				"/master/country/index",
+																				"/master/state/index",
+																				"/master/city/index",
+																				"/master/location/index",
+																				"/master/railway-station/index",
+																				"/master/airport/index",
+																				"/master/bonus-experience/index",
+																				"/master/email/index",
+																				"/master/mail-template/index",
+																				"/master/operator-category/index",
+																				"/master/suggestion-category/index",
+																				"/master/packagefeature/index",
+																				"/master/packagefeature/create",
+																				"/master/packagefeature/update",
+																				"/master/packageinclude/index",
+																				"/master/packageinclude/create",
+																				"/master/packageinclude/update",
+																				"/master/share-safari-reason/index",
+																				"/master/share-safari-reason/create",
+																				"/master/share-safari-reason/update",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
 
 							<li class="sub-slide <?= in_array($active_url, array(
-														"/cms",
-														"/master/animal/index",
-														"/master/animal/create",
-														"/master/animal/update",
-														"/master/rare-animal/index",
-														"/master/rare-animal/create",
-														"/master/rare-animal/update",
-													)) ? "is-expanded" : "" ?>">
-								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Animal</span><i class="sub-angle fe fe-chevron-right"></i></a>
-								<ul class="sub-slide-menu <?= in_array($active_url, array(
-																"/cms",
-																"/master/animal/index",
-																"/master/animal/create",
-																"/master/animal/update",
-																"/master/rare-animal/index",
-																"/master/rare-animal/create",
-																"/master/rare-animal/update",
-															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
-																							"/cms",
-																							"/master/animal/index",
-																							"/master/animal/create",
-																							"/master/animal/update",
-																							"/master/rare-animal/index",
-																							"/master/rare-animal/create",
-																							"/master/rare-animal/update",
-																						)) ? "display: block;" : "display: none;" ?>">
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																			"/master/rare-animal/index",
-																			"/master/rare-animal/create",
-																			"/master/rare-animal/update",
-																			"/master/rare-animal/view",
-																		)) ? "active" : "" ?>" href="/master/rare-animal/index">Rare and Exotic</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/cms",
 																			"/master/animal/index",
 																			"/master/animal/create",
 																			"/master/animal/update",
-																		)) ? "active" : "" ?>" href="/master/animal/index">Usual</a></li>
+																			"/master/rare-animal/index",
+																			"/master/rare-animal/create",
+																			"/master/rare-animal/update",
+																		)) ? "is-expanded" : "" ?>">
+								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Animal</span><i class="sub-angle fe fe-chevron-right"></i></a>
+								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																						"/cms",
+																						"/master/animal/index",
+																						"/master/animal/create",
+																						"/master/animal/update",
+																						"/master/rare-animal/index",
+																						"/master/rare-animal/create",
+																						"/master/rare-animal/update",
+																					)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																																				"/cms",
+																																				"/master/animal/index",
+																																				"/master/animal/create",
+																																				"/master/animal/update",
+																																				"/master/rare-animal/index",
+																																				"/master/rare-animal/create",
+																																				"/master/rare-animal/update",
+																																			)) ? "display: block;" : "display: none;" ?>">
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																											"/master/rare-animal/index",
+																											"/master/rare-animal/create",
+																											"/master/rare-animal/update",
+																											"/master/rare-animal/view",
+																										)) ? "active" : "" ?>" href="/master/rare-animal/index">Rare and Exotic</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																											"/master/animal/index",
+																											"/master/animal/create",
+																											"/master/animal/update",
+																										)) ? "active" : "" ?>" href="/master/animal/index">Usual</a></li>
 									<!-- <li><a class="sub-side-menu__item <?php // in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" 
-																			?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
+																													?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
 								</ul>
 							</li>
 
@@ -147,50 +147,50 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/master/operator-category/index")) ? "active" : "" ?>" href="/master/operator-category/index">Operator Category</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/suggestion-category/index")) ? "active" : "" ?>" href="/master/suggestion-category/index">Suggestion Category</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/master/packagefeature/index",
-															"/master/packagefeature/create",
-															"/master/packagefeature/update",
-														)) ? "active" : "" ?>" href="/master/packagefeature/index">Package Feature</a></li>
+																					"/master/packagefeature/index",
+																					"/master/packagefeature/create",
+																					"/master/packagefeature/update",
+																				)) ? "active" : "" ?>" href="/master/packagefeature/index">Package Feature</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/master/packageinclude/index",
-															"/master/packageinclude/create",
-															"/master/packageinclude/update",
-														)) ? "active" : "" ?>" href="/master/packageinclude/index">Package Include</a></li>
+																					"/master/packageinclude/index",
+																					"/master/packageinclude/create",
+																					"/master/packageinclude/update",
+																				)) ? "active" : "" ?>" href="/master/packageinclude/index">Package Include</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/master/share-safari-reason/index",
-															"/master/share-safari-reason/create",
-															"/master/share-safari-reason/update",
-														)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
+																					"/master/share-safari-reason/index",
+																					"/master/share-safari-reason/create",
+																					"/master/share-safari-reason/update",
+																				)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
 						</ul>
 					</li>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/meta",
-											"/meta/term-condition-type",
-											"/meta/wild-life-type",
-											"/meta/zone-type",
-											"/meta/stay-category",
-											"/meta/tour-operator",
-											"/meta/park-trip-slot",
-											"/meta/operator-credibility",
-											"/meta/package",
-											"/meta/other-wildlife-activities",
-											"/meta/animal-type",
-											"/meta/bird-type",
-										)) ? "is-expanded" : "" ?>">
+															"/meta",
+															"/meta/term-condition-type",
+															"/meta/wild-life-type",
+															"/meta/zone-type",
+															"/meta/stay-category",
+															"/meta/tour-operator",
+															"/meta/park-trip-slot",
+															"/meta/operator-credibility",
+															"/meta/package",
+															"/meta/other-wildlife-activities",
+															"/meta/animal-type",
+															"/meta/bird-type",
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/meta",
-														"/meta/term-condition-type",
-														"/meta/wild-life-type",
-														"/meta/zone-type",
-														"/meta/stay-category",
-														"/meta/park-trip-slot",
-														"/meta/operator-credibility",
-														"/meta/package",
-														"/meta/other-wildlife-activities",
-														"/meta/animal-type",
-														"/meta/bird-type",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/meta",
+																				"/meta/term-condition-type",
+																				"/meta/wild-life-type",
+																				"/meta/zone-type",
+																				"/meta/stay-category",
+																				"/meta/park-trip-slot",
+																				"/meta/operator-credibility",
+																				"/meta/package",
+																				"/meta/other-wildlife-activities",
+																				"/meta/animal-type",
+																				"/meta/bird-type",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Meta</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/meta/wild-life-type")) ? "active" : "" ?>" href="/meta/wild-life-type">Wild Life Type</a></li>
@@ -213,119 +213,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/park/safari/default/index",
-											"/park/birding/default/index",
-											"/park/safari/default/create",
-											"/park/safari/profile",
-											"/park/safari/profile/gallery",
-											"/park/safari/profile/creategallery",
-											"/park/safari/profile/updategallery",
-											"/park/safari/profile/animal",
-											"/park/safari/profile/createanimal",
-											"/park/safari/profile/updateanimal",
-											"/park/safari/profile/zone",
-											"/park/safari/profile/createzone",
-											"/park/safari/profile/updatezone",
-											"/park/safari/profile/vehicle",
-											"/park/safari/profile/createvehicle",
-											"/park/safari/profile/updatevehicle",
-											"/park/safari/profile/flora-fauna",
-											"/park/safari/profile/createflorafauna",
-											"/park/safari/profile/updateflorafauna",
-											"/park/safari/profile/how-to-reach",
-											"/park/safari/profile/createhowtoreach",
-											"/park/safari/profile/updatehowtoreach",
-											"/park/safari/profile/map",
-											"/park/safari/profile/suggestions",
-
-
-											"/park/birding/default/create",
-
-											"/park/birding/profile",
-											"/park/birding/profile/gallery",
-											"/park/birding/profile/creategallery",
-											"/park/birding/profile/updategallery",
-											"/park/birding/profile/animal",
-											"/park/birding/profile/createanimal",
-											"/park/birding/profile/updateanimal",
-											"/park/birding/profile/zone",
-											"/park/birding/profile/createzone",
-											"/park/birding/profile/updatezone",
-											"/park/birding/profile/vehicle",
-											"/park/birding/profile/createvehicle",
-											"/park/birding/profile/updatevehicle",
-											"/park/birding/profile/flora-fauna",
-											"/park/birding/profile/createflorafauna",
-											"/park/birding/profile/updateflorafauna",
-											"/park/birding/profile/how-to-reach",
-											"/park/birding/profile/createhowtoreach",
-											"/park/birding/profile/updatehowtoreach",
-											"/park/birding/profile/map",
-
-											"/park/operator-quote/index",
-											"/park/operator-quote/view",
-											"/park/safari-suggestion/index"
-										)) ? "is-expanded" : "" ?>">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/park/safari/default/index",
-														"/park/safari/default/create",
-														"/park/safari/profile",
-														"/park/safari/profile/gallery",
-														"/park/safari/profile/creategallery",
-														"/park/safari/profile/updategallery",
-														"/park/safari/profile/animal",
-														"/park/safari/profile/createanimal",
-														"/park/safari/profile/updateanimal",
-														"/park/safari/profile/zone",
-														"/park/safari/profile/createzone",
-														"/park/safari/profile/updatezone",
-														"/park/safari/profile/vehicle",
-														"/park/safari/profile/createvehicle",
-														"/park/safari/profile/updatevehicle",
-														"/park/safari/profile/flora-fauna",
-														"/park/safari/profile/createflorafauna",
-														"/park/safari/profile/updateflorafauna",
-														"/park/safari/profile/how-to-reach",
-														"/park/safari/profile/createhowtoreach",
-														"/park/safari/profile/updatehowtoreach",
-														"/park/safari/profile/map",
-														"/park/safari/profile/suggestions",
-
-
-
-
-														"/park/birding/default/create",
-
-														"/park/birding/default/index",
-														"/park/birding/profile",
-														"/park/birding/profile/gallery",
-														"/park/birding/profile/creategallery",
-														"/park/birding/profile/updategallery",
-														"/park/birding/profile/animal",
-														"/park/birding/profile/createanimal",
-														"/park/birding/profile/updateanimal",
-														"/park/birding/profile/zone",
-														"/park/birding/profile/createzone",
-														"/park/birding/profile/updatezone",
-														"/park/birding/profile/vehicle",
-														"/park/birding/profile/createvehicle",
-														"/park/birding/profile/updatevehicle",
-														"/park/birding/profile/flora-fauna",
-														"/park/birding/profile/createflorafauna",
-														"/park/birding/profile/updateflorafauna",
-														"/park/birding/profile/how-to-reach",
-														"/park/birding/profile/createhowtoreach",
-														"/park/birding/profile/updatehowtoreach",
-														"/park/birding/profile/map",
-
-														"/park/operator-quote/index",
-														"/park/operator-quote/view",
-														"/park/safari-suggestion/index"
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
 															"/park/safari/default/index",
+															"/park/birding/default/index",
 															"/park/safari/default/create",
 															"/park/safari/profile",
 															"/park/safari/profile/gallery",
@@ -348,10 +237,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/safari/profile/updatehowtoreach",
 															"/park/safari/profile/map",
 															"/park/safari/profile/suggestions",
-														)) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/park/birding/default/index",
+
+
 															"/park/birding/default/create",
+
 															"/park/birding/profile",
 															"/park/birding/profile/gallery",
 															"/park/birding/profile/creategallery",
@@ -371,15 +260,126 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/birding/profile/how-to-reach",
 															"/park/birding/profile/createhowtoreach",
 															"/park/birding/profile/updatehowtoreach",
-															"/park/birding/profile/map"
-														)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+															"/park/birding/profile/map",
+
 															"/park/operator-quote/index",
 															"/park/operator-quote/view",
-														)) ? "active" : "" ?>" href="/park/operator-quote/index">Operator Quotes</a></li>
+															"/park/safari-suggestion/index"
+														)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+																				"/park/safari/default/index",
+																				"/park/safari/default/create",
+																				"/park/safari/profile",
+																				"/park/safari/profile/gallery",
+																				"/park/safari/profile/creategallery",
+																				"/park/safari/profile/updategallery",
+																				"/park/safari/profile/animal",
+																				"/park/safari/profile/createanimal",
+																				"/park/safari/profile/updateanimal",
+																				"/park/safari/profile/zone",
+																				"/park/safari/profile/createzone",
+																				"/park/safari/profile/updatezone",
+																				"/park/safari/profile/vehicle",
+																				"/park/safari/profile/createvehicle",
+																				"/park/safari/profile/updatevehicle",
+																				"/park/safari/profile/flora-fauna",
+																				"/park/safari/profile/createflorafauna",
+																				"/park/safari/profile/updateflorafauna",
+																				"/park/safari/profile/how-to-reach",
+																				"/park/safari/profile/createhowtoreach",
+																				"/park/safari/profile/updatehowtoreach",
+																				"/park/safari/profile/map",
+																				"/park/safari/profile/suggestions",
+
+
+
+
+																				"/park/birding/default/create",
+
+																				"/park/birding/default/index",
+																				"/park/birding/profile",
+																				"/park/birding/profile/gallery",
+																				"/park/birding/profile/creategallery",
+																				"/park/birding/profile/updategallery",
+																				"/park/birding/profile/animal",
+																				"/park/birding/profile/createanimal",
+																				"/park/birding/profile/updateanimal",
+																				"/park/birding/profile/zone",
+																				"/park/birding/profile/createzone",
+																				"/park/birding/profile/updatezone",
+																				"/park/birding/profile/vehicle",
+																				"/park/birding/profile/createvehicle",
+																				"/park/birding/profile/updatevehicle",
+																				"/park/birding/profile/flora-fauna",
+																				"/park/birding/profile/createflorafauna",
+																				"/park/birding/profile/updateflorafauna",
+																				"/park/birding/profile/how-to-reach",
+																				"/park/birding/profile/createhowtoreach",
+																				"/park/birding/profile/updatehowtoreach",
+																				"/park/birding/profile/map",
+
+																				"/park/operator-quote/index",
+																				"/park/operator-quote/view",
+																				"/park/safari-suggestion/index"
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/material-symbols-light_park-outline.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Parks</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Parks</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/park/safari-suggestion/index",
-														)) ? "active" : "" ?>" href="/park/safari-suggestion/index">Safari Suggestion</a></li>
+																					"/park/safari/default/index",
+																					"/park/safari/default/create",
+																					"/park/safari/profile",
+																					"/park/safari/profile/gallery",
+																					"/park/safari/profile/creategallery",
+																					"/park/safari/profile/updategallery",
+																					"/park/safari/profile/animal",
+																					"/park/safari/profile/createanimal",
+																					"/park/safari/profile/updateanimal",
+																					"/park/safari/profile/zone",
+																					"/park/safari/profile/createzone",
+																					"/park/safari/profile/updatezone",
+																					"/park/safari/profile/vehicle",
+																					"/park/safari/profile/createvehicle",
+																					"/park/safari/profile/updatevehicle",
+																					"/park/safari/profile/flora-fauna",
+																					"/park/safari/profile/createflorafauna",
+																					"/park/safari/profile/updateflorafauna",
+																					"/park/safari/profile/how-to-reach",
+																					"/park/safari/profile/createhowtoreach",
+																					"/park/safari/profile/updatehowtoreach",
+																					"/park/safari/profile/map",
+																					"/park/safari/profile/suggestions",
+																				)) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/park/birding/default/index",
+																					"/park/birding/default/create",
+																					"/park/birding/profile",
+																					"/park/birding/profile/gallery",
+																					"/park/birding/profile/creategallery",
+																					"/park/birding/profile/updategallery",
+																					"/park/birding/profile/animal",
+																					"/park/birding/profile/createanimal",
+																					"/park/birding/profile/updateanimal",
+																					"/park/birding/profile/zone",
+																					"/park/birding/profile/createzone",
+																					"/park/birding/profile/updatezone",
+																					"/park/birding/profile/vehicle",
+																					"/park/birding/profile/createvehicle",
+																					"/park/birding/profile/updatevehicle",
+																					"/park/birding/profile/flora-fauna",
+																					"/park/birding/profile/createflorafauna",
+																					"/park/birding/profile/updateflorafauna",
+																					"/park/birding/profile/how-to-reach",
+																					"/park/birding/profile/createhowtoreach",
+																					"/park/birding/profile/updatehowtoreach",
+																					"/park/birding/profile/map"
+																				)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/park/operator-quote/index",
+																					"/park/operator-quote/view",
+																				)) ? "active" : "" ?>" href="/park/operator-quote/index">Operator Quotes</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/park/safari-suggestion/index",
+																				)) ? "active" : "" ?>" href="/park/safari-suggestion/index">Safari Suggestion</a></li>
 
 						</ul>
 					</li>
@@ -388,101 +388,40 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_cms_manager) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/cms",
-											"/cms/article-category/index",
-											"/cms/article-category/create",
-											"/cms/article-category/update",
-											"/cms/article-author/index",
-											"/cms/article-author/create",
-											"/cms/article-author/update",
-											"/cms/article-tag/index",
-											"/cms/article-tag/create",
-											"/cms/article-tag/update",
-											"/cms/article/index",
-											"/cms/article/update",
-											"/cms/article/create",
-											"/cms/article/comment",
-											"/cms/article-by-user/index",
-											"/cms/article-by-user/update",
-											"/cms/article-by-user/create",
-											"/cms/article-by-user/comment",
-											"/cms/banner",
-											"/cms/about",
-											"/cms/disclaimer",
-											"/cms/privacypolicy",
-											"/cms/termscondition",
-											"/cms/faqcategory",
-											"/cms/faqs",
-											"/cms/feature-park/index",
-											"/cms/banner/index",
-											"/cms/banner/create",
-											"/cms/banner/update",
-											"/cms/feature-article/index",
-											"/cms/feature-rare-exotic/index",
-											"/cms/feature-tag/index",
-										)) ? "is-expanded" : "" ?>">
+															"/cms",
+															"/cms/article-category/index",
+															"/cms/article-category/create",
+															"/cms/article-category/update",
+															"/cms/article-author/index",
+															"/cms/article-author/create",
+															"/cms/article-author/update",
+															"/cms/article-tag/index",
+															"/cms/article-tag/create",
+															"/cms/article-tag/update",
+															"/cms/article/index",
+															"/cms/article/update",
+															"/cms/article/create",
+															"/cms/article/comment",
+															"/cms/article-by-user/index",
+															"/cms/article-by-user/update",
+															"/cms/article-by-user/create",
+															"/cms/article-by-user/comment",
+															"/cms/banner",
+															"/cms/about",
+															"/cms/disclaimer",
+															"/cms/privacypolicy",
+															"/cms/termscondition",
+															"/cms/faqcategory",
+															"/cms/faqs",
+															"/cms/feature-park/index",
+															"/cms/banner/index",
+															"/cms/banner/create",
+															"/cms/banner/update",
+															"/cms/feature-article/index",
+															"/cms/feature-rare-exotic/index",
+															"/cms/feature-tag/index",
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/cms",
-														"/cms/article-category/index",
-														"/cms/article-category/create",
-														"/cms/article-category/update",
-														"/cms/article-author/index",
-														"/cms/article-author/create",
-														"/cms/article-author/update",
-														"/cms/article-tag/index",
-														"/cms/article-tag/create",
-														"/cms/article-tag/update",
-														"/cms/article/index",
-														"/cms/article/update",
-														"/cms/article/create",
-														"/cms/article/comment",
-														"/cms/article-by-user/index",
-														"/cms/article-by-user/update",
-														"/cms/article-by-user/create",
-														"/cms/article-by-user/comment",
-														"/cms/faqcategory",
-														"/cms/faqs",
-														"/cms/about/index",
-														"/cms/disclaimer/index",
-														"/cms/banner/index",
-														"/cms/banner/create",
-														"/cms/banner/update",
-														"/cms/feature-park/index",
-														"/cms/feature-article/index",
-														"/cms/feature-rare-exotic/index",
-														"/cms/feature-tag/index",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu <?= in_array($active_url, array(
-													"/cms",
-													"/cms/article-category/index",
-													"/cms/article-category/create",
-													"/cms/article-category/update",
-													"/cms/article-author/index",
-													"/cms/article-author/create",
-													"/cms/article-author/update",
-													"/cms/article-tag/index",
-													"/cms/article-tag/create",
-													"/cms/article-tag/update",
-													"/cms/article/index",
-													"/cms/article/update",
-													"/cms/article/create",
-													"/cms/article/comment",
-													"/cms/article-by-user/index",
-													"/cms/article-by-user/update",
-													"/cms/article-by-user/create",
-													"/cms/article-by-user/comment",
-													"/cms/banner",
-													"/cms/about",
-													"/cms/disclaimer",
-													"/cms/privacypolicy",
-													"/cms/termscondition",
-													"/cms/faqcategory",
-													"/cms/faqs",
-													"/cms/feature-park/index",
-													"/cms/feature-article/index",
-													"/cms/feature-rare-exotic/index",
-													"/cms/feature-tag/index",
-												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/article-category/index",
 																				"/cms/article-category/create",
@@ -501,154 +440,215 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/article-by-user/update",
 																				"/cms/article-by-user/create",
 																				"/cms/article-by-user/comment",
-																				"/cms/banner",
-																				"/cms/about",
-																				"/cms/disclaimer",
-																				"/cms/privacypolicy",
-																				"/cms/termscondition",	"/cms/faqcategory",
+																				"/cms/faqcategory",
 																				"/cms/faqs",
-																				"/cms/feature-park/index",
+																				"/cms/about/index",
+																				"/cms/disclaimer/index",
 																				"/cms/banner/index",
 																				"/cms/banner/create",
 																				"/cms/banner/update",
+																				"/cms/feature-park/index",
 																				"/cms/feature-article/index",
 																				"/cms/feature-rare-exotic/index",
 																				"/cms/feature-tag/index",
-																			)) ? "" : "display: none;" ?>">
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu <?= in_array($active_url, array(
+																		"/cms",
+																		"/cms/article-category/index",
+																		"/cms/article-category/create",
+																		"/cms/article-category/update",
+																		"/cms/article-author/index",
+																		"/cms/article-author/create",
+																		"/cms/article-author/update",
+																		"/cms/article-tag/index",
+																		"/cms/article-tag/create",
+																		"/cms/article-tag/update",
+																		"/cms/article/index",
+																		"/cms/article/update",
+																		"/cms/article/create",
+																		"/cms/article/comment",
+																		"/cms/article-by-user/index",
+																		"/cms/article-by-user/update",
+																		"/cms/article-by-user/create",
+																		"/cms/article-by-user/comment",
+																		"/cms/banner",
+																		"/cms/about",
+																		"/cms/disclaimer",
+																		"/cms/privacypolicy",
+																		"/cms/termscondition",
+																		"/cms/faqcategory",
+																		"/cms/faqs",
+																		"/cms/feature-park/index",
+																		"/cms/feature-article/index",
+																		"/cms/feature-rare-exotic/index",
+																		"/cms/feature-tag/index",
+																	)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																																"/cms",
+																																"/cms/article-category/index",
+																																"/cms/article-category/create",
+																																"/cms/article-category/update",
+																																"/cms/article-author/index",
+																																"/cms/article-author/create",
+																																"/cms/article-author/update",
+																																"/cms/article-tag/index",
+																																"/cms/article-tag/create",
+																																"/cms/article-tag/update",
+																																"/cms/article/index",
+																																"/cms/article/update",
+																																"/cms/article/create",
+																																"/cms/article/comment",
+																																"/cms/article-by-user/index",
+																																"/cms/article-by-user/update",
+																																"/cms/article-by-user/create",
+																																"/cms/article-by-user/comment",
+																																"/cms/banner",
+																																"/cms/about",
+																																"/cms/disclaimer",
+																																"/cms/privacypolicy",
+																																"/cms/termscondition",	"/cms/faqcategory",
+																																"/cms/faqs",
+																																"/cms/feature-park/index",
+																																"/cms/banner/index",
+																																"/cms/banner/create",
+																																"/cms/banner/update",
+																																"/cms/feature-article/index",
+																																"/cms/feature-rare-exotic/index",
+																																"/cms/feature-tag/index",
+																															)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
-														"/cms",
-														"/cms/article-category/index",
-														"/cms/article-category/create",
-														"/cms/article-category/update",
-														"/cms/article-author/index",
-														"/cms/article-author/create",
-														"/cms/article-author/update",
-														"/cms/article-tag/index",
-														"/cms/article-tag/create",
-														"/cms/article-tag/update",
-														"/cms/article/index",
-														"/cms/article/update",
-														"/cms/article/create",
-														"/cms/article/comment",
-														"/cms/article-by-user/index",
-														"/cms/article-by-user/update",
-														"/cms/article-by-user/create",
-														"/cms/article-by-user/comment",
-													)) ? "is-expanded" : "" ?>">
-								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Article</span><i class="sub-angle fe fe-chevron-right"></i></a>
-								<ul class="sub-slide-menu <?= in_array($active_url, array(
-																"/cms",
-																"/cms/article-category/index",
-																"/cms/article-category/create",
-																"/cms/article-category/update",
-																"/cms/article-author/index",
-																"/cms/article-author/create",
-																"/cms/article-author/update",
-																"/cms/article-tag/index",
-																"/cms/article-tag/create",
-																"/cms/article-tag/update",
-																"/cms/article/index",
-																"/cms/article/update",
-																"/cms/article/create",
-																"/cms/article/comment",
-																"/cms/article-by-user/index",
-																"/cms/article-by-user/update",
-																"/cms/article-by-user/create",
-																"/cms/article-by-user/comment",
-															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
-																							"/cms",
-																							"/cms/article-category/index",
-																							"/cms/article-category/create",
-																							"/cms/article-category/update",
-																							"/cms/article-author/index",
-																							"/cms/article-author/create",
-																							"/cms/article-author/update",
-																							"/cms/article-tag/index",
-																							"/cms/article-tag/create",
-																							"/cms/article-tag/update",
-																							"/cms/article/index",
-																							"/cms/article/update",
-																							"/cms/article/create",
-																							"/cms/article/comment",
-																							"/cms/article-by-user/index",
-																							"/cms/article-by-user/update",
-																							"/cms/article-by-user/create",
-																							"/cms/article-by-user/comment",
-																						)) ? "display: block;" : "display: none;" ?>">
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/cms",
 																			"/cms/article-category/index",
 																			"/cms/article-category/create",
 																			"/cms/article-category/update",
-																		)) ? "active" : "" ?>" href="/cms/article-category/index">Article Topics</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/article-author/index",
 																			"/cms/article-author/create",
 																			"/cms/article-author/update",
-																		)) ? "active" : "" ?>" href="/cms/article-author/index">Article Author</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/article-tag/index",
 																			"/cms/article-tag/create",
 																			"/cms/article-tag/update",
-																		)) ? "active" : "" ?>" href="/cms/article-tag/index">Article Tag</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																			"/cms/article/comment",
 																			"/cms/article/index",
 																			"/cms/article/update",
-																			"/cms/article/create"
-																		)) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																			"/cms/article-by-user/comment",
+																			"/cms/article/create",
+																			"/cms/article/comment",
 																			"/cms/article-by-user/index",
 																			"/cms/article-by-user/update",
-																			"/cms/article-by-user/create"
-																		)) ? "active" : "" ?>" href="/cms/article-by-user/index">Article By User</a></li>
+																			"/cms/article-by-user/create",
+																			"/cms/article-by-user/comment",
+																		)) ? "is-expanded" : "" ?>">
+								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Article</span><i class="sub-angle fe fe-chevron-right"></i></a>
+								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																						"/cms",
+																						"/cms/article-category/index",
+																						"/cms/article-category/create",
+																						"/cms/article-category/update",
+																						"/cms/article-author/index",
+																						"/cms/article-author/create",
+																						"/cms/article-author/update",
+																						"/cms/article-tag/index",
+																						"/cms/article-tag/create",
+																						"/cms/article-tag/update",
+																						"/cms/article/index",
+																						"/cms/article/update",
+																						"/cms/article/create",
+																						"/cms/article/comment",
+																						"/cms/article-by-user/index",
+																						"/cms/article-by-user/update",
+																						"/cms/article-by-user/create",
+																						"/cms/article-by-user/comment",
+																					)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																																				"/cms",
+																																				"/cms/article-category/index",
+																																				"/cms/article-category/create",
+																																				"/cms/article-category/update",
+																																				"/cms/article-author/index",
+																																				"/cms/article-author/create",
+																																				"/cms/article-author/update",
+																																				"/cms/article-tag/index",
+																																				"/cms/article-tag/create",
+																																				"/cms/article-tag/update",
+																																				"/cms/article/index",
+																																				"/cms/article/update",
+																																				"/cms/article/create",
+																																				"/cms/article/comment",
+																																				"/cms/article-by-user/index",
+																																				"/cms/article-by-user/update",
+																																				"/cms/article-by-user/create",
+																																				"/cms/article-by-user/comment",
+																																			)) ? "display: block;" : "display: none;" ?>">
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																											"/cms/article-category/index",
+																											"/cms/article-category/create",
+																											"/cms/article-category/update",
+																										)) ? "active" : "" ?>" href="/cms/article-category/index">Article Topics</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																											"/cms/article-author/index",
+																											"/cms/article-author/create",
+																											"/cms/article-author/update",
+																										)) ? "active" : "" ?>" href="/cms/article-author/index">Article Author</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																											"/cms/article-tag/index",
+																											"/cms/article-tag/create",
+																											"/cms/article-tag/update",
+																										)) ? "active" : "" ?>" href="/cms/article-tag/index">Article Tag</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																											"/cms/article/comment",
+																											"/cms/article/index",
+																											"/cms/article/update",
+																											"/cms/article/create"
+																										)) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																											"/cms/article-by-user/comment",
+																											"/cms/article-by-user/index",
+																											"/cms/article-by-user/update",
+																											"/cms/article-by-user/create"
+																										)) ? "active" : "" ?>" href="/cms/article-by-user/index">Article By User</a></li>
 
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(
-														"/cms",
-														"/cms/feature-park/index",
-														"/cms/feature-article/index",
-														"/cms/feature-rare-exotic/index",
-														"/cms/feature-tag/index",
-													)) ? "is-expanded" : "" ?>">
+																			"/cms",
+																			"/cms/feature-park/index",
+																			"/cms/feature-article/index",
+																			"/cms/feature-rare-exotic/index",
+																			"/cms/feature-tag/index",
+																		)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Feature</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
-																"/cms",
-																"/cms/feature-park/index",
-																"/cms/feature-article/index",
-																"/cms/feature-rare-exotic/index",
-																"/cms/feature-tag/index",
-															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
-																							"/cms",
-																							"/cms/feature-park/index",
-																							"/cms/feature-article/index",
-																							"/cms/feature-rare-exotic/index",
-																							"/cms/feature-tag/index",
-																						)) ? "display: block;" : "display: none;" ?>">
+																						"/cms",
+																						"/cms/feature-park/index",
+																						"/cms/feature-article/index",
+																						"/cms/feature-rare-exotic/index",
+																						"/cms/feature-tag/index",
+																					)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																																				"/cms",
+																																				"/cms/feature-park/index",
+																																				"/cms/feature-article/index",
+																																				"/cms/feature-rare-exotic/index",
+																																				"/cms/feature-tag/index",
+																																			)) ? "display: block;" : "display: none;" ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-park/index")) ? "active" : "" ?>" href="/cms/feature-park/index">Park</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-rare-exotic/index")) ? "active" : "" ?>" href="/cms/feature-rare-exotic/index">RARE AND EXOTIC</a></li>
 									<!-- <li><a class="sub-side-menu__item <?php // in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" 
-																			?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
+																													?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(
-														"/cms",
-														"/cms/faqcategory",
-														"/cms/faqs",
-													)) ? "is-expanded" : "" ?>">
+																			"/cms",
+																			"/cms/faqcategory",
+																			"/cms/faqs",
+																		)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">FAQs</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
-																"/cms",
-																"/cms/faqcategory",
-																"/cms/faqs",
-															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
-																							"/cms",
-																							"/cms/faqcategory",
-																							"/cms/faqs",
-																						)) ? "display: block;" :  "display: none;"  ?>">
+																						"/cms",
+																						"/cms/faqcategory",
+																						"/cms/faqs",
+																					)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																																				"/cms",
+																																				"/cms/faqcategory",
+																																				"/cms/faqs",
+																																			)) ? "display: block;" :  "display: none;"  ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/article-category/index")) ? "active" : "" ?>" href="/cms/faqcategory">FAQ Category</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/faqs")) ? "active" : "" ?>" href="/cms/faqs">FAQs</a></li>
 								</ul>
@@ -659,100 +659,100 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li>
 							<li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																	"/cms/flag-reason",
-																)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
+																									"/cms/flag-reason",
+																								)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/registration/safari-operator-tour",
-											"/registration/safari-operator-tour/index",
-											"/registration/safari-operator-tour/view",
-											"/registration/safari-operator-tour/create",
-											"/registration/safari-operator-tour/update",
-											"/registration/birding-operator-tour",
-											"/registration/birding-operator-tour/index",
-											"/registration/birding-operator-tour/view",
-											"/registration/birding-operator-tour/create",
-											"/registration/birding-operator-tour/update",
-										)) ? "is-expanded" : "" ?>">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/registration/safari-operator-tour",
-														"/registration/safari-operator-tour/index",
-														"/registration/safari-operator-tour/view",
-														"/registration/safari-operator-tour/create",
-														"/registration/safari-operator-tour/update",
-														"/registration/birding-operator-tour",
-														"/registration/birding-operator-tour/index",
-														"/registration/birding-operator-tour/view",
-														"/registration/birding-operator-tour/create",
-														"/registration/birding-operator-tour/update",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/material-symbols-light_app-registration.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Registrations</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Registrations</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
 															"/registration/safari-operator-tour",
 															"/registration/safari-operator-tour/index",
 															"/registration/safari-operator-tour/view",
 															"/registration/safari-operator-tour/create",
 															"/registration/safari-operator-tour/update",
-														)) ? "active" : "" ?>" href="/registration/safari-operator-tour">Safari Tour Operator</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
 															"/registration/birding-operator-tour",
 															"/registration/birding-operator-tour/index",
 															"/registration/birding-operator-tour/view",
 															"/registration/birding-operator-tour/create",
 															"/registration/birding-operator-tour/update",
-														)) ? "active" : "" ?>" href="/registration/birding-operator-tour">Birding Tour Operator</a></li>
+														)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+																				"/registration/safari-operator-tour",
+																				"/registration/safari-operator-tour/index",
+																				"/registration/safari-operator-tour/view",
+																				"/registration/safari-operator-tour/create",
+																				"/registration/safari-operator-tour/update",
+																				"/registration/birding-operator-tour",
+																				"/registration/birding-operator-tour/index",
+																				"/registration/birding-operator-tour/view",
+																				"/registration/birding-operator-tour/create",
+																				"/registration/birding-operator-tour/update",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/material-symbols-light_app-registration.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Registrations</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Registrations</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/registration/safari-operator-tour",
+																					"/registration/safari-operator-tour/index",
+																					"/registration/safari-operator-tour/view",
+																					"/registration/safari-operator-tour/create",
+																					"/registration/safari-operator-tour/update",
+																				)) ? "active" : "" ?>" href="/registration/safari-operator-tour">Safari Tour Operator</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/registration/birding-operator-tour",
+																					"/registration/birding-operator-tour/index",
+																					"/registration/birding-operator-tour/view",
+																					"/registration/birding-operator-tour/create",
+																					"/registration/birding-operator-tour/update",
+																				)) ? "active" : "" ?>" href="/registration/birding-operator-tour">Birding Tour Operator</a></li>
 						</ul>
 					</li>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/operator/safari-operator/index",
-											"/operator/safari-operator/index/view",
-											"/operator/birding-operator/index",
-											"/operator/birding-operator/index/view",
-										)) ? "is-expanded" : "" ?>">
+															"/operator/safari-operator/index",
+															"/operator/safari-operator/index/view",
+															"/operator/birding-operator/index",
+															"/operator/birding-operator/index/view",
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/operator/safari-operator/index",
-														"/operator/safari-operator/index/view",
-														"/operator/birding-operator/index",
-														"/operator/birding-operator/index/view",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/operator/safari-operator/index",
+																				"/operator/safari-operator/index/view",
+																				"/operator/birding-operator/index",
+																				"/operator/birding-operator/index/view",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/operator/safari-operator/index",
-															"/operator/safari-operator/index/view",
-														)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
+																					"/operator/safari-operator/index",
+																					"/operator/safari-operator/index/view",
+																				)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/operator/birding-operator/index",
-															"/operator/birding-operator/index/view",
-														)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
+																					"/operator/birding-operator/index",
+																					"/operator/birding-operator/index/view",
+																				)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
 						</ul>
 					</li>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/pendingapproval/article-comment/index",
-											"/pendingapproval/article-comment/view",
-										)) ? "is-expanded" : "" ?>">
+															"/pendingapproval/article-comment/index",
+															"/pendingapproval/article-comment/view",
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/pendingapproval/article-comment/index",
-														"/pendingapproval/article-comment/view",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Pending Approvals</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/pendingapproval/article-comment/index",
+																				"/pendingapproval/article-comment/view",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Pending Approvals</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Pending Approvals</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/pendingapproval/article-comment/index",
-															"/pendingapproval/article-comment/view",
-														)) ? "active" : "" ?>" href="/pendingapproval/article-comment/index">Article Comments</a></li>
+																					"/pendingapproval/article-comment/index",
+																					"/pendingapproval/article-comment/view",
+																				)) ? "active" : "" ?>" href="/pendingapproval/article-comment/index">Article Comments</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/pendingapproval/user-article/index",
-															"/pendingapproval/user-article/view",
-														)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li>
+																					"/pendingapproval/user-article/index",
+																					"/pendingapproval/user-article/view",
+																				)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li>
 
 						</ul>
 					</li>
@@ -761,30 +761,30 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php if (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
 					<li class="slide <?= str_starts_with($active_url, '/operatordashboard') ? "is-expanded" : "" ?>">
-						<a class="side-menu__item <?= str_starts_with($active_url, '/operatordashboard') ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
+						<a class="side-menu__item <?= str_starts_with($active_url, '/operatordashboard') ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
-														"/operatordashboard/safari"
-													)) ? "is-expanded" : "" ?>">
+																			"/operatordashboard/safari"
+																		)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Safari Tour Operator</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
-																'/operatordashboard/safari',
-																'/operatordashboard/safari/index',
-																'/operatordashboard/safari/quote',
-																'/operatordashboard/safari/sharedsafari',
-																'/operatordashboard/safari/review',
-																'/operatordashboard/safari/follower',
+																						'/operatordashboard/safari',
+																						'/operatordashboard/safari/index',
+																						'/operatordashboard/safari/quote',
+																						'/operatordashboard/safari/sharedsafari',
+																						'/operatordashboard/safari/review',
+																						'/operatordashboard/safari/follower',
 
-															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
-																							'/operatordashboard/safari',
-																							'/operatordashboard/safari/index',
-																							'/operatordashboard/safari/quote',
-																							'/operatordashboard/safari/sharedsafari',
-																							'/operatordashboard/safari/review',
-																							'/operatordashboard/safari/follower',
+																					)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																																				'/operatordashboard/safari',
+																																				'/operatordashboard/safari/index',
+																																				'/operatordashboard/safari/quote',
+																																				'/operatordashboard/safari/sharedsafari',
+																																				'/operatordashboard/safari/review',
+																																				'/operatordashboard/safari/follower',
 
-																						)) ? "display: block;" :  "display: none;"  ?>">
+																																			)) ? "display: block;" :  "display: none;"  ?>">
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/index') ? "active" : "" ?>" href="/operatordashboard/safari/index">Overview</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/quote') ? "active" : "" ?>" href="/operatordashboard/safari/quote">Get a Free Quote</a></li>
 									<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/safari/sharedsafari') ? "active" : "" ?>" href="/operatordashboard/safari/sharedsafari">Shared Safari</a></li>
@@ -804,35 +804,35 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/sharesafari/default/index",
-											"/sharesafari/default/view",
-											// "/sharesafari/request/index",
-											// "/sharesafari/request/view",
-										)) ? "is-expanded" : "" ?>">
+															"/sharesafari/default/index",
+															"/sharesafari/default/view",
+															// "/sharesafari/request/index",
+															// "/sharesafari/request/view",
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/sharesafari/default/index",
-														"/sharesafari/default/view",
-														// "/sharesafari/request/index",
-														// "/sharesafari/request/view",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/sharesafari/default/index",
+																				"/sharesafari/default/view",
+																				// "/sharesafari/request/index",
+																				// "/sharesafari/request/view",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
 							<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 								<!-- <li><a class="slide-item <?= in_array($active_url, array(
-																	"/sharesafari/request/index",
-																	"/sharesafari/request/view",
-																)) ? "active" : "" ?>" href="/sharesafari/request/index">Share Safari Request</a></li> -->
+																								"/sharesafari/request/index",
+																								"/sharesafari/request/view",
+																							)) ? "active" : "" ?>" href="/sharesafari/request/index">Share Safari Request</a></li> -->
 							<?php endif; ?>
 
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/sharesafari/default/index",
-															"/sharesafari/default/view",
-														)) ? "active" : "" ?>" href="/sharesafari/default/index">Share Safari</a></li>
+																					"/sharesafari/default/index",
+																					"/sharesafari/default/view",
+																				)) ? "active" : "" ?>" href="/sharesafari/default/index">Share Safari</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
-															"/sharesafari/share-safari-comment/index",
-															"/sharesafari/share-safari-comment/view",
-														)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li>
+																					"/sharesafari/share-safari-comment/index",
+																					"/sharesafari/share-safari-comment/view",
+																				)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
@@ -840,33 +840,33 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/package/default/index",
-														"/package/default/create",
-														"/package/profile",
-														"/package/profile/itinerary",
-														"/package/profile/inclusion",
-														"/package/profile/exclusion",
-														"/package/profile/term-condition",
-														"/package/profile/create-term-condition",
-														"/package/profile/update-term-condition",
-														"/package/profile/faq",
-														"/package/profile/create-faq",
-														"/package/profile/faq-update",
-													)) ? "active" : "" ?>" href="/package/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
+																				"/package/default/index",
+																				"/package/default/create",
+																				"/package/profile",
+																				"/package/profile/itinerary",
+																				"/package/profile/inclusion",
+																				"/package/profile/exclusion",
+																				"/package/profile/term-condition",
+																				"/package/profile/create-term-condition",
+																				"/package/profile/update-term-condition",
+																				"/package/profile/faq",
+																				"/package/profile/create-faq",
+																				"/package/profile/faq-update",
+																			)) ? "active" : "" ?>" href="/package/default/index"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
 					</li>
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide <?= in_array($active_url, array(
-											"/log/default/index",
-											"/log/default/front-index",
-											"/trierror/default/index",
-										)) ? "is-expanded" : "" ?>">
+															"/log/default/index",
+															"/log/default/front-index",
+															"/trierror/default/index",
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/log/default/index",
-														"/trierror",
-														"/log/default/front-index",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/log/default/index",
+																				"/trierror",
+																				"/log/default/front-index",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
@@ -885,7 +885,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 
 					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Progress Tracking</span><i class="angle fe fe-chevron-right"></i></a>
+						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Progress Tracking</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
 							<li><a class="slide-item" href="#">Report</a></li>
@@ -897,21 +897,21 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 					<li class="slide <?= in_array($active_url, array(
-											"/portalsetting/default/index",
-											"/portalsetting/default/params",
-											"/portalsetting/log/index",
-											"/portalsetting/default/clear-assets",
-											"/portalsetting/default/clear-cache",
-											"/portalsetting/pageview/index"
-										)) ? "is-expanded" : "" ?>">
+															"/portalsetting/default/index",
+															"/portalsetting/default/params",
+															"/portalsetting/log/index",
+															"/portalsetting/default/clear-assets",
+															"/portalsetting/default/clear-cache",
+															"/portalsetting/pageview/index"
+														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/portalsetting/default/index",
-														"/portalsetting/default/params",
-														"/portalsetting/log/index",
-														"/portalsetting/default/clear-assets",
-														"/portalsetting/default/clear-cache",
-														"/portalsetting/pageview/index"
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
+																				"/portalsetting/default/index",
+																				"/portalsetting/default/params",
+																				"/portalsetting/log/index",
+																				"/portalsetting/default/clear-assets",
+																				"/portalsetting/default/clear-cache",
+																				"/portalsetting/pageview/index"
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Portal Settings</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/index")) ? "active" : "" ?>" href="/portalsetting/default/index">Php Info</a></li>
@@ -926,88 +926,88 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 					<li class="slide">
 						<a class="side-menu__item <?= in_array($active_url, array(
-														"/user",
-														"/user/default/index",
-													)) ? "active" : "" ?>" href="/user/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
+																				"/user",
+																				"/user/default/index",
+																			)) ? "active" : "" ?>" href="/user/default/index"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Users</span></a>
 					</li>
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 
 					<li class="slide <?= in_array($active_url, array(
-											"/article/article-source/index",
-											"/article/article-source/create",
-											"/article/article-source/update",
-											"/article/article-source/view",
-											"/article/frequency/index",
-											"/article/frequency/create",
-											"/article/frequency/update",
-											"/article/category/index",
-											"/article/category/create",
-											"/article/category/update",
-											"/article/article-tag/index",
-											"/article/article-tag/create",
-											"/article/article-tag/update",
-											"/article/article/index",
-											"/article/article/create",
-											"/article/article/update",
-											"/article/article/view",
-										)) ? "is-expanded" : "" ?>">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/article/article-source/index",
-														"/article/article-source/create",
-														"/article/article-source/update",
-														"/article/article-source/view",
-														"/article/frequency/index",
-														"/article/frequency/create",
-														"/article/frequency/update",
-														"/article/category/index",
-														"/article/category/create",
-														"/article/category/update",
-														"/article/article-tag/index",
-														"/article/article-tag/create",
-														"/article/article-tag/update",
-														"/article/article/index",
-														"/article/article/create",
-														"/article/article/update",
-														"/article/article/view",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
 															"/article/article-source/index",
 															"/article/article-source/create",
 															"/article/article-source/update",
-															"/article/article-source/view"
-														)) ? "active" : "" ?>" href="/article/article-source/index">Article Source</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+															"/article/article-source/view",
 															"/article/frequency/index",
 															"/article/frequency/create",
 															"/article/frequency/update",
-														)) ? "active" : "" ?>" href="/article/frequency/index">Frequency</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
 															"/article/category/index",
 															"/article/category/create",
 															"/article/category/update",
-														)) ? "active" : "" ?>" href="/article/category/index">Category</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
 															"/article/article-tag/index",
 															"/article/article-tag/create",
 															"/article/article-tag/update",
-														)) ? "active" : "" ?>" href="/article/article-tag/index">Article Tag</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
 															"/article/article/index",
 															"/article/article/create",
 															"/article/article/update",
-															"/article/article/view"
-														)) ? "active" : "" ?>" href="/article/article/index">Article</a></li>
+															"/article/article/view",
+														)) ? "is-expanded" : "" ?>">
+						<a class="side-menu__item <?= in_array($active_url, array(
+																				"/article/article-source/index",
+																				"/article/article-source/create",
+																				"/article/article-source/update",
+																				"/article/article-source/view",
+																				"/article/frequency/index",
+																				"/article/frequency/create",
+																				"/article/frequency/update",
+																				"/article/category/index",
+																				"/article/category/create",
+																				"/article/category/update",
+																				"/article/article-tag/index",
+																				"/article/article-tag/create",
+																				"/article/article-tag/update",
+																				"/article/article/index",
+																				"/article/article/create",
+																				"/article/article/update",
+																				"/article/article/view",
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/theme/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/article/article-source/index",
+																					"/article/article-source/create",
+																					"/article/article-source/update",
+																					"/article/article-source/view"
+																				)) ? "active" : "" ?>" href="/article/article-source/index">Article Source</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/article/frequency/index",
+																					"/article/frequency/create",
+																					"/article/frequency/update",
+																				)) ? "active" : "" ?>" href="/article/frequency/index">Frequency</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/article/category/index",
+																					"/article/category/create",
+																					"/article/category/update",
+																				)) ? "active" : "" ?>" href="/article/category/index">Category</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/article/article-tag/index",
+																					"/article/article-tag/create",
+																					"/article/article-tag/update",
+																				)) ? "active" : "" ?>" href="/article/article-tag/index">Article Tag</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/article/article/index",
+																					"/article/article/create",
+																					"/article/article/update",
+																					"/article/article/view"
+																				)) ? "active" : "" ?>" href="/article/article/index">Article</a></li>
 
 						</ul>
 					</li>
 				<?php endif; ?>
 
 				<li class="slide">
-					<a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
+					<a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="/theme/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">
 						<span class="side-menu__label">Logout</span></a>
 				</li>
 
