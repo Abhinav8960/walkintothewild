@@ -61,7 +61,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <?php
                                             if (Yii::$app->user->identity) { ?>
                                                 <?php
-                                                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
+                                                $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
                                                     <a href="/package/unwishlist/<?= $package->package_slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
