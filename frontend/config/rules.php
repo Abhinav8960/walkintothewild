@@ -70,6 +70,7 @@ return [
     '/package/wishlist/<slug>' => '/package/default/wishlist', //package page url
     '/package/unwishlist/<slug>' => '/package/default/unwishlist', //package page url
 
+    '/profile/user-experience' => '/profile/default/create',
     '/profile/user/<user_handle>' => '/profile/default/index',
     '/profile/follower/<user_handle>' => '/profile/default/follower',
     '/profile/following/<user_handle>' => '/profile/default/following',

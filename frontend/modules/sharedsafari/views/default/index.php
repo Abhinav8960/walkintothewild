@@ -187,7 +187,7 @@ $recentposts = ArticleSearch::recentpost();
                                                     <p class="mb-0"><?= date('d', strtotime($share_safari->start_date)) ?></p>
                                                 </div>
                                             </div>
-                                            <div class="floating-watchlist">
+                                            <!-- <div class="floating-watchlist">
                                                 <?php
                                                 if (Yii::$app->user->identity) { ?>
                                                     <div class="heart_bx">
@@ -202,7 +202,13 @@ $recentposts = ArticleSearch::recentpost();
                                                         ?>
                                                     </div>
                                                 <?php } ?>
-                                            </div>
+                                            </div> -->
+                                            <?php if ($share_safari->type == 2) { ?>
+                                                <div class="fixed-depart">
+                                                    <p>Fixed Departure</p>
+                                                </div>
+                                            <?php } ?>
+
                                             <div class="shareimg">
                                                 <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                             </div>

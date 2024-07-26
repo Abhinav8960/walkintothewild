@@ -682,8 +682,9 @@ a {
 
 .btn_newsafari.organizeBtn.newbg{
 
-    background-color: var(--background-yellow);
+    background-color: var(--background-primary);
     border-radius: 10px;
+    color: var(--colorwhite);
 }
 
 .icons {
@@ -5788,4 +5789,21 @@ border-top-right-radius: 0;
 .table_design_manage table thead tr th:first-child
 {
  border-radius: 5px 0px 0px 0px;
+}
+
+.fixed-depart{
+
+    position: absolute;
+    left: 0;
+    top: 10px;
+    background-color: var(--background-yellow);
+    padding: 6px 10px;
+    border-radius: 0px 25px 25px 0px;
+}
+
+.fixed-depart p{
+
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 600;
 }
