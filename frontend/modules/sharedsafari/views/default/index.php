@@ -89,19 +89,6 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
                         <div class="row ">
                             <div class="col-12  mb-xl-4 mb-3">
-                                <div class="row justify-content-between">
-                                    <div class="col-md-12">
-                                        <?= $this->render('_date_search', ['searchModel' => $searchModel]) ?>
-                                    </div>
-                                    <div class="col-md-6 mt-md-0 mt-3">
-
-                                        <!-- <div class="me-3 float-md-end">
-                                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) { ?>
-                                                <a class="btn_newsafari" href="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari']) ?>">+ Create Fixed Departure </a>
-                                            <?php } ?>
-                                        </div> -->
-                                    </div>
-                                </div>
                                 <div class="tag-container">
 
                                     <?php if ($searchModel->park_id) {
