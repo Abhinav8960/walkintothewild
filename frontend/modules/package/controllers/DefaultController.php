@@ -36,8 +36,6 @@ class DefaultController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->estimated_price_filter_min = 1000;
-        $searchModel->estimated_price_filter_max = 500000;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $models = $dataProvider->getModels();
 

@@ -16,8 +16,12 @@ class PackageSearch extends Package
 {
     public $park_id;
     public $month_id;
-    public $estimated_price_filter_min;
-    public $estimated_price_filter_max;
+    public $estimated_price_filter_min = 1000;
+    public $estimated_price_filter_max = 50000;
+    public $no_of_safari_min = 1;
+    public $no_of_safari_max = 10;
+    public $no_of_night_min = 1;
+    public $no_of_night_max = 10;
     public $package_feature;
     public $package_include;
     public $custom_sort_by;
@@ -34,7 +38,7 @@ class PackageSearch extends Package
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
             [['package_image'], 'safe'],
-            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
+            [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
         ];
     }
 
@@ -98,15 +102,27 @@ class PackageSearch extends Package
         $query->andFilterWhere(['like', 'package_name', $this->package_name]);
 
         if ($this->estimated_price_filter_min && $this->estimated_price_filter_max) {
-            $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
+            if ($this->estimated_price_filter_max >= 50000) {
+                $dataProvider->query->andWhere('cost_per_person>=' . $this->estimated_price_filter_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'cost_per_person', $this->estimated_price_filter_min, $this->estimated_price_filter_max]);
+            }
         }
 
-        if ($this->no_of_night) {
-            $dataProvider->query->andFilterWhere(['between', 'no_of_night', 0, $this->no_of_night]);
+        if ($this->no_of_night_min && $this->no_of_night_max) {
+            if ($this->no_of_night_max >= 10) {
+                $dataProvider->query->andWhere('no_of_night>=' . $this->no_of_night_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'no_of_night', $this->no_of_night_min, $this->no_of_night_max]);
+            }
         }
 
-        if ($this->no_of_safari) {
-            $dataProvider->query->andFilterWhere(['between', 'no_of_safari', 0, $this->no_of_safari]);
+        if ($this->no_of_safari_min && $this->no_of_safari_max) {
+            if ($this->no_of_safari_max >= 10) {
+                $dataProvider->query->andWhere('no_of_safari>=' . $this->no_of_safari_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'no_of_safari', $this->no_of_safari_min, $this->no_of_safari_max]);
+            }
         }
 
 

@@ -52,36 +52,24 @@ use yii\helpers\ArrayHelper;
         </div>
         <div class="title_filter mb-3">
             <h6 class="">Tour Duration</h6>
-            <div class="rangetours range">
-                <?= $form->field($searchModel, 'no_of_night')->textInput([
-                    'maxlength' => true,
-                    'type' => 'range',
-                    'min' => 0,
-                    'max' => 20,
-                    'value' => isset($searchModel->no_of_night) ? $searchModel->no_of_night : 0,
-                    'class' => 'range_values d-flex align-items-center justify-content-between',
-                ]) ?>
+            <div class="multi-range">
+                <input type="range" name="PackageSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="packagesearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="packagesearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
-                <span class="value">0 Night</span>
-                <span class="float-end">10+ Nights</span>
+                <span class="value"><?= $searchModel->no_of_night_min ?> Night</span>
+                <span class="float-end"><?= $searchModel->no_of_night_max >= 10 ? '10+' : $searchModel->no_of_night_max ?> Nights</span>
             </div>
         </div>
         <div class="title_filter mb-3">
             <h6 class="">Total Safaris</h6>
-            <div class="rangetours range">
-                <?= $form->field($searchModel, 'no_of_safari')->textInput([
-                    'maxlength' => true,
-                    'type' => 'range',
-                    'min' => 0,
-                    'max' => 20,
-                    'value' => isset($searchModel->no_of_safari) ? $searchModel->no_of_safari : 0,
-                    'class' => 'range_values d-flex align-items-center justify-content-between',
-                ]) ?>
+            <div class="multi-range">
+                <input type="range" name="PackageSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="packagesearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="packagesearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
-                <span class="value">0 </span>
-                <span class="float-end">10+ </span>
+                <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
+                <span class="float-end"><?= $searchModel->no_of_safari_max >= 10 ? '10+' : $searchModel->no_of_safari_max ?> </span>
             </div>
         </div>
         <div class="title_filter mb-3">
@@ -91,8 +79,8 @@ use yii\helpers\ArrayHelper;
                 <input type="range" name="PackageSearch[estimated_price_filter_max]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
-                <span class="value">1000 </span>
-                <span class="float-end">50000+ </span>
+                <span class="value"><?= $searchModel->estimated_price_filter_min ?> </span>
+                <span class="float-end"><?= $searchModel->estimated_price_filter_max >= 50000 ? '50000+' : $searchModel->estimated_price_filter_max ?> </span>
             </div>
         </div>
         <div class="title_filter mb-3">
@@ -190,6 +178,9 @@ $script = <<< JS
         });
     }
 
+
+    initializeDualrange('packagesearch-no_of_night_min','packagesearch-no_of_night_max');
+    initializeDualrange('packagesearch-no_of_safari_min','packagesearch-no_of_safari_max');
     initializeDualrange('packagesearch-estimated_price_filter_min','packagesearch-estimated_price_filter_max');
 
 JS;
