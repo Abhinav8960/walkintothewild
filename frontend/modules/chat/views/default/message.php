@@ -104,7 +104,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             <div class="chat-send-message-form">
                                 <form id="chatmessageform" method="post">
                                     <div class="d-flex">
-                                        <div class="lead emoji-picker-container w-100">
+                                        <div class="lead emoji-picker-container w-100 submit_on_enter">
                                             <input type="text" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true">
                                         </div>
                                         <i class="fa fa-paper-plane chat-sendbtn" id="message_sent_btn"></i>
@@ -149,7 +149,7 @@ function sendmessage(){
 }
 
 $('.submit_on_enter').keydown(function(event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode == 13 && !event.shiftKey) {
         sendmessage();
     }
   });
