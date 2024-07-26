@@ -5,10 +5,12 @@ use yii\grid\GridView;
 use common\models\chat\Chat;
 use yii\widgets\Pjax;
 
+\frontend\assets\EmojiAsset::register($this);
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 $this->title = $individual_user->name . ' | Chat';
 
+$emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')->baseUrl;
 ?>
 
 <div class="container-fluid mt-2 mb-5">
@@ -102,7 +104,9 @@ $this->title = $individual_user->name . ' | Chat';
                             <div class="chat-send-message-form">
                                 <form id="chatmessageform" method="post">
                                     <div class="d-flex">
-                                        <input type="text" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off">
+                                        <div class="lead emoji-picker-container w-100">
+                                            <input type="text" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true">
+                                        </div>
                                         <i class="fa fa-paper-plane chat-sendbtn" id="message_sent_btn"></i>
                                     </div>
                                     <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
@@ -120,6 +124,15 @@ $this->title = $individual_user->name . ' | Chat';
 
 <?php
 $script = <<< JS
+
+$(function() {
+    window.emojiPicker = new EmojiPicker({
+        emojiable_selector: '[data-emojiable=true]',
+        assetsPath: '{$emoji_base_url}/lib/img/',
+        popupButtonClasses: 'fa-solid fa-face-smile'
+    });
+    window.emojiPicker.discover();
+});
 
 function sendmessage(){
     $.ajax({
