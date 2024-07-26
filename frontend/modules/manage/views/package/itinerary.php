@@ -26,7 +26,7 @@ $this->params['title'] = $this->title;
                     <div class="row">
                         <?= $this->render('_profile_navbar', ['package' => $package_model, 'itinerary_active' => 'active']) ?>
                     </div>
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col-md-12">
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
