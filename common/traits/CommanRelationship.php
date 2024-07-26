@@ -21,11 +21,11 @@ trait CommanRelationship
 
         if (isset($statuses[$this->status])) {
             if ($this->status == 1) {
-                return '<img src="/img/active.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/active.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
             } else if ($this->status == 2) {
-                return '<img src="/img/suspend.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/suspend.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
             } else if ($this->status == -1) {
-                return '<img src="/img/deleted.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/deleted.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
             }
         }
         return $this->status;
@@ -54,9 +54,9 @@ trait CommanRelationship
 
         if (isset($statuses[$this->is_approved])) {
             if ($this->is_approved == 1) {
-                return '<img src="/img/active.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/active.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
             } else if ($this->is_approved == 0) {
-                return '<img src="/img/suspend.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/suspend.png" alt="" style="width: 41px;height: 41px;object-fit: contain;">';
             }
         }
         return $this->status;

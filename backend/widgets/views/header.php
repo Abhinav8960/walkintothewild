@@ -1,8 +1,3 @@
-<?php
-$webasset = $this->assetManager->getBundle('backend\assets\NovaAppAsset');
-$this->params['baseurl'] = $webasset->baseUrl;
-?>
-
 <!-- main-header -->
 <div class="main-header side-header sticky nav nav-item" style="background: #09422D !important;color:#fff !important;">
 	<div class=" main-container container-fluid">
