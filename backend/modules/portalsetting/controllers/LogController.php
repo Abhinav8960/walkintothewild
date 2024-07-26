@@ -55,7 +55,30 @@ class LogController extends Controller
         ]);
     }
 
+    public function actionConsoleLog()
+    {
+        $robots_actual_url = \Yii::$app->getBasePath(true);
+        $robots_actual_url = str_replace("backend", "console", $robots_actual_url);
 
+        // Path to your log file
+        $logFile = $robots_actual_url . '/runtime/logs/app.log';
+
+        // Check if the log file exists
+        if (!file_exists($logFile)) {
+            throw new \yii\web\NotFoundHttpException('Log file does not exist.');
+        }
+
+        // Read the log file content
+        $logs = file_get_contents($logFile);
+
+        // Set response format to plain text
+        // Yii::$app->response->format = Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', 'text/plain');
+
+        return $this->render('index', [
+            'logs' => $logs
+        ]);
+    }
 
     public function actionExport()
     {

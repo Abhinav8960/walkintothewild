@@ -910,7 +910,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Request Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-pages")) ? "active" : "" ?>" href="/trierror/site-pages">Site Pages</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-untraced-request")) ? "active" : "" ?>" href="/trierror/site-untraced-request">Untraced Request</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-robots")) ? "active" : "" ?>" href="/trierror/site-robots">Robots Pages</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-robots")) ? "active" : "" ?>" href="/trierror/site-robots">Robots Txt</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
@@ -954,6 +954,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/export")) ? "active" : "" ?>" href="/portalsetting/log/export">Export Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/clear")) ? "active" : "" ?>" href="/portalsetting/log/clear" data-method="post">Clear Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/console-log")) ? "active" : "" ?>" href="/portalsetting/log/console-log">Console Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets" data-method="post">Clear Assets</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-cache")) ? "active" : "" ?>" href="/portalsetting/default/clear-cache" data-method="post">Clear Cache</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/pageview/index")) ? "active" : "" ?>" href="/portalsetting/pageview/index">Page View</a></li>
