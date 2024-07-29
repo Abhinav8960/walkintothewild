@@ -38,7 +38,11 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            $temp = "<a target='_blank' href='" . $model->url . "'>" . mb_strimwidth($model->url, 0, 100, ' ...') . "</a>";
+                            $temp = str_replace(Yii::$app->params['frontend_url'], "", $model->url);
+                            if (empty($temp)) {
+                                $temp = "/";
+                            }
+                            $temp = "<a target='_blank' href='" . $model->url . "'>" . mb_strimwidth($temp, 0, 100, ' ...') . "</a>";
                             return $temp;
                         }
                     ],

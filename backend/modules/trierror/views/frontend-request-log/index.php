@@ -72,11 +72,13 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Full URL',
+                        'label' => 'URL',
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            $temp = "<a target='_blank' href='" . $model->request_full_url . "'>" . mb_strimwidth($model->request_full_url, 0, 100, ' ...') . "</a>";
+                            $temp = str_replace(Yii::$app->params['frontend_url'], "", $model->request_full_url);
+
+                            $temp = "<a target='_blank' href='" . $model->request_full_url . "'>" . mb_strimwidth($temp, 0, 100, ' ...') . "</a>";
                             return $temp;
                         }
                     ],
