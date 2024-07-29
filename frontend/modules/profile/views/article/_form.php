@@ -8,8 +8,7 @@ use yii\bootstrap5\ActiveForm;
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
 <div class="col-md-12">
-
-    <div class="card">
+    <div class="card card_bodyPadding">
         <div class="card-body">
             <?php $form = ActiveForm::begin([
                 'id' => 'article-form',
@@ -22,7 +21,7 @@ use yii\bootstrap5\ActiveForm;
             ]); ?>
 
             <div class="row">
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <?= $form->field($model, 'title')->textInput([
                         'maxlength' => true,
                         'placeholder' => 'Enter Article Title',

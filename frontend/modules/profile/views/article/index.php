@@ -14,16 +14,16 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 <section>
-    <div class="container mb-5">
-        <div class="row justify-content-center mb-5">
-            <div class="col-xxl-11 mb-5">
+    <div class="container ">
+        <div class="row justify-content-center ">
+            <div class="col-xxl-11 margin_bottomfooter">
                 <div class="row">
                     <div class="col-lg-8">
-                        <div class="card mt-2">
+                        <div class="card  card_bodyPadding">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-flex justify-content-between mb-3">
                                             <h6 class="fs-6 fw-bold">Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h6>
                                             <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                                 <a class="follow_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
@@ -64,15 +64,15 @@ $this->params['title'] = $this->title;
                     <div class="col-lg-4">
                         <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
                         <div class="request_quote mt-4">
-                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                            <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                                 Instagram</button>
                             <div class="interst_wrapper pt-3 px-md-5 bg-white">
 
                             </div>
                         </div>
                         <div class="request_quote mt-4">
-                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                Organized Shared Safari <?= $model_count ?></button>
+                            <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+                                Organized Shared Safari <span><?= $model_count ?></span></button>
                             <div class="interst_wrapper pt-3 px-md-5 bg-white">
                                 <?php if ($sharesafrimodel) {
                                     foreach ($sharesafrimodel as $share_safari) {

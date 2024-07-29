@@ -407,10 +407,10 @@ a {
 .sharesafri-card {
 
     position: relative;
-    -webkit-box-shadow: 0px 3px 6px #00000029;
-    box-shadow: 0px 3px 6px #00000029;
+    /* -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029; */
     border-radius: 10px;
-    /* border: 1px solid #7070704D; */
+    border: 1px solid #7070704D;
 
 }
 
@@ -5947,4 +5947,12 @@ a.desc:after {
 
 .multi-range .dual_range:nth-child(2)::-webkit-slider-thumb::before {
     background-color: grey;
+}
+.card_bodyPadding .card-body{
+
+    padding: 24px 28px 15px 28px !important;
+}
+.margin_bottomfooter{
+
+    padding-bottom: 170px;
 }

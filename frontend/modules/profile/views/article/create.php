@@ -14,12 +14,13 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 <section>
-<div class="container mb-5 pb-5">
-    <div class="row mt-3 mb-5">
-        <div class="col-md-12">
-            <h5>Create New Article</h5>
+<div class="container margin_bottomfooter">
+    <div class="row mt-3  justify-content-center">
+        <div class="col-xxl-11 ">
+            <h6 class="mb-4 fs-6 fw-bold">Create New Article</h5>
+            <?= $this->render('_form', ['model' => $model]) ?>
         </div>
-        <?= $this->render('_form', ['model' => $model]) ?>
+       
     </div>
 </div>
 </section>

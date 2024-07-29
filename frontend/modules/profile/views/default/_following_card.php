@@ -1,5 +1,5 @@
 <div class="request_quote ">
-    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+    <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
         Following</button>
     <div class="interst_wrapper pt-3 px-md-5 bg-white">
         <?php if ($followings = $user->getUserfollowings()->where(['status' => 1])->all()) {
