@@ -122,7 +122,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Package</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
-            <div class="modal-body modal_form p-4">
+            <div class="modal-body modal_form">
                 <div id='modalContent'></div>
             </div>
         </div>
