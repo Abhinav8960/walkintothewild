@@ -17,14 +17,14 @@ $this->params['title'] = $this->title;
 </section>
 
 <section>
-    <div class="container mb-5">
+    <div class="container ">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
                 <div class="row justify-content-center mb-5">
-                    <div class="col-xxl-11 mb-5">
+                    <div class="col-xxl-11 margin_bottomfooter">
                         <div class="row">
                             <div class="col-lg-8">
-                                <div class="card mt-2 mb-4">
+                                <div class="card  mb-4 card_bodyPadding">
                                     <div class="card-body">
                                         <div class="row">
                                             <?php
@@ -59,15 +59,15 @@ $this->params['title'] = $this->title;
                                 <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
 
                                 <div class="request_quote mt-4">
-                                    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                        Instagram</button>
+                                    <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+                                        Instagram <span></span></button>
                                     <div class="interst_wrapper pt-3 px-md-5 bg-white">
 
                                     </div>
                                 </div>
                                 <div class="request_quote mt-4">
-                                    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                        Organized Shared Safari <?= $model_count ?></button>
+                                    <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+                                        Organized Shared Safari <span><?= $model_count ?></span></button>
                                     <div class="interst_wrapper pt-3 px-md-5 bg-white">
                                         <?php if ($sharesafrimodel) {
                                             foreach ($sharesafrimodel as $share_safari) {

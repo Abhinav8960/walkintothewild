@@ -17,18 +17,18 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 <section>
-    <div class="container mb-5">
+    <div class="container ">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
-                <div class="row justify-content-center mb-5">
-                    <div class="col-xxl-11 mb-5">
+                <div class="row justify-content-center ">
+                    <div class="col-xxl-11 margin_bottomfooter">
                         <div class="row">
                             <div class="col-lg-8">
-                                <div class="card  mb-4">
+                                <div class="card  mb-4 card_bodyPadding">
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
                                                     <h6 class="fs-6 fw-bold">Shared Photos</h6>
                                                     <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                                         <button class="follow_btn photoBtn text-center mt-sm-0 mt-2" value="<?= Url::toRoute(['/profile/photo/create']) ?>">+ Add photo</button>

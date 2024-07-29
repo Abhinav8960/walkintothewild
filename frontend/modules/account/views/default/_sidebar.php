@@ -4,7 +4,7 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="card account-settingside">
+<div class="card account-settingside ">
 <div class="nav flex-column nav-pills card-body">
     <a href="<?= Url::toRoute(['/account']) ?>" class="nav-link mb-2 <?= $active == 'profile' ? 'active' : '' ?>"><i class="fa-solid fa-user me-2"></i> Profile Setting</a>
     <a href="<?= Url::toRoute(['/account/login-info']) ?>" class="nav-link mb-2 <?= $active == 'login' ? 'active' : '' ?>"><i class="fa-solid fa-gear me-2"></i> Login Information</a>

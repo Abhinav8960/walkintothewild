@@ -22,10 +22,10 @@ $this->params['title'] = $this->title;
 <section class="ta">
     <div class="container-lg">
         <div class="row justify-content-center">
-            <div class="col-xxl-11 mb-5">
+            <div class="col-xxl-11 margin_bottomfooter">
                 <div class="row">
                     <div class="col-xl-8">
-                        <div class="card mt-2 mb-4">
+                        <div class="card card_bodyPadding  mb-4">
                             <div class="card-body">
                                 <h6>About</h6>
                                 <?php if ($user->about) { ?>
@@ -68,11 +68,11 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
 
-                        <div class="card mt-2 mb-5">
+                        <div class="card  mb-5 card_bodyPadding">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
                                             <h6 class="fs-6 fw-bold">Share Safari Experience</h6>
                                             <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                                 <button class="follow_btn photoBtn text-center mt-sm-0 mt-2" value="<?= Url::toRoute(['/profile/user-experience']) ?>">+ Add Experience</button>
@@ -123,19 +123,18 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 mb-5 pb-5">
+                    <div class="col-xl-4 ">
                         <?= $this->render('_following_card', ['user' => $user]) ?>
-
                         <div class="request_quote mt-4">
-                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                            <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                                 Instagram</button>
                             <div class="interst_wrapper pt-3 px-md-5 bg-white">
 
                             </div>
                         </div>
                         <div class="request_quote mt-4">
-                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                Organized Shared Safari <?= $model_count ?></button>
+                            <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+                            Organized Shared Safari <span><?= $model_count ?></span></button>
                             <div class="interst_wrapper pt-3 px-md-5 bg-white">
                                 <?php if ($model) {
                                     foreach ($model as $share_safari) {
@@ -231,7 +230,7 @@ $this->params['title'] = $this->title;
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add a New Experience</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
-            <div class="modal-body px-2 pt-0">
+            <div class="modal-body p-3">
                 <div id='modalContent'></div>
             </div>
         </div>

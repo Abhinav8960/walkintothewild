@@ -3,8 +3,8 @@ $this->title = 'Account Settings';
 
 ?>
 
-<div class="container mt-5 mb-5">
-    <div class="row mb-5">
+<div class="container mt-5">
+    <div class="row margin_bottomfooter">
     <div class="col-12">
         <h6 class="fs-3 fw-bold mb-4">Account Settings</h6>
         </div>
@@ -13,8 +13,8 @@ $this->title = 'Account Settings';
         </div>
         <div class="col-md-9">
             <div class="card account-settingside" style="min-height:500px">
-                <div class="card-body">
-                <h6 class="fs-5 fw-bold">  Login Information</h6>
+                <div class="card-body p-4">
+                <h6 class="fs-5 fw-bold mb-3">  Login Information</h6>
                 </div>
    
             </div>
