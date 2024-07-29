@@ -334,6 +334,7 @@ a {
     font-size: var(--fs-25);
     text-align: center;
     color: var(--colorwhite);
+    color: #ADDC2C;
 }
 
 .sharesafri {
@@ -5963,4 +5964,30 @@ a.desc:after {
 .field-createdepartureform-cost_per_person{
 
     width: 100%;
+}
+.bg-blues{
+
+    background-color: var(--background-primary) !important;
+    border-color: var(--background-primary);
+    color: #fff;
+}
+.btn-info.bg-blues{
+
+    border: 0;
+    padding: 11px 35px;
+    font-size: var(--fs-15);
+    color: var(--colorBlack);
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    border-radius: 5px;
+    color: #fff;
+}
+.btn-info.bg-blues:hover{
+
+    color: #fff;
+    border-color: var(--background-primary);
+}
+.flex-basis-50{
+
+    flex-basis: 25%;
 }

@@ -11,7 +11,7 @@ $this->params['title'] = $this->title;
 ?>
 
 
-<div class="container-fluid mt-5 mb-5">
+<div class="container-fluid mt-5">
     <div class="row margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between align-items-center mb-4">
         <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>

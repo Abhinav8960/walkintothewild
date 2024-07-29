@@ -11,7 +11,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 <div class="container-fluid mt-5 ">
     <div class="row margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center">
-          <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
+          <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class="right_button float-md-end ">
                 <button class="btn_newsafari packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= Url::toRoute(['/manage/package/create']) ?>">+ Create New Package </button>
             </div>
@@ -94,7 +94,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('View', [Url::toRoute(['view', 'package_id' => $model->id])], ['class' => 'btn btn-info', 'title' => 'View']);
+                                                return   Html::a('View', [Url::toRoute(['view', 'package_id' => $model->id])], ['class' => 'btn btn-info bg-blues py-2', 'title' => 'View']);
                                             }
                                         ],
                                         [
@@ -102,7 +102,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('Update', [Url::toRoute(['update', 'package_id' => $model->id])], ['class' => 'btn btn-info join_btn', 'title' => 'Update']);
+                                                return   Html::a('Update', [Url::toRoute(['update', 'package_id' => $model->id])], ['class' => 'btn btn-info join_btn py-2', 'title' => 'Update']);
                                             }
                                         ],
                                     ],
