@@ -51,6 +51,8 @@ class GenerateSiteXmlController extends Controller
      */
     public function actionIndex()
     {
+        $start = microtime(true);
+
         $backend_actual_url = Yii::$app->params['datapath'] . "/sitemap";
         if (!file_exists($backend_actual_url)) {
             mkdir($backend_actual_url);
@@ -104,6 +106,9 @@ class GenerateSiteXmlController extends Controller
         fclose($fp);
 
         //echo "complete sitemap createion";
+        $end = microtime(true);
+        $executionTime = $end - $start;
+        echo "Script execution time: " . $executionTime . " seconds";
     }
 
     protected function static_pages($backend_actual_url)

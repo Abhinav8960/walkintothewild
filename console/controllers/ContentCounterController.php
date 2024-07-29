@@ -23,13 +23,13 @@ class ContentCounterController extends Controller
 {
   public function actionIndex()
   {
+    $start = microtime(true);
+
     //make request log grouping
     $this->make_request_grouping();
 
     //move untraced request
-    $this->dump_untraced_request();
-
-    //make request 
+    //$this->dump_untraced_request();
 
     //article counter
     $article_slugs = FrontendRequestLog::find()
@@ -184,12 +184,17 @@ class ContentCounterController extends Controller
         }
       }
     }
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
   }
 
+  //  protected function ActiondumpUntracedRequest()
   protected function dump_untraced_request()
   {
     $connection = \Yii::$app->getDb();
-    $command = $connection->createCommand("SELECT DISTINCT(request_full_url) FROM site_frontend_request WHERE request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_pages) AND request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_untraced_request)");
+    $command = $connection->createCommand("SELECT DISTINCT(request_full_url) FROM site_frontend_request WHERE request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_pages where status = 1) AND request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_untraced_request)");
     $un_traced_record = $command->queryAll();
     if (count($un_traced_record) > 0) {
       $temp_array = [];
@@ -203,6 +208,7 @@ class ContentCounterController extends Controller
     }
   }
 
+  //protected function ActionMakeRequestGrouping()
   protected function make_request_grouping()
   {
     $affectedRows = \Yii::$app->db->createCommand("UPDATE site_frontend_request SET request_group = SUBSTRING_INDEX(route, '/', 1) WHERE is_count = :val1")->bindValue(':val1', 0)->execute();
