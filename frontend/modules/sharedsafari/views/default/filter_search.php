@@ -88,10 +88,27 @@ use common\models\park\SafariPark;
                     GeneralModel::hostoption(),
                     [
                         'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
+                        'item' => function ($index, $label, $name, $checked, $value) {
+                            $id = $name . '_' . $index; // Generate a unique ID for each checkbox
+                            return '<div class="checkbox-item d-flex gap-2 align-items-center">' .
+                                Html::checkbox($name, $checked, ['value' => $value, 'class' => 'checkbox_design', 'id' => $id]) .
+                                Html::label($label, $id, ['class' => 'checkbox-label']) .
+                                '</div>';
+                        },
                     ]
                 )->label(false); ?>
             </div>
+<!-- 
+            <div class="input_check d-flex gap-3 align-items-center">
+                <?= $form->field($searchModel, 'host_type')->checkboxList(
+                    GeneralModel::hostoption(),
+                    [
+                        'required' => true,
+                        'itemOptions' => ['class' => 'checkbox_design'],
+                    ]
+                )->label(false); ?>
+            </div> -->
+
         </div>
         <div class="title_filter mb-4">
             <h6>Budget</h6>

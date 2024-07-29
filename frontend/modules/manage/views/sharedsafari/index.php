@@ -7,12 +7,12 @@ use yii\helpers\Url;
 $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 
 ?>
-<div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
+<div class="container-fluid mt-5 ">
+    <div class="row margin_bottomfooter">
         <div class="col-md-12">
             <div class="d-flex justify-content-between mb-4 align-items-center">
-              <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
-                <div class="d-flex mb-2">
+                <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
+                <div class="d-flex align-items-center">
                     <button class="btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                 </div>
             </div>
@@ -22,7 +22,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
         </div>
         <div class="col-md-10">
             <div class="card account-settingside ">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive table_design_manage">
@@ -123,7 +123,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a New Fixed Departure</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
-            <div class="modal-body px-2 pt-0">
+            <div class="modal-body ">
                 <div id='modalContent'></div>
             </div>
         </div>

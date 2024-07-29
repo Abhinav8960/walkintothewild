@@ -27,14 +27,13 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 ?>
 
 
-<div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
-
+<div class="container-fluid mt-5 ">
+    <div class="row margin_bottomfooter ">
         <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center">
-            <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
+            <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class=" ">
-                <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $safari_operator->slug]) ?>" class="post-comment newbg rounded-2 py-2" target="_blank"><i class="fa fa-eye"></i> View as Member</a> &nbsp;
-                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2"><i class="fa fa-edit"></i> Update Request</a>
+                <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $safari_operator->slug]) ?>" class="post-comment newbg rounded-2 padding_btn" target="_blank"><i class="fa fa-eye"></i> View as Member</a> &nbsp;
+                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update Request</a>
             </div>
         </div>
         <div class="col-md-2">
@@ -42,11 +41,11 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
         </div>
         <div class="col-md-10">
             <div class="card account-settingside">
-                <div class="card-body">
+                <div class="card-body p-4">
                     <div class="row">
                         <div class="col-md-3">
                             <?php if ($safari_operator->imagepath) { ?>
-                                <img src="<?= $safari_operator->imagepath ?>"  class="mb-2 w-100 rounded-2" style="height:180px; object-fit:cover;">
+                                <img src="<?= $safari_operator->imagepath ?>" class="mb-2 w-100 rounded-2" style="height:180px; object-fit:cover;">
                             <?php } ?>
                         </div>
                         <div class="col-md-9">
@@ -117,48 +116,48 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                         <p><strong>Budget Segment : </strong> <?= implode(', ', $budget) ?></p>
                                     </div>
                                 </div>
-                              
+
                             </div>
 
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-12 ">
-                                    <div class="text-box">
-                                        <p><strong>Address : </strong><?= $safari_operator->register_comapany_name ?></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="text-box">
-                                        <p><strong>Offers Other Wildlife Activities : </strong><?= substr($html, 0, -2) ?></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="text-box">
-                                        <p><strong>Instagram Link : </strong><a href="<?= $safari_operator->instagram_url ?>" target="_blank"><?= $safari_operator->instagram_url ?></a></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="text-box">
-                                        <p><strong>Facebook Link : </strong><a href="<?= $safari_operator->facebook_url ?>" target="_blank"><?= $safari_operator->facebook_url ?></a></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="text-box">
-                                        <p><strong>Youtube Link : </strong><a href="<?= $safari_operator->youtube_link ?>" target="_blank"><?= $safari_operator->youtube_link ?></a></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="text-box">
-                                        <p><strong>Website : </strong><a href="<?= $safari_operator->website ?>"><?= $safari_operator->website ?></a></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 ">
-                                    <div class="text-box">
-                                        <p><strong>About Business : </strong><?= $safari_operator->about_business ?></p>
-                                    </div>
+                        <div class="col-md-12 ">
+                            <div class="text-box">
+                                <p><strong>Address : </strong><?= $safari_operator->register_comapany_name ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="text-box">
+                                <p><strong>Offers Other Wildlife Activities : </strong><?= substr($html, 0, -2) ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="text-box">
+                                <p><strong>Instagram Link : </strong><a href="<?= $safari_operator->instagram_url ?>" target="_blank"><?= $safari_operator->instagram_url ?></a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="text-box">
+                                <p><strong>Facebook Link : </strong><a href="<?= $safari_operator->facebook_url ?>" target="_blank"><?= $safari_operator->facebook_url ?></a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="text-box">
+                                <p><strong>Youtube Link : </strong><a href="<?= $safari_operator->youtube_link ?>" target="_blank"><?= $safari_operator->youtube_link ?></a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="text-box">
+                                <p><strong>Website : </strong><a href="<?= $safari_operator->website ?>"><?= $safari_operator->website ?></a></p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+                            <div class="text-box">
+                                <p><strong>About Business : </strong><?= $safari_operator->about_business ?></p>
+                            </div>
 
-                                </div>
+                        </div>
                     </div>
 
                 </div>
