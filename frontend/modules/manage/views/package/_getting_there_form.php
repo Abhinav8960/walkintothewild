@@ -27,11 +27,10 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Package Getting There'])->label('Package Getting There') ?>
             </div>
         </div>
-        <hr>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group float-end">
-                    <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
+            <div class="creat-safri float-end w-auto">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set ']) ?>
                 </div>
             </div>
         </div>

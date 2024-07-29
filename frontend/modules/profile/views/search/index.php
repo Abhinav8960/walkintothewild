@@ -13,10 +13,10 @@ $this->params['title'] = $this->title;
 <div class="container pt-5 mt-5">
     <div class="row mt-2">
         <div class="col-12">
-            <h6 class="fs-3 fw-bold mb-3">Search Profile</h6>
+            <h6 class="fs-3 fw-bold mb-4">Search Profile</h6>
         </div>
     </div>
-    <div class="row mb-5 pb-5">
+    <div class="row margin_bottomfooter">
         <?php foreach ($user_list as $user) { ?>
             <div class="col-md-3 mb-4">
                 <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $user]);  ?>

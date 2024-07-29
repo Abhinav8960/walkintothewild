@@ -5,10 +5,10 @@ use yii\grid\GridView;
 use common\models\GeneralModel;
 
 ?>
-<div class="card">
-    <div class="card-body">
-        <div id="w1-button" class="mb-3" style="font-weight: bolder;">Previous Request</div>
-        <div class="table-responsive">
+<div class="card card account-settingside">
+    <div class="card-body p-4">
+        <h6 class="fs-6 fw-bold mb-4" id="w1-button">Previous Request</h6>
+        <div class="table-responsive table_design_manage">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
@@ -86,7 +86,7 @@ use common\models\GeneralModel;
                             'view' => function ($url, $model) {
                                 return  Html::a('View
                                 ', ['viewrequest', 'id' => $model->id], [
-                                    'class' => 'btn btn-info',
+                                    'class' => 'btn btn-info bg-blues py-2',
                                     'title' => 'View',
 
                                 ]);

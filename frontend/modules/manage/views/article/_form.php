@@ -8,9 +8,8 @@ use yii\bootstrap5\ActiveForm;
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
 <div class="col-md-12">
-
-    <div class="card">
-        <div class="card-body">
+    <div class="card  Modal_form">
+        <div class="card-body p-4">
             <?php $form = ActiveForm::begin([
                 'id' => 'article-form',
                 'method' => 'POST',
@@ -22,8 +21,10 @@ use yii\bootstrap5\ActiveForm;
             ]); ?>
 
             <div class="row">
-                <div class="col-md-9">
-                    <?= $form->field($model, 'title')->textInput([
+                <div class="col-md-12">
+                    <?= $form->field($model, 'title', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->textInput([
                         'maxlength' => true,
                         'placeholder' => 'Enter Article Title',
                     ]) ?>
@@ -32,7 +33,9 @@ use yii\bootstrap5\ActiveForm;
 
             <div class="row">
                 <div class="col-md-6">
-                    <?= $form->field($model, 'article_tags')->widget(\kartik\select2\Select2::classname(), [
+                    <?= $form->field($model, 'article_tags', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->widget(\kartik\select2\Select2::classname(), [
                         'data' => GeneralModel::tagoption(),
                         'options' => ['placeholder' => 'Select', 'multiple' => true],
                         'pluginOptions' => [
@@ -42,7 +45,9 @@ use yii\bootstrap5\ActiveForm;
                 </div>
 
                 <div class="col-md-6">
-                    <?= $form->field($model, 'article_topics')->widget(\kartik\select2\Select2::classname(), [
+                    <?= $form->field($model, 'article_topics', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->widget(\kartik\select2\Select2::classname(), [
                         'data' => GeneralModel::topicoption(),
                         'options' => ['placeholder' => 'Select', 'multiple' => true],
                         'pluginOptions' => [
@@ -54,7 +59,9 @@ use yii\bootstrap5\ActiveForm;
 
             <div class="row">
                 <div class="col-6">
-                    <?= $form->field($model, 'banner_image')->fileInput()->label('Article Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    <?= $form->field($model, 'banner_image', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->fileInput()->label('Article Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                 </div>
                 <?php
                 if ($model->article_model->banner_image) { ?>
@@ -66,16 +73,22 @@ use yii\bootstrap5\ActiveForm;
 
 
             <div class="row">
-                <?= $form->field($model, 'description')->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description') ?>
+                <?= $form->field($model, 'description', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
 
             <div class="row">
                 <div class="col-md-3">
-                    <?= $form->field($model, 'comment_allowed')->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
+                    <?= $form->field($model, 'comment_allowed', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
                 </div>
 
-                <div class="col-md-6">
-                    <?= $form->field($model, 'slug')->textInput([
+                <div class="col-md-9">
+                    <?= $form->field($model, 'slug', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->textInput([
                         'maxlength' => true,
                         'placeholder' => 'Enter Slug',
                         'readonly' => isset($model->article_model->id) ? true : false,
@@ -84,11 +97,12 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group">
-                        <?= Html::submitButton('Save', ['class' => 'btn btn-info mb-2 ms-2']) ?>
+                    <div class="creat-safri float-end w-auto">
+                        <?= Html::submitButton('Save', ['class' => 'safari_create font_set px-5']) ?>
                     </div>
                 </div>
             </div>
+
 
         </div>
         <?php ActiveForm::end(); ?>

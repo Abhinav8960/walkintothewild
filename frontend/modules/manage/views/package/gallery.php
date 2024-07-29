@@ -12,23 +12,29 @@ $this->params['title'] = $this->title;
 
 ?>
 
-<div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
-        <div class="col-md-12 d-flex justify-content-between">
-            <h5><?= $this->title ?></h5>
-            <div class="d-flex justify-content-between">
-                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn btn-success mb-2" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
-                <button class="packageBtn join_btn ms-sm-3 mt-sm-0 mt-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery?package_id=' . $package_model->id . '']) ?>">+ Add Gallery</button>
+<div class="container-fluid mt-5 ">
+    <div class="row margin_bottomfooter">
+    <div class="col-md-12 ">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+            <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
+            <div class="d-flex justify-content-end align-items-center flex-basis-50  gap-2">
+            <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 w-25" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
+            <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 w-50" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery?package_id=' . $package_model->id . '']) ?>">+ Add Gallery</button>
             </div>
+            </div>
+           
         </div>
         <div class="col-md-2">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
         <div class="col-md-10">
-            <div class="card">
-                <div class="card-body">
+            <div class="card account-settingside itenary_tabs">
+                <div class="card-body safartabs p-4">
                     <div class="row">
-                        <?= $this->render('_profile_navbar', ['package' => $package_model, 'gallery_active' => 'active']) ?>
+                        <div class="col-12">
+
+                            <?= $this->render('_profile_navbar', ['package' => $package_model, 'gallery_active' => 'active']) ?>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -36,7 +42,7 @@ $this->params['title'] = $this->title;
                                 <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                                     <div class="card">
                                         <div class="card-body">
-                                            <div class="table-responsive">
+                                            <div class="table-responsive table_design_manage">
                                                 <?= GridView::widget([
                                                     'dataProvider' => $dataProvider,
                                                     'columns' => [
@@ -67,7 +73,7 @@ $this->params['title'] = $this->title;
                                                             'template' => '{update}',
                                                             'buttons' => [
                                                                 'update' => function ($url, $model) {
-                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?package_id=$model->package_id&id=$model->id", 'class' => 'btn packageBtn join_btn me-2', 'title' => 'Create Gallery']);
+                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?package_id=$model->package_id&id=$model->id", 'class' => 'packageBtn join_btn px-3', 'title' => 'Create Gallery']);
                                                                 },
                                                             ]
                                                         ],
@@ -93,7 +99,7 @@ $this->params['title'] = $this->title;
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add a Gallery</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
-            <div class="modal-body px-2 pt-0">
+            <div class="modal-body p-4">
                 <div id='modalContent'></div>
             </div>
         </div>

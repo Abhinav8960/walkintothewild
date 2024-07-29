@@ -27,18 +27,18 @@ $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
 
 ?>
 
-<div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
-        <div class="col-md-12">
-            <h5><?= $this->title ?></h5>
+<div class="container-fluid mt-5 ">
+    <div class="row margin_bottomfooter">
+        <div class="col-md-12 mb-4">
+          <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
         </div>
         <div class="col-md-2">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
         <div class="col-md-10">
             <div class="card">
-                <div class="card-body">
-                    <div class="row mt-2 mb-5">
+                <div class="card-body p-4">
+                    <div class="row mt-2 ">
                         <div class="col-md-3">
                             <img src="<?= $safari_operator_request->Imagepath ?>" style="width:100%;">
                         </div>

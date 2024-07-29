@@ -38,7 +38,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
   </section>
 </div>
-<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 170px !important; padding-top:30px;">
+<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 190px !important; padding-top:30px;">
   <div class="container-fluid pt-3">
     <div class="custom-row">
       <div class="custom-col">

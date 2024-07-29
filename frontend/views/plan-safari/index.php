@@ -185,9 +185,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="container-lg ">
             <div class="row justify-content-center">
                 <div class="col-xl-11 px-md-1 px-0">
-                    <div class="PackageBox_home py-3">
+                    <div class="PackageBox_home p-4">
                         <div class="row justify-content-left">
-                            <div class="col-xxl-12 col-lg-12 col-xl-12">
+                            <div class="col-xxl-12 col-lg-12 col-xl-12 pb-3">
                                 <div class="title_safari JoinPadding d-flex justify-content-left justify-content-xl-between align-items-left flex-wrap">
                                     <h4 class="text-center" style="color:var(--background-primary) !important;">Discover The Best Safari Deal</h4>
                                     <div class="joinshareView mt-xl-0 mt-3">
