@@ -39,11 +39,8 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            $temp = str_replace(Yii::$app->params['frontend_url'], "", $model->url);
-                            if (empty($temp)) {
-                                $temp = "/";
-                            }
-                            $temp = "<a target='_blank' href='" . $model->url . "'>" . mb_strimwidth($temp, 0, 100, ' ...') . "</a>";
+                            $short_url = \common\models\GeneralModel::getshorturl($model->url);
+                            $temp = "<a target='_blank' href='" . $model->url . "'>" . $short_url . "</a>";
                             return $temp;
                         }
                     ],
