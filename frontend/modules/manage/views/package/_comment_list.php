@@ -5,7 +5,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<div class="table-responsive">
+<div class="card  ">
+    <div class="card-body p-2">
+    <div class="table-responsive table_design_manage">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
@@ -71,6 +73,9 @@ use yii\helpers\Url;
         ],
     ]); ?>
 </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content">

@@ -21,7 +21,7 @@ use yii\bootstrap5\ActiveForm;
 
 
 <div class="card">
-    <div class="card-body">
+    <div class="card-body p-4">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
@@ -65,9 +65,10 @@ use yii\bootstrap5\ActiveForm;
         <hr>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group float-end">
-                    <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
+            <div class="creat-safri float-end w-auto">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set ']) ?>
                 </div>
+               
             </div>
         </div>
     </div>

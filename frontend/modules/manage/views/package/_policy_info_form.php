@@ -20,7 +20,6 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 <div class="card">
     <div class="card-body">
-
         <div class="container-fluid-fluid">
             <div class="row">
                 <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
@@ -76,25 +75,24 @@ use yii\bootstrap5\ActiveForm;
                     </div>
 
                     <div class="tab-content_tour " id="tab24">
-                        <div class="searchSafari_parks mb-4">
-                            <div class="row">
+                    <div class="row">
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label(false) ?>
                                 </div>
                             </div>
-                        </div>
-
-
                     </div>
 
                     <div class="tab-content_tour" id="tab25">
                         <!-- Shared Safari content goes here -->
                         <div class="row">
+                            <div class="col-12">
                             <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Date Change Policy'])->label(false) ?>
+                            </div>
+                           
                         </div>
                     </div>
 
-                    <div class="tab-content_tour mb-4" id="tab26">
+                    <div class="tab-content_tour " id="tab26">
                         <div class="row">
                             <div class="col-md-12">
                                 <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Refund Policy'])->label(false) ?>
@@ -105,9 +103,9 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group float-end">
-                        <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
-                    </div>
+                <div class="creat-safri float-end w-auto">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set ']) ?>
+                </div>
                 </div>
             </div>
         </div>
