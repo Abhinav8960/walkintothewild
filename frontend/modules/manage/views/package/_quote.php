@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 ?>
 <div class="card">
-    <div class="card-body">
+    <div class="card-body p-4">
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,

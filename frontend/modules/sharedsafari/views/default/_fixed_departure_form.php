@@ -32,7 +32,7 @@ use yii\helpers\Html;
             <p>Value: <span id="safariseat"><?= $model->no_of_safari ?></span></p>
         </div>
 
-        <div class="col-md-6 mb-1">
+        <div class="col-md-12 mb-1">
             <label for="" class="Modal_label">Theme</label>
             <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 

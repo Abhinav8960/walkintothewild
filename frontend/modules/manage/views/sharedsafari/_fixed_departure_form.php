@@ -31,7 +31,7 @@ use yii\helpers\Html;
             <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'number', 'min' => 0, 'placeholder' => 'Enter Number of safari'])->label(false) ?>
         </div>
 
-        <div class="col-md-6 mb-1">
+        <div class="col-md-12 mb-1">
             <label for="" class="Modal_label">Theme</label>
             <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 
@@ -59,7 +59,7 @@ use yii\helpers\Html;
 
         <div class="col-lg-6 mb-2">
             <label for="" class="Modal_label">Cost Per Person (INR)</label>
-            <div class="d-flex gap-3 align-items-center">
+            <div class="d-flex gap-3 align-items-center w-100">
                 <?= $form->field($model, 'cost_per_person')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control', 'placeholder' => 1000])->label(false) ?>
             </div>
 

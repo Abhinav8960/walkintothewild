@@ -5956,3 +5956,11 @@ a.desc:after {
 
     padding-bottom: 170px;
 }
+.padding_btn{
+
+    padding: 11px 20px !important;
+}
+.field-createdepartureform-cost_per_person{
+
+    width: 100%;
+}

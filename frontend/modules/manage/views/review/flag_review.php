@@ -6,9 +6,9 @@ use yii\helpers\Html;
 
 $this->title = 'Safari Tour Operator ';
 ?>
-<div class="card">
-    <div class="card-body">
-        <div class="table-responsive">
+<div class="card account-settingside">
+    <div class="card-body p-4">
+        <div class="table-responsive table_design_manage">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
