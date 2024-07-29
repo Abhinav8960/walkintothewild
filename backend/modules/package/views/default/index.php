@@ -113,7 +113,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['/package/profile/index', 'package_id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',

@@ -74,7 +74,7 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         'buttons' => [
                             'delete' => function ($url, $model) {
                                 if ($model->content_type == 'manual_url') {
-                                    return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'Delete',
                                         'data' => [

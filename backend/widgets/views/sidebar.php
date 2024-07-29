@@ -771,7 +771,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/flag/operator/index",
 																				"/flag/share-safari/index",
 																				"/flag/package/index",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Flag</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -896,11 +896,19 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/log/default/index",
 															"/log/default/front-index",
 															"/trierror/default/index",
+															"/trierror/frontend-request-log",
+															"/trierror/site-pages",
+															"/trierror/site-untraced-request",
+															"/trierror/site-robots"
 														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/log/default/index",
 																				"/trierror",
 																				"/log/default/front-index",
+																				"/trierror/frontend-request-log",
+																				"/trierror/site-pages",
+																				"/trierror/site-untraced-request",
+																				"/trierror/site-robots"
 																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>

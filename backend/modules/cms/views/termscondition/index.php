@@ -58,14 +58,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="View" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="View" width="25" height="25">
                                 ', ['view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'type' => 'View',
                                 ]);
                             },
                             'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'type' => 'Update',

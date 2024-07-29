@@ -68,7 +68,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                         'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['/park/safari/default/view', 'safari_park_id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',

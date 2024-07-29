@@ -63,7 +63,7 @@ $this->params['title'] = $this->title;
                         'template' => '{view}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['/park/operator-quote/view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
@@ -72,7 +72,7 @@ $this->params['title'] = $this->title;
                             },
 
                             'delete' => function ($url, $model) {
-                                return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
