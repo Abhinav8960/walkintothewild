@@ -11,17 +11,18 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
-<div class="container mt-5 mb-5">
-    <div class="row mb-5">
-        <div class="col-md-12  mt-2">
+<div class="container mt-5 ">
+    <div class="row margin_bottomfooter">
+        <div class="col-md-12  ">
             <h6 class="fs-3 fw-bold mb-4">Wishlist</h6>
         </div>
         <div class="col-12">
-            <div class="card">
-                <div class="row mb-5">
+            <div class="card account-settingside mb-5 itenary_tabs">
+                <div class="card-body card-body p-4 safartabs">
+                <div class="row ">
                     <div class="col-md-12">
                         <?= $this->render('@frontend/modules/account/views/wishlist/_navbar', ['shared_safari' => 'active']) ?>
-                        <div class="tab-content m-3" id="pills-tabContent">
+                        <div class="tab-content " id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-shared-safari" role="tabpanel" aria-labelledby="pills-shared-safari-tab">
                                 <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
 
@@ -133,6 +134,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         </div>
                     </div>
                 </div>
+                </div>
+               
             </div>
         </div>
 

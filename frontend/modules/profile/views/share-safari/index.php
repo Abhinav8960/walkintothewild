@@ -27,7 +27,7 @@ $this->params['title'] = $this->title;
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <h6 class="fs-6 fw-bold mb-4">Shared Safari Organized by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
-                                        <div class="row">
+                                        <div class="row gx-5">
                                             <?php if ($organized_by) {
                                                 foreach ($organized_by as $share_safari) {
                                             ?>

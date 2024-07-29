@@ -5991,3 +5991,7 @@ a.desc:after {
 
     flex-basis: 25%;
 }
+.table_design_manage .table-bordered{
+    --bs-border-width: 0px !important;
+    border-width:0 !important;
+}
