@@ -72,11 +72,12 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Full URL',
+                        'label' => 'URL',
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            $temp = "<a target='_blank' href='" . $model->request_full_url . "'>" . mb_strimwidth($model->request_full_url, 0, 100, ' ...') . "</a>";
+                            $short_url = \common\models\GeneralModel::getshorturl($model->request_full_url);
+                            $temp = "<a target='_blank' href='" . $model->request_full_url . "'>" . $short_url . "</a>";
                             return $temp;
                         }
                     ],

@@ -3,6 +3,7 @@
 use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /** @var yii\web\View $this */
 /** @var common\models\master\airport\MasterAirportSearch $model */
@@ -24,12 +25,19 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row">
     <div class="col-md-3">
-        <?= $form->field($model, 'user_id')->dropDownList(
-            yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
-            [
-                'prompt' => 'Select User',
-            ]
-        ) ?>
+        <?= $form->field($model, 'user_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' => yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
+            'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+            'options' => [
+                'placeholder' => 'Select User',
+                'multiple' => false,
+                'class' => 'form-control'
+            ],
+            'pluginOptions' => [
+                'allowClear' => true,
+                'class' => 'form-control'
+            ],
+        ])->label(false) ?>
     </div>
 
     <div class="col-md-3">

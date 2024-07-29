@@ -38,7 +38,8 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            $temp = "<a target='_blank' href='" . $model->url . "'>" . mb_strimwidth($model->url, 0, 100, ' ...') . "</a>";
+                            $short_url = \common\models\GeneralModel::getshorturl($model->url);
+                            $temp = "<a target='_blank' href='" . $model->url . "'>" . $short_url . "</a>";
                             return $temp;
                         }
                     ],

@@ -993,4 +993,18 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $wishlist->save(false);
         return $wishlist;
     }
+
+    public static function getshorturl($url)
+    {
+        $output = "/";
+        $temp = explode("/", $url);
+        if (count($temp) > 3) {
+
+            $output = array_slice($temp, 3);
+            $output = "/" . implode("/", $output);
+            $output = mb_strimwidth($output, 0, 100, ' ...');
+        }
+
+        return $output;
+    }
 }
