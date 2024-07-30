@@ -1206,7 +1206,7 @@ figure {
     transition: all 500ms ease;
     border-radius: 10px 10px 0px 0px;
     height: 260px;
-    object-fit: fill;
+    object-fit: cover;
 }
 .artical_cards:hover{
 
