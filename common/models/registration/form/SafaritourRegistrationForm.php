@@ -171,7 +171,7 @@ class SafaritourRegistrationForm extends model
                 // 'minHeight' => 123,
                 'maxSize' => 250 * 1024
             ],
-            ['about_business', \common\validators\Word120Validator::className()],
+            ['about_business', \common\validators\Word120Validator::className(), 'word_limit' => 500],
             ['phone_no', function () {
                 if ($this->phone_no === $this->operator_phone_no) {
                     $this->addError('operator_phone_no', 'Phone Number Should not match');
