@@ -1178,6 +1178,7 @@ figure {
 }
 
 
+
 .artical_cards:hover .link a {
 
     -webkit-transform: scale(1.2);
@@ -1389,7 +1390,13 @@ figure {
 
     border-radius: 10px;
 }
+.updateBtn_artical{
 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+}
 .bg_sky {
 
     padding: 70px 10px 50px 10px;

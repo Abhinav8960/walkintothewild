@@ -33,10 +33,10 @@ $this->params['title'] = $this->title;
                                     <?php if ($articles) {
                                         foreach ($articles as $article) {  ?>
                                             <div class="col-md-6 mb-5 " style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
-                                                <div class="artical_cards h-100">
+                                                <div class="artical_cards h-100 position-relative">
                                                     <div class="image-box">
                                                         <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                            <a class="join_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
+                                                            <a class="join_btn updateBtn_artical text-center px-3 py-1" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
                                                         <?php } ?>
 
                                                         <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
