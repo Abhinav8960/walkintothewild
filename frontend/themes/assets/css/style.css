@@ -6082,4 +6082,10 @@ a.desc:after {
 
     font-size: 18px !important;
     font-weight: 600 !important;
+    padding-bottom: 10px !important;
+}
+.card_bodyPadding .fs-6.fw-bold{
+
+    margin-bottom: 0 !important;
+    padding-bottom: 20px !important;
 }

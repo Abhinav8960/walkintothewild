@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     foreach ($operator_parks as $operator_park) {
                                                         $park_detail = $operator_park->park;
                                                 ?>
-                                                        <div class="col-md-6 col-lg-4 gap-2 mt-2 mb-2">
+                                                        <div class="col-md-6 col-lg-4 gap-2  mb-2">
                                                             <div class="parksImgireview h-100">
                                                                 <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
                                                                     <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">

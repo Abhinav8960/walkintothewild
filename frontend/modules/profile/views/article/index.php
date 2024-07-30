@@ -32,7 +32,7 @@ $this->params['title'] = $this->title;
                                     </div>
                                     <?php if ($articles) {
                                         foreach ($articles as $article) {  ?>
-                                            <div class="col-md-6 mb-5 mt-4" style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
+                                            <div class="col-md-6 mb-5 " style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
                                                 <div class="artical_cards h-100">
                                                     <div class="image-box">
                                                         <?php if (Yii::$app->user->identity->id == $user->id) { ?>
