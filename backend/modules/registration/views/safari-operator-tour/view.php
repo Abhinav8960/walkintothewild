@@ -135,7 +135,7 @@ foreach ($park as $key => $role) {
                 <?= $form->field($model, 'comment')->textInput(['maxlength' => true, 'placeholder' => 'Enter Comment']) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'is_approved')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select Approval Option']) ?>
+                <?= $form->field($model, 'is_approved')->dropDownList([1 => 'Yes', 2 => 'No'], ['prompt' => 'Select Approval Option']) ?>
             </div>
 
 

@@ -58,7 +58,7 @@ class SafariOperatorTourController extends Controller
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->safarioperator_request_approval_model->save()) {
+                    if ($model->safarioperator_request_approval_model->save(false)) {
                         if ($model->is_approved == 1) {
                             $safari_operator = SafariOperator::find()->where(['id' => $model->safarioperator_request_approval_model->safari_operator_id])->limit(1)->one();
                             if (!$safari_operator) {
@@ -163,10 +163,10 @@ class SafariOperatorTourController extends Controller
                                     }
                                 }
                             }
+                        } else {
+                            \Yii::$app->session->setFlash('success', 'Operator Not Approved');
+                            return $this->redirect(['index']);
                         }
-                    } else {
-                        // print_r($model->safarioperator_request_approval_model);
-                        // exit;
                     }
                 }
             }
