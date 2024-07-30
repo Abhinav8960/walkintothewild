@@ -83,7 +83,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Update',
@@ -91,7 +91,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                 ]);
                             },
                             'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'View',
@@ -100,7 +100,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             },
                             'delete' => function ($url, $model) {
                                 if ($model->status == 2) {
-                                    return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'Delete',
                                         'data' => [

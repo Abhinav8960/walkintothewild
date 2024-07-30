@@ -176,6 +176,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/meta/other-wildlife-activities",
 															"/meta/animal-type",
 															"/meta/bird-type",
+															"/meta/accommodation",
+															"/meta/safari-session"
 														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/meta",
@@ -189,6 +191,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/meta/other-wildlife-activities",
 																				"/meta/animal-type",
 																				"/meta/bird-type",
+																				"/meta/accommodation",
+																				"/meta/safari-session"
 																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Meta</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Meta</a></li>
@@ -419,6 +423,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/cms/feature-article/index",
 															"/cms/feature-rare-exotic/index",
 															"/cms/feature-tag/index",
+															"/cms/flag-reason"
 														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/cms",
@@ -450,6 +455,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/feature-article/index",
 																				"/cms/feature-rare-exotic/index",
 																				"/cms/feature-tag/index",
+																				"/cms/flag-reason"
 																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 																		"/cms",
@@ -481,6 +487,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																		"/cms/feature-article/index",
 																		"/cms/feature-rare-exotic/index",
 																		"/cms/feature-tag/index",
+																		"/cms/flag-reason"
 																	)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																																"/cms",
 																																"/cms/article-category/index",
@@ -513,6 +520,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																																"/cms/feature-article/index",
 																																"/cms/feature-rare-exotic/index",
 																																"/cms/feature-tag/index",
+																																"/cms/flag-reason"
 																															)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -657,9 +665,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li>
-							<li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																									"/cms/flag-reason",
-																								)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+																					"/cms/flag-reason",
+																				)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
@@ -771,7 +779,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/flag/operator/index",
 																				"/flag/share-safari/index",
 																				"/flag/package/index",
-																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
+																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Flag</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Flag</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
@@ -843,12 +851,14 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/sharesafari/default/view",
 															// "/sharesafari/request/index",
 															// "/sharesafari/request/view",
+															"/sharesafari/share-safari-comment/index",
 														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/sharesafari/default/index",
 																				"/sharesafari/default/view",
 																				// "/sharesafari/request/index",
 																				// "/sharesafari/request/view",
+																				"/sharesafari/share-safari-comment/index",
 																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
@@ -896,11 +906,21 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/log/default/index",
 															"/log/default/front-index",
 															"/trierror/default/index",
+															"/trierror/frontend-request-log",
+															"/trierror/site-pages",
+															"/trierror/site-untraced-request",
+															"/trierror/site-robots",
+															"/trierror/default/front-index"
 														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/log/default/index",
 																				"/trierror",
 																				"/log/default/front-index",
+																				"/trierror/frontend-request-log",
+																				"/trierror/site-pages",
+																				"/trierror/site-untraced-request",
+																				"/trierror/site-robots",
+																				"/trierror/default/front-index"
 																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
@@ -937,7 +957,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/portalsetting/log/index",
 															"/portalsetting/default/clear-assets",
 															"/portalsetting/default/clear-cache",
-															"/portalsetting/pageview/index"
+															"/portalsetting/pageview/index",
+															"/portalsetting/log/console-log"
 														)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/portalsetting/default/index",
@@ -945,7 +966,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/portalsetting/log/index",
 																				"/portalsetting/default/clear-assets",
 																				"/portalsetting/default/clear-cache",
-																				"/portalsetting/pageview/index"
+																				"/portalsetting/pageview/index",
+																				"/portalsetting/log/console-log"
 																			)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Portal Settings</a></li>
@@ -970,7 +992,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 																				"/contact",
 																				"/contact/default/index",
-																			)) ? "active" : "" ?>" href="/contact/default/index"><img src="/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Contacts</span></a>
+																			)) ? "active" : "" ?>" href="/contact/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Contacts</span></a>
 					</li>
 				<?php endif; ?>
 

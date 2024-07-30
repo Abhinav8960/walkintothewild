@@ -46,7 +46,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Update',
@@ -55,7 +55,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                             },
 
                             'delete' => function ($url, $model) {
-                                return  Html::a('<img src="/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [

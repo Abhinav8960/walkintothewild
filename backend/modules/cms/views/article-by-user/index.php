@@ -106,7 +106,7 @@ $this->params['title'] = $this->title;
                         'template' => '{update}&nbsp;&nbsp;{comment}',
                         'buttons' => [
                             'update' => function ($url, $model) {
-                                return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Update',
@@ -115,7 +115,7 @@ $this->params['title'] = $this->title;
                             },
 
                             'comment' => function ($url, $model) {
-                                return Html::a('<img src="/img/view.png" alt="" width="25" height="25">', ['comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
+                                return Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', ['comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
                             },
                         ]
                     ],
