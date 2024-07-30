@@ -33,7 +33,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </section>
-<section class="articals_wrapper py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
+<section class="articals_wrapper mt-4 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
     <div class="container-fluid">
         <!-- <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
@@ -100,8 +100,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     </div>
                                     <div class="col-md-9 col-sm-8 col-xl-9">
                                         <div class="safariSearch_wrap">
-                                            <div class="safrititles pt-sm-0 pt-3">
-                                                <h6 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?><?= isset($model->location) ? $model->location->title : '' ?></span></h6>
+                                            <div class="safrititles tite_parklist pt-sm-0 pt-3">
+                                                <h4 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?><?= isset($model->location) ? $model->location->title : '' ?></span></h4>
                                             </div>
                                             <div class="seelctes_text  pb-4 ">
                                                 <p>
@@ -128,15 +128,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
                                 </div>
 
                             </div>
                         </a>
-
                 <?php }
                 } ?>
             </div>
