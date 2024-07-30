@@ -5076,7 +5076,7 @@ figure {
     max-height: 300px;
     height: 300px;
     border-radius: 10px 10px;
-    object-fit: fill;
+    object-fit: cover;
     margin-bottom: 10px;
 }
 
