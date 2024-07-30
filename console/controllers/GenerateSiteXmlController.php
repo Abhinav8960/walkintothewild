@@ -6,7 +6,7 @@ use yii\console\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
-
+use yii\helpers\Url;
 use common\models\trierror\FrontendRequestLog;
 use common\models\trierror\FrontendRequestLogSearch;
 use common\models\cms\article\Article;
@@ -20,7 +20,8 @@ use common\models\cms\article\ArticleAuthor;
 use common\models\sharesafari\ShareSafari;
 use common\models\trierror\SiteRobots;
 use common\models\package\Package;
-use yii\helpers\Url;
+use common\models\master\animal\MasterRareAnimal;
+
 
 /**
  * FrontendRequestLogController implements the CRUD actions for FrontendRequestLog model.
@@ -71,6 +72,7 @@ class GenerateSiteXmlController extends Controller
         $additional_sitemap[] = $this->get_author_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_tags_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_package_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_rared_animal_site_pages($backend_actual_url);
 
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
@@ -291,7 +293,6 @@ class GenerateSiteXmlController extends Controller
         $base_url = Yii::$app->params['frontend_url'];
 
         $articles = Article::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
-
         SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'article', 'status' => true]);
         if (count($articles) > 0) {
             $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
@@ -300,7 +301,6 @@ class GenerateSiteXmlController extends Controller
             $insert_article_site_pages = [];
             foreach ($articles as $article) {
                 $url = $base_url . 'article/' . $article['slug'];
-
                 $insert_article_site_pages[] = [
                     'content_id' => $article['id'],
                     'content_type' => 'article',
@@ -504,6 +504,52 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "package.xml";
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url . "storage/sitemap/" . $fileName;
+        }
+        return '';
+    }
+
+    protected function get_rared_animal_site_pages($backend_actual_url)
+    {
+        $base_url = Yii::$app->params['frontend_url'];
+
+        $packages = MasterRareAnimal::find()->select(['id', 'slug', 'updated_at', 'total_view'])->where(['status' => true])->asArray()->all();
+
+        SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_type' => 'rare_animal', 'status' => true]);
+        if (count($packages) > 0) {
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
+            $insert_package_site_pages = [];
+            foreach ($packages as $package) {
+                $url = $base_url . 'rareanimal/' . $package['slug'];
+
+                $insert_package_site_pages[] = [
+                    'content_id' => $package['id'],
+                    'content_type' => 'rare_animal',
+                    'slug' => $package['slug'],
+                    'url' => $url,
+                    'last_update_at' => date('Y-m-d H:i:s', $package['updated_at']),
+                    'counter' => $package['total_view'],
+                ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $package['updated_at']) . "</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
+            }
+
+            Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_package_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "rared_animal.xml";
             $myFile = $backend_actual_url . "/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);

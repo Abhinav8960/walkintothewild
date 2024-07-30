@@ -15,6 +15,8 @@ use common\models\trierror\SitePages;
 use common\models\cms\article\ArticleAuthor;
 use common\models\sharesafari\ShareSafari;
 use common\models\trierror\SiteUntracedRequest;
+use common\models\package\Package;
+use common\models\master\animal\MasterRareAnimal;
 use Exception;
 
 /**
@@ -192,6 +194,54 @@ class ContentCounterController extends Controller
           $shared_safari_model->total_view += $safari['pending_view'];
           if ($shared_safari_model->save()) {
             $non_count_slug[] = $safari['slug'];
+          }
+        }
+      }
+      FrontendRequestLog::updateAll(['is_count' => true], ['in', 'slug', $non_count_slug]);
+    }
+
+    //rared animal counter
+    $rared_animals = FrontendRequestLog::find()
+      ->select(['slug', 'route', 'COUNT(*) AS pending_view'])
+      ->where(['not', ['slug' => null]])
+      ->andWhere(['is_count' => false])
+      ->andWhere(['route' => 'park/default/rareanimal'])
+      ->groupBy(['slug'])
+      ->createCommand()
+      ->queryAll();
+
+    if (count($rared_animals)) {
+      $non_count_slug = [];
+      foreach ($rared_animals as $animal) {
+        $rared_animals_model = MasterRareAnimal::find()->where(['slug' => $animal['slug']])->one();
+        if (!empty($rared_animals_model)) {
+          $rared_animals_model->total_view += $animal['pending_view'];
+          if ($rared_animals_model->save()) {
+            $non_count_slug[] = $animal['slug'];
+          }
+        }
+      }
+      FrontendRequestLog::updateAll(['is_count' => true], ['in', 'slug', $non_count_slug]);
+    }
+
+    //package counter
+    $packages = FrontendRequestLog::find()
+      ->select(['slug', 'route', 'COUNT(*) AS pending_view'])
+      ->where(['not', ['slug' => null]])
+      ->andWhere(['is_count' => false])
+      ->andWhere(['route' => 'package/default/view'])
+      ->groupBy(['slug'])
+      ->createCommand()
+      ->queryAll();
+
+    if (count($packages)) {
+      $non_count_slug = [];
+      foreach ($packages as $pckg) {
+        $packages_model = Package::find()->where(['package_slug' => $pckg['slug']])->one();
+        if (!empty($packages_model)) {
+          $packages_model->total_view += $pckg['pending_view'];
+          if ($packages_model->save()) {
+            $non_count_slug[] = $pckg['slug'];
           }
         }
       }
