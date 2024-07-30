@@ -4980,6 +4980,20 @@ figure {
     color: #646464;
     font-weight: 500;
 }
+.titles_locations h6.fs-5{
+
+    font-size: 18px !important;
+}
+.days_title h4{
+
+    font-size: 18px !important;
+}
+
+.desclaimers{
+
+    padding-left: 25px;
+    padding-top: 8px;
+}
 
 .inputsCheck input[type="checkbox"] {
 
@@ -5062,7 +5076,7 @@ figure {
     max-height: 300px;
     height: 300px;
     border-radius: 10px 10px;
-    object-fit: cover;
+    object-fit: fill;
     margin-bottom: 10px;
 }
 

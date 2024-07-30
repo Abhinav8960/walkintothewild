@@ -272,7 +272,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="animal-wrapper pb-4">
     <?= \frontend\widgets\RareExoticWidget::widget() ?>
 </section>
-<section class="articals_wrapper  pb-5 mb-5">
+<section class="articals_wrapper  margin_bottomfooter mb-5">
     <?= $this->render('_featured_article', [
         'featured_articles' => $featured_articles,
     ]) ?>

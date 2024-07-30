@@ -292,8 +292,8 @@ $this->params['title'] = $this->title;
                 <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                     <div class="request_quote">
                         <div class="request_quote mt-4">
-                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                Photo Gallery 10</button>
+                            <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+                                Photo Gallery <span>10</span></button>
                             <div class="interst_wrapper p-0 bg-white">
                                 <div class="photoSlider owl-carousel owl-theme">
                                     <?php foreach ($galleries as $gallery) { ?>

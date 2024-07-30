@@ -182,7 +182,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         'rare_exotics' => $rare_exotics,
     ]) ?>
 </section>
-<section class="bg_sky">
+<section class="bg_sky 44">
     <div class="container-fluid">
         <div class="row px-xl-4">
             <div class="col-lg-6 mb-5 mb-lg-4">
@@ -223,7 +223,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
     </div>
 </section>
-<section class="articals_wrapper  pb-5 mb-5">
+<section class="articals_wrapper  margin_bottomfooter mb-5">
     <?= $this->render('_featured_article', [
         'featured_articles' => $featured_articles,
     ]) ?>
