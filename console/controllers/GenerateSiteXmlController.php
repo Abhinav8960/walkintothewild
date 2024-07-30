@@ -549,7 +549,7 @@ class GenerateSiteXmlController extends Controller
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_package_site_pages)->execute();
 
             $xml_content .= "</urlset>";
-            $fileName = "package.xml";
+            $fileName = "rared_animal.xml";
             $myFile = $backend_actual_url . "/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
