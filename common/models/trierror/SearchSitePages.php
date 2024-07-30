@@ -68,10 +68,10 @@ class SearchSitePages extends SitePages
             'created_at' => $this->created_at,
         ]);
 
-        if($this->content_type != 'select_all'){
-            $query->andFilterWhere(['like', 'content_type', $this->content_type]);
+        if ($this->content_type != 'select_all') {
+            $query->andFilterWhere(['content_type' => $this->content_type]);
         }
-        
+
         $query->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'slug', $this->slug]);
 
