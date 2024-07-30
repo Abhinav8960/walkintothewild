@@ -451,6 +451,10 @@ a {
     border: 1px solid #7070704D;
     box-shadow: none;
 }
+.sharesafri-card.tourpackage:hover{
+    -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029;
+}
 
 .sharesafri-card.tourpackage .card_body {
 
@@ -1198,7 +1202,7 @@ figure {
     transition: all 500ms ease;
     border-radius: 10px 10px 0px 0px;
     height: 260px;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
 .artical_cards:hover .image-box .image img {
@@ -4440,7 +4444,9 @@ figure {
     position: absolute;
     top: calc(100% + -5px);
     right: 45px;
-    width: auto;
+    max-width: 300px;
+    width: 289px;
+    /* width: auto; */
     /* 153px; */
     /* min-height: 100px; */
     background: #fff;
@@ -4450,9 +4456,32 @@ figure {
     transform: translateY(-10px);
     visibility: hidden;
     transition: 300ms;
-    border-radius: 4px;
+    border-radius: 10px;
 
 }
+.profile_details{
+    padding: 15px 15px;
+}
+.profile_details .profile_name h6{
+
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+.profile_details .profile_name p{
+
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+}
+.profileBoxwrap ul li{
+
+    padding-left: 15px;
+    padding-right: 15px;
+}
+/* .profileBoxwrap{
+    padding: 15px 20px;
+} */
 
 /* .menuprofile::before {
     content: '';
@@ -4493,12 +4522,12 @@ figure {
 
 .menuprofile ul li a {
     text-decoration: none;
-    color: var(--background-primary);
+    color: #000;
     display: flex;
-    font-weight: 700;
+    font-weight: 400;
     align-items: center;
-    font-size: var(--fs-16);
-    padding: 10px 16px;
+    font-size: var(--fs-14);
+    padding: 8px 5px;
     gap: 16px;
     align-items: center;
     font-family: "Roboto", sans-serif !important;
@@ -4506,7 +4535,7 @@ figure {
 
 .menuprofile ul li a i {
 
-    font-size: 1.2rem;
+    font-size: 14px;
     color: #9c999f;
 }
 
@@ -5994,4 +6023,8 @@ a.desc:after {
 .table_design_manage .table-bordered{
     --bs-border-width: 0px !important;
     border-width:0 !important;
+}
+.margin-remove > div{
+
+    margin-bottom: 0 !important;
 }
