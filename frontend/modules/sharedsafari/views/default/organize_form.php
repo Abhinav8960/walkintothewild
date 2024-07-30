@@ -28,7 +28,7 @@ $this->params['title'] = $this->title;
     </section>
 <?php } ?>
 <section class="">
-    <div class="container-lg pb-5">
+    <div class="container-lg ">
         <div class="row justify-content-center  <?= $show_banner ? 'py-5' : '' ?>">
             <?php if ($show_banner) { ?>
                 <div class="col-12 py-4 text-center">
@@ -185,7 +185,7 @@ $this->params['title'] = $this->title;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12 ">
+                            <div class="col-lg-12 margin-remove">
                                 <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>
                                 <div class="creat-safri d-flex justify-content-end">
                                     <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>

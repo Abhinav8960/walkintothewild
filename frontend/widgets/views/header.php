@@ -140,21 +140,26 @@
 						</div>
 						<div class="menuprofile">
 							<div class="profileBoxwrap">
-								<!-- <div class="profile_details d-flex gap-2">
-									<div class="img-box2">
-										<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileimage <> '' ?  Yii::$app->user->identity->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="35" height="35">
+
+								<?php if ($user= Yii::$app->user->identity) { ?>
+									<div class="profile_details d-flex gap-2">
+										<div class="img-box2">
+											<img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="35" height="35">
+										</div>
+										<div class="profile_name">
+											<h6><?= $user->name ?></h6>
+											<p><?= $user->userhandle ?></p>
+										</div>
 									</div>
-									<div class="profile_name">
-										<h6>Gufran Ahmad</h6>
-										<p>@gufran_ahmad</p>
-									</div>
-								</div> -->
+								<?php } ?>
 								<ul>
 									<?php if (!Yii::$app->user->identity) { ?>
 										<li>
 											<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 										</li>
 									<?php } else { ?>
+
+
 										<!-- <?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
 											<li>
 												<a class="" target="_blank" href="<?= Yii::$app->params['backend_url'] ?>">
