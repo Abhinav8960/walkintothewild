@@ -11,27 +11,42 @@ use yii\helpers\Url;
 
 <style>
     .chat-card-sidebar {
+
+        max-height: 80vh;
+        height: 80vh;
+        width: 100%;
+    }
+
+    /* .chat_box.card{
+
+        max-height: 80vh;
+        height: 80vh;
+        width: 100%;  
+    } */
+
+    .chat-cardlist {
+
         max-height: 80vh;
         height: 80vh;
         width: 100%;
         overflow-y: auto;
-        /* border-right: 2px solid #aaa; */
     }
 
-    .chat-card-sidebar::-webkit-scrollbar-thumb {
+    .chat-cardlist::-webkit-scrollbar-thumb {
         background-color: #107751;
         border: 4px solid transparent;
         border-radius: 8px;
         background-clip: padding-box;
     }
 
-    .chat-card-sidebar::-webkit-scrollbar {
+    .chat-cardlist::-webkit-scrollbar {
         width: 10px;
     }
 
     .chat-message-container {
-        height: 70vh;
-        overflow: scroll;
+        height: 64vh;
+        overflow-y: auto;
+        overflow-x: hidden;
         padding-top: 6px;
     }
 
@@ -56,9 +71,10 @@ use yii\helpers\Url;
         border-bottom: 1px solid #aaaa;
         justify-content: center;
         overflow: hidden;
-        
+
     }
-    .chat-card-sidebar.card{
+
+    .chat-card-sidebar.card {
 
         border-radius: 10px;
     }
@@ -72,8 +88,8 @@ use yii\helpers\Url;
     }
 
     .selected_chat {
-        background-color: #107751;
-        color: #fff;
+        background-color: #b4e0fe;
+        color: #000;
         border-radius: 5px;
     }
 
@@ -101,32 +117,87 @@ use yii\helpers\Url;
     }
 
     .chat-message .message_body_left {
-        background-color: #334651;
+        background-color: #3db1fc;
         color: #fff;
-        margin-right: 55%;
-        border-bottom-right-radius: 8px 8px;
+        max-width: 30rem;
+        display: inline-block;
         margin-bottom: 1px;
-        padding: 3px;
+        padding: 0.5rem 1rem;
+        border-bottom-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        /* overflow: hidden; */
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-align: left;
+    }
+
+    .chat-message .message_body_left:before {
+        display: block;
+        clear: both;
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -8px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 12px 15px 12px;
+        border-color: transparent transparent #3db1fc transparent;
+        -webkit-transform: rotate(-37deg);
+        -ms-transform: rotate(-37deg);
+        transform: rotate(-37deg);
     }
 
     .chat-message .message_body_right {
-        background-color: #009378;
-        color: #fff;
-        margin-left: 55%;
-        margin-bottom: 1px;
-        border-bottom-left-radius: 8px 8px;
-        padding: 3px;
+        color: #000;
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 400;
+        padding: 15px;
+       
+        background-color: #f5f5f5;
+        max-width: 30rem;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .chat-message .message_body_right:before {
+        display: block;
+        clear: both;
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        right: -7px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 12px 15px 12px;
+        border-color: transparent transparent #f5f5f5 transparent;
+        -webkit-transform: rotate(37deg);
+        -ms-transform: rotate(37deg);
+        transform: rotate(37deg);
+        z-index: 1;
+    }
+
+    .reciverchta{
+
+        display: flex;
+        justify-content: end;
     }
 
     #message_sent_btn {
         cursor: pointer;
     }
 
-    .chat-user_name .lastmassge{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 0.9rem;
+    .chat-user_name .lastmassge {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-size: 0.9rem;
     }
 </style>
