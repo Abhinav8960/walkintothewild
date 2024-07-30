@@ -112,7 +112,7 @@ if ($article->meta_title != '') {
                                     'article' => $article,
                                 ]) ?>
                             </div>
-                            <div class="author_wrapper">
+                            <div class="author_wrapper pt-2">
                                 <ul class="artical-info flex-wrap">
                                     <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $article->articleAuthor ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
                                     <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="#comment-wrapper-section"><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
@@ -153,7 +153,7 @@ if ($article->meta_title != '') {
     </div>
     </div>
 </section>
-<section class="safariduring_sesons pb-5 mb-5">
+<section class="safariduring_sesons margin_bottomfooter mb-5">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 

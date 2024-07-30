@@ -66,8 +66,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
                                 <div class="col-xxl-8 col-lg-8">
-                                    <div class="comments_safari operator_comment bg-white safriComments">
-                                        <div class="commentsOther  position-relative">
+                                    <div class="comments_safari operator_comment bg-white safriComments pt-3">
+                                        <div class="commentsOther comments_parks  position-relative ">
                                             <div class=" d-flex justify-content-between flex-wrap">
                                                 <?php if ($reviews) { ?>
                                                     <div class="userRatingTitle">
@@ -122,7 +122,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <?php
                                             if ($reviews) {
                                                 foreach ($reviews as $review) {  ?>
-                                                    <div class="commentsOther  position-relative">
+                                                    <div class="commentsOther comments_parks  position-relative">
                                                         <div class="objec-flgs">
                                                             <?php if (Yii::$app->user->id) {  ?>
                                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/operator/default/flag', 'operator_id' => $operator->id, 'park_id' => $review->park_id, 'safari_operator_rating_id' => $review->id]) ?>">

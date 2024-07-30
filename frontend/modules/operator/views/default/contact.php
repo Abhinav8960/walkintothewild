@@ -67,7 +67,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="col-xxl-8 col-lg-8">
 
                                     <?php if (Yii::$app->user->identity) { ?>
-                                        <div class="card">
+                                        <div class="card card_bodyPadding">
                                             <div class="card-body">
                                                 <h6 class="fs-6 fw-bold">Address</h6>
                                                 <h6 class="mb-0 cmpny_name"><?= $operator->register_comapany_name ?></h6>

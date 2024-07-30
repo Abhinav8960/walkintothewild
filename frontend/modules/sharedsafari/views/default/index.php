@@ -90,7 +90,6 @@ $recentposts = ArticleSearch::recentpost();
                         <div class="row ">
                             <div class="col-12  mb-xl-4 mb-3">
                                 <div class="tag-container">
-
                                     <?php if ($searchModel->park_id) {
                                         $selected_park = $searchModel->parkoption[$searchModel->park_id];
                                         if ($selected_park) { ?>
@@ -153,9 +152,9 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                             <div class="col-12">
-                                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
+                                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 mb-3">
                                     <div class="left_text">
-                                        <p>There are currently <strong><?= count($models) ?> </strong> active shared safaris created by individuals</p>
+                                        <p class="mb-0">There are currently <strong><?= count($models) ?> </strong> active shared safaris created by individuals</p>
                                     </div>
                                     <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
                                 </div>
@@ -300,7 +299,7 @@ $recentposts = ArticleSearch::recentpost();
 
 </section>
 
-<section class="safariduring_sesons innerpage">
+<section class="safariduring_sesons innerpage margin_bottomfooter mb-5">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 

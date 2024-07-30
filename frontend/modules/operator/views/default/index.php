@@ -67,9 +67,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
             <div class="col-lg-8 col-xl-9 col-xxl-10 ps-lg-5 position-relative ">
                 <div class="col-12">
-                    <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
+                    <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 mb-2">
                         <div class="left_text">
-                            <p class="">There are currently <strong><?= count($operators) ?></strong> active operators</p>
+                            <p class="mb-0">There are currently <strong><?= count($operators) ?></strong> active operators</p>
                         </div>
                         <div class="right-select d-flex gap-2 align-items-center">
                             <div class="input_check pb-0">

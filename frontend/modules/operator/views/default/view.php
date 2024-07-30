@@ -64,17 +64,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="row">
                             <div class="col-xxl-8 col-lg-8">
-                                <div class="card">
+                                <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <h6 class="fs-5 fw-bold"><?= $operator->business_name ?> Operates in <?= count($operator_parks) ?> Parks</h6>
+                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Operates in <?= count($operator_parks) ?> Parks</h6>
                                             <div class="row">
                                                 <?php
                                                 if ($operator_parks) {
                                                     foreach ($operator_parks as $operator_park) {
                                                         $park_detail = $operator_park->park;
                                                 ?>
-                                                        <div class="col-md-6 col-lg-4 gap-2 mt-2 mb-2">
+                                                        <div class="col-md-6 col-lg-4 gap-2  mb-2">
                                                             <div class="parksImgireview h-100">
                                                                 <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
                                                                     <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">

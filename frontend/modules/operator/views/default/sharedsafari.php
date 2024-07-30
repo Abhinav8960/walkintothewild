@@ -67,11 +67,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12">
                         <div class="row">
                             <div class=" col-xxl-8 col-lg-">
-                                <div class="card">
+                                <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <h6 class="fs-5 fw-bold"><?= $operator->business_name ?> Organized <?= count($shared_safaries) ?> Shared Safari</h6>
-                                            <div class="row justify-content-center pt-3">
+                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Organized <?= count($shared_safaries) ?> Shared Safari</h6>
+                                            <div class="row justify-content-center ">
                                                 <?php
                                                 if ($shared_safaries) {
                                                     foreach ($shared_safaries as $share_safari) { ?>

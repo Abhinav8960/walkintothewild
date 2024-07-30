@@ -887,7 +887,7 @@ display: none;
     .aritcal_bigimg img{
 
         height: 400px;
-        object-fit: cover;
+        object-fit: fill;
     }
     .paddingset_desktop{
 

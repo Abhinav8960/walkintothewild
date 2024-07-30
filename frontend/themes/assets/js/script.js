@@ -154,6 +154,31 @@ $(document).ready(function () {
     } else {
         $slider.addClass('single-image');
     }
+
+
+//     var owl2 = $(".opratios-slider2");
+//    var itemCount2 = owl2.children().length;
+//     owl2.owlCarousel({
+//     items: itemCount2 >= 6 ? 6 : itemCount2,
+//     loop: false,
+//     margin: 10,
+//     dots: false,
+//     smartSpeed: 900,
+//     autoplay: true,
+//     nav: false,
+//     responsive: {
+//         0: {
+//             items: itemCount2 >= 2 ? 2 : itemCount2
+//         },
+//         1000: {
+//             items: itemCount2 >= 3 ? 3 : itemCount2
+//         },
+//         1400: {
+//             items: itemCount2 >= 6 ? 6 : itemCount2
+//         }
+//     }
+// });
+
 });
 $(document).ready(function () {
     var $slider = $('.photoSlider');
