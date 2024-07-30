@@ -8,20 +8,20 @@ $this->title = 'Chat';
 
 ?>
 
-<div class="container-fluid mt-2 mb-5">
+<div class="container-fluid mt-5 mb-5 py-5">
     <div class="row mb-5">
         <div class="col-md-12">
-            <h5><?= $this->title ?></h5>
+            <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
         </div>
         <div class="col-md-12">
             <?= $this->render('@frontend/modules/chat/views/default/_sidebar', ['active' => 'message']); ?>
         </div>
         <div class="col-md-12">
-            <div class="card chat">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-3 chat-card-sidebar">
-                            <?php
+                    <div class="row chat">
+                        <div class="col-md-3 ">
+                            <div class="chat-card-sidebar card">
+                                <div class="card-body">
+                                <?php
                             Pjax::begin([
                                 'id' => 'grid-data',
                                 'enablePushState' => FALSE,
@@ -34,13 +34,21 @@ $this->title = 'Chat';
                             </div>
                             <?= $this->render('_default_userlist', ['dataProvider' => $dataProvider]) ?>
                             <?php Pjax::end(); ?>
+                                </div>
+                       
+                            </div>
+                         
                         </div>
-                        <div class="col-9 text-center">
-                            Select a User for Chat
+                        <div class="col-md-9 ">
+                            <div class="chat_box  card text-center h-100">
+                                <div class="card-body">
+                                Select a User for Chat
+                                </div>
+                          
+                            </div>
+                           
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

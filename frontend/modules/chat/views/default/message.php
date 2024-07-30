@@ -13,61 +13,66 @@ $this->title = $individual_user->name . ' | Chat';
 $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')->baseUrl;
 ?>
 
-<div class="container-fluid mt-2 mb-5">
+<div class="container-fluid mt-5 mb-5 py-5">
     <div class="row mb-5">
         <div class="col-md-12">
-            <h5><?= $this->title ?></h5>
+        <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
         </div>
         <div class="col-md-12">
             <?= $this->render('@frontend/modules/chat/views/default/_sidebar', ['active' => 'message']); ?>
         </div>
         <div class="col-md-12">
-            <div class="card chat">
-                <div class="card-body">
                     <div class="row">
-                        <div class="col-3 chat-card-sidebar">
-                            <?php
+                        <div class="col-md-3 ">
+                            <div class="chat-card-sidebar card">
+                                <div class="card-body">
+                                    <?php
 
-                            Pjax::begin([
-                                'id' => 'grid-data',
-                                'enablePushState' => FALSE,
-                                'enableReplaceState' => FALSE,
-                                'timeout' => false,
-                            ]);
-                            ?>
-                            <div class="chat-search-user mb-2">
-                                <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false]) ?>
-                            </div>
-                            <?php if ($searchModel->name == '' && $active_chat_list) {
-                                foreach ($active_chat_list as $active_chat) {
-                                    if ($active_chat->user_id == $login_user->id) {
-                                        $user = $active_chat->recipient;
-                                    } else {
-                                        $user = $active_chat->user;
-                                    }
-                            ?>
-                                    <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
-                                        <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
-                                            <div class="d-flex chat-user_message">
-                                                <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
-                                                <div class="chat-user_name">
-                                                    <h6><?= $user->name ?></h6>
-                                                    <p><?= $active_chat->last_message ?></p>
+                                    Pjax::begin([
+                                        'id' => 'grid-data',
+                                        'enablePushState' => FALSE,
+                                        'enableReplaceState' => FALSE,
+                                        'timeout' => false,
+                                    ]);
+                                    ?>
+                                    <div class="chat-search-user mb-2">
+                                        <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false]) ?>
+                                    </div>
+                                    <?php if ($searchModel->name == '' && $active_chat_list) {
+                                        foreach ($active_chat_list as $active_chat) {
+                                            if ($active_chat->user_id == $login_user->id) {
+                                                $user = $active_chat->recipient;
+                                            } else {
+                                                $user = $active_chat->user;
+                                            }
+                                    ?>
+                                            <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
+                                                <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                    <div class="d-flex chat-user_message">
+                                                        <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
+                                                        <div class="chat-user_name">
+                                                            <h6><?= $user->name ?></h6>
+                                                            <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                            <?php }
-                            } ?>
-                            <?php
-                            if ($searchModel->name) {
-                                echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
-                            }
-                            ?>
-                            <?php Pjax::end(); ?>
+                                            </a>
+                                    <?php }
+                                    } ?>
+                                    <?php
+                                    if ($searchModel->name) {
+                                        echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                                    }
+                                    ?>
+                                    <?php Pjax::end(); ?>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-9">
-                            <div class="d-flex chat-message-header justify-content-between">
+
+                        <div class="col-md-9">
+                        <div class="chat_box  card text-center h-100">
+                        <div class="card-body">
+                        <div class="d-flex chat-message-header justify-content-between">
                                 <div class="chat-profile">
                                     <img src="<?= $individual_user->avatar <> '' ? $individual_user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
                                     <?= $individual_user->name ?>
@@ -115,6 +120,8 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             </div>
                         </div>
                     </div>
+                            
+                     
                 </div>
             </div>
         </div>

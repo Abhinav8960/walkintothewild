@@ -13,8 +13,9 @@ use yii\helpers\Url;
     .chat-card-sidebar {
         max-height: 80vh;
         height: 80vh;
-        overflow: scroll;
-        border-right: 2px solid #aaa;
+        width: 100%;
+        overflow-y: auto;
+        /* border-right: 2px solid #aaa; */
     }
 
     .chat-card-sidebar::-webkit-scrollbar-thumb {
@@ -54,6 +55,12 @@ use yii\helpers\Url;
         padding: 10px;
         border-bottom: 1px solid #aaaa;
         justify-content: center;
+        overflow: hidden;
+        
+    }
+    .chat-card-sidebar.card{
+
+        border-radius: 10px;
     }
 
     .chat-sidebar-user-card .user-icon {
@@ -113,5 +120,13 @@ use yii\helpers\Url;
 
     #message_sent_btn {
         cursor: pointer;
+    }
+
+    .chat-user_name .lastmassge{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 0.9rem;
     }
 </style>

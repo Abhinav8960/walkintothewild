@@ -6,7 +6,7 @@ $this->title = 'Chat';
 
 ?>
 
-<div class="container-fluid mt-5 mb-5">
+<div class="container-fluid mt-5 mb-5 py-5">
     <div class="row mb-5">
         <div class="col-md-12">
             <h5><?= $this->title ?></h5>

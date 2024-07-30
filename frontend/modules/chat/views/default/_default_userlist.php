@@ -16,7 +16,7 @@ if ($dataProvider) {
                         $active_chat = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $model->id . ' OR recipient_user_id=' . $model->id)->orderby(['last_message_at' => SORT_DESC])->one();
                         if ($active_chat) {
                         ?>
-                            <p><?= $active_chat->last_message ?></p>
+                            <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
                         <?php } ?>
                     </div>
                 </div>
