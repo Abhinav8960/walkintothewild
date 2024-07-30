@@ -13,7 +13,7 @@ use yii\helpers\Html;
     ],
 ]); ?>
 <div class="row ">
-    <div class="col-lg-4 mb-3">
+    <div class="col-lg-4 ">
         <div class="form-wrapper d-flex gap-3">
             <div class="input-group2">
                 <label for="travelers">Travelers</label>
@@ -23,32 +23,32 @@ use yii\helpers\Html;
             </div>
         </div>
     </div>
-    <div class="col-lg-4 mb-3">
+    <div class="col-lg-4 ">
         <div class="form-wrapper">
             <label for="">Start Date</label>
             <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false); ?>
         </div>
     </div>
-    <div class="col-lg-4 mb-3">
+    <div class="col-lg-4 ">
         <div class="form-wrapper">
             <label for="">End Date</label>
             <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false); ?>
         </div>
     </div>
     <div class="col-lg-12 mb">
-        <div class="form-wrapper mb-3">
+        <div class="form-wrapper ">
             <label for="">Full Name</label>
             <?= $form->field($model, 'name')->textInput(['placeholder' => 'xyz', 'class' => 'form-control'])->label(false); ?>
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="form-wrapper mb-3">
+        <div class="form-wrapper ">
             <label for="">Email Address</label>
             <?= $form->field($model, 'email_address')->textInput(['placeholder' => 'xyz@abc.com', 'class' => 'form-control'])->label(false); ?>
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="form-wrapper mb-3">
+        <div class="form-wrapper ">
             <label for="">Phone Number</label>
             <?= $form->field($model, 'phone')->textInput(['placeholder' => 'Enter Number', 'class' => 'form-control'])->label(false); ?>
         </div>

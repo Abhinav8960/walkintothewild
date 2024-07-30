@@ -159,7 +159,7 @@ if ($model->meta_title != '') {
 </section>
 
 
-<section class="safariduring_sesons innerpage">
+<section class="safariduring_sesons innerpage margin_bottomfooter mb-5">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 

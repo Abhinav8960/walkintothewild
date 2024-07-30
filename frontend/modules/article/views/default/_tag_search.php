@@ -6,7 +6,7 @@ use yii\helpers\Url;
 $tags = ArticleTag::find()->where(['status' => ArticleTag::STATUS_ACTIVE, 'article_id' => $article->id])->orderBy(['master_article_tag_id' => SORT_ASC])->all();
 
 ?>
-<div class="tags d-flex align-items-center flex-wrap gap-sm-3 gap-1">
+<div class="tags d-flex align-items-center flex-wrap gap-sm-2 gap-1">
 
     <?php if ($tags) {
         foreach ($tags as $tag) {

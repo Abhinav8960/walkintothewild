@@ -43,9 +43,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
     <div class="col-lg-8 col-xl-9 col-xxl-10 position-relative">
 
-        <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 ">
+        <div class="topfilter d-lg-flex d-none justify-content-between  w-100 mb-2">
             <div class="left_text">
-                <p class="">There are currently <strong><?= count($operators) ?></strong> safari tour operator</p>
+                <p class="mb-0">There are currently <strong><?= count($operators) ?></strong> safari tour operator</p>
             </div>
             <div class="right-select d-flex gap-2 align-items-center pe-xl-2">
                 <div class="input_check pb-0">
@@ -76,7 +76,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
             </div>
         </div>
-        <div class="gridview mt-4">
+        <div class="gridview mt-2">
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-4">
                 <?php
                 $counter = 0; // Initialize counter variable
@@ -145,16 +145,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 } ?>
 
             </div>
-            <div class="padding_right mb-3">
+            <div class="row">
+                <div class="col-12 mb-3">          
                 <?php if ($shared_safaries) { ?>
-                    <div class="backgroud_oprator">
+                    <div class="backgroud_oprator py-4">
                         <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
                             <h4 class="text-center">Join Shared Safaris in <?= $model->title ?></h4>
                             <div class="joinshareView mt-xl-0 mt-3">
-                                <a href="/sharedsafari?ShareSafariSearch[park_id]=<?= $model->id ?>" class="btn_shareView">View All</a>
+                                <a href="/sharedsafari?ShareSafariSearch[park_id]=<?= $model->id ?>" class="parkrevieBtn ">View All</a>
                             </div>
                         </div>
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-lg-4 justify-content-center">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-xxl-4 ">
                             <?php foreach ($shared_safaries as $share_safari) { ?>
                                 <div class="col mb-xl-0 mb-3 ">
                                     <div class="sharesafri-card">
@@ -233,7 +234,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 <?php } ?>
 
+                </div>
             </div>
+          
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-5">
                 <?php
                 $counter = 0; // Initialize counter variable

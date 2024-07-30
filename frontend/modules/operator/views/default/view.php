@@ -64,10 +64,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="row">
                             <div class="col-xxl-8 col-lg-8">
-                                <div class="card">
+                                <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <h6 class="fs-5 fw-bold"><?= $operator->business_name ?> Operates in <?= count($operator_parks) ?> Parks</h6>
+                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Operates in <?= count($operator_parks) ?> Parks</h6>
                                             <div class="row">
                                                 <?php
                                                 if ($operator_parks) {

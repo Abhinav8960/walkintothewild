@@ -248,7 +248,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 
-<section class="safari_wrapper mb-5">
+<section class="safari_wrapper margin_bottomfooter">
     <div class="container-lg">
         <div class="row mb-5  mt-4 itenary_tabs">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
@@ -257,11 +257,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <h2 class="accordion-header d-lg-none" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse bg-set collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
-                            <div class="accordion-body p-3">
+                        <div id="collapseOne" class="accordion-collapse bg-set collapse show card_bodyPadding  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+                            <div class="accordion-body card-body p-3">
                                 <div class="col-lg-12 mb-3">
                                     <div class="itenary-title">
-                                        <h6 class="fs-6 fw-bold pb-2">ABOUT TRIP / OVERVIEW</h6>
+                                        <h6 class="fs-6 fw-bold mb-4">ABOUT TRIP / OVERVIEW</h6>
                                     </div>
                                     <div class="itenary_text">
                                         <p><?= $package->package_description ?></p>
@@ -279,8 +279,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 INCLUSION
                             </button>
                         </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse  bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set">
+                        <div id="collapseTwo" class="accordion-collapse collapse card_bodyPadding   bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
+                            <div class="accordion-body height_set card-body">
                                 <?= $this->render('_inclusion', ['package' => $package]) ?>
                             </div>
                         </div>
@@ -292,8 +292,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 GETTING THERE
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set">
+                        <div id="collapseFour" class="accordion-collapse bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                            <div class="accordion-body card-body height_set">
                                 <?= $this->render('_getting_there', ['package' => $package]) ?>
                             </div>
                         </div>
@@ -305,8 +305,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 POLICY INFO
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse  bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set">
+                        <div id="collapseFour" class="accordion-collapse  bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                            <div class="accordion-body height_set card-body">
                                 <?= $this->render('_policy', ['package' => $package]) ?>
                             </div>
                         </div>
@@ -318,8 +318,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 FAQ
                             </button>
                         </h2>
-                        <div id="collapseFive" class="accordion-collapse bg-set collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set">
+                        <div id="collapseFive" class="accordion-collapse bg-set collapse card_bodyPadding  d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
+                            <div class="accordion-body card-body height_set">
                                 <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                             </div>
                         </div>
@@ -396,7 +396,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="modal-body">
                 <h1 class="modal-title fs-5 text-center pb-3" id="exampleModalLabel">Enquire</h1>
             </div>
-            <div class="modal-body px-2 pt-0">
+            <div class="modal-body px-4 pt-2 pb-4">
                 <div id='modalContent'></div>
             </div>
         </div>

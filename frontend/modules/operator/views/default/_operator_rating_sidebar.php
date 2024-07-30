@@ -11,11 +11,11 @@ $reviews = $ratingdataProvider->getModels();
 ?>
 
 <div class="request_quote">
-    <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+    <button class="intested_btn interestBtn  d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
         <?php if ($reviews) { ?>
             <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
             if ($avg) { ?>
-                Operator Rating <?= round($avg, 1) ?>
+                Operator Rating <span><?= round($avg, 1) ?></span>
             <?php } ?>
         <?php } ?></button>
     <div class="interst_wrapper pt-1 px-3 bg-white">

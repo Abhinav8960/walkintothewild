@@ -38,7 +38,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
   </section>
 </div>
-<section class="articals_wrapper margin-setposi py-3" style="background-color: #fff; margin-top: 190px !important; padding-top:30px;">
+<section class="articals_wrapper margin-setposi py-3 margin_bottomfooter" style="background-color: #fff; margin-top: 190px !important; padding-top:30px;">
   <div class="container-fluid pt-3">
     <div class="custom-row">
       <div class="custom-col">
@@ -127,9 +127,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
               </div>
               <div class="col-12">
-                <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100">
+                <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100 mb-2">
                   <div class="left_text">
-                    <p>There are currently <strong><?= count($models) ?></strong> active package.</p>
+                    <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
                   </div>
                   <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
 

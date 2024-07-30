@@ -56,9 +56,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
             </div>
             <div class="col-lg-10 col-12 paddingset_desktop ">
-                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100">
+                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 mb-2">
                     <div class="left_text">
-                        <p class="">We found <strong><?= count($models) ?> parks</strong> for you</p>
+                        <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select mb-md-0 mb-4">
                         <div class="input_check pb-0">
@@ -90,8 +90,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <?php if ($models) {
                     foreach ($models as $model) { ?>
                         <a href="/park/<?= $model->slug ?>" class="parking_Box">
-
                             <div class="searchSafari_wraper mb-4">
+
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-4 col-md-3">
                                         <div class="Slider_safariimg3 h-100">
@@ -108,12 +108,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <?= $model->long_description ?>
                                                 </p>
                                             </div>
-                                            <div class="tour_logosliders">
+                                            <div class="tour_logosliders ">
                                                 <div class="taglines">
-                                                    <p><a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $model->slug, '#' => 'safari_tour_operator_container']) ?>" style="color:inherit;">Top Safari Tour Operators</a></p>
+                                                    <!-- <p><a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $model->slug, '#' => 'safari_tour_operator_container']) ?>" style="color:inherit;">Top Safari Tour Operators</a></p> -->
+                                                    <p>Top Safari Tour Operators</p>
                                                 </div>
                                                 <div class="touroprators">
-                                                    <div class="opratios-slider owl-carousel owl-theme">
+                                                    <div class="opratios-slider owl-carousel imagzise owl-theme">
                                                         <?php if ($operator_list = $model->getSafarioperatorlist()->joinwith(['operator' => function ($operator_park_query) {
                                                             $operator_park_query->where(['safari_operator.status' => 1]);
                                                         }])->where(['safari_operator_park.status' => 1])->all()) {
@@ -132,9 +133,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </a>
+
                 <?php }
                 } ?>
             </div>
@@ -145,6 +147,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 
 
-<section class="safariduring_sesons innerpage">
+<section class="safariduring_sesons innerpage margin_bottomfooter">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
