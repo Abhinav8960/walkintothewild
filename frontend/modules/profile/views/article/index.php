@@ -23,10 +23,10 @@ $this->params['title'] = $this->title;
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <h6 class="fs-6 fw-bold">Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h6>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h6>
                                             <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                <a class="follow_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
+                                                <a class="follow_btn text-center mt-sm-0 " href="<?= Url::toRoute(['create']) ?>">Create Article</a>
                                             <?php } ?>
                                         </div>
                                     </div>
