@@ -10,7 +10,7 @@ use yii\helpers\Url;
 <div class="<?= isset($colsize) ? $colsize : 'col-lg-9' ?> order-lg-1 order-2 mb-5">
     <div class="formbg">
         <div class="comments_safari bg-white">
-            <div class="top_replysafari">
+            <div class="top_replysafari px-3">
                 <?php if ($share_safari->host_user_id) { ?>
                     <div class="comments-persons">
                         <div class="postcomment d-flex gap-2">

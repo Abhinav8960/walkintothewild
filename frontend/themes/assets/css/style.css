@@ -3047,6 +3047,10 @@ figure {
     width: 100%;
     border: 0;
     border-radius: 4px;
+   
+}
+.submir_review button:hover{
+
     -webkit-box-shadow: 0px 3px 6px #00000029;
     box-shadow: 0px 3px 6px #00000029;
 }
@@ -3518,11 +3522,15 @@ figure {
     font-size: var(--fs-14);
     font-weight: 500;
     /* width: 100%; */
-    -webkit-box-shadow: 0px 3px 6px #00000029;
-    box-shadow: 0px 3px 6px #00000029;
+
     /* font-family: "Roboto", sans-serif !important; */
     /* text-transform: uppercase; */
     color: var(--background-primary);
+}
+.creat-safri .safari_create:hover{
+
+    -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029;
 }
 
 .modal_form .form-control::-webkit-input-placeholder {
@@ -4349,6 +4357,10 @@ figure {
     font-weight: 500;
     border-radius: 25px;
     border: 0;
+   
+}
+.cancel_btn:hover{
+
     -webkit-box-shadow: 0px 3px 6px #00000029;
     box-shadow: 0px 3px 6px #00000029;
 }
@@ -4663,6 +4675,14 @@ figure {
     outline: none;
     border-radius: 25px;
 }
+.close_btns:hover,
+.btns_submit:hover{
+
+    -webkit-box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 0px 3px 6px #00000029;
+
+}
+
 
 
 .btns_submit {

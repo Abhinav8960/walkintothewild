@@ -43,7 +43,7 @@
 									<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/']) ?>">
 										<div class="d">
 											<div class="card-img">
-												<img src="<?= $this->params['baseurl'] ?>/img/Plan.png" alt="" width="20">
+												<img src="<?= $this->params['baseurl'] ?>/img/plansafari-icon.png" alt="" width="32">
 											</div> Plan Safari
 									</a>
 								</li>

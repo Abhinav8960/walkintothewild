@@ -8,7 +8,7 @@ use yii\helpers\Url;
 
 <div class="col-lg-9 order-lg-1 order-2">
     <div class="comments_safari">
-        <div class="top_replysafari">
+        <div class="top_replysafari px-3">
             <?php if ($package->created_by) { ?>
                 <div class="comments-persons">
                     <div class="postcomment d-flex gap-2">

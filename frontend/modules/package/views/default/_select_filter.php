@@ -6,7 +6,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 ?>
 
-<div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4">
+<div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
     <div class="filter-wrapper pb-2">
         <div class="title_top pb-4">
             <h4>Select Filters</h4>

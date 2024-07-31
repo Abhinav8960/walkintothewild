@@ -44,7 +44,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     </div>
                                                     <div class="floating-watchlist">
                                                         <div class="heart_bx">
-                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari_model->slug ?>" style="color:#FD5634;"><i class="fa-solid fa-heart"></i></a>
+                                                            <a href="/sharedsafari/unwishlist/<?= $share_safari_model->slug ?>" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
                                                         </div>
                                                     </div>
                                                     <div class="shareimg">
