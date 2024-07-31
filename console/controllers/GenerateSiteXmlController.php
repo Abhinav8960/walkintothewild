@@ -75,11 +75,6 @@ class GenerateSiteXmlController extends Controller
         $additional_sitemap[] = $this->get_rared_animal_site_pages($backend_actual_url);
         $all_url = $this->get_safari_operator_pages($backend_actual_url);
 
-        echo "<pre>";
-        print_r($all_url);
-        echo "</pre>";
-        die();
-
         if (count($all_url) > 0) {
             foreach ($all_url as $temp_url) {
                 $additional_sitemap[] = $temp_url;
@@ -87,6 +82,11 @@ class GenerateSiteXmlController extends Controller
         }
         $additional_sitemap[] = $this->get_monthly_package_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);
+
+        echo "<pre>";
+        print_r($additional_sitemap);
+        echo "</pre>";
+        die();
 
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
