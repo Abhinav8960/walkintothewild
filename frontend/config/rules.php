@@ -54,6 +54,7 @@ return [
     '/sharedsafari/<slug>' => '/sharedsafari/default/view',
     '/sharedsafari/wishlist/<slug>' => '/sharedsafari/default/wishlist', //sharedsafari page url
     '/sharedsafari/unwishlist/<slug>' => '/sharedsafari/default/unwishlist', //sharedsafari page url
+    '/sharedsafari/month/<month>' => '/sharedsafari/default/month', //url for site xml
 
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
     '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
@@ -71,6 +72,7 @@ return [
     '/package/<slug>' => '/package/default/view', //package page url
     '/package/wishlist/<slug>' => '/package/default/wishlist', //package page url
     '/package/unwishlist/<slug>' => '/package/default/unwishlist', //package page url
+    '/package/month/<month>' => '/package/default/month', //url for site xml
 
     '/profile/user-experience' => '/profile/default/create',
     '/profile/user/<user_handle>' => '/profile/default/index',

@@ -27,6 +27,7 @@ use frontend\models\form\SharedSafariRequestForm;
 use frontend\models\form\ShareSafariRequestContactForm;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentReportForm;
+use common\models\master\month\MasterMonth;
 
 /**
  * DefaultController.
@@ -631,6 +632,17 @@ class DefaultController extends FrontendBaseController
 
             // Construct the redirect URL
             return \yii\helpers\Url::to($url);
+        }
+    }
+
+    public function actionMonth($month)
+    {
+        $is_exist = MasterMonth::find()->where(['month_name' => $month])->one();
+        if ($is_exist) {
+            //rediret to plan safari search page
+            return $this->redirect(['/sharedsafari?ShareSafariSearch%5Bmonth_id%5D=' . $is_exist['month']]);
+        } else {
+            return $this->redirect(['/']);
         }
     }
 }

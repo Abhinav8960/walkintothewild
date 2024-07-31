@@ -64,7 +64,7 @@ class GenerateSiteXmlController extends Controller
         }
 
         //get article site pages
-        $additional_sitemap = [];/*
+        $additional_sitemap = [];
         $additional_sitemap[] = $this->static_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_park_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_site_pages($backend_actual_url);
@@ -82,7 +82,7 @@ class GenerateSiteXmlController extends Controller
             }
         }
         $additional_sitemap[] = $this->get_monthly_package_site_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);*/
+        $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_animal_search_site_pages($backend_actual_url);
 
         //create site_index file
@@ -664,7 +664,7 @@ class GenerateSiteXmlController extends Controller
 
             $insert_package_site_pages = [];
             foreach ($available_months as $ind => $month) {
-                $url = $base_url . "package?PackageSearch%5Bmonth_id%5D=" . $ind;
+                $url = $base_url . "package/month/" . $month['month_name'];
 
                 $insert_package_site_pages[] = [
                     'content_id' => $ind,
@@ -707,11 +707,11 @@ class GenerateSiteXmlController extends Controller
 
             $insert_package_site_pages = [];
             foreach ($available_months as $ind => $month) {
-                $url = $base_url . "sharedsafari?ShareSafariSearch%5Bmonth_id%5D=" . $ind;
+                $url = $base_url . "sharedsafari/month/" . $month['month_name'];
 
                 $insert_package_site_pages[] = [
                     'content_id' => $ind,
-                    'content_type' => 'month_wise_package',
+                    'content_type' => 'month_wise_shared_safari',
                     'slug' => $month,
                     'url' => $url,
                     'last_update_at' => date('Y-m-d H:i:s'),

@@ -22,6 +22,7 @@ use common\models\package\PackageSafariPark;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\form\PackageEnquiryForm;
 use frontend\models\PackageCommentReportForm;
+use common\models\master\month\MasterMonth;
 
 /**
  * DefaultController.
@@ -297,6 +298,17 @@ class DefaultController extends FrontendBaseController
 
             // Construct the redirect URL
             return \yii\helpers\Url::to($url);
+        }
+    }
+
+    public function actionMonth($month)
+    {
+        $is_exist = MasterMonth::find()->where(['month_name' => $month])->one();
+        if ($is_exist) {
+            //rediret to plan safari search page
+            return $this->redirect(['/package?PackageSearch%5Bmonth_id%5D=' . $is_exist['month']]);
+        } else {
+            return $this->redirect(['/']);
         }
     }
 }
