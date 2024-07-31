@@ -147,7 +147,7 @@
 											<img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="35" height="35">
 										</div>
 										<div class="profile_name">
-											<h6><?= $user->username ?></h6>
+											<h6><?= $user->name ?></h6>
 											<p><?= $user->userhandle ?></p>
 										</div>
 									</div>
