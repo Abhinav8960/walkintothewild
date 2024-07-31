@@ -35,7 +35,7 @@ class FrontendRequestLog extends \yii\db\ActiveRecord
             [['user_id', 'request_code'], 'integer'],
             [['request_data', 'response_error'], 'string'],
             [['response_error'], 'required'],
-            [['created_at'], 'safe'],
+            [['created_at', 'refer_url'], 'safe'],
             [['request_url'], 'string', 'max' => 555],
         ];
     }
@@ -52,6 +52,7 @@ class FrontendRequestLog extends \yii\db\ActiveRecord
             'request_data' => 'Request Data',
             'request_code' => 'Request Code',
             'response_error' => 'Response Error',
+            'refer_url' => 'Referef URL',
             'created_at' => 'Created At',
         ];
     }

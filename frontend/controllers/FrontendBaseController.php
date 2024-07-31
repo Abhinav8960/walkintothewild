@@ -33,14 +33,15 @@ class FrontendBaseController extends Controller
         $user = Yii::$app->user;
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
+        $refer_url = Yii::$app->request->referrer;
         $response = Yii::$app->response;
 
         $route = "";
         $route_map = $request->resolve();
-        if(isset($route_map[0])){
+        if (isset($route_map[0])) {
             $route = $route_map[0];
         }
-         
+
         $system_type = '';
         if ($agent->isMobile()) {
             $system_type = 'Mobile';
@@ -51,12 +52,12 @@ class FrontendBaseController extends Controller
         }
 
         $isAjax = 0;
-        if($request->isAjax){
+        if ($request->isAjax) {
             $isAjax = 1;
         }
 
         $userid = 0;
-        if(isset($user->id) && !empty($user->id)){
+        if (isset($user->id) && !empty($user->id)) {
             $userid = $user->id;
         }
 
@@ -66,13 +67,14 @@ class FrontendBaseController extends Controller
         }
 
         $request_url = $request->pathInfo;
-        if (strpos($request_url, 'storage') === false){
+        if (strpos($request_url, 'storage') === false) {
             $model = new FrontendRequestLog();
             $model->user_id = $userid;
             $model->slug = $slug;
             $model->route = $route;
             $model->request_url = $request->pathInfo;
             $model->request_full_url = $request->absoluteUrl;
+            $model->refer_url = $refer_url;
             $model->request_type = $request->method;
             $model->request_parameter = json_encode($request->queryParams);
             $model->user_ip = $request->getRemoteIP();
