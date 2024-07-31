@@ -54,7 +54,7 @@ if ($model->meta_title != '') {
 
 <section class="articals_wrapper py-3 ">
     <div class="container-fluid">
-        <div class="row mb-4  justify-content-center mt-4">
+        <div class="row mb-4  justify-content-center mt-4 padding_added">
             <div class="col-lg-12 col-xl-10 safartabs position-relative">
                 <div class="right_button float-lg-end pb-2 d-lg-block d-flex justify-content-end">
                     <button value="<?= Url::toRoute(['/park/default/suggestion', 'park_id' => $model->id]) ?>" class="btn-exclamtion pe-1 writeSuggestionBtn" data-bs-toggle="modal" data-bs-target="#exampleModal3"><svg xmlns="http://www.w3.org/2000/svg" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="submit correction if found wrong information!" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="30" x="0" y="0" viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
@@ -130,9 +130,15 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div>
-        <div class="row my-4 justify-content-center" id="safari_tour_operator_container">
+        
+    </div>
+</section>
+
+<section class="bg-white margin_bottomfooter">
+    <div class="container-fluid">
+    <div class="row my-4 justify-content-center padding_added" id="safari_tour_operator_container">
             <div class="col-lg-12 col-xl-10">
-                <div class="row pt-5">
+                <div class="row ">
                     <div class="col-lg-12 col-md-11 col-xxl-12 col-xl-10 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">

@@ -1610,7 +1610,8 @@ figure {
 
 .recentpost_box {
 
-    background-color: #faf7f3;
+    /* background-color: #faf7f3; */
+    background-color: #fff;
     padding: 10px 15px;
     border-radius: 10px;
 }
@@ -1647,7 +1648,8 @@ figure {
 }
 
 .topics_box {
-    background-color: #faf7f3;
+    /* background-color: #faf7f3; */
+    background-color: #fff;
     padding: 10px 15px;
     border-radius: 10px;
 }
