@@ -26,16 +26,17 @@
                         </div>
                         <div class="col-sm-9">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="share_safari_included[<?= $optionValue ?>]" value="1" <?= (isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 1) ? 'checked' : '' ?> onclick="return false;">
-                                <label class="form-check-label">Include</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="share_safari_included[<?= $optionValue ?>]" value="2" <?= (isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 2) ? 'checked' : '' ?> onclick="return false;">
-                                <label class="form-check-label">Exclude</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="share_safari_included[<?= $optionValue ?>]" value="3" <?= (isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 3) ? 'checked' : '' ?> onclick="return false;">
-                                <label class="form-check-label">Optional</label>
+                                <label class="form-check-label">
+                                    <?php if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 1)) {
+                                        echo 'Include';
+                                    } elseif ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 2)) {
+                                        echo 'Exclude';
+                                    } else if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 3)) {
+                                        echo 'Optional';
+                                    } else {
+                                        echo 'N/A';
+                                    } ?>
+                                </label>
                             </div>
                         </div>
                     </div>
