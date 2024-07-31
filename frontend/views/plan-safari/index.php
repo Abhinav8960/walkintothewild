@@ -230,8 +230,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         </div>
                                                         <div class="icons_restro">
 
-                                                            <i class="fa-solid fa-building"></i>
-                                                            <p class="mb-0"><?= $package->packagerange->title ?></p>
+                                                            <i class="fa-solid fa-building"></i><?php
+                                                                                                $temp = '';
+                                                                                                if (!empty($package->packagerange->title)) {
+                                                                                                    $temp = $package->packagerange->title;
+                                                                                                } ?>
+                                                            <p class="mb-0"><?= $temp ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
