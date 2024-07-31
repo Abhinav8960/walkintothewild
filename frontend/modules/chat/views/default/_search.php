@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
     'method' => 'get',
 ]); ?>
 
-<?= $form->field($searchModel, 'name')->textInput(['class' => 'form-control', 'placeholder' => 'Search', 'autocomplete' => 'off', 'autofocus' => $autofocus])->label(false) ?>
+<?= $form->field($searchModel, 'name')->textInput(['class' => 'form-control searchChat position-relative', 'placeholder' => 'Search', 'autocomplete' => 'off', 'autofocus' => $autofocus])->label(false) ?>
 <?php ActiveForm::end(); ?>
 
 <?php

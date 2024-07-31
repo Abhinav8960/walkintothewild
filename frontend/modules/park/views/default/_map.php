@@ -4,7 +4,7 @@
     </button>
 </h2>
 <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-    <div class="accordion-body height_set">
+    <div class="accordion-body height_set w-100">
         <?php
 
         $latitude = $model->latitude;

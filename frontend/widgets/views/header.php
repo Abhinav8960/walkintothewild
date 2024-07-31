@@ -141,7 +141,7 @@
 						<div class="menuprofile">
 							<div class="profileBoxwrap">
 
-								<?php if ($user= Yii::$app->user->identity) { ?>
+								<?php if ($user = Yii::$app->user->identity) { ?>
 									<div class="profile_details d-flex gap-2">
 										<div class="img-box2">
 											<img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="35" height="35">

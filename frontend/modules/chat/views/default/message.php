@@ -13,19 +13,20 @@ $this->title = $individual_user->name . ' | Chat';
 $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')->baseUrl;
 ?>
 
-<div class="container-fluid mt-2 mb-5">
+<div class="container-fluid mt-5 margin_bottomfooter mb-5 pt-5">
     <div class="row mb-5">
         <div class="col-md-12">
-            <h5><?= $this->title ?></h5>
+            <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
         </div>
         <div class="col-md-12">
             <?= $this->render('@frontend/modules/chat/views/default/_sidebar', ['active' => 'message']); ?>
         </div>
         <div class="col-md-12">
-            <div class="card chat">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-3 chat-card-sidebar">
+            <div class="row">
+                <div class="col-md-3 ">
+                    <div class="chat-card-sidebar card">
+                        <div class="card-body">
+
                             <?php
 
                             Pjax::begin([
@@ -35,9 +36,13 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 'timeout' => false,
                             ]);
                             ?>
-                            <div class="chat-search-user mb-2">
+                             <div class="chat-search-user mb-2 position-relative">
                                 <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false]) ?>
+                                <div class="secrchIcons">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
                             </div>
+                            <div class="chat-cardlist">
                             <?php if ($searchModel->name == '' && $active_chat_list) {
                                 foreach ($active_chat_list as $active_chat) {
                                     if ($active_chat->user_id == $login_user->id) {
@@ -52,7 +57,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                 <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
                                                 <div class="chat-user_name">
                                                     <h6><?= $user->name ?></h6>
-                                                    <p><?= $active_chat->last_message ?></p>
+                                                    <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -64,9 +69,18 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
                             }
                             ?>
+                            </div>
+
+                           
+                          
                             <?php Pjax::end(); ?>
                         </div>
-                        <div class="col-9">
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="chat_box  card  h-100">
+                        <div class="card-body">
                             <div class="d-flex chat-message-header justify-content-between">
                                 <div class="chat-profile">
                                     <img src="<?= $individual_user->avatar <> '' ? $individual_user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
@@ -84,13 +98,16 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->limit(1)->one();
                                 if ($chat && $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby(['created_at' => SORT_ASC])->all()) {
                                     foreach ($chat_message_list as $chat_message) { ?>
-                                        <div class="chat-message">
+                                        <div class="chat-message pt-3">
                                             <?php if ($chat_message->created_by == $login_user->id) { ?>
-                                                <div class="text-right text-end message_body_right">
+                                                <div class="reciverchta">
+                                                    <div class="text-right text-end message_body_right position-relative">
                                                     <?= $chat_message->message ?>
+                                                    </div>
+                                                  
                                                 </div>
                                             <?php  } else { ?>
-                                                <div class="text-left message_body_left">
+                                                <div class="text-left message_body_left position-relative">
                                                     <?= $chat_message->message ?>
                                                 </div>
                                             <?php } ?>
@@ -101,9 +118,9 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 ?>
                             </div>
 
-                            <div class="chat-send-message-form">
+                            <div class="chat-send-message-form pt-3">
                                 <form id="chatmessageform" method="post">
-                                    <div class="d-flex">
+                                    <div class="d-flex align-items-center">
                                         <div class="lead emoji-picker-container w-100 submit_on_enter">
                                             <input type="text" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true">
                                         </div>
@@ -115,6 +132,8 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>

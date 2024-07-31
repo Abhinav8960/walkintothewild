@@ -371,8 +371,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         $galleries = $package->packagegallery;
                     ?>
                         <div class="request_quote mt-4">
-                            <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
-                                Photo Gallery <?= count($galleries) ?></button>
+                            <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+                                Photo Gallery <span><?= count($galleries) ?></span></button>
                             <div class="interst_wrapper p-0 bg-white">
                                 <div class="photoSlider owl-carousel owl-theme">
                                     <?php foreach ($galleries as $gallery) { ?>

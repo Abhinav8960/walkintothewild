@@ -8,19 +8,19 @@ $this->title = 'Chat';
 
 ?>
 
-<div class="container-fluid mt-2 mb-5">
+<div class="container-fluid mt-5 margin_bottomfooter pt-5 ">
     <div class="row mb-5">
         <div class="col-md-12">
-            <h5><?= $this->title ?></h5>
+            <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
         </div>
         <div class="col-md-12">
             <?= $this->render('@frontend/modules/chat/views/default/_sidebar', ['active' => 'message']); ?>
         </div>
         <div class="col-md-12">
-            <div class="card chat">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-3 chat-card-sidebar">
+            <div class="row chat">
+                <div class="col-md-3 ">
+                    <div class="chat-card-sidebar card">
+                        <div class="card-body ">
                             <?php
                             Pjax::begin([
                                 'id' => 'grid-data',
@@ -29,16 +29,28 @@ $this->title = 'Chat';
                                 'timeout' => false,
                             ]);
                             ?>
-                            <div class="chat-search-user mb-2">
+                            <div class="chat-search-user mb-2 position-relative">
                                 <?= $this->render('_search', ['searchModel' => $searchModel, 'autofocus' => true]) ?>
+                                <div class="secrchIcons">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
                             </div>
-                            <?= $this->render('_default_userlist', ['dataProvider' => $dataProvider]) ?>
+                            <div class="chat-cardlist">
+                                <?= $this->render('_default_userlist', ['dataProvider' => $dataProvider]) ?>
+                            </div>
+
                             <?php Pjax::end(); ?>
                         </div>
-                        <div class="col-9 text-center">
+                    </div>
+                </div>
+                <div class="col-md-9 ">
+                    <div class="chat_box  card text-center h-100">
+                        <div class="card-body">
                             Select a User for Chat
                         </div>
+
                     </div>
+
                 </div>
             </div>
         </div>
