@@ -1,11 +1,15 @@
 <?php
 $this->title = 'Account Settings';
+
+
+use yii\bootstrap4\ActiveForm;
+use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 
 <div class="container mt-5">
     <div class="row margin_bottomfooter">
-    <div class="col-12 d-flex align-items-center justify-content-between mb-4">
+        <div class="col-12 d-flex align-items-center justify-content-between mb-4">
             <h6 class="fs-3 fw-bold ">Account Settings</h6>
             <a class="btn btn-info bg-blues py-2 rounded-5" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">View Profile</a>
         </div>
@@ -15,9 +19,32 @@ use yii\helpers\Url;
         <div class="col-md-9">
             <div class="card account-settingside" style="min-height:500px">
                 <div class="card-body p-4">
-                <h6 class="fs-5 fw-bold mb-3">  Login Information</h6>
+                    <h6 class="fs-5 fw-bold mb-3"> Login Information</h6>
+                    <hr>
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'changed-form',
+                        'method' => 'POST',
+                    ]); ?>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'username')->textInput(['readonly' => true]) ?>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'password')->passwordInput(['placeholder' => 'Changed Password']) ?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-2">
+                        <div class="float-start">
+                            <?= Html::submitButton('Save Changes', ['class' => 'btn btn-sm post-comment']) ?>
+                        </div>
+
+                    </div>
+                    <?php ActiveForm::end(); ?>
                 </div>
-   
+
             </div>
         </div>
     </div>
