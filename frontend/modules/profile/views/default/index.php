@@ -74,7 +74,7 @@ $this->params['title'] = $this->title;
                                     <div class="col-md-12">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <h6 class="fs-6 fw-bold">Share Safari Experience</h6>
-                                            <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
                                                 <button class="follow_btn photoBtn text-center mt-sm-0 " value="<?= Url::toRoute(['/profile/user-experience']) ?>">+ Add Experience</button>
                                             <?php } ?>
                                         </div>
