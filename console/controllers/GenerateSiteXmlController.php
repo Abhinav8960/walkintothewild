@@ -664,8 +664,8 @@ class GenerateSiteXmlController extends Controller
 
             $insert_package_site_pages = [];
             foreach ($available_months as $ind => $month) {
-                $url = $base_url . "package/month/" . $month['month_name'];
-
+                $url = $base_url . "package/month/" . $month;
+                die($url);
                 $insert_package_site_pages[] = [
                     'content_id' => $ind,
                     'content_type' => 'month_wise_package',
@@ -707,7 +707,7 @@ class GenerateSiteXmlController extends Controller
 
             $insert_package_site_pages = [];
             foreach ($available_months as $ind => $month) {
-                $url = $base_url . "sharedsafari/month/" . $month['month_name'];
+                $url = $base_url . "sharedsafari/month/" . $month;
 
                 $insert_package_site_pages[] = [
                     'content_id' => $ind,
