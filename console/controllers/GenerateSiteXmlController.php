@@ -243,42 +243,41 @@ class GenerateSiteXmlController extends Controller
             $fileName = "safari_operator.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
             $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
-            die($myFile);
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
             $fileName = "safari_operator_shared_safari.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
-            $myFile = $backend_actual_url . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/"  . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $shared_xml_content);
             fclose($fh);
 
             $fileName = "safari_operator_package.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
-            $myFile = $backend_actual_url . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $packages_xml_content);
             fclose($fh);
 
             $fileName = "safari_operator_park.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
-            $myFile = $backend_actual_url . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $parks_xml_content);
             fclose($fh);
 
             $fileName = "safari_operator_review.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
-            $myFile = $backend_actual_url . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $review_xml_content);
             fclose($fh);
 
             $fileName = "safari_operator_article.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
-            $myFile = $backend_actual_url . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $article_xml_content);
             fclose($fh);
