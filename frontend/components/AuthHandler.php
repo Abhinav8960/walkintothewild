@@ -177,8 +177,10 @@ class AuthHandler
         $attributes = $this->client->getUserAttributes();
         $picture = $attributes['picture'];
         $google_source_id = $attributes['id'];
-        $name = $attributes['name'];
-        $user->name = $name;
+        if (!isset($user->name)) {
+            $name = $attributes['name'];
+            $user->name = $name;
+        }
         $user->google_source_id = $google_source_id;
         $gmail = true;
         if ($user->avatar != $picture) {
