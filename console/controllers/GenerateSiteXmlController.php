@@ -243,6 +243,7 @@ class GenerateSiteXmlController extends Controller
             $fileName = "safari_operator.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
             $myFile = $backend_actual_url . $fileName;
+            die($myFile);
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
