@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
-        <div class="safri_tour sticky-top">
-            <div class="topics_listing">
+        <div class="safri_tour sticky-top border-0">
+            <div class="topics_listing px-0 safariChanges ">
                 <ul id="tabList">
                     <li><a class="tab-items active_safri" data-tab="tab21">
                             <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>

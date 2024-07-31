@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 ?>
 
 <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4">
-    <div class="filter-wrapper ">
+    <div class="filter-wrapper pb-2">
         <div class="title_top pb-4">
             <h4>Select Filters</h4>
         </div>
@@ -95,7 +95,7 @@ use yii\helpers\ArrayHelper;
                 )->label(false); ?>
             </div>
         </div>
-        <div class="title_filter mb-3">
+        <div class="title_filter ">
             <h6>Included</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'package_include')->checkboxList(

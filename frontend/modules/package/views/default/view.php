@@ -96,7 +96,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -121,7 +121,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meal">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -149,7 +149,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stay Category">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset($package->stay_category_id) ? GeneralModel::packageoption()[$package->stay_category_id] : '' ?></p>
@@ -187,13 +187,19 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <ul>
                                         <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
                                         </li>
-                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
-                                        </li>
+                                        <!-- <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
+                                        </li> -->
                                         <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
                                         </li>
                                         <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
                                         </li>
+                                        <li><a href="https://in.linkedin.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-linkedin-in"></i></a>
+                                        </li>
+                                        <li><a href="https://web.telegram.org/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class=" fa-brands fa-telegram"></i></a>
+                                        </li>
 
+
+                                       
                                     </ul>
                                 </div>
                             </div>
@@ -250,7 +256,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="safari_wrapper margin_bottomfooter">
     <div class="container-lg">
-        <div class="row mb-5  mt-4 itenary_tabs">
+        <div class="row mb-5  mt-4 itenary_tabs px-3">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
                 <div class="tab-content accordion" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -305,8 +311,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 POLICY INFO
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse  bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set card-body">
+                        <div id="collapseFour" class="accordion-collapse   card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                            <div class="accordion-body height_set px-0 py-0">
                                 <?= $this->render('_policy', ['package' => $package]) ?>
                             </div>
                         </div>

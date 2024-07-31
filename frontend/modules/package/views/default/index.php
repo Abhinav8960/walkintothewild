@@ -28,8 +28,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
           <div class="col-12">
             <div class="headingBnner_inner">
               <h1>Wildlife Safari tour packages</h1>
-              <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
-                Their Adventures</p> -->
             </div>
           </div>
         </div>
@@ -39,8 +37,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
   </section>
 </div>
 <section class="articals_wrapper margin-setposi py-3 margin_bottomfooter" style="background-color: #fff; margin-top: 190px !important; padding-top:30px;">
-  <div class="container-fluid pt-3">
-    <div class="custom-row">
+  <div class="container-fluid ">
+    <div class="custom-row pt-4">
       <div class="custom-col">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
@@ -65,17 +63,25 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
       </div>
     </div>
 
-    <div class="row justify-content-center mb-4 pt-3">
+    <div class="row justify-content-center mb-4 pt-5">
       <div class="col-xl-11 col-lg-12">
-        <div class="row my-4 justify-content-center">
+        <div class="row mb-5 justify-content-center">
           <?= $this->render('_select_filter', [
             'searchModel' => $searchModel,
           ]) ?>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
-              <div class="col-12  mb-xl-4 mb-3">
-                <div class="tag-container">
+                <div class="col-12">
+                <div class="topfilter d-flex justify-content-between  flex-wrap w-100 ">
+                  <div class="left_text">
+                    <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
+                  </div>
+                  <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
 
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="tag-container">
                   <?php if ($searchModel->park_id) {
                     $selected_park = $searchModel->parkoption[$searchModel->park_id];
                     if ($selected_park) { ?>
@@ -123,15 +129,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                   <?php }
                     }
                   } ?>
-
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100 mb-2">
-                  <div class="left_text">
-                    <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
-                  </div>
-                  <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
 
                 </div>
               </div>
@@ -214,11 +211,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
 
@@ -281,3 +275,15 @@ $script = <<< JS
 JS;
 $this->registerJs($script);
 ?>
+<script>
+        // JavaScript to add a class to the parent element based on the child element
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const childElement = document.querySelector('.tag');
+            if (childElement) {
+                const parentElement = childElement.closest('.tag-container');
+                if (parentElement) {
+                    parentElement.classList.add('mb-4');
+                }
+            }
+        });
+    </script>
