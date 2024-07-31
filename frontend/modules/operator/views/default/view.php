@@ -20,10 +20,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 ?>
 
 
-<section class="banner_section-inner position-relative">
+<section class="banner_section-inner  packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 " alt="banner">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search   banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container">
@@ -80,7 +80,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     foreach ($operator_parks as $operator_park) {
                                                         $park_detail = $operator_park->park;
                                                 ?>
-                                                        <div class="col-md-6 col-lg-4 gap-2  mb-2">
+                                                        <div class="col-md-6 col-lg-4 gap-2  mb-4">
                                                             <div class="parksImgireview h-100">
                                                                 <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
                                                                     <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">

@@ -63,11 +63,11 @@
 												<i class="fa-solid fa-message"></i>
 												Messages</a>
 										</li> -->
-										<li>
+										<!-- <li>
 											<a class="" href="/profile/search">
 												<i class="fa-solid fa-search"></i>
 												Search Profile</a>
-										</li>
+										</li> -->
 										<li>
 											<a class="" href="/account/wishlist">
 												<i class="fa-solid fa-heart"></i>

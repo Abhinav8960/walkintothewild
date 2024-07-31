@@ -71,7 +71,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
           ]) ?>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
-                <div class="col-12">
+              <div class="col-12">
                 <div class="topfilter d-flex justify-content-between  flex-wrap w-100 ">
                   <div class="left_text">
                     <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
@@ -195,7 +195,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                           <div class="col-5">
                             <div class="safari text-center">
                               <div class="joinsafari package">
-                                <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>
+                                <h6 class=" titlePrice">₹<?= $model->total_price ?> </h6>
                                 <a href="/package/<?= $model->package_slug ?>">View Details</a>
                               </div>
                             </div>
@@ -276,14 +276,14 @@ JS;
 $this->registerJs($script);
 ?>
 <script>
-        // JavaScript to add a class to the parent element based on the child element
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const childElement = document.querySelector('.tag');
-            if (childElement) {
-                const parentElement = childElement.closest('.tag-container');
-                if (parentElement) {
-                    parentElement.classList.add('mb-4');
-                }
-            }
-        });
-    </script>
+  // JavaScript to add a class to the parent element based on the child element
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const childElement = document.querySelector('.tag');
+    if (childElement) {
+      const parentElement = childElement.closest('.tag-container');
+      if (parentElement) {
+        parentElement.classList.add('mb-4');
+      }
+    }
+  });
+</script>

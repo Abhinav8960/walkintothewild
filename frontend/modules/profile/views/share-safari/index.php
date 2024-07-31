@@ -26,7 +26,13 @@ $this->params['title'] = $this->title;
                             <div class="col-lg-8">
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
-                                        <h6 class="fs-6 fw-bold mb-4">Shared Safari Organized by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
+                                    <div class="d-flex justify-content-between mb-2">
+                                    <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Shared Safari Organized by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
+                                            <?php if (Yii::$app->user->identity->id == $user->id) { ?>
+                                                <a class="follow_btn text-center mt-sm-0 " href="">View All</a>
+                                            <?php } ?>
+                                        </div>
+                                       
                                         <div class="row gx-5">
                                             <?php if ($organized_by) {
                                                 foreach ($organized_by as $share_safari) {
