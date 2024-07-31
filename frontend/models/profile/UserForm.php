@@ -115,7 +115,7 @@ class UserForm extends Model
             'insta_url' => 'Instagram',
             'about' => 'About',
             'account_type' => 'Account Type',
-            'user_bio' => 'User Bio',
+            'user_bio' => 'You are',
             'gender' => 'Gender',
             'date_of_birth' => 'D.O.B',
             'website_url' => 'Website Url'
