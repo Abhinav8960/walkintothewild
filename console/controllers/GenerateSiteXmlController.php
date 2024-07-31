@@ -242,7 +242,8 @@ class GenerateSiteXmlController extends Controller
             $all_files = [];
             $fileName = "safari_operator.xml";
             $all_files[] = $base_url . "storage/sitemap/" . $fileName;
-            $myFile = $backend_actual_url . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
+            die($myFile);
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
