@@ -53,6 +53,11 @@ class PackageForm extends \yii\base\Model
     public $day_note;
     public $day_status;
 
+
+    public $type;
+    public $gst_percentage;
+    public $total_price;
+
     public $package_model;
     public $action_url;
     public $action_validate_url;
@@ -92,6 +97,10 @@ class PackageForm extends \yii\base\Model
             $this->refund_policy = $this->package_model->refund_policy;
             $this->getting_there = $this->package_model->getting_there;
 
+            $this->type = $this->package_model->type;
+            $this->gst_percentage = $this->package_model->gst_percentage;
+
+
 
             $this->status = $this->package_model->status;
 
@@ -116,7 +125,7 @@ class PackageForm extends \yii\base\Model
             [['package_name', 'package_slug', 'no_of_day'], 'required', 'on' => 'create'],
             [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status'], 'integer'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
             [['package_feature', 'package_included', 'package_park', 'package_image', 'getting_there'], 'safe'],
@@ -145,14 +154,16 @@ class PackageForm extends \yii\base\Model
             'stay_category_id', 'status', 'cost_per_person', 'package_description',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
-            'start_location', 'end_location', 'start_date', 'end_date', 'owned_by_id'
+            'start_location', 'end_location', 'start_date', 'end_date', 'owned_by_id',
+            'type', 'gst_percentage', 'total_price'
         ];
         $scenarios['update'] = [
             'package_name', 'package_image', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_safari',
             'stay_category_id', 'status', 'cost_per_person', 'package_description',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
-            'start_location', 'end_location', 'start_date', 'end_date'
+            'start_location', 'end_location', 'start_date', 'end_date',
+            'type', 'gst_percentage', 'total_price'
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
@@ -186,6 +197,11 @@ class PackageForm extends \yii\base\Model
             'package_inclusion' => 'Package Inclusion',
             'package_exclusion' => 'Package Exclusion',
             'package_terms_condtition' => 'Package Terms Condtition',
+
+            'type' => 'Type',
+            'gst_percentage' => 'GST Percentage',
+            'total_price' => 'Total Price',
+
             'status' => 'Status',
         ];
     }
@@ -221,6 +237,16 @@ class PackageForm extends \yii\base\Model
         $this->package_model->date_change_policy = $this->date_change_policy;
         $this->package_model->refund_policy = $this->refund_policy;
         $this->package_model->getting_there = $this->getting_there;
+
+        $this->package_model->type = $this->type;
+        if ($this->type == 1) { // With GST
+            $this->package_model->gst_percentage = $this->gst_percentage;
+            $gst_amount = (0.01 * $this->gst_percentage) * $this->cost_per_person;
+            $this->package_model->total_price = $this->cost_per_person + $gst_amount;
+        } else { // Without GST
+            $this->package_model->total_price = $this->cost_per_person;
+        }
+
         $this->package_model->status = $this->status;
     }
 
