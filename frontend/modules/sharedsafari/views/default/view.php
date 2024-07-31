@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
 
     </div>
 </section>
-<section class="safari_wrapper bg-white py-3">
+<section class="safari_wrapper bg-white pt-3 pb-0">
     <div class="container-lg">
         <div class="row my-4">
             <div class="col-12">
@@ -61,7 +61,7 @@ $this->params['title'] = $this->title;
                                     </div>
                                 </div>
                                 <div class="col-sm-10 pt-sm-0 pt-3">
-                                    <div class="safrititles">
+                                    <div class="safrititles 44">
                                         <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>"><?= $share_safari->park->title ?></a>
                                             <?php
                                             if (Yii::$app->user->identity) { ?>
@@ -289,7 +289,7 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </section>
-<section class="safari_wrapper py-5">
+<section class="safari_wrapper margin_bottomfooter pt-3">
     <div class="container-lg">
         <div class="row mb-5 pb-5">
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>

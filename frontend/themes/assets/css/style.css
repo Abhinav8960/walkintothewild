@@ -1997,7 +1997,7 @@ figure {
 .text-form p {
 
     margin-bottom: 0;
-    font-weight: 400;
+    font-weight: 500;
     font-size: var(--fs-14);
     color: #151C2C;
 }
@@ -2152,9 +2152,15 @@ figure {
 
 .top_replysafari {
 
-    background: #F5F5F5;
+    /* background: #F5F5F5; */
     padding: 15px 3px;
     border-radius: 10px 10px 0px 0px;
+    border-bottom: 1px solid #7070704D;
+}
+.top_replysafari .text_com p{
+
+    font-weight: 500;
+    font-size: 15px;
 }
 
 .commentsOther {
@@ -4272,14 +4278,29 @@ figure {
 #flashMessage {
     display: none;
     position: absolute;
-    top: -48px;
-    right: -10px;
+    top: -56px;
+    text-align: center;
+    max-width: 203px;
+    right: -71px;
     background-color: var(--background-yellow);
     color: #000;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 4px 7px;
+    border-radius: 6px;
     z-index: 10;
     font-size: 14px;
+    font-weight: 400;
+
+}
+#flashMessage::after{
+
+    position: absolute;
+    content: '';
+    bottom: -5px;
+    width: 10px;
+    left: 49%;
+    height: 10px;
+    transform: rotate(45deg);
+    background-color: var(--background-yellow);
 }
 
 .close_button {
@@ -4603,19 +4624,22 @@ figure {
     bottom: 1em;
 }
 
-#modalFlag .modal-header.flageHeader {
+#modalFlag .modal-header.flageHeader,
+#report-modal .modal-header.flageHeader{
     background: #F7BF39 !important;
     color: #000000 !important;
 }
 
-#modalFlag .modal-header.flageHeader .modal-title p {
+#modalFlag .modal-header.flageHeader .modal-title p ,
+#report-modal .modal-header.flageHeader .modal-title p{
 
-    font-size: 13px !important;
+    font-size: 14px !important;
     margin-bottom: 0;
     font-weight: 400;
 }
 
-#modalFlag .modal-header.flageHeader .btn_close {
+#modalFlag .modal-header.flageHeader .btn_close,
+#report-modal .modal-header.flageHeader .btn_close{
 
     position: absolute;
     right: 17px;
@@ -4630,12 +4654,14 @@ figure {
     color: #fff;
     border: 0;
     outline: none;
+    border-radius: 25px;
 }
 
 
 .btns_submit {
 
     padding: 6px 25px;
+    border-radius: 25px;
     background: #F7BF39;
     color: #000;
     border: 0;
@@ -5747,7 +5773,12 @@ a.desc:after {
 }
 
 .margin_n5 {
-    margin-top: -37px;
+    margin-top: -30px;
+}
+.userBio p{
+
+    font-weight: 400;
+    font-size: 18px;
 }
 
 .card_profile.card {
@@ -5959,6 +5990,7 @@ a.desc:after {
 .custom-tooltip {
     --bs-tooltip-bg: var(--background-yellow) !important;
     --bs-tooltip-color: #000 !important;
+    opacity: 1 !important;
 
 }
 
@@ -6224,4 +6256,8 @@ color: #000000 !important;
     font-size: 20px;
     color: var(--background-primary);
     font-weight: 700;
+}
+
+.border-radious iframe{
+    border-radius: 10px;
 }
