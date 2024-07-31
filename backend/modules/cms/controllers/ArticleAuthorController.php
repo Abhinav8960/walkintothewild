@@ -22,7 +22,7 @@ class ArticleAuthorController extends Controller
     {
         $searchModel = new ArticleAuthorSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere("user_id IS null");
+        $dataProvider->query->andWhere("user_id is null");
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

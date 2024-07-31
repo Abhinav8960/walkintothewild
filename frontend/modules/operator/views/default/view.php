@@ -67,7 +67,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Operates in <?= count($operator_parks) ?> Parks</h6>
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h6 class="fs-5 fw-bold mb-0"><?= $operator->business_name ?> Operates in <span class="numberFont"><?= count($operator_parks) ?></span> Parks</h6>
+                                                <div class="whiteReview ">
+                                                    <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
+                                                </div>
+                                            </div>
+
                                             <div class="row">
                                                 <?php
                                                 if ($operator_parks) {

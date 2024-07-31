@@ -410,7 +410,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function authoroption()
     {
-        return ArrayHelper::map(ArticleAuthor::find()->where(['status' => self::STATUS_ACTIVE])->andWhere("user_id IS NULL")->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
+        return ArrayHelper::map(ArticleAuthor::find()->where(['status' => self::STATUS_ACTIVE])->andWhere("user_id is NULL")->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
     }
 
     public static function userauthoroption()
