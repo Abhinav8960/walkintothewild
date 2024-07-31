@@ -4,6 +4,7 @@ namespace common\models\cms\article\form;
 
 use Yii;
 use common\models\cms\article\Article;
+use common\models\cms\article\ArticleAuthor;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\GeneralModel;
@@ -194,7 +195,10 @@ class ArticleForm extends \yii\base\Model
         $this->article_model->description = $this->description;
         $this->article_model->article_author_id = $this->article_author_id;
         if ($this->article_author_id) {
-            $this->article_model->author_name =  GeneralModel::authoroption()[$this->article_author_id];
+            $author = ArticleAuthor::find()->where(['id' => $this->article_author_id])->one();
+            if ($author) {
+                $this->article_model->author_name =  $author->author_name;
+            }
         }
         // $this->article_model->article_tags = $this->article_tags;
         // if ($this->article_tags) {
