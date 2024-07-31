@@ -35,32 +35,39 @@ use yii\helpers\Html;
             <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false); ?>
         </div>
     </div>
-    <div class="col-lg-12 mb">
-        <div class="form-wrapper ">
-            <label for="">Full Name</label>
-            <?= $form->field($model, 'name')->textInput(['placeholder' => 'xyz', 'class' => 'form-control'])->label(false); ?>
+
+    <?php if (!Yii::$app->user->identity) { ?>
+        <div class="col-lg-12 mb">
+            <div class="form-wrapper ">
+                <label for="">Full Name</label>
+                <?= $form->field($model, 'name')->textInput(['placeholder' => 'xyz', 'class' => 'form-control'])->label(false); ?>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="form-wrapper ">
-            <label for="">Email Address</label>
-            <?= $form->field($model, 'email_address')->textInput(['placeholder' => 'xyz@abc.com', 'class' => 'form-control'])->label(false); ?>
+        <div class="col-lg-6">
+            <div class="form-wrapper ">
+                <label for="">Email Address</label>
+                <?= $form->field($model, 'email_address')->textInput(['placeholder' => 'xyz@abc.com', 'class' => 'form-control'])->label(false); ?>
+            </div>
         </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="form-wrapper ">
-            <label for="">Phone Number</label>
-            <?= $form->field($model, 'phone')->textInput(['placeholder' => 'Enter Number', 'class' => 'form-control'])->label(false); ?>
+        <div class="col-lg-6">
+            <div class="form-wrapper ">
+                <label for="">Phone Number</label>
+                <?= $form->field($model, 'phone')->textInput(['placeholder' => 'Enter Number', 'class' => 'form-control'])->label(false); ?>
+            </div>
         </div>
-    </div>
+    <?php } ?>
+
 </div>
 <div class="row align-items-center">
-    <div class="col-md-7">
-        <div class="text_get termsConditioncheck d-flex gap-2">
-            <input type="checkbox" id="chekcs" required>
-            <label for="chekcs">I agree to the terms and conditions.</label>
+    <?php if (!Yii::$app->user->identity) { ?>
+        <div class="col-md-7">
+            <div class="text_get termsConditioncheck d-flex gap-2">
+                <input type="checkbox" id="chekcs" required>
+                <label for="chekcs">I agree to the terms and conditions.</label>
+
+            </div>
         </div>
-    </div>
+    <?php } ?>
     <div class="col-md-5  pt-lg-0 pt-3">
         <?= Html::submitButton('Send Request', ['class' => 'sent_btn']) ?>
     </div>
