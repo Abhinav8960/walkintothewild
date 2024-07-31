@@ -96,7 +96,7 @@ class GenerateSiteXmlController extends Controller
         }
         $xml_content .= "</sitemapindex>";
 
-        $myFile = $backend_actual_url . "/sitemap.xml";
+        $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . "sitemap.xml";
         print_r($myFile);
         $fh = fopen($myFile, 'w') or die("can't open file");
         fwrite($fh, $xml_content);
