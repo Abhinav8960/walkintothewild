@@ -27,10 +27,10 @@ use yii\widgets\ActiveForm;
                 // '1' => 'Created Recently',
                 '2' => 'Less Safaris',
                 '3' => 'More Safaris',
-                '4' => 'cheapest',
+                '4' => 'Cheapest',
 
 
-            ],['prompt'=>'Created Recently']
+            ],['prompt'=>'Sort By : Created Recently']
         )->label(false); ?>
     </div>
 </div>
