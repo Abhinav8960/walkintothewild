@@ -81,9 +81,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                         </div>
                         <div class="row postion_setsfari  pe-lg-4 ps-lg-5">
-                            <div class="col-3"></div>
+                            <div class="col-3 555"></div>
                             <?php foreach ($shared_safaries as $share_safari) { ?>
-                                <div class="col-lg-3 col-sm-5 col-xxl-3 col-md-4 mb-4 ">
+                                <div class="col-lg-3 col-sm-6 col-xxl-3 col-md-4 mb-4 ">
                                     <div class="sharesafri-card">
                                         <div class="flotingdate">
                                             <div class="icons text-center">
