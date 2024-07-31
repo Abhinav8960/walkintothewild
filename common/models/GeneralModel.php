@@ -55,6 +55,7 @@ use frontend\models\registration\BirdingOperatorRequest;
 use frontend\models\registration\BirdingOperatorRequestPark;
 use frontend\models\registration\SafariOperatorRequestActivities;
 use frontend\models\registration\SafariOperatorRequestPark;
+use common\models\trierror\FrontendRequestLog;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -1002,9 +1003,44 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
             $output = array_slice($temp, 3);
             $output = "/" . implode("/", $output);
-            $output = mb_strimwidth($output, 0, 100, ' ...');
+            $output = mb_strimwidth($output, 0, 40, ' ...');
         }
 
         return $output;
+    }
+
+    public static function getreferhistory($route_url)
+    {
+        $unisque_refer_url = FrontendRequestLog::find()->select(['refer_url'])->distinct(['refer_url'])->where(['route' => $route_url])->asArray()->all();
+        $unisque_refer_url = FrontendRequestLog::find()
+            ->select(['refer_url', 'COUNT(*) AS refer_from_count'])
+            ->where(['route' => $route_url])
+            ->groupBy(['refer_url'])
+            ->createCommand()
+            ->queryAll();
+
+        $return = "<table class='table table-striped table-bordered table-hover'>";
+        $return .= "<thead>";
+        $return .= "<tr>";
+        $return .= "<td scope='col'>Total</td>";
+        $return .= "<td scope='col'>Total Refer from</td>";
+        $return .= "</tr>";
+        $return .= "</thead>";
+        $return .= "<tbody>";
+        $counter = 1;
+        foreach ($unisque_refer_url as $row) {
+            $refer_url = "Direct";
+            if (!empty($row['refer_url'])) {
+                $refer_url = "<a target='_blank' href='" . $row['refer_url'] . "'>" . $row['refer_url'] . "</a>";
+            }
+            $return .= "<tr>";
+            $return .= "<td>" . $row['refer_from_count'] . "</td>";
+            $return .= "<td>" . $refer_url . "</td>";
+            $return .= "</tr>";
+            $counter++;
+        }
+        $return .= "</tbody>";
+        $return .= "</table>";
+        return $return;
     }
 }
