@@ -201,7 +201,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-lg-5 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="pakageCost">
-                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $package->cost_per_person ?> +GST</h6>
+                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $package->total_price ?></h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>

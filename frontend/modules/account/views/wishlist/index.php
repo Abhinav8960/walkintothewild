@@ -80,7 +80,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                             <div class="col-6">
                                                                 <div class="safari text-center">
                                                                     <div class="joinsafari package">
-                                                                        <h6 class=" titlePrice"><?= $package_model->cost_per_person ?> + GST </h6>
+                                                                        <h6 class=" titlePrice"><?= $package_model->total_price ?>  </h6>
                                                                         <a href="/package/<?= $package_model->package_slug ?>">View Details</a>
                                                                     </div>
                                                                 </div>
