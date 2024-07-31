@@ -13,7 +13,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
         <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center">
         <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class="d-flex justify-content-between">
-                <a href="<?= Url::toRoute(['/manage/article/create']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" target="_blank"><i class="fa fa-plus"></i> Create Article</a> &nbsp;
+                <a href="<?= Url::toRoute(['/manage/article/create']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2"><i class="fa fa-plus"></i> Create Article</a> &nbsp;
             </div>
         </div>
         <div class="col-md-2">

@@ -53,7 +53,7 @@ class ArticleController extends FrontendBaseController
         $model = new ArticleForm();
         $model->action_url = '/manage/article/create';
         $model->action_validate_url = '/manage/article/validate';
-        $model->status = Article::STATUS_SUSPEND;
+        $model->status = Article::STATUS_ACTIVE;
         $model->user_id = $safari_operator->id;
         $model->user_type = Article::USER_TYPE_SAFARI_OPERATOR;
         $model->scenario = 'create';
@@ -176,7 +176,7 @@ class ArticleController extends FrontendBaseController
                     $model->initializeForm();
                     // Inactive if Anything is changed into form
                     if ($model->article_model->dirtyattributes) {
-                        $model->article_model->status = Article::STATUS_SUSPEND;
+                        $model->article_model->status = Article::STATUS_ACTIVE;
                     }
                     if ($model->article_model->save(false)) {
                         $model->uploadFile();

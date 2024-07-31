@@ -83,16 +83,6 @@ use yii\bootstrap5\ActiveForm;
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
                 </div>
-
-                <div class="col-md-9">
-                    <?= $form->field($model, 'slug', [
-                        'labelOptions' => ['class' => 'Modal_label']
-                    ])->textInput([
-                        'maxlength' => true,
-                        'placeholder' => 'Enter Slug',
-                        'readonly' => isset($model->article_model->id) ? true : false,
-                    ]) ?>
-                </div>
             </div>
             <div class="row">
             <div class="col-md-12">
@@ -120,34 +110,34 @@ $this->registerJs($script);
 
 
 <?php
-if (!isset($model->article_model->id)) {
-    $script = <<< JS
-    $(function(){
-        // Function to generate slug from title
-        function slugify(text) {
-            return text.toString().toLowerCase()
-                .replace(/\s+/g, '-')           // Replace spaces with -
-                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                .replace(/^-+/, '')             // Trim - from start of text
-                .replace(/-+$/, '');            // Trim - from end of text
-        }
+// if (!isset($model->article_model->id)) {
+//     $script = <<< JS
+//     $(function(){
+//         // Function to generate slug from title
+//         function slugify(text) {
+//             return text.toString().toLowerCase()
+//                 .replace(/\s+/g, '-')           // Replace spaces with -
+//                 .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+//                 .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+//                 .replace(/^-+/, '')             // Trim - from start of text
+//                 .replace(/-+$/, '');            // Trim - from end of text
+//         }
 
-        // Handle title change to update slug
-        $('#articleform-title').on('input', function() {
-            var title = $(this).val();
-            var slug = slugify(title);
-            $('#articleform-slug').val(slug);
-        });
+//         // Handle title change to update slug
+//         $('#articleform-title').on('input', function() {
+//             var title = $(this).val();
+//             var slug = slugify(title);
+//             $('#articleform-slug').val(slug);
+//         });
 
-        // Initialize slug when editing existing record
-        if (!$('#articleform-slug').val() && $('#articleform-title').val()) {
-            var title = $('#articleform-title').val();
-            var slug = slugify(title);
-            $('#articleform-slug').val(slug);
-        }
-    });
-JS;
-    $this->registerJs($script);
-}
+//         // Initialize slug when editing existing record
+//         if (!$('#articleform-slug').val() && $('#articleform-title').val()) {
+//             var title = $('#articleform-title').val();
+//             var slug = slugify(title);
+//             $('#articleform-slug').val(slug);
+//         }
+//     });
+// JS;
+//     $this->registerJs($script);
+// }
 ?>

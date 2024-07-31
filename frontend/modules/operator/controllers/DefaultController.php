@@ -479,7 +479,7 @@ class DefaultController extends FrontendBaseController
         }
 
         $query = Article::find()->where([
-            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'user_id' => $operator->id
+            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'status' => Article::STATUS_ACTIVE, 'user_id' => $operator->id
         ]);
         $articledataProvider = new \yii\data\ActiveDataProvider([
             'query' => $query,
