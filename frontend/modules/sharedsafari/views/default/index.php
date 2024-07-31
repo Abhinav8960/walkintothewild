@@ -28,8 +28,8 @@ $recentposts = ArticleSearch::recentpost();
 
 <section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/banner-share.png" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/banner-share.png" class="d-block w-100 banner_search" alt="banner">
+        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container">
@@ -90,7 +90,7 @@ $recentposts = ArticleSearch::recentpost();
                         </div>
                     </div>
                     <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
-                        <div class="row ">  
+                        <div class="row ">
                             <div class="col-12">
                                 <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100 mb-2">
                                     <div class="left_text">
@@ -340,14 +340,14 @@ JS;
 $this->registerJs($script);
 ?>
 <script>
-  // JavaScript to add a class to the parent element based on the child element
-  document.addEventListener('DOMContentLoaded', (event) => {
-    const childElement = document.querySelector('.tag');
-    if (childElement) {
-      const parentElement = childElement.closest('.tag-container');
-      if (parentElement) {
-        parentElement.classList.add('mb-4');
-      }
-    }
-  });
+    // JavaScript to add a class to the parent element based on the child element
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const childElement = document.querySelector('.tag');
+        if (childElement) {
+            const parentElement = childElement.closest('.tag-container');
+            if (parentElement) {
+                parentElement.classList.add('mb-4');
+            }
+        }
+    });
 </script>
