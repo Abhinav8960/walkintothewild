@@ -266,13 +266,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </section>
 <?php } ?>
 
-<section class="safariduring_sesons">
+<section class="safariduring_sesons paddiinTop_add">
     <?= \frontend\widgets\FeatureParkWidget::widget(['section_title' => $banner ? $banner->feature_park_title : '']) ?>
 </section>
-<section class="animal-wrapper pb-4">
+<section class="animal-wrapper  paddiinTop_add">
     <?= \frontend\widgets\RareExoticWidget::widget() ?>
 </section>
-<section class="articals_wrapper  margin_bottomfooter mb-5">
+<section class="articals_wrapper  margin_bottomfooter mb-5 paddiinTop_add">
     <?= $this->render('_featured_article', [
         'featured_articles' => $featured_articles,
     ]) ?>

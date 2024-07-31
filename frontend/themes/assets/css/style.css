@@ -339,8 +339,12 @@ a {
 
 .sharesafri {
 
-    padding-top: 70px;
+    padding-top: 75px;
     padding-bottom: 7px;
+}
+.paddiinTop_add{
+
+    padding-top: 75px;
 }
 
 .title_safari h4 {
@@ -633,8 +637,17 @@ a {
 .left_text p {
 
     color: var(--background-primary);
+    font-size: 16px;
+    line-height: 18px;
 }
+.left_text p strong{
 
+    font-size: 18px;
+}
+.hide{
+
+    display: none;
+}
 .input_check .form-select {
 
     font-family: "Roboto", sans-serif !important;
@@ -904,10 +917,10 @@ a {
 
 /* homeshrecard */
 
-.title_web {
+/* .title_web {
 
     padding: 30px 0px;
-}
+} */
 
 .title_web h2 {
 
@@ -1588,12 +1601,12 @@ figure {
 .banner_section-inner.packagebnner .headingBnner_inner h1,
 .banner_section-inner.packagedetails .headingBnner_inner h1 {
 
-    font-size: 36px;
+    font-size: 32px;
 }
 
 .banner_section-inner.packagebnner .banner_searchBox {
 
-    top: 56%;
+    top: 53%;
 }
 
 .banner_section-inner .headingBnner_inner h1 {
@@ -2113,6 +2126,18 @@ figure {
     background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
 
 }
+.iconSize .fa-linkedin-in {
+
+    background: #257bb8;
+    /* background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); */
+
+}
+.iconSize .fa-telegram {
+
+    background: #0088cc;
+
+}
+
 
 .comments_safari {
 
@@ -5973,7 +5998,7 @@ a.desc:after {
 .dual_range {
     box-sizing: border-box;
     appearance: none;
-    width: 250px;
+    width: 100%;
     margin: 0;
     padding: 0 2px;
     overflow: hidden;
@@ -6020,7 +6045,7 @@ a.desc:after {
 
 .multi-range .dual_range {
     position: absolute;
-    left: -6px;
+    left: -2px;
     top: -1px;
 }
 
@@ -6168,4 +6193,35 @@ border-radius: 10px;
 }
 .emoji-picker-icon{
     margin-top: 12px !important;
+}
+.safariChanges .tab-items{
+
+    padding: 10px 10px;
+    z-index: 0;
+ 
+}
+.safariChanges #tabList li{
+    padding-bottom: 10px;
+}
+.safariChanges #tabList li a{
+
+color: #000000;
+font-weight: 500;
+}
+.safariChanges .active_safri{
+
+    background: #fff;
+   border-radius: 5px;
+    border: 1px solid #7070704D;
+}
+.safariChanges a.active_safri i{
+
+color: #000000 !important;
+}
+
+.numberFont {
+
+    font-size: 20px;
+    color: var(--background-primary);
+    font-weight: 700;
 }

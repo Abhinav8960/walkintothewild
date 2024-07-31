@@ -70,7 +70,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Organized <?= count($shared_safaries) ?> Shared Safari</h6>
+                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Organized <span class="numberFont"><?= count($shared_safaries) ?></span> Shared Safari</h6>
                                             <div class="row justify-content-center ">
                                                 <?php
                                                 if ($shared_safaries) {
