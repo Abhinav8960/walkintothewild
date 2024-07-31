@@ -93,6 +93,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <li><a href="<?= $user->insta_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
                                     </li>
                                 <?php } ?>
+                                <?php if ($user->website_url) { ?>
+                                    <li><a href="<?= $user->website_url; ?>" target="_blank" class="iconSize"><i class="fa-solid fa-globe"></i></a>
+                                    </li>
+                                <?php } ?>
 
                             </ul>
                         </div>

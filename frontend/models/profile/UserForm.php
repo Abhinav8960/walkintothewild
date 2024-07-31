@@ -22,6 +22,7 @@ class UserForm extends Model
     public $whatsapp_url;
     public $x_url;
     public $insta_url;
+    public $website_url;
     public $about;
     public $user_bio;
     public $account_type;
@@ -40,9 +41,10 @@ class UserForm extends Model
             $this->user_handle = $this->user_model->user_handle;
             $this->mobile_no = $this->user_model->mobile_no;
             $this->facebook_url = $this->user_model->facebook_url;
-            $this->whatsapp_url = $this->user_model->whatsapp_url;
+            // $this->whatsapp_url = $this->user_model->whatsapp_url;
             $this->x_url = $this->user_model->x_url;
             $this->insta_url = $this->user_model->insta_url;
+            $this->website_url = $this->user_model->website_url;
             $this->about = $this->user_model->about;
             $this->user_bio = $this->user_model->user_bio;
             $this->account_type = $this->user_model->account_type;
@@ -62,7 +64,7 @@ class UserForm extends Model
             ['name', 'trim'],
             ['name', 'required'],
             ['name', 'string', 'min' => 2, 'max' => 255],
-            ['user_bio', 'string', 'max' => 255],
+            ['user_bio', 'string', 'max' => 120],
             ['mobile_no', 'match', 'pattern' => '/^\+?\d{10,15}$/', 'message' => 'Invalid mobile number format.'],
             [['profile_image', 'cover_image'], 'safe'],
 
@@ -79,7 +81,7 @@ class UserForm extends Model
                 'targetClass' => User::className(), 'targetAttribute' => ['user_handle'],
                 'message' => 'This username has already been taken'
             ],
-            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url'], 'string'],
+            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url', 'website_url'], 'string'],
             [['about'], 'string'],
 
             [
@@ -113,9 +115,10 @@ class UserForm extends Model
             'insta_url' => 'Instagram',
             'about' => 'About',
             'account_type' => 'Account Type',
-            'user_bio' => 'User Bio',
+            'user_bio' => 'You are',
             'gender' => 'Gender',
             'date_of_birth' => 'D.O.B',
+            'website_url' => 'Website Url'
 
         ];
     }
@@ -129,6 +132,7 @@ class UserForm extends Model
         $this->user_model->whatsapp_url = $this->whatsapp_url;
         $this->user_model->x_url = $this->x_url;
         $this->user_model->insta_url = $this->insta_url;
+        $this->user_model->website_url = $this->website_url;
         $this->user_model->about = $this->about;
         $this->user_model->user_bio = $this->user_bio;
         $this->user_model->account_type = $this->account_type;

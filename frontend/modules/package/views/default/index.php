@@ -182,7 +182,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             <div class="icons_restro">
 
                               <i class="fa-solid fa-building"></i>
-                              <p class="mb-0"><?= $model->packagerange->title ?></p>
+                              <p class="mb-0"><?= isset($model->packagerange->title) ? $model->packagerange->title : "" ?></p>
                             </div>
                           </div>
                         </div>

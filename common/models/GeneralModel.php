@@ -579,7 +579,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
         $query = Article::find()
             // ->where(['status' => self::STATUS_ACTIVE])
-            ->where("status=1 AND (user_type=3 OR is_approved=1)")
+            ->where("status=1 AND (user_type=3)")
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
