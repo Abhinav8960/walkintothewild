@@ -55,7 +55,7 @@ class GenerateSiteXmlController extends Controller
     {
         $start = microtime(true);
 
-        $backend_actual_url = Yii::$app->params['datapath'] . "/sitemap";
+        $backend_actual_url = Yii::$app->params['datapath'] . "sitemap/";
         if (!file_exists($backend_actual_url)) {
             mkdir($backend_actual_url);
             chmod($backend_actual_url, 0777);
@@ -64,7 +64,6 @@ class GenerateSiteXmlController extends Controller
         //get article site pages
         $additional_sitemap = [];
         $additional_sitemap[] = $this->static_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_safari_operator_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_park_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_category_site_pages($backend_actual_url);
@@ -73,6 +72,12 @@ class GenerateSiteXmlController extends Controller
         $additional_sitemap[] = $this->get_article_tags_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_package_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_rared_animal_site_pages($backend_actual_url);
+        $all_url = $this->get_safari_operator_pages($backend_actual_url);
+        if (count($all_url) > 0) {
+            foreach ($all_url as $temp_url) {
+                $additional_sitemap[] = $temp_url;
+            }
+        }
 
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
@@ -160,8 +165,14 @@ class GenerateSiteXmlController extends Controller
         if (count($safari_operators) > 0) {
             $insert_safari_operator_site_pages = [];
 
-            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $article_xml_content = $review_xml_content = $parks_xml_content = $packages_xml_content = $shared_xml_content = $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+
             $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+            $shared_xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+            $packages_xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+            $parks_xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+            $review_xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+            $article_xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
             foreach ($safari_operators as $operator) {
                 $url = $base_url . 'operator/' . $operator['slug'];
                 $insert_safari_operator_site_pages[] = [
@@ -176,21 +187,98 @@ class GenerateSiteXmlController extends Controller
                 $xml_content .= "<url>";
                 $xml_content .= "<loc>" . $url . "</loc>";
                 $xml_content .= "<lastmod>" . date('Y-m-d', $operator['updated_at']) . "</lastmod>";
-                //$xml_content .= "<changefreq>weekly</changefreq>";
                 $xml_content .= "<priority>0.9</priority>";
                 $xml_content .= "</url>";
+
+                $shared_xml_content_url = $url . "#memberview";
+                $shared_xml_content .= "<url>";
+                $shared_xml_content .= "<loc>" . $shared_xml_content_url . "</loc>";
+                $shared_xml_content .= "<lastmod>" . date('Y-m-d', $operator['updated_at']) . "</lastmod>";
+                $shared_xml_content .= "<priority>0.9</priority>";
+                $shared_xml_content .= "</url>";
+
+                $packages_xml_content_url = $url . "/package#memberview";
+                $packages_xml_content .= "<url>";
+                $packages_xml_content .= "<loc>" . $packages_xml_content_url . "</loc>";
+                $packages_xml_content .= "<lastmod>" . date('Y-m-d', $operator['updated_at']) . "</lastmod>";
+                $packages_xml_content .= "<priority>0.9</priority>";
+                $packages_xml_content .= "</url>";
+
+                $parks_xml_content_url = $url . "/park#memberview";
+                $parks_xml_content .= "<url>";
+                $parks_xml_content .= "<loc>" . $parks_xml_content_url . "</loc>";
+                $parks_xml_content .= "<lastmod>" . date('Y-m-d', $operator['updated_at']) . "</lastmod>";
+                $parks_xml_content .= "<priority>0.9</priority>";
+                $parks_xml_content .= "</url>";
+
+                $review_xml_content_url = $url . "/reviewlist#memberview";
+                $review_xml_content .= "<url>";
+                $review_xml_content .= "<loc>" . $review_xml_content_url . "</loc>";
+                $review_xml_content .= "<lastmod>" . date('Y-m-d', $operator['updated_at']) . "</lastmod>";
+                $review_xml_content .= "<priority>0.9</priority>";
+                $review_xml_content .= "</url>";
+
+                $article_url = $url . "/article#memberview";
+                $article_xml_content .= "<url>";
+                $article_xml_content .= "<loc>" . $article_url . "</loc>";
+                $article_xml_content .= "<lastmod>" . date('Y-m-d', $operator['updated_at']) . "</lastmod>";
+                $article_xml_content .= "<priority>0.9</priority>";
+                $article_xml_content .= "</url>";
             }
+
             $xml_content .= "</urlset>";
+            $shared_xml_content .= "</urlset>";
+            $packages_xml_content .= "</urlset>";
+            $parks_xml_content .= "</urlset>";
+            $review_xml_content .= "</urlset>";
+            $article_xml_content .= "</urlset>";
 
             Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_safari_operator_site_pages)->execute();
 
+            $all_files = [];
             $fileName = "safari_operator.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $all_files[] = $base_url . "storage/sitemap/" . $fileName;
+            $myFile = $backend_actual_url . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
 
-            return $base_url . "storage/sitemap/" . $fileName;
+            $fileName = "safari_operator_shared_safari.xml";
+            $all_files[] = $base_url . "storage/sitemap/" . $fileName;
+            $myFile = $backend_actual_url . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $shared_xml_content);
+            fclose($fh);
+
+            $fileName = "safari_operator_package.xml";
+            $all_files[] = $base_url . "storage/sitemap/" . $fileName;
+            $myFile = $backend_actual_url . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $packages_xml_content);
+            fclose($fh);
+
+            $fileName = "safari_operator_park.xml";
+            $all_files[] = $base_url . "storage/sitemap/" . $fileName;
+            $myFile = $backend_actual_url . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $parks_xml_content);
+            fclose($fh);
+
+            $fileName = "safari_operator_review.xml";
+            $all_files[] = $base_url . "storage/sitemap/" . $fileName;
+            $myFile = $backend_actual_url . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $review_xml_content);
+            fclose($fh);
+
+            $fileName = "safari_operator_article.xml";
+            $all_files[] = $base_url . "storage/sitemap/" . $fileName;
+            $myFile = $backend_actual_url . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $article_xml_content);
+            fclose($fh);
+
+            return $all_files;
         }
 
         return '';
