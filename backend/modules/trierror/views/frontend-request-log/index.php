@@ -58,7 +58,7 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'Type',
+                        'label' => 'Module',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return ucwords($model->request_group);
