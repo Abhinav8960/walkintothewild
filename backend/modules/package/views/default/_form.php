@@ -141,6 +141,16 @@ use kartik\datetime\DateTimePicker;
             </div>
 
             <div class="col-md-3">
+                <?= $form->field($model, 'type')->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion']) ?>
+            </div>
+
+            <div class="col-md-3">
+                <?= $form->field($model, 'gst_percentage')->textInput([
+                    'placeholder' => 'GST (%)',
+                ]) ?>
+            </div>
+
+            <div class="col-md-3">
                 <?= $form->field($model, 'package_feature')->widget(\kartik\select2\Select2::classname(), [
                     'data' => GeneralModel::packagefeatureoption(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -187,6 +197,32 @@ editor('packageform-package_description');
 JS;
 $this->registerJs($script);
 ?>
+
+<?php
+
+
+$gst_script = <<< JS
+    $(function() {
+        $('.field-packageform-gst_percentage').hide();
+        var gst_type =$("#packageform-type").val();
+            
+        if(gst_type == 1){
+            $('.field-packageform-gst_percentage').show();
+        }
+       
+        $('#packageform-type').on('change', function() {
+            var selectValue = $(this).val();
+            if (selectValue == 1) {
+                $('.field-packageform-gst_percentage').show();
+            } else {
+                $('.field-packageform-gst_percentage').hide();
+            }
+        });
+    });
+JS;
+$this->registerJs($gst_script);
+?>
+
 
 <?php
 $script = <<< JS

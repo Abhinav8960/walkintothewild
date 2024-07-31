@@ -20,7 +20,7 @@ use kartik\datetime\DateTimePicker;
 ]); ?>
 <div class="row">
     <div class="col-md-6">
-        <?= $form->field($model, 'package_name',[
+        <?= $form->field($model, 'package_name', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->textInput([
             'maxlength' => true,
@@ -41,13 +41,13 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'no_of_day',[
+        <?= $form->field($model, 'no_of_day', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->dropDownList(GeneralModel::packagedayoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Select Day/Night'])->label('Day/Night') ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'no_of_safari',[
+        <?= $form->field($model, 'no_of_safari', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->textInput([
             'maxlength' => true,
@@ -56,7 +56,7 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'start_location',[
+        <?= $form->field($model, 'start_location', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->textInput([
             'maxlength' => true,
@@ -64,7 +64,7 @@ use kartik\datetime\DateTimePicker;
         ]) ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'end_location',[
+        <?= $form->field($model, 'end_location', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->textInput([
             'maxlength' => true,
@@ -72,7 +72,7 @@ use kartik\datetime\DateTimePicker;
         ]) ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'start_date',[
+        <?= $form->field($model, 'start_date', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->widget(\kartik\datetime\DateTimePicker::classname(), [
             'options' => ['placeholder' => 'Enter Start Date'],
@@ -88,7 +88,7 @@ use kartik\datetime\DateTimePicker;
         ]); ?>
     </div>
     <div class="col-md-6">
-        <?= $form->field($model, 'end_date',[
+        <?= $form->field($model, 'end_date', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->widget(\kartik\datetime\DateTimePicker::classname(), [
             'options' => ['placeholder' => 'Enter End Date'],
@@ -107,25 +107,25 @@ use kartik\datetime\DateTimePicker;
     <?php
     if ($model->package_model->package_image) { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'package_image',[
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+            <?= $form->field($model, 'package_image', [
+                'labelOptions' => ['class' => 'Modal_label']
+            ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
         </div>
         <div class="col-md-1">
             <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'package_image',[
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+            <?= $form->field($model, 'package_image', [
+                'labelOptions' => ['class' => 'Modal_label']
+            ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
         </div>
     <?php  } ?>
 
 
 
     <div class="col-md-6">
-        <?= $form->field($model, 'package_park',[
+        <?= $form->field($model, 'package_park', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::safariparkoption(),
@@ -138,13 +138,13 @@ use kartik\datetime\DateTimePicker;
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'stay_category_id',[
+        <?= $form->field($model, 'stay_category_id', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->dropDownList(GeneralModel::packageoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Select Category']) ?>
     </div>
 
     <div class="col-md-6">
-        <?= $form->field($model, 'cost_per_person',[
+        <?= $form->field($model, 'cost_per_person', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->textInput([
             'maxlength' => true,
@@ -152,8 +152,22 @@ use kartik\datetime\DateTimePicker;
         ]) ?>
     </div>
 
+    <div class="col-md-3">
+        <?= $form->field($model, 'type', [
+            'labelOptions' => ['class' => 'Modal_label']
+        ])->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion']) ?>
+    </div>
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'gst_percentage', [
+            'labelOptions' => ['class' => 'Modal_label']
+        ])->textInput([
+            'placeholder' => 'GST (%)',
+        ]) ?>
+    </div>
+
     <div class="col-md-12">
-        <?= $form->field($model, 'package_feature',[
+        <?= $form->field($model, 'package_feature', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->widget(\kartik\select2\Select2::classname(), [
             'data' => GeneralModel::packagefeatureoption(),
@@ -168,13 +182,13 @@ use kartik\datetime\DateTimePicker;
     <?php
     if (!empty($model->package_model->id)) { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'status',[
-            'labelOptions' => ['class' => 'Modal_label']
-        ])->dropDownList(GeneralModel::statusoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => '--Select Status--']) ?>
+            <?= $form->field($model, 'status', [
+                'labelOptions' => ['class' => 'Modal_label']
+            ])->dropDownList(GeneralModel::statusoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => '--Select Status--']) ?>
         </div>
     <?php } ?>
     <div class="col-md-12">
-        <?= $form->field($model, 'package_description',[
+        <?= $form->field($model, 'package_description', [
             'labelOptions' => ['class' => 'Modal_label']
         ])->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
     </div>
@@ -199,6 +213,30 @@ $script = <<< JS
 editor('packageform-package_description');
 JS;
 $this->registerJs($script);
+?>
+
+
+<?php
+$gst_script = <<< JS
+    $(function() {
+        $('.field-packageform-gst_percentage').hide();
+        var gst_type =$("#packageform-type").val();
+            
+        if(gst_type == 1){
+            $('.field-packageform-gst_percentage').show();
+        }
+       
+        $('#packageform-type').on('change', function() {
+            var selectValue = $(this).val();
+            if (selectValue == 1) {
+                $('.field-packageform-gst_percentage').show();
+            } else {
+                $('.field-packageform-gst_percentage').hide();
+            }
+        });
+    });
+JS;
+$this->registerJs($gst_script);
 ?>
 
 <?php
