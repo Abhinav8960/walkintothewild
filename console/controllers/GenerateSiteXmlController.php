@@ -21,6 +21,7 @@ use common\models\sharesafari\ShareSafari;
 use common\models\trierror\SiteRobots;
 use common\models\package\Package;
 use common\models\master\animal\MasterRareAnimal;
+use common\models\GeneralModel;
 
 
 /**
@@ -73,11 +74,14 @@ class GenerateSiteXmlController extends Controller
         $additional_sitemap[] = $this->get_package_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_rared_animal_site_pages($backend_actual_url);
         $all_url = $this->get_safari_operator_pages($backend_actual_url);
+
         if (count($all_url) > 0) {
             foreach ($all_url as $temp_url) {
                 $additional_sitemap[] = $temp_url;
             }
         }
+        $additional_sitemap[] = $this->get_monthly_package_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);
 
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
@@ -92,13 +96,13 @@ class GenerateSiteXmlController extends Controller
         }
         $xml_content .= "</sitemapindex>";
 
-        $myFile = $backend_actual_url . "/sitemap.xml";
+        $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . "sitemap.xml";
         $fh = fopen($myFile, 'w') or die("can't open file");
         fwrite($fh, $xml_content);
         fclose($fh);
         //chmod($fh, 0777);
 
-        //create robots.txt to make entry of sitemap_index.xml
+        //create robots.txt to make entry of sitemap_icdndex.xml
         $content = "Sitemap: " . Yii::$app->params['frontend_url'] . "storage/sitemap/sitemap.xml";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
         if (count($all_url) > 0) {
@@ -638,6 +642,92 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "rared_animal.xml";
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url . "storage/sitemap/" . $fileName;
+        }
+        return '';
+    }
+
+    protected function get_monthly_package_site_pages($backend_actual_url)
+    {
+        $base_url = Yii::$app->params['frontend_url'];
+        $available_months = GeneralModel::monthoption();
+        if (count($available_months) > 0) {
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
+            $insert_package_site_pages = [];
+            foreach ($available_months as $ind => $month) {
+                $url = $base_url . "package?PackageSearch%5Bmonth_id%5D=" . $ind;
+
+                $insert_package_site_pages[] = [
+                    'content_id' => $ind,
+                    'content_type' => 'month_wise_package',
+                    'slug' => $month,
+                    'url' => $url,
+                    'last_update_at' => date('Y-m-d H:i:s'),
+                    'counter' => 0 //$package['total_view'],
+                ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d H:i:s') . "</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
+            }
+
+            Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_package_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "month_wise_package.xml";
+            $myFile = $backend_actual_url . "/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $xml_content);
+            fclose($fh);
+
+            return $base_url . "storage/sitemap/" . $fileName;
+        }
+        return '';
+    }
+
+    protected function get_monthly_shared_safari_site_pages($backend_actual_url)
+    {
+        $base_url = Yii::$app->params['frontend_url'];
+        $available_months = GeneralModel::monthoption();
+        if (count($available_months) > 0) {
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
+            $insert_package_site_pages = [];
+            foreach ($available_months as $ind => $month) {
+                $url = $base_url . "sharedsafari?ShareSafariSearch%5Bmonth_id%5D=" . $ind;
+
+                $insert_package_site_pages[] = [
+                    'content_id' => $ind,
+                    'content_type' => 'month_wise_package',
+                    'slug' => $month,
+                    'url' => $url,
+                    'last_update_at' => date('Y-m-d H:i:s'),
+                    'counter' => 0 //$package['total_view'],
+                ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d H:i:s') . "</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
+            }
+
+            Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_package_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "month_wise_shared_safari.xml";
             $myFile = $backend_actual_url . "/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);

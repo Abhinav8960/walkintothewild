@@ -49,13 +49,17 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             $user_row = '-';
                             if (!empty($model->user_id)) {
-                                $user_row = $model->user->name . " (" . $model->user->mobile_no . ")";
+                                $user_mob = '';
+                                if (!empty($model->user->mobile_no)) {
+                                    $user_mob = " (" . $model->user->mobile_no . ")";
+                                }
+                                $user_row = $model->user->name . $user_mob;
                             }
                             return $user_row;
                         }
                     ],
                     [
-                        'label' => 'Type',
+                        'label' => 'Module',
                         'format' => 'raw',
                         'value' => function ($model) {
                             return ucwords($model->request_group);
@@ -77,6 +81,24 @@ $this->params['title'] = $this->title;
                     'request_parameter',
                     'request_data',
                     'request_code',
+                    [
+                        'label' => 'Refer URL',
+                        'format' => 'raw',
+                        'contentOptions' => ['style' => 'color:#000;'],
+                        'value' => function ($model) {
+
+                            $temp = "<a target='_blank' href='" . $model->refer_url . "'>" . mb_strimwidth($model->refer_url, 0, 100, ' ...') . "</a>";
+                            return $temp;
+                        }
+                    ],
+                    [
+                        'label' => 'Refer History',
+                        'format' => 'raw',
+                        'contentOptions' => ['style' => 'color:#000;'],
+                        'value' => function ($model) {
+                            return \common\models\GeneralModel::getreferhistory($model->route);;
+                        }
+                    ],
                     'response_error',
                     'is_server_error',
                     'is_client_error',

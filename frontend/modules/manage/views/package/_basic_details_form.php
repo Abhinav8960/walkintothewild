@@ -111,8 +111,8 @@ use yii\bootstrap5\ActiveForm;
             if ($model->package_model->package_image) { ?>
                 <div class="col-md-3">
                     <?= $form->field($model, 'package_image', [
-                    'labelOptions' => ['class' => 'Modal_label']
-                ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                 </div>
                 <div class="col-md-1">
                     <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
@@ -120,8 +120,8 @@ use yii\bootstrap5\ActiveForm;
             <?php } else { ?>
                 <div class="col-md-3">
                     <?= $form->field($model, 'package_image', [
-                    'labelOptions' => ['class' => 'Modal_label']
-                ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                 </div>
             <?php  } ?>
 
@@ -130,8 +130,8 @@ use yii\bootstrap5\ActiveForm;
             <div class="row">
                 <div class="col-md-3">
                     <?= $form->field($model, 'package_park', [
-                    'labelOptions' => ['class' => 'Modal_label']
-                ])->widget(\kartik\select2\Select2::classname(), [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->widget(\kartik\select2\Select2::classname(), [
                         'data' => GeneralModel::safariparkoption(),
                         // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                         'options' => ['placeholder' => 'Select', 'multiple' => true],
@@ -142,23 +142,37 @@ use yii\bootstrap5\ActiveForm;
                 </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'stay_category_id', [
-                    'labelOptions' => ['class' => 'Modal_label']
-                ])->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Category']) ?>
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Category']) ?>
                 </div>
 
                 <div class="col-md-3">
                     <?= $form->field($model, 'cost_per_person', [
-                    'labelOptions' => ['class' => 'Modal_label']
-                ])->textInput([
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->textInput([
                         'maxlength' => true,
                         'placeholder' => 'Enter Cost Per Person',
                     ]) ?>
                 </div>
 
                 <div class="col-md-3">
+                    <?= $form->field($model, 'type', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion']) ?>
+                </div>
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'gst_percentage', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->textInput([
+                        'placeholder' => 'GST (%)',
+                    ]) ?>
+                </div>
+
+                <div class="col-md-3">
                     <?= $form->field($model, 'package_feature', [
-                    'labelOptions' => ['class' => 'Modal_label']
-                ])->widget(\kartik\select2\Select2::classname(), [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->widget(\kartik\select2\Select2::classname(), [
                         'data' => GeneralModel::packagefeatureoption(),
                         // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                         'options' => ['placeholder' => 'Select', 'multiple' => true],
@@ -205,6 +219,28 @@ $script = <<< JS
 editor('packageform-package_description');
 JS;
 $this->registerJs($script);
+?>
+<?php
+$gst_script = <<< JS
+    $(function() {
+        $('.field-packageform-gst_percentage').hide();
+        var gst_type =$("#packageform-type").val();
+            
+        if(gst_type == 1){
+            $('.field-packageform-gst_percentage').show();
+        }
+       
+        $('#packageform-type').on('change', function() {
+            var selectValue = $(this).val();
+            if (selectValue == 1) {
+                $('.field-packageform-gst_percentage').show();
+            } else {
+                $('.field-packageform-gst_percentage').hide();
+            }
+        });
+    });
+JS;
+$this->registerJs($gst_script);
 ?>
 
 <?php
