@@ -62,7 +62,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Select Region' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <!-- <div class="dropdown-item" data-value="">Select Region</div> -->
+                        <div class="dropdown-item" data-value="">Any \ All</div>
                         <?php foreach ($locationoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -92,7 +92,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <!-- <div class="dropdown-item" data-value="">Select Animal</div> -->
+                        <div class="dropdown-item" data-value="">Any / All</div>
                         <?php foreach ($animalfilteroption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
