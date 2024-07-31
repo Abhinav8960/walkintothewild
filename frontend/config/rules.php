@@ -10,6 +10,7 @@ return [
     //    '/shared_safari.xml' => '/sitemap/shared_safari',
     //    '/walkintothewild_pages.xml' => '/sitemap/walkintothewild_pages',
     //    '/article_tag.xml' => '/sitemap/article_tag',
+    '/animal/<animal>/<slug>' => '/animal/index', //home Page url
     '/home' => '/plan-safari', //home Page url
     '/park' => '/park/default/index', //home-old page url
     '/park/<slug>' => '/park/default/view', //park view url
