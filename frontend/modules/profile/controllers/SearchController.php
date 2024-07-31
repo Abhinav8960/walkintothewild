@@ -49,6 +49,10 @@ class SearchController extends FrontendBaseController
     public function actionBlocked($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
+        if (Yii::$app->user->identity->id == $user->id) {
+            Yii::$app->session->setFlash('error', "You can't Block yourself!");
+            return $this->redirect(Yii::$app->request->referrer);
+        }
         $blocked_user = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
         if ($blocked_user) {
             $blocked_user->status = 2;
