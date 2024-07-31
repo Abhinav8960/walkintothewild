@@ -97,11 +97,9 @@ class GenerateSiteXmlController extends Controller
         $xml_content .= "</sitemapindex>";
 
         $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . "sitemap.xml";
-        print_r($myFile);
         $fh = fopen($myFile, 'w') or die("can't open file");
         fwrite($fh, $xml_content);
         fclose($fh);
-        die('xml wirting is done');
         //chmod($fh, 0777);
 
         //create robots.txt to make entry of sitemap_icdndex.xml
