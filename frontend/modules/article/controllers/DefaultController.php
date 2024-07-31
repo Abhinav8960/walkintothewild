@@ -2,6 +2,7 @@
 
 namespace frontend\modules\article\controllers;
 
+use common\interfaces\StatusInterface;
 use common\models\article\article\form\ArticleForm;
 use Yii;
 use frontend\models\CommentForm;
@@ -33,8 +34,8 @@ class DefaultController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
+        $searchModel->status = StatusInterface::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere("status=1 AND (user_type=3 OR is_approved=1)");
 
         return $this->render('index', [
             'searchModel' => $searchModel,

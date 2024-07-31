@@ -147,7 +147,7 @@ class GenerateSiteXmlController extends Controller
             $xml_content .= "</urlset>";
 
             $fileName = "walkintothewild_pages.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
 
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
@@ -324,7 +324,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "safari_park.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -370,7 +370,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article_tag.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -413,7 +413,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -459,7 +459,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article_category.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -504,7 +504,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "shared_safari.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -550,7 +550,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "article_authors.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -596,7 +596,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "package.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -642,7 +642,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "rared_animal.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -685,7 +685,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "month_wise_package.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);
@@ -728,7 +728,7 @@ class GenerateSiteXmlController extends Controller
 
             $xml_content .= "</urlset>";
             $fileName = "month_wise_shared_safari.xml";
-            $myFile = $backend_actual_url . "/" . $fileName;
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
             $fh = fopen($myFile, 'w') or die("can't open file");
             fwrite($fh, $xml_content);
             fclose($fh);

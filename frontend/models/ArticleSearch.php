@@ -75,6 +75,8 @@ class ArticleSearch extends Article
             'article.updated_at' => $this->updated_at,
         ]);
 
+
+        $query->andWhere(self::addtionalQuery());
         $query->andFilterWhere(['like', 'article.title', $this->title]);
         $query->andFilterWhere(['like', 'article.slug', $this->slug]);
         $query->andFilterWhere(['like', 'article.description', $this->description]);
@@ -100,6 +102,10 @@ class ArticleSearch extends Article
     }
 
 
+    public static function addtionalQuery()
+    {
+        return "id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and user_type=3) OR id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and is_approved=1 and user_type IN (1,2))";
+    }
 
 
 
@@ -112,17 +118,19 @@ class ArticleSearch extends Article
                         $additional_query->andWhere(['like', 'master_article_topic.slug', $slug]);
                     }]);
                 }])
-                // ->andWhere(['article.status' => self::STATUS_ACTIVE]) // Filters by active status
+                ->andWhere(['article.status' => self::STATUS_ACTIVE]) // Filters by active status
                 ->andWhere("is_schedule = 0 OR DATE(publish_date_time) <= '" . date('Y-m-d') . "'") // Filters by publication date
-                ->andWhere("article.status=1 AND (user_type=3 OR is_approved=1)")
+                // ->andWhere("article.status=1 AND (user_type=3 OR is_approved=1)")
+                ->andWhere(self::addtionalQuery())
                 ->orderBy('RAND()') // Orders the results randomly
                 ->limit(3) // Limits the number of results to 3
                 ->all(); // Retrieves all matching records
         } else {
             return Article::find()
-                // ->andWhere(['article.status' => [self::STATUS_ACTIVE]])
+                ->andWhere(['article.status' => [self::STATUS_ACTIVE]])
                 ->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
-                ->andWhere("status=1 AND (user_type=3 OR is_approved=1)")
+                // ->andWhere("status=1 AND (user_type=3 OR is_approved=1)")
+                ->andWhere(self::addtionalQuery())
                 ->orderBy('RAND()') // Order by random
                 ->limit(3)
                 ->all();
