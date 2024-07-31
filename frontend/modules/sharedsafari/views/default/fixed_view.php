@@ -104,7 +104,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($pick_drop_includes) ? 'Pick & Drop' : '';
+                                                            echo ($pick_drop_includes) ? 'Pick & Drop' : 'N/A';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $share_safari_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($share_safari_includes) ? 'All meals' : '';
+                                                            echo ($share_safari_includes) ? 'All meals' : 'N/A';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -143,7 +143,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $share_safari_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($share_safari_includes) ? 'Camera Fee' : '';
+                                                            echo ($share_safari_includes) ? 'Camera Fee' : 'N/A';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= isset($share_safari->stay_category_id) ? GeneralModel::packageoption()[$share_safari->stay_category_id] : '' ?></p>
+                                            <p class="mb-0"><?= isset(GeneralModel::packageoption()[$share_safari->stay_category_id]) ? GeneralModel::packageoption()[$share_safari->stay_category_id] : 'N/A' ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -186,7 +186,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-lg-5 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="pakageCost">
-                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?> +GST</h6>
+                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>

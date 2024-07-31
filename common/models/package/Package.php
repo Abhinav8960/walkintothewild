@@ -213,13 +213,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-        return ($pick_drop_includes) ? 'Pick & Drop' : '';
+        return ($pick_drop_includes) ? 'Pick & Drop' : 'N/A';
     }
 
     public function getMeals()
     {
         $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-        return ($package_includes) ? 'All meals' : '';
+        return ($package_includes) ? 'All meals' : 'N/A';
     }
 }
