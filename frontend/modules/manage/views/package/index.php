@@ -78,7 +78,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'contentOptions' => ['style' => 'width: 10%;'],
                                             'format' => 'raw',
                                             'value' => function ($model) {
-                                                return $model->cost_per_person;
+                                                return $model->total_price;
                                             }
                                         ],
                                         [
