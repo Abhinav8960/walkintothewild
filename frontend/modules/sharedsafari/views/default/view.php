@@ -148,7 +148,7 @@ $this->params['title'] = $this->title;
                                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0">Available Seats - <?= $share_safari->total_seat ?>/<?= $share_safari->share_seat ?></p>
+                                            <p class="mb-0">Available Seats - <?= $share_safari->share_seat ?>/<?= $share_safari->total_seat ?></p>
                                         </div>
                                     </div>
                                 </div>
