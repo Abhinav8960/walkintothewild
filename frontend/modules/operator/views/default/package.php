@@ -70,8 +70,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class=" col-xxl-8 col-lg-8">
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
-                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Created <?= count($operator_packages) ?> Packages</h6>
-                                            <div class="row gx-5 justify-content-center">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h6 class="fs-5 fw-bold mb-0"><?= $operator->business_name ?> Created <span class="numberFont"><?= count($operator_packages) ?></span> Packages</h6>
+                                                <div class="whiteReview ">
+                                                    <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row gx-5 ">
                                                 <?php if ($operator_packages) {
                                                     foreach ($operator_packages as $model) { ?>
                                                         <div class="col-md-6 mb-4 padding_righ">
