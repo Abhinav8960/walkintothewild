@@ -43,8 +43,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <h6 class="mb-0"><?= $user->userhandle ?></h6>
                 </div>
                 <?php if ($user->user_bio <> '') { ?>
-                    <div class="text-center">
-                        <p class="mb-0"><?= $user->user_bio ?></p>
+                    <div class="text-center pt-2 userBio">
+                        <p class="mb-0  "><?= $user->user_bio ?></p>
                     </div>
                 <?php } ?>
             </div>

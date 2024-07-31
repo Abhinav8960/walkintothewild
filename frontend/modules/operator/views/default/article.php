@@ -23,10 +23,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 ?>
 
 
-<section class="banner_section-inner position-relative">
+<section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 " alt="banner">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container">
@@ -68,7 +68,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="col-md-8">
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
-                                            <h6 class="fs-5 fw-bold mb-3"><?= $operator->business_name ?> Published <?= count($articles) ?> Article</h6>
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h6 class="fs-5 fw-bold mb-0"><?= $operator->business_name ?> Published <span class="numberFont"><?= count($articles) ?></span> Article</h6>
+                                                <div class="whiteReview ">
+                                                    <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
+                                                </div>
+                                            </div>
+
                                             <div class="row">
                                                 <?php if ($articles) {
                                                     foreach ($articles as $article) { ?>

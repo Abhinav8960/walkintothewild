@@ -22,6 +22,7 @@ use common\models\trierror\SiteRobots;
 use common\models\package\Package;
 use common\models\master\animal\MasterRareAnimal;
 use common\models\GeneralModel;
+use common\models\master\animal\MasterAnimal;
 
 
 /**
@@ -63,7 +64,7 @@ class GenerateSiteXmlController extends Controller
         }
 
         //get article site pages
-        $additional_sitemap = [];
+        $additional_sitemap = [];/*
         $additional_sitemap[] = $this->static_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_park_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_site_pages($backend_actual_url);
@@ -81,7 +82,8 @@ class GenerateSiteXmlController extends Controller
             }
         }
         $additional_sitemap[] = $this->get_monthly_package_site_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);*/
+        $additional_sitemap[] = $this->get_animal_search_site_pages($backend_actual_url);
 
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
@@ -733,6 +735,50 @@ class GenerateSiteXmlController extends Controller
             fwrite($fh, $xml_content);
             fclose($fh);
 
+            return $base_url . "storage/sitemap/" . $fileName;
+        }
+        return '';
+    }
+
+    protected function get_animal_search_site_pages($backend_actual_url)
+    {
+        $base_url = Yii::$app->params['frontend_url'];
+
+        $animals = MasterAnimal::find()->select(['id', 'slug', 'name', 'updated_at'])->where(['status' => true])->asArray()->all();
+        if (count($animals) > 0) {
+            $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+            $xml_content .= "<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
+            $insert_package_site_pages = [];
+            foreach ($animals as $animal) {
+                $animal_name = str_replace(" ", "+", $animal['name']);
+                $url = $base_url . "animal/" . $animal_name . "/" . $animal['slug'];
+                $insert_package_site_pages[] = [
+                    'content_id' => $animal['id'],
+                    'content_type' => 'animal_parks',
+                    'slug' => $animal['slug'],
+                    'url' => $url,
+                    'last_update_at' => date('Y-m-d H:i:s', $animal['updated_at']),
+                    'counter' => 0 //$package['total_view'],
+                ];
+
+                $xml_content .= "<url>";
+                $xml_content .= "<loc>" . $url . "</loc>";
+                $xml_content .= "<lastmod>" . date('Y-m-d', $animal['updated_at']) . "</lastmod>";
+                //$xml_content .= "<changefreq>weekly</changefreq>";
+                $xml_content .= "<priority>0.9</priority>";
+                $xml_content .= "</url>";
+            }
+
+            Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_type', 'slug', 'url', 'last_update_at', 'counter'], $insert_package_site_pages)->execute();
+
+            $xml_content .= "</urlset>";
+            $fileName = "animal_parks.xml";
+            $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $fileName;
+            //$myFile = Yii::$app->params['datapath'] . "sitemap/" . $fileName;
+            $fh = fopen($myFile, 'w') or die("can't open file");
+            fwrite($fh, $xml_content);
+            fclose($fh);
             return $base_url . "storage/sitemap/" . $fileName;
         }
         return '';

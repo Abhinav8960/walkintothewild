@@ -4,7 +4,7 @@
     </button>
 </h2>
 <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-    <div class="accordion-body height_set w-100">
+    <div class="accordion-body p-0 overflow-hiden border-radious">
         <?php
 
         $latitude = $model->latitude;
@@ -15,7 +15,7 @@
         if (!empty($latitude) && !empty($longitude)) {
         ?>
 
-            <iframe width="100%" height="450" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
+            <iframe width="100%" height="480" frameborder="0" style="border:0" src="<?= $mapUrl ?>" allowfullscreen>
             </iframe>
 
         <?php } ?>
