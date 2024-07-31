@@ -15,7 +15,7 @@ class FeatureArticleController extends Controller
     public function actionIndex()
     {
         // Fetch the current sequences
-        $sequences = Article::find()->select(['sequence', 'id'])->where("status=1 AND (user_type=3 OR is_approved=1)")->indexBy('sequence')->column();
+        $sequences = Article::find()->select(['sequence', 'id'])->where("status=1 AND user_type=3")->indexBy('sequence')->column();
 
         return $this->render('index', [
             'sequences' => $sequences,
