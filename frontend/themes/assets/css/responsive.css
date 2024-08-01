@@ -432,9 +432,9 @@
     height: 232px;
   }
 
-  .shareimg {
+  /* .shareimg {
     height: 150px;
-  }
+  } */
 
   .Modal_label {
     font-size: 14px;
@@ -477,6 +477,8 @@
     object-fit: cover;
   }
 }
+
+
 @media only screen and (max-width: 986px) and (min-width: 874px) {
 }
 
@@ -673,6 +675,7 @@
   }
   .dropdown-container {
     width: auto;
+    display: inline-block;
   }
 }
 
@@ -705,6 +708,34 @@
 @media only screen and (max-width: 991px) and (min-width: 990.98px) {
   .articals_wrapper.margin-setposi {
     margin-top: 510px !important;
+  }
+}
+@media only screen and (max-width: 991px) and (min-width: 768px){
+
+  .padding_mobileAdded{
+
+    padding: 0px 45px;
+    justify-content: center;
+  }
+  .title_safari.JoinPadding{
+
+     flex-direction: column;
+     text-align: center;
+   
+  }
+  .title_safari.JoinPadding .joinshareView{
+
+    padding-top: 10px;
+  }
+  .padditg_mobile {
+    padding: 0px 40px;
+}
+  .sharesafribg{
+
+    background: var(--background-primary) !important;
+    height: auto !important;
+    padding-top: 30px;
+    border-radius: 10px;
   }
 }
 @media only screen and (max-width: 1200px) and (min-width: 576px) {
@@ -795,6 +826,10 @@
 @media only screen and (max-width: 1400px) {
   .author_wrapper {
     padding-top: 10px;
+  }
+  .sharesafribg{
+
+    height: 470px;
   }
 
   .searchSafari_wraper .seelctes_text p {
@@ -934,9 +969,9 @@
     height: 24px;
   }
 
-  .sharesafribg {
+  /* .sharesafribg {
     height: 400px;
-  }
+  } */
 }
 @media only screen and (max-width: 1399px) and (min-width: 768px) {
   .safartabs .nav-tabs .nav-link {
@@ -963,6 +998,11 @@
   }
 }
 @media (max-width: 991px) {
+  .padding_mobileAdded{
+
+    justify-content: center;
+  }
+
   .banner_section-inner.packagebnner .headingBnner_inner h1 {
     font-size: 28px;
   }
@@ -1236,9 +1276,19 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .paddiinTop_add{
+
+    padding-top: 25px;
+  }
   .tag {
     font-size: 14px;
   }
+  .title_safari.JoinPadding{
+
+    flex-direction: column;
+    text-align: center;
+  }
+
   .postthumbnail img {
     height: 50px;
     object-fit: cover;
@@ -1345,7 +1395,7 @@
 
   .header_wrapper {
     height: 60px;
-    line-height: 60px;
+    line-height: 36px !important;
   }
 
   .logo {
@@ -1368,7 +1418,7 @@
     border-radius: 10px;
   }
   .padditg_mobile {
-    padding: 0px 40px;
+    padding: 0px 20px;
   }
 
   .sharesafribg.home .shareimg {
@@ -1516,7 +1566,7 @@
 }
 @media only screen and (max-width: 575px) and (min-width: 420px) {
   .safarishareBox .row .col-xxl-3 {
-    padding: 0px 73px;
+    padding: 0px 50px;
   }
 }
 
