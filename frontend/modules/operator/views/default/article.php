@@ -68,11 +68,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="col-md-8">
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <h6 class="fs-5 fw-bold mb-0"><?= $operator->business_name ?> Published <span class="numberFont"><?= count($articles) ?></span> Article</h6>
-                                                <div class="whiteReview ">
+                                            <div class="d-flex justify-content-between  mb-4">
+                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Published <span class="numberFont"><?= count($articles) ?></span> Article</h6>
+                                                <!-- <div class="whiteReview ">
                                                     <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
-                                                </div>
+                                                </div> -->
+                                                <a class="SeeAll" href="">See All</a>
                                             </div>
 
                                             <div class="row">
