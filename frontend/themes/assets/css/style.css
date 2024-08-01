@@ -6288,3 +6288,8 @@ color: #000000 !important;
 .border-radious iframe{
     border-radius: 10px;
 }
+
+.safri_tour.sticky-top{
+
+    z-index: 0;
+}

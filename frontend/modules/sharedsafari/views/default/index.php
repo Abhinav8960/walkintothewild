@@ -220,7 +220,7 @@ $recentposts = ArticleSearch::recentpost();
                                                 if (Yii::$app->user->identity) {
                                                     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                     if ($share_safari_intrested) {
-                                                        $class = 'background-color: #007BFF;';
+                                                        $class = 'background-color: #4B4B4B;';
                                                     }
                                                 } ?>
                                                 <div class="top_seats" style='<?= $class ?>'>
@@ -274,7 +274,7 @@ $recentposts = ArticleSearch::recentpost();
                                                                     if (Yii::$app->user->identity) {
                                                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                                         if ($share_safari_intrested) { ?>
-                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color: #007BFF;">Leave Safari</a>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color:#4B4B4B;">Leave Safari</a>
                                                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                                             <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
                                                                         <?php  }

@@ -178,6 +178,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </li>
                                         <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
                                         </li>
+                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-linkedin-in"></i></a>
+                                        </li>
+                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-telegram"></i></a>
+                                        </li>
 
                                     </ul>
                                 </div>
@@ -324,7 +328,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse card_bodyPadding bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set card-body">
+                            <div class="accordion-body  card-body">
                                 <?= $this->render('_inclusion', ['share_safari' => $share_safari]) ?>
                             </div>
                         </div>
@@ -337,7 +341,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </button>
                         </h2>
                         <div id="collapseFour" class="accordion-collapse bg-set card_bodyPadding collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set card-body">
+                            <div class="accordion-body  card-body">
                                 <?= $this->render('_getting_there', ['share_safari' => $share_safari]) ?>
                             </div>
                         </div>
@@ -349,8 +353,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 POLICY INFO
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse card_bodyPadding bg-set collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set card-body">
+                        <div id="collapseFour" class="accordion-collapse  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                            <div class="accordion-body height_set pt-0">
                                 <?= $this->render('_policy', ['share_safari' => $share_safari]) ?>
                             </div>
                         </div>

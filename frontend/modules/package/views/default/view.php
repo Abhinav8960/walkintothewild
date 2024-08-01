@@ -286,7 +286,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </button>
                         </h2>
                         <div id="collapseTwo" class="accordion-collapse collapse card_bodyPadding   bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set card-body">
+                            <div class="accordion-body  card-body">
                                 <?= $this->render('_inclusion', ['package' => $package]) ?>
                             </div>
                         </div>
@@ -299,7 +299,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </button>
                         </h2>
                         <div id="collapseFour" class="accordion-collapse bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body card-body height_set">
+                            <div class="accordion-body card-body ">
                                 <?= $this->render('_getting_there', ['package' => $package]) ?>
                             </div>
                         </div>
