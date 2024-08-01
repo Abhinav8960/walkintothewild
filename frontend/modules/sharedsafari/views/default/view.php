@@ -88,16 +88,7 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
                             <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
-                                    <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
-                                        'class' => 'join_btn text-center mt-sm-0 mt-2 d-block',
-                                        'style' => 'background-color:green; color:white;',
-                                        'data' => [
-                                            'confirm' => 'Are you sure you want to Completed this Safari?',
-                                            'method' => 'post',
-                                        ],
-                                    ]) ?>
-                                <?php } ?>
+                            
 
                                 <?php if ($share_safari->status == 2) { ?>
                                     <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
@@ -252,16 +243,6 @@ $this->params['title'] = $this->title;
 
                                 </div>
                                 <div class="btns-safaries">
-                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
-                                        <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
-                                            'class' => 'join_btn text-center mt-sm-0 mt-2',
-                                            'style' => 'background-color:green; color:white;',
-                                            'data' => [
-                                                'confirm' => 'Are you sure you want to Completed this Safari?',
-                                                'method' => 'post',
-                                            ],
-                                        ]) ?>
-                                    <?php } ?>
 
                                     <?php if ($share_safari->status == 2) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
