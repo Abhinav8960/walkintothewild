@@ -32,7 +32,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     continue;
                                                 }
                                         ?>
-                                                <div class="col-md-4 mb-4 padding_righ">
+                                                <div class="col-md-4 mb-4 padding_righ pt-4">
                                                     <div class="sharesafri-card tourpackage">
                                                         <div class="flotingdate">
                                                             <div class="icons text-center">

@@ -34,7 +34,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             }
 
                                     ?>
-                                            <div class="col mb-4 padding_righ">
+                                            <div class="col mb-4 padding_righ pt-4">
                                                 <div class="sharesafri-card">
                                                     <div class="flotingdate">
                                                         <div class="icons text-center">
