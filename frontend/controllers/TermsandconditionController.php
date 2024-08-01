@@ -38,51 +38,47 @@ class TermsandconditionController extends FrontendBaseController
         if ($model->load(Yii::$app->request->post())) {
             $data = Yii::$app->request->post('AuthTemp');
 
-            if ($data['status']) {
-                $password = Yii::$app->security->generateRandomString(6);
-                $user = new User([
-                    'name' => $model->name,
-                    'username' => $model->username,
-                    'gmail' => $model->gmail,
-                    'email' => $model->email,
-                    'google_source_id' => $model->source_id,
-                    'avatar' => $model->avatar,
-                    'password' => $password,
-                    'status' => User::STATUS_ACTIVE // make sure you set status properly
+            $password = Yii::$app->security->generateRandomString(6);
+            $user = new User([
+                'name' => $model->name,
+                'username' => $model->username,
+                'gmail' => $model->gmail,
+                'email' => $model->email,
+                'google_source_id' => $model->source_id,
+                'avatar' => $model->avatar,
+                'password' => $password,
+                'status' => User::STATUS_ACTIVE // make sure you set status properly
+            ]);
+            $user->generateAuthKey();
+            //$user->generatePasswordResetToken();
+
+            $transaction = User::getDb()->beginTransaction();
+
+            if ($user->save()) {
+                $auth = new Auth([
+                    'user_id' => $user->id,
+                    'source' => $model->source,
+                    'source_id' => $model->source_id,
                 ]);
-                $user->generateAuthKey();
-                //$user->generatePasswordResetToken();
-
-                $transaction = User::getDb()->beginTransaction();
-
-                if ($user->save()) {
-                    $auth = new Auth([
-                        'user_id' => $user->id,
-                        'source' => $model->source,
-                        'source_id' => $model->source_id,
-                    ]);
-                    if ($auth->save()) {
-                        $transaction->commit();
-                        $this->loginUser($user);
-                        return Yii::$app->response->redirect('/');
-                    } else {
-                        Yii::$app->getSession()->setFlash('error', [
-                            Yii::t('app', 'Unable to save {client} account: {errors}', [
-                                'client' => $this->client->getTitle(),
-                                'errors' => json_encode($auth->getErrors()),
-                            ]),
-                        ]);
-                    }
+                if ($auth->save()) {
+                    $transaction->commit();
+                    $this->loginUser($user);
+                    return Yii::$app->response->redirect($model->redirect_to);
                 } else {
                     Yii::$app->getSession()->setFlash('error', [
-                        Yii::t('app', 'Unable to save user: {errors}', [
+                        Yii::t('app', 'Unable to save {client} account: {errors}', [
                             'client' => $this->client->getTitle(),
-                            'errors' => json_encode($user->getErrors()),
+                            'errors' => json_encode($auth->getErrors()),
                         ]),
                     ]);
                 }
             } else {
-                return Yii::$app->response->redirect('/');
+                Yii::$app->getSession()->setFlash('error', [
+                    Yii::t('app', 'Unable to save user: {errors}', [
+                        'client' => $this->client->getTitle(),
+                        'errors' => json_encode($user->getErrors()),
+                    ]),
+                ]);
             }
         }
 

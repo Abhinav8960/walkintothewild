@@ -90,24 +90,30 @@ if (isset($key) && !empty($key)) { ?>
                     ],
                 ]); ?>
                 <div class="modal-header justify-content-center">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & conditions</h1>
+                    <h1 class="modal-title fs-5">
+                        <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="180px" class="logo">
+                    </h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
                 </div>
                 <div class="modal-body px-3">
                     <div class="row">
                         <div class="col-12">
                             <div class="content_terms">
-                                <h5>terms & conditions</h5>
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe quam molestiae est quae placeat perferendis, reiciendis minus, dolorem nobis facere molestias blanditiis vitae distinctio. Nulla inventore ratione maiores quidem facilis?</p>
-                                <div class="termsagree">
-                                    <label for="agree"><?= $form->field($model, 'status')->checkbox(['class' => 'agreeterms'])->label("I agreen to this <strong><a href='/termsandcondition' target='_blank'>terms & constions</a></strong>"); ?> </label>
-                                </div>
+                                <h5>Create your account</h5>
+                                <h6>Email Address<br /><b><?= $model->email ?></b></h6>
+                                <p></p>
+                                <h6>Full Name<br /><b><?= ucwords($model->name) ?></b></h6>
+                                <p></p>
+                                <p>By creating an account, I accept the WalkIntoTheWild <a href="/termsandcondition" target="_blank">Terms of Service</a> and acknowledge the Privacy Policy.</p>
+                                <p></p>
+                                <?= $form->field($model, 'rand_key')->hiddenInput()->label(false); ?>
+
+                                <p><?= Html::submitButton('Create your account', ['class' => 'btns_submit']) ?></p>
+                                <p></p>
+                                <p class="justify-content-center"><a href="/site/login">Already have an WalkIntoTheWild account? Log in</a></p>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <a href="/" class="backtohome">Back to Home</a>
-                    <?= Html::submitButton('Agree', ['class' => 'btns_submit']) ?>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>

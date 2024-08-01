@@ -123,8 +123,8 @@ class DefaultController extends Controller
     public function actionDelete($id)
     {
         $user = $this->findModel($id);
-        $user->username = $user->username . "d";
-        $user->email = $user->email . "d";
+        $user->username = $user->username . rand();
+        $user->email = $user->email . rand();
         $user->google_source_id = 0;
         if ($user->save()) {
             $isexist = Auth::find()->where(['user_id' => $id])->one();
