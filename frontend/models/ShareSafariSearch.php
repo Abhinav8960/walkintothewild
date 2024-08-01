@@ -19,6 +19,11 @@ class ShareSafariSearch extends ShareSafari
     public $estimated_price_filter;
     public $date_filter;
     public $title;
+    public $no_of_safari_min = 1;
+    public $no_of_safari_max = 10;
+    public $estimate_price_min = 1;
+    public $estimate_price_max = 15000;
+
 
 
 
@@ -31,7 +36,7 @@ class ShareSafariSearch extends ShareSafari
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title'], 'safe'],
-            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'no_of_safari_min', 'no_of_safari_max'], 'safe'],
         ];
     }
 
@@ -98,42 +103,65 @@ class ShareSafariSearch extends ShareSafari
             // $query->andWhere("MONTH(start_date)=" . $this->month_id . " OR MONTH(end_date)=" . $this->month_id);
         }
 
-        if ($this->estimated_price_filter) {
-            $price_query = "";
-            foreach ((array)$this->estimated_price_filter as $price_filter) {
-                if ($price_filter == 1) {
-                    $price_query .= "estimate_price_min >= 0 AND estimate_price_min <= 5000 OR estimate_price_max >= 0 AND estimate_price_max <= 5000 OR ";
-                } else if ($price_filter == 2) {
-                    $price_query .= "estimate_price_min >= 5000 AND estimate_price_min <= 10000 OR estimate_price_max >= 5000 AND estimate_price_max <= 10000 OR ";
-                } else if ($price_filter == 3) {
-                    $price_query .= "estimate_price_min >= 10000 AND estimate_price_min >= 15000 OR estimate_price_max >= 10000 AND estimate_price_max >= 15000 OR ";
-                }
-            }
-            if ($price_query <> '') {
-                $price_query = substr($price_query, 0, -3);
-                $query->andWhere($price_query);
+        // if ($this->estimated_price_filter) {
+        //     $price_query = "";
+        //     foreach ((array)$this->estimated_price_filter as $price_filter) {
+        //         if ($price_filter == 1) {
+        //             $price_query .= "estimate_price_min >= 0 AND estimate_price_min <= 5000 OR estimate_price_max >= 0 AND estimate_price_max <= 5000 OR ";
+        //         } else if ($price_filter == 2) {
+        //             $price_query .= "estimate_price_min >= 5000 AND estimate_price_min <= 10000 OR estimate_price_max >= 5000 AND estimate_price_max <= 10000 OR ";
+        //         } else if ($price_filter == 3) {
+        //             $price_query .= "estimate_price_min >= 10000 AND estimate_price_min >= 15000 OR estimate_price_max >= 10000 AND estimate_price_max >= 15000 OR ";
+        //         }
+        //     }
+        //     if ($price_query <> '') {
+        //         $price_query = substr($price_query, 0, -3);
+        //         $query->andWhere($price_query);
+        //     }
+        // }
+
+        // if ($this->no_of_safari) {
+        //     $safari_query = "";
+        //     foreach ((array)$this->no_of_safari as $no_of_safari) {
+        //         if ($no_of_safari == 1) {
+        //             $safari_query .= "no_of_safari between 1 and 2 OR ";
+        //         } else if ($no_of_safari == 2) {
+        //             $safari_query .= "no_of_safari between 3 and 5 OR ";
+        //         } else if ($no_of_safari == 3) {
+        //             $safari_query .= "no_of_safari between 6 and 8 OR ";
+        //         } else {
+        //             $safari_query .= "no_of_safari >=8 OR ";
+        //         }
+        //     }
+        //     if ($safari_query <> '') {
+        //         $safari_query = substr($safari_query, 0, -3);
+        //         $query->andWhere($safari_query);
+        //     }
+        // }
+
+        if ($this->estimate_price_min !== null && $this->estimate_price_max !== null) {
+            if ($this->estimate_price_max >= 15000) {
+                $dataProvider->query->andWhere([
+                    'or',
+                    ['>=', 'estimate_price_max', $this->estimate_price_min],
+                    ['<=', 'estimate_price_min', $this->estimate_price_max]
+                ]);
+            } else {
+                $dataProvider->query->andWhere([
+                    'or',
+                    ['and', ['>=', 'estimate_price_min', $this->estimate_price_min], ['<=', 'estimate_price_min', $this->estimate_price_max]],
+                    ['and', ['>=', 'estimate_price_max', $this->estimate_price_min], ['<=', 'estimate_price_max', $this->estimate_price_max]]
+                ]);
             }
         }
 
-        if ($this->no_of_safari) {
-            $safari_query = "";
-            foreach ((array)$this->no_of_safari as $no_of_safari) {
-                if ($no_of_safari == 1) {
-                    $safari_query .= "no_of_safari between 1 and 2 OR ";
-                } else if ($no_of_safari == 2) {
-                    $safari_query .= "no_of_safari between 3 and 5 OR ";
-                } else if ($no_of_safari == 3) {
-                    $safari_query .= "no_of_safari between 6 and 8 OR ";
-                } else {
-                    $safari_query .= "no_of_safari >=8 OR ";
-                }
-            }
-            if ($safari_query <> '') {
-                $safari_query = substr($safari_query, 0, -3);
-                $query->andWhere($safari_query);
+        if ($this->no_of_safari_min && $this->no_of_safari_max) {
+            if ($this->no_of_safari_max >= 10) {
+                $dataProvider->query->andWhere('no_of_safari>=' . $this->no_of_safari_min);
+            } else {
+                $dataProvider->query->andFilterWhere(['between', 'no_of_safari', $this->no_of_safari_min, $this->no_of_safari_max]);
             }
         }
-
         if ($this->custom_sort_by) {
             if ($this->custom_sort_by == '1') {
                 $dataProvider->sort = [
