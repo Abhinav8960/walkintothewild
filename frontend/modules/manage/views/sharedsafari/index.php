@@ -35,7 +35,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                         ],
                                         [
                                             'label' => 'Park List',
-                                            'contentOptions' => ['style' => 'width: 10%;'],
+                                            'contentOptions' => ['style' => 'width: 18%;'],
                                             'format' => 'raw',
                                             'value' => function ($model) {
                                                 return Html::a($model->park->title, ['/sharedsafari/default/view', 'slug' => $model->slug]);
@@ -94,7 +94,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('View', [Url::toRoute(['view', 'id' => $model->id])], ['class' => 'btn btn-info', 'title' => 'View']);
+                                                return   Html::a('View', [Url::toRoute(['view', 'id' => $model->id])], ['class' => 'btn btn-info bg-blues py-2', 'title' => 'View']);
                                             }
                                         ],
                                         [
@@ -102,7 +102,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('Update', [Url::toRoute(['update-fixed-departure', 'share_safari_id' => $model->id])], ['class' => 'btn btn-info', 'title' => 'Update']);
+                                                return   Html::a('Update', [Url::toRoute(['update-fixed-departure', 'share_safari_id' => $model->id])], ['class' => 'btn btn-info join_btn py-2', 'title' => 'Update']);
                                             }
                                         ],
                                     ],

@@ -34,7 +34,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'header' => 'User',
                                             'value' => function ($model) {
                                                 if ($user = $model->user) {
-                                                    return Html::a(Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name, ['/profile/default/index', 'user_handle' => $user->user_handle]);
+                                                    return Html::a(Html::img($user->avatar != '' ? $user->avatar : '/img/dpmain.png', ['class' => "rounded-5 profile-picture", 'style' => "width:28px;"]) . ' ' . $user->name, ['/profile/default/index', 'user_handle' => $user->user_handle]);
                                                 }
                                                 return $model->user_id;
                                             },
@@ -68,7 +68,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::Button('View', ['value' => Url::toRoute(['/manage/review/flagview', 'id' => $model->id]), 'class' => 'btn btn_newsafari flagBtn', 'title' => 'View Flages']);
+                                                return   Html::Button('View', ['value' => Url::toRoute(['/manage/review/flagview', 'id' => $model->id]), 'class' => 'btn btn-info bg-blues py-2 flagBtn', 'title' => 'View Flages']);
                                             }
                                         ],
                                     ],

@@ -73,23 +73,23 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="sharesafribg home px-lg-0 px-2">
                         <div class="safarishareBox py-3 pb-5">
                             <div class="row justify-content-center">
-                                <div class="col-xl-3">
+                                <div class="col-xxl-3">
 
                                 </div>
                                 <div class="col-xxl-9 col-lg-12 col-xl-9">
-                                    <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
+                                    <div class="title_safari JoinPadding d-flex justify-content-center justify-content-md-between align-items-center flex-wrap">
                                         <h4 class="text-center ps-4">Discover and Join 100+ Shared Safaris</h4>
-                                        <div class="joinshareView mt-xl-0 mt-3 pe-lg-4">
+                                        <div class="joinshareView mt-md-0 mt-3 pe-lg-4">
                                             <a href="/sharedsafari" class="btn_shareView">View All</a>
                                         </div>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="row postion_setsfari  pe-lg-4 ps-lg-3 ps-xxl-5">
-                                <div class="col-lg-12 col-sm-12 col-xxl-3 col-md-4 mb-4"></div>
+                            <div class="row postion_setsfari  pe-lg-4 ps-lg-3 ps-xxl-5 padding_mobileAdded">
+                                <div class="col-lg-12 col-sm-12 col-xxl-3 col-md-12 mb-4"></div>
                                 <?php foreach ($shared_safaries as $share_safari) { ?>
-                                    <div class="col-lg-4 col-sm-6 col-xxl-3 col-md-4 mb-4 ">
+                                    <div class="col-lg-4 col-sm-6 col-xxl-3 col-md-6 mb-4 ">
                                         <div class="sharesafri-card">
                                             <div class="flotingdate">
                                                 <div class="icons text-center">
@@ -182,15 +182,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 <?php if ($packages) { ?>
     <section class="sharesafri">
-        <div class="container-lg ">
+        <div class="container-lg  padditg_mobile">
             <div class="row justify-content-center">
                 <div class="col-xl-11 px-md-1 px-0">
                     <div class="PackageBox_home p-4">
                         <div class="row justify-content-left">
                             <div class="col-xxl-12 col-lg-12 col-xl-12 pb-3">
-                                <div class="title_safari JoinPadding d-flex justify-content-left justify-content-xl-between align-items-left flex-wrap">
+                                <div class="title_safari JoinPadding d-flex justify-content-left justify-content-md-between align-items-left flex-wrap">
                                     <h4 class="text-center" style="color:var(--background-primary) !important;">Discover The Best Safari Deal</h4>
-                                    <div class="joinshareView mt-xl-0 mt-3">
+                                    <div class="joinshareView mt-md-0 mt-3">
                                         <a href="/package" class="btn_shareView pakage">View All</a>
                                     </div>
                                 </div>

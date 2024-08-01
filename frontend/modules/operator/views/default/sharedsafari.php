@@ -75,11 +75,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <a class="SeeAll" href="">See All</a>
                                             </div>
                        
-                                            <div class="row gx-5 ">
+                                            <div class="row gx-5 justify-content-center">
                                                 <?php
                                                 if ($shared_safaries) {
                                                     foreach ($shared_safaries as $share_safari) { ?>
-                                                        <div class="col-md-5 mb-4 padding_right">
+                                                        <div class="col-md-5 mb-4 ">
                                                             <div class="sharesafri-card">
                                                                 <div class="flotingdate">
                                                                     <div class="icons text-center">
