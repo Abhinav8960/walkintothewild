@@ -310,6 +310,24 @@ a {
 #ui_notifIt.success {
     background-color: #f7bf39 !important;
     color: #212529 !important;
+
+ 
+}
+
+#ui_notifIt{
+
+    width: 600px !important;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#ui_notifIt p{
+
+    font-size: 20px !important;
+    font-weight: 500 !important;
 }
 
 .banner_searchBox {
@@ -2181,6 +2199,7 @@ figure {
     position: absolute;
     top: 13px;
     right: 20px;
+    cursor: pointer;
 }
 
 .interst_wrapper {
@@ -6069,7 +6088,7 @@ a.desc:after {
     appearance: none;
     width: 100%;
     margin: 0;
-    padding: 0 2px;
+    /* padding: 0 2px; */
     overflow: hidden;
     border: 0;
     border-radius: 1px;

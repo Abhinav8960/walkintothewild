@@ -9,7 +9,7 @@ use yii\helpers\Html;
     <?php $form = ActiveForm::begin(['id' => 'report-form']); ?>
     <div class="row">
         <div class="col-12">
-            <div class="selects w-100 d-flex align-items-center gap-3">
+            <div class="selects w-100 d-flex  flex-column">
                 <label for="" class="Modal_label">Reason</label>
                 <?= $form->field($model, 'reason_id')->dropDownList(
                     [
