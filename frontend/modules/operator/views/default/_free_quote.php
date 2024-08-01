@@ -33,7 +33,12 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-3">
                 <div class="form-wrapper">
                     <label for="">Safari Park</label>
-                    <?= $form->field($model, 'safari_park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator->id), ['prompt' => 'Select', 'class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
+
+                    <?= $form->field($model, 'safari_park_id')->widget(\kartik\select2\Select2::className(), [
+                        'hideSearch' => true,
+                        'data' => GeneralModel::operatorsafariparkoption($operator->id),
+                        'options' => ['placeholder' => 'Select park...'],
+                    ])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -66,7 +71,11 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">Stay Category</label>
-                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::staycategoryoption(), ['prompt' => 'Select', 'class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
+                    <?= $form->field($model, 'stay_category_id')->widget(\kartik\select2\Select2::className(), [
+                        'hideSearch' => true,
+                        'data' => GeneralModel::staycategoryoption(),
+                        'options' => ['placeholder' => 'Select...'],
+                    ])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-2">

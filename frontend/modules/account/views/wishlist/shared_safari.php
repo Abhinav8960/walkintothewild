@@ -34,7 +34,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             }
 
                                     ?>
-                                            <div class="col mb-4 padding_righ">
+                                            <div class="col mb-4 padding_righ pt-4">
                                                 <div class="sharesafri-card">
                                                     <div class="flotingdate">
                                                         <div class="icons text-center">
@@ -110,7 +110,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                                             if (Yii::$app->user->identity) {
                                                                                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari_model->id, 'status' => 1])->limit(1)->one();
                                                                                 if ($share_safari_intrested) { ?>
-                                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari_model->slug]) ?>" style="background-color: #4B4B4B;">Leave Safari</a>
+                                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari_model->slug]) ?>" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;">Leave Safari</a>
                                                                                 <?php } else if ($share_safari_model->host_user_id != Yii::$app->user->identity->id) { ?>
                                                                                     <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari_model->slug]) ?>">Join Safari</a>
                                                                                 <?php  }

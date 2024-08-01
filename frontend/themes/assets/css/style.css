@@ -310,6 +310,24 @@ a {
 #ui_notifIt.success {
     background-color: #f7bf39 !important;
     color: #212529 !important;
+
+ 
+}
+
+#ui_notifIt{
+
+    width: 600px !important;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#ui_notifIt p{
+
+    font-size: 20px !important;
+    font-weight: 500 !important;
 }
 
 .banner_searchBox {
@@ -429,8 +447,8 @@ a {
 
 .sharesafri-card .card_body {
 
-    background: #F5F5F5;
-    /* background-color: #fff; */
+    /* background: #F5F5F5; */
+    background-color: #fff;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -796,12 +814,16 @@ a {
     text-align: center;
     color: var(--colorwhite);
     border-radius: 20px;
+    font-weight: 500;
 }
+
 
 
 .joinsafari a:hover {
 
     background-color: var(--background-orange);
+    -webkit-box-shadow: 0px 3px 6px #00000029 !important;
+    box-shadow: 0px 3px 6px #00000029 !important;
 
 }
 
@@ -2181,6 +2203,7 @@ figure {
     position: absolute;
     top: 13px;
     right: 20px;
+    cursor: pointer;
 }
 
 .interst_wrapper {
@@ -5757,6 +5780,8 @@ a.desc:after {
 .safritimg.innerImg img {
 
     border-radius: 10px;
+    height: 100%;
+    object-fit: cover;
 }
 
 .formbg {
@@ -6069,7 +6094,7 @@ a.desc:after {
     appearance: none;
     width: 100%;
     margin: 0;
-    padding: 0 2px;
+    /* padding: 0 2px; */
     overflow: hidden;
     border: 0;
     border-radius: 1px;
@@ -6325,4 +6350,8 @@ color: #000000 !important;
 
     width: 18px;
     height: 18px;
+}
+.safritimg.innerImg{
+
+    height: 100%;
 }

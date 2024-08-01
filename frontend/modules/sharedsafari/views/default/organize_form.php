@@ -52,7 +52,7 @@ $this->params['title'] = $this->title;
                 <div class="modal-body modal_form <?= $show_banner ? 'card' : '' ?>">
 
                     <div class="<?= $show_banner ? 'card-body' : '' ?>">
-                        <div class="row">
+                        <div class="row pt-3">
 
                             <div class="col-12 mb-2">
                                 <label for="" class="Modal_label">Select a Safari Park <span class="necessary">*</span></label>
@@ -186,7 +186,7 @@ $this->params['title'] = $this->title;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12 margin-remove">
+                            <div class="col-lg-12 margin-remove pt-3">
                                 <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>
                                 <div class="creat-safri d-flex justify-content-end">
                                     <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>

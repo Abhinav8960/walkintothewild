@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
                     <div class="input-group2 ">
                         <label for="travelers">Travelers</label>
                         <div class="number-input position-relative">
-                            <?= $form->field($packagemodel, 'travelers')->textInput(['class' => 'form-control', 'id' => "travelers", 'value' => 0])->label(false) ?>
+                            <?= $form->field($packagemodel, 'travelers')->textInput(['class' => 'form-control', 'id' => "travelers", 'value' => 1])->label(false) ?>
                             <!-- <div class="bton_updown">
                                 <button onclick="increment('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
                                 <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
@@ -32,9 +32,9 @@ use yii\bootstrap5\ActiveForm;
                         </div>
                     </div>
                     <div class="form-wrapper">
-                    <label for="start-date">Start Date</label>
-                    <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control'])->label(false) ?>
-                </div>
+                        <label for="start-date">Start Date</label>
+                        <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control'])->label(false) ?>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-12 mt-3">
