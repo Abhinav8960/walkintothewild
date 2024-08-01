@@ -1,5 +1,6 @@
 <?php
 
+use common\models\cms\contentmanagement\ContentManagement;
 use common\models\GeneralModel;
 use kartik\select2\Select2;
 use yii\helpers\Html;
@@ -267,7 +268,7 @@ $this->params['title'] = $this->title;
                     <div class="col-sm-10">
                         <div class="term-condition text-center">
                             <p class="mb-0 d-flex justify-content-center align-items-center">
-                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a href="" data-bs-toggle="modal" data-bs-target="#modalsafritermsForm">terms and conditions.</a>'); ?>
+                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <button value="" class="termBtn" data-bs-toggle="modal" data-bs-target="#modalsafritermsForm">terms and conditions.</button>'); ?>
                             </p>
                         </div>
                     </div>
@@ -465,3 +466,57 @@ $this->params['title'] = $this->title;
         validateForm1();
     });
 </script>
+
+<?php
+// Directly fetch the data from the model
+// Fetch the content based on the constant
+$content = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
+?>?>
+
+<div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & conditions</h1>
+            </div>
+            <div class="modal-body px-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content_terms">
+                            <h5>Terms & Conditions</h5>
+                            <!-- Display the content -->
+                            <p><?= htmlspecialchars($content ? $content->content : 'No content available', ENT_QUOTES, 'UTF-8') ?></p>
+                            <!-- Display the ID of the matched content -->
+                            <?php if ($content) : ?>
+                                <p><strong>Content ID:</strong> <?= htmlspecialchars($content->id, ENT_QUOTES, 'UTF-8') ?></p>
+                            <?php endif; ?>
+                            <div class="termsagree">
+                                <input type="checkbox" class="agreeterms" id="agree">
+                                <label for="agree">I agree to this <strong>terms & conditions</strong></label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="backtohome">Back to Home</a>
+                <button type="button" class="btns_submit">Agree</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+$script = <<< JS
+function termfunction() {
+	$('.termBtn').on('click', function () {
+        $('#termsmodal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+termfunction();
+
+JS;
+$this->registerJs($script);
+?>

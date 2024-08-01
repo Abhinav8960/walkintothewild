@@ -45,28 +45,26 @@ use common\models\park\SafariPark;
                 )->label(false); ?>
             </div>
         </div>
-        <div class="title_filter mb-4">
-            <h6>Budget Price Per Person</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'estimated_price_filter')->checkboxList(
-                    GeneralModel::estimatedpriceoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
+        <div class="title_filter mb-3">
+            <h6 class="">Budget Price Per Person</h6>
+            <div class="multi-range">
+                <input type="range" name="ShareSafariSearch[estimate_price_min]" min="1" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="ShareSafariSearch[estimate_price_max]" min="1" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+            </div>
+            <div class="range-label">
+                <span class="value"><?= $searchModel->estimate_price_min ?> </span>
+                <span class="float-end"><?= $searchModel->estimate_price_max >= 15000 ? '15000+' : $searchModel->estimate_price_max ?> </span>
             </div>
         </div>
-        <div class="title_filter mb-4">
-            <h6>Total Safaris</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'no_of_safari')->checkboxList(
-                    GeneralModel::noofsafarioption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
+        <div class="title_filter mb-3">
+            <h6 class="">Total Safaris</h6>
+            <div class="multi-range">
+                <input type="range" name="ShareSafariSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="sharesafarisearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="ShareSafariSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="sharesafarisearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+            </div>
+            <div class="range-label">
+                <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
+                <span class="float-end"><?= $searchModel->no_of_safari_max >= 10 ? '10+' : $searchModel->no_of_safari_max ?> </span>
             </div>
         </div>
         <div class="title_filter mb-4">
@@ -98,7 +96,7 @@ use common\models\park\SafariPark;
                     ]
                 )->label(false); ?>
             </div>
-<!-- 
+            <!-- 
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'host_type')->checkboxList(
                     GeneralModel::hostoption(),
@@ -192,13 +190,14 @@ use common\models\park\SafariPark;
                 </div>
                 <div class="col-7">
                     <div class="input_check d-flex gap-3 align-items-center">
-                        <?= $form->field($searchModel, 'estimated_price_filter')->checkboxList(
-                            GeneralModel::estimatedpriceoption(),
-                            [
-                                'required' => true,
-                                'itemOptions' => ['class' => 'checkbox_design'],
-                            ]
-                        )->label(false); ?>
+                        <div class="multi-range">
+                            <input type="range" name="ShareSafariSearch[estimate_price_min]" min="1" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                            <input type="range" name="ShareSafariSearch[estimate_price_max]" min="1" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        </div>
+                        <div class="range-label">
+                            <span class="value"><?= $searchModel->estimate_price_min ?> </span>
+                            <span class="float-end"><?= $searchModel->estimate_price_max >= 15000 ? '15000+' : $searchModel->estimate_price_max ?> </span>
+                        </div>
                     </div>
 
                 </div>
@@ -212,15 +211,13 @@ use common\models\park\SafariPark;
                     </div>
                 </div>
                 <div class="col-7">
-
-                    <div class="input_check d-flex gap-3 align-items-center">
-                        <?= $form->field($searchModel, 'no_of_safari')->checkboxList(
-                            GeneralModel::noofsafarioption(),
-                            [
-                                'required' => true,
-                                'itemOptions' => ['class' => 'checkbox_design'],
-                            ]
-                        )->label(false); ?>
+                    <div class="multi-range">
+                        <input type="range" name="ShareSafariSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="sharesafarisearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="ShareSafariSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="sharesafarisearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                    </div>
+                    <div class="range-label">
+                        <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
+                        <span class="float-end"><?= $searchModel->no_of_safari_max >= 10 ? '10+' : $searchModel->no_of_safari_max ?> </span>
                     </div>
                 </div>
             </div>
@@ -360,6 +357,10 @@ $script = <<< JS
             dataType:'html'
         });
     }
+
+ 
+    initializeDualrange('sharesafarisearch-estimate_price_min','sharesafarisearch-estimate_price_max');
+    initializeDualrange('sharesafarisearch-no_of_safari_min','sharesafarisearch-no_of_safari_max');
 JS;
 $this->registerJs($script);
 ?>
