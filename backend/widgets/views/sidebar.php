@@ -668,6 +668,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array(
 																					"/cms/flag-reason",
 																				)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/content-management")) ? "active" : "" ?>" href="/cms/content-management">Content Management</a></li>
+
 						</ul>
 					</li>
 				<?php endif; ?>
