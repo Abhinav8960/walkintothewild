@@ -1601,7 +1601,7 @@ figure {
 .banner_section-inner.packagebnner .headingBnner_inner h1,
 .banner_section-inner.packagedetails .headingBnner_inner h1 {
 
-    font-size: 32px;
+    font-size: 31px;
 }
 
 .banner_section-inner.packagebnner .banner_searchBox {
@@ -4348,6 +4348,16 @@ figure {
  
 
 } */
+
+.backtohome{
+    padding: 6px 20px;
+    background-color: #c3c3c3;
+    color: var(--background-primary);
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 25px;
+    border: 0;
+}
 .cancel_btn {
 
     padding: 6px 20px;
@@ -6299,4 +6309,20 @@ color: #000000 !important;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
+}
+
+.content_terms p{
+
+    font-size: 17px;
+}
+.termsagree{
+
+    display: flex;
+    align-items: center;
+    gap:7px;
+}
+.agreeterms{
+
+    width: 18px;
+    height: 18px;
 }

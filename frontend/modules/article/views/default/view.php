@@ -40,10 +40,10 @@ if ($article->meta_title != '') {
 }
 ?>
 
-<section class="banner_section-inner position-relative">
+<section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" class="d-block w-100" alt="banner">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container">
@@ -83,7 +83,6 @@ if ($article->meta_title != '') {
                             </div>
 
                             <p><?= $article->description ?> </p>
-
 
                         </div>
 
@@ -153,7 +152,7 @@ if ($article->meta_title != '') {
     </div>
     </div>
 </section>
-<section class="safariduring_sesons margin_bottomfooter mb-5">
+<section class="safariduring_sesons margin_bottomfooter mb-5 paddiinTop_add">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 

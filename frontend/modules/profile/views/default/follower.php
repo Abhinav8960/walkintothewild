@@ -16,13 +16,13 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 
-<section>
+<section class="margin_bottomfooter">
     <div class="container">
         <div class="row justify-content-center mb-5">
             <div class="col-xxl-11 mb-5">
                 <div class="row mb-5">
                     <div class="col-md-12">
-                        <h5>Followers</h5>
+                        <h6 class="fs-5 fw-bold">Followers</h5>
                     </div>
                     <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
                         foreach ($userfollowers as $userfollower) { ?>
