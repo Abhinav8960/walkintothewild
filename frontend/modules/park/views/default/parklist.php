@@ -77,7 +77,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div> -->
         <div class="row mb-4 sticky_set e">
-            <div class="col-xl-2 col-lg-3 col-12 mb-lg-0 mb-3 ps-xxl-5 pe-xl-2">
+            <div class="col-xl-2 col-lg-3 col-12 mb-lg-0 mb-3 ps-xxl-5 pe-xl-2 pt-3">
                 <div id="targetDiv">
                     <?= $this->render('_park_side_search', [
                         'model' => $searchModel,
