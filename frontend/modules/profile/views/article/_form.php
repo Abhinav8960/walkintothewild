@@ -27,7 +27,7 @@ use yii\bootstrap5\ActiveForm;
                     ])->textInput([
                         'maxlength' => true,
                         'placeholder' => 'Enter Article Title',
-                    ]) ?>
+                    ])->label('Title <span class="necessary">*</span>') ?>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@ use yii\bootstrap5\ActiveForm;
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
-                    ])->label('Article Tag') ?>
+                    ])->label('Article Tag <span class="necessary">*</span>') ?>
                 </div>
 
                 <div class="col-md-6">
@@ -53,7 +53,7 @@ use yii\bootstrap5\ActiveForm;
                         'pluginOptions' => [
                             'allowClear' => true
                         ],
-                    ])->label('Article Topics') ?>
+                    ])->label('Article Topics <span class="necessary">*</span>') ?>
                 </div>
             </div>
 
@@ -73,19 +73,19 @@ use yii\bootstrap5\ActiveForm;
 
             <div class="row">
                 <?= $form->field($model, 'description', [
-                        'labelOptions' => ['class' => 'Modal_label']
-                    ])->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description') ?>
+                    'labelOptions' => ['class' => 'Modal_label']
+                ])->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description <span class="necessary">*</span>') ?>
             </div>
 
             <div class="row">
                 <div class="col-md-3">
                     <?= $form->field($model, 'comment_allowed', [
                         'labelOptions' => ['class' => 'Modal_label']
-                    ])->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --']) ?>
+                    ])->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --'])->label('Comment Allowed <span class="necessary">*</span>') ?>
                 </div>
             </div>
             <div class="row">
-            <div class="col-md-12">
+                <div class="col-md-12">
                     <div class="creat-safri float-end w-auto">
                         <?= Html::submitButton('Save', ['class' => 'safari_create font_set px-5']) ?>
                     </div>

@@ -26,7 +26,7 @@ use kartik\datetime\DateTimePicker;
             'maxlength' => true,
             'placeholder' => 'Enter Package Name',
             'id' => 'packageform-package_name', // Add an ID for JavaScript targeting
-        ]) ?>
+        ])->label('Package Name <span class="necessary">*</span>') ?>
     </div>
 
     <div class="col-md-6">
@@ -37,13 +37,13 @@ use kartik\datetime\DateTimePicker;
             'placeholder' => 'Enter Slug',
             'readonly' => isset($model->package_model->id) ? true : false, // Make it readonly for existing records
             'id' => 'packageform-package_slug', // Add an ID for JavaScript targeting
-        ]) ?>
+        ])->label('Package Slug <span class="necessary">*</span>') ?>
     </div>
 
     <div class="col-md-6">
         <?= $form->field($model, 'no_of_day', [
             'labelOptions' => ['class' => 'Modal_label']
-        ])->dropDownList(GeneralModel::packagedayoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Select Day/Night'])->label('Day/Night') ?>
+        ])->dropDownList(GeneralModel::packagedayoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Select Day/Night'])->label('Day/Night <span class="necessary">*</span>') ?>
     </div>
 
     <div class="col-md-6">
