@@ -29,9 +29,9 @@ $this->params['title'] = $this->title;
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="d-flex justify-content-between align-items-center mb-3">
-                                                    <h6 class="fs-6 fw-bold">Shared Photos</h6>
+                                                    <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Shared Photos</h6>
                                                     <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                        <button class="follow_btn photoBtn text-center mt-sm-0 mt-2" value="<?= Url::toRoute(['/profile/photo/create']) ?>">+ Add photo</button>
+                                                        <button class="follow_btn photoBtn text-center mt-sm-0 " value="<?= Url::toRoute(['/profile/photo/create']) ?>">+ Add photo</button>
                                                     <?php } ?>
                                                 </div>
                                                 <div class="tab-content_tour active">
@@ -40,7 +40,7 @@ $this->params['title'] = $this->title;
                                                         if ($userposts) {
                                                             foreach ($userposts as $userpost) {
                                                         ?>
-                                                                <div class="col-md-6 col-lg-4 gap-2 mt-2 mb-2">
+                                                                <div class="col-md-6 col-lg-4 gap-2  mb-2">
                                                                     <div class="parksImgireview h-100 position-relative">
                                                                         <div class="floating-watchlist">
                                                                             <?php

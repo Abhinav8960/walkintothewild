@@ -23,7 +23,7 @@ $this->params['title'] = $this->title;
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="d-flex justify-content-between mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
                                             <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h6>
                                             <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                                 <a class="follow_btn text-center mt-sm-0 " href="<?= Url::toRoute(['create']) ?>">Create Article</a>
@@ -32,7 +32,7 @@ $this->params['title'] = $this->title;
                                     </div>
                                     <?php if ($articles) {
                                         foreach ($articles as $article) {  ?>
-                                            <div class="col-md-4 mb-5 " style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
+                                            <div class="col-sm-6 col-lg-4 mb-5 " style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
                                                 <div class="artical_cards h-100 position-relative">
                                                     <div class="image-box">
                                                         <?php if (Yii::$app->user->identity->id == $user->id) { ?>

@@ -73,7 +73,7 @@ $this->params['title'] = $this->title;
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h6 class="fs-6 fw-bold">Share Safari Experience</h6>
+                                            <h6 class="fs-6 fw-bold" style="padding-bottom: 0 !important;">Share Safari Experience</h6>
                                             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
                                                 <button class="follow_btn photoBtn text-center mt-sm-0 " value="<?= Url::toRoute(['/profile/user-experience']) ?>">+ Add Experience</button>
                                             <?php } ?>
@@ -128,14 +128,14 @@ $this->params['title'] = $this->title;
                         <div class="request_quote mt-4">
                             <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                                 Instagram</button>
-                            <div class="interst_wrapper pt-3 px-md-5 bg-white">
+                            <div class="interst_wrapper py-4 px-md-5 bg-white">
 
                             </div>
                         </div>
                         <div class="request_quote mt-4">
                             <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                             Organized Shared Safari <span><?= $model_count ?></span></button>
-                            <div class="interst_wrapper pt-3 px-md-5 bg-white">
+                            <div class="interst_wrapper py-4 px-md-5 bg-white">
                                 <?php if ($model) {
                                     foreach ($model as $share_safari) {
                                 ?>
