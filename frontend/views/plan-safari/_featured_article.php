@@ -44,7 +44,7 @@ use yii\helpers\Url;
         </div>
         <div class="row justify-content-center text-center mt-4">
             <div class="col-md-2">
-                <a href="/article" class="btn_newsafari organizeBtn newbg">View All Articles <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="/article" class="btn_newsafari organizeBtn newbg rounded-5">View All Articles <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
     </div>
