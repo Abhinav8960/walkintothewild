@@ -30,7 +30,7 @@ use yii\bootstrap5\ActiveForm;
 
         ]); ?>
         <div class="row ">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">Safari Park</label>
 
@@ -41,7 +41,7 @@ use yii\bootstrap5\ActiveForm;
                     ])->label(false) ?>
                 </div>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <div class="form-wrapper d-flex gap-3">
                     <div class="input-group2 mb-3">
                         <label for="safaris">Safaris</label>
@@ -78,13 +78,13 @@ use yii\bootstrap5\ActiveForm;
                     ])->label(false) ?>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="form-wrapper">
                     <label for="start-date">Start Date</label>
                     <?= $form->field($model, 'start_date')->input('date', ['class' => 'form-control'])->label(false) ?>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="form-wrapper">
                     <label for="end-date">End Date</label>
                     <?= $form->field($model, 'end_date')->input('date', ['class' => 'form-control'])->label(false) ?>
