@@ -862,8 +862,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function agendaoption()
     {
         $return = [
-            '1' => 'Photography',
-            '2' => 'Vlogging',
+            // '1' => 'Photography',
+            // '2' => 'Vlogging',
             '3' => 'Safari Experience'
         ];
         return $return;
