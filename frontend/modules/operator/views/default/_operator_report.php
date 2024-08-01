@@ -33,7 +33,7 @@ use yii\helpers\Html;
         <div class="col-lg-12 mb-2 mt-2">
             <label for="" class="Modal_label">Details</label>
             <div class="textarea">
-                <?= $form->field($model, 'reason')->textInput(['placeholder' => 'Write Reason', 'class' => 'form-control'])->label(false); ?>
+                <?= $form->field($model, 'reason')->textarea(['row' => 4, 'placeholder' => 'Write Reason', 'class' => 'form-control'])->label(false); ?>
             </div>
         </div>
         <div class="col-12">
