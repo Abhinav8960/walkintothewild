@@ -14,13 +14,13 @@ $this->params['title'] = $this->title;
         <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active', 'user' => $user]) ?>
     </div>
 </section>
-<section>
+<section class="margin_bottomfooter">
     <div class="container">
     <div class="row justify-content-center mb-5">
                     <div class="col-xxl-11 mb-5">
                     <div class="row mt-3 mb-5">
             <div class="col-md-12">
-                <h5>Following</h5>
+                <h6 class="fs-5 fw-bold">Following</h6>
             </div>
             <?php if ($userfollowers = $user->getUserfollowings()->where(['status' => 1])->all()) {
                 foreach ($userfollowers as $userfollower) { ?>

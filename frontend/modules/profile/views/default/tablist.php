@@ -115,13 +115,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                         if ($user->is_safari_operator == 1) { ?>
-                            <li class="nav-item"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link <?= isset($business) ? $business : '' ?> " target="_blank">Manage Safari Tour Business <i class="fa fa-external-link"></i></a></li>
+                            <li class="nav-item"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link  <?= isset($business) ? $business : '' ?> " target="_blank">Manage Safari Tour Business <i class="fa fa-external-link"></i></a></li>
                             <?php } else if (in_array($user->account_type, [2, 3])) {
                             $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->one();
                             if ($business_request) { ?>
                                 <li class="nav-item"><a href="<?= Url::toRoute(['/profile/business']) ?>" class="nav-link bg-info">Pending Business Request</a></li>
                             <?php } else { ?>
-                                <li class="nav-item"><a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="btn bg-warning">Create Your Page </a></li>
+                                <li class="nav-item"><a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="follow_massge rounded-2 text-capitalize">Create Your Page </a></li>
                             <?php }
                             ?>
                         <?php }

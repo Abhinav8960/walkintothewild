@@ -16,10 +16,10 @@ $park_constant = Constants::PARK_LIST;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 
-<section class="banner_section-inner position-relative">
+<section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 " alt="banner">
+        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
     </picture>
     <div class="banner_searchBox">
         <div class="container">
@@ -46,7 +46,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             </div>
         </div> -->
         <div class="row mb-4 sticky_set e">
-            <div class="col-lg-2 col-12 mb-lg-0 mb-3 ps-xl-5">
+            <div class="col-lg-2 col-12 mb-lg-0 mb-3 ps-xl-5 pt-3">
                 <div id="targetDiv">
                     <?= $this->render('_rareanimal_side_search', [
                         'model' => $searchModel,
@@ -56,12 +56,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
             </div>
             <div class="col-lg-10 col-12 paddingset_desktop ">
-                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 mb-2">
+                <div class="topfilter d-flex justify-content-between align-items-center mb-2 flex-wrap w-100 ">
                     <div class="left_text">
                         <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
                     </div>
-                    <div class="right-select mb-md-0 mb-4">
-                        <div class="input_check pb-0">
+                    <div class="right-select ">
+                        <div class="input_check pb-0 mb-3">
 
                             <form id="custom_sort_by_form">
                                 <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
@@ -144,6 +144,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 
 
-<section class="safariduring_sesons innerpage margin_bottomfooter">
+<section class="safariduring_sesons innerpage mb-5 margin_bottomfooter paddiinTop_add">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>

@@ -76,3 +76,35 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
 </footer>
+
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#termsmodal">
+ Agree modal
+</button>
+<div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & conditions</h1>
+            </div>
+            <div class="modal-body px-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content_terms">
+                        <h5>terms & conditions</h5>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe quam molestiae est quae placeat perferendis, reiciendis minus, dolorem nobis facere molestias blanditiis vitae distinctio. Nulla inventore ratione maiores quidem facilis?</p>
+                        <div class="termsagree">
+                            <input type="checkbox" class="agreeterms" id="agree">
+                            <label for="agree">I agreen to this <strong>terms & constions</strong></label>
+                        </div>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+             <a href="" class="backtohome">Back to Home</a>
+            <button type="button" class="btns_submit">Agree</button>
+      </div>
+        </div>
+    </div>
+</div> -->
