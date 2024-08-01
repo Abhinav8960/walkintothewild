@@ -79,8 +79,8 @@ use yii\helpers\ArrayHelper;
                 <input type="range" name="PackageSearch[estimated_price_filter_max]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
-                <span class="value"><?= $searchModel->estimated_price_filter_min ?> </span>
-                <span class="float-end"><?= $searchModel->estimated_price_filter_max >= 50000 ? '50000+' : $searchModel->estimated_price_filter_max ?> </span>
+                <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
+                <span class="float-end">₹<?= $searchModel->estimated_price_filter_max >= 50000 ? '50000+' : $searchModel->estimated_price_filter_max ?> </span>
             </div>
         </div>
         <div class="title_filter mb-3">
