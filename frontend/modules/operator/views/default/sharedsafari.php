@@ -77,7 +77,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 </div>
                                             </div>
                        
-                                            <div class="row justify-content-center ">
+                                            <div class="row gx-5 ">
                                                 <?php
                                                 if ($shared_safaries) {
                                                     foreach ($shared_safaries as $share_safari) { ?>
