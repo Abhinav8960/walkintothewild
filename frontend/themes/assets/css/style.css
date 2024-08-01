@@ -447,8 +447,8 @@ a {
 
 .sharesafri-card .card_body {
 
-    background: #F5F5F5;
-    /* background-color: #fff; */
+    /* background: #F5F5F5; */
+    background-color: #fff;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -814,6 +814,7 @@ a {
     text-align: center;
     color: var(--colorwhite);
     border-radius: 20px;
+    font-weight: 500;
 }
 
 
