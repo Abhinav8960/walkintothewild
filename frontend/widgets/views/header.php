@@ -110,7 +110,7 @@
 													Whishlist</a>
 											</li>
 											<li>
-												<a class="" href="/site/logout">
+												<a class="" href="/site/logout" data-method="POST">
 													<i class="fa-solid fa-arrow-right-from-bracket"></i>
 													Log Out</a>
 
@@ -204,7 +204,7 @@
 												Whishlist</a>
 										</li>
 										<li class="border-top">
-											<a class="py-3" href="/site/logout">
+											<a class="py-3" href="/site/logout" data-method="POST">
 												<i class="fa-solid fa-arrow-right-from-bracket"></i>
 												Log Out</a>
 										</li>

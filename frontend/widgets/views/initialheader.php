@@ -74,7 +74,7 @@
 												Whishlist</a>
 										</li>
 										<li>
-											<a class="" href="/site/logout">
+											<a class="" href="/site/logout" data-method="POST">
 												<i class="fa-solid fa-arrow-right-from-bracket"></i>
 												Log Out</a>
 										</li>

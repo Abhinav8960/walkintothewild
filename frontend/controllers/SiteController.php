@@ -52,7 +52,7 @@ class SiteController extends FrontendBaseController
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    // 'logout' => ['post'],
+                    'logout' => ['post'],
                 ],
             ],
         ];

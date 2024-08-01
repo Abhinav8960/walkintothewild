@@ -2,23 +2,41 @@
 
 namespace frontend\modules\profile\controllers;
 
-use common\models\BlockedModel;
-use common\models\sharesafari\ShareSafari;
-use common\models\User;
-use common\models\UserExperience;
-use common\models\UserFollow;
-use frontend\controllers\FrontendBaseController;
-use frontend\models\profile\UserExperienceForm;
-use frontend\models\profile\UserForm;
 use Yii;
 use yii\web\Response;
+use common\models\User;
 use yii\web\UploadedFile;
+use yii\filters\VerbFilter;
+use common\models\UserFollow;
+use common\models\BlockedModel;
+use common\models\UserExperience;
+use frontend\models\profile\UserForm;
+use common\models\sharesafari\ShareSafari;
+use frontend\models\profile\UserExperienceForm;
+use frontend\controllers\FrontendBaseController;
 
 /**
  * DefaultController.
  */
 class DefaultController extends FrontendBaseController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'follow' => ['post'],
+                    'unfollow' => ['post'],
+                ],
+            ],
+        ];
+    }
+
 
     /**
      * Renders the index view for the module

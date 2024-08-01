@@ -41,7 +41,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         </div>
                                                         <div class="floating-watchlist">
                                                             <div class="heart_bx">
-                                                                <a href="/package/unwishlist/<?= $package_model->package_slug ?>" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                                                                <a href="/package/unwishlist/<?= $package_model->package_slug ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
                                                             </div>
                                                         </div>
                                                         <div class="shareimg">
