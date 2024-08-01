@@ -49,6 +49,7 @@ $this->params['title'] = $this->title;
                                                         </div>
 
                                                     </div>
+                                                    <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
                                                 </div>
                                             </div>
                                     <?php }

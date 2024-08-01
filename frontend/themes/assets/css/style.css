@@ -5780,6 +5780,8 @@ a.desc:after {
 .safritimg.innerImg img {
 
     border-radius: 10px;
+    height: 100%;
+    object-fit: cover;
 }
 
 .formbg {
@@ -6352,9 +6354,4 @@ color: #000000 !important;
 .safritimg.innerImg{
 
     height: 100%;
-}
-.safritimg.innerImg img{
-
-    height: 100%;
-    object-fit: cover;
 }
