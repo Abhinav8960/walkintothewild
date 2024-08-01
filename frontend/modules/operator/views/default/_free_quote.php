@@ -33,7 +33,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-3">
                 <div class="form-wrapper">
                     <label for="">Safari Park</label>
-                    <?= $form->field($model, 'safari_park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator->id), ['prompt' => 'Select', 'class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
+                    <?= $form->field($model, 'safari_park_id')->dropDownList(GeneralModel::operatorsafariparkoption($operator->id), ['prompt' => '', 'class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-3">
@@ -66,7 +66,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">Stay Category</label>
-                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::staycategoryoption(), ['prompt' => 'Select', 'class' => "form-select mb-3", 'aria-label' => "Default select example"])->label(false) ?>
+                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::staycategoryoption(), ['prompt' => '', 'class' => "form-select mb-3"])->label(false) ?>
                 </div>
             </div>
             <div class="col-lg-2">
