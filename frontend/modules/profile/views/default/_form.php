@@ -31,7 +31,7 @@ use yii\bootstrap5\ActiveForm;
                     <?= $form->field($model, 'file')->fileInput()->label('Photo (JPEG /JPG or PNG / 250 KB)') ?>
                 </div>
                 <div class="col-md-12">
-                    <?= $form->field($model, 'description')->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description') ?>
+                    <?= $form->field($model, 'description')->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description <span class="necessary">*</span>') ?>
 
                 </div>
             </div>

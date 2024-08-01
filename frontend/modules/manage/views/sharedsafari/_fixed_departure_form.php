@@ -17,7 +17,7 @@ use yii\helpers\Html;
 <div class="modal-body modal_form">
     <div class="row">
         <div class="col-md-6 mb-1">
-            <label for="" class="Modal_label">Select Park</label>
+            <label for="" class="Modal_label">Select Park <span class="necessary">*</span></label>
             <?= $form->field($model, 'park_list')->widget(Select2::class, [
                 'data' => GeneralModel::operatorsafariparkoption(Yii::$app->user->identity),
                 'options' => ['placeholder' => 'Select', 'multiple' => true],
@@ -32,7 +32,7 @@ use yii\helpers\Html;
         </div>
 
         <div class="col-md-12 mb-1">
-            <label for="" class="Modal_label">Theme</label>
+            <label for="" class="Modal_label">Theme <span class="necessary">*</span></label>
             <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '2' => 'Vlogging', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 
         </div>
@@ -40,12 +40,12 @@ use yii\helpers\Html;
         <div class="col-md-12">
             <div class="d-flex  gap-sm-3 align-items-center flex-sm-nowrap flex-wrap  w-100 mb-1">
                 <div class="start w-100">
-                    <label for="" class="Modal_label">Start Date</label>
+                    <label for="" class="Modal_label">Start Date <span class="necessary">*</span></label>
                     <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
                 </div>
                 <span class="pt-sm-4 text-center">-</span>
                 <div class="start w-100">
-                    <label for="" class="Modal_label">End Date</label>
+                    <label for="" class="Modal_label">End Date <span class="necessary">*</span></label>
                     <?= $form->field($model, 'end_date')->textInput(['type' => 'date'])->label(false) ?>
                 </div>
             </div>
@@ -58,7 +58,7 @@ use yii\helpers\Html;
 
 
         <div class="col-lg-6 mb-2">
-            <label for="" class="Modal_label">Cost Per Person (INR)</label>
+            <label for="" class="Modal_label">Cost Per Person (INR) <span class="necessary">*</span></label>
             <div class="d-flex gap-3 align-items-center w-100">
                 <?= $form->field($model, 'cost_per_person')->textInput(['type' => 'number', 'min' => 0, 'class' => 'form-control', 'placeholder' => 1000])->label(false) ?>
             </div>
@@ -66,6 +66,7 @@ use yii\helpers\Html;
         </div>
         <div class="col-lg-12 ">
             <div class="textarea">
+                <label for="" class="Modal_label">Plan <span class="necessary">*</span></label>
                 <?= $form->field($model, 'safari_plan')->textarea(['row' => 4, 'placeholder' => 'Write about your plan'])->label(false) ?>
             </div>
 
@@ -76,7 +77,7 @@ use yii\helpers\Html;
         <div class="col-lg-12">
             <div class="d-flex align-items-center gap-2">
                 <div class="selects w-100">
-                    <label for="" class="Modal_label">Total Seat</label>
+                    <label for="" class="Modal_label">Total Seat <span class="necessary">*</span></label>
                     <?= $form->field($model, 'total_seat')->textInput()->label(false) ?>
                 </div>
 
