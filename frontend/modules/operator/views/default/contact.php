@@ -73,17 +73,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <h6 class="mb-0 cmpny_name"><?= $operator->register_comapany_name ?></h6>
                                                 <p><?= $operator->address ?></p>
                                                 <h6 class="fs-6 fw-bold">Contact Details</h6>
-                                                <div class="contaicts d-flex gap-2">
+                                                <div class="contaicts d-flex gap-2 align-items-center mb-2">
                                                     <strong>Phone :</strong>
-                                                    <p> <?= $operator->phone_no ?></p>
+                                                    <p class="mb-0">  <?= $operator->phone_no ?></p>
                                                 </div>
-                                                <div class="contaicts d-flex gap-2">
+                                                <div class="contaicts d-flex gap-2 align-items-center mb-2">
                                                     <strong>Email :</strong>
-                                                    <p> <?= $operator->email ?></p>
+                                                    <p class="mb-0"> <?= $operator->email ?></p>
                                                 </div>
-                                                <div class="contaicts d-flex gap-2">
+                                                <div class="contaicts d-flex gap-2 align-items-center mb-2">
                                                     <strong>Website :</strong>
-                                                    <p><?= $operator->website ?></p>
+                                                    <p class="mb-0"><?= $operator->website ?></p>
                                                 </div>
                                                 <br>
                                                 <?php if ($operator->instagram_url <> '' || $operator->facebook_url <> '' || $operator->youtube_link <> '') { ?>

@@ -20,9 +20,12 @@
 
                 // Generate radio options
                 foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
-                    <div class="row mb-3">
-                        <div class="col-sm-3">
-                            <label class="control-label font_sizes"><?= $optionLabel ?></label>
+                    <div class="row ">
+                        <div class="col-sm-2">
+                            <ul>
+                                <li><label class="control-label font_sizes"><?= $optionLabel ?></label></li>
+                            </ul>
+                         
                         </div>
                         <div class="col-sm-9">
                             <div class="form-check form-check-inline">
