@@ -350,7 +350,7 @@ class DefaultController extends FrontendBaseController
 
         $model = new SafariParkReviewForm();
         $model->safari_park_id = $park_id;
-
+        $model->status = StatusInterface::STATUS_SUSPEND;
         $model->action_url = '/park/default';
         $model->action_validate_url = '/park/default/validatereview';
         if ($this->request->isPost) {
