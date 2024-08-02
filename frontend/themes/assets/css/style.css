@@ -3909,6 +3909,11 @@ figure {
     padding-bottom: 30px;
 
 }
+.border_top{
+
+    border-top: 2px solid var(--colorwhite);
+    padding-top: 30px; 
+}
 
 .copyright p {
 

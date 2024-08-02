@@ -12,60 +12,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <img src="<?= $this->params['baseurl'] ?>/img/footermobile.png" alt="" class="d-md-none d-block">
     </div>
     <div class="container-fluid">
-        <div class="row justify-content-between border_bottom px-lg-5">
-
-            <div class="col-lg-3 col-md-6">
-                <div class="footer_text float-lg-end">
-                    <div class="heading-footer">
-                        <h6>Become A Partner </h6>
-                    </div>
-                    <div class="footerContent">
-                        <ul class="footer_listing">
-                            <!-- <li><a href="/safaritour-registration">Safari Tour Operator</a></li> -->
-                            <!-- <li><a href="/birdingtour-registration">Birding Tour Operator</a></li> -->
-                            <!-- <li><a href="#" style="cursor: default;">Resorts / Lodge / Home Stay</a></li> -->
-                            <li><a href="/article">Articles and Tips</a></li>
-                            <li><a href="/contact">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="footer_text float-lg-end">
-                    <div class="heading-footer">
-                        <h6>Contact Info </h6>
-                    </div>
-                    <div class="footerContent">
-                        <p><strong>Address:</strong> New Delhi , India</p>
-                        <p><strong>Email:</strong> <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
-                        <div class="d-flex align-items-center gap-2">
-                            <div class="insticon"><i class="fa-brands fa-instagram"></i> </div>
-
-                            <a href="">walkintothewild.in</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- <div class="mt-5">
-                <div class="heading-footer">
-                    <h6>DISCLAIMER</h6>
-                </div>
-                <div class="footerContent">
-                    <
-                    $content = ContentManagement::findOne(['id' => ContentManagement::CM_DISCLAIMER]);
-                    ?>
-                    <div class="content_terms" style="word-break: break-word;">
-                        < $content ? Html::decode($content->content) : '<p>No content available</p>' ?>
-                    </div>
-                </div>
-            </div> -->
-
-        </div>
+      
 
 
-        <div class="row pt-4 justify-content-between mobile-responsive align-items-center">
+        <div class="row pt-4 pb-2 justify-content-between border_top mobile-responsive align-items-center">
             <div class="col-lg-2 col-md-4">
                 <div class="footerlogo">
                     <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" width="160">
