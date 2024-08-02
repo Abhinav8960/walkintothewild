@@ -113,7 +113,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
                     <?php if ($user->contribution_privacy && $user->id == Yii::$app->user->identity->id) { ?>
                         <li class="nav-item"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
-                    <?php } elseif ($user->contribution_privacy && $user->followers) {  ?>
+                    <?php } elseif ($user->contribution_privacy && $user->userfollowers) {  ?>
                         <li class="nav-item"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
                     <?php } else { ?>
                         <li class="nav-item"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
@@ -121,7 +121,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                     <?php if ($user->photo_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
                         <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
-                    <?php } elseif ($user->photo_privacy == 3 && $user->followers) { ?>
+                    <?php } elseif ($user->photo_privacy == 3 && $user->userfollowers) { ?>
                         <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
                     <?php } else { ?>
                         <li class="nav-item"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
