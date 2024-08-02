@@ -93,8 +93,26 @@
     height: 300px !important;
     /* width: 270px !important; */
   }
+  .title_safari.JoinPadding{
+
+    flex-direction: column;
+    justify-content: center;
+  }
+  .title_safari.JoinPadding .joinshareView{
+
+    margin-top: 14px!important;
+  }
 }
 @media (max-width: 1500px) {
+  .title_safari.JoinPadding{
+
+    flex-direction: column;
+    justify-content: center;
+  }
+  .title_safari.JoinPadding .joinshareView{
+
+    margin-top: 14px!important;
+  }
   .placeholder_select {
     top: 9px;
   }
@@ -173,7 +191,10 @@
     padding-left: 55px !important;
     padding-right: 55px !important;
   }
-
+  .padding_added {
+    padding-left: 70px !important;
+    padding-right: 70px !important;
+  }
   /* .searchSafari_parks .row .col-xl-3 {
 
         width: auto !important;
@@ -222,10 +243,7 @@
 }
 
 @media (min-width: 1400px) {
-  .padding_added {
-    padding-left: 70px !important;
-    padding-right: 70px !important;
-  }
+ 
   .single-image img {
     height: 89% !important;
     min-height: 298px;
@@ -522,6 +540,7 @@
     .dropdown-toggle {
     width: 290px;
   }
+ 
 }
 @media only screen and (max-width: 1199px) and (min-width: 992px) {
   .planSearch_box
@@ -1601,6 +1620,10 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .banner_section-inner.packagebnner .headingBnner_inner h1{
+
+    font-size: 24px;
+  }
   .postthumbnail img {
     height: 100px;
     object-fit: cover;
