@@ -47,7 +47,7 @@ $this->params['title'] = $this->title;
                     'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;

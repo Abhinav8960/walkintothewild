@@ -31,7 +31,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->title;
@@ -54,7 +54,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                     'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -63,7 +63,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/birding/default/
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
                             // 'view' => function ($url, $model) {

@@ -74,7 +74,8 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'max-width: 200px !important; width: 700px !important; word-wrap: break-word; text-align: left; padding: 0; margin: 0;'],
+
+                        'contentOptions' => ['style' => 'max-width: 200px !important; width: 700px !important; word-wrap: break-word; text-align: center; padding: 0; margin: 0;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {

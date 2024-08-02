@@ -36,7 +36,7 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/master/s
                     'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -45,17 +45,17 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/master/s
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '&nbsp;{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'View',
 
-                                ]);
-                            },
+                            //     ]);
+                            // },
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [

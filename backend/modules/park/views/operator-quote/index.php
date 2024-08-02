@@ -27,12 +27,17 @@ $this->params['title'] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'label' => 'Park',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->safari_park_id) ? GeneralModel::safariparkoption()[$model->safari_park_id]  : '';
+                            return isset($model->safari_park_id) ? Html::a(
+                                GeneralModel::safariparkoption()[$model->safari_park_id],
+                                ['/park/operator-quote/view', 'id' => $model->id],
+                                ['style' => 'color: black !important;', 'title' => 'View Park Details']
+                            ) : '';
                         }
                     ],
+
                     [
                         'label' => 'Operator',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -50,7 +55,7 @@ $this->params['title'] = $this->title;
                     'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -59,17 +64,17 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{delete}',
+                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
+                        'template' => '&nbsp;{delete}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['/park/operator-quote/view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            //     ', ['/park/operator-quote/view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'View',
 
-                                ]);
-                            },
+                            //     ]);
+                            // },
 
                             'delete' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [

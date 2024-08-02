@@ -31,16 +31,33 @@ $this->params['title'] = $this->title;
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    // [
+                    //     'label' => 'Article Title',
+                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return Html::tag('div', $model->article_title, [
+                    //             'style' => 'display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;',
+                    //         ]);
+                    //     }
+                    // ],
+
+
+
                     [
-                        'label' => 'Article Title',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'attribute' => 'article_title',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::tag('div', $model->article_title, [
-                                'style' => 'display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;',
+                            return Html::a($model->article_title, ['view', 'id' => $model->id], [
+                                'style' => 'color: black !important;',
+                                'title' => 'View',
                             ]);
-                        }
-                    ],
+                        },
+                        'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
+                    ], 
+
+
+
                     [
                         'label' => 'Writer',
                         'contentOptions' => ['style' => 'width: 15%;'],
@@ -118,31 +135,26 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->status == 1) {
-                                return 'Active';
-                            } elseif ($model->status == 2) {
-                                return 'Suspended';
-                            }
-                            return '';
+                            return $model->statuslabel;
                         }
                     ],
-
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        // 'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
-                                ', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'name' => 'View',
-                                ]);
-                            },
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'name' => 'View',
+                            //     ]);
+                            // },
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [

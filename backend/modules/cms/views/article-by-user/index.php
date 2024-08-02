@@ -30,8 +30,17 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\SerialColumn',
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
-                    'title',
                     [
+                        'attribute' => 'title',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Html::a($model->title, ['comment', 'id' => $model->id], [
+                                'title' => 'View',
+                                'style' => 'color: black !important;'
+                            ]);
+                        },
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                    ],                    [
                         'label' => 'Author Name',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -92,7 +101,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -102,8 +111,9 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{update}&nbsp;&nbsp;{comment}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '{update}&nbsp;',
+                        // 'template' => '{update}&nbsp;&nbsp;{comment}',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
@@ -114,9 +124,9 @@ $this->params['title'] = $this->title;
                                 ]);
                             },
 
-                            'comment' => function ($url, $model) {
-                                return Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', ['comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
-                            },
+                            // 'comment' => function ($url, $model) {
+                            //     return Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', ['comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
+                            // },
                         ]
                     ],
                 ],

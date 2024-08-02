@@ -41,21 +41,16 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->status == 1) {
-                                return 'Active';
-                            } elseif ($model->status == 2) {
-                                return 'Suspended';
-                            }
-                            return '';
+                            return $model->statuslabel;
                         }
                     ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {
