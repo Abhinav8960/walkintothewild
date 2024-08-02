@@ -5587,7 +5587,7 @@ a.desc:after {
 }
 
 .mobile_didplay_block .join_btn {
-    padding: 11px 30px;
+    padding: 9px 30px;
     color: #152F1B;
     font-weight: 600;
 }
@@ -6355,3 +6355,9 @@ color: #000000 !important;
 
     height: 100%;
 }
+#mobile_search .select_boxes h6{
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+

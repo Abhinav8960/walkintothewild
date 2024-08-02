@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
 
     </div>
 </section>
-<section class="safari_wrapper bg-white pt-3 pb-0">
+<section class="safari_wrapper bg-white pt-3 pb-0 ">
     <div class="container-lg">
         <div class="row my-4">
             <div class="col-12">

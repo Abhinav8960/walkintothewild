@@ -142,7 +142,7 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div>
-        <div class="row my-4 justify-content-center" id="safari_tour_operator_container">
+        <div class="row my-lg-4 my-2 justify-content-center margin_bottomfooter mb-5" id="safari_tour_operator_container">
             <div class="col-lg-12 col-xl-10">
                 <?= $this->render('_operators', [
                     'operators' => $operators,
@@ -159,9 +159,9 @@ if ($model->meta_title != '') {
 </section>
 
 
-<section class="safariduring_sesons innerpage margin_bottomfooter mb-5">
+<!-- <section class="safariduring_sesons innerpage margin_bottomfooter mb-5">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
+</section> -->
 
 
 <!-- Modal -->

@@ -46,7 +46,7 @@ $recentposts = ArticleSearch::recentpost();
 
     </div>
 </section>
-<section class="articals_wrapper py-3 bg-white">
+<section class="articals_wrapper py-3 bg-white margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
         <div class="row justify-content-center ">
             <div class="col-lg-6 mb-4 d-lg-block d-none">
@@ -302,9 +302,9 @@ $recentposts = ArticleSearch::recentpost();
 
 </section>
 
-<section class="safariduring_sesons innerpage margin_bottomfooter mb-5 paddiinTop_add">
+<!-- <section class="safariduring_sesons innerpage ">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
+</section> -->
 
 
 
