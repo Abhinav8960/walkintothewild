@@ -1,0 +1,1 @@
+<li><a href="https://twitter.com/intent/tweet?url=<?= Yii::$app->request->absoluteUrl; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a></li>

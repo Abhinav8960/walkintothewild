@@ -88,7 +88,7 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
                             <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                            
+
 
                                 <?php if ($share_safari->status == 2) { ?>
                                     <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
@@ -213,6 +213,10 @@ $this->params['title'] = $this->title;
                                     $shared_url = urlencode(Url::to('', true));
                                     ?>
                                     <ul>
+                                        <?= \frontend\widgets\ShareButton::widget([
+                                            'style' => 'horizontal',
+                                            'networks' => ['facebook', 'twitter'],
+                                        ]); ?>
                                         <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
                                         </li>
                                         <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
