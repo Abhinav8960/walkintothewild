@@ -83,12 +83,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 ?>
                                                         <div class="col-md-6 col-lg-4 gap-2  mb-4">
                                                             <div class="parksImgireview h-100">
-                                                                <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
+                                                                <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => isset($park_detail->slug) ? $park_detail->slug : ""]) ?>">
                                                                     <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
 
                                                                 </a>
                                                                 <div class="footer_safariname">
-                                                                    <h6 class=""><?= $park_detail->title ?></h6>
+                                                                    <h6 class=""><?= isset($park_detail->title) ? $park_detail->title : "" ?></h6>
                                                                 </div>
                                                             </div>
 
