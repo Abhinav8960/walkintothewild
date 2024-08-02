@@ -62,6 +62,7 @@ class DefaultController extends FrontendBaseController
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'models' => $models,
+            'device' => $this->device(),
         ]);
     }
 

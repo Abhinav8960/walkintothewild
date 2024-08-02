@@ -68,6 +68,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         <div class="row mb-5 justify-content-center">
           <?= $this->render('_select_filter', [
             'searchModel' => $searchModel,
+            'device' => $device,
           ]) ?>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
@@ -81,7 +82,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
                 <div class="top_mobilefilter d-flex gap-2 d-lg-none justify-content-between align-items-center w-100 mb-4">
                   <div class="left_text">
-                  <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
+                    <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
                   </div>
                   <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                     <div class="input_check pb-0">
