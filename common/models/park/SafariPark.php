@@ -176,23 +176,48 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
         $fifth = $this->getAirportdata('nearest_airport_five')->one();
 
         if ($first) {
-            $text .= $first->name . ', ';
+            if ($city = $first->city) {
+                $city_name = ' (' . $city->city_name . ')';
+            } else {
+                $city_name = '';
+            }
+            $text .= $first->name . $city_name . ', ';
         }
 
         if ($second) {
-            $text .= $second->name . ', ';
+            if ($city = $second->city) {
+                $city_name = ' (' . $city->city_name . ')';
+            } else {
+                $city_name = '';
+            }
+            $text .= $second->name . $city_name . ', ';
         }
 
         if ($third) {
-            $text .= $third->name . ', ';
+            if ($city = $third->city) {
+                $city_name = ' (' . $city->city_name . ')';
+            } else {
+                $city_name = '';
+            }
+            $text .= $third->name . $city_name . ', ';
         }
 
         if ($fourth) {
-            $text .= $fourth->name . ', ';
+            if ($city = $fourth->city) {
+                $city_name = ' (' . $city->city_name . ')';
+            } else {
+                $city_name = '';
+            }
+            $text .= $fourth->name . $city_name . ', ';
         }
 
         if ($fifth) {
-            $text .= $fifth->name . ', ';
+            if ($city = $fifth->city) {
+                $city_name = ' (' . $city->city_name . ')';
+            } else {
+                $city_name = '';
+            }
+            $text .= $fifth->name . $city_name . ', ';
         }
         return substr($text, 0, -2);
     }
