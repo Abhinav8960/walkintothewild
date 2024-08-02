@@ -66,10 +66,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     <div class="row justify-content-center mb-4 pt-5">
       <div class="col-xl-11 col-lg-12">
         <div class="row mb-5 justify-content-center">
-          <?= $this->render('_select_filter', [
-            'searchModel' => $searchModel,
-            'device' => $device,
-          ]) ?>
+          <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
+            <?= $this->render('_select_filter', [
+              'searchModel' => $searchModel,
+              'device' => $device,
+            ]) ?>
+          </div>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
               <div class="col-12">
