@@ -130,7 +130,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         </div>
                                                         <div class="postcomment  pt-3">
                                                             <div class="text_com">
-                                                                <h6 class="nameavatr"><?= $review->park->title ?></h6>
+                                                                <h6 class="nameavatr"><?= isset($review->park) ? $review->park->title : '' ?></h6>
                                                                 <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
 
                                                                     <div class="ratings">
@@ -149,7 +149,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
 
                                                                     <div class="googlerating">
-                                                                        <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                        <p class="mb-0"> <?= isset($review->user) ?  $review->user->name : ''  ?></p>
 
                                                                     </div>
                                                                 </div>

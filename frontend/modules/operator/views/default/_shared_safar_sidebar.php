@@ -43,7 +43,7 @@ $shared_safari_list = ShareSafari::find()->where(['status' => ShareSafari::STATU
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= $share_safari->park->title ?></a></h6>
+                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong><?= $share_safari->organizedbyname ?></strong></p>
                                     </div>
