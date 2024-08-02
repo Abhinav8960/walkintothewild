@@ -24,7 +24,7 @@ class Footer extends Widget
         // return $this->render('footer');
 
         if (str_starts_with($active_url, '/profile')) {
-            return $this->render('initialfooter');
+            return $this->render('profilefooter');
         } else {
             return $this->render('footer');
         }
