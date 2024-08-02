@@ -20,7 +20,7 @@ class ChangePasswordForm extends Model
     public $user_model;
 
 
-    public function __construct(User $user_model, array $config = [])
+    public function __construct(User $user_model = null)
     {
         $this->user_model = Yii::createObject([
             'class' => User::className()

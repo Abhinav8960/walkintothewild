@@ -1,6 +1,9 @@
 <?php
 $this->title = 'Account Settings';
 
+use common\models\GeneralModel;
+use yii\bootstrap5\ActiveForm;
+use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
 
@@ -18,26 +21,62 @@ use yii\helpers\Url;
                 <div class="card-body p-4">
                     <h6 class="fs-5 fw-bold mb-3"> Select who may see your profile details</h6>
 
-
-                    <div class="row">
-                        <div class="col-md-12 mt-3">
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'privacy-form',
+                        'method' => 'POST',
+                    ]); ?>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-md-3 mt-3">
                             Gender
                         </div>
-
-                        <div class="col-md-12 mt-5">
+                        <div class="col-md-3 mt-3">
+                            <?= $form->field($model, 'gender_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-md-3 mt-5">
                             Email
                         </div>
+                        <div class="col-md-3 mt-5">
+                            <?= $form->field($model, 'email_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
+                        </div>
+                    </div>
 
-                        <div class="col-md-12 mt-5">
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-md-3 mt-5">
                             Photo
                         </div>
-
-                        <div class="col-md-12 mt-5">
+                        <div class="col-md-3 mt-5">
+                            <?= $form->field($model, 'photo_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-between">
+                        <div class="col-md-3 mt-5">
                             Contribution
+                        </div>
+                        <div class="col-md-3 mt-5">
+                            <?= $form->field($model, 'contribution_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
                         </div>
                     </div>
                 </div>
+                <?php ActiveForm::end(); ?>
             </div>
         </div>
     </div>
 </div>
+<?php
+
+$script = <<< JS
+    $('form select').on('change', function(){
+        $("#privacy-form").attr("data-pjax", "true");    
+        $(this).closest('form').submit();
+    }); 
+   
+    $('form').on('change', function(){
+        $("#privacy-form").attr("data-pjax", "true");    
+        $(this).closest('form').submit();
+       
+    }); 
+JS;
+$this->registerJs($script);
+?>

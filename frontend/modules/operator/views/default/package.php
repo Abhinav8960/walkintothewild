@@ -72,7 +72,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between  mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Created <span class="numberFont"><?= count($operator_packages) ?></span> Packages</h6>
-                                                <a class="SeeAll" href="">See All</a>
+                                                <?php if ($operator_packages) { ?>
+                                                    <a class="SeeAll" href="">See All</a>
+                                                <?php } ?>
                                                 <!-- <div class="whiteReview ">
                                                     <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
                                                 </div> -->
