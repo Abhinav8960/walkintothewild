@@ -1050,7 +1050,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '1' => 'Public',
             '2' => 'Only me',
             '3' => 'My Follower',
-            '4' => 'All Member'
         ];
         return $return;
     }
