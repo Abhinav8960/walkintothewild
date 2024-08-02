@@ -491,7 +491,7 @@ $content = ContentManagement::findOne(['id' => ContentManagement::CM_BIRDING_TOU
                     <div class="col-12">
                         <div class="content_terms">
                             <h5>Terms & Conditions</h5>
-                            <p><?= htmlspecialchars(strip_tags($content ? $content->content : 'No content available'), ENT_QUOTES, 'UTF-8') ?></p>
+                            <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>
                         </div>
 
                     </div>

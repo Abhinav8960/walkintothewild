@@ -22,9 +22,8 @@ class PhotoController extends FrontendBaseController
     public function actionIndex($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        if (Yii::$app->user->identity->id == $user->id) {
-            $userposts = UserPosts::find()->where(['user_id' => $user->id, 'status' => UserPosts::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
-        }
+        $userposts = UserPosts::find()->where(['user_id' => $user->id, 'status' => UserPosts::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+
         return $this->render('index', [
             'user' => $user,
             'userposts' => $userposts
