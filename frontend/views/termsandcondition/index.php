@@ -13,43 +13,22 @@ $this->title = 'Safari Tour Operator Registration';
 $this->params['title'] = $this->title;
 ?>
 
-<section class="banner_section-inner position-relative">
-    <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/t&c.jpg" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/t&c.jpg" class="d-block w-100 " alt="banner">
-    </picture>
+<div class="terms-contionsSplasescreen">
+    <!-- <picture>
+        <source media="(max-width: 991px)" srcset="<?= $this->params['baseurl'] ?>/img/spalsemobile.png" class="d-block w-100">
+        <source media="(min-width: 992px)" srcset="<?= $this->params['baseurl'] ?>/img/spalshscreendesktop.png" class="d-block w-100">
+        <img src="<?= $this->params['baseurl'] ?>/img/spalsemobile.png" class="d-block w-100 " alt="banner">
+    </picture> -->
 
-</section>
-<section class="terms_wrapper">
-    <div class="container-lg">
-        <div class="row pb-5 mb-5">
-            <div class="col-12">
-                <div class="title_terms">
-                    <h2>Terms of Use</h2>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="terms_details">
-                    <?php
-                    $content = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
-                    ?>
-                    <div class="content_terms">
-                        <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>
-                        <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+</div>
 <?php
-if (isset($key) && !empty($key)) { ?>
+if (isset($key) && !empty($key)) {
+?>
     <!--    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#termsmodal">
         Agree modal
     </button> -->
-    <div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+    <div class="modal fade _standard-text mobile_loginconditions" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
             <div class="modal-content">
                 <?php $form = ActiveForm::begin([
                     'id' => 'tag-form',
@@ -64,24 +43,56 @@ if (isset($key) && !empty($key)) { ?>
                     </h1>
                     <h1 class="modal-title fs-5" id="exampleModalLabel"></h1>
                 </div>
-                <div class="modal-body px-3">
-                    <div class="row">
+                <div class="modal-body px-5">
+                    <div class="row py-4">
                         <div class="col-12">
                             <div class="content_terms">
-                                <h5>Create your account</h5>
-                                <h6>Email Address<br /><b><?= $model->email ?></b></h6>
-                                <p></p>
-                                <h6>Full Name<br /><b><?= ucwords($model->name) ?></b></h6>
-                                <p></p>
+                                <h5 class="text-center">Create your account</h5>
+                                <div class="login_users pt-4">
+                                    <h6 class="colorgreen ">Email Address</h6>
+                                    <h6 class="fs-5 fw-bold"><?= $model->email ?></h6>
+                                </div>
+                                <div class="login_users pt-4">
+                                    <h6 class="colorgreen ">Full Name</h6>
+                                    <h6 class="fs-5 fw-bold"><?= ucwords($model->name) ?></h6>
+                                </div>
+                                <div class="contenss pt-3">
                                 <p>By creating an account, I accept the WalkIntoTheWild <a href="/termsandcondition" target="_blank">Terms of Service</a> and acknowledge the Privacy Policy.</p>
-                                <p></p>
+                                </div>
+                               
                                 <?= $form->field($model, 'rand_key')->hiddenInput()->label(false); ?>
-
-                                <p><?= Html::submitButton('Create your account', ['class' => 'btns_submit']) ?></p>
-                                <p></p>
-                                <p class="justify-content-center"><a href="/site/login">Already have an WalkIntoTheWild account? Log in</a></p>
+                                <div class="btns-submit">
+                                <?= Html::submitButton('Create your account', ['class' => 'btns_submit rounded-1 w-100 fs-5']) ?>
+                                </div>
+                                <div class="contenss pt-3 ">
+                                <p class="text-center"><a href="/site/login">Already have an WalkIntoTheWild account? Log in</a></p>
+                                </div>
+                                
                             </div>
                         </div>
+
+                        <!-- <div class="col-12 logindesign">
+                            <div class="form_design">
+                                <div class="h6 text-center pb-2 text-muted">Log in to continue</div>
+                                <div class="emailfields mb-3">
+                                    <input type="text" class="form-control " style="padding: 12px 10px;" placeholder="Enter your Email">
+                                </div>
+                                <div class="emailfields">
+                                    <input type="text" class="form-control " style="padding: 12px 10px;" placeholder="Enter yoyr password">
+                                </div>
+                                <div class="btns-submit pt-3">
+                                    <?= Html::submitButton('Create your account', ['class' => 'btns_submit rounded-1 w-100 fs-5']) ?>
+                                </div>
+                            </div>
+                            <div class="continue pt-5">
+                                <h6 class="fs-5 text-center pb-2 text-muted">Or continue With:</h6>
+                            </div>
+                            <div class="btnssss-g">
+                                <button class="googlelogin w-100 py-2  mb-3 d-flex align-items-center gap-2"> <img src="<?= $this->params['baseurl'] ?>/img/google-logo.5867462c.svg" width="25" alt="banner"> Google</button>
+                                <button class="googlelogin w-100 py-2  mb-3 d-flex align-items-center gap-2"> <img src="<?= $this->params['baseurl'] ?>/img/apple-logo.54e0d711.svg" width="25" alt="banner"> Apple</button>
+                            </div>
+
+                        </div> -->
                     </div>
                 </div>
                 <?php ActiveForm::end(); ?>
@@ -115,3 +126,15 @@ if (isset($key) && !empty($key)) { ?>
             $this->registerJs($script);
         }
             ?>
+
+
+<style>
+    footer {
+
+        display: none;
+    }
+
+    header {
+        display: none;
+    }
+</style>
