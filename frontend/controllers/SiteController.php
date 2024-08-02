@@ -219,14 +219,14 @@ class SiteController extends FrontendBaseController
         );
     }
 
-    public function actionSignin()
+    public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('/park');
         }
 
         $model = new LoginForm();
-        $model->action_url = '/site/signin';
+        $model->action_url = '/site/login';
         $model->action_validate_url = '/site/signinvalidate';
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -260,7 +260,7 @@ class SiteController extends FrontendBaseController
         }
     }
 
-    public function actionLogin()
+    public function actionLogin_old()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('/park');

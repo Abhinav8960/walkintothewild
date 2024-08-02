@@ -155,7 +155,7 @@
 								<ul>
 									<?php if (!Yii::$app->user->identity) { ?>
 										<li>
-											<a href="/site/signin"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+											<a href="/site/login"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 										</li>
 									<?php } else { ?>
 
