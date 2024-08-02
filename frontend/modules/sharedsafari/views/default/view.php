@@ -215,7 +215,7 @@ $this->params['title'] = $this->title;
                                     <ul>
                                         <?= \frontend\widgets\ShareButton::widget([
                                             'style' => 'horizontal',
-                                            'networks' => ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'telegram'],
+                                            'networks' => ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'telegram', 'clipboard'],
                                         ]); ?>
 
                                     </ul>

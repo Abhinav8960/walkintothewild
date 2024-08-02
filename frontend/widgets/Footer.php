@@ -21,12 +21,12 @@ class Footer extends Widget
 
         $active_url = "/" . Yii::$app->requestedRoute;
 
-        return $this->render('footer');
+        // return $this->render('footer');
 
-        // if (in_array($active_url, array("/", "/thankyou", "/safaritour-registration", "/birdingtour-registration", "/coming-soon"))) {
-        //     return $this->render('initialfooter');
-        // } else {
-        //     return $this->render('footer');
-        // }
+        if (str_starts_with($active_url, '/profile')) {
+            return $this->render('initialfooter');
+        } else {
+            return $this->render('footer');
+        }
     }
 }

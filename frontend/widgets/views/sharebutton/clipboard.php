@@ -1,0 +1,1 @@
+<li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= Yii::$app->request->absoluteUrl; ?>" target="_blank" class="iconSize"><i class="fa fa-clipboard" style="font-size:25px;color:red"></i></a></li>

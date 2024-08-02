@@ -21,7 +21,7 @@ class ShareButton extends \yii\base\Widget
 	 * like - facebook, googleplus, linkedin, twitter
 	 */
 
-	public $networks = ['facebook', 'googleplus', 'linkedin', 'twitter', 'whatsapp', 'instagram', 'telegram'];
+	public $networks = ['facebook', 'googleplus', 'linkedin', 'twitter', 'whatsapp', 'instagram', 'telegram', 'clipboard'];
 
 
 	/**
