@@ -1,11 +1,2 @@
-<?php
-	if($style == 'vertical')
-		$data_type = 'top';
-	else
-		$data_type = 'right';
-?>
-
-<script src="//platform.linkedin.com/in.js" type="text/javascript">
-  lang: en_US
-</script>
-<script type="IN/Share" data-url="<?php echo Yii::$app->request->absoluteUrl; ?>" data-counter="right"></script>
+<li><a href="https://www.instagram.com/?url=<?= Yii::$app->request->absoluteUrl; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-linkedin-in"></i></a>
+</li>
