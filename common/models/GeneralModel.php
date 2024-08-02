@@ -1043,4 +1043,15 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $return .= "</table>";
         return $return;
     }
+
+    public static function privacyoptions()
+    {
+        $return = [
+            '1' => 'Public',
+            '2' => 'Only me',
+            '3' => 'My Follower',
+            '4' => 'All Member'
+        ];
+        return $return;
+    }
 }
