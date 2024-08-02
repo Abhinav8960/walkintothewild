@@ -1,4 +1,7 @@
 <?php
+
+use common\models\cms\contentmanagement\ContentManagement;
+
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
@@ -15,11 +18,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <h6>ABOUT US </h6>
                     </div>
                     <div class="footerContent">
-                        <p>We offers a seamless experience, connecting you with multiple safari tour operators and providing all
-                            the essential details you need to make informed decisions about your wildlife safari, all at no cost.
-                        </p>
-                        <p>Our shared safari feature connects you with fellow safari enthusiasts, enabling you to form a group and
-                            embark on a shared safari adventure together.</p>
+                        <?php
+                        $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT]);
+                        ?>
+                        <div class="content_terms" style="word-break: break-word;">
+                            <p><?= htmlspecialchars(strip_tags($content ? $content->content : 'No content available'), ENT_QUOTES, 'UTF-8') ?></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,7 +60,24 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                 </div>
             </div>
+
+            <div class="mt-5">
+                <div class="heading-footer">
+                    <h6>DISCLAIMER</h6>
+                </div>
+                <div class="footerContent">
+                    <?php
+                    $content = ContentManagement::findOne(['id' => ContentManagement::CM_DISCLAIMER]);
+                    ?>
+                    <div class="content_terms" style="word-break: break-word;">
+                        <p><?= htmlspecialchars(strip_tags($content ? $content->content : 'No content available'), ENT_QUOTES, 'UTF-8') ?></p>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+
         <div class="row pt-4 justify-content-between mobile-responsive align-items-center">
             <div class="col-lg-2 col-md-4">
                 <div class="footerlogo">
