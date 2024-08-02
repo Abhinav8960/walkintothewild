@@ -1,1 +1,23 @@
-<li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= Yii::$app->request->absoluteUrl; ?>" target="_blank" class="iconSize"><i class="fa fa-clipboard" style="font-size:25px;color:red"></i></a></li>
+<li><span class="iconSize copytoclipboard" data-href="<?php echo Yii::$app->request->absoluteUrl; ?>"><i class="fa fa-clipboard" style="font-size:25px;color:red"></i></span></li>
+
+<?php
+$script = <<< Js
+
+$(document).ready(function() {
+    function copyToClipboard() {
+        $('.copytoclipboard').on('click', function () {
+            var temp = $("<input>");
+            $("body").append(temp);
+            temp.val($(this).attr('data-href')).select();
+            document.execCommand("copy");
+            temp.remove();
+            $(this).html('Copied');
+        });
+    }
+    copyToClipboard();
+});
+
+
+Js;
+$this->registerJs($script);
+?>
