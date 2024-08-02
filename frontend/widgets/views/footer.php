@@ -1,6 +1,7 @@
 <?php
 
 use common\models\cms\contentmanagement\ContentManagement;
+use yii\helpers\Html;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -22,9 +23,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT]);
                         ?>
                         <div class="content_terms" style="word-break: break-word;">
-                            <p><?= htmlspecialchars(strip_tags($content ? $content->content : 'No content available'), ENT_QUOTES, 'UTF-8') ?></p>
+                            <?= $content ? Html::decode($content->content) : '<p>No content available</p>' ?>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
@@ -61,19 +63,19 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
             </div>
 
-            <div class="mt-5">
+            <!-- <div class="mt-5">
                 <div class="heading-footer">
                     <h6>DISCLAIMER</h6>
                 </div>
                 <div class="footerContent">
-                    <?php
+                    <
                     $content = ContentManagement::findOne(['id' => ContentManagement::CM_DISCLAIMER]);
                     ?>
                     <div class="content_terms" style="word-break: break-word;">
-                        <p><?= htmlspecialchars(strip_tags($content ? $content->content : 'No content available'), ENT_QUOTES, 'UTF-8') ?></p>
+                        < $content ? Html::decode($content->content) : '<p>No content available</p>' ?>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 

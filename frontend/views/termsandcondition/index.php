@@ -34,8 +34,8 @@ $this->params['title'] = $this->title;
                     $content = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
                     ?>
                     <div class="content_terms">
-                        <p><?= htmlspecialchars(strip_tags($content ? $content->content : 'No content available'), ENT_QUOTES, 'UTF-8') ?></p>
-                    <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
+                        <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>
+                        <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
 
                     </div>
                 </div>
