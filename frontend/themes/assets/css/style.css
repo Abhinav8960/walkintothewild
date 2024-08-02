@@ -5587,7 +5587,7 @@ a.desc:after {
 }
 
 .mobile_didplay_block .join_btn {
-    padding: 11px 30px;
+    padding: 9px 30px;
     color: #152F1B;
     font-weight: 600;
 }
@@ -6354,4 +6354,40 @@ color: #000000 !important;
 .safritimg.innerImg{
 
     height: 100%;
+}
+#mobile_search .select_boxes h6{
+
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.legends{
+
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
+}
+
+.legends_bx p{
+
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 14px;
+}
+.closedbg{
+
+ 
+    background-color:#808080;
+
+}
+.Core-Open{
+
+ 
+    background-color:#127729;
+
+}
+.BufferZoneOpen{
+
+ 
+    background-color:#EABC74;
+
 }

@@ -46,7 +46,7 @@ $recentposts = ArticleSearch::recentpost();
 
     </div>
 </section>
-<section class="articals_wrapper py-3 bg-white">
+<section class="articals_wrapper py-3 bg-white margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
         <div class="row justify-content-center ">
             <div class="col-lg-6 mb-4 d-lg-block d-none">
@@ -69,6 +69,9 @@ $recentposts = ArticleSearch::recentpost();
                             <?php } else {  ?>
                                 <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/auth?authclient=google">+ Organize a New
                                     Safari</a>
+                            <?php } ?>
+                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
+                                <button class="btn_newsafari departureBtn newbg mt-2 d-block text-center rounded-3" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
                             <?php } ?>
                         </div>
                     </div>
@@ -302,9 +305,9 @@ $recentposts = ArticleSearch::recentpost();
 
 </section>
 
-<section class="safariduring_sesons innerpage margin_bottomfooter mb-5 paddiinTop_add">
+<!-- <section class="safariduring_sesons innerpage ">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
+</section> -->
 
 
 
@@ -321,6 +324,36 @@ $recentposts = ArticleSearch::recentpost();
         </div>
     </div>
 </div>
+
+<div class="modal fade _standard-text" id="departure-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a New Fixed Departure</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body ">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+$script = <<< JS
+
+function departurefunction() {
+	$('.departureBtn').on('click', function () {
+        $('#departure-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+departurefunction();
+             
+JS;
+$this->registerJs($script);
+?>
 
 
 

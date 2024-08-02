@@ -231,8 +231,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function operatorcredibility()
     {
         return [
-            1 => 'Registered Company',
-            2 => 'Has a Website',
+            // 1 => 'Registered Company',
+            // 2 => 'Has a Website',
             3 => 'Offers Other Wildlife Activities',
             4 => 'Has Cancellation Policy',
             5 => 'Wildlife Photographer',

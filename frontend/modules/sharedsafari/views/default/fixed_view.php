@@ -188,7 +188,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <div class="pakageCost">
+                            <div class="pakageCost text-center">
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
                             </div>
                         </div>
@@ -206,7 +206,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         ]) ?>
                                     <?php } ?>
                                 </div>
-                                <div class="right_button  mt-2">
+                                <div class="right_button ">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
                                         <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                                             Safari</button>

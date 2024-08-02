@@ -19,6 +19,8 @@ NotifyAsset::register($this);
 $this->registerCsrfMetaTags();
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
+
+$this->params['baseurl'] = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset')->baseUrl;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -29,6 +31,8 @@ $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_k
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <link rel="shortcut icon" href="<?= $this->params['baseurl']; ?>/img/favicon.ico" type="image/x-icon" />
+
     <?php $this->head() ?>
 
     <?php if (\Yii::$app->params['environment'] == "production") { ?>

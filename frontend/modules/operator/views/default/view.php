@@ -80,20 +80,22 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 if ($operator_parks) {
                                                     foreach ($operator_parks as $operator_park) {
                                                         $park_detail = $operator_park->park;
+                                                        if ($park_detail) {
                                                 ?>
-                                                        <div class="col-md-6 col-lg-4 gap-2  mb-4">
-                                                            <div class="parksImgireview h-100">
-                                                                <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>">
-                                                                    <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                                            <div class="col-md-6 col-lg-4 gap-2  mb-4">
+                                                                <div class="parksImgireview h-100">
+                                                                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' =>  $park_detail->slug]) ?>">
+                                                                        <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
 
-                                                                </a>
-                                                                <div class="footer_safariname">
-                                                                    <h6 class=""><?= $park_detail->title ?></h6>
+                                                                    </a>
+                                                                    <div class="footer_safariname">
+                                                                        <h6 class=""><?= $park_detail->title ?></h6>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
-                                                        </div>
+                                                            </div>
                                                 <?php }
+                                                    }
                                                 } ?>
                                             </div>
 

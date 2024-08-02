@@ -12,6 +12,7 @@ use common\models\park\SafariParkRating;
 class SafariParkRatingSearch extends SafariParkRating
 {
     public $custom_sort_by;
+    public $safari_park;
     /**
      * {@inheritdoc}
      */
@@ -20,7 +21,7 @@ class SafariParkRatingSearch extends SafariParkRating
         return [
             [['user_id', 'safari_park_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
             [['rating'], 'number'],
-            [['review', 'user_agent'], 'string', 'max' => 512],
+            [['review', 'user_agent', 'safari_park'], 'string', 'max' => 512],
             [['user_device', 'user_platform', 'user_platform_version', 'user_browser'], 'string', 'max' => 50],
             [['user_browser_version', 'user_ip_address'], 'string', 'max' => 20],
             [['custom_sort_by'], 'safe']
@@ -46,7 +47,7 @@ class SafariParkRatingSearch extends SafariParkRating
      */
     public function search($params)
     {
-        $query = SafariParkRating::find()->where(['status' => [1, 2]]);
+        $query = SafariParkRating::find()->where(['safari_park_rating.status' => [1, 2]]);
 
         // add conditions that should always apply here
 
@@ -85,17 +86,24 @@ class SafariParkRatingSearch extends SafariParkRating
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'safari_park_id' => $this->safari_park_id,
-            'rating' => $this->rating,
-            'flaged' => $this->flaged,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'safari_park_rating.id' => $this->id,
+            'safari_park_rating.safari_park_id' => $this->safari_park_id,
+            'safari_park_rating.rating' => $this->rating,
+            'safari_park_rating.flaged' => $this->flaged,
+            'safari_park_rating.created_at' => $this->created_at,
+            'safari_park_rating.created_by' => $this->created_by,
+            'safari_park_rating.updated_at' => $this->updated_at,
+            'safari_park_rating.updated_by' => $this->updated_by,
+            'safari_park_rating.status' => $this->status,
         ]);
         $query->andFilterWhere(['like', 'review', $this->review]);
+
+
+        if ($this->safari_park) {
+            $query->joinwith(['park' => function ($query) {
+                $query->andFilterWhere(['like', 'safari_park.title', $this->safari_park]);
+            }]);
+        }
 
         return $dataProvider;
     }

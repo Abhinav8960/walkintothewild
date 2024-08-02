@@ -78,7 +78,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                             </div>
                                             <div class="lower-content">
                                                 <ul class="artical-info ">
-                                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $model->articleAuthor ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
+                                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => isset($model->articleAuthor) ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
 
                                                 </ul>
                                                 <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>

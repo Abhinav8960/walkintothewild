@@ -292,7 +292,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
             <!-- mobile responsive icons end -->
         </div>
         <div class="row pt-2">
-            <div class="col-lg-12 col-xl-6 mb-3 mb-xl-0">
+            <div class="col-lg-6 col-xl-6 mb-3 mb-xl-0">
                 <div class="row gx-2 <?= in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
                     <div class="col-sm-3 mb-sm-0 mb-3 ">
                         <div class="coreZone h-100">
@@ -329,7 +329,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-xl-6">
+            <div class="col-lg-6 col-xl-6">
                 <div class="row gx-2">
                     <div class="col-sm-3 mb-sm-0 mb-3">
                         <div class="bufferzone h-100">
@@ -362,6 +362,24 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                 </div>
             </div>
 
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="legends_wrap d-flex justify-content-end gap-4 pt-3">
+                    <div class="legends_bx d-flex align-items-center gap-2">
+                        <div class="legends closedbg"></div>
+                        <p>Closed</p>
+                    </div>
+                    <div class="legends_bx d-flex align-items-center gap-2">
+                        <div class="legends Core-Open"></div>
+                        <p>Core Zone Open</p>
+                    </div>
+                    <div class="legends_bx d-flex align-items-center gap-2">
+                        <div class="legends BufferZoneOpen"></div>
+                        <p>Buffer Zone Open</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
