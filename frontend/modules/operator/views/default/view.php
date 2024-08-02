@@ -88,7 +88,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                                                                 </a>
                                                                 <div class="footer_safariname">
-                                                                    <h6 class=""><?= $park_detail->title ?></h6>
+                                                                    <h6 class=""><?= isset($park_detail->title) ? $park_detail->title : "" ?></h6>
                                                                 </div>
                                                             </div>
 
