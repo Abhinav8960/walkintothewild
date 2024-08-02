@@ -1650,6 +1650,10 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .topSlider_tour .items_slider img{
+
+    height: 200px;
+  }
   .mobile_loginconditions .modal-content{
 
     height: 100%;

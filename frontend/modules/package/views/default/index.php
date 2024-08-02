@@ -72,12 +72,25 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
               <div class="col-12">
-                <div class="topfilter d-flex justify-content-between align-items-center mb-2 flex-wrap w-100 ">
+                <div class="topfilter d-lg-flex d-none justify-content-between  w-100 mb-2 ">
                   <div class="left_text">
                     <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
                   </div>
                   <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
 
+                </div>
+                <div class="top_mobilefilter d-flex gap-2 d-lg-none justify-content-between align-items-center w-100 mb-4">
+                  <div class="left_text">
+                  <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
+                  </div>
+                  <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
+                    <div class="input_check pb-0">
+                      <div class="filter_searchbox">
+                        <span>Filter <i class="fa-solid fa-chevron-down"></i></span>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
               <div class="col-12">

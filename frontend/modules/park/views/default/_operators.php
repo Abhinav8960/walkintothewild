@@ -42,7 +42,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
     <div class="col-lg-8 col-xl-9 col-xxl-10 position-relative">
-
         <div class="topfilter d-lg-flex d-none justify-content-between  w-100 mb-2">
             <div class="left_text">
                 <p class="mb-0">There are currently <strong><?= count($operators) ?></strong> safari tour operator</p>

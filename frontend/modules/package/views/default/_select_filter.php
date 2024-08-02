@@ -5,114 +5,296 @@ use common\models\park\SafariPark;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 ?>
-
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'data-pjax' => true,
+        'id' => 'side-search-form'
+    ],
+    'action' => ['index'],
+    'method' => 'get',
+    'fieldConfig' => [
+        'template' => '{input}{error}',
+    ],
+]); ?>
 <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
-    <div class="filter-wrapper pb-2">
-        <div class="title_top pb-4">
-            <h4>Select Filters</h4>
-        </div>
-        <?php $form = ActiveForm::begin([
-            'options' => [
-                'data-pjax' => true,
-                'id' => 'side-search-form'
-            ],
-            'action' => ['index'],
-            'method' => 'get',
-            'fieldConfig' => [
-                'template' => '{input}{error}',
-            ],
-        ]); ?>
-        <div class="title_filter mb-3">
-            <h6>Safari Park</h6>
-            <div class="input_check ">
-                <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>
+    <?php if ($device == 'desktop') { ?>
+        <div class="filter-wrapper custoM-inputs d-lg-block d-none mb-2">
+            <div class="title_top pb-4">
+                <h4>Select Filters</h4>
             </div>
-        </div>
-        <div class="title_filter mb-3">
-            <h6>Month</h6>
-            <div class="input_check ">
-                <?= $form->field($searchModel, 'month_id')->dropDownlist(
-                    GeneralModel::monthoption(),
-                    ['prompt' => 'Select Month']
+            <div class="title_filter mb-2">
+                <h6>Safari Park</h6>
+                <div class="input_check ">
+                    <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>
+                </div>
+            </div>
+            <div class="title_filter mb-3">
+                <h6>Month</h6>
+                <div class="input_check ">
+                    <?= $form->field($searchModel, 'month_id')->dropDownlist(
+                        GeneralModel::monthoption(),
+                        ['prompt' => 'Select Month']
 
-                )->label(false); ?>
+                    )->label(false); ?>
+                </div>
             </div>
-        </div>
-        <div class="title_filter mb-3">
-            <h6>Stay Category</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
-                    GeneralModel::budgetoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
+            <div class="title_filter mb-3">
+                <h6>Stay Category</h6>
+                <div class="input_check d-flex gap-3 align-items-center">
+                    <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
+                        GeneralModel::budgetoption(),
+                        [
+                            'required' => true,
+                            'itemOptions' => ['class' => 'checkbox_design'],
+                        ]
+                    )->label(false); ?>
+                </div>
             </div>
-        </div>
-        <div class="title_filter mb-3">
-            <h6 class="">Tour Duration</h6>
-            <div class="multi-range">
-                <input type="range" name="PackageSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="packagesearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="PackageSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="packagesearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+            <div class="title_filter mb-3">
+                <h6 class="">Tour Duration</h6>
+                <div class="multi-range">
+                    <input type="range" name="PackageSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="packagesearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                    <input type="range" name="PackageSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="packagesearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                </div>
+                <div class="range-label">
+                    <span class="value"><?= $searchModel->no_of_night_min ?> Night</span>
+                    <span class="float-end"><?= $searchModel->no_of_night_max >= 10 ? '10+' : $searchModel->no_of_night_max ?> Nights</span>
+                </div>
             </div>
-            <div class="range-label">
-                <span class="value"><?= $searchModel->no_of_night_min ?> Night</span>
-                <span class="float-end"><?= $searchModel->no_of_night_max >= 10 ? '10+' : $searchModel->no_of_night_max ?> Nights</span>
+            <div class="title_filter mb-3">
+                <h6 class="">Total Safaris</h6>
+                <div class="multi-range">
+                    <input type="range" name="PackageSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="packagesearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                    <input type="range" name="PackageSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="packagesearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                </div>
+                <div class="range-label">
+                    <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
+                    <span class="float-end"><?= $searchModel->no_of_safari_max >= 10 ? '10+' : $searchModel->no_of_safari_max ?> </span>
+                </div>
             </div>
-        </div>
-        <div class="title_filter mb-3">
-            <h6 class="">Total Safaris</h6>
-            <div class="multi-range">
-                <input type="range" name="PackageSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="packagesearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="PackageSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="packagesearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+            <div class="title_filter mb-3">
+                <h6 class="">Cost (Per Person)</h6>
+                <div class="multi-range">
+                    <input type="range" name="PackageSearch[estimated_price_filter_min]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                    <input type="range" name="PackageSearch[estimated_price_filter_max]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                </div>
+                <div class="range-label">
+                    <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
+                    <span class="float-end">₹<?= $searchModel->estimated_price_filter_max >= 50000 ? '50000+' : $searchModel->estimated_price_filter_max ?> </span>
+                </div>
             </div>
-            <div class="range-label">
-                <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
-                <span class="float-end"><?= $searchModel->no_of_safari_max >= 10 ? '10+' : $searchModel->no_of_safari_max ?> </span>
+            <div class="title_filter mb-3">
+                <h6>Features</h6>
+                <div class="input_check d-flex gap-3 align-items-center">
+                    <?= $form->field($searchModel, 'package_feature')->checkboxList(
+                        GeneralModel::packagefeatureoption(),
+                        [
+                            'required' => true,
+                            'itemOptions' => ['class' => 'checkbox_design'],
+                        ]
+                    )->label(false); ?>
+                </div>
             </div>
-        </div>
-        <div class="title_filter mb-3">
-            <h6 class="">Cost (Per Person)</h6>
-            <div class="multi-range">
-                <input type="range" name="PackageSearch[estimated_price_filter_min]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="PackageSearch[estimated_price_filter_max]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+            <div class="title_filter ">
+                <h6>Included</h6>
+                <div class="input_check d-flex gap-3 align-items-center">
+                    <?= $form->field($searchModel, 'package_include')->checkboxList(
+                        GeneralModel::packageincludeoption(),
+                        [
+                            'required' => true,
+                            'itemOptions' => ['class' => 'checkbox_design'],
+                        ]
+                    )->label(false); ?>
+                </div>
             </div>
-            <div class="range-label">
-                <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
-                <span class="float-end">₹<?= $searchModel->estimated_price_filter_max >= 50000 ? '50000+' : $searchModel->estimated_price_filter_max ?> </span>
-            </div>
-        </div>
-        <div class="title_filter mb-3">
-            <h6>Features</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'package_feature')->checkboxList(
-                    GeneralModel::packagefeatureoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
-        </div>
-        <div class="title_filter ">
-            <h6>Included</h6>
-            <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'package_include')->checkboxList(
-                    GeneralModel::packageincludeoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
-        </div>
-        <?php ActiveForm::end(); ?>
 
-    </div>
+
+        </div>
+    <?php } else { ?>
+        <div class="filterPhone  custoM-inputs d-lg-none">
+            <div class="top_filterwrap d-flex align-items-center justify-content-between">
+                <div class="title_top ">
+                    <h4 class="mb-0">Select Filters</h4>
+                </div>
+                <div class="apply-btn">
+                    <button class="btn_apply">Apply</button>
+                </div>
+            </div>
+            <div class="searchwrap mb-3 mt-5 pt-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6 class="mb-0">Sort By</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Safari Park</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="title_filter">
+                            <div class="input_check ">
+                                <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Month</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="input_check ">
+                            <?= $form->field($searchModel, 'month_id')->dropDownlist(
+                                GeneralModel::monthoption(),
+                                ['prompt' => 'Select Month']
+
+                            )->label(false); ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Stay Category</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="input_check d-flex gap-3 align-items-center">
+                            <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
+                                GeneralModel::budgetoption(),
+                                [
+                                    'required' => true,
+                                    'itemOptions' => ['class' => 'checkbox_design'],
+                                ]
+                            )->label(false); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Tour Duration</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="multi-range">
+                            <input type="range" name="PackageSearch[no_of_night_min]" min="1" max="10" value="<?= $searchModel->no_of_night_min ?>" id="packagesearch-no_of_night_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                            <input type="range" name="PackageSearch[no_of_night_max]" min="1" max="10" value="<?= $searchModel->no_of_night_max ?>" id="packagesearch-no_of_night_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        </div>
+                        <div class="range-label">
+                            <span class="value"><?= $searchModel->no_of_night_min ?> Night</span>
+                            <span class="float-end"><?= $searchModel->no_of_night_max >= 10 ? '10+' : $searchModel->no_of_night_max ?> Nights</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Total Safaris</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="multi-range">
+                            <input type="range" name="PackageSearch[no_of_safari_min]" min="1" max="10" value="<?= $searchModel->no_of_safari_min ?>" id="packagesearch-no_of_safari_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                            <input type="range" name="PackageSearch[no_of_safari_max]" min="1" max="10" value="<?= $searchModel->no_of_safari_max ?>" id="packagesearch-no_of_safari_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        </div>
+                        <div class="range-label">
+                            <span class="value"><?= $searchModel->no_of_safari_min ?> </span>
+                            <span class="float-end"><?= $searchModel->no_of_safari_max >= 10 ? '10+' : $searchModel->no_of_safari_max ?> </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Cost (Per Person)</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="multi-range">
+                            <input type="range" name="PackageSearch[estimated_price_filter_min]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                            <input type="range" name="PackageSearch[estimated_price_filter_max]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        </div>
+                        <div class="range-label">
+                            <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
+                            <span class="float-end">₹<?= $searchModel->estimated_price_filter_max >= 50000 ? '50000+' : $searchModel->estimated_price_filter_max ?> </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Features</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="input_check d-flex gap-3 align-items-center">
+                            <?= $form->field($searchModel, 'package_feature')->checkboxList(
+                                GeneralModel::packagefeatureoption(),
+                                [
+                                    'required' => true,
+                                    'itemOptions' => ['class' => 'checkbox_design'],
+                                ]
+                            )->label(false); ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="searchwrap mb-3">
+                <div class="row align-items-center">
+                    <div class="col-5">
+                        <div class="title_filter">
+                            <h6>Included</h6>
+                        </div>
+                    </div>
+                    <div class="col-7">
+                        <div class="input_check d-flex gap-3 align-items-center">
+                            <?= $form->field($searchModel, 'package_include')->checkboxList(
+                                GeneralModel::packageincludeoption(),
+                                [
+                                    'required' => true,
+                                    'itemOptions' => ['class' => 'checkbox_design'],
+                                ]
+                            )->label(false); ?>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
 </div>
 
-
+<?php ActiveForm::end(); ?>
 <?php
 
 $script = <<< JS

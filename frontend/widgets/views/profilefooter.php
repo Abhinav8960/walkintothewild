@@ -15,7 +15,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
       
 
 
-        <div class="row pt-4 pb-2 justify-content-between border_top mobile-responsive align-items-center">
+        <div class="row pt-4 pb-2s justify-content-between border_top mobile-responsive align-items-center">
             <div class="col-lg-2 col-md-4">
                 <div class="footerlogo">
                     <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" width="160">
