@@ -571,4 +571,22 @@ class DefaultController extends FrontendBaseController
             ]);
         }
     }
+
+
+    public function actionSharedsafariseeall($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->id, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE])->all();
+        return $this->renderAjax(
+            'sharedsafariseeall',
+            [
+                'operator' => $operator,
+                'shared_safaries' => $shared_safaries,
+            ]
+        );
+    }
 }

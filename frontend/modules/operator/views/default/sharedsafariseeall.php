@@ -2,63 +2,14 @@
 
 use yii\helpers\Url;
 use common\models\GeneralModel;
-use common\interfaces\Constants;
-use common\models\cms\banner\Banner;
-use common\models\operator\SafariOperatorRating;
 use common\models\sharesafari\ShareSafariIntrested;
 
-
-/* @var $this yii\web\View */
-
-$this->title = 'Safari Operator  | ' . $operator->register_comapany_name . ' | Shared Safari';
-$this->params['breadcrumbs'][] = $this->title;
-$this->params['title'] = $this->title;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$park_constant = Constants::OPERATOR_VIEW;
-$banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
-
 ?>
 
-
-<section class="banner_section-inner packagebnner position-relative">
-    <picture class="position-relative">
-        <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
-        <img src="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">
-    </picture>
-    <div class="banner_searchBox">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="headingBnner_inner">
-                        <h1>Safari Tour Operator</h1>
-                        <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
-                                Their Adventures</p> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-<section class="touroprator_section bg-white">
-    <div class="container-fluid">
-        <?= $this->render('_operator_overview', ['operator' => $operator]) ?>
-
-        <div class="row justify-content-center  mb-4">
-            <?= $this->render('_free_quote', [
-                'model' => $model,
-                'operator' => $operator,
-            ]) ?>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <?= $this->render('_view_navbar', ['active' => 'sharedsafari', 'operator' => $operator]) ?>
-    </div>
-
-</section>
 <section class="touroprator_section ">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
@@ -70,13 +21,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <div class="d-flex justify-content-between  mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Organized <span class="numberFont"><?= count($shared_safaries) ?></span> Shared Safari</h6>
-                                                <?php if ($shared_safaries) { ?>
-                                                    <button class="SeeAll safariBtn" value="<?= Url::toRoute(['/operator/default/sharedsafariseeall', 'slug' => $operator->slug]) ?>">See All</button>
-                                                <?php } ?>
-                                            </div>
-
                                             <div class="row gx-5 justify-content-center">
                                                 <?php
                                                 if ($shared_safaries) {
@@ -163,9 +107,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xxl-4 col-lg-4">
-                                <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
-                            </div>
+
                         </div>
                     </div>
 
@@ -174,37 +116,3 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </section>
-
-
-<section class="safariduring_sesons innerpage">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
-
-<div class="modal fade _standard-text" id="popup-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Safari</h1>
-                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
-            </div>
-            <div class="modal-body px-2 pt-0">
-                <div id='modalContent'></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php
-$script = <<< JS
-function popupfunction() {
-	$('.safariBtn').on('click', function () {
-        $('#popup-modal').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-}
-popupfunction();
-
-JS;
-$this->registerJs($script);
-?>
