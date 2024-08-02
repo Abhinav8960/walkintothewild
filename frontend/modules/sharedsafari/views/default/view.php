@@ -215,20 +215,8 @@ $this->params['title'] = $this->title;
                                     <ul>
                                         <?= \frontend\widgets\ShareButton::widget([
                                             'style' => 'horizontal',
-                                            'networks' => ['facebook', 'twitter'],
+                                            'networks' => ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'telegram'],
                                         ]); ?>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
-                                        </li>
-                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
-                                        </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-linkedin-in"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-telegram"></i></a>
-                                        </li>
 
                                     </ul>
                                 </div>
