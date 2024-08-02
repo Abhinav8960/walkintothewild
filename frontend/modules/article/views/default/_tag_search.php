@@ -11,7 +11,7 @@ $tags = ArticleTag::find()->where(['status' => ArticleTag::STATUS_ACTIVE, 'artic
     <?php if ($tags) {
         foreach ($tags as $tag) {
     ?>
-            <a href="<?= Url::toRoute(['/article/default/tag', 'slug' => $tag->articletag->slug]) ?>" class="tags-button"><i class="fa-solid fa-tag pe-1"></i><?= $tag->articletag->title ?></a>
+            <a href="<?= Url::toRoute(['/article/default/tag', 'slug' => isset($tag->articletag) ? $tag->articletag->slug : ""]) ?>" class="tags-button"><i class="fa-solid fa-tag pe-1"></i><?= $tag->articletag->title ?></a>
     <?php }
     } ?>
 </div>

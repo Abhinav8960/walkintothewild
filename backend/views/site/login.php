@@ -16,7 +16,7 @@ $this->title = 'Login';
         <div class="col-lg-5">
             <div class="login_form_admin ">
                 <div class="topheadinglogin pb-4 text-center">
-                    <img src="/theme/img/logo_transparent.png">
+                    <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" class="logo">
                 </div>
                 <div class="row pt-5">
                     <div class="col-lg-12">
