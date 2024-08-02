@@ -6360,4 +6360,34 @@ color: #000000 !important;
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.legends{
 
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
+}
+
+.legends_bx p{
+
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 14px;
+}
+.closedbg{
+
+ 
+    background-color:#808080;
+
+}
+.Core-Open{
+
+ 
+    background-color:#127729;
+
+}
+.BufferZoneOpen{
+
+ 
+    background-color:#EABC74;
+
+}
