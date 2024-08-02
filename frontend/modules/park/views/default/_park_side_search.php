@@ -74,8 +74,8 @@ use yii\widgets\ActiveForm;
                 <button class="btn_apply">Apply</button>
             </div>
         </div>
-        <div class="searchwrap mb-3">
-            <div class="row align-items-center">
+        <div class="searchwrap mb-3 mt-5 ">
+            <div class="row align-items-center mt-2">
                 <div class="col-5">
                     <div class="title_filter">
                         <h6 class="mb-0">Sort By</h6>
@@ -85,9 +85,8 @@ use yii\widgets\ActiveForm;
                     <div class="input_check pb-0">
                         <select class="form-select " aria-label="Default select example">
                             <option selected>Relevant</option>
-                            <option value="1">January</option>
-                            <option value="2">Febraury</option>
-                            <option value="3">March</option>
+                            <option value="1">Most Demanding</option>
+                           
                         </select>
                     </div>
 

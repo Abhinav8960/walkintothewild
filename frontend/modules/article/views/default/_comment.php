@@ -19,7 +19,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
                     <img src="<?= $article_comment->user && $article_comment->user->avatar <> '' ? $article_comment->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                 </div>
                 <div class="text_com">
-                    <h6 class="nameavatr"><?= $article_comment->user->name ?></h6>
+                    <h6 class="nameavatr"><?= isset($article_comment->user) ? $article_comment->user->name : "" ?></h6>
                     <p><?= $article_comment->comment ?></p>
                 </div>
                 <div class="objec-flgs">

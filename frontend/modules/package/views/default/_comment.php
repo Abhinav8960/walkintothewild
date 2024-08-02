@@ -28,7 +28,7 @@ use yii\helpers\Url;
                             </div>
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center">
-                                    <h6 class="nameavatr"><?= $comments->user->name ?></h6>
+                                    <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?></h6>
                                 </div>
                                 <p><?= $comments->comment ?></p>
                                 <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
@@ -46,7 +46,7 @@ use yii\helpers\Url;
                                                     <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                                                 </div>
                                                 <div class="font-color">
-                                                    <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
+                                                    <span class="comment-author"><a href=""><?= isset($reply->user) ? $reply->user->name : '' ?></a></span>
                                                     <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>

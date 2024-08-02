@@ -30,7 +30,7 @@ $reviews = $ratingdataProvider->getModels();
                             <div class="text_com colors_p">
                                 <div class="providerNamerating ">
                                     <div class="googlerating names">
-                                        <h6 class="mb-0 fs-6 pb-0"><?= $review->user->name ?></h6>
+                                        <h6 class="mb-0 fs-6 pb-0"><?= isset($review->user) ? $review->user->name : '' ?></h6>
                                     </div>
                                     <div class="ratings colors">
                                         <p class="mb-0">

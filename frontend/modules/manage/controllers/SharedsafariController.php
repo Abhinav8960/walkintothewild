@@ -81,7 +81,7 @@ class SharedsafariController extends FrontendBaseController
                             }
                         }
                         \Yii::$app->session->setFlash('success', 'Fixed Departure Created Successfully');
-                        return $this->redirect(['index']);
+                        return $this->redirect(['update-fixed-departure', 'share_safari_id' => $model->shared_safari_departure_model->id]);
                     }
                 }
             }

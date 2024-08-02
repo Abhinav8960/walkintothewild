@@ -63,9 +63,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div> -->
             </div>
         </div>
-        <div class="top_mobilefilter d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
+        <div class="top_mobilefilter d-flex gap-2 d-lg-none justify-content-between align-items-center w-100 mb-4">
             <div class="left_text">
-                <p class="">There are currently <strong>0</strong> active shared safaris created by individuals</p>
+                <p class="mb-0">There are currently <strong>0</strong> active shared safaris created by individuals</p>
             </div>
             <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                 <div class="input_check pb-0">
@@ -155,7 +155,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <a href="/sharedsafari?ShareSafariSearch[park_id]=<?= $model->id ?>" class="parkrevieBtn ">View All</a>
                             </div>
                         </div>
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-xxl-4 ">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-xxl-4 ">
                             <?php foreach ($shared_safaries as $share_safari) { ?>
                                 <div class="col mb-xl-0 mb-3 ">
                                     <div class="sharesafri-card">
@@ -188,7 +188,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 </div>
                                             </div>
                                             <div class="footer_card row pb-2 px-2 align-items-center">
-                                                <div class="col-6">
+                                                <div class="col-5 col-lg-5 col-xxl-5">
                                                     <div class="users">
                                                         <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
                                                             $count = $share_safari->getIntrested()->count();
@@ -209,18 +209,18 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                         <?php } ?>
                                                     </div>
                                                 </div>
-                                                <div class="col-6">
+                                                <div class="col-7 col-lg-7 col-xxl-7">
                                                     <div class="safari text-center">
                                                         <div class="joinsafari">
                                                             <?php if (Yii::$app->user->identity) {
                                                                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                                 if ($share_safari_intrested) { ?>
-                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" data-method="POST">Leave Safari</a>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" data-method="POST" class="d-inline-block float-end">Leave Safari</a>
                                                                 <?php } else { ?>
-                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>" data-method="POST">Join Safari</a>
+                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>" data-method="POST" class="d-inline-block float-end">Join Safari</a>
                                                                 <?php  }
                                                             } else { ?>
-                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>" data-method="POST">Join Safari</a>
+                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>" data-method="POST" class="d-inline-block float-end">Join Safari</a>
                                                             <?php } ?>
                                                         </div>
                                                     </div>

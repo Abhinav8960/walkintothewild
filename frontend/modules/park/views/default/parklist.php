@@ -64,7 +64,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </section>
 <?php } ?>
-<section class="articals_wrapper py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
+<section class="articals_wrapper margin_bottomfooter mb-5 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
     <div class="container-fluid">
         <!-- <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
@@ -160,9 +160,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 
 
-<section class="safariduring_sesons innerpage pt-5 margin_bottomfooter mb-4">
+<!-- <section class="safariduring_sesons innerpage pt-5 mb-4">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
+</section> -->
 
 
 <?php

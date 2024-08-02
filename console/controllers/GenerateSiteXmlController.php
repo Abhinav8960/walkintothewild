@@ -53,6 +53,29 @@ class GenerateSiteXmlController extends Controller
      *
      * @return string
      */
+
+    public function actionOtherXml()
+    {
+        $start = microtime(true);
+
+        $backend_actual_url = Yii::$app->params['datapath'] . "sitemap/";
+        if (!file_exists($backend_actual_url)) {
+            mkdir($backend_actual_url);
+            chmod($backend_actual_url, 0777);
+        }
+        $additional_sitemap[] = $this->static_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_monthly_package_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_animal_search_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_article_category_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_shared_safari_site_pages($backend_actual_url);
+        $additional_sitemap[] = $this->get_author_site_pages($backend_actual_url);
+
+        $end = microtime(true);
+        $executionTime = $end - $start;
+        echo "Script execution time: " . $executionTime . " seconds";
+    }
+
     public function actionIndex()
     {
         $start = microtime(true);
@@ -65,12 +88,8 @@ class GenerateSiteXmlController extends Controller
 
         //get article site pages
         $additional_sitemap = [];
-        $additional_sitemap[] = $this->static_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_park_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_site_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_article_category_site_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_shared_safari_site_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_author_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_article_tags_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_package_site_pages($backend_actual_url);
         $additional_sitemap[] = $this->get_rared_animal_site_pages($backend_actual_url);
@@ -81,10 +100,8 @@ class GenerateSiteXmlController extends Controller
                 $additional_sitemap[] = $temp_url;
             }
         }
-        $additional_sitemap[] = $this->get_monthly_package_site_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_monthly_shared_safari_site_pages($backend_actual_url);
-        $additional_sitemap[] = $this->get_animal_search_site_pages($backend_actual_url);
 
+        /*
         //create site_index file
         $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
         $xml_content .= "<sitemapindex xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
@@ -104,6 +121,7 @@ class GenerateSiteXmlController extends Controller
         fclose($fh);
         //chmod($fh, 0777);
 
+        /*
         //create robots.txt to make entry of sitemap_icdndex.xml
         $content = "Sitemap: " . Yii::$app->params['frontend_url'] . "storage/sitemap/sitemap.xml";
         $all_url = SiteRobots::find()->where(['status' => true])->all();
@@ -119,6 +137,7 @@ class GenerateSiteXmlController extends Controller
         $fp = fopen($robots_actual_url . "/robots.txt", "w");
         fwrite($fp, $content);
         fclose($fp);
+        */
 
         //echo "complete sitemap createion";
         $end = microtime(true);

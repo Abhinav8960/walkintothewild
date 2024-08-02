@@ -23,12 +23,9 @@ $vehicleoption = GeneralModel::vehicleoption();
 
 <div class="row gx-0 justify-content-center d-md-flex d-none desktop_search" id="desktop_search">
     <div class="close_button" id="desktop_close_button"><i class="fa-solid fa-xmark"></i></div>
-    <div class=" col-xl-9 planSearch_box">
-        <div class="select_searcjBox d-md-flex flex-wrap align-items-center gap-1 w-100">
-           
-          
-          
-        <div class="select_boxes position-relative">
+    <div class=" col-xl-10 col-xxl-9 planSearch_box">
+        <div class="select_searcjBox d-sm-flex flex-wrap align-items-center gap-1 w-100">
+            <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
                         <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Safari Park' ?>
@@ -64,10 +61,10 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Any / All' ?>
+                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Select Region' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
+                        <div class="dropdown-item" data-value="">Any \ All</div>
                         <?php foreach ($locationoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
                         <?php endforeach; ?>
@@ -94,7 +91,7 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?>
+                        <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <div class="dropdown-item" data-value="">Any / All</div>
@@ -123,7 +120,7 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Any / All' ?>
+                        <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <div class="dropdown-item" data-value="">Any / All</div>
@@ -148,6 +145,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
 
             </div>
+        
         </div>
     </div>
     <div class=" col-xl-1">
@@ -168,19 +166,19 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
             </div>
             <div class="select_boxes">
-                <h6 class="fs-5"> <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'All India' ?></h6>
+                <h6 class="fs-5">  <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Safari Park' ?></h6>
             </div>
             <i class="fa-solid fa-chevron-right"></i>
             <div class="select_boxes">
-                <h6 class="fs-5"> <?= isset($safarisessionoption[$model->session_id]) ? $safarisessionoption[$model->session_id] : 'Any / All' ?></h6>
+                <h6 class="fs-5"><?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Select Region' ?></h6>
             </div>
             <i class="fa-solid fa-chevron-right"></i>
             <div class="select_boxes">
-                <h6 class="fs-5"><?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Any / All' ?></h6>
+                <h6 class="fs-5"> <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?></h6>
             </div>
             <i class="fa-solid fa-chevron-right"></i>
             <div class="select_boxes">
-                <h6 class="fs-5"><?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Any / All' ?></h6>
+                <h6 class="fs-5"> <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?></h6>
             </div>
         </div>
     </div>
