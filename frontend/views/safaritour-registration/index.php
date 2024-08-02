@@ -268,7 +268,7 @@ $this->params['title'] = $this->title;
                     <div class="col-sm-10">
                         <div class="term-condition text-center">
                             <p class="mb-0 d-flex justify-content-center align-items-center">
-                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <button value="" class="termBtn" data-bs-toggle="modal" data-bs-target="#modalsafritermsForm">terms and conditions.</button>'); ?>
+                                <?= $form->field($model, 'is_agree')->checkbox(['class' => 'me-2 checkbox_design'])->label('I agree to the <a  class="termBtn" data-bs-toggle="modal" data-bs-target="#modalsafritermsForm">terms and conditions.</a>'); ?>
                             </p>
                         </div>
                     </div>
@@ -470,7 +470,7 @@ $this->params['title'] = $this->title;
 <?php
 // Directly fetch the data from the model
 // Fetch the content based on the constant
-$content = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
+$content = ContentManagement::findOne(['id' => ContentManagement::CM_SAFARI_TERM_AND_CONDITION]);
 ?>?>
 
 <div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -484,16 +484,7 @@ $content = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CO
                     <div class="col-12">
                         <div class="content_terms">
                             <h5>Terms & Conditions</h5>
-                            <!-- Display the content -->
-                            <p><?= htmlspecialchars($content ? $content->content : 'No content available', ENT_QUOTES, 'UTF-8') ?></p>
-                            <!-- Display the ID of the matched content -->
-                            <?php if ($content) : ?>
-                                <p><strong>Content ID:</strong> <?= htmlspecialchars($content->id, ENT_QUOTES, 'UTF-8') ?></p>
-                            <?php endif; ?>
-                            <div class="termsagree">
-                                <input type="checkbox" class="agreeterms" id="agree">
-                                <label for="agree">I agree to this <strong>terms & conditions</strong></label>
-                            </div>
+                            <p><?= htmlspecialchars(strip_tags($content ? $content->content : 'No content available'), ENT_QUOTES, 'UTF-8') ?></p>
                         </div>
 
                     </div>
