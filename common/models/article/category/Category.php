@@ -3,6 +3,7 @@
 namespace common\models\article\category;
 
 use common\models\article\Article;
+use common\traits\CommanRelationship;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 
@@ -19,6 +20,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class Category extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
 
     /**
      * {@inheritdoc}

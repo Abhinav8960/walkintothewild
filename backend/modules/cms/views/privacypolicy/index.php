@@ -51,7 +51,7 @@ $this->params['buttons'][] = Html::a('Set Sequence', ['#'], ['class' => 'btn btn
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -60,7 +60,7 @@ $this->params['buttons'][] = Html::a('Set Sequence', ['#'], ['class' => 'btn btn
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {

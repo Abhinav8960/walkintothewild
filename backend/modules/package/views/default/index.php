@@ -29,12 +29,23 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'class' => 'yii\grid\SerialColumn',
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
+                    // [
+                    //     'label' => 'Package Name',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->package_name;
+                    //     }
+                    // ],
                     [
                         'label' => 'Package Name',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->package_name;
+                            return Html::a($model->package_name, ['/package/profile/index', 'package_id' => $model->id], [
+                                'style' => 'color: black !important;',
+                                'title' => 'View',
+                            ]);
                         }
                     ],
                     [
@@ -100,7 +111,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -109,17 +120,18 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                        // 'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['/package/profile/index', 'package_id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            //     ', ['/package/profile/index', 'package_id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'View',
 
-                                ]);
-                            },
+                            //     ]);
+                            // },
                             'delete' => function ($url, $model) {
                                 if ($model->status != -1) {
                                 } else {

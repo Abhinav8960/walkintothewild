@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use common\models\cms\contentmanagement\ContentManagement;
 use yii\helpers\Html;
 
@@ -14,20 +15,27 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class="container-fluid">
         <div class="row justify-content-between border_bottom px-lg-5">
             <div class="col-lg-5">
-                <div class="footer_text">
-                    <div class="heading-footer">
-                        <h6>ABOUT US </h6>
-                    </div>
-                    <div class="footerContent">
-                        <?php
-                        $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT]);
-                        ?>
-                        <div class="content_terms" style="word-break: break-word;">
-                            <?= $content ? Html::decode($content->content) : '<p>No content available</p>' ?>
+                <?php
+                // Directly fetch the data from the model
+                $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT]);
+
+                // Check if the content exists and its status is 1
+                $showFooterContent = $content && $content->status == \common\interfaces\StatusInterface::STATUS_ACTIVE;
+                ?>
+
+                <?php if ($showFooterContent) : ?>
+                    <div class="footer_text">
+                        <div class="heading-footer">
+                            <h6>ABOUT US</h6>
+                        </div>
+                        <div class="footerContent">
+                            <div class="content_terms" style="word-break: break-word;">
+                                <?= $content ? Html::decode($content->content) : '<p>No content available</p>' ?>
+                            </div>
                         </div>
                     </div>
+                <?php endif; ?>
 
-                </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer_text float-lg-end">

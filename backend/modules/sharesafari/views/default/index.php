@@ -38,7 +38,10 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->park->title) ? $model->park->title : '';
+                            return isset($model->park->title) ? Html::a($model->park->title, ['view', 'id' => $model->id], [
+                                'style' => 'color: black !important;',
+                                'title' => 'View',
+                            ]) : '';
                         }
                     ],
                     [
@@ -83,7 +86,7 @@ if (Yii::$app->user->identity) {
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -92,17 +95,18 @@ if (Yii::$app->user->identity) {
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '',
+                        // 'template' => '{view}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                            ', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'view',
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            // ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'view',
 
-                                ]);
-                            },
+                            //     ]);
+                            // },
 
                         ]
                     ],

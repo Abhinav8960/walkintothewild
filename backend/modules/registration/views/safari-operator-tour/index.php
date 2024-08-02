@@ -25,13 +25,25 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    // [
+                    //     'label' => 'Business Name',
+                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->business_name;
+                    //     }
+                    // ],
+
                     [
-                        'label' => 'Business Name',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'attribute' => 'business_name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->business_name;
-                        }
+                            return Html::a($model->business_name, ['view', 'id' => $model->id], [
+                                'style' => 'color: black !important;',
+                                'title' => 'View',
+                            ]);
+                        },
+                        'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
                     ],
                     [
                         'label' => 'Registered Name',
@@ -80,9 +92,9 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         // 'template' => '{update}&nbsp;&nbsp;{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
-                        'template' => '{update}&nbsp;&nbsp;{view}',
+                        'template' => '{update}&nbsp;',
                         'buttons' => [
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
@@ -92,14 +104,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
 
                                 ]);
                             },
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'View',
 
-                                ]);
-                            },
+                            //     ]);
+                            // },
                             // 'delete' => function ($url, $model) {
                             //     if ($model->status == 2) {
                             //         return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [

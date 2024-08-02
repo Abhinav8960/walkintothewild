@@ -20,7 +20,37 @@ $this->params['title'] = $this->title;
         <img src="<?= $this->params['baseurl'] ?>/img/spalsemobile.png" class="d-block w-100 " alt="banner">
     </picture> -->
 
-</div>
+</section>
+<section class="terms_wrapper">
+    <div class="container-lg">
+        <?php
+        // Directly fetch the data from the model
+        $content = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
+
+        // Check if the content exists and its status is 1
+        $showContent = $content && $content->status == \common\interfaces\StatusInterface::STATUS_ACTIVE;
+        ?>
+
+        <?php if ($showContent) : ?>
+            <div class="row pb-5 mb-5">
+                <div class="col-12">
+                    <div class="title_terms">
+                        <h2>Terms of Use</h2>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="terms_details">
+                        <div class="content_terms">
+                            <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>
+                            <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+
+    </div>
+</section>
 <?php
 if (isset($key) && !empty($key)) {
 ?>

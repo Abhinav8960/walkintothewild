@@ -27,10 +27,16 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+                    [
+                        'class' => 'yii\grid\SerialColumn',
+                        'contentOptions' => ['style' => 'width: 1%; text-align: center;'],
+
+
+                    ],
+
                     [
                         'label' => 'Title',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 50%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->title;
@@ -38,7 +44,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                     ],
                     [
                         'label' => 'Slug',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->slug;
@@ -46,7 +52,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -55,7 +61,7 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 25%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {

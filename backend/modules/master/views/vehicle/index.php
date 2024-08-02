@@ -34,7 +34,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'attribute' => 'icon',
                         'format' => 'html',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'label' => 'Icon',
                         'value' => function ($model) {
                             return Html::img($model->Imagepath, ['alt' => 'Vehicle Photograph', 'style' => 'max-width:60px;']);
@@ -45,7 +45,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -54,7 +54,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             'update' => function ($url, $model) {
