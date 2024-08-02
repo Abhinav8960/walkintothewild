@@ -16,7 +16,8 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user;
-
+    public $action_url;
+    public $action_validate_url;
 
     /**
      * {@inheritdoc}

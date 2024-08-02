@@ -123,7 +123,7 @@ class AuthHandler
                     $temp_auth->redirect_to = $this->redirect_url;
                     $temp_auth->save(false);
 
-                    return Yii::$app->response->redirect(['/termsandcondition/confirmation/' . $temp_key,]);
+                    return Yii::$app->response->redirect(['/site/signinagree/' . $temp_key,]);
                     exit();
                     /*
                     //                    die('333333');

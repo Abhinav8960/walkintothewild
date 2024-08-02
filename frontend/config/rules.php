@@ -132,6 +132,5 @@ return [
 
     // Chat Routes
     '/chat/message/<user_handle>' => '/chat/default/message',
-    '/termsandcondition/confirmation/<key>' => '/termsandcondition/confirmation',
-
+    '/site/signinagree/<key>' => '/site/signinagree',
 ];

@@ -19,6 +19,12 @@ use common\models\trierror\form\ErrorLogForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
 use common\models\trierror\form\FrontendErrorLogForm;
+use common\models\Auth;
+use common\models\User;
+use yii\authclient\ClientInterface;
+use yii\helpers\ArrayHelper;
+use common\models\PreAuth;
+use frontend\models\AuthTemp;
 
 /**
  * Site controller
@@ -150,6 +156,110 @@ class SiteController extends FrontendBaseController
      *
      * @return mixed
      */
+    public function actionSigninagree($key)
+    {
+        $model = AuthTemp::find()->where(['rand_key' => $key])->one();
+        if (empty($model)) {
+            return Yii::$app->response->redirect('/');
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            $data = Yii::$app->request->post('AuthTemp');
+
+            $password = Yii::$app->security->generateRandomString(6);
+            $user = new User([
+                'name' => $model->name,
+                'username' => $model->username,
+                'gmail' => $model->gmail,
+                'email' => $model->email,
+                'google_source_id' => $model->source_id,
+                'avatar' => $model->avatar,
+                'password' => $password,
+                'status' => User::STATUS_ACTIVE // make sure you set status properly
+            ]);
+            $user->generateAuthKey();
+            //$user->generatePasswordResetToken();
+
+            $transaction = User::getDb()->beginTransaction();
+
+            if ($user->save()) {
+                $auth = new Auth([
+                    'user_id' => $user->id,
+                    'source' => $model->source,
+                    'source_id' => $model->source_id,
+                ]);
+                if ($auth->save()) {
+                    $transaction->commit();
+                    $this->loginUser($user);
+                    return Yii::$app->response->redirect($model->redirect_to);
+                } else {
+                    Yii::$app->getSession()->setFlash('error', [
+                        Yii::t('app', 'Unable to save {client} account: {errors}', [
+                            'client' => $this->client->getTitle(),
+                            'errors' => json_encode($auth->getErrors()),
+                        ]),
+                    ]);
+                }
+            } else {
+                Yii::$app->getSession()->setFlash('error', [
+                    Yii::t('app', 'Unable to save user: {errors}', [
+                        'client' => $this->client->getTitle(),
+                        'errors' => json_encode($user->getErrors()),
+                    ]),
+                ]);
+            }
+        }
+
+        return $this->render(
+            'signinagree',
+            [
+                'model' => $model,
+                'key' => $key
+            ]
+        );
+    }
+
+    public function actionSignin()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect('/park');
+        }
+
+        $model = new LoginForm();
+        $model->action_url = '/site/signin';
+        $model->action_validate_url = '/site/signinvalidate';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    if ($model->login()) {
+                        return $this->redirect('/park');
+                    }
+                }
+            }
+        } else {
+            $model->password = '';
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('signin', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('signin', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionSigninvalidate()
+    {
+        $model = new LoginForm();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+    }
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -283,5 +393,11 @@ class SiteController extends FrontendBaseController
                 'exception' => $exception
             ]
         );
+    }
+
+    private function loginUser($user)
+    {
+        //$this->updateUserInfo($user);
+        Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
     }
 }
