@@ -94,7 +94,7 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                                 ]);
                             } else {
                                 return Html::a('<i class="fa fa-toggle-off"></i>', ['/user/default/block', 'id' => $model->id], [
-                                    'class' => 'btn btn-xs btn-danger',
+                                    'class' => 'btn btn-xs btn-warning',
                                     'data-method' => 'post',
                                     'data-confirm' => 'Are you sure to block this user?',
                                     'title' => 'Block User', 'data-bs-toggle' => "tooltip"
@@ -104,6 +104,21 @@ if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator == 1
                         'format' => 'raw',
                         'headerOptions' => ['style' => 'width:5%;'],
                         'contentOptions' => ['style' => 'width:5%;'],
+                    ],
+                    [
+                        'label' => 'Delete',
+                        'value' => function ($model) {
+                            return Html::a('<i class="fa fa-user-times"></i>', ['delete', 'id' => $model->id], [
+                                'class' => 'btn btn-xs btn-danger',
+                                'data-method' => 'post',
+                                'data-confirm' => 'Are you sure to delete this user?',
+                                'title' => 'Delete User', 'data-bs-toggle' => "tooltip"
+                            ]);
+                        },
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'width:5%;'],
+                        'contentOptions' => ['style' => 'width:5%;'],
+                        'visible' => $isvisible,
                     ],
                 ],
             ]); ?>

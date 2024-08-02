@@ -11,6 +11,7 @@ class SafariParkReviewForm extends \yii\base\Model
     public $rating_model;
     public $safari_park_id;
     public $rating;
+    public $status;
     public $review;
     public $action_url;
     public $action_validate_url;
@@ -34,7 +35,7 @@ class SafariParkReviewForm extends \yii\base\Model
     {
         return [
             [['safari_park_id', 'rating', 'review',], 'required'],
-            [['safari_park_id', 'rating'], 'integer'],
+            [['safari_park_id', 'rating', 'status'], 'integer'],
             ['review', 'string', 'max' => 255],
         ];
     }
@@ -53,6 +54,7 @@ class SafariParkReviewForm extends \yii\base\Model
             'user_id' => 'User ID',
             'safari_park_id' => 'Park ID',
             'rating' => 'Rating',
+            'status' => 'Status',
         ];
     }
 
@@ -70,6 +72,7 @@ class SafariParkReviewForm extends \yii\base\Model
         $this->rating_model->safari_park_id = $this->safari_park_id;
         $this->rating_model->rating = $this->rating;
         $this->rating_model->review = $this->review;
+        $this->rating_model->status = $this->status;
 
         $this->rating_model->user_ip_address = Yii::$app->getRequest()->getUserIp();
         $this->rating_model->user_agent =  Yii::$app->request->userAgent;
@@ -78,7 +81,6 @@ class SafariParkReviewForm extends \yii\base\Model
         $this->rating_model->user_platform_version = $agent->version($this->rating_model->user_platform);
         $this->rating_model->user_browser = $agent->browser();
         $this->rating_model->user_browser_version = $agent->version($this->rating_model->user_browser);
-        $this->rating_model->status = 1;
     }
 
     /**

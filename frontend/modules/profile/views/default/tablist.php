@@ -52,9 +52,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="follow_massage d-flex justify-content-center mt-4 gap-3 align-items-center">
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $user->id) {
                         if (UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id, 'status' => '1'])->one()) { ?>
-                            <a href="<?= Url::toRoute(['/profile/default/unfollow', 'id' =>  $user->id]) ?>" class="follow_btn">Unfollow</a>
+                            <a href="<?= Url::toRoute(['/profile/default/unfollow', 'id' =>  $user->id]) ?>" class="follow_btn" data-method="POST">Unfollow</a>
                         <?php } else { ?>
-                            <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="follow_btn ">Follow</a>
+                            <a href="<?= Url::toRoute(['/profile/default/follow', 'id' =>  $user->id]) ?>" class="follow_btn " data-method="POST">Follow</a>
                         <?php } ?>
                         <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="follow_massge">Message</a>
                     <?php } else { ?>

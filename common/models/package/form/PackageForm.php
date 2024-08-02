@@ -76,7 +76,7 @@ class PackageForm extends \yii\base\Model
             $this->owned_by_id = $this->package_model->owned_by_id;
             $this->package_name = $this->package_model->package_name;
             $this->package_image = $this->package_model->package_image;
-            $this->package_slug = $this->package_model->package_slug;
+            // $this->package_slug = $this->package_model->package_slug;
             $this->no_of_day = $this->package_model->no_of_day;
             $this->no_of_night = $this->package_model->no_of_night;
             $this->no_of_safari = $this->package_model->no_of_safari;
@@ -122,7 +122,7 @@ class PackageForm extends \yii\base\Model
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
-            [['package_name', 'package_slug', 'no_of_day'], 'required', 'on' => 'create'],
+            [['package_name', 'no_of_day'], 'required', 'on' => 'create'],
             [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price'], 'integer'],
@@ -150,7 +150,7 @@ class PackageForm extends \yii\base\Model
     {
         $scenarios = parent::scenarios();
         $scenarios['create'] = [
-            'package_name', 'package_image', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_safari',
+            'package_name', 'package_image', 'no_of_day', 'no_of_night', 'no_of_safari',
             'stay_category_id', 'status', 'cost_per_person', 'package_description',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
@@ -158,7 +158,7 @@ class PackageForm extends \yii\base\Model
             'type', 'gst_percentage', 'total_price'
         ];
         $scenarios['update'] = [
-            'package_name', 'package_image', 'package_slug', 'no_of_day', 'no_of_night', 'no_of_safari',
+            'package_name', 'package_image', 'no_of_day', 'no_of_night', 'no_of_safari',
             'stay_category_id', 'status', 'cost_per_person', 'package_description',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
@@ -215,7 +215,6 @@ class PackageForm extends \yii\base\Model
     {
         $this->package_model->owned_by_id = $this->owned_by_id;
         $this->package_model->package_name = $this->package_name;
-        $this->package_model->package_slug = $this->package_slug;
         $this->package_model->no_of_day = $this->no_of_day;
         if ($this->no_of_day) {
             $this->package_model->no_of_night = $this->no_of_day - 1;
@@ -248,6 +247,16 @@ class PackageForm extends \yii\base\Model
         }
 
         $this->package_model->status = $this->status;
+
+        $this->package_model->package_slug = $this->package_slug;
+
+        if ($this->package_model->package_slug == '') {
+            $without_space_string = str_replace(' ', '-', strtolower($this->package_model->safarioperator->business_name));
+            $package_name = str_replace(' ', '-', strtolower($this->package_model->package_name));
+            $string = preg_replace('/[^A-Za-z0-9\-]/', '', ($without_space_string . '-' . $package_name));
+            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->package_model->owned_by_id . time() . '-safari-package';
+            $this->package_model->package_slug = $slug;
+        }
     }
 
     /**

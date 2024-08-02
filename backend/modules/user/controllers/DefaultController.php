@@ -9,6 +9,7 @@ use yii\web\Controller;
 use common\models\UserSearch;
 use common\models\UserUpdateForm;
 use common\models\UserRegistrationForm;
+use common\models\Auth;
 
 /**
  * Default controller for the `user` module
@@ -116,6 +117,23 @@ class DefaultController extends Controller
                 \Yii::$app->getSession()->setFlash('success', 'User has been blocked');
             }
         }
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionDelete($id)
+    {
+        $user = $this->findModel($id);
+        $user->username = $user->username . rand();
+        $user->email = $user->email . rand();
+        $user->google_source_id = 0;
+        if ($user->save()) {
+            $isexist = Auth::find()->where(['user_id' => $id])->one();
+            if (!empty($isexist)) {
+                $isexist->delete();
+            }
+        }
+
+        \Yii::$app->getSession()->setFlash('success', 'User has been deleted');
         return $this->redirect(Yii::$app->request->referrer);
     }
 

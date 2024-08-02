@@ -5,35 +5,54 @@ namespace frontend\modules\sharedsafari\controllers;
 use Yii;
 use yii\helpers\Url;
 use yii\helpers\Json;
+use common\models\MailLog;
+use yii\filters\VerbFilter;
+use frontend\models\ReplyForm;
+use common\models\UserWishlist;
+use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
-use common\models\MailLog;
-use common\models\park\SafariPark;
 use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
-use common\models\sharesafari\ShareSafariComment;
-use common\models\sharesafari\ShareSafariCommentReport;
-use common\models\sharesafari\ShareSafariFaqSearch;
 use frontend\models\form\SharedSafariForm;
-use frontend\models\ShareSafariCommentForm;
-use frontend\controllers\FrontendBaseController;
-use common\models\sharesafari\ShareSafariIntrested;
-use common\models\sharesafari\ShareSafariParklist;
-use common\models\sharesafari\ShareSafariRequest;
-use common\models\sharesafari\ShareSafariRequestContact;
-use common\models\UserWishlist;
-use frontend\models\form\CreateDepartureForm;
-use frontend\models\form\SharedSafariRequestForm;
-use frontend\models\form\ShareSafariRequestContactForm;
-use frontend\models\ReplyForm;
-use frontend\models\ShareSafariCommentReportForm;
 use common\models\master\month\MasterMonth;
+use frontend\models\ShareSafariCommentForm;
+use frontend\models\form\CreateDepartureForm;
+use frontend\controllers\FrontendBaseController;
+use common\models\sharesafari\ShareSafariComment;
+use common\models\sharesafari\ShareSafariRequest;
+use frontend\models\form\SharedSafariRequestForm;
+use frontend\models\ShareSafariCommentReportForm;
+use common\models\sharesafari\ShareSafariParklist;
+use common\models\sharesafari\ShareSafariFaqSearch;
+use common\models\sharesafari\ShareSafariIntrested;
+use common\models\sharesafari\ShareSafariCommentReport;
+use frontend\models\form\ShareSafariRequestContactForm;
+use common\models\sharesafari\ShareSafariRequestContact;
 
 /**
  * DefaultController.
  */
 class DefaultController extends FrontendBaseController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'wishlist' => ['post'],
+                    'unwishlist' => ['post'],
+                    'join' => ['post'],
+                    'unjoin' => ['post'],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Renders the index view for the module
@@ -474,13 +493,6 @@ class DefaultController extends FrontendBaseController
         }
     }
 
-
-    /**
-     * Show Safari List by user or host
-     */
-    public function actionSafaribyuser($user_id)
-    {
-    }
 
     protected function findModel($slug)
     {

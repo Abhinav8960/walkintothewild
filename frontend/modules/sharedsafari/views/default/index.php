@@ -36,7 +36,7 @@ $recentposts = ArticleSearch::recentpost();
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1>Join or Organize a Sharing Safari ee</h1>
+                        <h1>Join or Organize a Sharing Safari </h1>
                         <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
                             Their Adventures</p> -->
                     </div>
@@ -274,12 +274,12 @@ $recentposts = ArticleSearch::recentpost();
                                                                     if (Yii::$app->user->identity) {
                                                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                                                         if ($share_safari_intrested) { ?>
-                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;">Leave Safari</a>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;" data-method="POST">Leave Safari</a>
                                                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>" data-method="POST">Join Safari</a>
                                                                         <?php  }
                                                                     } else { ?>
-                                                                        <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>">Join Safari</a>
+                                                                        <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>" data-method="POST">Join Safari</a>
                                                                 <?php }
                                                                 } ?>
                                                             </div>

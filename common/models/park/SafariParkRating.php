@@ -104,4 +104,9 @@ class SafariParkRating extends \yii\db\ActiveRecord implements \common\interface
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
+    }
 }

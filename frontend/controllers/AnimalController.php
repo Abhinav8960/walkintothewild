@@ -7,7 +7,7 @@ use common\models\master\animal\MasterAnimal;
 
 class AnimalController extends FrontendBaseController
 {
-  public function actionIndex($animal, $slug)
+  public function actionIndex($slug)
   {
     $animal = MasterAnimal::find()->where(['status' => true])->andWhere(['slug' => $slug])->one();
     if ($animal) {

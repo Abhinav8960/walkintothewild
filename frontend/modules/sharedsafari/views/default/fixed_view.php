@@ -66,9 +66,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
-                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
                                                 <?php } else { ?>
-                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
+                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
@@ -162,7 +162,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
-                        <div class="col-lg-7">
+                        <div class="col-lg-6">
                             <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-3">
@@ -187,11 +187,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 d-lg-block  mobile_didplay_block">
+                        <div class="col-lg-2">
+                            <div class="pakageCost">
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div class="pakageCost">
-                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
-                                </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
                                         <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
@@ -203,77 +205,81 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             ],
                                         ]) ?>
                                     <?php } ?>
+                                </div>
+                                <div class="right_button  mt-2">
+                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
+                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                            Safari</button>
+                                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
+                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                            Fixed Departure</button>
+                                    <?php } else if (!Yii::$app->user->identity) {  ?>
+                                        <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
+                                            Safari</a>
+                                    <?php } ?>
 
+
+                                </div>
+                                <div class="btns-safaries">
                                     <?php if ($share_safari->status == 2) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
                                         <?php } else {
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                             if ($share_safari_intrested) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>"> Leave Safari</a>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
                                             <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>">Join Safari</a>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
                                             <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
                                     <?php }
                                     } ?>
-                                    <div class="right_button  mt-2">
-                                        <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
-                                            <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                                Safari</button>
-                                        <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
-                                            <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                                Fixed Departure</button>
-                                        <?php } else if (!Yii::$app->user->identity) {  ?>
-                                            <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
-                                                Safari</a>
-                                        <?php } ?>
-
-
-                                    </div>
                                 </div>
 
+
                             </div>
 
                         </div>
+
                     </div>
-                    <div class="row">
-                        <div class="col-12 pt-4">
-                            <div class="text_safaripackage">
-                                <p><?= $share_safari->safari_plan ?></p>
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 pt-4">
+                        <div class="text_safaripackage">
+                            <p><?= $share_safari->safari_plan ?></p>
                         </div>
                     </div>
-                    <div class="row  mt-4 itenary_tabs">
-                        <div class="col-lg-12 col-xl-11 safartabs position-relative">
-                            <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">Discussion</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
-                                </li>
+                </div>
+                <div class="row  mt-4 itenary_tabs">
+                    <div class="col-lg-12 col-xl-11 safartabs position-relative">
+                        <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">Discussion</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
+                            </li>
 
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#getting-there" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">GETTING THERE</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
-                                </li>
-                            </ul>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#getting-there" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">GETTING THERE</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#policy" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false" tabindex="-1">POLICY INFO</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="faq-tab" data-bs-toggle="tab" data-bs-target="#faq-tab-pane" type="button" role="tab" aria-controls="faq-tab-pane" aria-selected="false" tabindex="-1">FAQ</button>
+                            </li>
+                        </ul>
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 

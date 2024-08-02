@@ -115,15 +115,10 @@ class PackageController extends FrontendBaseController
 
 
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('create', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+        return $this->render('create', [
+            'model' => $model,
+            'safari_operator' => $safari_operator,
+        ]);
     }
 
 

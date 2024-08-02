@@ -11,11 +11,11 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 <div class="container-fluid mt-5 ">
     <div class="row margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center">
-          <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
+            <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class="right_button float-md-end ">
-                <button class="btn_newsafari packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= Url::toRoute(['/manage/package/create']) ?>">+ Create New Package </button>
+                <a class="btn_newsafari btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" href="<?= Url::toRoute(['/manage/package/create']) ?>">+ Create New Package </a>
             </div>
-       
+
         </div>
         <div class="col-md-2">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>

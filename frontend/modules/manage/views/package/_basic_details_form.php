@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="card">
     <div class="card-body p-4 modal_form">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <?= $form->field($model, 'package_name', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
@@ -34,23 +34,13 @@ use yii\bootstrap5\ActiveForm;
                 ]) ?>
             </div>
 
-            <div class="col-md-3">
-                <?= $form->field($model, 'package_slug', [
-                    'labelOptions' => ['class' => 'Modal_label']
-                ])->textInput([
-                    'maxlength' => true,
-                    'placeholder' => 'Enter Slug',
-                    'readonly' => isset($model->package_model->id) ? true : false, // Make it readonly for existing records
-                    'id' => 'packageform-package_slug', // Add an ID for JavaScript targeting
-                ]) ?>
-            </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <?= $form->field($model, 'no_of_day', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Day/Night'])->label('Day/Night') ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <?= $form->field($model, 'no_of_safari', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
@@ -190,7 +180,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <?php
             if (!empty($model->package_model->id)) { ?>
-                <div class="col-md-12">
+                <div class="col-md-3">
                     <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
                 </div>
             <?php } ?>
@@ -198,7 +188,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="row">
             <div class="col-md-12">
                 <div class="creat-safri float-end w-auto">
-                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set ']) ?>
+                    <?= Html::submitButton('Update Package ', ['class' => 'safari_create font_set ']) ?>
                 </div>
             </div>
         </div>
@@ -244,32 +234,32 @@ $this->registerJs($gst_script);
 ?>
 
 <?php
-$script = <<< JS
-    $(function(){
-        // Function to generate slug from title
-        function slugify(text) {
-            return text.toString().toLowerCase()
-                .replace(/\s+/g, '-')           // Replace spaces with -
-                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                .replace(/^-+/, '')             // Trim - from start of text
-                .replace(/-+$/, '');            // Trim - from end of text
-        }
+// $script = <<< JS
+//     $(function(){
+//         // Function to generate slug from title
+//         function slugify(text) {
+//             return text.toString().toLowerCase()
+//                 .replace(/\s+/g, '-')           // Replace spaces with -
+//                 .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+//                 .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+//                 .replace(/^-+/, '')             // Trim - from start of text
+//                 .replace(/-+$/, '');            // Trim - from end of text
+//         }
 
-        // Handle title change to update slug
-        $('#packageform-package_name').on('input', function() {
-            var package_name = $(this).val();
-            var package_slug = slugify(package_name);
-            $('#packageform-package_slug').val(package_slug);
-        });
+//         // Handle title change to update slug
+//         $('#packageform-package_name').on('input', function() {
+//             var package_name = $(this).val();
+//             var package_slug = slugify(package_name);
+//             $('#packageform-package_slug').val(package_slug);
+//         });
 
-        // Initialize slug when editing existing record
-        if (!$('#packageform-slug').val() && $('#packageform-package_name').val()) {
-            var package_name = $('#packageform-package_name').val();
-            var package_slug = slugify(package_name);
-            $('#packageform-package_slug').val(package_slug);
-        }
-    });
-JS;
-$this->registerJs($script);
+//         // Initialize slug when editing existing record
+//         if (!$('#packageform-slug').val() && $('#packageform-package_name').val()) {
+//             var package_name = $('#packageform-package_name').val();
+//             var package_slug = slugify(package_name);
+//             $('#packageform-package_slug').val(package_slug);
+//         }
+//     });
+// JS;
+// $this->registerJs($script);
 ?>

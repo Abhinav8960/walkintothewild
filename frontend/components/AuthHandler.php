@@ -120,6 +120,7 @@ class AuthHandler
                     $temp_auth->source = $this->client->getId();
                     $temp_auth->source_id = (string)$id;
                     $temp_auth->avatar = $picture;
+                    $temp_auth->redirect_to = $this->redirect_url;
                     $temp_auth->save(false);
 
                     return Yii::$app->response->redirect(['/termsandcondition/confirmation/' . $temp_key,]);

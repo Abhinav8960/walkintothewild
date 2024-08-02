@@ -751,7 +751,7 @@ class GenerateSiteXmlController extends Controller
             $insert_package_site_pages = [];
             foreach ($animals as $animal) {
                 $animal_name = str_replace(" ", "+", $animal['name']);
-                $url = $base_url . "animal/" . $animal_name . "/" . $animal['slug'];
+                $url = $base_url . "animal/" . $animal['slug'];
                 $insert_package_site_pages[] = [
                     'content_id' => $animal['id'],
                     'content_type' => 'animal_parks',

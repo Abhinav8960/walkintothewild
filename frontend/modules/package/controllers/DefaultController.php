@@ -5,6 +5,7 @@ namespace frontend\modules\package\controllers;
 use Yii;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
+use yii\filters\VerbFilter;
 use common\models\UserWishlist;
 use common\models\package\Package;
 use yii\web\NotFoundHttpException;
@@ -13,22 +14,39 @@ use frontend\models\PackageReplyForm;
 use common\interfaces\StatusInterface;
 use frontend\models\PackageCommentForm;
 use common\models\package\PackageSearch;
+use common\models\package\PackageComment;
 use common\models\package\PackageFeature;
 use common\models\operator\SafariOperator;
+use common\models\master\month\MasterMonth;
 use common\models\package\form\PackageForm;
-use common\models\package\PackageComment;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
-use frontend\controllers\FrontendBaseController;
 use frontend\models\form\PackageEnquiryForm;
 use frontend\models\PackageCommentReportForm;
-use common\models\master\month\MasterMonth;
+use frontend\controllers\FrontendBaseController;
 
 /**
  * DefaultController.
  */
 class DefaultController extends FrontendBaseController
 {
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'wishlist' => ['post'],
+                    'unwishlist' => ['post'],
+                ],
+            ],
+        ];
+    }
+
 
     /**
      * Renders the index view for the module
