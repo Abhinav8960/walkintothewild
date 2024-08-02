@@ -25,12 +25,15 @@ $this->params['title'] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Business Name',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'attribute' => 'business_name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->business_name;
-                        }
+                            return Html::a($model->business_name, ['view', 'id' => $model->id], [
+                                'style' => 'color: black !important;',
+                                'title' => 'View',
+                            ]);
+                        },
+                        'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
                     ],
                     [
                         'label' => 'Registered Name',
@@ -92,16 +95,16 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp{update}&nbsp{suspend}',
+                        'template' => '&nbsp{update} &nbsp{suspend}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'View',
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'View',
 
-                                ]);
-                            },
+                            //     ]);
+                            // },
                             'update' => function ($url, $model) {
 
                                 return Html::a(

@@ -34,7 +34,14 @@ use yii\bootstrap5\ActiveForm;
 
         ]) ?>
     </div>
-    
+    <div class="col-md-6">
+        <?php if ($model->formModel->id) { ?>
+            <div class="col-md-6">
+                <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
+            </div>
+        <?php } ?>
+    </div>
+
 </div>
 
 

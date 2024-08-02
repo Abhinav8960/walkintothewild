@@ -62,7 +62,7 @@ $this->params['title'] = $this->title;
                     ],
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 7%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -89,7 +89,7 @@ $this->params['title'] = $this->title;
                         },
                         'format' => 'raw',
                         'headerOptions' => ['style' => 'width:5%;'],
-                        'contentOptions' => ['style' => 'width:5%;'],
+                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
                     ],
                 ],
             ]); ?>

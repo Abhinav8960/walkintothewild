@@ -145,12 +145,35 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <?php } ?>
                 </ul>
                 <div class="sharerbtn">
-                    <a href="" class="follow_massge rounded-2 text-capitalize"><i class="fa-solid fa-share"></i> Share Profile</a>
+                    <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn mb-2"><i class="fa-solid fa-share"></i> Share Profile</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade _standard-text" id="share-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Link</h1>
+
+            </div>
+            <div class="modal-body p-3">
+                <div id='modalContent'>
+                    <ul>
+                        <?= \frontend\widgets\ShareButton::widget([
+                            'style' => 'horizontal',
+                            'networks' => ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'telegram', 'clipboard'],
+                        ]); ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <style>
     .mt-n5 {
@@ -161,6 +184,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
         background-image: linear-gradient(#09422dfc, #f9d600);
     } */
 </style>
+
+<?php
+$script = <<< JS
+function popUpfunction() {
+	$('.shareBtn').on('click', function () {
+        $('#share-modal').modal('show')
+		.find('#modalContent');
+	});
+}
+popUpfunction();
+             
+JS;
+$this->registerJs($script);
+?>
 
 <?php
 $script = <<<JS

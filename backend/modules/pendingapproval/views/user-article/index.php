@@ -29,7 +29,17 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\SerialColumn',
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
-                    'title',
+                    [
+                        'attribute' => 'title',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return Html::a($model->title, ['view', 'id' => $model->id], [
+                                'style' => 'color: black !important;',
+                                'title' => 'View',
+                            ]);
+                        },
+                        'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
+                    ],
                     'author_name',
                     [
                         'label' => 'Date',
@@ -72,7 +82,7 @@ $this->params['title'] = $this->title;
                     'is_approved:boolean',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -82,17 +92,18 @@ $this->params['title'] = $this->title;
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '',
+                        // 'template' => '{view}&nbsp',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'view',
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'view',
 
-                                ]);
-                            },
+                            //     ]);
+                            // },
                         ]
                     ],
                 ],

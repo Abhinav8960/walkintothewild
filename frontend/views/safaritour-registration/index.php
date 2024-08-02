@@ -469,34 +469,38 @@ $this->params['title'] = $this->title;
 
 <?php
 // Directly fetch the data from the model
-// Fetch the content based on the constant
 $content = ContentManagement::findOne(['id' => ContentManagement::CM_SAFARI_TERM_AND_CONDITION]);
-?>?>
 
-<div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & conditions</h1>
-            </div>
-            <div class="modal-body px-3">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="content_terms">
-                            <h5>Terms & Conditions</h5>
-                            <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>
+// Check if the content exists and its status is 1
+$showModal = $content && $content->status == \common\interfaces\StatusInterface::STATUS_ACTIVE;
+?>
+
+<?php if ($showModal) : ?>
+    <div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & conditions</h1>
+                </div>
+                <div class="modal-body px-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="content_terms">
+                                <h5>Terms & Conditions</h5>
+                                <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <a href="" class="backtohome">Back to Home</a>
-                <button type="button" class="btns_submit">Agree</button>
+                <div class="modal-footer">
+                    <a href="" class="backtohome">Back to Home</a>
+                    <button type="button" class="btns_submit">Agree</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+<?php endif; ?>
+
 <?php
 $script = <<< JS
 function termfunction() {

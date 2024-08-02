@@ -37,13 +37,25 @@ $this->params['title'] = $this->title;
                 'dataProvider' => $dataProvider,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
+                    // [
+                    //     'label' => 'Article Source',
+                    //     'contentOptions' => ['style' => 'width: 30%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->article_source;
+                    //     }
+                    // ],
+
                     [
-                        'label' => 'Article Source',
-                        'contentOptions' => ['style' => 'width: 30%;'],
+                        'attribute' => 'article_source',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->article_source;
-                        }
+                            return Html::a($model->article_source, ['view', 'id' => $model->id], [
+                                'style' => 'color: black !important;',
+                                'title' => 'View',
+                            ]);
+                        },
+                        'contentOptions' => ['style' => 'width: 30%; text-align: left;'],
                     ],
 
                     [
@@ -88,30 +100,25 @@ $this->params['title'] = $this->title;
 
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->status == 1) {
-                                return 'Active';
-                            } elseif ($model->status == 2) {
-                                return 'Suspended';
-                            }
-                            return '';
+                            return $model->statuslabel;
                         }
                     ],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '&nbsp;{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
-                            'view' => function ($url, $model) {
-                                return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
-                                ', ['view', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'name' => 'View',
-                                ]);
-                            },
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'name' => 'View',
+                            //     ]);
+                            // },
                             'update' => function ($url, $model) {
                                 return  Html::a('<img src="/img/update.png" alt="" width="25" height="25">
                                 ', ['update', 'id' => $model->id], [

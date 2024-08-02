@@ -2,7 +2,7 @@
 
 namespace common\models\article\frequency;
 
-
+use common\traits\CommanRelationship;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 
@@ -19,6 +19,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Frequency extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
+    use CommanRelationship;
+
 
     /**
      * {@inheritdoc}

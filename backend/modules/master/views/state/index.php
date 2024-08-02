@@ -44,7 +44,7 @@ $this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['cl
                     'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
@@ -53,7 +53,7 @@ $this->params['buttons'][] = Html::a('Upload State CSV', ['statefromfile'], ['cl
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '{update}&nbsp;&nbsp;{delete}',
                         'buttons' => [
                             // 'view' => function ($url, $model) {

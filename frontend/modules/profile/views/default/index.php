@@ -73,7 +73,7 @@ $this->params['title'] = $this->title;
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h6 class="fs-6 fw-bold" style="padding-bottom: 0 !important;">Share Safari Experience</h6>
+                                            <h6 class="fs-6 fw-bold" style="padding-bottom: 0 !important;">Park Visited</h6>
                                             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
                                                 <button class="follow_btn photoBtn text-center mt-sm-0 " value="<?= Url::toRoute(['/profile/user-experience']) ?>">+ Add Experience</button>
                                             <?php } ?>
@@ -227,7 +227,7 @@ $this->params['title'] = $this->title;
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add a New Experience</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Feature Your Visited Parks</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body p-3">

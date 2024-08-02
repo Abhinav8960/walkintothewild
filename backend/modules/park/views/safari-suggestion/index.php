@@ -27,7 +27,7 @@ $this->params['title'] = $this->title;
                     ['class' => 'yii\grid\SerialColumn'],
                     [
                         'label' => 'Safari Park',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return isset($model->park_id) ? GeneralModel::safariparkoption()[$model->park_id] : '';
@@ -50,11 +50,18 @@ $this->params['title'] = $this->title;
                             return isset($model->you_are_id) ? GeneralModel::operatorcategory()[$model->you_are_id] : '';
                         }
                     ],
-                    'details',
+                    [
+                        'label' => 'Details',
+                        'contentOptions' => ['style' => 'width: 40%;'],  // Adjust width here
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->details;
+                        }
+                    ],
                     'created_at:dateTime:Created at',
                     [
                         'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->statuslabel;
