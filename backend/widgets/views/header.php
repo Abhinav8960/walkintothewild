@@ -1,3 +1,8 @@
+<?php
+if (isset(Yii::$app->user->identity->can_login) && !\Yii::$app->user->identity->can_login) {
+	\Yii::$app->user->logout();
+	\Yii::$app->response->redirect(\Yii::$app->getHomeUrl());
+} ?>
 <!-- main-header -->
 <div class="main-header side-header sticky nav nav-item" style="background: #09422D !important;color:#fff !important;">
 	<div class=" main-container container-fluid">
