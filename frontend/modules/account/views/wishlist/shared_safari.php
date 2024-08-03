@@ -127,7 +127,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 </div>
                                         <?php }
                                         } else {
-                                            echo 'No Shared Safari found in wishlist';
+                                            echo '<p class="px-4">No Shared Safari found in wishlist</p>';
                                         } ?>
                                     </div>
                                 </div>
