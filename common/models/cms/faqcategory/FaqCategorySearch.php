@@ -4,9 +4,9 @@ namespace common\models\cms\faqcategory;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\cms\faqcategory\Faq;
+use common\models\cms\faqcategory\FaqCategory;
 
-class FaqSearch extends Model
+class FaqCategorySearch extends FaqCategory
 {
     public $id;
     public $name;
@@ -33,7 +33,7 @@ class FaqSearch extends Model
      */
     public function search($params)
     {
-        $query = Faq::find()->where(['status' => [1, 2]]);
+        $query = FaqCategory::find()->where(['status' => [1, 2]]);
 
         // Add conditions that should always apply here
 

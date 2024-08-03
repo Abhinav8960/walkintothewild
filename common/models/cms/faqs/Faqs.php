@@ -69,6 +69,6 @@ class Faqs extends \yii\db\ActiveRecord implements \common\interfaces\StatusInte
 
     public function getCategory()
     {
-        return $this->hasOne(\common\models\cms\faqcategory\Faq::className(), ['id' => 'category_id']);
+        return $this->hasOne(\common\models\cms\faqcategory\FaqCategory::className(), ['id' => 'category_id']);
     }
 }

@@ -50,7 +50,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <li><a href="/article">Articles and Tips</a></li>
                             <li><a href="/contact">Contact Us</a></li>
                             <li><a href="#" style="cursor: default;">About us</a></li>
-                            <li><a href="#" style="cursor: default;">FAQs</a></li>
+                            <li><a href="/faq" style="cursor: default;">FAQs</a></li>
                         </ul>
                     </div>
                 </div>

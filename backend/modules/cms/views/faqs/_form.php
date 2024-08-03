@@ -13,13 +13,13 @@ use yii\bootstrap5\ActiveForm;
 <h5>FAQ</h5>
 
 <div class="col-md-6">
-        <?= $form->field($model, 'category_id', ['inputOptions' => ['id' => 'title']])->dropDownList(
-            GeneralModel::faqoption(),
-            [
-                'prompt' => 'Select Category',                
-            ]
-        ); ?>
-    </div>
+    <?= $form->field($model, 'category_id', ['inputOptions' => ['id' => 'title']])->dropDownList(
+        GeneralModel::faqcategoryoption(),
+        [
+            'prompt' => 'Select Category',
+        ]
+    ); ?>
+</div>
 
 <div class="col-md-12">
     <?= $form->field($model, 'question')->widget(CKEditor::className(), [

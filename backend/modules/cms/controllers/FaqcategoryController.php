@@ -2,20 +2,20 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\interfaces\StatusInterface;
-use common\models\cms\faqcategory\form\FaqForm;
-use common\models\cms\faqcategory\Faq;
-use common\models\cms\faqcategory\FaqSearch;
-
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+
+use common\interfaces\StatusInterface;
+use common\models\cms\faqcategory\FaqCategory;
+use common\models\cms\faqcategory\FaqCategorySearch;
+use common\models\cms\faqcategory\form\FaqCategoryForm;
 
 class FaqcategoryController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new FaqSearch();
+        $searchModel = new FaqCategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -26,7 +26,7 @@ class FaqcategoryController extends Controller
 
     public function actionCreate()
     {
-        $model = new FaqForm();
+        $model = new FaqCategoryForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
@@ -52,7 +52,7 @@ class FaqcategoryController extends Controller
     public function actionUpdate($id)
     {
         $faq_model = $this->findModel($id);
-        $model = new FaqForm($faq_model);
+        $model = new FaqCategoryForm($faq_model);
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -96,7 +96,7 @@ class FaqcategoryController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Faq::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = FaqCategory::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

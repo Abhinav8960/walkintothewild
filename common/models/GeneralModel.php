@@ -11,7 +11,7 @@ use common\models\cms\article\ArticleAuthor;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\MasterArticleTag;
 use common\models\cms\article\MasterArticleTopic;
-use common\models\cms\faqcategory\Faq;
+use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\flagreason\Flagreason;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
@@ -401,9 +401,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterCity::find()->where(['state_id' => $master_state_id, 'status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
     }
 
-    public static function faqoption()
+    public static function faqcategoryoption()
     {
-        return ArrayHelper::map(Faq::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(FaqCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
 
