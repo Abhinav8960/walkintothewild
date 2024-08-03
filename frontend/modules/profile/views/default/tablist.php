@@ -97,6 +97,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <li><a href="<?= $user->website_url; ?>" target="_blank" class="iconSize"><i class="fa-solid fa-globe"></i></a>
                                     </li>
                                 <?php } ?>
+                                <?php if ($user->youtube_url) { ?>
+                                    <li><a href="<?= $user->youtube_url; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-youtube"></i></a>
+                                    </li>
+                                <?php } ?>
 
                             </ul>
                         </div>

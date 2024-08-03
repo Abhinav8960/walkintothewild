@@ -42,18 +42,6 @@ use yii\helpers\Url;
 
                     <div class="row p-3 shadow-sm  bg-white rounded mb-3">
                         <div class="col-md-12">
-                            <h6>Account Settings</h6>
-                        </div>
-                        <div class="col-md-8">
-                            Your password is changed
-                        </div>
-                        <div class="col-md-4 d-flex justify-content-between">
-                            <span>Email</span> <span>Web</span>
-                        </div>
-                    </div>
-
-                    <div class="row p-3 shadow-sm  bg-white rounded mb-3">
-                        <div class="col-md-12">
                             <h6>Activity</h6>
                         </div>
                         <div class="col-md-12">
