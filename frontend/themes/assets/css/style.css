@@ -2168,11 +2168,18 @@ figure {
 
 }
 
-.iconSize .fa-telegram {
+.iconSize .fa-paper-plane{
 
     background: #0088cc;
 
 }
+.iconSize .fa-link{
+
+    background: var(--background-yellow);
+    cursor: pointer;
+}
+
+
 
 .iconSize .fa-globe {
 
@@ -6509,3 +6516,4 @@ a.desc:after {
     color: var(--ds-text, #42526E) !important;
     background: rgb(255, 255, 255) !important;
 }
+

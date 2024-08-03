@@ -17,13 +17,13 @@ use yii\helpers\Html;
     </div>
 </div>
 <div class="row justify-content-end pt-3 pe-3">
-    <div class="col-lg-9 col-xl-8">
-        <div class="post_text">
+    <div class="col-lg-12 col-xl-8">
+        <div class="post_text px-sm-3  px-lg-3 px-3">
             <p>Commenting on this thread will notify all event attendees via email and will also be visible to
                 everyone viewing the event.</p>
         </div>
     </div>
-    <div class="col-lg-4 col-xl-3 ">
+    <div class="col-lg-12 col-xl-3 ">
         <div class="comment_button float-end mb-lg-0 mb-3">
             <?= Html::submitButton('Post Comment', ['class' => 'post-comment newbg']) ?>
         </div>

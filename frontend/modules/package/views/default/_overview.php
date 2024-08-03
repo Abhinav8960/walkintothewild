@@ -1,4 +1,4 @@
-<div class="row pt-4">
+<div class="row pt-lg-4 pt-4">
     <div class="col-12 inner_accordion">
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <?php if ($package->packagedays) {

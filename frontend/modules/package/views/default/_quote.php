@@ -20,7 +20,7 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="row ">
             <div class="col-lg-12">
-                <div class="form-wrapper d-flex gap-3">
+                <div class="form-wrapper form-wrap d-flex  gap-xl-3 gap-1">
                     <div class="input-group2 ">
                         <label for="travelers">Travelers</label>
                         <div class="number-input position-relative">
