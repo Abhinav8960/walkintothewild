@@ -120,7 +120,7 @@ return [
     '/manage/package/create-gallery/<package_id>' => '/manage/package/create-gallery', //package profile create faq url          
 
 
-    '/manage/sharedsafari/update-fixed-departure/<share_safari_id>' => '/manage/sharedsafari/update-fixed-departure',
+    '/manage/sharedsafari/update-fixed-departure/<slug>' => '/manage/sharedsafari/update-fixed-departure',
     '/manage/sharedsafari/itinerary/<share_safari_id>/<day>' => '/manage/sharedsafari/itinerary', //sharedsafari profile itenary url          
     '/manage/sharedsafari/inclusion/<share_safari_id>' => '/manage/sharedsafari/inclusion', //sharedsafari profile inclusion url          
     '/manage/sharedsafari/getting-there/<share_safari_id>' => '/manage/sharedsafari/getting-there', //sharedsafari profile getting-there url          

@@ -73,15 +73,23 @@ use yii\helpers\Html;
 
         </div>
         <div class="row mt-2 pe-0">
-            <div class="col-lg-12">
-                <div class="d-flex align-items-center gap-2">
-                    <div class="selects w-100">
-                        <label for="" class="Modal_label">Total Seat</label>
-                        <?= $form->field($model, 'total_seat')->textInput()->label(false) ?>
-                    </div>
 
+
+            <div class="col-lg-6">
+                <div class="selects w-100">
+                    <label for="" class="Modal_label">Total Seat</label>
+                    <?= $form->field($model, 'total_seat')->textInput()->label(false) ?>
                 </div>
             </div>
+
+            <div class="col-lg-6">
+                <div class="selects w-100">
+                    <label for="" class="Modal_label">Status <span class="necessary">*</span></label>
+                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['prompt' => 'Status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                </div>
+            </div>
+
+
 
             <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>
             <div class="col-lg-12 ">

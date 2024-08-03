@@ -226,9 +226,6 @@ $this->params['title'] = $this->title;
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
                                         <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                                             Safari</button>
-                                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Fixed Departure</button>
                                     <?php } else if (!Yii::$app->user->identity) {  ?>
                                         <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
                                             Safari</a>

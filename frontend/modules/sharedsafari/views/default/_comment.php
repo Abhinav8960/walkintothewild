@@ -46,7 +46,7 @@ use yii\helpers\Url;
                                 </div>
                                 <div class="text_com">
                                     <div class="requestContact d-flex gap-2 align-items-center">
-                                        <h6 class="nameavatr"><?= $comments->user->name ?></h6>
+                                        <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?></h6>
                                         <?php if (Yii::$app->user->identity) {
                                             if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
                                                 <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>
@@ -56,7 +56,7 @@ use yii\helpers\Url;
                                     <p><?= $comments->comment ?></p>
                                     <?php if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                                        if ($share_safari_intrested || Yii::$app->user->id ==  $share_safari->host_user_id) { ?>
+                                        if ($share_safari_intrested ||  $share_safari->host_user_id == $login_safarioperator->id) { ?>
                                             <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                                     <?php }
                                     } ?>
@@ -119,7 +119,7 @@ use yii\helpers\Url;
             <?php } else {
             if (Yii::$app->user->id) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id) { ?>
+                if ($share_safari_intrested || $share_safari->host_user_id == $login_safarioperator->id) { ?>
                     <?= $this->render('_comment_form', ['model' => $model]) ?>
         <?php } else {
                     echo '<p class="px-3 pt-2">Please Join in for start Comment</p>';

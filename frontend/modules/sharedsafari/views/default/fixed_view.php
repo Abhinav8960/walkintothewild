@@ -207,17 +207,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <?php } ?>
                                 </div>
                                 <div class="right_button ">
-                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Safari</button>
-                                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Fixed Departure</button>
-                                    <?php } else if (!Yii::$app->user->identity) {  ?>
-                                        <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
-                                            Safari</a>
-                                    <?php } ?>
 
+                                    <?php if ($share_safari->host_user_id == $login_safarioperator->id) { ?>
+                                        <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                            Fixed Departure</a>
+                                    <?php } ?>
 
                                 </div>
                                 <div class="btns-safaries">
@@ -228,7 +222,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                             if ($share_safari_intrested) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
-                                            <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
+                                            <?php } else if ($share_safari->host_user_id != $login_safarioperator->id) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
@@ -304,7 +298,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+                        <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
