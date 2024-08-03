@@ -127,7 +127,14 @@
 				</div>
 				<div class="d-flex gap-4 align-items-center justify-content-end initial_headers">
 
-					<div class="notification pt-2"><i class="fa-solid fa-bell"></i></div>
+					<div class="notification pt-2 "><i class="fa-solid fa-bell"></i></div>
+					<div class="menunotification">
+						<ul>
+							<li>bDkjfsb</li>
+							<li>bDkjfsb</li>
+							<li>bDkjfsb</li>
+						</ul>
+					</div>
 					<div class="massge pt-2">
 						<a href="/chat"><i class="fa-solid fa-envelope"></i></a>
 					</div>
@@ -223,4 +230,20 @@
 			</div>
 		</nav>
 	</header>
+
+	<script>
+		let notification = document.querySelector('.notification');
+		let menunotification = document.querySelector('.menunotification');
+
+		notification.onclick = function(event) {
+			event.stopPropagation(); 
+			menunotification.classList.toggle('active');
+		}
+
+		document.onclick = function(event) {
+			if (!notification.contains(event.target) && !menunotification.contains(event.target)) {
+				menunotification.classList.remove('active');
+			}
+		}
+	</script>
 	<!-- /main-header -->
