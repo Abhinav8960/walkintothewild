@@ -5,6 +5,7 @@ namespace frontend\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\park\SafariPark;
+use common\models\master\animal\MasterRareAnimal;
 
 /**
  * SafariParkSearch represents the model behind the search form of `common\models\park\SafariPark`.
@@ -96,11 +97,19 @@ class SafariParkSearch extends SafariPark
             }]);
         }
 
-
         if ($this->master_animal_id && $this->master_animal_id != 0) {
             $query->joinwith(['animals' => function ($query) {
                 $query->andFilterWhere(['safari_parks_animal.master_animal_id' => $this->master_animal_id]);
             }]);
+        }
+
+        if (isset($params['slug']) && !empty($params['slug'])) {
+            $is_exist = MasterRareAnimal::find()->where(['slug' => $params['slug']])->andWhere(['status' => true])->one();
+            if (!empty($is_exist)) {
+                $query->joinwith(['animals' => function ($query) {
+                    //$query->andFilterWhere(['safari_parks_animal.master_animal_id' => $is_exist->id]);
+                }]);
+            }
         }
 
         if ($this->master_rare_animal_id && $this->master_rare_animal_id != 0) {
