@@ -6,33 +6,34 @@ use common\models\GeneralModel;
 
 ?>
 
-<?php $form = ActiveForm::begin([
-    'id' => 'safariform',
-    'enableAjaxValidation' => true,
-    'enableClientValidation' => false,
-    'enableClientScript' => true,
-    'action' => $model->action_url,
-    'validationUrl' => $model->action_validate_url,
-]); ?>
-<div class="modal-body modal_form">
-    <div class="row">
-        <div class="col-12">
-            <h6 class="text-center" style="font-weight:bolder;"><?= $safari_park->title ?></h6>
-        </div>
-        <div class="col-12 mb-2">
-            <label for="" class="Modal_label">Select Category</label>
-            <?= $form->field($model, 'master_suggestion_id')->dropDownList(GeneralModel::suggestioncategory(), ['prompt' => 'Select', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
-        </div>
-
-        <div class="col-lg-12 mb-2 mt-2">
-            <div class="textarea">
-                <?= $form->field($model, 'details')->textarea(['class' => "form-control", 'placeholder' => "Write about your plan"])->label(false) ?>
+<?php if ($model) { ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'safariform',
+        'enableAjaxValidation' => true,
+        'enableClientValidation' => false,
+        'enableClientScript' => true,
+        'action' => $model->action_url,
+        'validationUrl' => $model->action_validate_url,
+    ]); ?>
+    <div class="modal-body modal_form">
+        <div class="row">
+            <div class="col-12">
+                <h6 class="text-center" style="font-weight:bolder;"><?= $safari_park->title ?></h6>
             </div>
-        </div>
+            <div class="col-12 mb-2">
+                <label for="" class="Modal_label">Select Category</label>
+                <?= $form->field($model, 'master_suggestion_id')->dropDownList(GeneralModel::suggestioncategory(), ['prompt' => 'Select', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
+            </div>
 
-    </div>
-    <div class="row mt-2 pe-0">
-        <!-- <div class="col-lg-12">
+            <div class="col-lg-12 mb-2 mt-2">
+                <div class="textarea">
+                    <?= $form->field($model, 'details')->textarea(['class' => "form-control", 'placeholder' => "Write about your plan"])->label(false) ?>
+                </div>
+            </div>
+
+        </div>
+        <div class="row mt-2 pe-0">
+            <!-- <div class="col-lg-12">
             <label for="" class="Modal_label">You Are?</label>
             <?= $form->field($model, 'you_are_id')->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Who You Are?', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
         </div>
@@ -52,11 +53,14 @@ use common\models\GeneralModel;
 
 
 
-        <div class="col-lg-4 mt-2">
-            <div class="creat-safri">
-                <?= Html::submitButton('Submit', ['class' => 'safari_create font_set']) ?>
+            <div class="col-lg-4 mt-2">
+                <div class="creat-safri">
+                    <?= Html::submitButton('Submit', ['class' => 'safari_create font_set']) ?>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
+<?php } else {
+    echo 'For suggest correction you need to <a href="/site/login">Login</a>';
+} ?>

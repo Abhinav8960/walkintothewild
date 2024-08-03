@@ -70,7 +70,7 @@ class UserForm extends Model
 
             ['user_handle', function () {
                 // Allow Only Small Letter Character(a-z), digit(0-9) and Underscore(_)
-                if (!preg_match('/^[a-z0-9_]*$/', $this->user_handle)) {
+                if (!preg_match('/^[a-z0-9_.]*$/', $this->user_handle)) {
                     $this->addError('user_handle', 'Invalid Username!!!');
                 }
             }],
