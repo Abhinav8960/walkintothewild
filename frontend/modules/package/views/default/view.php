@@ -55,7 +55,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
                                     </div>
                                 </div>
-                                <div class="col-lg-8 pt-sm-0 pt-3">
+                                <div class="col-lg-8 pt-sm-3 pt-lg-0 pt-3">
                                     <div class="safrititles">
                                         <h5 class="fs-4"><?= $package->package_name ?>
                                             <?php
@@ -81,8 +81,18 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-4 d-md-block d-lg-none d-none">
+                            <div class="text-left">
+                                <div class="pakageCost">
+                                    <h6 class="fs-3 mb-0 fw-bold"><img src="/assets/f9595a2a/img/rupees.png" alt="" width="20px" class="me-1 mb-1">1000</h6>
+                                </div>
+                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-lg-5 pt-lg-0 pt-4">
-                            <div class="row px-sm-4 px-0">
+                            <div class="row px-lg-4 px-0">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
@@ -178,9 +188,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
                         <div class="col-lg-7">
-                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
+                            <div class="social-share d-flex  flex-wrap gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
-                                <div class="sociel_icons ps-3">
+                                <div class="sociel_icons ps-xl-3">
                                     <?php
                                     $shared_url = urlencode(Url::to('', true));
                                     ?>
@@ -195,11 +205,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-lg-5 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center pt-sm-3 pt-3">
                                 <div class="pakageCost">
                                     <h6 class="fs-3 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= $package->total_price ?></h6>
                                 </div>
-                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                                <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
                                     <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>
                                 </div>
                             </div>

@@ -1035,6 +1035,11 @@
   }
 }
 @media (max-width: 991px) {
+  .packageSfari .imagesSafari img{
+
+    height: 230px;
+    max-height: 230px;
+  }
 
   .padding_mobileAdded{
 
@@ -1899,6 +1904,10 @@ margin: 0;
 }
 
 @media (max-width: 420px) {
+  .topSlider_tour .items_slider img{
+
+    height: 120px;
+  }
   .inner_animals > img {
     height: 215px;
   }
