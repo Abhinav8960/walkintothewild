@@ -3,13 +3,19 @@
 namespace frontend\controllers;
 
 use Yii;
+use common\models\Auth;
+use common\models\User;
 use yii\web\Controller;
+use common\models\PreAuth;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use frontend\models\AuthTemp;
 use frontend\models\LoginForm;
 use yii\filters\AccessControl;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\RenderedContent;
+use yii\authclient\ClientInterface;
 use frontend\components\AuthHandler;
 use frontend\models\VerifyEmailForm;
 use yii\web\BadRequestHttpException;
@@ -18,13 +24,8 @@ use yii\base\InvalidArgumentException;
 use common\models\trierror\form\ErrorLogForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
+use common\models\notification\FrontendNotification;
 use common\models\trierror\form\FrontendErrorLogForm;
-use common\models\Auth;
-use common\models\User;
-use yii\authclient\ClientInterface;
-use yii\helpers\ArrayHelper;
-use common\models\PreAuth;
-use frontend\models\AuthTemp;
 
 /**
  * Site controller
@@ -399,5 +400,34 @@ class SiteController extends FrontendBaseController
     {
         //$this->updateUserInfo($user);
         Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+    }
+
+    /**
+     * New Notification
+     *
+     * @return void
+     */
+    public function actionNotification($notice_id = null, $update_is_seen = false)
+    {
+        $model = [];
+        if ($notice_id) {
+            $model = FrontendNotification::find()->where(['status' => 1, 'id' => $notice_id])->limit(1)->one();
+        } else {
+            $model = FrontendNotification::find()->where(['status' => 1, 'attender_user_id' => \Yii::$app->user->identity->id, 'user_id' => \Yii::$app->user->identity->id])->andWhere("created_at < " . time() . "-coalesce(delay_time,0)")->orderBy(['id' => SORT_DESC])->limit(1)->one();
+        }
+        if ($model) {
+            $model->is_seen = 1;
+            $model->seen_datetime = date('Y-m-d H:i:s');
+            // $model->is_read = 1;
+            $model->read_datetime = date('Y-m-d H:i:s');
+            $model->save(false);
+        }
+        if ($update_is_seen && $model) {
+            $model->is_seen = 1;
+            $model->seen_datetime = date('Y-m-d H:i:s');
+            // $model->is_read = 1;
+            $model->read_datetime = date('Y-m-d H:i:s');
+            $model->save(false);
+        }
     }
 }

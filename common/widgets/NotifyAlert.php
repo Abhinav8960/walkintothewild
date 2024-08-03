@@ -16,7 +16,8 @@ class NotifyAlert extends Widget
         'danger'  => 'error',
         'success' => 'success',
         'info'    => 'info',
-        'warning' => 'warning'
+        'warning' => 'warning',
+        'notification' => 'notification'
     ];
 
     /**

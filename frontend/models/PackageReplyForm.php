@@ -52,4 +52,10 @@ class PackageReplyForm extends Model
             return $reply->save();
         }
     }
+
+
+    public function commentbyParent()
+    {
+        return PackageComment::findone($this->parent_id);
+    }
 }

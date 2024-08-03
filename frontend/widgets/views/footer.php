@@ -107,3 +107,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
 </footer>
+
+<?php
+
+if (isset(Yii::$app->params['PUSHER_AUTH_KEY']) && Yii::$app->params['PUSHER_AUTH_KEY'] != '') {
+    if (Yii::$app->user->identity) {
+        echo $this->render('_notification_pusher');
+    }
+}
+?>

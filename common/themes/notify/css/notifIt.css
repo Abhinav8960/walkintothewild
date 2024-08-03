@@ -72,6 +72,12 @@
     color: #fff;
 }
 
+#ui_notifIt.notification {
+    background-color: #3b4863 !important;
+    color: #fff;
+}
+
+
 #ui_notifIt.order-accpected {
     background-color: #FD981C;
     color: #fff;
