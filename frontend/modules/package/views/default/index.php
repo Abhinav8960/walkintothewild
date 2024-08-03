@@ -16,8 +16,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 ?>
 
 
-<div class="fixedbanner">
-  <section class="banner_section-inner packagebnner  position-relative">
+
+  <section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
       <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
       <img src=" <?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" class="d-block w-100 banner_search" alt="banner">
@@ -35,8 +35,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
     </div>
   </section>
-</div>
-<section class="articals_wrapper margin-setposi py-3 margin_bottomfooter" style="background-color: #fff; margin-top: 190px !important; padding-top:30px;">
+
+<section class="articals_wrapper  py-3 " >
   <div class="container-fluid ">
     <div class="custom-row pt-4">
       <div class="custom-col">
