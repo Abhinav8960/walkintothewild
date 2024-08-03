@@ -2,13 +2,14 @@
 
 namespace common\models;
 
-use common\models\sharesafari\ShareSafari;
 use Yii;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 use yii\base\NotSupportedException;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
+use common\behaviors\UserHandleBehavior;
+use common\models\sharesafari\ShareSafari;
 
 /**
  * User model
@@ -48,25 +49,26 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            // [
-            //     'class' => SluggableBehavior::class,
-            //     'attribute' => 'name',
-            //     'slugAttribute' => 'user_handle',
-            //     'ensureUnique' => true,
-            // ],
-            TimestampBehavior::class,
-            'slug' => [
-                'class' => 'skeeks\yii2\slug\SlugBehavior',
-                'slugAttribute' => 'user_handle', //The attribute to be generated
-                'attribute' => 'name', //The attribute from which will be generated
-                'maxLength' => 255,
+            [
+                'class' => UserHandleBehavior::class,
+                'attribute' => 'name',
+                'slugAttribute' => 'user_handle',
                 'ensureUnique' => true,
-                'slugifyOptions' => [
-                    'lowercase' => true,
-                    'separator' => '_',
-                    'trim' => true
-                ]
-            ]
+                'separator' => '_'
+            ],
+            TimestampBehavior::class,
+            // 'slug' => [
+            //     'class' => 'skeeks\yii2\slug\SlugBehavior',
+            //     'slugAttribute' => 'user_handle', //The attribute to be generated
+            //     'attribute' => 'name', //The attribute from which will be generated
+            //     'maxLength' => 255,
+            //     'ensureUnique' => true,
+            //     'slugifyOptions' => [
+            //         'lowercase' => true,
+            //         'separator' => '_',
+            //         'trim' => true
+            //     ]
+            // ]
         ];
     }
 
