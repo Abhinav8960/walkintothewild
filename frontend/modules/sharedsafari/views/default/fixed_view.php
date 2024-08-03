@@ -208,7 +208,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="right_button ">
 
-                                    <?php if ($share_safari->host_user_id == $login_safarioperator->id) { ?>
+                                    <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
                                         <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                                             Fixed Departure</a>
                                     <?php } ?>
@@ -222,7 +222,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                             if ($share_safari_intrested) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
-                                            <?php } else if ($share_safari->host_user_id != $login_safarioperator->id) { ?>
+                                            <?php } else if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>

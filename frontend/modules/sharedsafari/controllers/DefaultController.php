@@ -204,7 +204,7 @@ class DefaultController extends FrontendBaseController
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED], 'slug' => $slug])->limit(1)->one();
 
-        $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+        $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $model = new ShareSafariCommentForm();
         $replymodel = new ReplyForm();
