@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 \frontend\assets\EmojiAsset::register($this);
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-$this->title = $individual_user->name . ' | Chat';
+$this->title = 'Message | ' . $individual_user->name;
 
 $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')->baseUrl;
 ?>
@@ -36,43 +36,43 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 'timeout' => false,
                             ]);
                             ?>
-                             <div class="chat-search-user mb-2 position-relative">
+                            <div class="chat-search-user mb-2 position-relative">
                                 <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false]) ?>
                                 <div class="secrchIcons">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
                             </div>
                             <div class="chat-cardlist">
-                            <?php if ($searchModel->name == '' && $active_chat_list) {
-                                foreach ($active_chat_list as $active_chat) {
-                                    if ($active_chat->user_id == $login_user->id) {
-                                        $user = $active_chat->recipient;
-                                    } else {
-                                        $user = $active_chat->user;
-                                    }
-                            ?>
-                                    <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
-                                        <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
-                                            <div class="d-flex chat-user_message">
-                                                <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
-                                                <div class="chat-user_name">
-                                                    <h6><?= $user->name ?></h6>
-                                                    <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
+                                <?php if ($searchModel->name == '' && $active_chat_list) {
+                                    foreach ($active_chat_list as $active_chat) {
+                                        if ($active_chat->user_id == $login_user->id) {
+                                            $user = $active_chat->recipient;
+                                        } else {
+                                            $user = $active_chat->user;
+                                        }
+                                ?>
+                                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
+                                            <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                <div class="d-flex chat-user_message">
+                                                    <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
+                                                    <div class="chat-user_name">
+                                                        <h6><?= $user->name ?></h6>
+                                                        <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                            <?php }
-                            } ?>
-                            <?php
-                            if ($searchModel->name) {
-                                echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
-                            }
-                            ?>
+                                        </a>
+                                <?php }
+                                } ?>
+                                <?php
+                                if ($searchModel->name) {
+                                    echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                                }
+                                ?>
                             </div>
 
-                           
-                          
+
+
                             <?php Pjax::end(); ?>
                         </div>
                     </div>
@@ -102,9 +102,9 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                             <?php if ($chat_message->created_by == $login_user->id) { ?>
                                                 <div class="reciverchta">
                                                     <div class="text-right text-end message_body_right position-relative">
-                                                    <?= $chat_message->message ?>
+                                                        <?= $chat_message->message ?>
                                                     </div>
-                                                  
+
                                                 </div>
                                             <?php  } else { ?>
                                                 <div class="text-left message_body_left position-relative">

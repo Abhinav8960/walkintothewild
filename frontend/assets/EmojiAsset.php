@@ -11,7 +11,7 @@ class EmojiAsset extends AssetBundle
 {
     public $sourcePath = '@frontend/themes/emoji/';
     public $publishOptions = [
-        'forceCopy' => true,
+        'forceCopy' => false,
     ];
     public $css = [
         'lib/css/emoji.css',
