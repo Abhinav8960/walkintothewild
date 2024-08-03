@@ -31,8 +31,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1>Safari Tour Operator</h1>
-                        <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
-                                Their Adventures</p> -->
                     </div>
                 </div>
             </div>
@@ -63,24 +61,18 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div class="row pt-5 pb-4">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="row">
-                            <div class="col-xxl-8 col-lg-8">
+                            <div class="col-xxl-12 col-lg-12">
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
                                             <div class="d-flex justify-content-between  mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Operates in <span class="numberFont"><?= count($operator_parks) ?></span> Parks</h6>
-                                                <?php if (count($operator_parks) >= 6) { ?>
-                                                    <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/parkseeall', 'slug' => $operator->slug]) ?>">See All</a>
-                                                <?php } ?>
-                                                <!-- <div class="whiteReview ">
-                                                    <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
-                                                </div> -->
+                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Operates in <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Parks</h6>
                                             </div>
 
                                             <div class="row">
                                                 <?php
-                                                if ($operator_parks) {
-                                                    foreach ($operator_parks as $operator_park) {
+                                                if ($dataProvider->models) {
+                                                    foreach ($dataProvider->models as $operator_park) {
                                                         $park_detail = $operator_park->park;
                                                         if ($park_detail) {
                                                 ?>
@@ -99,17 +91,18 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php }
                                                     }
                                                 } ?>
+                                                <?php
+                                                echo \yii\widgets\LinkPager::widget([
+                                                    'pagination' => $dataProvider->pagination,
+                                                ]);
+                                                ?>
                                             </div>
+
+
 
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xxl-4 col-lg-4">
-                                <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
-
-                                <?= $this->render('_shared_safar_sidebar', ['operator' => $operator]) ?>
-
                             </div>
                         </div>
 

@@ -65,19 +65,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-md-12">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between  mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Published <span class="numberFont"><?= count($articles) ?></span> Article</h6>
-                                                <?php if (count($articles) > 1) { ?>
-                                                    <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug]) ?>">See All</a>
-                                                <?php } ?>
+                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Published <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Article</h6>
                                             </div>
 
                                             <div class="row">
-                                                <?php if ($articles) {
-                                                    foreach ($articles as $article) { ?>
+                                                <?php if ($dataProvider->models) {
+                                                    foreach ($dataProvider->models as $article) { ?>
                                                         <div class="col-md-6 mb-5">
                                                             <div class="artical_cards h-100">
                                                                 <div class="image-box">
@@ -105,16 +102,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php }
                                                 } ?>
                                             </div>
+                                            <?php
+                                            echo \yii\widgets\LinkPager::widget([
+                                                'pagination' => $dataProvider->pagination,
+                                            ]);
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xxl-4 col-lg-4">
 
-                                    <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
-
-                                    <?= $this->render('_shared_safar_sidebar', ['operator' => $operator]) ?>
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -127,52 +123,3 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="safariduring_sesons innerpage">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
-
-<div class="modal fade _standard-text order--modal" id="review-write-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Write a Review</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div id='modalContent'></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php
-$script = <<< JS
-
-
-$(document).ready(function() {
-    $(".review-button").click(function(){
-        var review_url=$(this).attr("value");
-        $('.review-button.active').removeClass('active');
-        $(this).addClass("active")
-        $.get(review_url, function( data ) {
-            $("#review-list").html(data);
-        });
-    })
-});
-    
-function writeareviewfunction() {
-	$('.writeAReviewBtn').on('click', function () {
-        $('#review-write-modal').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-
-    $('.flagBtn').on('click', function () {
-        $('#modalFlag').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-}
-writeareviewfunction();
-              
-             
-JS;
-$this->registerJs($script);
-?>
