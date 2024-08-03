@@ -72,8 +72,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <div class="tab-content_tour active">
                                             <div class="d-flex justify-content-between  mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Organized <span class="numberFont"><?= count($shared_safaries) ?></span> Shared Safari</h6>
-                                                <?php if ($shared_safaries) { ?>
-                                                    <button class="SeeAll safariBtn" value="<?= Url::toRoute(['/operator/default/sharedsafariseeall', 'slug' => $operator->slug]) ?>">See All</button>
+                                                <?php if (count($shared_safaries) >= 1) { ?>
+                                                    <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/sharedsafariseeall', 'slug' => $operator->slug]) ?>">See All</a>
                                                 <?php } ?>
                                             </div>
 
@@ -179,32 +179,3 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="safariduring_sesons innerpage">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
-
-<div class="modal fade _standard-text" id="popup-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Safari</h1>
-                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
-            </div>
-            <div class="modal-body px-2 pt-0">
-                <div id='modalContent'></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php
-$script = <<< JS
-function popupfunction() {
-	$('.safariBtn').on('click', function () {
-        $('#popup-modal').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-}
-popupfunction();
-
-JS;
-$this->registerJs($script);
-?>
