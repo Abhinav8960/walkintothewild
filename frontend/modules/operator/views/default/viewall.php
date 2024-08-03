@@ -66,7 +66,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
                                             <div class="d-flex justify-content-between  mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Operates in <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Parks</h6>
+                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Operates in <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Parks</h6>
                                             </div>
 
                                             <div class="row">

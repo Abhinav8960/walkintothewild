@@ -31,7 +31,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1 class="mb-0"><?= $package->package_name ?></h1>
-                        <!-- <p class="text-center text-white mb-0">Organized by <?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></p> -->
+                        <!-- <p class="text-center text-white mb-0">Organized by <?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></p> -->
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
-                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>"><strong><?= isset($package->safarioperator) ? $package->safarioperator->business_name : '' ?></strong></a></p>
+                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>"><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong></a></p>
 
                                     </div>
 
@@ -340,10 +340,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                     <div class="itenary_text">
                         <ul>
-                            <li>This tour is operated by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> and not by Walk Into The Wild.</li>
-                            <li><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                            <li>This tour is operated by <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> and not by Walk Into The Wild.</li>
+                            <li><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
                             <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> will propose a suitable alternative.</li>
+                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> will propose a suitable alternative.</li>
                             <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
                         </ul>
                     </div>

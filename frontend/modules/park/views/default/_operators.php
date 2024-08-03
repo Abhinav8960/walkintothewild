@@ -100,7 +100,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                                         </div>
                                         <div class="provider_details  px-2">
-                                            <h6 class="pname py-3 border-top"><?= $operator->business_name ?></h6>
+                                            <h6 class="pname py-3 border-top"><?= $operator->businessname ?></h6>
                                             <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
 
                                                 <div class="ratings">
@@ -262,7 +262,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                             <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                                         </div>
                                         <div class="provider_details  px-2">
-                                            <h6 class="pname py-3 border-top"><?= $operator->business_name ?></h6>
+                                            <h6 class="pname py-3 border-top"><?= $operator->businessname ?></h6>
                                             <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
 
                                                 <div class="ratings">

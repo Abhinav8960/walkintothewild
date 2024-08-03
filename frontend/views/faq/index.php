@@ -23,7 +23,6 @@ $this->params['title'] = $this->title;
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1 class="mb-0">Frequently Asked Questions</h1>
-                        <!-- <p class="text-center text-white mb-0">Organized by <?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></p> -->
                     </div>
 
 

@@ -2,7 +2,7 @@
 
 use common\models\GeneralModel;
 
-$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+$this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 $budget = [];
 if ($safari_operator_request->is_offer_premium_budget == 1) {

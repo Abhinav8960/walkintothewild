@@ -1,7 +1,7 @@
 <?php
 
 use yii\grid\GridView;
-$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+$this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
 

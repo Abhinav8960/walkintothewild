@@ -35,7 +35,7 @@ use common\models\operator\SafariOperatorFollow;
                 <div class="col-lg-9 border_bottom_mobile pt-lg-0 pt-3">
                     <div class="provider_details ps-lg-3">
                         <div class="title_tours d-flex justify-content-between align-items-center gap-md-2 gap-xxl-3">
-                            <h3><?= $operator->business_name ?></h3>
+                            <h3><?= $operator->businessname ?></h3>
                             <!-- <span class="d-sm-block d-none">|</span> -->
                             <div class="follow_massage d-flex gap-3">
                                 <div class="follow mb-lg-2 mb-xxl-0 mb-2">
