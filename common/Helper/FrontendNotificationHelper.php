@@ -64,6 +64,35 @@ class FrontendNotificationHelper
         }
     }
 
+
+    /**
+     * Order Added Into Queued
+     *
+     * @param [type] $package
+     * @return void
+     */
+    public static function packageNewQuote(Package $package, User $user)
+    {
+        if ($package) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_PACKAGE_NEW_COMMENT;
+            $model->notification_url = Url::toRoute(['/manage/package/view', 'package_id' => $package->id]);
+            $model->parent_id = $package->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            if ($package->safarioperator) {
+                $model->user_id = $package->safarioperator->user_id;
+            }
+            $model->is_seen = false;
+            $model->is_read = False;
+            $model->notification_text = "New Request Quote Recivied From $user->name | " . $package->package_name;
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+
     public static function eventSendtoPusher($model)
     {
         if (isset(Yii::$app->params['PUSHER_AUTH_KEY']) && Yii::$app->params['PUSHER_AUTH_KEY'] != '') {
