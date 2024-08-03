@@ -24,7 +24,7 @@ $PUSHER_AUTH_KEY = Yii::$app->params['PUSHER_AUTH_KEY'];
 $cluster = Yii::$app->params['PUSHER_CLUSTER'];
 $script = <<< JS
     // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
+    // Pusher.logToConsole = true;
 
     var pusher = new Pusher('{$PUSHER_AUTH_KEY}', {
         cluster: '{$cluster}'
