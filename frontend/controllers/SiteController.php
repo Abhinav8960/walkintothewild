@@ -430,4 +430,13 @@ class SiteController extends FrontendBaseController
             $model->save(false);
         }
     }
+
+    /**
+     * Update Notification List
+     */
+    public function actionUpdatenotificationlist()
+    {
+        $notification_list = FrontendNotification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->identity->id])->orderby(['id' => SORT_DESC])->limit(6)->all();
+        return $this->renderAjax('_notification_list', ['notification_list' => $notification_list]);
+    }
 }

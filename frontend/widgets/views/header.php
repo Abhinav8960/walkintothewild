@@ -131,29 +131,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 				<?php if (Yii::$app->user->identity) { ?>
 					<div class="notification pt-2 "><i class="fa-solid fa-bell"></i></div>
-					<div class="menunotification">
-						<h6 class="fs-5 fw-semibold px-3 pt-3 pb-3 border-bottom mb-3">Notifications</h6>
-						<?php
-						$notification_list = FrontendNotification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->identity->id])->orderby(['id' => SORT_DESC])->limit(6)->all();
-						?>
-						<ul>
-							<?php if ($notification_list) {
-								foreach ($notification_list as $notification) { ?>
-									<li class="<?= $notification->noticeclass ?>">
-
-										<a href="<?= Url::toRoute(['/account/notification/view', 'id' => $notification->id]) ?>">
-											<?= $notification->notification_text ?>
-										</a>
-									</li>
-							<?php }
-							} else {
-								echo '<li>No New Notification!</li>';
-							} ?>
-						</ul>
-						<div class="viewallNotification float-end pe-3 pt-2">
-						<a href="" class="follow_massge">View all notifications</a>
-						</div>
-					</div>
+					<div class="menunotification" id="menunotification_menu"></div>
 				<?php } ?>
 
 				<div class="massge pt-2">
@@ -268,3 +246,18 @@ $active_url = "/" . Yii::$app->requestedRoute;
 	}
 </script>
 <!-- /main-header -->
+
+<?php
+$script = <<<JS
+$(document).ready(function() {
+    $(".notification").click(function(){
+        var notice_update_url='/site/updatenotificationlist';
+        $.get(notice_update_url, function( data ) {
+            $("#menunotification_menu").html(data);
+        });
+    })
+})
+                  
+JS;
+$this->registerJs($script);
+?>
