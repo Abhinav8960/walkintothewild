@@ -208,7 +208,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="right_button ">
 
-                                    <?php if ($share_safari->host_user_id == $login_safarioperator->id) { ?>
+                                    <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
                                         <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
                                             Fixed Departure</a>
                                     <?php } ?>
