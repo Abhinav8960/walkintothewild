@@ -67,13 +67,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
       <div class="col-xl-11 col-lg-12">
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
-          <div id="targetDiv">
-          <?= $this->render('_select_filter', [
-              'searchModel' => $searchModel,
-              'device' => $device,
-            ]) ?>
-          </div>
-         
+            <div id="targetDiv">
+              <?= $this->render('_select_filter', [
+                'searchModel' => $searchModel,
+                'device' => $device,
+              ]) ?>
+            </div>
+
           </div>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
             <div class="row ">
@@ -192,7 +192,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                             <div class="icons_restro">
                               <i class="fa-solid fa-car"></i>
-                              <p class="mb-0"><?= $model->pickanddrop ?></p>
+                              <p class="mb-0"><?= $model->mastervehicle ? $model->mastervehicle->vehicle_name : 'N/A' ?></p>
                             </div>
                             <div class="icons_restro">
                               <i class="fa-solid fa-utensils"></i>
