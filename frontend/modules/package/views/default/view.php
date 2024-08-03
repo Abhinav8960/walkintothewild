@@ -87,7 +87,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <h6 class="fs-3 mb-0 fw-bold"><img src="/assets/f9595a2a/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= $package->total_price ?></h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button>
+                                <div class="message">
+                                    <a href="" class="follow_massge">Message</a>
+                                </div>
+                                    <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button> -->
                                 </div>
                             </div>
                         </div>
@@ -201,12 +204,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-lg-5 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-between align-items-center pt-sm-3 pt-3">
+                            <div class="d-flex justify-content-between align-items-center pt-lg-0 pt-sm-3 pt-3">
                                 <div class="pakageCost">
                                     <h6 class="fs-3 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= $package->total_price ?></h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
-                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>
+                                    <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button> -->
+                                    <div class="message">
+                                    <a href="" class="follow_massge">Message</a>
+                                </div>
                                 </div>
                             </div>
 

@@ -39,9 +39,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer_text float-lg-end">
-                    <div class="heading-footer">
+                    <!-- <div class="heading-footer">
                         <h6>Become A Partner </h6>
-                    </div>
+                    </div> -->
                     <div class="footerContent">
                         <ul class="footer_listing">
                             <!-- <li><a href="/safaritour-registration">Safari Tour Operator</a></li> -->
@@ -49,6 +49,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <!-- <li><a href="#" style="cursor: default;">Resorts / Lodge / Home Stay</a></li> -->
                             <li><a href="/article">Articles and Tips</a></li>
                             <li><a href="/contact">Contact Us</a></li>
+                            <li><a href="#" style="cursor: default;">About us</a></li>
+                            <li><a href="#" style="cursor: default;">FAQs</a></li>
                         </ul>
                     </div>
                 </div>
