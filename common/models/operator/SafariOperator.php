@@ -167,4 +167,22 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
             return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
         }
     }
+
+
+    /**
+     * Business Name with Type
+     */
+    public function getBusinessname()
+    {
+        $name = $this->business_name;
+
+        $category = '';
+        if ($this->category_id = 2) {
+            $category = ' (Wild Life Photographer)';
+        } else if ($this->category_id = 1) {
+            $category = ' (safari Operator)';
+        }
+
+        return $name . $category;
+    }
 }
