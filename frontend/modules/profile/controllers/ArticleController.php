@@ -178,9 +178,6 @@ class ArticleController extends FrontendBaseController
                     $model->meta_title = $model->title;
                     $model->initializeForm();
                     // Inactive if Anything is changed into form
-                    if ($model->article_model->dirtyattributes) {
-                        $model->article_model->status = Article::STATUS_SUSPEND;
-                    }
                     if ($model->article_model->save(false)) {
                         $model->uploadFile();
 
