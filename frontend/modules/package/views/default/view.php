@@ -254,11 +254,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 
-<section class="safari_wrapper margin_bottomfooter">
+<section class="safari_wrapper margin_bottomfooter ">
     <div class="container-lg">
-        <div class="row mb-5  mt-4 itenary_tabs px-3">
+        <div class="row mb-5  mt-4 mobileAccordion itenary_tabs px-3">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
-                <div class="tab-content accordion" id="myTabContent">
+                <div class="tab-content accordion " id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
@@ -293,12 +293,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFour">
-                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <h2 class="accordion-header d-lg-none" id="headingGetting">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseGetting" aria-expanded="false" aria-controls="collapseGetting">
                                 GETTING THERE
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                        <div id="collapseGetting" class="accordion-collapse bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                             <div class="accordion-body card-body ">
                                 <?= $this->render('_getting_there', ['package' => $package]) ?>
                             </div>

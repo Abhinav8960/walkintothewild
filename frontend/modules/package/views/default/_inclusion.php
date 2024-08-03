@@ -21,13 +21,13 @@
                 // Generate radio options
                 foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
                     <div class="row mb-2">
-                        <div class="col-sm-2">
+                        <div class="col-md-3 col-sm-4">
                             <ul class="mb-0 ">
                                 <li><label class="control-label font_sizes"><?= $optionLabel ?> </label></li>
                             </ul>
                             
                         </div>
-                        <div class="col-sm-9">
+                        <div class="col-md-9 col-sm-8">
                             <div class="form-check form-check-inline">
                                 <label class="form-check-label">
                                     <?php if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 1)) {

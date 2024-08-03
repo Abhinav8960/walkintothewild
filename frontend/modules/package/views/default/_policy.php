@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-lg-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
+<div class="row px-lg-0 px-3">
+    <div class="col-lg-4 col-md-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
         <div class="safri_tour sticky-top border-0">
             <div class="topics_listing px-0 safariChanges ">
                 <ul id="tabList">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-xxl-9 col-xl-9">
+    <div class="col-lg-8 col-md-8 col-xxl-9 col-xl-9 pt-lg-0 pt-2 pb-md-0 pb-3">
         <div class="tab-content_tour active " id="tab21">
             <!-- Safari Parks content goes here -->
             <div class="row">

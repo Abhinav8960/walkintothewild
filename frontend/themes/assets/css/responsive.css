@@ -1035,6 +1035,38 @@
   }
 }
 @media (max-width: 991px) {
+  .form-wrap{
+
+    flex-wrap: wrap;
+  }
+
+
+  .mobileAccordion.itenary_tabs .safartabs .accordion-item .accordion-collapse.bg-set{
+
+     border-radius: 0px 0px 10px 10px!important;
+     border: 0 !important;
+
+  }
+
+  .mobileAccordion.itenary_tabs  .tab-pane{
+
+border-bottom: 1px solid #0000004d;
+margin-bottom: 0 !important;
+  }
+  .mobileAccordion.itenary_tabs .safartabs .accordion-item .card_bodyPadding.bg-set{
+
+    margin-bottom: 13px;
+  }
+  /* .mobileAccordion.itenary_tabs .safartabs .accordion-item > .accordion-header .accordion-button{
+
+    border-top-left-radius:0 !important;
+    border-top-right-radius:0 !important;
+  }
+  .mobileAccordion.itenary_tabs .safartabs .accordion-item {
+
+    border: 1px solid #0000004d !important;
+  } */
+
   .packageSfari .imagesSafari img{
 
     height: 230px;
@@ -1655,6 +1687,14 @@
 }
 
 @media only screen and (max-width: 576px) {
+  .form-wrapper .input-group2{
+
+    width: 100%;
+  }
+  .border_setgetting .form-wrapper{
+
+    width: 100%;
+  }
   .topSlider_tour .items_slider img{
 
     height: 200px;
