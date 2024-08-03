@@ -85,7 +85,7 @@ $recentposts = ArticleSearch::recentpost();
 
                             ]) ?>
                         </div>
-                        <div class="advertisment pt-md-5 ">
+                        <div class="advertisment pt-md-5 d-lg-block d-none">
                             <p class="text-center">ADVERTISMENT</p>
                             <div class="advertisment_box-2">
 
@@ -95,7 +95,7 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
                         <div class="row ">
                             <div class="col-12">
-                                <div class="topfilter d-flex justify-content-between align-items-center flex-wrap w-100 mb-2">
+                                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center flex-wrap w-100 mb-2">
                                     <div class="left_text">
                                         <p class="mb-0">There are currently <strong><?= count($models) ?> </strong> active shared safaris created by individuals</p>
                                     </div>
