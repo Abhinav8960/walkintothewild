@@ -26,6 +26,7 @@ class UserForm extends Model
     public $about;
     public $user_bio;
     public $account_type;
+    public $youtube_url;
 
     public $gender;
     public $date_of_birth;
@@ -45,6 +46,7 @@ class UserForm extends Model
             $this->x_url = $this->user_model->x_url;
             $this->insta_url = $this->user_model->insta_url;
             $this->website_url = $this->user_model->website_url;
+            $this->youtube_url = $this->user_model->youtube_url;
             $this->about = $this->user_model->about;
             $this->user_bio = $this->user_model->user_bio;
             $this->account_type = $this->user_model->account_type;
@@ -81,7 +83,7 @@ class UserForm extends Model
                 'targetClass' => User::className(), 'targetAttribute' => ['user_handle'],
                 'message' => 'This username has already been taken'
             ],
-            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url', 'website_url'], 'string'],
+            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url', 'website_url', 'youtube_url'], 'string'],
             [['about'], 'string'],
 
             [
@@ -118,7 +120,8 @@ class UserForm extends Model
             'user_bio' => 'You are',
             'gender' => 'Gender',
             'date_of_birth' => 'D.O.B',
-            'website_url' => 'Website Url'
+            'website_url' => 'Website Url',
+            'youtube_url' => 'Youtube Url',
 
         ];
     }
@@ -133,6 +136,7 @@ class UserForm extends Model
         $this->user_model->x_url = $this->x_url;
         $this->user_model->insta_url = $this->insta_url;
         $this->user_model->website_url = $this->website_url;
+        $this->user_model->youtube_url = $this->youtube_url;
         $this->user_model->about = $this->about;
         $this->user_model->user_bio = $this->user_bio;
         $this->user_model->account_type = $this->account_type;
