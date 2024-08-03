@@ -23,19 +23,17 @@ $this->params['title'] = $this->title;
                 <div class="row justify-content-center ">
                     <div class="col-xxl-11 margin_bottomfooter">
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-lg-12">
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between mb-4">
                                             <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Shared Safari Organized by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
-                                            <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                <a class="SeeAll" href="<?= Url::toRoute(['/profile/share-safari/viewall', 'user_handle' => $user->user_handle]) ?>">See All</a>
-                                            <?php } ?>
+
                                         </div>
 
                                         <div class="row gx-5">
-                                            <?php if ($organized_by) {
-                                                foreach ($organized_by as $share_safari) {
+                                            <?php if ($dataProvider->models) {
+                                                foreach ($dataProvider->models as $share_safari) {
                                             ?>
                                                     <div class="col-md-6 mb-4">
                                                         <div class="sharesafri-card">
@@ -92,13 +90,7 @@ $this->params['title'] = $this->title;
                                                                             <?php } ?>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-6">
-                                                                        <div class="safari text-center">
-                                                                            <div class="joinsafari">
 
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -106,12 +98,15 @@ $this->params['title'] = $this->title;
                                             <?php }
                                             } ?>
                                         </div>
+                                        <?php
+                                        echo \yii\widgets\LinkPager::widget([
+                                            'pagination' => $dataProvider->pagination,
+                                        ]);
+                                        ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
-                                <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
-                            </div>
+
 
                         </div>
                     </div>
