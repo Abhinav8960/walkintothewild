@@ -6520,7 +6520,7 @@ a.desc:after {
 
 .menunotification {
     position: absolute;
-    top: calc(100% + 4px);
+    top: calc(100% + -5px);
     right: 129px;
     min-height: 100px;
     background: #fff;
@@ -6530,13 +6530,14 @@ a.desc:after {
     visibility: hidden;
     transition: 300ms;
     z-index: 100;
-    width: 230px;
-    max-width: 230px;
-    padding: 10px;
+    width: auto;
+    max-width: 500px;
+    padding-bottom: 20px;
+    /* padding: 15px 10px; */
     border-radius: 10px;
 }
 
-.menunotification::before {
+/* .menunotification::before {
     content: '';
     position: absolute;
     top: -10px;
@@ -6546,13 +6547,60 @@ a.desc:after {
     background: #fff;
     transform: rotate(45deg);
     z-index: -1;
-}
+} */
 .menunotification.active {
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
 }
+.menunotification ul{
+
+    padding-left: 0;
+    list-style: none;
+   
+}
+.menunotification .notification-not-read,
+.menunotification .notification-read{
+
+    border-bottom:1px solid #f1f2f4;;
+    
+}
+.menunotification .notification-not-read a{
+
+color: #000 !important;
+font-weight: 500;
+background-color: transparent;
+text-overflow: ellipsis;
+display: inline-block;
+overflow: hidden;
+padding: 12px 18px;
+}
+
+.menunotification .notification-read a {
+  
+color: #7b8191 !important;
+padding: 12px 18px;
+font-weight:400;
+text-overflow: ellipsis;
+display: inline-block;
+overflow: hidden;
+}
+
+
 .notification{
 
     cursor: pointer;
+}
+
+.notification-not-read{
+
+background-color: #fff;
+color: #000;
+font-weight: 500;
+
+}
+
+.notification-read{
+
+    background-color: #d8d8d8;
 }

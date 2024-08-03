@@ -7,17 +7,18 @@ use yii\grid\GridView;
 
 <div class="container mt-5">
     <div class="row margin_bottomfooter">
-        <div class="col-12 d-flex align-items-center justify-content-between mb-4">
+        
+        <div class="col-md-7 offset-md-3">
+        <div class=" d-flex align-items-center justify-content-between mb-4">
             <h6 class="fs-3 fw-bold ">Notifications</h6>
         </div>
-        <div class="col-md-6 offset-md-3">
             <div class="card account-settingside" style="min-height:500px">
                 <div class="card-body p-4">
                     <h6 class="fs-5 fw-bold mb-3"> Recivied Notifications</h6>
                     <?php if ($models = $dataProvider->models) {
                         foreach ($models as $model) { ?>
                             <a href="<?= Url::toRoute(['/account/notification/view', 'id' => $model->id]) ?>" style="color:inherit;">
-                                <div class="row p-3 shadow-sm  bg-white rounded mb-3 <?= $model->noticeclass ?>">
+                                <div class="row p-3 shadow-sm   rounded mb-3 <?= $model->noticeclass ?>">
                                     <div class="col-9">
                                         <?= $model->notification_text ?>
                                     </div>

@@ -132,6 +132,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity) { ?>
 					<div class="notification pt-2 "><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification">
+						<h6 class="fs-5 fw-semibold px-3 pt-3 pb-3 border-bottom mb-3">Notifications</h6>
 						<?php
 						$notification_list = FrontendNotification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->identity->id])->orderby(['id' => SORT_DESC])->limit(6)->all();
 						?>
@@ -149,6 +150,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								echo '<li>No New Notification!</li>';
 							} ?>
 						</ul>
+						<div class="viewallNotification float-end pe-3 pt-2">
+						<a href="" class="follow_massge">View all notifications</a>
+						</div>
 					</div>
 				<?php } ?>
 
