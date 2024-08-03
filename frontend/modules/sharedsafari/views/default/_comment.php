@@ -119,7 +119,7 @@ use yii\helpers\Url;
             <?php } else {
             if (Yii::$app->user->id) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id) { ?>
+                if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id || $login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
                     <?= $this->render('_comment_form', ['model' => $model]) ?>
         <?php } else {
                     echo '<p class="px-3 pt-2">Please Join in for start Comment</p>';
