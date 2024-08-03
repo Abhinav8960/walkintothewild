@@ -72,7 +72,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <div class="tab-content_tour active">
                                             <div class="d-flex justify-content-between  mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Organized <span class="numberFont"><?= count($shared_safaries) ?></span> Shared Safari</h6>
-                                                <?php if (count($shared_safaries) >= 1) { ?>
+                                                <?php if (count($shared_safaries) >= 6) { ?>
                                                     <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/sharedsafariseeall', 'slug' => $operator->slug]) ?>">See All</a>
                                                 <?php } ?>
                                             </div>

@@ -677,4 +677,44 @@ class DefaultController extends FrontendBaseController
             ]
         );
     }
+
+    public function actionArticleall($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+
+        $model = new OperatorQuoteForm();
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+        }
+
+        $query = Article::find()->where([
+            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'status' => Article::STATUS_ACTIVE, 'user_id' => $operator->id
+        ]);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 6,
+            ],
+            'sort' => ['defaultOrder' => [
+                'id' => SORT_DESC
+            ]]
+        ]);
+
+
+        return $this->render(
+            'article',
+            [
+                'operator' => $operator,
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
 }
