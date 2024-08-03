@@ -94,6 +94,7 @@ return [
 
 
 
+    '/profile/share-safari-all/<user_handle>' => '/profile/share-safari/viewall',
     '/profile/share-safari/<user_handle>' => '/profile/share-safari/index',
     '/profile/activity/<user_handle>' => '/profile/activity/index',
     '/profile/photo/delete' => '/profile/photo/delete',

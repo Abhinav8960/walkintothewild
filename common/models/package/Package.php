@@ -2,10 +2,11 @@
 
 namespace common\models\package;
 
+use Yii;
+use common\models\User;
 use common\models\meta\MetaPackageRange;
 use common\models\operator\SafariOperator;
-use common\models\User;
-use Yii;
+use common\models\master\vehicle\MasterVehicle;
 
 /**
  * This is the model class for table "package".
@@ -163,6 +164,11 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     public function getSafarioperator()
     {
         return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
+    }
+
+    public function getMastervehicle()
+    {
+        return $this->hasOne(MasterVehicle::class, ['id' => 'master_vehicle_id']);
     }
 
 

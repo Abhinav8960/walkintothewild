@@ -31,7 +31,7 @@ use yii\web\View;
                     <tr>
                         <td> <?= $i; ?></td>
                         <td> <?php
-                                echo Html::dropDownList("ArticleSequence[$i]", $selectedArticleId, GeneralModel::articleoption($article_ids), [
+                                echo Html::dropDownList("ArticleSequence[$i]", $selectedArticleId, GeneralModel::articleoptionfeature($article_ids), [
                                     'class' => 'article-dropdown',
                                     'data-index' => $i,
                                     'prompt' => 'Select',

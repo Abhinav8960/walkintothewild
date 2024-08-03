@@ -23,6 +23,7 @@ use frontend\controllers\FrontendBaseController;
 use frontend\models\SafariOperatorRatingReportForm;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\package\Package;
+use yii\data\ActiveDataProvider;
 
 /**
  * DefaultController.
@@ -75,7 +76,7 @@ class DefaultController extends FrontendBaseController
             throw new NotFoundHttpException('The requested page does not exist.');
         }
 
-        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->limit(6)->all();
         $model = new OperatorQuoteForm();
 
         if (Yii::$app->user->identity) {
@@ -580,12 +581,139 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->id, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE])->all();
-        return $this->renderAjax(
+
+        $model = new OperatorQuoteForm();
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        }
+
+        $shared_safaries = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->id, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $shared_safaries,
+            'pagination' => [
+                'pageSize' => 6,
+            ],
+        ]);
+
+        return $this->render(
             'sharedsafariseeall',
             [
                 'operator' => $operator,
-                'shared_safaries' => $shared_safaries,
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+
+    public function actionPackageseeall($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $model = new OperatorQuoteForm();
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        }
+
+        $operator_packages = Package::find()->where(['owned_by_id' => $operator->id]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $operator_packages,
+            'pagination' => [
+                'pageSize' => 6,
+            ],
+        ]);
+
+
+        return $this->render(
+            'packageseeall',
+            [
+                'operator' => $operator,
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+    public function actionParkseeall($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $operator_parks,
+            'pagination' => [
+                'pageSize' => 6,
+            ],
+        ]);
+
+        $model = new OperatorQuoteForm();
+
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+        }
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/view',  'slug' => $slug]);
+        }
+
+        return $this->render(
+            'viewall',
+            [
+                'operator' => $operator,
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+    public function actionArticleall($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+
+        $model = new OperatorQuoteForm();
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
+            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+        }
+
+        $query = Article::find()->where([
+            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'status' => Article::STATUS_ACTIVE, 'user_id' => $operator->id
+        ]);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 6,
+            ],
+            'sort' => ['defaultOrder' => [
+                'id' => SORT_DESC
+            ]]
+        ]);
+
+
+        return $this->render(
+            'article',
+            [
+                'operator' => $operator,
+                'model' => $model,
+                'dataProvider' => $dataProvider,
             ]
         );
     }

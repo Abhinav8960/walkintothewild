@@ -57,6 +57,7 @@ class PackageForm extends \yii\base\Model
     public $type;
     public $gst_percentage;
     public $total_price;
+    public $master_vehicle_id;
 
     public $package_model;
     public $action_url;
@@ -96,6 +97,7 @@ class PackageForm extends \yii\base\Model
             $this->date_change_policy = $this->package_model->date_change_policy;
             $this->refund_policy = $this->package_model->refund_policy;
             $this->getting_there = $this->package_model->getting_there;
+            $this->master_vehicle_id = $this->package_model->master_vehicle_id;
 
             $this->type = $this->package_model->type;
             $this->gst_percentage = $this->package_model->gst_percentage;
@@ -122,10 +124,10 @@ class PackageForm extends \yii\base\Model
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
-            [['package_name', 'no_of_day'], 'required', 'on' => 'create'],
+            [['package_name', 'no_of_day', 'master_vehicle_id'], 'required', 'on' => ['create', 'update']],
             [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price'], 'integer'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price', 'master_vehicle_id'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
             [['package_feature', 'package_included', 'package_park', 'package_image', 'getting_there'], 'safe'],
@@ -155,7 +157,7 @@ class PackageForm extends \yii\base\Model
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
             'start_location', 'end_location', 'start_date', 'end_date', 'owned_by_id',
-            'type', 'gst_percentage', 'total_price'
+            'type', 'gst_percentage', 'total_price', 'master_vehicle_id'
         ];
         $scenarios['update'] = [
             'package_name', 'package_image', 'no_of_day', 'no_of_night', 'no_of_safari',
@@ -163,7 +165,7 @@ class PackageForm extends \yii\base\Model
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
             'start_location', 'end_location', 'start_date', 'end_date',
-            'type', 'gst_percentage', 'total_price'
+            'type', 'gst_percentage', 'total_price', 'master_vehicle_id'
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
@@ -201,6 +203,7 @@ class PackageForm extends \yii\base\Model
             'type' => 'Type',
             'gst_percentage' => 'GST Percentage',
             'total_price' => 'Total Price',
+            'master_vehicle_id' => 'Select Vehicle',
 
             'status' => 'Status',
         ];
@@ -249,6 +252,7 @@ class PackageForm extends \yii\base\Model
         $this->package_model->status = $this->status;
 
         $this->package_model->package_slug = $this->package_slug;
+        $this->package_model->master_vehicle_id = $this->master_vehicle_id;
 
         if ($this->package_model->package_slug == '') {
             $without_space_string = str_replace(' ', '-', strtolower($this->package_model->safarioperator->business_name));

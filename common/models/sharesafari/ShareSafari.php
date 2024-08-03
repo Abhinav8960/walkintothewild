@@ -153,9 +153,9 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function getOrganizedbyname()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return $this->user->name;
+            return $this->user ? $this->user->name : 'N/A';
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return isset($this->safarioperator->business_name) ? $this->safarioperator->business_name : "";
+            return isset($this->safarioperator) ? $this->safarioperator->businessname : "N/A";
         }
     }
 

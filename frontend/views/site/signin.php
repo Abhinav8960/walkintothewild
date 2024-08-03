@@ -43,7 +43,7 @@ $this->params['title'] = $this->title;
       <div class="modal-body px-5">
         <div class="row py-4">
           <div class="col-12 logindesign">
-            <?php $form = ActiveForm::begin([
+            <?php /* $form = ActiveForm::begin([
               'id' => 'login-form',
               'enableAjaxValidation' => true,
               'enableClientValidation' => false,
@@ -69,14 +69,13 @@ $this->params['title'] = $this->title;
             <div class="continue pt-5">
               <h6 class="fs-5 text-center pb-2 text-muted">Or continue with:</h6>
             </div>
-            <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end(); */ ?>
             <div class="btnssss-g">
               <?= \yii\authclient\widgets\AuthChoice::widget([
                 'baseAuthUrl' => ['site/auth'],
                 'popupMode' => false,
               ]), 'Google' ?>
             </div>
-
             <!-- <div class="btnssss-g">
               <a href="/site/auth?authclient=google">
                 <button class="googlelogin w-100 py-2  mb-3 d-flex align-items-center gap-2"> <img src="<?= $this->params['baseurl'] ?>/img/google-logo.5867462c.svg" width="25" alt="banner"> Google</button>
