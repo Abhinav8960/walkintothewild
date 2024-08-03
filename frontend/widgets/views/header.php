@@ -132,11 +132,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity) { ?>
 					<div class="notification pt-2 "><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
+
+					<div class="massge pt-2">
+						<a href="/chat"><i class="fa-solid fa-envelope"></i></a>
+					</div>
 				<?php } ?>
 
-				<div class="massge pt-2">
-					<a href="/chat"><i class="fa-solid fa-envelope"></i></a>
-				</div>
+
 				<div class="proilewrapper">
 					<div class="profile">
 						<div class="img-box2">

@@ -74,7 +74,7 @@ $this->params['title'] = $this->title;
                                                     </div>
                                                 </div>
                                             </div>
-                                
+
                                         </div>
                                     </div>
                                 </div>
@@ -83,7 +83,6 @@ $this->params['title'] = $this->title;
                                 <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
                             </div>
                         </div>
-
                     </div>
                 </div>
 

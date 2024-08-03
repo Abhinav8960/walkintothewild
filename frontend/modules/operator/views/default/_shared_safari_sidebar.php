@@ -6,13 +6,13 @@ use common\models\sharesafari\ShareSafari;
 $shared_safari_list = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'host_user_id' => $operator->id])->limit(3)->all();
 
 ?>
+<?php if ($shared_safari_list) { ?>
 
-<div class="request_quote mt-4">
-    <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
-        Organized Safari <span><?= count($shared_safari_list); ?></span></button>
-    <div class="interst_wrapper py-4 px-md-5 bg-white">
+    <div class="request_quote mt-4">
+        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+            Organized Safari <span><?= count($shared_safari_list); ?></span></button>
+        <div class="interst_wrapper py-4 px-md-5 bg-white">
 
-        <?php if ($shared_safari_list) { ?>
             <div class="row justify-content-center">
                 <?php
                 foreach ($shared_safari_list as $share_safari) {
@@ -94,6 +94,6 @@ $shared_safari_list = ShareSafari::find()->where(['status' => ShareSafari::STATU
                     </div>
                 </div>
             </div>
-        <?php } ?>
+        </div>
     </div>
-</div>
+<?php } ?>

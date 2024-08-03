@@ -108,7 +108,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             <div class="col-xxl-4 col-lg-4">
                                 <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
 
-                                <?= $this->render('_shared_safar_sidebar', ['operator' => $operator]) ?>
+                                <?= $this->render('_shared_safari_sidebar', ['operator' => $operator]) ?>
 
                             </div>
                         </div>
