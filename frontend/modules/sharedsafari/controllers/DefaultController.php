@@ -228,6 +228,7 @@ class DefaultController extends FrontendBaseController
                 'share_safari' => $share_safari,
                 'model' => $model,
                 'replymodel' => $replymodel,
+                'login_safarioperator' => $login_safarioperator,
             ]);
         } else {
 

@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <?php } ?>
                                         </h5>
                                         <div class="date_bx">
-                                            <h6><span style="color:black;">Fixed Departure</span>  <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
+                                            <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
                                         <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
 
@@ -386,10 +386,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <?php if ($intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all()) {
                             foreach ($intrested_users as $intrested_user) {
                         ?>
-                                <div class="profileavtar">
-                                    <img src="<?= $intrested_user->user && $intrested_user->user->avatar <> '' ? $intrested_user->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
-                                </div>
-
+                                <?php if ($user_intersted = $intrested_user->user) { ?>
+                                    <div class="profileavtar">
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>">
+                                            <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
+                                        </a>
+                                    </div>
+                                <?php } ?>
                         <?php }
                         } ?>
                     </div>

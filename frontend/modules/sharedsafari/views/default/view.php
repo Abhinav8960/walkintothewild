@@ -262,7 +262,7 @@ $this->params['title'] = $this->title;
 <section class="safari_wrapper margin_bottomfooter pt-3">
     <div class="container-lg">
         <div class="row mb-5 pb-5">
-            <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+            <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
 
 
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
@@ -276,10 +276,13 @@ $this->params['title'] = $this->title;
                         <?php if ($intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all()) {
                             foreach ($intrested_users as $intrested_user) {
                         ?>
-                                <div class="profileavtar">
-                                    <img src="<?= $intrested_user->user && $intrested_user->user->avatar <> '' ? $intrested_user->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
-                                </div>
-
+                                <?php if ($user_intersted = $intrested_user->user) { ?>
+                                    <div class="profileavtar">
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>">
+                                            <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
+                                        </a>
+                                    </div>
+                                <?php } ?>
                         <?php }
                         } ?>
                     </div>
