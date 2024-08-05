@@ -84,10 +84,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
-                        <div class="pakageCost text-center mb-3">
+                            <div class="pakageCost text-center mb-3">
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
                             </div>
-                           <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
+                            <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
                                 <div class="right_button mb-2 w-100 text-center">
 
                                     <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
@@ -99,6 +99,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="btns-safaries">
                                     <?php if ($share_safari->status == 2) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
+                                    <?php } else if ($share_safari->status == 3) { ?>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>
                                         <?php } else {
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
@@ -193,7 +195,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                     
+
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
                         <div class="col-lg-6">
@@ -251,6 +253,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="btns-safaries">
                                     <?php if ($share_safari->status == 2) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
+                                    <?php } else if ($share_safari->status == 3) { ?>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>
                                         <?php } else {
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
