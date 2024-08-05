@@ -101,7 +101,9 @@ return [
     '/profile/photo/validate' => '/profile/photo/validate',
     '/profile/photo/create' => '/profile/photo/create',
     '/profile/photo/<user_handle>' => '/profile/photo/index',
+    '/profile/photo/photoseeall/<user_handle>' => '/profile/photo/photoseeall',
     '/profile/contribution/<user_handle>' => '/profile/contribution/index',
+
 
     '/profile/search' => '/profile/search/index',
     '/profile/search/blocked/<user_handle>' => '/profile/search/blocked',
