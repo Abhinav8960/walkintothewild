@@ -6,7 +6,7 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="bg-white p-3 rounded-3 mb-5">
+<div class="bg-white p-3 rounded-3 mb-4">
 
     <div class="comments_safari border-0 ">
         <div class="commentsOther  position-relative ps-3 ">

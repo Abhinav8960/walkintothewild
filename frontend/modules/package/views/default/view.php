@@ -258,7 +258,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="safari_wrapper margin_bottomfooter ">
     <div class="container-lg">
-        <div class="row mb-5  mt-4 mobileAccordion itenary_tabs px-3">
+        <div class="row mb-5  mt-4 mobileAccordion itenary_tabs px-md-3">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
                 <div class="tab-content accordion " id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -334,6 +334,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
+               
+                <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
                 <div class="desclaimers pb-3">
                     <div class="itenary-title">
                         <h6 class="fs-5 pb-2">Disclaimer</h6>
@@ -348,7 +350,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </ul>
                     </div>
                 </div>
-                <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
             </div>
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <?php if (Yii::$app->user->identity) { ?>
