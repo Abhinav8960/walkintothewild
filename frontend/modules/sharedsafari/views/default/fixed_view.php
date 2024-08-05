@@ -229,7 +229,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-lg-end gap-2 align-items-center mt-lg-0 mt-3">
+                            <div class="d-flex justify-content-lg-end flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
                                 <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
                                         <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
@@ -242,7 +242,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         ]) ?>
                                     <?php } ?>
                                 </div> -->
-                                <div class="right_button ">
+                                <div class="right_button mb-1">
 
                                     <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
                                         <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
