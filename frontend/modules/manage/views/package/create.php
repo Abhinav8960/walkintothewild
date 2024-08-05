@@ -186,6 +186,19 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                     ])->label('Package Feature') ?>
                                 </div>
 
+                                <div class="col-md-3">
+                                    <?= $form->field($model, 'master_vehicle_id', [
+                                        'labelOptions' => ['class' => 'Modal_label']
+                                    ])->widget(\kartik\select2\Select2::classname(), [
+                                        'data' => GeneralModel::vehicleoption(),
+                                        'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                                        'options' => ['placeholder' => 'Select Vehicle', 'multiple' => false],
+                                        'pluginOptions' => [
+                                            'allowClear' => true
+                                        ],
+                                    ]) ?>
+                                </div>
+
                                 <?php
                                 if (!empty($model->package_model->id)) { ?>
                                     <div class="col-md-6">
