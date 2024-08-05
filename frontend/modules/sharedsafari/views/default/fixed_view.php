@@ -85,7 +85,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
                             <div class="pakageCost text-center mb-3">
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
                             <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
                                 <div class="right_button mb-2 w-100 text-center">
@@ -225,7 +225,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <div class="col-lg-2 mt-lg-0 mt-3">
                             <div class="pakageCost text-lg-center d-sm-block  d-lg-block d-md-none">
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
                         </div>
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
