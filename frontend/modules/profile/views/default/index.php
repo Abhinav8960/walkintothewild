@@ -104,7 +104,7 @@ $this->params['title'] = $this->title;
                                                                 </div>
                                                                 <img src="<?= isset($user_experience->file) ? $user_experience->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                                                                 <div class="footer_safariname">
-                                                                    <h6 class=""><?= isset($user_experience->park_id) ? GeneralModel::safariparkoption()[$user_experience->park_id] : '' ?></h6>
+                                                                    <h6 class=""><?= isset(GeneralModel::safariparkoption()[$user_experience->park_id]) ? GeneralModel::safariparkoption()[$user_experience->park_id] : '' ?></h6>
                                                                 </div>
                                                             </div>
 
