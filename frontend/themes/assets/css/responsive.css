@@ -104,6 +104,12 @@
   }
 }
 @media (max-width: 1500px) {
+  .safari-box h3 {
+    position: relative;
+    display: block;
+    font-size:18px;
+    line-height: 25px;}
+
   /* .title_safari.JoinPadding{
 
     flex-direction: column;
@@ -650,7 +656,7 @@
   }
   .wrapper-skybgsafri .images_tour.select_safrai{
 
-    height: auto;
+    height: 100%;
   }
 
   /* .placeholder_select {
