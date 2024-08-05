@@ -120,8 +120,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
             </div>
         </div>
-        <div class="row pt-5 itenary_tabs justify-content-center">
-            <div class="col-xxl-11 safartabs d-flex  justify-content-between align-items-center">
+        <div class="row pt-5 itenary_tabs justify-content-center position-relative" >
+            <div class="col-xxl-11 safartabs d-flex  justify-content-between align-items-center position-relative">
                 <ul class="nav nav-tabs slider_addmobile ">
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safari</a></li>
@@ -152,8 +152,40 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     } ?>
                 </ul>
                 <div class="sharerbtn">
-                    <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn mb-2 mobile-hidelink"><i class="fa-solid fa-share"></i> Share Profile</button>
-                    <button value="" class="follow_massge rounded-2 text-capitalize shareBtn mb-2 d-lg-none"> More</button>
+                    <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn mb-2 mobile-hidelink "><i class="fa-solid fa-share"></i> Share Profile</button>
+                    <button value="" class="follow_massge rounded-2 text-capitalize  mb-2 d-lg-none mobile-more px-3"> More <i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+            </div>
+            <div class="moreviewMobile">
+            <ul class="nav nav-tabs slider_addmobile flex-column">
+                    <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
+                    <?php if ($user->contribution_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
+                        <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
+                    <?php } elseif ($user->contribution_privacy == 3 && $user->userfollowers) {  ?>
+                        <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
+                    <?php } else { ?>
+                        <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
+                    <?php } ?>
+
+                    <?php if ($user->photo_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
+                        <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
+                    <?php } elseif ($user->photo_privacy == 3 && $user->userfollowers) { ?>
+                        <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
+                    <?php } else { ?>
+                        <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
+                    <?php } ?>
+
+
+
+                    <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
+                        if ($user->is_safari_operator == 1) { ?>
+                            <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link  <?= isset($business) ? $business : '' ?> " target="_blank">Manage Safari Tour Business <i class="fa fa-external-link"></i></a></li>
+                    <?php }
+                    } ?>
+                </ul>
+                <div class="sharerbtn">
+                    <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn mb-2 "><i class="fa-solid fa-share"></i> Share Profile</button>
+                  
                 </div>
             </div>
         </div>
@@ -340,3 +372,20 @@ $script = <<<JS
 JS;
 $this->registerJs($script);
 ?>
+
+<script>
+    let profile = document.querySelector('.mobile-more');
+    let menu = document.querySelector('.moreviewMobile');
+
+    profile.onclick = function(event) {
+        event.stopPropagation(); // Prevents the click event from bubbling up to the document
+        menu.classList.toggle('active');
+    }
+
+    document.onclick = function(event) {
+        // Check if the clicked element is not the profile button or the menu
+        if (!profile.contains(event.target) && !menu.contains(event.target)) {
+            menu.classList.remove('active');
+        }
+    }
+</script>
