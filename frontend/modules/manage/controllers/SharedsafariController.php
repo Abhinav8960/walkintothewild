@@ -113,7 +113,6 @@ class SharedsafariController extends FrontendBaseController
         $safari_operator = $this->module->operatormodel();
         $shared_safari_departure_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         $model = new CreateDepartureForm($shared_safari_departure_model);
-        $model->status = ShareSafari::STATUS_ACTIVE;
         $model->action_url = '/manage/sharedsafari/update-fixed-departure?slug=' . $slug . '';
         $model->action_validate_url = '/manage/sharedsafari/update-departure-validate?id=' . $shared_safari_departure_model->id . '';
 
