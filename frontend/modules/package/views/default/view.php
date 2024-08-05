@@ -87,9 +87,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <h6 class="fs-3 mb-0 fw-bold text-center"><img src="/assets/f9595a2a/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= $package->total_price ?></h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                <div class="message">
-                                    <a href="" class="follow_massge d-block w-100 text-center">Message</a>
-                                </div>
+                                    <div class="message">
+                                        <a href="" class="follow_massge d-block w-100 text-center">Message</a>
+                                    </div>
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button> -->
                                 </div>
                             </div>
@@ -211,8 +211,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button> -->
                                     <div class="message">
-                                    <a href="" class="follow_massge">Message</a>
-                                </div>
+                                        <a href="" class="follow_massge">Message</a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -272,7 +272,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <h6 class="fs-6 fw-bold mb-4">ABOUT TRIP / OVERVIEW</h6>
                                     </div>
                                     <div class="itenary_text">
-                                        <p><?= $package->package_description ?></p>
+                                        <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -334,7 +334,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
-               
+
                 <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
                 <div class="desclaimers pb-3">
                     <div class="itenary-title">
