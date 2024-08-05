@@ -956,6 +956,9 @@
   }
 }
 @media only screen and (max-width: 1200px) {
+  .sent_btn {
+    padding: 4px 25px;
+}
   .searchSafari_parks .parks_body .seelctes_text p {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1712,6 +1715,14 @@ display: none;
 }
 
 @media only screen and (max-width: 576px) {
+  .title_tours h3{
+
+    margin-bottom: 10px;
+  }
+  .legends_bx p{
+
+    font-size: 12px;
+  }
   .wrapper-skybgsafri{
 
     padding-left: 5px;

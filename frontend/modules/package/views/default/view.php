@@ -258,7 +258,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="safari_wrapper margin_bottomfooter ">
     <div class="container-lg">
-        <div class="row mb-5  mt-4 mobileAccordion itenary_tabs px-3">
+        <div class="row mb-5  mt-4 mobileAccordion itenary_tabs px-md-3">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
                 <div class="tab-content accordion " id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">

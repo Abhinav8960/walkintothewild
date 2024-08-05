@@ -32,7 +32,7 @@ use common\models\operator\SafariOperatorFollow;
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 border_bottom_mobile pt-lg-0 pt-3">
+                <div class="col-lg-9  pt-lg-0 pt-3">
                     <div class="provider_details ps-lg-3">
                         <div class="title_tours d-flex justify-content-between align-items-center gap-md-2 gap-xxl-3">
                             <h3><?= $operator->businessname ?></h3>

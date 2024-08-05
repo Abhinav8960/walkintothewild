@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-md-8 col-xxl-9 col-xl-9 pt-lg-0 pt-2 pb-md-0 pb-3">
+    <div class="col-lg-8 col-md-8 col-xxl-9 col-xl-8 pt-lg-0 pt-2 pb-md-0 pb-3">
         <div class="tab-content_tour active " id="tab21">
             <!-- Safari Parks content goes here -->
             <div class="row">

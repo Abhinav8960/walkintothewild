@@ -170,9 +170,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 </section>
 
 
-<section class="safariduring_sesons innerpage">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
 
 
 <?php
