@@ -212,6 +212,12 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                         'labelOptions' => ['class' => 'Modal_label']
                                     ])->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <?= $form->field($model, 'package_itinerary_overview', [
+                                        'labelOptions' => ['class' => 'Modal_label']
+                                    ])->textarea(['rows' => '2', 'placeholder' => 'Itinerary Detail '])->label('Overview') ?>
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -238,6 +244,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 <?php
 $script = <<< JS
 editor('packageform-package_description');
+editor('packageform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>

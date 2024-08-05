@@ -28,7 +28,7 @@ $this->params['title'] = $this->title;
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between mb-4">
-                                            <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Shared Safari Organized by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
+                                            <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $dataProvider->getTotalCount() ?> Shared Safari Organized by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
 
                                         </div>
 
@@ -42,7 +42,7 @@ $this->params['title'] = $this->title;
                                             <?php }
                                             } ?>
                                             <div class="d-flex justify-content-between mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Shared Safari Joined by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
+                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $joindedProvider->getTotalCount() ?> Shared Safari Joined by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
 
                                             </div>
                                             <?php if ($joindedProvider->models) {
