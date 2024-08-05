@@ -6604,3 +6604,52 @@ font-weight: 500;
 
     background-color: #d8d8d8;
 }
+
+
+
+.moreviewMobile {
+    position: absolute;
+    top: calc(100% + 0px);
+    right: 53px;
+    min-height: 100px;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: 300ms;
+    z-index: 100;
+    width: auto;
+    max-width: 500px;
+    padding-bottom: 20px;
+    padding: 15px 16px;
+    border-radius: 10px;
+}
+.moreviewMobile .nav-tabs .nav-link{
+    color: #1E1E1E !important;
+    border: 0 !important;
+    background: #fff !important;
+    opacity: 1 !important;
+    font-weight: 500 !important;
+    padding: 0 !important;
+    padding-bottom: 10px !important;
+}
+
+
+
+/* .menunotification::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 40px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    transform: rotate(45deg);
+    z-index: -1;
+} */
+.moreviewMobile.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}

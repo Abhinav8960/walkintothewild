@@ -832,6 +832,10 @@
 }
 
 @media only screen and (min-width: 991px) {
+  .moreviewMobile{
+
+    display: none;
+  }
   .terms-contionsSplasescreen{
 
     background-image: url(../img/spalshscreendesktop.png);
@@ -1747,6 +1751,10 @@ display: none;
 }
 
 @media only screen and (max-width: 576px) {
+  .itenary_tabs .nav-tabs .nav-link{
+
+    font-size: 14px;
+  }
 
   .title_tours h3{
 
