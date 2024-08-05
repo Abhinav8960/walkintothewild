@@ -202,7 +202,6 @@ $this->params['title'] = $this->title;
                         </div>
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4">
-
                         <div class="col-lg-6">
                             <div class="social-share flex-wrap d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
@@ -263,8 +262,6 @@ $this->params['title'] = $this->title;
     <div class="container-lg">
         <div class="row mb-5 pb-5">
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
-
-
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
