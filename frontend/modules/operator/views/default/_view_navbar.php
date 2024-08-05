@@ -12,22 +12,22 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
 <div class="row  mt-4 pt-4 itenary_tabs justify-content-center">
     <div class="col-lg-12 col-xl-9 safartabs position-relative">
         <ul class="nav nav-tabs  gap-2" role="tablist">
-            <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+            <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>">
                     Shared Safari</i>
                 </a></li>
-            <li class="nav-item"><a class="nav-link <?= $active == 'package' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+            <li class="nav-item"><a class="nav-link <?= $active == 'package' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug]) ?>">
                     Packages</i>
                 </a></li>
-            <li class="nav-item"><a class="nav-link <?= $active == 'park' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+            <li class="nav-item"><a class="nav-link <?= $active == 'park' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>">
                     Parks</i>
                 </a></li>
-            <li class="nav-item"><a class="nav-link <?= $active == 'reviewlist' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+            <li class="nav-item"><a class="nav-link <?= $active == 'reviewlist' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>">
                     Review</i>
                 </a></li>
-            <li class="nav-item"><a class="nav-link <?= $active == 'article' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+            <li class="nav-item"><a class="nav-link <?= $active == 'article' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug]) ?>">
                     Article</i>
                 </a></li>
-            <li class="nav-item"><a class="nav-link <?= $active == 'contact' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/contact', 'slug' => $operator->slug, '#' => 'memberview']) ?>">
+            <li class="nav-item"><a class="nav-link <?= $active == 'contact' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/contact', 'slug' => $operator->slug]) ?>">
                     Contact</i>
                 </a></li>
         </ul>
@@ -128,4 +128,3 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
         /* Change color on hover */
     }
 </style>
-
