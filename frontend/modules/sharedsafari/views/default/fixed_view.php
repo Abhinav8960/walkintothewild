@@ -285,7 +285,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="col-lg-12 col-xl-11 safartabs position-relative">
                         <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">Discussion</button>
+                                <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">DISCUSSION</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
