@@ -76,7 +76,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="col-xxl-3">
 
                                 </div>
-                                <div class="col-xxl-9 col-lg-12 col-xl-9">
+                                <div class="col-xxl-9 col-lg-12 col-xl-12">
                                     <div class="title_safari JoinPadding d-flex justify-content-center justify-content-md-between align-items-center flex-wrap">
                                         <h4 class="text-center ps-4">Discover and Join 100+ Shared Safaris</h4>
                                         <div class="joinshareView mt-md-0 mt-3 pe-lg-4">

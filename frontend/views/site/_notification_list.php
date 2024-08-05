@@ -22,7 +22,7 @@ $notification_list = FrontendNotification::find()->where(['status' => 1, 'user_i
             </li>
     <?php }
     } else {
-        echo '<li>No New Notification!</li>';
+        echo '<li class="px-3">No New Notification!</li>';
     } ?>
 </ul>
 <div class="viewallNotification float-end pe-3 pt-2">

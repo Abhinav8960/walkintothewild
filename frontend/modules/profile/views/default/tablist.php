@@ -15,7 +15,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
                 <?php if (Yii::$app->user->id == $user->id) { ?>
                     <label for="coverImageUpload" class="coverbtns">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Upload Cover Picture
+                        <i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload Cover Picture</span>
                     </label>
                     <input type="file" id="coverImageUpload" style="display: none;" accept="image/*">
                 <?php } ?>
@@ -109,8 +109,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="row pt-5 itenary_tabs justify-content-center">
-            <div class="col-xxl-11 safartabs d-flex justify-content-between">
-                <ul class="nav nav-tabs">
+            <div class="col-xxl-11 safartabs d-flex  justify-content-between">
+                <ul class="nav nav-tabs slider_addmobile ">
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safari</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
@@ -301,6 +301,37 @@ $script = <<<JS
                     }
                 });
           });
+        //   function initializeOwlCarousel() {
+        //     if ($(window).width() <= 991) {
+        //         $('.slider_addmobile').addClass('owl-carousel');
+        //         $('.slider_addmobile').owlCarousel({
+        //             loop: true,
+        //             margin: 10,
+        //             nav: false,
+        //             dots: false,
+        //             responsive: {
+        //                 0: {
+        //                     items: 2
+        //                 },
+        //                 600: {
+        //                     items: 4
+        //                 },
+        //                 991: {
+        //                     items: 4
+        //                 }
+        //             }
+        //         });
+        //     } else {
+        //         $('.slider_addmobile').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+        //         $('.slider_addmobile').find('.owl-stage-outer').children().unwrap();
+        //     }
+        // }
+
+        // initializeOwlCarousel();
+
+        // $(window).resize(function() {
+        //     initializeOwlCarousel();
+        // });
     });
 JS;
 $this->registerJs($script);

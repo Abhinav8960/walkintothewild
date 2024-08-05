@@ -413,7 +413,7 @@ a {
 .shareimg {
 
     width: 100%;
-    height: 200px;
+    height: 170px;
     -o-object-fit: cover;
     object-fit: cover;
 }
@@ -488,7 +488,7 @@ a {
 
 .sharesafri-card.tourpackage .shareimg img {
 
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .JoinPadding {

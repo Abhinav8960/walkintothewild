@@ -9,12 +9,12 @@ $this->title = $user->name . ' | Article';
 $this->params['title'] = $this->title;
 ?>
 <section class="profile-wrapper">
-    <div class="container mb-5">
+    <div class="container-lg mb-5">
         <?= $this->render('@frontend/modules/profile/views/default/tablist', ['article' => 'active', 'user' => $user]) ?>
     </div>
 </section>
 <section>
-    <div class="container ">
+    <div class="container-lg ">
         <div class="row justify-content-center ">
             <div class="col-xxl-11 margin_bottomfooter">
                 <div class="row">

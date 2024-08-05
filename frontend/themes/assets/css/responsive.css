@@ -104,11 +104,11 @@
   }
 }
 @media (max-width: 1500px) {
-  .title_safari.JoinPadding{
+  /* .title_safari.JoinPadding{
 
     flex-direction: column;
     justify-content: center;
-  }
+  } */
   .title_safari.JoinPadding .joinshareView{
 
     margin-top: 14px!important;
@@ -254,7 +254,7 @@
   }
 
   .safartabs .nav-tabs .nav-link {
-    padding: 7px 42px;
+    padding: 7px 35px;
   }
 
   .articals_wrapper.margin-setposi {
@@ -300,7 +300,7 @@
   }
 
   .sharesafribg {
-    height: 420px;
+    height: 440px;
   }
 }
 
@@ -1367,6 +1367,15 @@ margin-bottom: 0 !important;
 }
 
 @media only screen and (max-width: 767px) {
+  .coverbtns span{
+
+display: none;
+  }
+  .coverbtns{
+
+    padding: 6px 11px;
+  }
+
 
   .terms-contionsSplasescreen{
 

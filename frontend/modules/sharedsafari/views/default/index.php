@@ -179,7 +179,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-4">
 
                             <?php if ($models = $dataProvider->models) {
                                 foreach ($models as $share_safari) {
