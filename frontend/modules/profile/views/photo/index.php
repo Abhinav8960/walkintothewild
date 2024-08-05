@@ -37,12 +37,20 @@ $this->params['title'] = $this->title;
                                                 if ($user) {
                                                 ?>
                                                     <div class="col-md-4 gap-2  mb-2">
+                                                        <div class="d-flex justify-content-between mb-4">
+                                                            <h6 class="fs-6  mb-0" style="padding-bottom: 0 !important;">Display Picture</h6>
+
+                                                        </div>
                                                         <div class="parksImgireview h-100 position-relative">
                                                             <img src="<?= isset($user->profileimage) <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
                                                         </div>
 
                                                     </div>
                                                     <div class="col-md-8 gap-2  mb-2">
+                                                        <div class="d-flex justify-content-between mb-4">
+                                                            <h6 class="fs-6  mb-0" style="padding-bottom: 0 !important;">Cover Picture</h6>
+
+                                                        </div>
                                                         <div class="parksImgireview h-100 position-relative">
                                                             <img src="<?= isset($user->cover_image) <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
                                                         </div>
