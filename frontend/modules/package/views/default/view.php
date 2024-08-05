@@ -51,11 +51,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-lg-4 col-md-3">
-                                    <div class="images_tour select_safrai">
+                                    <div class="images_tour select_safrai ">
                                         <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
                                     </div>
                                 </div>
-                                <div class="col-lg-8 col-md-9 pt-sm-3 pt-lg-0 pt-3">
+                                <div class="col-lg-8 col-md-9 pt-sm-3 pt-md-0 pt-3">
                                     <div class="safrititles">
                                         <h5 class="fs-4"><?= $package->package_name ?>
                                             <?php
@@ -84,11 +84,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-md-4 d-md-block d-lg-none d-none">
                             <div class="text-left">
                                 <div class="pakageCost">
-                                    <h6 class="fs-3 mb-0 fw-bold"><img src="/assets/f9595a2a/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= $package->total_price ?></h6>
+                                    <h6 class="fs-3 mb-0 fw-bold text-center"><img src="/assets/f9595a2a/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= $package->total_price ?></h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                 <div class="message">
-                                    <a href="" class="follow_massge">Message</a>
+                                    <a href="" class="follow_massge d-block w-100 text-center">Message</a>
                                 </div>
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button> -->
                                 </div>
