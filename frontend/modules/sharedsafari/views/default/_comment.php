@@ -48,10 +48,10 @@ use yii\helpers\Url;
                                     <div class="requestContact d-flex gap-2 align-items-center">
                                         <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?></h6>
                                         <!-- <?php if (Yii::$app->user->identity) {
-                                            if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
+                                                    if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
                                                 <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>
                                         <?php }
-                                        } ?> -->
+                                                } ?> -->
                                     </div>
                                     <p><?= $comments->comment ?></p>
                                     <?php if (Yii::$app->user->identity) {
@@ -115,8 +115,10 @@ use yii\helpers\Url;
             </div>
         </div>
         <?php if ($share_safari->status == 2) {
-            echo '<p class="px-3 pt-2">Comment Closed for this Safari...</p>' ?>
-            <?php } else {
+            echo '<p class="px-3 pt-2">Comment Closed for this Safari...</p>';
+        } elseif ($share_safari->status == 3) {
+            echo '<p class="px-3 pt-2">Comment Closed</p>';
+        } else {
             if (Yii::$app->user->id) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                 if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id || ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id)) { ?>
