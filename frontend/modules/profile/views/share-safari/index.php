@@ -37,82 +37,7 @@ $this->params['title'] = $this->title;
                                                 foreach ($dataProvider->models as $share_safari) {
                                             ?>
                                                     <div class="col-md-4 mb-4">
-                                                        <div class="sharesafri-card">
-                                                            <div class="flotingdate">
-                                                                <div class="icons text-center">
-                                                                    <p class="mb-0"><?= date('M', strtotime($share_safari->start_date)) ?></p>
-                                                                    <p class="mb-0"><?= date('d', strtotime($share_safari->start_date)) ?></p>
-                                                                </div>
-                                                            </div>
-                                                            <div class="shareimg">
-                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
-                                                            </div>
-                                                            <div class="card_body">
-                                                                <div class="top_seats">
-                                                                    <div class="safari d-flex justify-content-between ">
-                                                                        <div class="safarinum d-flex gap-2 align-items-center ">
-                                                                            <p class="text_safari">SAFARI</p>
-                                                                            <h6 class="number-safari"><?= $share_safari->no_of_safari ?></h6>
-
-                                                                        </div>
-                                                                        <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                                            <p class="text_safari">SEATS</p>
-                                                                            <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="titleDate">
-                                                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= $share_safari->park->title ?></a></h6>
-                                                                    <div class="orgnizer">
-                                                                        <p>Organized by: <strong><?= $share_safari->user->name ?></strong></p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="footer_card row pb-2 px-2 align-items-center">
-                                                                    <div class="col-6">
-                                                                        <div class="users">
-                                                                            <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
-                                                                                $count = $share_safari->getIntrested()->count();
-                                                                                $avatar_count = 3;
-                                                                                foreach ($interests as $interest) {
-                                                                            ?>
-                                                                                    <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
-                                                                                <?php
-                                                                                };
-                                                                                $count = $share_safari->getIntrested()->count();
-                                                                                $avatar_count = 3;
-                                                                                $data = $count - $avatar_count;
-                                                                                if ($data > 3) {  ?>
-                                                                                    <div class="roundes_countuser">
-                                                                                        <?= $data ?>+
-                                                                                    </div>
-                                                                                <?php }
-                                                                            } else { ?>
-                                                                                <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-6">
-                                                                        <div class="safari text-center">
-                                                                            <div class="joinsafari">
-                                                                                <?php if ($share_safari->status == 2) { ?>
-                                                                                    <a href="#">Closed Safari</a>
-                                                                                    <?php } else {
-                                                                                    if (Yii::$app->user->identity) {
-                                                                                        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                                                                                        if ($share_safari_intrested) { ?>
-                                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug]) ?>" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;" data-method="POST">Leave Safari</a>
-                                                                                        <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                                                                            <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug]) ?>" data-method="POST">Join Safari</a>
-                                                                                <?php  }
-                                                                                    }
-                                                                                } ?>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                     </div>
                                             <?php }
                                             } ?>
@@ -121,87 +46,12 @@ $this->params['title'] = $this->title;
 
                                             </div>
                                             <?php if ($joindedProvider->models) {
-                                                foreach ($joindedProvider->models as $share_safari) {
-                                                    if ($shared_safari = $share_safari->sharesafari) {
+                                                foreach ($joindedProvider->models as $shared_safari) {
+                                                    if ($share_safari = $shared_safari->sharesafari) {
 
                                             ?>
                                                         <div class="col-md-4 mb-4">
-                                                            <div class="sharesafri-card">
-                                                                <div class="flotingdate">
-                                                                    <div class="icons text-center">
-                                                                        <p class="mb-0"><?= date('M', strtotime($shared_safari->start_date)) ?></p>
-                                                                        <p class="mb-0"><?= date('d', strtotime($shared_safari->start_date)) ?></p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="shareimg">
-                                                                    <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari->slug]) ?>"><img src="<?= $shared_safari->sharedimagepath ? $shared_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
-                                                                </div>
-                                                                <div class="card_body">
-                                                                    <div class="top_seats">
-                                                                        <div class="safari d-flex justify-content-between ">
-                                                                            <div class="safarinum d-flex gap-2 align-items-center ">
-                                                                                <p class="text_safari">SAFARI</p>
-                                                                                <h6 class="number-safari"><?= $shared_safari->no_of_safari ?></h6>
-
-                                                                            </div>
-                                                                            <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                                                <p class="text_safari">SEATS</p>
-                                                                                <h6 class="number-safari"><?= $shared_safari->share_seat ?></h6>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="titleDate">
-                                                                        <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari->slug]) ?>"><?= isset($shared_safari->park) ? $shared_safari->park->title : '' ?></a></h6>
-                                                                        <div class="orgnizer">
-                                                                            <p>Organized by: <strong><?= isset($shared_safari->user) ? $shared_safari->user->name : '' ?></strong></p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="footer_card row pb-2 px-2 align-items-center">
-                                                                        <div class="col-6">
-                                                                            <div class="users">
-                                                                                <?php if ($interests = $shared_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
-                                                                                    $count = $shared_safari->getIntrested()->count();
-                                                                                    $avatar_count = 3;
-                                                                                    foreach ($interests as $interest) {
-                                                                                ?>
-                                                                                        <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
-                                                                                    <?php
-                                                                                    };
-                                                                                    $count = $shared_safari->getIntrested()->count();
-                                                                                    $avatar_count = 3;
-                                                                                    $data = $count - $avatar_count;
-                                                                                    if ($data > 3) {  ?>
-                                                                                        <div class="roundes_countuser">
-                                                                                            <?= $data ?>+
-                                                                                        </div>
-                                                                                    <?php }
-                                                                                } else { ?>
-                                                                                    <img src="<?= $shared_safari->user && $shared_safari->user->avatar <> '' ? $shared_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
-                                                                                <?php } ?>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-6">
-                                                                            <div class="safari text-center">
-                                                                                <div class="joinsafari">
-                                                                                    <?php if ($shared_safari->status == 2) { ?>
-                                                                                        <a href="#">Closed Safari</a>
-                                                                                        <?php } else {
-                                                                                        if (Yii::$app->user->identity) {
-                                                                                            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $shared_safari->id, 'status' => 1])->limit(1)->one();
-                                                                                            if ($share_safari_intrested) { ?>
-                                                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $shared_safari->slug]) ?>" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;" data-method="POST">Leave Safari</a>
-                                                                                            <?php } else if ($shared_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $shared_safari->slug]) ?>" data-method="POST">Join Safari</a>
-                                                                                    <?php  }
-                                                                                        }
-                                                                                    } ?>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                         </div>
                                             <?php }
                                                 }
