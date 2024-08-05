@@ -64,7 +64,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         if ($user->is_safari_operator != 1 && in_array($user->account_type, [2, 3])) {
                             $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->one();
                             if ($business_request) { ?>
-                                <a href="<?= Url::toRoute(['/profile/business']) ?>" class="nav-link bg-info">Pending Business Request</a>
+                                <a href="<?= Url::toRoute(['/profile/business']) ?>" class="follow_massge rounded-2 text-capitalize">Pending Business Request</a>
                             <?php } else { ?>
                                 <a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="follow_massge rounded-2 text-capitalize">Create Your Page </a>
                             <?php }
