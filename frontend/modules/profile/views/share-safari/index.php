@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
 </section>
 
 <section>
-    <div class="container ">
+    <div class="container-lg ">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
                 <div class="row justify-content-center ">
@@ -36,7 +36,7 @@ $this->params['title'] = $this->title;
                                             <?php if ($dataProvider->models) {
                                                 foreach ($dataProvider->models as $share_safari) {
                                             ?>
-                                                    <div class="col-md-4 mb-4">
+                                                    <div class="col-md-6 col-lg-4 mb-4">
                                                         <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                     </div>
                                             <?php }
@@ -50,7 +50,7 @@ $this->params['title'] = $this->title;
                                                     if ($share_safari = $shared_safari->sharesafari) {
 
                                             ?>
-                                                        <div class="col-md-4 mb-4">
+                                                        <div class="col-md-6 col-lg-4 mb-4">
                                                             <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                         </div>
                                             <?php }
