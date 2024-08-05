@@ -38,6 +38,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
 
     const STATUS_APPROVED = 1;
     const STATUS_COMPLETED = 2;
+    const STATUS_FULL_SEAT = 3;
 
     const TYPE_SAFARI = 1;
     const TYPE_FIXED_DEPARTURE = 2;
