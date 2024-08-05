@@ -152,12 +152,23 @@ use yii\bootstrap5\ActiveForm;
                         ],
                     ])->label('Package Feature') ?>
                 </div>
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'master_vehicle_id')->widget(\kartik\select2\Select2::classname(), [
+                        'data' => GeneralModel::vehicleoption(),
+                        // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                        'options' => ['placeholder' => 'Select Vehicle', 'multiple' => false],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])->label('Select Vehicle') ?>
+                </div>
             </div>
 
             <div class="col-md-12">
                 <?= $form->field($model, 'package_description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
-        
+
             <div class="col-md-12">
                 <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
