@@ -193,8 +193,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                            <div class="d-flex justify-content-end gap-2 align-items-center">
+                                <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
                                         <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
                                             'class' => 'join_btn text-center mt-sm-0 mt-2 d-block',
@@ -205,7 +205,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             ],
                                         ]) ?>
                                     <?php } ?>
-                                </div>
+                                </div> -->
                                 <div class="right_button ">
 
                                     <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
@@ -372,6 +372,20 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
+                    </div>
+                </div>
+                <div class="desclaimers pb-3">
+                    <div class="itenary-title">
+                        <h6 class="fs-5 pb-2">Disclaimer</h6>
+                    </div>
+                    <div class="itenary_text">
+                        <ul>
+                            <li>This tour is operated by <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> and not by Walk Into The Wild.</li>
+                            <li><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                            <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
+                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> will propose a suitable alternative.</li>
+                            <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
+                        </ul>
                     </div>
                 </div>
             </div>

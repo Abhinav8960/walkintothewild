@@ -7,7 +7,7 @@ use common\models\operator\SafariOperatorFollow;
 ?>
 
 <div class="row justify-content-center pt-4">
-    <div class="col-xl-8 col-lg-12">
+    <div class="col-xxl-8 col-xl-10 col-lg-12">
         <div class="top_opratorsBox logedin">
             <div class="row gx-2">
                 <div class="col-lg-3">
