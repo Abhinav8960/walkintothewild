@@ -157,6 +157,10 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-12">
                 <?= $form->field($model, 'package_description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
+        
+            <div class="col-md-12">
+                <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
+            </div>
             <?php
             if (!empty($model->package_model->id)) { ?>
                 <div class="col-md-3">
@@ -187,6 +191,7 @@ use yii\bootstrap5\ActiveForm;
 <?php
 $script = <<< JS
 editor('packageform-package_description');
+editor('packageform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>
