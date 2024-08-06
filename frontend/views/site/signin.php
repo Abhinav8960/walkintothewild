@@ -27,13 +27,6 @@ $this->params['title'] = $this->title;
 <div class="modal fade _standard-text mobile_loginconditions show" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" role="dialog" data-backdrop="static" data-keyboard="false" aria-modal="true" style="display: block;">
   <div class="modal-dialog modal-dialog-centered modal-md modal-dialog-scrollable">
     <div class="modal-content">
-      <?php $form = ActiveForm::begin([
-        'id' => 'tag-form',
-        'method' => 'POST',
-        'fieldConfig' => [
-          'template' => '<div class="form-group">{label}{input}{error}</div>',
-        ],
-      ]); ?>
       <div class="modal-header justify-content-center">
         <h1 class="modal-title fs-5">
           <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="180px" class="logo">
@@ -80,7 +73,7 @@ $this->params['title'] = $this->title;
                 <?= \yii\authclient\widgets\AuthChoice::widget([
                   'baseAuthUrl' => ['site/auth'],
                   'popupMode' => false,
-                ]), 'Google' ?>
+                ]), 'Continue with Google' ?>
               </div>
             </div>
             <!-- <div class="btnssss-g">
