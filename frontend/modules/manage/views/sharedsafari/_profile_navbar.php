@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs d-none d-lg-flex gap-2 ps-3" id="myTab" role="tablist">
+<ul class="nav nav-tabs d-none d-lg-flex gap-2 ps-3 pb-3" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <a href="/manage/sharedsafari/update-fixed-departure/<?= $sharedsafari->id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>" id="home-tab">OVERVIEW</a>
     </li>
