@@ -24,7 +24,7 @@ $this->params['title'] = $this->title;
                         <?= $this->render('_profile_navbar', ['sharedsafari' => $shared_safari_departure_model, 'itinerary_active' => 'active']) ?>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12  Modal_form">
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="accordion accordion-flush" id="accordionFlushExample">
                                     <?php
@@ -36,9 +36,11 @@ $this->params['title'] = $this->title;
                                                     Day <?= $i ?>
                                                 </a>
                                             </h2>
+
+                                           
                                             <div id="flush-collapse<?= $i ?>" class="accordion-collapse collapse <?= ($i == $model->day) ? 'show' : ''; ?>" aria-labelledby="flush-heading<?= $i ?>" data-bs-parent="#accordionFlushExample">
                                                 <?php if ($i == $model->day) { ?>
-                                                    <div class="accordion-body">
+                                                    <div class="accordion-body p-0">
                                                         <div class="wrap_days">
                                                             <div class="card-body">
                                                                 <?php $form = ActiveForm::begin(); ?>
@@ -47,61 +49,61 @@ $this->params['title'] = $this->title;
 
                                                                 <?= $form->field($model, 'no_of_day')->hiddenInput(['value' => $shared_safari_departure_model->tour_duration])->label(false) ?>
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-6 mb-3">
                                                                         <?= $form->field($model, 'day')->textInput([
                                                                             'maxlength' => true,
                                                                             'value' => $i,
                                                                             'placeholder' => 'Enter Day',
                                                                             'id' => 'dayitineraryform-day' . $i,
-                                                                        ]) ?>
+                                                                        ]) ->label('Day', ['class' => 'Modal_label']) ?>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-6 mb-3">
                                                                         <?= $form->field($model, 'day_title')->textInput([
                                                                             'maxlength' => true,
                                                                             'placeholder' => 'Enter Day Title',
                                                                             'id' => 'dayitineraryform-day_title' . $i,
-                                                                        ]) ?>
+                                                                        ]) ->label('Day Title', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row mb-3">
                                                                     <div class="col-md-12">
                                                                         <?= $form->field($model, 'day_description')->textarea([
                                                                             'rows' => '2',
                                                                             'placeholder' => 'Description Detail',
                                                                             'id' => 'dayitineraryform-day_description' . $i,
-                                                                        ])->label('Description') ?>
+                                                                        ])->label('Description', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-4 mb-3">
                                                                         <?= $form->field($model, 'start_location')->textInput([
                                                                             'maxlength' => true,
                                                                             'placeholder' => 'Enter Start Location',
                                                                             'id' => 'dayitineraryform-start_location' . $i,
-                                                                        ]) ?>
+                                                                        ])->label('Start Location', ['class' => 'Modal_label']) ?>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-4 mb-3">
                                                                         <?= $form->field($model, 'end_location')->textInput([
                                                                             'maxlength' => true,
                                                                             'placeholder' => 'Enter End Location',
                                                                             'id' => 'dayitineraryform-end_location' . $i,
-                                                                        ]) ?>
+                                                                        ]) ->label('End Location', ['class' => 'Modal_label']) ?>
                                                                     </div>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-4 mb-3">
                                                                         <?= $form->field($model, 'hotel_name')->textInput([
                                                                             'maxlength' => true,
                                                                             'placeholder' => 'Enter Accommodation Name',
                                                                             'id' => 'dayitineraryform-hotel_name' . $i,
-                                                                        ])->label('Accommodation') ?>
+                                                                        ])->label('Accommodation', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Latitude'])->label('Accommodation Latitude') ?>
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Latitude'])->label('Accommodation Latitude', ['class' => 'Modal_label']) ?>
                                                                     </div>
 
-                                                                    <div class="col-md-4">
-                                                                        <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Longitude'])->label('Accommodation Longitude') ?>
+                                                                    <div class="col-md-6 mb-4">
+                                                                        <?= $form->field($model, 'longitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Longitude'])->label('Accommodation Longitude', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                     <?php
 
@@ -121,22 +123,22 @@ $this->params['title'] = $this->title;
                                                                 </div>
                                                                 <div class="row">
                                                                     <?php if ($model->share_safari_day_model->day_image) { ?>
-                                                                        <div class="col-md-3">
-                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Share Safari Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                                                        <div class="col-md-6">
+                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Share Safari Image (JPEG / JPG / PNG / 940px * 430px / 250kb)', ['class' => 'Modal_label']) ?>
                                                                         </div>
-                                                                        <div class="col-md-1">
+                                                                        <div class="col-md-2">
                                                                             <?= Html::img($model->share_safari_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
                                                                         </div>
                                                                     <?php } else { ?>
-                                                                        <div class="col-md-3">
-                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Share Safari Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                                                                        <div class="col-md-5">
+                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Share Safari Image (JPEG / JPG / PNG / 940px * 430px / 250kb)', ['class' => 'Modal_label']) ?>
                                                                         </div>
                                                                     <?php } ?>
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-12">
-                                                                        <div class="form-group float-end">
-                                                                            <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
+                                                                        <div class="creat-safri d-flex justify-content-end ">
+                                                                            <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                                                                         </div>
                                                                     </div>
                                                                 </div>
