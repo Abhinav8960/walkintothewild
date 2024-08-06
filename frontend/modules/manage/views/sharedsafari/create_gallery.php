@@ -16,24 +16,23 @@ use yii\bootstrap5\ActiveForm;
     ],
 
 ]); ?>
-<div class="card">
-    <div class="card-body">
 
-        <div class="row">
+
+        <div class="row p-4">
             <div class="col-md-12">
-                <?= $form->field($model, 'image_caption')->textInput(['rows' => '2', 'placeholder' => 'Enter Image Caption'])->label('Image Caption') ?>
+                <?= $form->field($model, 'image_caption')->textInput(['rows' => '2', 'placeholder' => 'Enter Image Caption'])->label('Image Caption', ['class' => 'Modal_label']) ?>
             </div>
             <?php
             if ($model->share_safari_gallery_model->image) { ?>
                 <div class="col-md-10">
-                    <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 940px * 430px / 250kb)', ['class' => 'Modal_label']) ?>
                 </div>
                 <div class="col-md-2">
                     <?php echo '<img src="' . $model->share_safari_gallery_model->imagepath . '" width="75" height="75"></img>'; ?>
                 </div>
             <?php } else { ?>
                 <div class="col-md-12">
-                    <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    <?= $form->field($model, 'image')->fileInput()->label('Image (JPEG / JPG / PNG / 940px * 430px / 250kb)', ['class' => 'Modal_label']) ?>
                 </div>
             <?php  } ?>
 
@@ -44,8 +43,8 @@ use yii\bootstrap5\ActiveForm;
                 </div>
             <?php } ?>
         </div>
-        <hr>
-        <div class="row">
+ 
+        <div class="row px-4">
             <div class="col-lg-12 ">
                 <div class="creat-safri d-flex justify-content-end">
                     <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>

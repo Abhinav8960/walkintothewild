@@ -17,17 +17,16 @@ use yii\bootstrap5\ActiveForm;
 
 ]); ?>
 
-<div class="row mt-2">
+<div class="row mt-2 p-4">
     <div class="col-md-12">
         <?= $form->field($model, 'faq_id')->dropDownList(GeneralModel::mastersharesafarifaqoption($shared_safari_departure_model->id), ['prompt' => 'Select FAQ'])->label(false) ?>
     </div>
-</div>
-<hr>
-<div class="row">
     <div class="col-md-12">
-        <div class="form-group float-end">
-            <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
-        </div>
-    </div>
+    <div class="creat-safri d-flex justify-content-end ">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                </div>
+            </div>
 </div>
+
+
 <?php ActiveForm::end(); ?>

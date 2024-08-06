@@ -14,10 +14,10 @@ $this->params['title'] = $this->title;
         <div class="col-md-12 d-flex justify-content-between">
         <h6 class="fs-3 fw-bold mb-4"><?= $this->title ?></h6>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="card account-settingside">
                 <div class="card-body">
                     <div class="row">
