@@ -23,7 +23,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="card ">
     <div class="card-body">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 Modal_form">
                 <div class="form-group">
                     <?php foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
                         <div class="row mb-3">
@@ -56,17 +56,16 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'share_safari_inclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Inclusion'])->label('Share Safari Inclusion') ?>
+                <?= $form->field($model, 'share_safari_inclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Inclusion'])->label('Share Safari Inclusion', ['class' => 'Modal_label']) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'share_safari_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Exclusion'])->label('Share Safari Exclusion') ?>
+                <?= $form->field($model, 'share_safari_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Exclusion'])->label('Share Safari Exclusion', ['class' => 'Modal_label']) ?>
             </div>
         </div>
-        <hr>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group float-end">
-                    <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
+                <div class="creat-safri d-flex justify-content-end ">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                 </div>
             </div>
         </div>

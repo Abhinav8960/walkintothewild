@@ -16,7 +16,7 @@ use yii\bootstrap5\ActiveForm;
     ],
 
 ]); ?>
-<div class="row mt-2">
+<div class="row p-4">
     <div class="col-md-12">
         <?= $form->field($model, 'question')->textInput(['rows' => '2', 'placeholder' => 'Package Question'])->label('Package Question')->label(false) ?>
     </div>
@@ -30,12 +30,12 @@ use yii\bootstrap5\ActiveForm;
         </div>
     <?php } ?>
 </div>
-<hr>
 <div class="row">
     <div class="col-md-12">
-        <div class="form-group float-end">
-            <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
-        </div>
+    <div class="creat-safri d-flex justify-content-end ">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                </div>
+            </div>
     </div>
 </div>
 

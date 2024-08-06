@@ -12,6 +12,8 @@ use common\models\cms\banner\Banner;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\UserWishlist;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 $this->title = 'Share Safari';
 $this->params['breadcrumbs'][] = $this->title;
@@ -46,6 +48,22 @@ $recentposts = ArticleSearch::recentpost();
 
     </div>
 </section>
+<?php
+Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => FALSE,
+    'enableReplaceState' => FALSE,
+    'timeout' => false,
+]);
+?>
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'data-pjax' => true,
+        'id' => 'side-search-form'
+    ],
+    'action' => ['index'],
+    'method' => 'get',
+]); ?>
 <section class="articals_wrapper py-3 bg-white margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
         <div class="row justify-content-center ">
@@ -80,6 +98,7 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
                         <div id="targetDiv">
                             <?= $this->render('filter_search', [
+                                'form' => $form,
                                 'searchModel' => $searchModel,
                                 'device' => $device,
 
@@ -99,7 +118,7 @@ $recentposts = ArticleSearch::recentpost();
                                     <div class="left_text">
                                         <p class="mb-0">There are currently <strong><?= count($models) ?> </strong> active shared safaris created by individuals</p>
                                     </div>
-                                    <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
+                                    <?= $this->render('sort_by_month', ['form' => $form, 'searchModel' => $searchModel]) ?>
                                 </div>
                                 <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                                     <div class="left_text">
@@ -199,6 +218,9 @@ $recentposts = ArticleSearch::recentpost();
     </div>
 
 </section>
+<?php ActiveForm::end(); ?>
+
+<?php Pjax::end(); ?>
 
 <!-- <section class="safariduring_sesons innerpage ">
     <?= \frontend\widgets\FeatureParkWidget::widget() ?>

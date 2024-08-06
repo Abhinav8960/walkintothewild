@@ -18,10 +18,7 @@ use yii\bootstrap5\ActiveForm;
     ],
 
 ]); ?>
-<div class="card">
-    <div class="card-body">
 
-        <div class="container-fluid-fluid">
             <div class="row">
                 <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
                     <div class="safri_tour">
@@ -105,15 +102,12 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="form-group float-end">
-                        <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
-                    </div>
+                <div class="creat-safri d-flex justify-content-end ">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                </div>
                 </div>
             </div>
-        </div>
-
-    </div>
-</div>
+  
 <?php ActiveForm::end(); ?>
 
 

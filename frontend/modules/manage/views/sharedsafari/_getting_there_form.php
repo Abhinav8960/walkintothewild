@@ -20,23 +20,21 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 
 
-<div class="card">
-    <div class="card-body">
+
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Getting There'])->label('Share Safari Getting There') ?>
+                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Getting There'])->label('Share Safari Getting There', ['class' => 'Modal_label']) ?>
             </div>
         </div>
-        <hr>
+     
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group float-end">
-                    <?= Html::submitButton('Create ', ['class' => 'btn_newsafari font_set w-auto ms-2']) ?>
+            <div class="creat-safri d-flex justify-content-end ">
+                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 <?php ActiveForm::end(); ?>
 
 <style>
