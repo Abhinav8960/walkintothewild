@@ -167,13 +167,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 <?php
 // Assuming $models is passed as JSON-encoded data from your Yii controller or view
-$modelsJson = json_encode($models);
-
 $js = <<<JS
 $(document).ready(function() {
     var win = $(window);
     var isLoading = false; // Flag to prevent multiple simultaneous Ajax requests
-    var models = $modelsJson; // Models data from PHP
 
     win.scroll(function() {
         if (!isLoading && ($(document).height() - win.height() <= win.scrollTop() + 1500)) {
@@ -181,12 +178,18 @@ $(document).ready(function() {
             isLoading = true; // Set loading flag to true to prevent multiple requests
 
             var nextPageUrl = $(".pagination .next a:first").attr("href");
-            if (nextPageUrl && models.length > 0) { // Check if there are more pages and models exist
-                setTimeout(function() {
-                    loadPage(nextPageUrl);
-                }, 500); // Delay for 500 milliseconds before making the Ajax call
-            } else {
-                isLoading = false; // Reset loading flag if no more models to load
+            var tabindex = $(".pagination .next a:first").attr("tabindex");
+            if(tabindex==undefined){
+                if (nextPageUrl) { // Check if there are more pages and models exist
+                    setTimeout(function() {
+                        loadPage(nextPageUrl);
+                    }, 500); // Delay for 500 milliseconds before making the Ajax call
+                } else {
+                    isLoading = false; // Reset loading flag if no more models to load
+                }
+            }else{
+                isLoading = false;
+                $(".loader").html('<div class="no-results-found">No more results found.</div>');
             }
         }
     });
@@ -214,3 +217,4 @@ JS;
 
 $this->registerJs($js);
 ?>
+
