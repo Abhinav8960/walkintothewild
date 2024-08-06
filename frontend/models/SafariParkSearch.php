@@ -77,19 +77,21 @@ class SafariParkSearch extends SafariPark
         }
 
         // Sorting based on custom_sort_by attribute
-        if ($this->custom_sort_by == 'most-demanding') {
+        if ($this->custom_sort_by == 2) {
             $dataProvider->sort = [
-                'defaultOrder' => ['is_most_demanding' => SORT_DESC, 'title' => SORT_ASC]
+                'defaultOrder' => ['title' => SORT_ASC]
             ];
-        } else if ($this->custom_sort_by == 'shared-safari') {
+        } else if ($this->custom_sort_by == 3) {
             $dataProvider->sort = [
-                'defaultOrder' => ['is_shared_safari' => SORT_DESC]
+                'defaultOrder' => ['title' => SORT_DESC]
             ];
         } else {
             $dataProvider->sort = [
                 'defaultOrder' => ['is_most_demanding' => SORT_DESC, 'title' => SORT_ASC]
             ];
         }
+
+
 
         if ($this->month_id && $this->month_id != 0) {
             $query->joinwith(['months' => function ($query) {
