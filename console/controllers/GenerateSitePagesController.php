@@ -327,12 +327,12 @@ class GenerateSitePagesController extends Controller
   protected function get_operator_tabs_site_pages()
   {
     $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
-    $tab_urls = ['package' => 'package', 'park' => 'park', 'reviewlist' => 'reviewlist', 'article' => 'article', 'contact' => 'contact'];
+    $tab_urls = ['package' => '/package', 'park' => '/park', 'review' => '/reviewlist', 'article' => '/article', 'contact' => '/contact'];
     if (count($records)) {
       $temp_insert_data = [];
       foreach ($records as $row) {
         foreach ($tab_urls as $ind => $tab) {
-          if ($row['status']) {
+          if ($row['status'] && !empty($row['slug'])) {
             //update existing record
             $data_url = "operator/_slug" . $tab;
             $url = str_replace("_slug", $row['slug'], $data_url);
