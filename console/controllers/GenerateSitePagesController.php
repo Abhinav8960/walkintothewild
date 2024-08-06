@@ -334,8 +334,11 @@ class GenerateSitePagesController extends Controller
         foreach ($tab_urls as $ind => $tab) {
           if ($row['status'] && !empty($row['slug'])) {
             //update existing record
-            $data_url = "operator/_slug" . $tab;
+            $data_url = "operator/_slug";
             $url = str_replace("_slug", $row['slug'], $data_url);
+            $url = $url . $tab;
+            print_r($url);
+            die();
             $method = $get_parameter = $post_parameter = '';
 
             $s_request = FrontendRequestLog::find()->where(['request_url' => $url])->orderBy('id DESC')->asArray()->one();
