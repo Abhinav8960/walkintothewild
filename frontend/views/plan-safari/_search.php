@@ -25,8 +25,7 @@ $query = SafariPark::find()
     ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
     ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 $query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_park_rare_animal WHERE status=1)");
-// $query->andFilterWhere(['like', 'title', 'Tiger Reserve']);
-$query->andWhere("title like '%Tiger Reserve%' OR title like '%Gir National Park%' OR title like '%Jhalana Leopard Conservation Reserve%' OR title like '%Jawai Leopard Safari%'");
+$query->andWhere(['show_in_filter' => 1]);
 $parks = $query->all();
 
 

@@ -97,6 +97,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
             [['slug'], 'unique'],
+            ['show_in_filter', 'boolean'],
         ];
     }
 
@@ -107,6 +108,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\Stat
     {
         return [
             'id' => 'ID',
+            'show_in_filter' => 'Show in Filter',
             'title' => 'Title',
             'slug' => 'Slug',
             'short_description' => 'Sort Description',

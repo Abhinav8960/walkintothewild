@@ -9,8 +9,8 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use backend\components\AuthHandler;
 use common\models\MailLog;
-use common\models\trierror\BackendErrorLog;
-use common\models\trierror\form\BackendErrorLogForm;
+//use common\models\trierror\BackendErrorLog;
+//use common\models\trierror\form\BackendErrorLogForm;
 use common\models\trierror\form\ErrorLogForm;
 use yii\web\Response;
 
@@ -128,7 +128,7 @@ class SiteController extends Controller
         (new AuthHandler($client))->handle();
     }
 
-
+    /*
     public function actionError()
     {
         $exception = Yii::$app->errorHandler->exception;
@@ -167,4 +167,5 @@ class SiteController extends Controller
             ]
         );
     }
+    */
 }
