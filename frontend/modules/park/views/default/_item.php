@@ -1,4 +1,8 @@
-<a href="/park/<?= $model->slug ?>" class="parking_Box">
+<?php
+
+use yii\helpers\Url;
+?>
+<a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" class="parking_Box">
     <div class="searchSafari_wraper mb-4">
         <div class="row">
             <div class="col-xl-3 col-sm-4 col-md-3">
