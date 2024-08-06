@@ -120,14 +120,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
             </div>
         </div>
-        <div class="row pt-5 itenary_tabs justify-content-center position-relative" >
+        <div class="row pt-5 itenary_tabs justify-content-center position-relative">
             <div class="col-xxl-11 safartabs d-flex  justify-content-between align-items-center position-relative">
                 <ul class="nav nav-tabs slider_addmobile ">
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safari</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($article) ? $article : '' ?>">Article</a></li>
                     <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
-                    <?php if ($user->contribution_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
+                    <?php if (Yii::$app->user->identity && $user->contribution_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
                         <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
                     <?php } elseif ($user->contribution_privacy == 3 && $user->userfollowers) {  ?>
                         <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
@@ -135,7 +135,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
                     <?php } ?>
 
-                    <?php if ($user->photo_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
+                    <?php if (Yii::$app->user->identity && $user->photo_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
                         <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
                     <?php } elseif ($user->photo_privacy == 3 && $user->userfollowers) { ?>
                         <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
@@ -157,9 +157,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
             </div>
             <div class="moreviewMobile">
-            <ul class="nav nav-tabs slider_addmobile flex-column">
+                <ul class="nav nav-tabs slider_addmobile flex-column">
                     <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
-                    <?php if ($user->contribution_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
+                    <?php if (Yii::$app->user->identity && $user->contribution_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
                         <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
                     <?php } elseif ($user->contribution_privacy == 3 && $user->userfollowers) {  ?>
                         <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
@@ -167,7 +167,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>
                     <?php } ?>
 
-                    <?php if ($user->photo_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
+                    <?php if (Yii::$app->user->identity && $user->photo_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
                         <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
                     <?php } elseif ($user->photo_privacy == 3 && $user->userfollowers) { ?>
                         <li class="nav-item mb-2"><a href="<?= Url::toRoute(['/profile/photo/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($photo) ? $photo : '' ?>">Photos</a></li>
@@ -185,7 +185,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </ul>
                 <div class="sharerbtn">
                     <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn mb-2 "><i class="fa-solid fa-share"></i> Share Profile</button>
-                  
+
                 </div>
             </div>
         </div>
