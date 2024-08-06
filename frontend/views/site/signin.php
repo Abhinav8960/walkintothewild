@@ -94,7 +94,8 @@ $this->params['title'] = $this->title;
           </div>
         </div>
       </div>
-      <?php ActiveForm::end(); ?>
+      <?php //ActiveForm::end(); 
+      ?>
     </div>
   </div>
 </div><?php
