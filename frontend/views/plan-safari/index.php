@@ -108,7 +108,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <div class="container-lg  padditg_mobile">
             <div class="row justify-content-center">
                 <div class="col-xl-11 px-md-1 px-0">
-                    <div class="PackageBox_home p-4">
+                    <div class="PackageBox_home p-sm-4">
                         <div class="row justify-content-left">
                             <div class="col-xxl-12 col-lg-12 col-xl-12 pb-3">
                                 <div class="title_safari JoinPadding d-flex justify-content-left justify-content-md-between align-items-left flex-wrap">

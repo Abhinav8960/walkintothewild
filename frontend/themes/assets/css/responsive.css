@@ -1751,6 +1751,11 @@ display: none;
 }
 
 @media only screen and (max-width: 576px) {
+  .profile_coverbnner .banner-cover{
+
+    height: 200px;
+    padding: 0px;
+  }
   .itenary_tabs .nav-tabs .nav-link{
 
     font-size: 14px;

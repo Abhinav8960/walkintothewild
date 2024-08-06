@@ -5213,12 +5213,6 @@ figure {
     height: auto;
 }
 
-/* Responsive styling */
-@media (max-width: 1200px) {
-    .custom-col {
-        padding: 0 20px;
-    }
-}
 
 
 .topSlider_tour .owl-dots {

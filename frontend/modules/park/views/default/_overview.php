@@ -365,7 +365,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="legends_wrap d-flex justify-content-end gap-4 pt-3">
+                <div class="legends_wrap d-flex justify-content-end gap-md-4 gap-2 pt-3">
                     <div class="legends_bx d-flex align-items-center gap-2">
                         <div class="legends closedbg"></div>
                         <p>Closed</p>
