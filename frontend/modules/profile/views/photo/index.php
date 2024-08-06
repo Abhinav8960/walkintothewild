@@ -29,7 +29,6 @@ $this->params['title'] = $this->title;
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between mb-4">
                                             <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Photo Shared by <?= Yii::$app->user->identity->id == $user->id ? 'me' : $user->name ?> </h6>
-
                                         </div>
                                         <div class="tab-content_tour active">
                                             <div class="row">
@@ -37,22 +36,21 @@ $this->params['title'] = $this->title;
                                                 if ($user) {
                                                 ?>
                                                     <div class="col-md-4 gap-2  mb-2">
-                                                        <div class="d-flex justify-content-between mb-4">
+                                                        <div class="d-flex justify-content-between mb-2">
                                                             <h6 class="fs-6  mb-0" style="padding-bottom: 0 !important;">Display Picture</h6>
-
                                                         </div>
                                                         <div class="parksImgireview h-100 position-relative">
-                                                            <img src="<?= isset($user->profileimage) <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100">
+                                                            <img src="<?= isset($user->profileimage) <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="w-100 h-100 rounded-2">
                                                         </div>
 
                                                     </div>
                                                     <div class="col-md-8 gap-2  mb-2">
-                                                        <div class="d-flex justify-content-between mb-4">
+                                                        <div class="d-flex justify-content-between mb-2">
                                                             <h6 class="fs-6  mb-0" style="padding-bottom: 0 !important;">Cover Picture</h6>
 
                                                         </div>
                                                         <div class="parksImgireview h-100 position-relative">
-                                                            <img src="<?= isset($user->cover_image) <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
+                                                            <img src="<?= isset($user->cover_image) <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover rounded-2">
                                                         </div>
 
                                                     </div>
@@ -62,7 +60,7 @@ $this->params['title'] = $this->title;
                                                     </div>
                                                 <?php } ?>
                                             </div>
-                                            <div class="d-flex justify-content-between mb-4">
+                                            <div class="d-flex justify-content-between mb-4 mt-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"> Shared Safari Pictures </h6>
 
                                             </div>
@@ -84,7 +82,7 @@ $this->params['title'] = $this->title;
                                                     </div>
                                                 <?php } ?>
                                             </div>
-                                            <div class="d-flex justify-content-between mb-4">
+                                            <div class="d-flex justify-content-between mb-4 mt-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"> Articles Pictures </h6>
 
                                             </div>

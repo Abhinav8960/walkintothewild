@@ -6647,3 +6647,11 @@ font-weight: 500;
     transform: translateY(0);
     visibility: visible;
 }
+.shrelinkssss ul{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding-left: 0;
+}
