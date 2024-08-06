@@ -1256,9 +1256,23 @@ margin-bottom: 0 !important;
   }
 
   .tab-content > .tab-pane {
-    display: block !important;
-    opacity: 1 !important;
+    display: block ;
+    opacity: 1 ;
   }
+
+#user-form .tab-content > .tab-pane {
+  display: none ;
+}
+#user-form .tab-content > .active {
+  display: block;
+}
+#user-form .tab-content > .active {
+  display: block;
+}
+.itenary_tabs .account-settingside.safartabs .nav-tabs{
+
+  gap: 25px !important;
+}
 
   .header_wrapper.navigation_hide {
     line-height: 30px;
@@ -1324,6 +1338,11 @@ margin-bottom: 0 !important;
   .nav-link {
     padding: 0;
   }
+.card.account-settingside .nav-link{
+
+padding:0.5rem  1rem!important;
+
+}
 
   .card-img {
     display: none;

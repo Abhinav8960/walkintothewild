@@ -9,16 +9,16 @@ $this->title = 'Account Settings';
 
 ?>
 
-<div class="container mt-5 ">
+<div class="container-lg mt-5 pt-5">
     <div class="row margin_bottomfooter">
         <div class="col-12 d-flex align-items-center justify-content-between mb-4">
             <h6 class="fs-3 fw-bold ">Account Settings</h6>
             <a class="btn btn-info bg-blues py-2 rounded-5" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">View Profile</a>
         </div>
-        <div class="col-md-3">
+        <div class=" col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-9 itenary_tabs">
+        <div class="col-xxl-9 col-lg-8 itenary_tabs">
             <div class="card account-settingside safartabs ">
                 <div class="card-body p-4">
                     <ul class="nav nav-tabs mb-4  border-bottom " id="pills-tab" role="tablist">
@@ -101,7 +101,7 @@ $this->title = 'Account Settings';
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade " id="pills-profile-photo" role="tabpanel" aria-labelledby="pills-profile-photo-tab" style="min-height:500px">
+                        <div class="tab-pane fade" id="pills-profile-photo" role="tabpanel" aria-labelledby="pills-profile-photo-tab" style="min-height:500px;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'profile_image')->fileInput() ?>
@@ -115,7 +115,7 @@ $this->title = 'Account Settings';
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-cover-photo" role="tabpanel" aria-labelledby="pills-cover-photo-tab" style="min-height:500px">
+                        <div class="tab-pane fade " id="pills-cover-photo" role="tabpanel" aria-labelledby="pills-cover-photo-tab" style="min-height:500px;">
                             <div class="row">
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'cover_image')->fileInput() ?>
