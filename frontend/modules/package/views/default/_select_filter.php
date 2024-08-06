@@ -7,17 +7,6 @@ use yii\helpers\ArrayHelper;
 ?>
 
 
-<?php $form = ActiveForm::begin([
-    'options' => [
-        'data-pjax' => true,
-        'id' => 'side-search-form'
-    ],
-    'action' => ['index'],
-    'method' => 'get',
-    'fieldConfig' => [
-        'template' => '{input}{error}',
-    ],
-]); ?>
 <?php if ($device == 'desktop') { ?>
     <div class="filter-wrapper custoM-inputs d-lg-block d-none mb-2">
         <div class="title_top pb-4">
@@ -293,7 +282,7 @@ use yii\helpers\ArrayHelper;
         </div>
     </div>
 <?php } ?>
-<?php ActiveForm::end(); ?>
+
 
 
 
@@ -337,30 +326,30 @@ $this->registerJs($script);
 <?php
 $script = <<< JS
     $('form').on('change', function(){
-        // $("#Searchform").attr("data-pjax", "true");    
-        // $(this).closest('form').submit();
-        reloadpage();
+        $("#Searchform").attr("data-pjax", "true");    
+        $(this).closest('form').submit();
+        // reloadpage();
     });
 
 
     $('#sharesafarisearch-custom_sort_by').on('change', function(){
-        // $("#Searchform").attr("data-pjax", "true");    
-        // $(this).closest('form').submit();
-        reloadpage();
+        $("#Searchform").attr("data-pjax", "true");    
+        $(this).closest('form').submit();
+        // reloadpage();
     });
 
-    function reloadpage(){
-        $.ajax({
-            type: 'POST',
-            url: '/package/default/geturl',
-            data:$("#side-search-form, #custom_sort_by_form").serialize(),
-            success:function(data){
-                console.log(data);
-                window.location.href = data;
-            },
-            dataType:'html'
-        });
-    }
+    // function reloadpage(){
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/package/default/geturl',
+    //         data:$("#side-search-form, #custom_sort_by_form").serialize(),
+    //         success:function(data){
+    //             console.log(data);
+    //             window.location.href = data;
+    //         },
+    //         dataType:'html'
+    //     });
+    // }
 
 
     initializeDualrange('packagesearch-no_of_night_min','packagesearch-no_of_night_max');

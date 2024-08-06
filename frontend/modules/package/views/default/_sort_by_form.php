@@ -8,17 +8,7 @@ use yii\widgets\ActiveForm;
 /** @var common\models\sharesafari\ShareSafari $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-<?php $form = ActiveForm::begin([
-    'options' => [
-        'data-pjax' => true,
-        'id' => 'custom_sort_by_form'
-    ],
-    'action' => ['index'],
-    'method' => 'get',
-    'fieldConfig' => [
-        'template' => '{input}{error}',
-    ],
-]); ?>
+
 
 <div class="right-select">
     <div class="input_check pb-0 mb-3">
@@ -35,7 +25,7 @@ use yii\widgets\ActiveForm;
         )->label(false); ?>
     </div>
 </div>
-<?php ActiveForm::end(); ?>
+
 
 <?php
 

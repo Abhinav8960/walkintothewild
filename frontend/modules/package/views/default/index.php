@@ -7,7 +7,8 @@ use common\models\GeneralModel;
 use common\models\UserWishlist;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
-
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 $this->title = 'Package';
 $this->params['title'] = $this->title;
@@ -36,6 +37,23 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
   </div>
 </section>
 
+
+<?php
+Pjax::begin([
+  'id' => 'grid-data',
+  'enablePushState' => FALSE,
+  'enableReplaceState' => FALSE,
+  'timeout' => false,
+]);
+?>
+ <?php $form = ActiveForm::begin([
+                'options' => [
+                  'data-pjax' => true,
+                  'id' => 'side-search-form'
+                ],
+                'action' => ['index'],
+                'method' => 'get',
+              ]); ?>
 <section class="articals_wrapper  py-3 ">
   <div class="container-fluid ">
     <div class="custom-row pt-4">
@@ -68,7 +86,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
             <div id="targetDiv">
+             
               <?= $this->render('_select_filter', [
+                'form' => $form,
                 'searchModel' => $searchModel,
                 'device' => $device,
               ]) ?>
@@ -82,7 +102,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                   <div class="left_text">
                     <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
                   </div>
-                  <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
+                  <?= $this->render('_sort_by_form', ['form' => $form, 'searchModel' => $searchModel]) ?>
 
                 </div>
                 <div class="top_mobilefilter d-flex gap-2 d-lg-none justify-content-between align-items-center w-100 mb-4">
@@ -233,6 +253,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
   </div>
 </section>
+<?php ActiveForm::end(); ?>
+
+<?php Pjax::end(); ?>
+
 
 
 <div class="modal fade _standard-text" id="package-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
