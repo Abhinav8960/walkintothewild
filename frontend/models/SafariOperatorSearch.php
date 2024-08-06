@@ -72,7 +72,11 @@ class SafariOperatorSearch extends SafariOperator
 
 
         if ($this->custom_sort_by) {
-            if ($this->custom_sort_by == 'name_az') {
+            if ($this->custom_sort_by == 'rating_low') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['google_rating' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == 'name_az') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['register_comapany_name' => SORT_ASC]
                 ];
@@ -80,13 +84,9 @@ class SafariOperatorSearch extends SafariOperator
                 $dataProvider->sort = [
                     'defaultOrder' => ['register_comapany_name' => SORT_DESC]
                 ];
-            } else if ($this->custom_sort_by == 'rating_high') {
+            } else {
                 $dataProvider->sort = [
                     'defaultOrder' => ['google_rating' => SORT_DESC]
-                ];
-            } else if ($this->custom_sort_by == 'rating_low') {
-                $dataProvider->sort = [
-                    'defaultOrder' => ['google_rating' => SORT_ASC]
                 ];
             }
         }
