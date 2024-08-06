@@ -170,6 +170,7 @@ class GenerateSitePagesController extends Controller
     }
 
     if (count($records)) {
+      $temp_insert_data = [];
       foreach ($records as $row) {
         if ($row['status']) {
           //update existing record
@@ -193,26 +194,30 @@ class GenerateSitePagesController extends Controller
             $model->save(false);
           } else {
             //insert new record
-            $model = new SitePages();
-            $model->content_id = $row['id'];
-            $model->content_table = $data['table'];
-            $model->url = $url;
-            $model->url_type = $data['url_type'];
-            $model->method = $method;
-            $model->slug = $row['slug'];
-            $model->category = $data['category'];
-            $model->sub_category = $data['sub_category'];
-            $model->get_parameter  = $get_parameter;
-            $model->post_parameter  = $post_parameter;
-            $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
-            $model->counter = 0;
-            $model->status = 1;
-            $model->save(false);
+            $temp_insert_data[] = [
+              'content_id' => $row['id'],
+              'content_table' => $data['table'],
+              'url' => $url,
+              'url_type' => $data['url_type'],
+              'method' => $method,
+              'slug' => $row['slug'],
+              'category' => $data['category'],
+              'sub_category' => $data['sub_category'],
+              'get_parameter' => $get_parameter,
+              'post_parameter' => $post_parameter,
+              'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+              'counter' => 0,
+              'status' => 1,
+            ];
           }
         } else {
           //mark as disabled
           SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_id' => $row['id'], 'content_table' => $data['table']]);
         }
+      }
+
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'method', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
       }
     }
   }
@@ -324,6 +329,7 @@ class GenerateSitePagesController extends Controller
     $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     $tab_urls = ['memberview' => '#memberview', 'package' => '/package#memberview', 'park' => '/park#memberview', 'reviewlist' => '/reviewlist#memberview', 'article' => '/article#memberview', 'contact' => '/contact#memberview'];
     if (count($records)) {
+      $temp_insert_data = [];
       foreach ($records as $row) {
         foreach ($tab_urls as $ind => $tab) {
           if ($row['status']) {
@@ -349,21 +355,21 @@ class GenerateSitePagesController extends Controller
               $model->save(false);
             } else {
               //insert new record
-              $model = new SitePages();
-              $model->content_id = 0;
-              $model->content_table = 'safari_operator';
-              $model->url = $url;
-              $model->url_type = 'Secondary';
-              $model->method = $method;
-              $model->slug = $row['slug'];
-              $model->category = 'Operator';
-              $model->sub_category = $ind;
-              $model->get_parameter  = $get_parameter;
-              $model->post_parameter  = $post_parameter;
-              $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
-              $model->counter = 0;
-              $model->status = 1;
-              $model->save(false);
+              $temp_insert_data[] = [
+                'content_id' => 0,
+                'content_table' => 'safari_operator',
+                'url' => $url,
+                'url_type' => 'Primary',
+                'method' => $method,
+                'slug' => $row['slug'],
+                'category' => 'Operator',
+                'sub_category' => $ind,
+                'get_parameter' => $get_parameter,
+                'post_parameter' => $post_parameter,
+                'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+                'counter' => 0,
+                'status' => 1,
+              ];
             }
           } else {
             $data_url = "operator/_slug" . $tab;
@@ -373,6 +379,10 @@ class GenerateSitePagesController extends Controller
             SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_table' => 'safari_operator', 'url' => $url]);
           }
         }
+      }
+
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'method', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
       }
     }
   }
