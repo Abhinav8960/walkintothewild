@@ -201,7 +201,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
             <div class="modal-body p-3">
                 <div id='modalContent'>
-                    <ul>
+                    <ul class="shrelinkssss ps-0">
                         <?= \frontend\widgets\ShareButton::widget([
                             'style' => 'horizontal',
                             'networks' => ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'telegram', 'clipboard'],
