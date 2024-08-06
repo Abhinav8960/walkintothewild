@@ -18,7 +18,7 @@ class SearchSitePages extends SitePages
     {
         return [
             [['id', 'content_id', 'counter', 'status'], 'integer'],
-            [['content_type', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at'], 'safe'],
+            [['content_type', 'category', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at'], 'safe'],
         ];
     }
 
@@ -68,8 +68,10 @@ class SearchSitePages extends SitePages
             'created_at' => $this->created_at,
         ]);
 
-        if ($this->content_type != 'select_all') {
-            $query->andFilterWhere(['content_type' => $this->content_type]);
+        if ($this->category != 'select_all') {
+            //print_r($params);
+            //die();
+            $query->andFilterWhere(['category' => $this->category]);
         }
 
         $query->andFilterWhere(['like', 'url', $this->url])

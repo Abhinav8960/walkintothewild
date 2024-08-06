@@ -18,7 +18,7 @@ $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] =  ['label' => 'trierror', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'btn btn-orange', 'title' => 'Add New URL', 'style' => 'margin-right: 2px;']);
+//$this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'btn btn-orange', 'title' => 'Add New URL', 'style' => 'margin-right: 2px;']);
 ?>
 <style>
     .table a {
@@ -36,10 +36,17 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     [
-                        'label' => 'Content Type',
+                        'label' => 'Category',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return ucwords(str_replace("_", " ", $model->content_type));
+                            return $model->category;
+                        }
+                    ],
+                    [
+                        'label' => 'Sub-Category',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return ucwords($model->sub_category);
                         }
                     ],
                     [
@@ -47,7 +54,7 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
-                            $short_url = \common\models\GeneralModel::getshorturl($model->url);
+                            $short_url = $model->url;
                             $temp = "<a target='_blank' href='" . $model->url . "'>" . $short_url . "</a>";
                             return $temp;
                         }
@@ -65,7 +72,7 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         'value' => function ($model) {
                             return $model->counter;
                         }
-                    ],
+                    ],/*
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
@@ -73,7 +80,7 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                         'template' => '{delete}',
                         'buttons' => [
                             'delete' => function ($url, $model) {
-                                if ($model->content_type == 'manual_url') {
+                                if ($model->content_type == 'category') {
                                     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
                                         'class' => 'btn p-0 change-menuicon',
                                         'title' => 'Delete',
@@ -85,7 +92,7 @@ $this->params['buttons'][] = Html::a('+ Add New URL', ['create'], ['class' => 'b
                                 }
                             },
                         ]
-                    ],
+                    ],*/
                 ],
             ]); ?>
         </div>
