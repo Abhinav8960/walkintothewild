@@ -18,21 +18,21 @@ use yii\widgets\ActiveForm;
         'template' => '{input}{error}',
     ],
 ]); ?>
-    <div class="row">
-        <div class="col-md-6">
-            <?= $form->field($model, 'url')->textInput(["placeholder" => "Search by url"]) ?>
-        </div>
-        <div class="col-md-3">
-            <?= $form->field($model, 'content_type')->dropDownList(
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($model, 'url')->textInput(["placeholder" => "Search by url"]) ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'category')->dropDownList(
             $content_type,
             [
-                'prompt' => 'Select Content Type',
+                'prompt' => 'Select Category',
             ]
         ) ?>
-        </div>
+    </div>
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
-        
+
     </div>
 </div>
 <?php ActiveForm::end(); ?>

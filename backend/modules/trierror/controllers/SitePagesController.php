@@ -41,13 +41,13 @@ class SitePagesController extends Controller
     {
         //$content_types_data = \yii\helpers\ArrayHelper::map(SitePages::find()->select(['id', 'content_type'])->orderBy('content_type', 'asc')->groupBy('content_type', 'id')->all(), 'id', 'content_type');
 
-        $content_types_data = SitePages::find()->select('content_type')->distinct()->asArray()->all();
+        $content_types_data = SitePages::find()->select('category')->distinct()->asArray()->all();
 
         $content_type = [];
         if (count($content_types_data) > 0) {
             $content_type["select_all"] = "Select All";
             foreach ($content_types_data as $val) {
-                $content_type[$val['content_type']] = ucwords(str_replace("_", " ", $val['content_type']));
+                $content_type[$val['category']] = ucwords($val['category']);
             }
         }
 
