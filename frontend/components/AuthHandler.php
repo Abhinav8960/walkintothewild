@@ -87,7 +87,6 @@ class AuthHandler
 
 
                     // start comment by sonu shokeen 
-                    /*
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new User([
                         'name' => $nickname,
@@ -100,13 +99,9 @@ class AuthHandler
                     $user->generateAuthKey();
                     $user->generatePasswordResetToken();
 
-                    print_r($email);
-                    print_r($_REQUEST);
-                    echo "<pre>";
-                    print_r($user);
-                    echo "</pre>";
-                    */
                     // end comment by sonu shokeen
+
+                    /*
                     $attributes = $this->client->getUserAttributes();
                     $picture = $attributes['picture'];
 
@@ -125,8 +120,7 @@ class AuthHandler
 
                     return Yii::$app->response->redirect(['/site/signinagree/' . $temp_key,]);
                     exit();
-                    /*
-                    //                    die('333333');
+                    */
                     $transaction = User::getDb()->beginTransaction();
 
                     if ($user->save()) {
@@ -154,7 +148,7 @@ class AuthHandler
                                 'errors' => json_encode($user->getErrors()),
                             ]),
                         ]);
-                    }*/
+                    }
                 }
             }
         } else { // user already logged in

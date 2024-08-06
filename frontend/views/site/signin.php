@@ -70,11 +70,18 @@ $this->params['title'] = $this->title;
               <h6 class="fs-5 text-center pb-2 text-muted">Or continue with:</h6>
             </div>
             <?php ActiveForm::end(); */ ?>
-            <div class="btnssss-g">
-              <?= \yii\authclient\widgets\AuthChoice::widget([
-                'baseAuthUrl' => ['site/auth'],
-                'popupMode' => false,
-              ]), 'Google' ?>
+            <div class="content_terms">
+              <h5 class="text-center">Login your account</h5>
+              <div class="contenss pt-3">
+                <p>By login an account, I accept the WalkIntoTheWild <a href="/termsandcondition" target="_blank">Terms of Service</a> and acknowledge the Privacy Policy.</p>
+              </div>
+
+              <div class="btnssss-g">
+                <?= \yii\authclient\widgets\AuthChoice::widget([
+                  'baseAuthUrl' => ['site/auth'],
+                  'popupMode' => false,
+                ]), 'Google' ?>
+              </div>
             </div>
             <!-- <div class="btnssss-g">
               <a href="/site/auth?authclient=google">
