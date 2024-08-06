@@ -22,7 +22,7 @@ foreach ($activies as $key => $role) {
         $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
     }
 }
-$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+$this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
 

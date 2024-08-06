@@ -1,10 +1,11 @@
 <?php
 
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-$this->title = 'Chat';
+$this->title = 'Message';
 
 ?>
 
@@ -36,7 +37,32 @@ $this->title = 'Chat';
                                 </div>
                             </div>
                             <div class="chat-cardlist">
-                                <?= $this->render('_default_userlist', ['dataProvider' => $dataProvider]) ?>
+                                <?php if ($searchModel->name == '' && $active_chat_list) {
+                                    foreach ($active_chat_list as $active_chat) {
+                                        if ($active_chat->user_id == $login_user->id) {
+                                            $user = $active_chat->recipient;
+                                        } else {
+                                            $user = $active_chat->user;
+                                        }
+                                ?>
+                                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
+                                            <div class="chat-sidebar-user-card">
+                                                <div class="d-flex chat-user_message">
+                                                    <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
+                                                    <div class="chat-user_name">
+                                                        <h6><?= $user->name ?></h6>
+                                                        <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                <?php }
+                                } ?>
+                                <?php
+                                if ($searchModel->name) {
+                                    echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                                }
+                                ?>
                             </div>
 
                             <?php Pjax::end(); ?>

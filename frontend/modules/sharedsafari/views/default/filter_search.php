@@ -149,14 +149,14 @@ use common\models\park\SafariPark;
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
-                        <h6>Park</h6>
+                        <h6>Safari Park</h6>
                     </div>
                 </div>
                 <div class="col-7">
                     <div class="title_filter">
 
                         <div class="input_check ">
-                            <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Park'])->label(false) ?>
+                            <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>
                         </div>
                     </div>
                 </div>
@@ -185,19 +185,17 @@ use common\models\park\SafariPark;
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
-                        <h6>Estimate Price Per Person</h6>
+                        <h6>Budget Price Per Person</h6>
                     </div>
                 </div>
                 <div class="col-7">
-                    <div class="input_check d-flex gap-3 align-items-center">
-                        <div class="multi-range">
-                            <input type="range" name="ShareSafariSearch[estimate_price_min]" min="1" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                            <input type="range" name="ShareSafariSearch[estimate_price_max]" min="1" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
-                        </div>
-                        <div class="range-label">
-                            <span class="value"><?= $searchModel->estimate_price_min ?> </span>
-                            <span class="float-end"><?= $searchModel->estimate_price_max >= 15000 ? '15000+' : $searchModel->estimate_price_max ?> </span>
-                        </div>
+                    <div class="multi-range">
+                        <input type="range" name="ShareSafariSearch[estimate_price_min]" min="1" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="ShareSafariSearch[estimate_price_max]" min="1" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                    </div>
+                    <div class="range-label">
+                        <span class="value"><?= $searchModel->estimate_price_min ?> </span>
+                        <span class="float-end"><?= $searchModel->estimate_price_max >= 15000 ? '15000+' : $searchModel->estimate_price_max ?> </span>
                     </div>
 
                 </div>
@@ -207,7 +205,7 @@ use common\models\park\SafariPark;
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
-                        <h6>No. Of Safaris</h6>
+                        <h6>Total Safaris</h6>
                     </div>
                 </div>
                 <div class="col-7">
@@ -226,20 +224,20 @@ use common\models\park\SafariPark;
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
-                        <h6>Agenda</h6>
+                        <h6>Theme</h6>
                     </div>
                 </div>
                 <div class="col-7">
 
-                    <div class="input_check d-flex gap-3 align-items-center">
-                        <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
-                            GeneralModel::agendaoption(),
-                            [
-                                'required' => true,
-                                'itemOptions' => ['class' => 'checkbox_design'],
-                            ]
-                        )->label(false); ?>
-                    </div>
+                <div class="input_check d-flex gap-3 align-items-center">
+                <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
+                    GeneralModel::agendaoption(),
+                    [
+                        'required' => true,
+                        'itemOptions' => ['class' => 'checkbox_design'],
+                    ]
+                )->label(false); ?>
+            </div>
                 </div>
             </div>
         </div>
@@ -247,20 +245,26 @@ use common\models\park\SafariPark;
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
-                        <h6>Host</h6>
+                        <h6>Organizer</h6>
                     </div>
                 </div>
                 <div class="col-7">
 
-                    <div class="input_check d-flex gap-3 align-items-center">
-                        <?= $form->field($searchModel, 'host_type')->checkboxList(
-                            GeneralModel::hostoption(),
-                            [
-                                'required' => true,
-                                'itemOptions' => ['class' => 'checkbox_design'],
-                            ]
-                        )->label(false); ?>
-                    </div>
+                <div class="input_check d-flex gap-3 align-items-center">
+                <?= $form->field($searchModel, 'host_type')->checkboxList(
+                    GeneralModel::hostoption(),
+                    [
+                        'required' => true,
+                        'item' => function ($index, $label, $name, $checked, $value) {
+                            $id = $name . '_' . $index; // Generate a unique ID for each checkbox
+                            return '<div class="checkbox-item d-flex gap-2 align-items-center">' .
+                                Html::checkbox($name, $checked, ['value' => $value, 'class' => 'checkbox_design', 'id' => $id]) .
+                                Html::label($label, $id, ['class' => 'checkbox-label']) .
+                                '</div>';
+                        },
+                    ]
+                )->label(false); ?>
+            </div>
                 </div>
             </div>
         </div>
@@ -273,15 +277,15 @@ use common\models\park\SafariPark;
                 </div>
                 <div class="col-7">
 
-                    <div class="input_check d-flex gap-3 align-items-center">
-                        <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
-                            GeneralModel::budgetoption(),
-                            [
-                                'required' => true,
-                                'itemOptions' => ['class' => 'checkbox_design'],
-                            ]
-                        )->label(false); ?>
-                    </div>
+                <div class="input_check d-flex gap-3 align-items-center">
+                <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
+                    GeneralModel::budgetoption(),
+                    [
+                        'required' => true,
+                        'itemOptions' => ['class' => 'checkbox_design'],
+                    ]
+                )->label(false); ?>
+            </div>
                 </div>
             </div>
         </div>

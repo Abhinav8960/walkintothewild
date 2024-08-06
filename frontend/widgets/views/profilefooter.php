@@ -21,14 +21,20 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" width="160">
                 </div>
             </div>
-            <div class="col-lg-8 col-md-8">
+            <div class="col-lg-7 col-md-8">
                 <div class="copyright text-center">
                     <p>COPYRIGHT © 2024 | WALK INTO THE WILD | ALL RIGHTS RESERVED</p>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-12">
-                <div class="terms">
-                    <p class="mb-0"><a href="/termsandcondition">TERMS & CONDITIONS</a></p>
+            <div class="col-lg-3 col-md-12 ">
+                <div class="d-flex gap-3 justify-content-lg-end justify-content-center ps-lg-0 ps-5">
+                    <div class="terms float-lg-start">
+                        <p class="mb-0  pt-0"><a href="" style="cursor: default;">PRIVACY POLICY</a></p>
+                    </div>
+                    <span>|</span>
+                    <div class="terms">
+                        <p class="mb-0 pt-0"><a href="/termsandcondition">TERMS & CONDITIONS</a></p>
+                    </div>
                 </div>
             </div>
         </div>

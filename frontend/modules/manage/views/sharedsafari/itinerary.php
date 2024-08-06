@@ -4,22 +4,22 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+$this->title = $safari_operator->businessname . ' | Manage Operator Business';
 $this->params['title'] = $this->title;
 ?>
 <script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
-<div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
-        <div class="col-md-12 d-flex justify-content-between">
-            <h5><?= $this->title ?></h5>
+<div class="container-lg mt-5 mb-5 pt-5">
+    <div class="row margin_bottomfooter">
+        <div class="col-md-12 d-flex justify-content-between mb-4">
+        <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
-        </div>
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-body">
+        </div> 
+        <div class="col-md-9  itenary_tabs">
+            <div class="card account-settingside safartabs">
+                <div class="card-body p-4">
                     <div class="row">
                         <?= $this->render('_profile_navbar', ['sharedsafari' => $shared_safari_departure_model, 'itinerary_active' => 'active']) ?>
                     </div>

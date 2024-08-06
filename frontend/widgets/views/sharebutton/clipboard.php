@@ -1,4 +1,4 @@
-<li><span class="iconSize copytoclipboard" data-href="<?php echo Yii::$app->request->absoluteUrl; ?>"><i class="fa-solid fa-copy" style="font-size:25px;color: #63E6BE;"></i></span></li>
+<li><span class="iconSize copytoclipboard" data-href="<?php echo Yii::$app->request->absoluteUrl; ?>"><i class="fa-solid fa-link" ></i></span></li>
 
 <?php
 $script = <<< Js
@@ -21,3 +21,4 @@ $(document).ready(function() {
 Js;
 $this->registerJs($script);
 ?>
+

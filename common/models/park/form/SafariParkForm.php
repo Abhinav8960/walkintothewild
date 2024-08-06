@@ -19,6 +19,7 @@ use common\models\park\SafariParkVehicle;
  */
 class SafariParkForm extends model
 {
+    public $show_in_filter;
     public $title;
     public $logo;
     public $feature_image;
@@ -101,6 +102,7 @@ class SafariParkForm extends model
 
         if ($safari_park_model  != '') {
             $this->safari_park_model = $safari_park_model;
+            $this->show_in_filter = $this->safari_park_model->show_in_filter;
             $this->title = $this->safari_park_model->title;
             $this->slug = $this->safari_park_model->slug;
             $this->short_description = $this->safari_park_model->short_description;
@@ -176,8 +178,9 @@ class SafariParkForm extends model
     public function rules()
     {
         return [
-            [['title', 'state_id', 'city_id', 'master_location_id'], 'required', 'on' => 'create'],
-            [['title', 'state_id', 'city_id', 'master_location_id'], 'required', 'on' => 'update'],
+            [['title', 'state_id', 'city_id', 'master_location_id', 'show_in_filter'], 'required', 'on' => 'create'],
+            [['title', 'state_id', 'city_id', 'master_location_id', 'show_in_filter'], 'required', 'on' => 'update'],
+            ['show_in_filter', 'boolean'],
             [['module_title'], 'required', 'on' => 'howtoreach'],
             [['florafauna'], 'required', 'on' => 'florafauna'],
             [['meta_title', 'slug'], 'required', 'on' => 'meta'],
@@ -415,13 +418,13 @@ class SafariParkForm extends model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
+            'show_in_filter', 'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
             'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
             'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'month_note', 'safri_cost_note', 'animal_text'
         ];
         $scenarios['update'] = [
-            'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
+            'show_in_filter', 'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
             'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
             'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
             'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'safri_cost_note', 'animal_text', 'is_most_demanding', 'is_shared_safari'
@@ -454,6 +457,7 @@ class SafariParkForm extends model
     public function attributeLabels()
     {
         return [
+            'show_in_filter' => 'Show in filter',
             'title' => 'Title *',
             'slug' => 'Slug',
             'park_type_id' => 'Park Type',
@@ -514,6 +518,7 @@ class SafariParkForm extends model
      */
     public function initializeForm()
     {
+        $this->safari_park_model->show_in_filter = $this->show_in_filter;
         $this->safari_park_model->title = $this->title;
         $this->safari_park_model->slug = $this->slug;
         $this->safari_park_model->short_description = $this->short_description;

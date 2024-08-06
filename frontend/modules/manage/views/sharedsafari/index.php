@@ -4,7 +4,7 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+$this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
 <div class="container-fluid mt-5 ">
@@ -102,7 +102,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('Update', [Url::toRoute(['update-fixed-departure', 'share_safari_id' => $model->id])], ['class' => 'btn btn-info join_btn py-2', 'title' => 'Update']);
+                                                return   Html::a('Update', [Url::toRoute(['update-fixed-departure', 'slug' => $model->slug])], ['class' => 'btn btn-info join_btn py-2', 'title' => 'Update']);
                                             }
                                         ],
                                     ],

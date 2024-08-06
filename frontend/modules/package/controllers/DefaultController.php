@@ -23,6 +23,7 @@ use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
 use frontend\models\form\PackageEnquiryForm;
 use frontend\models\PackageCommentReportForm;
+use common\Helper\FrontendNotificationHelper;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -89,12 +90,21 @@ class DefaultController extends FrontendBaseController
         $replymodel = new PackageReplyForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($package)) {
+            // Notification for New Comment
+            FrontendNotificationHelper::packageNewComment($package, Yii::$app->user->identity);
+
             Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
             return $this->redirect(\yii\helpers\Url::toRoute(['/package/' . $package->package_slug . '']));
         }
 
 
         if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($package)) {
+
+            // Notification for Reply Comment
+            $reply_comment = $replymodel->commentbyParent();
+            if ($reply_comment) {
+                FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
+            }
             Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
             return $this->redirect(['/package/' . $package->package_slug . '']);
         }
@@ -106,6 +116,9 @@ class DefaultController extends FrontendBaseController
 
         $packagemodel->action_validate_url = '/package/default/validate';
         if ($packagemodel->load(Yii::$app->request->post()) && $packagemodel->validate() && $packagemodel->request($package->id)) {
+            // Send Notification for Package Quote
+            FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity);
+
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
             return $this->redirect(['/package/' . $package->package_slug . '']);
         }

@@ -52,12 +52,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-sm-3 col-md-2">
                                     <div class="safritimg innerImg">
                                         <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
-                                <div class="col-sm-10 pt-sm-0 pt-3">
+                                <div class="col-sm-9 col-md-10 pt-sm-0 pt-3">
                                     <div class="safrititles">
                                         <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>"><?= $share_safari->park->title ?></a>
                                             <?php
@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <?php } ?>
                                         </h5>
                                         <div class="date_bx">
-                                            <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
+                                            <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
                                         <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
 
@@ -83,8 +83,43 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-4 d-lg-none mobile_didplay_none">
+                            <div class="pakageCost text-center mb-3">
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
+                            </div>
+                            <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
+                                <div class="right_button mb-2 w-100 text-center">
+
+                                    <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
+                                        <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                            Fixed Departure</a>
+                                    <?php } ?>
+
+                                </div>
+                                <div class="btns-safaries">
+                                    <?php if ($share_safari->status == 2) { ?>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
+                                    <?php } else if ($share_safari->status == 3) { ?>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>
+                                        <?php } else {
+                                        if (Yii::$app->user->identity) {
+                                            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                            if ($share_safari_intrested) { ?>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 w-100 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
+                                            <?php } else if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) { ?>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
+                                            <?php }
+                                        } else { ?>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/site/auth?authclient=google"> Join Safari</a>
+                                    <?php }
+                                    } ?>
+                                </div>
+
+
+                            </div>
+                        </div>
                         <div class="col-lg-5 pt-lg-0 pt-4">
-                            <div class="row px-sm-4 px-0">
+                            <div class="row px-lg-4 px-0">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
@@ -160,12 +195,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
                         <div class="col-lg-6">
-                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
+                            <div class="social-share flex-wrap d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
-                                <div class="sociel_icons ps-3">
+                                <div class="sociel_icons ps-xl-3">
                                     <?php
                                     $shared_url = urlencode(Url::to('', true));
                                     ?>
@@ -180,21 +216,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </li>
                                         <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-linkedin-in"></i></a>
                                         </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-telegram"></i></a>
+                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-solid fa-paper-plane"></i></a>
                                         </li>
 
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-2">
-                            <div class="pakageCost text-center">
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $share_safari->cost_per_person ?></h6>
+                        <div class="col-lg-2 mt-lg-0 mt-3">
+                            <div class="pakageCost text-lg-center d-sm-block  d-lg-block d-md-none">
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
                         </div>
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                            <div class="d-flex justify-content-lg-end flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
+                                <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
                                         <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
                                             'class' => 'join_btn text-center mt-sm-0 mt-2 d-block',
@@ -205,30 +241,26 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             ],
                                         ]) ?>
                                     <?php } ?>
-                                </div>
-                                <div class="right_button ">
-                                    <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Safari</button>
-                                    <?php } else if (false && $share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 2) { ?>
-                                        <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Fixed Departure</button>
-                                    <?php } else if (!Yii::$app->user->identity) {  ?>
-                                        <a class="btn_newsafari organizeBtn" href="/site/auth?authclient=google">+ Organize a New
-                                            Safari</a>
-                                    <?php } ?>
+                                </div> -->
+                                <div class="right_button mb-1">
 
+                                    <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
+                                        <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                            Fixed Departure</a>
+                                    <?php } ?>
 
                                 </div>
                                 <div class="btns-safaries">
                                     <?php if ($share_safari->status == 2) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
+                                    <?php } else if ($share_safari->status == 3) { ?>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>
                                         <?php } else {
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                             if ($share_safari_intrested) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
-                                            <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
+                                            <?php } else if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
@@ -239,9 +271,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 
                             </div>
-
                         </div>
-
                     </div>
                 </div>
                 <div class="row">
@@ -255,7 +285,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="col-lg-12 col-xl-11 safartabs position-relative">
                         <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">Discussion</button>
+                                <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">DISCUSSION</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
@@ -285,12 +315,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="safari_wrapper mb-5 margin_bottomfooter">
     <div class="container-lg">
-        <div class="row mb-5  mt-5 itenary_tabs">
-            <div class="col-lg-9 col-xl-9 safartabs position-relative">
+        <div class="row mb-5  mt-5 mobileAccordion itenary_tabs">
+            <div class="col-lg-9 col-xl-9  safartabs position-relative">
                 <div class="tab-content accordion" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Discussion</button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse bg-set card_bodyPadding collapse show mb-3 d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
                             <div class="accordion-body p-3 card-body">
@@ -304,14 +334,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel]) ?>
+                        <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
+                        <h2 class="accordion-header d-lg-none" id="headingItenary">
+                            <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseItenary" aria-expanded="true" aria-controls="collapseItenary">ITENARY</button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse bg-set card_bodyPadding collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+                        <div id="collapseItenary" class="accordion-collapse collapse card_bodyPadding bg-set d-lg-block" aria-labelledby="headingItenary" data-bs-parent="#myTabContent">
                             <div class="accordion-body card-body p-3">
                                 <div class="col-lg-12 mb-3">
                                     <div class="itenary-title">
@@ -341,12 +371,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFour">
-                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <h2 class="accordion-header d-lg-none" id="headingGetting">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseGetting" aria-expanded="false" aria-controls="collapseGetting">
                                 GETTING THERE
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse bg-set card_bodyPadding collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                        <div id="collapseGetting" class="accordion-collapse bg-set card_bodyPadding collapse d-lg-block" aria-labelledby="headingGetting" data-bs-parent="#myTabContent">
                             <div class="accordion-body  card-body">
                                 <?= $this->render('_getting_there', ['share_safari' => $share_safari]) ?>
                             </div>
@@ -360,7 +390,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </button>
                         </h2>
                         <div id="collapseFour" class="accordion-collapse  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set pt-0">
+                            <div class="accordion-body  pt-0">
                                 <?= $this->render('_policy', ['share_safari' => $share_safari]) ?>
                             </div>
                         </div>
@@ -380,6 +410,20 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
+                <div class="desclaimers pb-3 pt-lg-0 pt-3">
+                    <div class="itenary-title">
+                        <h6 class="fs-5 pb-2">Disclaimer</h6>
+                    </div>
+                    <div class="itenary_text">
+                        <ul>
+                            <li>This tour is operated by <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> and not by Walk Into The Wild.</li>
+                            <li><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                            <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
+                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> will propose a suitable alternative.</li>
+                            <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
@@ -392,10 +436,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <?php if ($intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all()) {
                             foreach ($intrested_users as $intrested_user) {
                         ?>
-                                <div class="profileavtar">
-                                    <img src="<?= $intrested_user->user && $intrested_user->user->avatar <> '' ? $intrested_user->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
-                                </div>
-
+                                <?php if ($user_intersted = $intrested_user->user) { ?>
+                                    <div class="profileavtar">
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>">
+                                            <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
+                                        </a>
+                                    </div>
+                                <?php } ?>
                         <?php }
                         } ?>
                     </div>

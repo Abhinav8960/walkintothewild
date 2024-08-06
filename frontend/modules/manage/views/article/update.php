@@ -4,7 +4,7 @@ use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
-$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+$this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
 

@@ -57,7 +57,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </div>
 
 </section>
-<section class="touroprator_section">
+<section class="touroprator_section  margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-9 col-lg-12">
@@ -69,7 +69,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between  mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Published <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Article</h6>
+                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Published <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Article</h6>
                                             </div>
 
                                             <div class="row">
@@ -120,6 +120,3 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 </section>
 
 
-<section class="safariduring_sesons innerpage">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>

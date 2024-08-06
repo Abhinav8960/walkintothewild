@@ -81,7 +81,7 @@ class SharedsafariController extends FrontendBaseController
                             }
                         }
                         \Yii::$app->session->setFlash('success', 'Fixed Departure Created Successfully');
-                        return $this->redirect(['update-fixed-departure', 'share_safari_id' => $model->shared_safari_departure_model->id]);
+                        return $this->redirect(['update-fixed-departure', 'slug' => $model->shared_safari_departure_model->slug]);
                     }
                 }
             }
@@ -108,13 +108,12 @@ class SharedsafariController extends FrontendBaseController
         }
     }
 
-    public function actionUpdateFixedDeparture($share_safari_id)
+    public function actionUpdateFixedDeparture($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_departure_model = ShareSafari::find()->where(['id' => $share_safari_id])->limit(1)->one();
+        $shared_safari_departure_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         $model = new CreateDepartureForm($shared_safari_departure_model);
-        $model->status = ShareSafari::STATUS_ACTIVE;
-        $model->action_url = '/manage/sharedsafari/update-fixed-departure?share_safari_id=' . $share_safari_id . '';
+        $model->action_url = '/manage/sharedsafari/update-fixed-departure?slug=' . $slug . '';
         $model->action_validate_url = '/manage/sharedsafari/update-departure-validate?id=' . $shared_safari_departure_model->id . '';
 
         if ($this->request->isPost) {
@@ -133,7 +132,7 @@ class SharedsafariController extends FrontendBaseController
                             }
                         }
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(\yii\helpers\Url::toRoute(['/manage/sharedsafari/update-fixed-departure/' . $share_safari_id . '']));
+                        return $this->redirect(\yii\helpers\Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $slug]));
                     }
                 }
             }

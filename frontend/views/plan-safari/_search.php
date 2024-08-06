@@ -3,6 +3,9 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use common\models\GeneralModel;
+use common\models\park\SafariPark;
+use yii\helpers\ArrayHelper;
+
 ?>
 <?php $form = ActiveForm::begin([
     'options' => [
@@ -17,7 +20,16 @@ use common\models\GeneralModel;
 ]);
 $locationoption = GeneralModel::getAllLocation();
 $animalfilteroption = GeneralModel::animalfilteroption();
-$parkoption = GeneralModel::safariparkoption('slug');
+$query = SafariPark::find()
+    ->where(['status' => SafariPark::STATUS_ACTIVE])
+    ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+    ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+$query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_park_rare_animal WHERE status=1)");
+$query->andWhere(['show_in_filter' => 1]);
+$parks = $query->all();
+
+
+$parkoption = ArrayHelper::map($parks, 'slug', 'title');
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
 <div class="row gx-0 justify-content-center ">
@@ -85,7 +97,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
 
             </div>
-            
+
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
@@ -143,7 +155,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
 
             </div>
-        
+
         </div>
     </div>
     <div class=" col-xl-1">

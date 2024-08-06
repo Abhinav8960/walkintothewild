@@ -58,7 +58,7 @@ class ShareSafariSearch extends ShareSafari
      */
     public function search($params, $pagination = true)
     {
-        $query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_ACTIVE]])->andWhere(['>=', 'start_date', date("Y-m-d")]);
+        $query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'start_date', date("Y-m-d")]);
 
         // add conditions that should always apply here
 
@@ -139,21 +139,21 @@ class ShareSafariSearch extends ShareSafari
         //     }
         // }
 
-        if ($this->estimate_price_min !== null && $this->estimate_price_max !== null) {
-            if ($this->estimate_price_max >= 15000) {
-                $dataProvider->query->andWhere([
-                    'or',
-                    ['>=', 'estimate_price_max', $this->estimate_price_min],
-                    ['<=', 'estimate_price_min', $this->estimate_price_max]
-                ]);
-            } else {
-                $dataProvider->query->andWhere([
-                    'or',
-                    ['and', ['>=', 'estimate_price_min', $this->estimate_price_min], ['<=', 'estimate_price_min', $this->estimate_price_max]],
-                    ['and', ['>=', 'estimate_price_max', $this->estimate_price_min], ['<=', 'estimate_price_max', $this->estimate_price_max]]
-                ]);
-            }
-        }
+        // if ($this->estimate_price_min !== null && $this->estimate_price_max !== null) {
+        //     if ($this->estimate_price_max >= 15000) {
+        //         $dataProvider->query->andWhere([
+        //             'or',
+        //             ['>=', 'estimate_price_max', $this->estimate_price_min],
+        //             ['<=', 'estimate_price_min', $this->estimate_price_max]
+        //         ]);
+        //     } else {
+        //         $dataProvider->query->andWhere([
+        //             'or',
+        //             ['and', ['>=', 'estimate_price_min', $this->estimate_price_min], ['<=', 'estimate_price_min', $this->estimate_price_max]],
+        //             ['and', ['>=', 'estimate_price_max', $this->estimate_price_min], ['<=', 'estimate_price_max', $this->estimate_price_max]]
+        //         ]);
+        //     }
+        // }
 
         if ($this->no_of_safari_min && $this->no_of_safari_max) {
             if ($this->no_of_safari_max >= 10) {

@@ -175,6 +175,9 @@ use kartik\datetime\DateTimePicker;
             <div class="col-md-12">
                 <?= $form->field($model, 'package_description')->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
             </div>
+            <div class="col-md-12">
+                <?= $form->field($model, 'package_itinerary_overview')->textarea(['rows' => '2', 'placeholder' => 'Itinerary Detail '])->label('Overview') ?>
+            </div>
         </div>
         <hr>
         <div class="row">
@@ -199,6 +202,7 @@ use kartik\datetime\DateTimePicker;
 <?php
 $script = <<< JS
 editor('packageform-package_description');
+editor('packageform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>

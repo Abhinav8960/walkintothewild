@@ -16,6 +16,7 @@ use frontend\models\ShareSafariSearch;
 use common\models\sharesafari\ShareSafari;
 use frontend\models\form\SharedSafariForm;
 use common\models\master\month\MasterMonth;
+use common\models\operator\SafariOperator;
 use frontend\models\ShareSafariCommentForm;
 use frontend\models\form\CreateDepartureForm;
 use frontend\controllers\FrontendBaseController;
@@ -201,7 +202,10 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+
+        $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
+
         $model = new ShareSafariCommentForm();
         $replymodel = new ReplyForm();
 
@@ -224,6 +228,7 @@ class DefaultController extends FrontendBaseController
                 'share_safari' => $share_safari,
                 'model' => $model,
                 'replymodel' => $replymodel,
+                'login_safarioperator' => $login_safarioperator,
             ]);
         } else {
 
@@ -237,6 +242,7 @@ class DefaultController extends FrontendBaseController
                 'model' => $model,
                 'replymodel' => $replymodel,
                 'faqs' => $faqs,
+                'login_safarioperator' => $login_safarioperator,
             ]);
         }
     }

@@ -45,15 +45,12 @@ class DefaultController extends FrontendBaseController
     public function actionIndex($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        $model = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
-        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
+      
         $user_experiences = UserExperience::find()->where(['user_id' => $user->id, 'status' => UserExperience::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         return $this->render(
             'index',
             [
                 'user' => $user,
-                'model' => $model,
-                'model_count' => $model_count,
                 'user_experiences' => $user_experiences
             ]
         );

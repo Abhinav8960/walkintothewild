@@ -3,7 +3,7 @@
 namespace backend\modules\cms\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\cms\faqcategory\Faq;
+use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\faqs\form\FaqsForm;
 use common\models\cms\faqs\Faqs;
 use common\models\cms\faqs\FaqsSearch;
@@ -20,7 +20,7 @@ class FaqsController extends Controller
         $searchModel = new FaqsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $categories = Faq::find()->select(['id', 'name'])->where(['status' => true])->all();
+        $categories = FaqCategory::find()->select(['id', 'name'])->where(['status' => true])->all();
         $categoryList = ArrayHelper::map($categories, 'id', 'name');
 
         return $this->render('index', [

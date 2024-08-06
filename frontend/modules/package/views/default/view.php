@@ -31,7 +31,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1 class="mb-0"><?= $package->package_name ?></h1>
-                        <!-- <p class="text-center text-white mb-0">Organized by <?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></p> -->
+                        <!-- <p class="text-center text-white mb-0">Organized by <?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></p> -->
                     </div>
                 </div>
             </div>
@@ -50,12 +50,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="images_tour select_safrai">
+                                <div class="col-lg-4 col-md-3">
+                                    <div class="images_tour select_safrai ">
                                         <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
                                     </div>
                                 </div>
-                                <div class="col-lg-8 pt-sm-0 pt-3">
+                                <div class="col-lg-8 col-md-9 pt-sm-3 pt-md-0 pt-3">
                                     <div class="safrititles">
                                         <h5 class="fs-4"><?= $package->package_name ?>
                                             <?php
@@ -74,15 +74,28 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
-                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>"><strong><?= isset($package->safarioperator) ? $package->safarioperator->business_name : '' ?></strong></a></p>
+                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>"><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong></a></p>
 
                                     </div>
 
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-4 d-md-block d-lg-none d-none">
+                            <div class="text-left">
+                                <div class="pakageCost">
+                                    <h6 class="fs-3 mb-0 fw-bold text-center"><img src="/assets/f9595a2a/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?></h6>
+                                </div>
+                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
+                                    <div class="message">
+                                        <a href="" class="follow_massge d-block w-100 text-center">Message</a>
+                                    </div>
+                                    <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button> -->
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-lg-5 pt-lg-0 pt-4">
-                            <div class="row px-sm-4 px-0">
+                            <div class="row px-lg-4 px-0">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
@@ -174,9 +187,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
                         <div class="col-lg-7">
-                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
+                            <div class="social-share d-flex  flex-wrap gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
-                                <div class="sociel_icons ps-3">
+                                <div class="sociel_icons ps-xl-3">
                                     <?php
                                     $shared_url = urlencode(Url::to('', true));
                                     ?>
@@ -191,12 +204,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-lg-5 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center pt-lg-0 pt-sm-3 pt-3">
                                 <div class="pakageCost">
-                                    <h6 class="fs-3 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= $package->total_price ?></h6>
+                                    <h6 class="fs-3 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?></h6>
                                 </div>
-                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>
+                                <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
+                                    <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button> -->
+                                    <div class="message">
+                                        <a href="" class="follow_massge">Message</a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -240,11 +256,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 
-<section class="safari_wrapper margin_bottomfooter">
+<section class="safari_wrapper margin_bottomfooter ">
     <div class="container-lg">
-        <div class="row mb-5  mt-4 itenary_tabs px-3">
+        <div class="row mb-5  mt-4 mobileAccordion itenary_tabs px-md-3">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
-                <div class="tab-content accordion" id="myTabContent">
+                <div class="tab-content accordion " id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                         <h2 class="accordion-header d-lg-none" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
@@ -256,7 +272,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <h6 class="fs-6 fw-bold mb-4">ABOUT TRIP / OVERVIEW</h6>
                                     </div>
                                     <div class="itenary_text">
-                                        <p><?= $package->package_description ?></p>
+                                        <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -279,12 +295,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFour">
-                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <h2 class="accordion-header d-lg-none" id="headingGetting">
+                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseGetting" aria-expanded="false" aria-controls="collapseGetting">
                                 GETTING THERE
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                        <div id="collapseGetting" class="accordion-collapse bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                             <div class="accordion-body card-body ">
                                 <?= $this->render('_getting_there', ['package' => $package]) ?>
                             </div>
@@ -318,21 +334,22 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
+
+                <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
                 <div class="desclaimers pb-3">
                     <div class="itenary-title">
                         <h6 class="fs-5 pb-2">Disclaimer</h6>
                     </div>
                     <div class="itenary_text">
                         <ul>
-                            <li>This tour is operated by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> and not by Walk Into The Wild.</li>
-                            <li><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                            <li>This tour is operated by <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> and not by Walk Into The Wild.</li>
+                            <li><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
                             <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> will propose a suitable alternative.</li>
+                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> will propose a suitable alternative.</li>
                             <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
                         </ul>
                     </div>
                 </div>
-                <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel]) ?>
             </div>
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <?php if (Yii::$app->user->identity) { ?>

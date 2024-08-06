@@ -1,12 +1,12 @@
-<div class="row">
-    <div class="col-lg-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
+<div class="row px-lg-0 px-3">
+    <div class="col-lg-4 col-md-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
         <div class="safri_tour sticky-top border-0">
             <div class="topics_listing px-0 safariChanges ">
                 <ul id="tabList">
                     <li><a class="tab-items active_safri" data-tab="tab21">
                             <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
-                    <li><a class="tab-items " data-tab="tab22">
+                    <!-- <li><a class="tab-items " data-tab="tab22">
                             <div class="numparks">Privacy Policy</div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
                     <li><a class="tab-items" data-tab="tab23">
@@ -14,7 +14,7 @@
                         </a></li>
                     <li><a class="tab-items " data-tab="tab24">
                             <div class="numparks">What You Must Carry </div><i class="fa-solid fa-chevron-right"></i>
-                        </a></li>
+                        </a></li> -->
                     <li><a class="tab-items " data-tab="tab25">
                             <div class="numparks">Date Change Policy </div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-xxl-9 col-xl-9">
+    <div class="col-lg-8 col-md-8 col-xxl-9 col-xl-8 pt-lg-0 pt-2 pb-md-0 pb-3">
         <div class="tab-content_tour active " id="tab21">
             <!-- Safari Parks content goes here -->
             <div class="row">
@@ -45,8 +45,8 @@
                 </div>
             </div>
         </div>
-        <div class="tab-content_tour" id="tab22">
-            <!-- Safari Parks content goes here -->
+        <!-- <div class="tab-content_tour" id="tab22">
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -63,9 +63,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-content_tour" id="tab23">
-            <!-- Safari Parks content goes here -->
+        </div> -->
+        <!-- <div class="tab-content_tour" id="tab23">
+            
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -82,9 +82,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="tab-content_tour " id="tab24">
+        <!-- <div class="tab-content_tour " id="tab24">
             <div class="searchSafari_parks mb-4">
                 <div class="row">
                     <div class="col-md-12">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="tab-content_tour" id="tab25">
             <!-- Shared Safari content goes here -->

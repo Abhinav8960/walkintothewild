@@ -8,4 +8,10 @@ return [
     'user.passwordMinLength' => 8,
     "isGoogleV3CaptchaValidateNeeded" => false,
 
+    // params for PUsher
+    'PUSHER_APP_ID' => '1844055',
+    'PUSHER_AUTH_KEY' => '224fb7b95b501eca5161',
+    'PUSHER_SECRET_KEY' => '1270be252c3504068584',
+    'PUSHER_CLUSTER' => 'ap2',
+
 ];

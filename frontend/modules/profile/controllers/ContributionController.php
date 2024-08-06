@@ -23,14 +23,10 @@ class ContributionController extends FrontendBaseController
         $user = $this->findUserbyHandle($user_handle);
         $suggestions = SafariSuggestions::find()->where(['created_by' => $user->id, 'status' => 1])->all();
 
-        $sharesafrimodel = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
-        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
 
         return $this->render('index', [
             'user' => $user,
             'suggestions' => $suggestions,
-            'sharesafrimodel' => $sharesafrimodel,
-            'model_count' => $model_count
         ]);
     }
 }

@@ -5,7 +5,7 @@ namespace common\models\cms\faqcategory\form;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use common\models\cms\faqcategory\Faq;
+use common\models\cms\faqcategory\FaqCategory;
 
 /**
  * Class Faq
@@ -13,19 +13,19 @@ use common\models\cms\faqcategory\Faq;
  *
  * Handles the creation and updating of Faq models
  */
-class FaqForm extends Model
+class FaqCategoryForm extends Model
 {
     public $name;
     public $status;
     public $status_option = [];
     public $faq_model;
 
-    public function __construct(Faq $faq_model = null, $config = [])
+    public function __construct(FaqCategory $faq_model = null, $config = [])
     {
         parent::__construct($config);
 
         if ($faq_model === null) {
-            $this->faq_model = new Faq();
+            $this->faq_model = new FaqCategory();
         } else {
             $this->faq_model = $faq_model;
             $this->name = $this->faq_model->name;

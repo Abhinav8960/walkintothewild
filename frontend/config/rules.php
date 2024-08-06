@@ -94,13 +94,16 @@ return [
 
 
 
+    '/profile/share-safari-all/<user_handle>' => '/profile/share-safari/viewall',
     '/profile/share-safari/<user_handle>' => '/profile/share-safari/index',
     '/profile/activity/<user_handle>' => '/profile/activity/index',
     '/profile/photo/delete' => '/profile/photo/delete',
     '/profile/photo/validate' => '/profile/photo/validate',
     '/profile/photo/create' => '/profile/photo/create',
     '/profile/photo/<user_handle>' => '/profile/photo/index',
+    '/profile/photo/photoseeall/<user_handle>' => '/profile/photo/photoseeall',
     '/profile/contribution/<user_handle>' => '/profile/contribution/index',
+
 
     '/profile/search' => '/profile/search/index',
     '/profile/search/blocked/<user_handle>' => '/profile/search/blocked',
@@ -119,7 +122,7 @@ return [
     '/manage/package/create-gallery/<package_id>' => '/manage/package/create-gallery', //package profile create faq url          
 
 
-    '/manage/sharedsafari/update-fixed-departure/<share_safari_id>' => '/manage/sharedsafari/update-fixed-departure',
+    '/manage/sharedsafari/update-fixed-departure/<slug>' => '/manage/sharedsafari/update-fixed-departure',
     '/manage/sharedsafari/itinerary/<share_safari_id>/<day>' => '/manage/sharedsafari/itinerary', //sharedsafari profile itenary url          
     '/manage/sharedsafari/inclusion/<share_safari_id>' => '/manage/sharedsafari/inclusion', //sharedsafari profile inclusion url          
     '/manage/sharedsafari/getting-there/<share_safari_id>' => '/manage/sharedsafari/getting-there', //sharedsafari profile getting-there url          

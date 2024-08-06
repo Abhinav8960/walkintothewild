@@ -413,7 +413,7 @@ a {
 .shareimg {
 
     width: 100%;
-    height: 200px;
+    height: 170px;
     -o-object-fit: cover;
     object-fit: cover;
 }
@@ -488,7 +488,7 @@ a {
 
 .sharesafri-card.tourpackage .shareimg img {
 
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .JoinPadding {
@@ -718,7 +718,7 @@ a {
 .btn_newsafari {
 
     background-color: #F5F5F5;
-    padding: 10px 25px;
+    padding: 10px 19px;
     font-size: var(--fs-15);
     font-weight: 600;
     font-family: "Roboto", sans-serif !important;
@@ -1000,7 +1000,7 @@ a {
 
     border: 1px solid #09422D4D;
     border-radius: 10px;
-    /* height: 150px; */
+    height: 150px;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -1597,10 +1597,10 @@ figure {
     width: 100% !important;
     min-height: auto !important;
 } */
-.imagzise .owl-item {
+/* .imagzise .owl-item {
 
     width: 156px !important;
-}
+} */
 
 .slidesImg {
 
@@ -2168,11 +2168,18 @@ figure {
 
 }
 
-.iconSize .fa-telegram {
+.iconSize .fa-paper-plane{
 
     background: #0088cc;
 
 }
+.iconSize .fa-link{
+
+    background: var(--background-yellow);
+    cursor: pointer;
+}
+
+
 
 .iconSize .fa-globe {
 
@@ -2520,7 +2527,7 @@ figure {
 
 .listingSafari {
 
-    border: 1px solid #707070;
+    border: 1px solid #7070704D;
     border-radius: 5px;
     position: relative;
     /* width: 300px; */
@@ -5206,12 +5213,6 @@ figure {
     height: auto;
 }
 
-/* Responsive styling */
-@media (max-width: 1200px) {
-    .custom-col {
-        padding: 0 20px;
-    }
-}
 
 
 .topSlider_tour .owl-dots {
@@ -6508,4 +6509,149 @@ a.desc:after {
     border-radius: 3px;
     color: var(--ds-text, #42526E) !important;
     background: rgb(255, 255, 255) !important;
+}
+
+
+.menunotification {
+    position: absolute;
+    top: calc(100% + -5px);
+    right: 129px;
+    min-height: 100px;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: 300ms;
+    z-index: 100;
+    width: auto;
+    max-width: 500px;
+    padding-bottom: 20px;
+    /* padding: 15px 10px; */
+    border-radius: 10px;
+}
+
+/* .menunotification::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 40px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    transform: rotate(45deg);
+    z-index: -1;
+} */
+.menunotification.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+.menunotification ul{
+
+    padding-left: 0;
+    list-style: none;
+   
+}
+.menunotification .notification-not-read,
+.menunotification .notification-read{
+
+    border-bottom:1px solid #f1f2f4;;
+    
+}
+.menunotification .notification-not-read a{
+
+color: #000 !important;
+font-weight: 500;
+background-color: transparent;
+text-overflow: ellipsis;
+display: inline-block;
+overflow: hidden;
+padding: 12px 18px;
+}
+
+.menunotification .notification-read a {
+  
+color: #7b8191 !important;
+padding: 12px 18px;
+font-weight:400;
+text-overflow: ellipsis;
+display: inline-block;
+overflow: hidden;
+}
+
+
+.notification{
+
+    cursor: pointer;
+}
+
+.notification-not-read{
+
+background-color: #fff;
+color: #000;
+font-weight: 500;
+
+}
+
+.notification-read{
+
+    background-color: #d8d8d8;
+}
+
+
+
+.moreviewMobile {
+    position: absolute;
+    top: calc(100% + 0px);
+    right: 53px;
+    min-height: 100px;
+    background: #fff;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+    opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition: 300ms;
+    z-index: 100;
+    width: auto;
+    max-width: 500px;
+    padding-bottom: 20px;
+    padding: 15px 16px;
+    border-radius: 10px;
+}
+.moreviewMobile .nav-tabs .nav-link{
+    color: #1E1E1E !important;
+    border: 0 !important;
+    background: #fff !important;
+    opacity: 1 !important;
+    font-weight: 500 !important;
+    padding: 0 !important;
+    padding-bottom: 10px !important;
+}
+
+
+
+/* .menunotification::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 40px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    transform: rotate(45deg);
+    z-index: -1;
+} */
+.moreviewMobile.active {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+.shrelinkssss ul{
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    padding-left: 0;
 }

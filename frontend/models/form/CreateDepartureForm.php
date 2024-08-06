@@ -73,6 +73,7 @@ class CreateDepartureForm extends \yii\base\Model
             $this->refund_policy = $this->shared_safari_departure_model->refund_policy;
             $this->getting_there = $this->shared_safari_departure_model->getting_there;
 
+
             $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_model->id])->column(); //abb multiple park ko store karenge
         }
     }

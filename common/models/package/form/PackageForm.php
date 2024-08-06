@@ -24,6 +24,7 @@ class PackageForm extends \yii\base\Model
     public $stay_category_id;
     public $cost_per_person;
     public $package_description;
+    public $package_itinerary_overview;
     public $package_inclusion;
     public $package_exclusion;
     public $package_terms_condtition;
@@ -88,6 +89,7 @@ class PackageForm extends \yii\base\Model
             $this->stay_category_id = $this->package_model->stay_category_id;
             $this->cost_per_person = $this->package_model->cost_per_person;
             $this->package_description = $this->package_model->package_description;
+            $this->package_itinerary_overview = $this->package_model->package_itinerary_overview;
             $this->package_inclusion = $this->package_model->package_inclusion;
             $this->package_exclusion = $this->package_model->package_exclusion;
             $this->package_terms_condtition = $this->package_model->package_terms_condtition;
@@ -124,12 +126,12 @@ class PackageForm extends \yii\base\Model
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
-            [['package_name', 'no_of_day', 'master_vehicle_id'], 'required', 'on' => ['create', 'update']],
+            [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person'], 'required', 'on' => ['create', 'update']],
             [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price', 'master_vehicle_id'], 'integer'],
             [['cost_per_person'], 'number'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
+            [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
             [['package_feature', 'package_included', 'package_park', 'package_image', 'getting_there'], 'safe'],
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
@@ -153,7 +155,7 @@ class PackageForm extends \yii\base\Model
         $scenarios = parent::scenarios();
         $scenarios['create'] = [
             'package_name', 'package_image', 'no_of_day', 'no_of_night', 'no_of_safari',
-            'stay_category_id', 'status', 'cost_per_person', 'package_description',
+            'stay_category_id', 'status', 'cost_per_person', 'package_description', 'package_itinerary_overview',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
             'start_location', 'end_location', 'start_date', 'end_date', 'owned_by_id',
@@ -161,7 +163,7 @@ class PackageForm extends \yii\base\Model
         ];
         $scenarios['update'] = [
             'package_name', 'package_image', 'no_of_day', 'no_of_night', 'no_of_safari',
-            'stay_category_id', 'status', 'cost_per_person', 'package_description',
+            'stay_category_id', 'status', 'cost_per_person', 'package_description', 'package_itinerary_overview',
             'package_inclusion', 'package_exclusion', 'package_terms_condtition',
             'package_feature', 'package_included', 'package_park', 'package_image',
             'start_location', 'end_location', 'start_date', 'end_date',
@@ -196,6 +198,7 @@ class PackageForm extends \yii\base\Model
             'stay_category_id' => 'Stay Category',
             'cost_per_person' => 'Cost Per Person',
             'package_description' => 'Package Description',
+            'package_itinerary_overview' => 'Overview',
             'package_inclusion' => 'Package Inclusion',
             'package_exclusion' => 'Package Exclusion',
             'package_terms_condtition' => 'Package Terms Condtition',
@@ -230,6 +233,7 @@ class PackageForm extends \yii\base\Model
         $this->package_model->stay_category_id = $this->stay_category_id;
         $this->package_model->cost_per_person = $this->cost_per_person;
         $this->package_model->package_description = $this->package_description;
+        $this->package_model->package_itinerary_overview = $this->package_itinerary_overview;
         $this->package_model->package_inclusion = $this->package_inclusion;
         $this->package_model->package_exclusion = $this->package_exclusion;
         $this->package_model->package_terms_condtition = $this->package_terms_condtition;

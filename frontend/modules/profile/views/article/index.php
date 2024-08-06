@@ -9,12 +9,12 @@ $this->title = $user->name . ' | Article';
 $this->params['title'] = $this->title;
 ?>
 <section class="profile-wrapper">
-    <div class="container mb-5">
+    <div class="container-lg mb-5">
         <?= $this->render('@frontend/modules/profile/views/default/tablist', ['article' => 'active', 'user' => $user]) ?>
     </div>
 </section>
 <section>
-    <div class="container ">
+    <div class="container-lg ">
         <div class="row justify-content-center ">
             <div class="col-xxl-11 margin_bottomfooter">
                 <div class="row">
@@ -23,17 +23,17 @@ $this->params['title'] = $this->title;
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;">Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h6>
+                                        <div class="d-flex justify-content-between flex-wrap align-items-center mb-3">
+                                            <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= isset($articles) ? count($articles) : '' ?> Articles shared by <?= Yii::$app->user->identity->id == $user->id ? ' me' : $user->name ?></h6>
                                             <?php if (Yii::$app->user->identity->id == $user->id) { ?>
-                                                <a class="follow_btn text-center mt-sm-0 " href="<?= Url::toRoute(['create']) ?>">Create Article</a>
+                                                <a class="follow_btn text-center mt-sm-0 mt-2" href="<?= Url::toRoute(['create']) ?>">Create Article</a>
                                             <?php } ?>
                                         </div>
                                     </div>
                                     <?php if ($articles) {
                                         foreach ($articles as $article) {  ?>
-                                            <div class="col-sm-6 col-lg-4 mb-5 " style="<?= $article->status == 1 ?: 'border: 2px solid red;' ?>">
-                                                <div class="artical_cards h-100 position-relative">
+                                            <div class="col-sm-6 col-lg-4 mb-5 ">
+                                                <div class="artical_cards h-100 position-relative" style="<?= $article->status == 1 ?: 'border: 1px solid red;' ?>">
                                                     <div class="image-box">
                                                         <?php if (Yii::$app->user->identity->id == $user->id) { ?>
                                                             <a class="join_btn updateBtn_artical text-center px-3 py-1" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>

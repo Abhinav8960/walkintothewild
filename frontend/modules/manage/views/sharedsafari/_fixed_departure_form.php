@@ -82,6 +82,7 @@ use yii\helpers\Html;
                 </div>
 
             </div>
+            
         </div>
 
         <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>

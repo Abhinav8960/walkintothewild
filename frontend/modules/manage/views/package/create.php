@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use kartik\datetime\DateTimePicker;
 
-$this->title = $safari_operator->business_name . ' | Manage Operator Business';
+$this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
 
@@ -186,6 +186,19 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                     ])->label('Package Feature') ?>
                                 </div>
 
+                                <div class="col-md-3">
+                                    <?= $form->field($model, 'master_vehicle_id', [
+                                        'labelOptions' => ['class' => 'Modal_label']
+                                    ])->widget(\kartik\select2\Select2::classname(), [
+                                        'data' => GeneralModel::vehicleoption(),
+                                        'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
+                                        'options' => ['placeholder' => 'Select Vehicle', 'multiple' => false],
+                                        'pluginOptions' => [
+                                            'allowClear' => true
+                                        ],
+                                    ]) ?>
+                                </div>
+
                                 <?php
                                 if (!empty($model->package_model->id)) { ?>
                                     <div class="col-md-6">
@@ -198,6 +211,12 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
                                     <?= $form->field($model, 'package_description', [
                                         'labelOptions' => ['class' => 'Modal_label']
                                     ])->textarea(['rows' => '2', 'placeholder' => 'Description Detail '])->label('Description') ?>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <?= $form->field($model, 'package_itinerary_overview', [
+                                        'labelOptions' => ['class' => 'Modal_label']
+                                    ])->textarea(['rows' => '2', 'placeholder' => 'Itinerary Detail '])->label('Overview') ?>
                                 </div>
                             </div>
                             <div class="row">
@@ -225,6 +244,7 @@ $this->title = $safari_operator->business_name . ' | Manage Operator Business';
 <?php
 $script = <<< JS
 editor('packageform-package_description');
+editor('packageform-package_itinerary_overview');
 JS;
 $this->registerJs($script);
 ?>

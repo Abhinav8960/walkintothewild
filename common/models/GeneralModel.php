@@ -11,7 +11,7 @@ use common\models\cms\article\ArticleAuthor;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\MasterArticleTag;
 use common\models\cms\article\MasterArticleTopic;
-use common\models\cms\faqcategory\Faq;
+use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\flagreason\Flagreason;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
@@ -401,9 +401,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterCity::find()->where(['state_id' => $master_state_id, 'status' => self::STATUS_ACTIVE])->orderBy(['city_name' => SORT_ASC])->all(), 'id', 'city_name');
     }
 
-    public static function faqoption()
+    public static function faqcategoryoption()
     {
-        return ArrayHelper::map(Faq::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(FaqCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
 
@@ -583,6 +583,26 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
+        // Get all the models
+        $parks = $query->all();
+
+        // Use ArrayHelper::map to create the key-value pairs
+        $result = ArrayHelper::map($parks, 'id', 'title');
+        return $result;
+    }
+
+    public static function articleoptionfeature($ids = null)
+    {
+
+        $query = Article::find()
+            // ->where(['status' => self::STATUS_ACTIVE])
+            ->where("article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and user_type=3) OR article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and is_approved=1 and user_type IN (1,2))")
+            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+
+        if ($ids) {
+            $query->andWhere("article.id NOT IN ($ids)");
+        }
         // Get all the models
         $parks = $query->all();
 
@@ -1050,6 +1070,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '1' => 'Public',
             '2' => 'Only me',
             '3' => 'My Follower',
+        ];
+        return $return;
+    }
+
+    public static function sharesafarioptions()
+    {
+        $return = [
+            '1' => 'Active',
+            '2' => 'Deactive',
+            '3' => 'Seat Full',
         ];
         return $return;
     }

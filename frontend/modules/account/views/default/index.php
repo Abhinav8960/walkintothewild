@@ -89,6 +89,9 @@ $this->title = 'Account Settings';
                                 <div class="col-md-12">
                                     <?= $form->field($model, 'website_url')->textInput(['maxlength' => true, 'placeholder' => 'Website Link']) ?>
                                 </div>
+                                <div class="col-md-12">
+                                    <?= $form->field($model, 'youtube_url')->textInput(['maxlength' => true, 'placeholder' => 'Youtube Link']) ?>
+                                </div>
 
                                 <div class="col-md-12">
                                     <div class="float-end">

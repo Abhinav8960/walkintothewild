@@ -184,6 +184,13 @@ $this->params['title'] = $this->title;
                                         <label for="" class="Modal_label">Share Seats <span class="necessary">*</span></label>
                                         <?= $form->field($model, 'share_seat')->dropDownList($model->getSharedseat(), ['prompt' => 'Share Seats', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                                     </div>
+
+                                    <?php if (isset($model->shared_safari_model->id)) { ?>
+                                        <div class="selects w-100">
+                                            <label for="" class="Modal_label">Status <span class="necessary">*</span></label>
+                                            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['prompt' => 'Status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="col-lg-12 margin-remove pt-3">

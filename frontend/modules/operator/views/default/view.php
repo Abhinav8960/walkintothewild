@@ -56,7 +56,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </div>
 
 </section>
-<section class="touroprator_section">
+<section class="touroprator_section margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
             <div class="col-xl-9 col-lg-12">
@@ -68,7 +68,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
                                             <div class="d-flex justify-content-between  mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->business_name ?> Operates in <span class="numberFont"><?= count($operator_parks) ?></span> Parks</h6>
+                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Operates in <span class="numberFont"><?= count($operator_parks) ?></span> Parks</h6>
                                                 <?php if (count($operator_parks) >= 6) { ?>
                                                     <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/parkseeall', 'slug' => $operator->slug]) ?>">See All</a>
                                                 <?php } ?>
@@ -108,7 +108,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             <div class="col-xxl-4 col-lg-4">
                                 <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
 
-                                <?= $this->render('_shared_safar_sidebar', ['operator' => $operator]) ?>
+                                <?= $this->render('_shared_safari_sidebar', ['operator' => $operator]) ?>
 
                             </div>
                         </div>
@@ -121,6 +121,3 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 </section>
 
 
-<section class="safariduring_sesons innerpage">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>

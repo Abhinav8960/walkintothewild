@@ -16,7 +16,7 @@ use yii\helpers\Url;
         <div class="row  gx-xxl-5 gx-lg-4  justify-content-center  px-sm-2">
             <?php if ($featured_articles) {
                 foreach ($featured_articles as $featured_article) { ?>
-                    <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 mb-5">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-5">
                         <div class="artical_cards h-100">
                             <div class="image-box">
                                 <figure class="image"><a href="/article/<?= $featured_article->slug ?>"><img src="<?= isset($featured_article->banner_image) ? $featured_article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
@@ -43,7 +43,7 @@ use yii\helpers\Url;
 
         </div>
         <div class="row justify-content-center text-center mt-4">
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <a href="/article" class="btn_newsafari organizeBtn newbg rounded-5">View All Articles <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>

@@ -10,7 +10,7 @@ $this->title = $user->name . ' | Following';
 $this->params['title'] = $this->title;
 ?>
 <section class="profile-wrapper">
-    <div class="container mb-5">
+    <div class="container-lg mb-5">
         <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active', 'user' => $user]) ?>
     </div>
 </section>
