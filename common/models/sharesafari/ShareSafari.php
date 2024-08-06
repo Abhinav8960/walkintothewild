@@ -163,9 +163,9 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function getOrganizedbyprofileurl()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {
-            return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->user->user_handle]);
+            return \yii\helpers\Url::toRoute(['/profile/default/index', 'user_handle' => $this->user ? $this->user->user_handle : '']);
         } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
-            return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->safarioperator->slug]);
+            return \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $this->safarioperator ? $this->safarioperator->slug : '']);
         }
     }
 

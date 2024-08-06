@@ -50,6 +50,13 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'Type',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return ucwords($model->url_type);
+                        }
+                    ],
+                    [
                         'label' => 'URL',
                         'format' => 'raw',
                         'contentOptions' => ['style' => 'color:#000;'],

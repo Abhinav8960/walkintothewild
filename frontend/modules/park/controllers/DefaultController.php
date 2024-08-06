@@ -19,6 +19,8 @@ use common\models\park\SafariParkRatingSearch;
 use common\models\suggestions\SafariSuggestions;
 use frontend\controllers\FrontendBaseController;
 use common\models\master\animal\MasterRareAnimal;
+use common\models\package\Package;
+use common\models\package\PackageSafariPark;
 use common\models\suggestions\form\SafariSuggestionsForm;
 
 /**
@@ -420,5 +422,71 @@ class DefaultController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+
+    public function actionSharedsafari($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/parklist']);
+        }
+        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
+        return $this->render(
+            '_shared_safari',
+            [
+                'model' => $model,
+                'shared_safaries' => $shared_safaries,
+            ]
+        );
+    }
+
+    public function actionDiscussion($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/parklist']);
+        }
+
+        return $this->render(
+            '_discussion',
+            [
+                'model' => $model,
+            ]
+        );
+    }
+
+    public function actionUpdate($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/parklist']);
+        }
+        return $this->render(
+            '_update',
+            [
+                'model' => $model,
+            ]
+        );
+    }
+
+    public function actionPackage($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/parklist']);
+        }
+
+        $packages = Package::find()->where(['package.status' => Package::STATUS_ACTIVE])
+            ->joinWith('packagepark', function ($additional_query) use ($model) {
+                $additional_query->andWhere(['park_id' => $model->id, 'package_safari_park.status' => 1]);
+            })->all();
+        return $this->render(
+            '_package',
+            [
+                'model' => $model,
+                'packages' => $packages,
+            ]
+        );
     }
 }

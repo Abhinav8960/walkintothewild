@@ -18,7 +18,7 @@ class SearchSitePages extends SitePages
     {
         return [
             [['id', 'content_id', 'counter', 'status'], 'integer'],
-            [['content_type', 'category', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at'], 'safe'],
+            [['url_type', 'content_type', 'category', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at'], 'safe'],
         ];
     }
 
@@ -75,7 +75,8 @@ class SearchSitePages extends SitePages
         }
 
         $query->andFilterWhere(['like', 'url', $this->url])
-            ->andFilterWhere(['like', 'slug', $this->slug]);
+            ->andFilterWhere(['like', 'slug', $this->slug])
+            ->andFilterWhere(['like', 'url_type', $this->url_type]);
 
         return $dataProvider;
     }

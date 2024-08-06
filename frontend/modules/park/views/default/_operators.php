@@ -50,10 +50,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="input_check pb-0">
                     <?php if ($device == 'desktop') {  ?>
                         <select class="form-select mb-2" aria-label="Default select example" id="custom_sort_by">
-                            <option value="name_az" <?= $operatorsearchModel->custom_sort_by == 'name_az' || $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Sort By: Name A-Z</option>
-                            <option value="name_za" <?= $operatorsearchModel->custom_sort_by == 'name_za' ? 'selected' : '' ?>>Name Z-A</option>
-                            <option value="rating_high" <?= $operatorsearchModel->custom_sort_by == 'rating_high' ? 'selected' : '' ?>>Rating High</option>
-                            <option value="rating_low" <?= $operatorsearchModel->custom_sort_by == 'rating_low' ? 'selected' : '' ?>>Rating Low</option>
+                            <option value="" <?= $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Short By: Rating High</option>
+                            <option value="rating_low" <?= $operatorsearchModel->custom_sort_by == 'rating_low' ? 'selected' : '' ?>>Short By: Rating Low</option>
+                            <option value="name_az" <?= $operatorsearchModel->custom_sort_by == 'name_az' || $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Short By: Name A-Z</option>
+                            <option value="name_za" <?= $operatorsearchModel->custom_sort_by == 'name_za' ? 'selected' : '' ?>>Short By: Name Z-A</option>
                         </select>
                     <?php } ?>
                 </div>

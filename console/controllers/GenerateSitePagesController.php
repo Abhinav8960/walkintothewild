@@ -42,12 +42,8 @@ class GenerateSitePagesController extends Controller
     );
   }
 
-  public function actionIndex()
+  public function actionSitePages1()
   {
-    $start = microtime(true);
-
-    $group_pages = [];
-
     $group_pages[] = [
       'table' => 'master_article_tag',
       'url' => 'article/tag/_slug',
@@ -57,26 +53,10 @@ class GenerateSitePagesController extends Controller
     ];
 
     $group_pages[] = [
-      'table' => 'safari_operator',
-      'url' => 'operator/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Safari', //ask
-      'sub_category' => 'Operator'
-    ];
-
-    $group_pages[] = [
-      'table' => 'safari_park',
-      'url' => 'park/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Safari', //ask
-      'sub_category' => 'Park'
-    ];
-
-    $group_pages[] = [
       'table' => 'article',
       'url' => 'article/_slug',
       'url_type' => 'Primary',
-      'category' => 'Park', //ask
+      'category' => 'Article',
       'sub_category' => 'Article'
     ];
 
@@ -84,59 +64,104 @@ class GenerateSitePagesController extends Controller
       'table' => 'master_article_topic',
       'url' => 'article/topic/_slug',
       'url_type' => 'Primary',
-      'category' => 'Article', //ask
+      'category' => 'Article',
       'sub_category' => 'Topic'
-    ];
-
-    $group_pages[] = [
-      'table' => 'share_safari',
-      'url' => 'sharedsafari/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Safari', //ask
-      'sub_category' => 'Shared Safari'
     ];
 
     $group_pages[] = [
       'table' => 'article_author',
       'url' => 'article/author/_slug',
       'url_type' => 'Primary',
-      'category' => 'Article', //ask
+      'category' => 'Article',
       'sub_category' => 'Author'
+    ];
+
+    $this->process($group_pages);
+  }
+
+  public function actionSitePages2()
+  {
+    $group_pages = [];
+
+    $group_pages[] = [
+      'table' => 'share_safari',
+      'url' => 'sharedsafari/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Shared Safari',
+      'sub_category' => 'Shared Safari'
     ];
 
     $group_pages[] = [
       'table' => 'package',
       'url' => 'package/_slug',
       'url_type' => 'Primary',
-      'category' => 'Safari', //ask
+      'category' => 'Package',
       'sub_category' => 'Package'
     ];
 
     $group_pages[] = [
       'table' => 'master_rare_animal',
-      'url' => 'rareanimal/_slug',
+      'url' => 'animal/_slug',
       'url_type' => 'Primary',
-      'category' => 'Animal', //ask
+      'category' => 'Animal',
       'sub_category' => 'Rare'
     ];
 
     $group_pages[] = [
-      'table' => 'master_rare_animal',
-      'url' => 'rareanimal/_slug',
+      'table' => 'master_animal',
+      'url' => 'animal/_slug',
       'url_type' => 'Primary',
-      'category' => 'Animal', //ask
-      'sub_category' => 'Rare'
+      'category' => 'Animal',
+      'sub_category' => 'Usual'
     ];
+
+    $this->process($group_pages);
+  }
+
+  public function actionSitePages3()
+  {
+    $group_pages = [];
+
+    $group_pages[] = [
+      'table' => 'safari_operator',
+      'url' => 'operator/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Operator',
+      'sub_category' => 'Operator'
+    ];
+
+    $group_pages[] = [
+      'table' => 'safari_park',
+      'url' => 'park/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Park',
+      'sub_category' => 'Park'
+    ];
+
+    $this->process($group_pages);
+  }
+
+  public function actionSitePages4()
+  {
+    $start = microtime(true);
+
+    $this->get_monthly_package_site_pages();
+    $this->get_monthly_shared_safari_site_pages();
+    $this->get_operator_tabs_site_pages();
+    $this->get_static_pages('static pages');
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
+  }
+
+  public function process($group_pages)
+  {
+    $start = microtime(true);
 
     foreach ($group_pages as $grp) {
       $this->update_site_pages($grp);
     }
-
-    $this->get_monthly_package_site_pages();
-    $this->get_monthly_shared_safari_site_pages();
-    $this->get_animal_search_site_pages();
-    $this->get_operator_tabs_site_pages();
-    $this->get_static_pages('static pages');
 
     $end = microtime(true);
     $executionTime = $end - $start;
@@ -164,9 +189,12 @@ class GenerateSitePagesController extends Controller
       $records = Package::find()->select(['id', 'package_slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     } else if ($data['table'] == 'master_rare_animal') {
       $records = MasterRareAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+    } else if ($data['table'] == 'master_animal') {
+      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     }
 
     if (count($records)) {
+      $temp_insert_data = [];
       foreach ($records as $row) {
         if ($row['status']) {
           //update existing record
@@ -190,26 +218,30 @@ class GenerateSitePagesController extends Controller
             $model->save(false);
           } else {
             //insert new record
-            $model = new SitePages();
-            $model->content_id = $row['id'];
-            $model->content_table = $data['table'];
-            $model->url = $url;
-            $model->url_type = $data['url_type'];
-            $model->method = $method;
-            $model->slug = $row['slug'];
-            $model->category = $data['category'];
-            $model->sub_category = $data['sub_category'];
-            $model->get_parameter  = $get_parameter;
-            $model->post_parameter  = $post_parameter;
-            $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
-            $model->counter = 0;
-            $model->status = 1;
-            $model->save(false);
+            $temp_insert_data[] = [
+              'content_id' => $row['id'],
+              'content_table' => $data['table'],
+              'url' => $url,
+              'url_type' => $data['url_type'],
+              'method' => $method,
+              'slug' => $row['slug'],
+              'category' => $data['category'],
+              'sub_category' => $data['sub_category'],
+              'get_parameter' => $get_parameter,
+              'post_parameter' => $post_parameter,
+              'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+              'counter' => 0,
+              'status' => 1,
+            ];
           }
         } else {
           //mark as disabled
           SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_id' => $row['id'], 'content_table' => $data['table']]);
         }
+      }
+
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'method', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
       }
     }
   }
@@ -319,14 +351,16 @@ class GenerateSitePagesController extends Controller
   protected function get_operator_tabs_site_pages()
   {
     $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
-    $tab_urls = ['memberview' => '#memberview', 'package' => '/package#memberview', 'park' => '/park#memberview', 'reviewlist' => '/reviewlist#memberview', 'article' => '/article#memberview', 'contact' => '/contact#memberview'];
+    $tab_urls = ['package' => '/package', 'park' => '/park', 'review' => '/reviewlist', 'article' => '/article', 'contact' => '/contact'];
     if (count($records)) {
+      $temp_insert_data = [];
       foreach ($records as $row) {
         foreach ($tab_urls as $ind => $tab) {
-          if ($row['status']) {
+          if ($row['status'] && !empty($row['slug'])) {
             //update existing record
-            $data_url = "operator/_slug" . $tab;
+            $data_url = "operator/_slug";
             $url = str_replace("_slug", $row['slug'], $data_url);
+            $url = $url . $tab;
             $method = $get_parameter = $post_parameter = '';
 
             $s_request = FrontendRequestLog::find()->where(['request_url' => $url])->orderBy('id DESC')->asArray()->one();
@@ -346,21 +380,21 @@ class GenerateSitePagesController extends Controller
               $model->save(false);
             } else {
               //insert new record
-              $model = new SitePages();
-              $model->content_id = 0;
-              $model->content_table = 'safari_operator';
-              $model->url = $url;
-              $model->url_type = 'Secondary';
-              $model->method = $method;
-              $model->slug = $row['slug'];
-              $model->category = 'Safari Operator';
-              $model->sub_category = $ind;
-              $model->get_parameter  = $get_parameter;
-              $model->post_parameter  = $post_parameter;
-              $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
-              $model->counter = 0;
-              $model->status = 1;
-              $model->save(false);
+              $temp_insert_data[] = [
+                'content_id' => 0,
+                'content_table' => 'safari_operator',
+                'url' => $url,
+                'url_type' => 'Primary',
+                'method' => $method,
+                'slug' => $row['slug'],
+                'category' => 'Operator',
+                'sub_category' => $ind,
+                'get_parameter' => $get_parameter,
+                'post_parameter' => $post_parameter,
+                'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+                'counter' => 0,
+                'status' => 1,
+              ];
             }
           } else {
             $data_url = "operator/_slug" . $tab;
@@ -370,6 +404,10 @@ class GenerateSitePagesController extends Controller
             SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_table' => 'safari_operator', 'url' => $url]);
           }
         }
+      }
+
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'method', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
       }
     }
   }
@@ -392,7 +430,6 @@ class GenerateSitePagesController extends Controller
       '/',
       'account',
     ];
-
 
     foreach ($pages as $page) {
       $url = $page;
@@ -421,7 +458,7 @@ class GenerateSitePagesController extends Controller
         $model->url = $url;
         $model->url_type = 'Primary';
         $model->method = $method;
-        $model->category = 'Static Pages';
+        $model->category = 'CMS';
         $model->sub_category = 'Pages';
         $model->get_parameter  = $get_parameter;
         $model->post_parameter  = $post_parameter;

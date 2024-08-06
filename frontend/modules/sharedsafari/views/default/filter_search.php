@@ -10,17 +10,7 @@ use common\models\park\SafariPark;
 /** @var common\models\sharesafari\ShareSafari $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-<?php $form = ActiveForm::begin([
-    'options' => [
-        'data-pjax' => true,
-        'id' => 'side-search-form'
-    ],
-    'action' => ['index'],
-    'method' => 'get',
-    'fieldConfig' => [
-        'template' => '{input}{error}',
-    ],
-]); ?>
+
 
 
 
@@ -229,15 +219,15 @@ use common\models\park\SafariPark;
                 </div>
                 <div class="col-7">
 
-                <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
-                    GeneralModel::agendaoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
+                            GeneralModel::agendaoption(),
+                            [
+                                'required' => true,
+                                'itemOptions' => ['class' => 'checkbox_design'],
+                            ]
+                        )->label(false); ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -250,21 +240,21 @@ use common\models\park\SafariPark;
                 </div>
                 <div class="col-7">
 
-                <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'host_type')->checkboxList(
-                    GeneralModel::hostoption(),
-                    [
-                        'required' => true,
-                        'item' => function ($index, $label, $name, $checked, $value) {
-                            $id = $name . '_' . $index; // Generate a unique ID for each checkbox
-                            return '<div class="checkbox-item d-flex gap-2 align-items-center">' .
-                                Html::checkbox($name, $checked, ['value' => $value, 'class' => 'checkbox_design', 'id' => $id]) .
-                                Html::label($label, $id, ['class' => 'checkbox-label']) .
-                                '</div>';
-                        },
-                    ]
-                )->label(false); ?>
-            </div>
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'host_type')->checkboxList(
+                            GeneralModel::hostoption(),
+                            [
+                                'required' => true,
+                                'item' => function ($index, $label, $name, $checked, $value) {
+                                    $id = $name . '_' . $index; // Generate a unique ID for each checkbox
+                                    return '<div class="checkbox-item d-flex gap-2 align-items-center">' .
+                                        Html::checkbox($name, $checked, ['value' => $value, 'class' => 'checkbox_design', 'id' => $id]) .
+                                        Html::label($label, $id, ['class' => 'checkbox-label']) .
+                                        '</div>';
+                                },
+                            ]
+                        )->label(false); ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -277,15 +267,15 @@ use common\models\park\SafariPark;
                 </div>
                 <div class="col-7">
 
-                <div class="input_check d-flex gap-3 align-items-center">
-                <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
-                    GeneralModel::budgetoption(),
-                    [
-                        'required' => true,
-                        'itemOptions' => ['class' => 'checkbox_design'],
-                    ]
-                )->label(false); ?>
-            </div>
+                    <div class="input_check d-flex gap-3 align-items-center">
+                        <?= $form->field($searchModel, 'stay_category_id')->checkboxList(
+                            GeneralModel::budgetoption(),
+                            [
+                                'required' => true,
+                                'itemOptions' => ['class' => 'checkbox_design'],
+                            ]
+                        )->label(false); ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,7 +283,7 @@ use common\models\park\SafariPark;
 
 <?php } ?>
 
-<?php ActiveForm::end(); ?>
+
 
 <?php
 
@@ -337,30 +327,30 @@ $this->registerJs($script);
 <?php
 $script = <<< JS
     $('form').on('change', function(){
-        // $("#Searchform").attr("data-pjax", "true");    
-        // $(this).closest('form').submit();
-        reloadpage();
+        $("#Searchform").attr("data-pjax", "true");    
+        $(this).closest('form').submit();
+        // reloadpage();
     });
 
 
     $('#sharesafarisearch-custom_sort_by').on('change', function(){
-        // $("#Searchform").attr("data-pjax", "true");    
-        // $(this).closest('form').submit();
-        reloadpage();
+        $("#Searchform").attr("data-pjax", "true");    
+        $(this).closest('form').submit();
+        // reloadpage();
     });
 
-    function reloadpage(){
-        $.ajax({
-            type: 'POST',
-            url: '/sharedsafari/default/geturl',
-            data:$("#side-search-form,#search-form, #custom_sort_by_form").serialize(),
-            success:function(data){
-                console.log(data);
-                window.location.href = data;
-            },
-            dataType:'html'
-        });
-    }
+    // function reloadpage(){
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/sharedsafari/default/geturl',
+    //         data:$("#side-search-form,#search-form, #custom_sort_by_form").serialize(),
+    //         success:function(data){
+    //             console.log(data);
+    //             window.location.href = data;
+    //         },
+    //         dataType:'html'
+    //     });
+    // }
 
  
     initializeDualrange('sharesafarisearch-estimate_price_min','sharesafarisearch-estimate_price_max');

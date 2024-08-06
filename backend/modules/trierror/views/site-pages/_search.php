@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'url')->textInput(["placeholder" => "Search by url"]) ?>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?= $form->field($model, 'category')->dropDownList(
             $content_type,
             [
@@ -30,7 +30,17 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
-    <div class="col-md-3">
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'url_type')->dropDownList(
+            ['Primary' => 'Primary', 'Secondary' => 'Secondary'],
+            [
+                'prompt' => 'Select Type',
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
 
     </div>
