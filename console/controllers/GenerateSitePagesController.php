@@ -101,7 +101,7 @@ class GenerateSitePagesController extends Controller
       'table' => 'share_safari',
       'url' => 'sharedsafari/_slug',
       'url_type' => 'Primary',
-      'category' => 'Safari', //ask
+      'category' => 'Shared Safari', //ask
       'sub_category' => 'Shared Safari'
     ];
 
@@ -327,7 +327,7 @@ class GenerateSitePagesController extends Controller
   protected function get_operator_tabs_site_pages()
   {
     $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
-    $tab_urls = ['memberview' => '#memberview', 'package' => '/package#memberview', 'park' => '/park#memberview', 'reviewlist' => '/reviewlist#memberview', 'article' => '/article#memberview', 'contact' => '/contact#memberview'];
+    $tab_urls = ['package' => 'package', 'park' => 'park', 'reviewlist' => 'reviewlist', 'article' => 'article', 'contact' => 'contact'];
     if (count($records)) {
       $temp_insert_data = [];
       foreach ($records as $row) {
