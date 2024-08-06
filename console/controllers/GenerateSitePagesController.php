@@ -57,26 +57,10 @@ class GenerateSitePagesController extends Controller
     ];
 
     $group_pages[] = [
-      'table' => 'safari_operator',
-      'url' => 'operator/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Safari', //ask
-      'sub_category' => 'Operator'
-    ];
-
-    $group_pages[] = [
-      'table' => 'safari_park',
-      'url' => 'park/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Safari', //ask
-      'sub_category' => 'Park'
-    ];
-
-    $group_pages[] = [
       'table' => 'article',
       'url' => 'article/_slug',
       'url_type' => 'Primary',
-      'category' => 'Park', //ask
+      'category' => 'Article', //ask
       'sub_category' => 'Article'
     ];
 
@@ -89,6 +73,31 @@ class GenerateSitePagesController extends Controller
     ];
 
     $group_pages[] = [
+      'table' => 'article_author',
+      'url' => 'article/author/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Article', //ask
+      'sub_category' => 'Author'
+    ];
+
+
+    $group_pages[] = [
+      'table' => 'safari_park',
+      'url' => 'park/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Park', //ask
+      'sub_category' => 'Park'
+    ];
+
+    $group_pages[] = [
+      'table' => 'safari_operator',
+      'url' => 'operator/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Operator', //ask
+      'sub_category' => 'Operator'
+    ];
+
+    $group_pages[] = [
       'table' => 'share_safari',
       'url' => 'sharedsafari/_slug',
       'url_type' => 'Primary',
@@ -97,35 +106,27 @@ class GenerateSitePagesController extends Controller
     ];
 
     $group_pages[] = [
-      'table' => 'article_author',
-      'url' => 'article/author/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Article', //ask
-      'sub_category' => 'Author'
-    ];
-
-    $group_pages[] = [
       'table' => 'package',
       'url' => 'package/_slug',
       'url_type' => 'Primary',
-      'category' => 'Safari', //ask
+      'category' => 'Package', //ask
       'sub_category' => 'Package'
     ];
 
     $group_pages[] = [
       'table' => 'master_rare_animal',
-      'url' => 'rareanimal/_slug',
+      'url' => 'animal/_slug',
       'url_type' => 'Primary',
       'category' => 'Animal', //ask
       'sub_category' => 'Rare'
     ];
 
     $group_pages[] = [
-      'table' => 'master_rare_animal',
-      'url' => 'rareanimal/_slug',
+      'table' => 'master_animal',
+      'url' => 'animal/_slug',
       'url_type' => 'Primary',
       'category' => 'Animal', //ask
-      'sub_category' => 'Rare'
+      'sub_category' => 'Usual'
     ];
 
     foreach ($group_pages as $grp) {
@@ -134,7 +135,7 @@ class GenerateSitePagesController extends Controller
 
     $this->get_monthly_package_site_pages();
     $this->get_monthly_shared_safari_site_pages();
-    $this->get_animal_search_site_pages();
+    //$this->get_animal_search_site_pages();
     $this->get_operator_tabs_site_pages();
     $this->get_static_pages('static pages');
 
@@ -164,6 +165,8 @@ class GenerateSitePagesController extends Controller
       $records = Package::find()->select(['id', 'package_slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     } else if ($data['table'] == 'master_rare_animal') {
       $records = MasterRareAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+    } else if ($data['table'] == 'master_animal') {
+      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     }
 
     if (count($records)) {
@@ -353,7 +356,7 @@ class GenerateSitePagesController extends Controller
               $model->url_type = 'Secondary';
               $model->method = $method;
               $model->slug = $row['slug'];
-              $model->category = 'Safari Operator';
+              $model->category = 'Operator';
               $model->sub_category = $ind;
               $model->get_parameter  = $get_parameter;
               $model->post_parameter  = $post_parameter;
@@ -393,7 +396,6 @@ class GenerateSitePagesController extends Controller
       'account',
     ];
 
-
     foreach ($pages as $page) {
       $url = $page;
 
@@ -421,7 +423,7 @@ class GenerateSitePagesController extends Controller
         $model->url = $url;
         $model->url_type = 'Primary';
         $model->method = $method;
-        $model->category = 'Static Pages';
+        $model->category = 'CMS';
         $model->sub_category = 'Pages';
         $model->get_parameter  = $get_parameter;
         $model->post_parameter  = $post_parameter;
