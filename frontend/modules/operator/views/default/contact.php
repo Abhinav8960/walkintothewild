@@ -71,22 +71,32 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <?php if (Yii::$app->user->identity) { ?>
                                         <div class="card card_bodyPadding">
                                             <div class="card-body">
-                                                <h6 class="fs-6 fw-bold">Address</h6>
-                                                <h6 class="mb-0 cmpny_name"><?= $operator->register_comapany_name ?></h6>
-                                                <p><?= $operator->address ?></p>
-                                                <h6 class="fs-6 fw-bold">Contact Details</h6>
-                                                <div class="contaicts d-flex gap-2 align-items-center mb-2">
-                                                    <strong>Phone :</strong>
-                                                    <p class="mb-0">  <?= $operator->phone_no ?></p>
-                                                </div>
-                                                <div class="contaicts d-flex gap-2 align-items-center mb-2">
-                                                    <strong>Email :</strong>
-                                                    <p class="mb-0"> <?= $operator->email ?></p>
-                                                </div>
-                                                <div class="contaicts d-flex gap-2 align-items-center mb-2">
-                                                    <strong>Website :</strong>
-                                                    <p class="mb-0"><?= $operator->website ?></p>
-                                                </div>
+                                                <?php if ($operator->register_comapany_name <> '' || $operator->address <> '') { ?>
+                                                    <h6 class="fs-6 fw-bold">Address</h6>
+                                                    <h6 class="mb-0 cmpny_name"><?= $operator->register_comapany_name ?></h6>
+                                                    <p><?= $operator->address ?></p>
+                                                <?php } ?>
+                                                <?php if ($operator->phone_no <> '' || $operator->email <> '' || $operator->website <> '') { ?>
+                                                    <h6 class="fs-6 fw-bold">Contact Details</h6>
+                                                    <?php if ($operator->phone_no <> '') { ?>
+                                                        <div class="contaicts d-flex gap-2 align-items-center mb-2">
+                                                            <strong>Phone :</strong>
+                                                            <p class="mb-0"> <a href="tel:<?= $operator->phone_no ?>"><?= $operator->phone_no ?></a></p>
+                                                        </div>
+                                                    <?php } ?>
+                                                    <?php if ($operator->email <> '') { ?>
+                                                        <div class="contaicts d-flex gap-2 align-items-center mb-2">
+                                                            <strong>Email :</strong>
+                                                            <p class="mb-0"><a href="mailto:<?= $operator->email ?>"> <?= $operator->email ?></a></p>
+                                                        </div>
+                                                    <?php } ?>
+                                                    <?php if ($operator->website <> '') { ?>
+                                                        <div class="contaicts d-flex gap-2 align-items-center mb-2">
+                                                            <strong>Website :</strong>
+                                                            <p class="mb-0"><a href="<?= $operator->website ?>"><?= $operator->website ?></a></p>
+                                                        </div>
+                                                <?php }
+                                                } ?>
                                                 <br>
                                                 <?php if ($operator->instagram_url <> '' || $operator->facebook_url <> '' || $operator->youtube_link <> '') { ?>
                                                     <h6 class="fs-6 fw-bold"> Social Media</h6>

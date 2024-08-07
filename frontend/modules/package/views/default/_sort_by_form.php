@@ -11,14 +11,14 @@ use yii\widgets\ActiveForm;
     <div class="input_check pb-0 mb-3">
         <?= $form->field($searchModel, 'custom_sort_by')->dropDownlist(
             [
-                // '1' => 'Created Recently',
-                '2' => 'Less Safaris',
-                '3' => 'More Safaris',
-                '4' => 'Cheapest',
+                '1' => 'Short by : Created Recently',
+                '2' => 'Short by : Less Safaris',
+                '3' => 'Short by : More Safaris',
+                '4' => 'Short by : Cheapest',
 
 
             ],
-            ['prompt' => 'Sort By : Created Recently']
+
         )->label(false); ?>
     </div>
 </div>
