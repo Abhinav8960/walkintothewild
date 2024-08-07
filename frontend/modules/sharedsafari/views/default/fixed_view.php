@@ -52,12 +52,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
-                                <div class="col-sm-3 col-md-2">
+                                <div class="col-sm-3 col-md-3 col-lg-2">
                                     <div class="safritimg innerImg">
                                         <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
-                                <div class="col-sm-9 col-md-10 pt-sm-0 pt-3">
+                                <div class="col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3">
                                     <div class="safrititles">
                                         <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>"><?= $share_safari->park->title ?></a>
                                             <?php
