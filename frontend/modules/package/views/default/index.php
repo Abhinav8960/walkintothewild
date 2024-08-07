@@ -46,14 +46,14 @@ Pjax::begin([
   'timeout' => false,
 ]);
 ?>
- <?php $form = ActiveForm::begin([
-                'options' => [
-                  'data-pjax' => true,
-                  'id' => 'side-search-form'
-                ],
-                'action' => ['index'],
-                'method' => 'get',
-              ]); ?>
+<?php $form = ActiveForm::begin([
+  'options' => [
+    'data-pjax' => true,
+    'id' => 'side-search-form'
+  ],
+  'action' => ['index'],
+  'method' => 'get',
+]); ?>
 <section class="articals_wrapper  py-3 ">
   <div class="container-fluid ">
     <div class="custom-row pt-4">
@@ -86,7 +86,7 @@ Pjax::begin([
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
             <div id="targetDiv">
-             
+
               <?= $this->render('_select_filter', [
                 'form' => $form,
                 'searchModel' => $searchModel,
@@ -254,7 +254,24 @@ Pjax::begin([
   </div>
 </section>
 <?php ActiveForm::end(); ?>
+<script>
+  var mobileSearchDivPackage = document.getElementById('mobileSearchDiv');
+  var targetDivPackage = document.getElementById('targetDiv');
+  var formSelectPackage = document.querySelector('.form-select');
 
+  if (mobileSearchDivPackage && targetDivPackage) {
+    mobileSearchDivPackage.addEventListener('click', function(event) {
+      event.stopPropagation(); // Prevent the default behavior
+      targetDivPackage.style.display = targetDivPackage.style.display === 'none' ? 'block' : 'block';
+    });
+
+    if (formSelectPackage) {
+      formSelectPackage.addEventListener('click', function(event) {
+        event.stopPropagation();
+      });
+    }
+  }
+</script>
 <?php Pjax::end(); ?>
 
 

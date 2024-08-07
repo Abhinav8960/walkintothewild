@@ -239,7 +239,24 @@ Pjax::begin([
     </div>
 </div>
 <?php ActiveForm::end(); ?>
+<script>
+    var mobileSearchDivOperator = document.getElementById('mobileSearchDiv');
+    var targetDivOperator = document.getElementById('targetDiv');
+    var formSelectOperator = document.querySelector('.form-select');
 
+    if (mobileSearchDivOperator && targetDivOperator) {
+        mobileSearchDivOperator.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the default behavior
+            targetDivOperator.style.display = targetDivOperator.style.display === 'none' ? 'block' : 'block';
+        });
+
+        if (formSelectOperator) {
+            formSelectOperator.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        }
+    }
+</script>
 <?php Pjax::end(); ?>
 
 

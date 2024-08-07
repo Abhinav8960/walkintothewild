@@ -53,7 +53,7 @@ Pjax::begin([
     'id' => 'grid-data',
     'enablePushState' => FALSE,
     'enableReplaceState' => FALSE,
-    'timeout' => false,
+    'timeout' => FALSE,
 ]);
 ?>
 <?php $form = ActiveForm::begin([
@@ -219,6 +219,24 @@ Pjax::begin([
 
 </section>
 <?php ActiveForm::end(); ?>
+<script>
+    var mobileSearchDivShared = document.getElementById('mobileSearchDiv');
+    var targetDivShared = document.getElementById('targetDiv');
+    var formSelectShared = document.querySelector('.form-select');
+
+    if (mobileSearchDivShared && targetDivShared) {
+        mobileSearchDivShared.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the default behavior
+            targetDivShared.style.display = targetDivShared.style.display === 'none' ? 'block' : 'block';
+        });
+
+        if (formSelectShared) {
+            formSelectShared.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        }
+    }
+</script>
 
 <?php Pjax::end(); ?>
 
@@ -259,14 +277,14 @@ Pjax::begin([
 <?php
 $script = <<< JS
 
-function departurefunction() {
-	$('.departureBtn').on('click', function () {
-        $('#departure-modal').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-}
-departurefunction();
+    function departurefunction() {
+        $('.departureBtn').on('click', function () {
+            $('#departure-modal').modal('show')
+            .find('#modalContent')
+            .load($(this).attr('value'));
+        });
+    }
+    departurefunction();
              
 JS;
 $this->registerJs($script);
