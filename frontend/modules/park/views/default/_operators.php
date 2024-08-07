@@ -3,19 +3,43 @@
 
 /* @var $this yii\web\View */
 
+use common\assets\NotifyAsset;
 use yii\helpers\Url;
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafariIntrested;
+use frontend\assets\AppAsset;
+use frontend\assets\FrontAppAsset;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
+
+<?php
+Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => FALSE,
+    'enableReplaceState' => FALSE,
+    'timeout' => false,
+]);
+
+?>
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'data-pjax' => true,
+        'id' => 'safarioperatorsearch'
+    ],
+    'action' => ['/park/' . $model->slug . ''],
+    'method' => 'get',
+]); ?>
 <div class="row">
     <div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 ">
         <div id="targetDiv">
             <?= $this->render('_operator_side_search', [
                 'model' => $operatorsearchModel,
                 'safari_model' => $model,
+                'form' => $form,
                 'device' => $device,
             ]) ?>
         </div>
@@ -49,12 +73,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="right-select d-flex gap-2 align-items-center pe-xl-2">
                 <div class="input_check pb-0">
                     <?php if ($device == 'desktop') {  ?>
-                        <select class="form-select mb-2" aria-label="Default select example" id="custom_sort_by">
-                            <option value="" <?= $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Short By: Rating High</option>
-                            <option value="rating_low" <?= $operatorsearchModel->custom_sort_by == 'rating_low' ? 'selected' : '' ?>>Short By: Rating Low</option>
-                            <option value="name_az" <?= $operatorsearchModel->custom_sort_by == 'name_az' || $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Short By: Name A-Z</option>
-                            <option value="name_za" <?= $operatorsearchModel->custom_sort_by == 'name_za' ? 'selected' : '' ?>>Short By: Name Z-A</option>
-                        </select>
+                        <?= $form->field($operatorsearchModel, 'custom_sort_by')->dropDownList([1 => 'Short By: Rating High', 2 => 'Short By: Rating Low', 3 => 'Short By: Name A-Z', 4 => 'Short By: Name Z-A'], ['class' => 'form-select mb-2'])->label(false) ?>
                     <?php } ?>
                 </div>
                 <!-- <div class="gridListview">
@@ -219,15 +238,17 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
     </div>
 </div>
+<?php ActiveForm::end(); ?>
 
+<?php Pjax::end(); ?>
 
 
 <?php
-$script = <<< JS
-    $('#custom_sort_by').on('change', function(){
-        $('#safarioperatorsearch-custom_sort_by').val(this.value);
-        $('#safarioperatorsearch').submit();
-    });
-JS;
-$this->registerJs($script);
+// $script = <<< JS
+//     $('form').on('change', function(){
+//         $("#safarioperatorsearch-custom_sort_by").attr("data-pjax", "true");    
+//         $(this).closest('form').submit();
+//     });
+// JS;
+// $this->registerJs($script);
 ?>

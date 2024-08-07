@@ -131,7 +131,7 @@ use common\models\park\SafariPark;
                     </div>
                 </div>
                 <div class="col-7">
-                    <?= $this->render('sort_by_month', ['searchModel' => $searchModel]) ?>
+                    <?= $this->render('sort_by_month', ['form' => $form, 'searchModel' => $searchModel]) ?>
                 </div>
             </div>
         </div>

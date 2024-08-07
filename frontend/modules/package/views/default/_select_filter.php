@@ -118,7 +118,7 @@ use yii\helpers\ArrayHelper;
                     </div>
                 </div>
                 <div class="col-7">
-                    <?= $this->render('_sort_by_form', ['searchModel' => $searchModel]) ?>
+                    <?= $this->render('_sort_by_form', ['form' => $form, 'searchModel' => $searchModel]) ?>
                 </div>
             </div>
         </div>

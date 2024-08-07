@@ -28,7 +28,9 @@ use common\models\suggestions\form\SafariSuggestionsForm;
  */
 class DefaultController extends FrontendBaseController
 {
-    public $action_ids = ['index', 'view', 'parklist'];
+    public $action_ids = ['index', 'view'];
+
+
 
     /**
      * Renders the index view for the module
@@ -36,33 +38,17 @@ class DefaultController extends FrontendBaseController
      */
     public function actionIndex()
     {
-
-        return $this->redirect('/');
         $searchModel = new SafariParkSearch();
-        $searchModel->master_location_id = 7;
-        $searchModel->session_id = 1;
-        $searchModel->master_animal_id = 13;
-        $searchModel->master_vehicle_id = 5;
-        $dataProvider = $searchModel->search($this->request->queryParams, false);
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $models = $dataProvider->getModels();
 
-
-        $featured_articles = Article::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->limit(8)->orderBy(['sequence' => SORT_ASC])->all();
-        $rare_exotics = MasterRareAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->all();
-        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE])->limit(2)->orderby("RAND()")->all();
-
-        return $this->render(
-            'index',
-            [
-
-                'featured_articles' => $featured_articles,
-                'rare_exotics' => $rare_exotics,
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'shared_safaries' => $shared_safaries,
-            ]
-        );
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'models' => $models,
+            'device' => $this->device(),
+        ]);
     }
-
 
     /**
      * Renders the index view for the module
@@ -72,7 +58,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
             // throw new NotFoundHttpException('The requested page does not exist.');
         }
         $searchModel = new SafariParkSearch();
@@ -157,7 +143,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
             // throw new NotFoundHttpException('The requested page does not exist.');
         }
 
@@ -185,7 +171,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
             // throw new NotFoundHttpException('The requested page does not exist.');
         }
 
@@ -265,35 +251,6 @@ class DefaultController extends FrontendBaseController
     }
 
 
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
-    public function actionParklist($master_location_id = null, $session_id = null, $master_animal_id = null, $master_vehicle_id = null)
-    {
-        $searchModel = new SafariParkSearch();
-        if ($master_location_id) {
-            $searchModel->master_location_id = $master_location_id;
-        }
-        if ($session_id) {
-            $searchModel->session_id = $session_id;
-        }
-        if ($master_animal_id) {
-            $searchModel->master_animal_id = $master_animal_id;
-        }
-        if ($master_vehicle_id) {
-            $searchModel->master_vehicle_id = $master_vehicle_id;
-        }
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $models = $dataProvider->getModels();
-
-        return $this->render('parklist', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'models' => $models,
-            'device' => $this->device(),
-        ]);
-    }
 
     /**
      * Renders the index view for the module
@@ -326,7 +283,7 @@ class DefaultController extends FrontendBaseController
     {
         if (Yii::$app->request->isPost) {
             // Initialize URL with the base route
-            $url = ['/parklist'];
+            $url = ['/park'];
 
             // Loop through the payload parameters
             foreach (Yii::$app->request->post('SafariParkSearch') as $key => $value) {
@@ -350,7 +307,7 @@ class DefaultController extends FrontendBaseController
     {
         $safari_park = SafariPark::find()->where(['id' => $park_id])->one();
         if (!$safari_park) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
         }
 
         $model = new SafariParkReviewForm();
@@ -429,7 +386,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
         }
         $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
         return $this->render(
@@ -445,7 +402,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
         }
 
         return $this->render(
@@ -460,7 +417,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
         }
         return $this->render(
             '_update',
@@ -474,7 +431,7 @@ class DefaultController extends FrontendBaseController
     {
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
-            return $this->redirect(['/parklist']);
+            return $this->redirect(['/park']);
         }
 
         $packages = Package::find()->where(['package.status' => Package::STATUS_ACTIVE])

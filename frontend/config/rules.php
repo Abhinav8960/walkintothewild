@@ -12,7 +12,6 @@ return [
     //    '/article_tag.xml' => '/sitemap/article_tag',
     '/animal/<slug>' => '/animal/index', //home Page url
     '/home' => '/plan-safari', //home Page url
-    '/park' => '/park/default/index', //home-old page url
     '/park/<slug>' => '/park/default/view', //park view url
     '/park/<slug>/sharedsafari' => '/park/default/sharedsafari',
     '/park/<slug>/discussion' => '/park/default/discussion',
@@ -20,9 +19,10 @@ return [
     '/park/<slug>/package' => '/park/default/package',
     '/park/<slug>/reviewlist' => '/park/default/reviewlist', //park view url
     '/park/<slug>/contributionlist' => '/park/default/contributionlist', //park view url
+    '/park' => '/park/default/index', //home-old page url
 
-    '/parklist/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/parklist',
-    '/parklist' => '/park/default/parklist', //park listing url
+    // '/park/<master_location_id:\w+>/<session_id:\w+>/<master_animal_id:\w+>/<master_vehicle_id:\w+>' => '/park/default/index',
+    // '/park' => '/park/default/index', //park listing url
     '/animal/<slug>' => '/park/default/rareanimal', //park listing url
 
     '/article' => '/article/default/index',
