@@ -76,6 +76,14 @@ class GenerateSitePagesController extends Controller
       'sub_category' => 'Author'
     ];
 
+    $group_pages[] = [
+      'table' => 'safari_park',
+      'url' => 'park/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Park',
+      'sub_category' => 'Park'
+    ];
+
     $this->process($group_pages);
   }
 
