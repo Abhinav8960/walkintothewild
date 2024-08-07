@@ -39,20 +39,24 @@ use common\models\operator\SafariOperatorFollow;
                             <!-- <span class="d-sm-block d-none">|</span> -->
                             <div class="follow_massage d-flex gap-3">
                                 <div class="follow mb-lg-2 mb-xxl-0 mb-2">
-                                    <?php if (Yii::$app->user->identity) {
+                                    <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) {
                                         $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id, 'status' => 1])->limit(1)->one();
                                         if ($operator_follow) { ?>
                                             <a class="follow_btn" href="/operator/default/unfollow?id=<?= $operator->id ?>"></i> UNFOLLOW</a>
                                         <?php } else { ?>
                                             <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"> FOLLOW</a>
                                         <?php  }
-                                    } else { ?>
+                                    } else if (Yii::$app->user->identity && Yii::$app->user->identity->id == $operator->user_id) { ?>
+                                        <a class="follow_btn" href="<?= Url::toRoute(['/manage/default/edit-request']) ?>">Update</a>
+                                    <?php } else { ?>
                                         <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"> FOLLOW</a>
                                     <?php } ?>
                                 </div>
-                                <div class="message">
-                                    <a href="" class="follow_massge">Message</a>
-                                </div>
+                                <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
+                                    <div class="message">
+                                        <a href="" class="follow_massge">Message</a>
+                                    </div>
+                                <?php } ?>
                             </div>
 
                         </div>
