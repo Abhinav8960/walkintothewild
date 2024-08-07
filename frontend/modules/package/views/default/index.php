@@ -40,22 +40,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 </section>
 
 
-<?php
-Pjax::begin([
-  'id' => 'grid-data',
-  'enablePushState' => FALSE,
-  'enableReplaceState' => FALSE,
-  'timeout' => false,
-]);
-?>
-<?php $form = ActiveForm::begin([
-  'options' => [
-    'data-pjax' => true,
-    'id' => 'side-search-form'
-  ],
-  'action' => ['index'],
-  'method' => 'get',
-]); ?>
+
 <section class="articals_wrapper  py-3 ">
   <div class="container-fluid ">
     <div class="custom-row pt-4">
@@ -82,7 +67,22 @@ Pjax::begin([
         </div>
       </div>
     </div>
-
+    <?php
+Pjax::begin([
+  'id' => 'grid-data',
+  'enablePushState' => FALSE,
+  'enableReplaceState' => FALSE,
+  'timeout' => false,
+]);
+?>
+<?php $form = ActiveForm::begin([
+  'options' => [
+    'data-pjax' => true,
+    'id' => 'side-search-form'
+  ],
+  'action' => ['index'],
+  'method' => 'get',
+]); ?>
     <div class="row justify-content-center mb-4 pt-lg-5">
       <div class="col-xl-11 col-lg-12">
         <div class="row mb-5 justify-content-center">
@@ -253,9 +253,10 @@ Pjax::begin([
         </div>
       </div>
     </div>
+    <?php ActiveForm::end(); ?>
   </div>
 </section>
-<?php ActiveForm::end(); ?>
+
 <script>
   var mobileSearchDivPackage = document.getElementById('mobileSearchDiv');
   var targetDivPackage = document.getElementById('targetDiv');
