@@ -67,7 +67,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-md-12">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-xxl-8 col-lg-8 mb-3">
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between  mb-4">

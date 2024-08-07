@@ -6659,3 +6659,8 @@ font-weight: 500;
 
     font-size: 14px;
 }
+.select2-container--krajee-bs5 .select2-selection--single{
+    height: calc(2.25rem + -4px);
+    line-height: 19px;
+    font-size: 14px;
+}

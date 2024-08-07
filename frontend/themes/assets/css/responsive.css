@@ -590,6 +590,10 @@
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+  .tourLogoes  .images_tour{
+
+    height: 172px;
+  }
   .terms-contionsSplasescreen{
 
     background-image: url(../img/spalsemobile.png);
@@ -1065,6 +1069,7 @@
   }
 }
 @media (max-width: 991px) {
+
   .mobile-hidelink{
 
     display: none;
