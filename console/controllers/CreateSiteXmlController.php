@@ -42,4 +42,13 @@ class CreateSiteXmlController extends Controller
     $executionTime = $end - $start;
     echo "Script execution time: " . $executionTime . " seconds";
   }
+
+  public function actionSitePagesCounter()
+  {
+    $start = microtime(true);
+
+    $records = SitePages::find()->where(['status' => true])->all();
+    if (count($records) > 0) {
+    }
+  }
 }
