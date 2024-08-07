@@ -39,3 +39,4 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+

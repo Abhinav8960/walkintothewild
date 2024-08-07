@@ -43,12 +43,12 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">
-                        <div class="col-md-4 col-xl-3">
+                        <div class="col-md-12 col-xl-3">
                             <?php if ($safari_operator->imagepath) { ?>
                                 <img src="<?= $safari_operator->imagepath ?>" class="mb-2 w-100 rounded-2" style="height:180px; object-fit:cover;">
                             <?php } ?>
                         </div>
-                        <div class="col-md-8 col-xl-9">
+                        <div class="col-md-12 col-xl-9">
                             <div class="row">
                                 <div class="col-md-12  col-xl-4 col-lg-6">
                                     <div class="text-box">
