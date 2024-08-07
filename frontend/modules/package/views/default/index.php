@@ -1,7 +1,6 @@
 <?php
 
-$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
-$this->params['baseurl'] = $webasset->baseUrl;
+
 
 use common\models\GeneralModel;
 use common\models\UserWishlist;
@@ -9,6 +8,9 @@ use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
+
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title = 'Package';
 $this->params['title'] = $this->title;
@@ -200,7 +202,7 @@ Pjax::begin([
                       </div>
                       <div class="shareimg">
                         <a href="/package/<?= $model->package_slug ?>">
-                          <img src="<?= isset($model->package_image) ? $model->imagepath : $this->params['baseurl'] . '/img/blog_details01.jpg' ?>" alt=""></a>
+                          <img src="<?= isset($model->imagepath) ? $model->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt=""></a>
                       </div>
                       <div class="card_body">
                         <div class="titleDate">
