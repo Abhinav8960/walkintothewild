@@ -178,7 +178,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
 
         $category = '';
         if ($this->category_id = 2) {
-            $category = ' (Wild Life Photographer)';
+            $category = ' (Wild Life)';
         } else if ($this->category_id = 1) {
             $category = ' (safari Operator)';
         }
