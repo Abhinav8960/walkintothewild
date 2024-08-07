@@ -146,9 +146,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
     public function getImagepath()
     {
-        if ($this->package_image != '') {
-            return '/storage/package/' . $this->id . '/' . $this->package_image;
-        }
+        return isset($this->package_image) ? ('/storage/package/' . $this->id . '/' . $this->package_image) : (isset($this->singlepark) ? (isset($this->singlepark->park) && isset($this->singlepark->park->logo) ? $this->singlepark->park->logoimagepath : '') : '');
     }
 
     public function getComments()
@@ -173,6 +171,14 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     }
 
 
+
+    /**
+     * Parks List
+     */
+    public function getSinglepark()
+    {
+        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
 
     /**
      * Parks List

@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\park\SafariPark;
 use Yii;
 
 /**
@@ -73,5 +74,10 @@ class PackageSafariPark extends \yii\db\ActiveRecord implements \common\interfac
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::class, ['id' => 'park_id']);
     }
 }
