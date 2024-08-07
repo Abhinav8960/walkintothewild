@@ -10,17 +10,17 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 <div class="container-fluid mt-5 ">
     <div class="row margin_bottomfooter">
-        <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center">
+        <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center flex-wrap">
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
-            <div class="right_button float-md-end ">
+            <div class="right_button float-md-end mt-xl-0 mt-3">
                 <a class="btn_newsafari btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" href="<?= Url::toRoute(['/manage/package/create']) ?>">+ Create New Package </a>
             </div>
 
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8 col-xl-9 col-xxl-10">
             <div class="card account-settingside ">
                 <div class="card-body p-4">
                     <div class="row">
