@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
         'data-pjax' => true,
         'id' => 'sideSearchform'
     ],
-    'action' => ['parklist'],
+    'action' => ['index'],
     'method' => 'get',
     'fieldConfig' => [
         'template' => '{input}{error}',
@@ -83,11 +83,8 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="col-7">
                     <div class="input_check pb-0">
-                        <select class="form-select " aria-label="Default select example">
-                            <option selected>Relevant</option>
-                            <option value="1">Most Demanding</option>
-                           
-                        </select>
+
+                        <?= $form->field($model, 'custom_sort_by')->dropDownList([2 => 'Sort by: A to Z', 3 => 'Sort by: Z to A'], ['prompt' => 'Most Demanding', 'class' => 'form-select'])->label(false); ?>
                     </div>
 
                 </div>
