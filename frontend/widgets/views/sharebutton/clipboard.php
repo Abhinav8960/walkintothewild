@@ -11,7 +11,11 @@ $(document).ready(function() {
             temp.val($(this).attr('data-href')).select();
             document.execCommand("copy");
             temp.remove();
-            alert('Link Copied');
+            return notif({
+                type: 'success',
+                msg: 'Link Copied',
+                position: "right",
+            });
         });
     }
     copyToClipboard();
