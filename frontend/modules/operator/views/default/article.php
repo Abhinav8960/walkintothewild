@@ -72,7 +72,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between  mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Published <span class="numberFont"><?= count($articles) ?></span> Article</h6>
-                                                <?php if (count($articles) > 1) { ?>
+                                                <?php if (count($articles) >= 2) { ?>
                                                     <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug]) ?>">See All</a>
                                                 <?php } ?>
                                             </div>
