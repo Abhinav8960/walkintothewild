@@ -72,18 +72,18 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <div class="d-flex justify-content-between  mb-4">
+                                            <div class="d-flex justify-content-between flex-wrap mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Organized <span class="numberFont"><?= count($shared_safaries) ?></span> Shared Safari</h6>
                                                 <?php if (count($shared_safaries) >= 2) { ?>
-                                                    <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/sharedsafariseeall', 'slug' => $operator->slug]) ?>">See All</a>
+                                                    <a class="SeeAll mt-sm-0 mt-3" href="<?= Url::toRoute(['/operator/default/sharedsafariseeall', 'slug' => $operator->slug]) ?>">See All</a>
                                                 <?php } ?>
                                             </div>
 
-                                            <div class="row gx-5 justify-content-center">
+                                            <div class="row gx-md-5 justify-content-center">
                                                 <?php
                                                 if ($shared_safaries) {
                                                     foreach ($shared_safaries as $share_safari) { ?>
-                                                        <div class="col-md-5 col-lg-6 col-xxl-5 mb-4 ">
+                                                        <div class="col-md-5 col-sm-6 col-lg-6 col-xxl-5 mb-4 ">
                                                             <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                         </div>
                                                 <?php }

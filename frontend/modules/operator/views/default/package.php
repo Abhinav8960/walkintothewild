@@ -69,20 +69,20 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row justify-content-center">
-                                <div class=" col-xxl-8 col-lg-8">
+                                <div class=" col-xxl-8 col-lg-8 mb-4">
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
-                                            <div class="d-flex justify-content-between  mb-4">
+                                            <div class="d-flex justify-content-between flex-wrap mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Created <span class="numberFont"><?= count($operator_packages) ?></span> Packages</h6>
                                                 <?php if (count($operator_packages) >= 2) { ?>
-                                                    <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/packageseeall', 'slug' => $operator->slug]) ?>">See All</a>
+                                                    <a class="SeeAll mt-sm-0 mt-3" href="<?= Url::toRoute(['/operator/default/packageseeall', 'slug' => $operator->slug]) ?>">See All</a>
                                                 <?php } ?>
                                                 <!-- <div class="whiteReview ">
                                                     <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
                                                 </div> -->
                                             </div>
 
-                                            <div class="row gx-5 ">
+                                            <div class="row gx-xxl-5  ">
                                                 <?php if ($operator_packages) {
                                                     foreach ($operator_packages as $model) { ?>
                                                         <div class="col-md-6 mb-4 padding_righ">
@@ -136,12 +136,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                         </div>
                                                                     </div>
                                                                     <div class="footer_card row pb-2 px-2 align-items-center">
-                                                                        <div class="col-7">
+                                                                        <div class="col-6 col-xxl-7">
                                                                             <div class="safaritourlogo">
                                                                                 <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-5">
+                                                                        <div class="col-xxl-5 col-6">
                                                                             <div class="safari text-center">
                                                                                 <div class="joinsafari package">
                                                                                     <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>
@@ -162,16 +162,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     </div>
                                 </div>
                                 <div class="col-xxl-4 col-lg-4">
-
-
-
                                     <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
-
-
                                     <?= $this->render('_shared_safari_sidebar', ['operator' => $operator]) ?>
-
-
-
                                 </div>
                             </div>
                         </div>

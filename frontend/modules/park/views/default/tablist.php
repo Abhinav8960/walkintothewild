@@ -91,7 +91,7 @@ if ($model->meta_title != '') {
                         <button class="nav-link" id="howto-reach" data-bs-toggle="tab" data-bs-target="#howto-reach-pan" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">HOW TO REACH</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false">MAP</button>
+                        <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map-tab-pane" type="button" role="tab" aria-controls="map-tab-pane" aria-selected="false" >MAP</button>
                     </li>
                     <div class="btn_wrap pt-md-0 pt-3 d-lg-block d-none">
                         <?php
@@ -124,7 +124,7 @@ if ($model->meta_title != '') {
                             'model' => $model,
                         ]) ?>
                     </div>
-                    <div class="tab-pane fade accordion-item" id="map-tab-pane" role="tabpanel" aria-labelledby="map-tab" tabindex="0">
+                    <div class="tab-pane fade accordion-item" id="map-tab-pane" role="tabpanel" aria-labelledby="map-tab" tabindex="0" style="line-height: 10px !important;">
                         <?= $this->render('_map', [
                             'model' => $model,
                         ]) ?>
