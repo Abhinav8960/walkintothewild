@@ -3,6 +3,9 @@
 
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 
@@ -15,7 +18,23 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::PARK_LIST;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
+<?php
+Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => FALSE,
+    'enableReplaceState' => FALSE,
+    'timeout' => false,
+]);
 
+?>
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'data-pjax' => true,
+        'id' => 'sideSearchform'
+    ],
+    'action' => Url::toRoute(['/park/default/rareanimal', 'slug' => $slug]),
+    'method' => 'get',
+]); ?>
 <section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">
@@ -52,6 +71,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                         'model' => $searchModel,
                         'device' => $device,
                         'slug' => $slug,
+                        'form' => $form
                     ]) ?>
                 </div>
             </div>
@@ -63,11 +83,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="right-select ">
                         <div class="input_check pb-0 mb-3">
                             <form id="custom_sort_by_form">
-                                <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
-                                    <option value="" <?= !in_array($searchModel->custom_sort_by, ['most-demanding', 'shared-safari']) ? 'selected' : '' ?>>Sort By: Relevant</option>
-                                    <option value="most-demanding" <?= $searchModel->custom_sort_by == 'most-demanding' ? 'selected' : '' ?>>Most Demanding</option>
-                                    <option value="shared-safari" <?= $searchModel->custom_sort_by == 'shared-safari' ? 'selected' : '' ?>>Shared Safari</option>
-                                </select>
+                                <?= $form->field($searchModel, 'custom_sort_by')->dropDownList(['is_most_demanding' => 'Most Demanding', 2 => 'Sort by: A to Z', 3 => 'Sort by: Z to A'], ['class' => 'form-select mb-2'])->label(false) ?>
                             </form>
                         </div>
 
@@ -75,7 +91,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
                 <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                     <div class="left_text">
-                    <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
+                        <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                         <div class="input_check pb-0">
@@ -88,7 +104,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
                 <?php if ($models) {
                     foreach ($models as $model) { ?>
-                        <a href="/park/<?= $model->slug ?>" class="parking_Box">
+                        <a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" class="parking_Box" data-pjax="0">
                             <div class="searchSafari_wraper mb-4">
 
                                 <div class="row">
@@ -140,6 +156,26 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </div>
     </div>
 </section>
+<?php ActiveForm::end(); ?>
+<script>
+    var mobileSearchDivAnimal = document.getElementById('mobileSearchDiv');
+    var targetDivAnimal = document.getElementById('targetDiv');
+    var formSelectAnimal = document.querySelector('.form-select');
+
+    if (mobileSearchDivAnimal && targetDivAnimal) {
+        mobileSearchDivAnimal.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the default behavior
+            targetDivAnimal.style.display = targetDivAnimal.style.display === 'none' ? 'block' : 'block';
+        });
+
+        if (formSelectAnimal) {
+            formSelectAnimal.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        }
+    }
+</script>
+<?php Pjax::end(); ?>
 
 
 

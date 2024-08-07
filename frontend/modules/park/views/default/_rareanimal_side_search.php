@@ -9,17 +9,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 
 ?>
-<?php $form = ActiveForm::begin([
-    'options' => [
-        'data-pjax' => true,
-        'id' => 'sideSearchform'
-    ],
-    'action' => ['/rareanimal/' . $slug . ''],
-    'method' => 'get',
-    'fieldConfig' => [
-        'template' => '{input}{error}',
-    ],
-]); ?>
+
 
 <?php if ($device == 'desktop') { ?>
     <div class="filter-wrapper d-lg-block d-none sticky-sidebar">
@@ -79,12 +69,7 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="col-7">
                     <div class="input_check pb-0">
-                        <select class="form-select " aria-label="Default select example">
-                            <option selected>Relevant</option>
-                            <option value="1">January</option>
-                            <option value="2">Febraury</option>
-                            <option value="3">March</option>
-                        </select>
+                        <?= $form->field($model, 'custom_sort_by')->dropDownList(['is_most_demanding' => 'Most Demanding', 2 => 'Sort by: A to Z', 3 => 'Sort by: Z to A'])->label(false) ?>
                     </div>
 
                 </div>
@@ -139,18 +124,18 @@ use yii\widgets\ActiveForm;
     </div>
 <?php } ?>
 
-
-<?php ActiveForm::end(); ?>
-
 <?php
 $script = <<< JS
-    $('form input[type=checkbox]').on('change', function(){
-        $('#sideSearchform').submit();
-    });
-    $('form select').on('change', function(){
+    $('form').on('change', function(){
         $("#sideSearchform").attr("data-pjax", "true");    
         $(this).closest('form').submit();
-    }); 
+    });
+    $('#safariparksearch-custom_sort_by').on('change', function(){
+        $("#sideSearchform").attr("data-pjax", "true");    
+        $(this).closest('form').submit();
+    });
+
+
 JS;
 $this->registerJs($script);
 ?>
