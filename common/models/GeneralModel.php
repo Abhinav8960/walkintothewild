@@ -58,6 +58,7 @@ use frontend\models\registration\SafariOperatorRequestPark;
 use common\models\trierror\FrontendRequestLog;
 use Yii;
 use yii\helpers\ArrayHelper;
+use common\models\trierror\SitePages;
 
 class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusInterface
 {
@@ -1081,6 +1082,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '2' => 'Deactive',
             '3' => 'Seat Full',
         ];
+        return $return;
+    }
+
+    public static function getsitepagessubcategory($category_name)
+    {
+        $return = [];
+        $sub_category = SitePages::find()->select('sub_category')->distinct('sub_category')->where(['category' => $category_name])->all();
+        foreach ($sub_category as $sub) {
+            $return[$sub->sub_category] = ucwords($sub->sub_category);
+        }
+
         return $return;
     }
 }

@@ -115,4 +115,13 @@ class SitePagesController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionGetsubcategorylist($category_id)
+    {
+        $sub_category = SitePages::find()->select('sub_category')->distinct('sub_category')->where(['category' => $category_id, 'status' => 1])->all();
+        echo "<option value=''>Select Sub-Category</option>";
+        foreach ($sub_category as $sub) {
+            echo "<option value='" . $sub->sub_category . "'>" . $sub->sub_category . "</option>";
+        }
+    }
 }
