@@ -124,7 +124,7 @@ if ($model->meta_title != '') {
                             'model' => $model,
                         ]) ?>
                     </div>
-                    <div class="tab-pane fade accordion-item" id="map-tab-pane" role="tabpanel" aria-labelledby="map-tab" tabindex="0">
+                    <div class="tab-pane fade accordion-item" id="map-tab-pane" role="tabpanel" aria-labelledby="map-tab" tabindex="0" >
                         <?= $this->render('_map', [
                             'model' => $model,
                         ]) ?>

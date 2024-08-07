@@ -76,10 +76,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Created <span class="numberFont"><?= $dataProvider->getTotalCount() ?></span> Packages</h6>
                                             </div>
 
-                                            <div class="row gx-5 ">
+                                            <div class="row gx-xxl-5 ">
                                                 <?php if ($dataProvider->models) {
                                                     foreach ($dataProvider->models as $model) { ?>
-                                                        <div class="col-md-6 mb-4 padding_righ">
+                                                        <div class="col-md-6 col-lg-4 mb-4 padding_righ">
                                                             <div class="sharesafri-card tourpackage">
                                                                 <div class="flotingdate">
                                                                     <div class="icons text-center">
@@ -130,12 +130,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                         </div>
                                                                     </div>
                                                                     <div class="footer_card row pb-2 px-2 align-items-center">
-                                                                        <div class="col-7">
+                                                                        <div class="col-6 col-xxl-7">
                                                                             <div class="safaritourlogo">
                                                                                 <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-5">
+                                                                        <div class="col-xxl-5 col-6">
                                                                             <div class="safari text-center">
                                                                                 <div class="joinsafari package">
                                                                                     <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>

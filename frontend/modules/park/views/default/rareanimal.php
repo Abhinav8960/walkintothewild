@@ -33,7 +33,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </section>
-<section class="articals_wrapper mt-4 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
+<section class="articals_wrapper mt-md-4 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
     <div class="container-fluid">
         <!-- <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
@@ -56,13 +56,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
             </div>
             <div class="col-lg-10 col-12 paddingset_desktop ">
-                <div class="topfilter d-flex justify-content-between align-items-center mb-2 flex-wrap w-100 ">
+                <div class="topfilter d-lg-flex d-none justify-content-between align-items-center mb-2 flex-wrap w-100 ">
                     <div class="left_text">
                         <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select ">
                         <div class="input_check pb-0 mb-3">
-
                             <form id="custom_sort_by_form">
                                 <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
                                     <option value="" <?= !in_array($searchModel->custom_sort_by, ['most-demanding', 'shared-safari']) ? 'selected' : '' ?>>Sort By: Relevant</option>
@@ -76,7 +75,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
                 <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                     <div class="left_text">
-                        <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
+                    <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                         <div class="input_check pb-0">

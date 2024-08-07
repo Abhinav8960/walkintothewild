@@ -590,9 +590,13 @@
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
+  .tourLogoes  .images_tour{
+
+    height: 172px;
+  }
   .terms-contionsSplasescreen{
 
-    background-image: url(../img/spalsemobile.png);
+    background-image: url(../img/loginpages.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -838,7 +842,7 @@
   }
   .terms-contionsSplasescreen{
 
-    background-image: url(../img/spalshscreendesktop.png);
+    background-image: url(../img/loginpages.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -1065,6 +1069,7 @@
   }
 }
 @media (max-width: 991px) {
+
   .mobile-hidelink{
 
     display: none;
@@ -1437,7 +1442,7 @@ display: none;
 
   .terms-contionsSplasescreen{
 
-    background-image: url(../img/spalsemobile.png);
+    background-image: url(../img/loginpages.jpg);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 100% 100%;

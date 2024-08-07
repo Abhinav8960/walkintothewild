@@ -67,13 +67,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-md-12">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-md-8">
+                                <div class="col-xxl-8 col-lg-8 mb-3">
                                     <div class="card card_bodyPadding">
                                         <div class="card-body">
-                                            <div class="d-flex justify-content-between  mb-4">
+                                            <div class="d-flex justify-content-between flex-wrap mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Published <span class="numberFont"><?= count($articles) ?></span> Article</h6>
                                                 <?php if (count($articles) >= 2) { ?>
-                                                    <a class="SeeAll" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug]) ?>">See All</a>
+                                                    <a class="SeeAll mt-md-0 mt-3" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug]) ?>">See All</a>
                                                 <?php } ?>
                                             </div>
 

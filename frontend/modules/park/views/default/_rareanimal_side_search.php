@@ -70,7 +70,7 @@ use yii\widgets\ActiveForm;
                 <button class="btn_apply">Apply</button>
             </div>
         </div>
-        <div class="searchwrap mb-3">
+        <div class="searchwrap mb-3 mt-5 pt-3">
             <div class="row align-items-center">
                 <div class="col-5">
                     <div class="title_filter">
