@@ -43,13 +43,7 @@ Pjax::begin([
                 'device' => $device,
             ]) ?>
         </div>
-        <div id="targetDiv">
-            <?= $this->render('_park_review', [
-                'model' => $operatorsearchModel,
-                'safari_model' => $model,
-                'device' => $device,
-            ]) ?>
-        </div>
+
         <div id="targetDiv">
             <?= $this->render('_park_contribution', [
                 'model' => $operatorsearchModel,
@@ -101,9 +95,6 @@ Pjax::begin([
 
                 if ($operators) {
                     foreach ($operators as $operator) {
-                        if ($counter >= 4) {
-                            break; // Exit the loop if counter reaches 4
-                        }
                 ?>
                         <div class="col-lg-6 col-md-4 col-sm-6 col-xl-4 col-xxl-3 mb-3">
                             <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" class="oprators_boxes">
@@ -158,82 +149,13 @@ Pjax::begin([
                             </a>
                         </div>
                 <?php
-                        $counter++; // Increment the counter after each operator
+                        // Increment the counter after each operator
                     }
                 } ?>
 
             </div>
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-4">
-                <?php
-                $counter = 0; // Initialize counter variable
 
-                if ($operators) {
-                    foreach ($operators as $operator) {
-                        if ($counter < 4) {
-                            // Skip the first 4 operators
-                            $counter++;
-                            continue;
-                        }
-                ?>
-                        <div class="col-lg-6 col-md-4 col-sm-6 col-xl-4 col-xxl-3 mb-3">
-                            <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" class="oprators_boxes">
-                                <div class="listingSafari ">
-                                    <?php if ($operator->is_highlighted) { ?>
-                                        <div class="higlighted">
-                                            <p>Highlighted</p>
-                                        </div>
-                                    <?php } ?>
-                                    <div class="card-body ">
-                                        <div class="logo_provide2">
-                                            <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
-                                            <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
-                                        </div>
-                                        <div class="provider_details  px-2">
-                                            <h6 class="pname py-3 border-top"><?= $operator->businessname ?></h6>
-                                            <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-
-                                                <div class="ratings">
-
-                                                    <p class="mb-0"><?= $operator->google_rating ?>
-                                                        <?= GeneralModel::ratiing_views($operator->google_rating); ?>
-                                                    </p>
-                                                </div>
-                                                <div class="googlerating">
-                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="footer_provider ">
-                                        <div class="slect_safricound d-flex justify-content-around">
-                                            <div class="parks_text text-center">
-                                                <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
-                                                <p>Parks</p>
-                                            </div>
-                                            <div class="parks_text text-center">
-                                                <p>0</p>
-                                                <p>Packages</p>
-                                            </div>
-                                            <div class="parks_text text-center">
-                                                <p>0</p>
-                                                <p>Shared Safari</p>
-                                            </div>
-                                        </div>
-                                        <div class="get_quote text-center">
-                                            <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" class="get_quote_btn">GET A FREE QUOTE</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                <?php
-                        $counter++; // Increment the counter after each operator
-                    }
-                } ?>
-
-            </div>
         </div>
 
     </div>

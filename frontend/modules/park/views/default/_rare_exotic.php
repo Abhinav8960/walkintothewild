@@ -3,8 +3,10 @@
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-if ($rare_exotics) {
 ?>
+<?php
+if ($rare_exotics) { ?>
+
     <div class="container-lg">
         <div class="row justify-content-center">
             <div class="col-12">

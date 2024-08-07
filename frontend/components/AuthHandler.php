@@ -97,7 +97,7 @@ class AuthHandler
                         'status' => User::STATUS_ACTIVE // make sure you set status properly
                     ]);
                     $user->generateAuthKey();
-                    $user->generatePasswordResetToken();
+                    //$user->generatePasswordResetToken();
 
                     // end comment by sonu shokeen
 
