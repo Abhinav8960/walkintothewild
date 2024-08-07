@@ -284,6 +284,44 @@ $(document).ready(function(){
         initializeOwlCarousel();
     });
 });
+$(document).ready(function(){
+    function initializeOwlCarousel() {
+        if ($(window).width() <= 768) {
+            $('.slider_addmobile3').addClass('owl-carousel');
+            $('.slider_addmobile3').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: false,
+                center:true,
+                // stagePadding: 50,
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 3
+                    },
+                    600: {
+                        items: 5
+                    },
+                    991: {
+                        items: 5
+                    },
+                    1200: {
+                        items: 5
+                    }
+                }
+            });
+        } else {
+            $('.slider_addmobile3').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+            $('.slider_addmobile3').find('.owl-stage-outer').children().unwrap();
+        }
+    }
+
+    initializeOwlCarousel();
+
+    $(window).resize(function() {
+        initializeOwlCarousel();
+    });
+});
 document.addEventListener('DOMContentLoaded', function () {
     let profile = document.querySelector('.profile');
     let menu = document.querySelector('.menuprofile');

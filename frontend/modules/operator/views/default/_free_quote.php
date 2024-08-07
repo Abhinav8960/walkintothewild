@@ -29,7 +29,7 @@ use yii\bootstrap5\ActiveForm;
             ],
 
         ]); ?>
-        <div class="row ">
+        <div class="row gx-2">
             <div class="col-lg-2">
                 <div class="form-wrapper">
                     <label for="">Safari Park</label>

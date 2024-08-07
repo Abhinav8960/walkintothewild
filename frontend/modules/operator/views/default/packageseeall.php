@@ -79,7 +79,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <div class="row gx-5 ">
                                                 <?php if ($dataProvider->models) {
                                                     foreach ($dataProvider->models as $model) { ?>
-                                                        <div class="col-md-6 mb-4 padding_righ">
+                                                        <div class="col-md-6 col-lg-4 mb-4 padding_righ">
                                                             <div class="sharesafri-card tourpackage">
                                                                 <div class="flotingdate">
                                                                     <div class="icons text-center">

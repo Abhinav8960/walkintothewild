@@ -83,7 +83,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php
                                                 if ($shared_safaries) {
                                                     foreach ($shared_safaries as $share_safari) { ?>
-                                                        <div class="col-md-5 mb-4 ">
+                                                        <div class="col-md-5 col-lg-6 col-xxl-5 mb-4 ">
                                                             <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                         </div>
                                                 <?php }

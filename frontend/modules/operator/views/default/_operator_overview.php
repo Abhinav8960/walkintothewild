@@ -9,8 +9,8 @@ use common\models\operator\SafariOperatorFollow;
 <div class="row justify-content-center pt-4">
     <div class="col-xxl-8 col-xl-10 col-lg-12">
         <div class="top_opratorsBox logedin">
-            <div class="row gx-2">
-                <div class="col-lg-3">
+            <div class="row gx-lg-2">
+                <div class="col-lg-3 col-md-4">
                     <div class="tourLogoes ">
                         <div class="images_tour">
                             <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="">
@@ -32,7 +32,7 @@ use common\models\operator\SafariOperatorFollow;
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9  pt-lg-0 pt-3">
+                <div class="col-lg-9 col-md-8 pt-sm-3 pt-md-0 pt-3">
                     <div class="provider_details ps-lg-3">
                         <div class="title_tours d-flex justify-content-between align-items-center gap-md-2 gap-xxl-3">
                             <h3><?= $operator->businessname ?></h3>
