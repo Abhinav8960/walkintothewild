@@ -29,53 +29,53 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 <div class="container-fluid mt-5 ">
     <div class="row margin_bottomfooter ">
-        <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center">
+        <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center flex-wrap">
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
-            <div class=" ">
+            <div class=" mt-xxl-0 mt-3">
                 <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]) ?>" class="post-comment newbg rounded-2 padding_btn" target="_blank"><i class="fa fa-eye"></i> View as Member</a> &nbsp;
                 <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update Request</a>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8 col-xxl-10 col-xl-9">
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12 col-xl-3">
                             <?php if ($safari_operator->imagepath) { ?>
                                 <img src="<?= $safari_operator->imagepath ?>" class="mb-2 w-100 rounded-2" style="height:180px; object-fit:cover;">
                             <?php } ?>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-12 col-xl-9">
                             <div class="row">
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6">
                                     <div class="text-box">
                                         <p><strong>Business Name : </strong><?= $safari_operator->business_name ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6  ">
                                     <div class="text-box">
                                         <p><strong>Phone Number : </strong><?= $safari_operator->phone_no ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6  ">
                                     <div class="text-box">
                                         <p><strong>Alternate Phone Number : </strong><?= $safari_operator->operator_phone_no ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Email Address : </strong><?= $safari_operator->email ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6">
                                     <div class="text-box">
                                         <p><strong>Alternate Email Address : </strong><?= $safari_operator->operator_email ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Category : </strong><?php
 
@@ -85,12 +85,12 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                                                         } ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Registered Name : </strong><?= $safari_operator->operator_phone_no ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Approved Status : </strong> <?php
                                                                                 if ($safari_operator->is_approved) {
@@ -101,17 +101,17 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                                                                 ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Rating : </strong> <?= $safari_operator->google_rating ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Cancellation : </strong> <?= isset($safari_operator->has_cancellation_policy) ? GeneralModel::yesnooption()[$safari_operator->has_cancellation_policy] : '' ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
+                                <div class="col-md-12  col-xl-4 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Budget Segment : </strong> <?= implode(', ', $budget) ?></p>
                                     </div>

@@ -14,12 +14,12 @@ $this->params['title'] = $this->title;
         <div class="col-md-12 d-flex justify-content-between">
         <h6 class="fs-3 fw-bold mb-4"><?= $this->title ?></h6>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8 col-xl-9 col-xxl-10 itenary_tabs">
             <div class="card account-settingside">
-                <div class="card-body">
+                <div class="card-body p-4 safartabs">
                     <div class="row">
                         <?= $this->render('_profile_navbar', ['sharedsafari' => $shared_safari_departure_model, 'overview_active' => 'active']) ?>
                     </div>
@@ -39,3 +39,4 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+

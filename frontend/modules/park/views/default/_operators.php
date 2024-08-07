@@ -3,19 +3,43 @@
 
 /* @var $this yii\web\View */
 
+use common\assets\NotifyAsset;
 use yii\helpers\Url;
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafariIntrested;
+use frontend\assets\AppAsset;
+use frontend\assets\FrontAppAsset;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
+
+<?php
+Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => FALSE,
+    'enableReplaceState' => FALSE,
+    'timeout' => false,
+]);
+
+?>
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'data-pjax' => true,
+        'id' => 'safarioperatorsearch'
+    ],
+    'action' => ['/park/' . $model->slug . ''],
+    'method' => 'get',
+]); ?>
 <div class="row">
     <div class="col-lg-4 col-xl-3 col-xxl-2 mb-4 ">
         <div id="targetDiv">
             <?= $this->render('_operator_side_search', [
                 'model' => $operatorsearchModel,
                 'safari_model' => $model,
+                'form' => $form,
                 'device' => $device,
             ]) ?>
         </div>
@@ -49,12 +73,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="right-select d-flex gap-2 align-items-center pe-xl-2">
                 <div class="input_check pb-0">
                     <?php if ($device == 'desktop') {  ?>
-                        <select class="form-select mb-2" aria-label="Default select example" id="custom_sort_by">
-                            <option value="" <?= $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Short By: Rating High</option>
-                            <option value="rating_low" <?= $operatorsearchModel->custom_sort_by == 'rating_low' ? 'selected' : '' ?>>Short By: Rating Low</option>
-                            <option value="name_az" <?= $operatorsearchModel->custom_sort_by == 'name_az' || $operatorsearchModel->custom_sort_by == '' ? 'selected' : '' ?>>Short By: Name A-Z</option>
-                            <option value="name_za" <?= $operatorsearchModel->custom_sort_by == 'name_za' ? 'selected' : '' ?>>Short By: Name Z-A</option>
-                        </select>
+                        <?= $form->field($operatorsearchModel, 'custom_sort_by')->dropDownList([1 => 'Short By: Rating High', 2 => 'Short By: Rating Low', 3 => 'Short By: Name A-Z', 4 => 'Short By: Name Z-A'], ['class' => 'form-select mb-2'])->label(false) ?>
                     <?php } ?>
                 </div>
                 <!-- <div class="gridListview">
@@ -144,28 +163,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 } ?>
 
             </div>
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <?php if ($shared_safaries) { ?>
-                        <div class="backgroud_oprator py-4">
-                            <div class="title_safari JoinPadding d-flex justify-content-center justify-content-xl-between align-items-center flex-wrap">
-                                <h4 class="text-center">Join Shared Safaris in <?= $model->title ?></h4>
-                                <div class="joinshareView mt-xl-0 mt-3">
-                                    <a href="/sharedsafari?ShareSafariSearch[park_id]=<?= $model->id ?>" class="parkrevieBtn ">View All</a>
-                                </div>
-                            </div>
-                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-xxl-4 ">
-                                <?php foreach ($shared_safaries as $share_safari) { ?>
-                                    <div class="col mb-xl-0 mb-3 ">
-                                        <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
-                                    </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                    <?php } ?>
-
-                </div>
-            </div>
 
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-4">
                 <?php
@@ -241,15 +238,34 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
     </div>
 </div>
+<?php ActiveForm::end(); ?>
+<script>
+    var mobileSearchDivOperator = document.getElementById('mobileSearchDiv');
+    var targetDivOperator = document.getElementById('targetDiv');
+    var formSelectOperator = document.querySelector('.form-select');
 
+    if (mobileSearchDivOperator && targetDivOperator) {
+        mobileSearchDivOperator.addEventListener('click', function(event) {
+            event.stopPropagation(); // Prevent the default behavior
+            targetDivOperator.style.display = targetDivOperator.style.display === 'none' ? 'block' : 'block';
+        });
+
+        if (formSelectOperator) {
+            formSelectOperator.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        }
+    }
+</script>
+<?php Pjax::end(); ?>
 
 
 <?php
-$script = <<< JS
-    $('#custom_sort_by').on('change', function(){
-        $('#safarioperatorsearch-custom_sort_by').val(this.value);
-        $('#safarioperatorsearch').submit();
-    });
-JS;
-$this->registerJs($script);
+// $script = <<< JS
+//     $('form').on('change', function(){
+//         $("#safarioperatorsearch-custom_sort_by").attr("data-pjax", "true");    
+//         $(this).closest('form').submit();
+//     });
+// JS;
+// $this->registerJs($script);
 ?>

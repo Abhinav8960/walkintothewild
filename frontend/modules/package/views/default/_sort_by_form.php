@@ -4,9 +4,6 @@ use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var common\models\sharesafari\ShareSafari $model */
-/** @var yii\widgets\ActiveForm $form */
 ?>
 
 

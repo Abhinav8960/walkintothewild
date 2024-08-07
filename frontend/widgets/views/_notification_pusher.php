@@ -1,4 +1,3 @@
-
 <?php
 
 $login_user = Yii::$app->user->identity;
@@ -36,6 +35,39 @@ $script = <<< JS
             success_notify(data);
         }
     });                  
+JS;
+$this->registerJs($script);
+?>
+
+
+<script>
+    let notification = document.querySelector('.notification');
+    let menunotification = document.querySelector('.menunotification');
+
+    notification.onclick = function(event) {
+        event.stopPropagation();
+        menunotification.classList.toggle('active');
+    }
+
+    document.onclick = function(event) {
+        if (!notification.contains(event.target) && !menunotification.contains(event.target)) {
+            menunotification.classList.remove('active');
+        }
+    }
+</script>
+<!-- /main-header -->
+
+<?php
+$script = <<<JS
+$(document).ready(function() {
+    $(".notification").click(function(){
+        var notice_update_url='/site/updatenotificationlist';
+        $.get(notice_update_url, function( data ) {
+            $("#menunotification_menu").html(data);
+        });
+    })
+})
+                  
 JS;
 $this->registerJs($script);
 ?>

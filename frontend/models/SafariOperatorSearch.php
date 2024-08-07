@@ -58,7 +58,7 @@ class SafariOperatorSearch extends SafariOperator
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['register_comapany_name' => SORT_ASC]
+                'defaultOrder' => ['google_rating' => SORT_DESC]
             ]
         ]);
 
@@ -72,21 +72,21 @@ class SafariOperatorSearch extends SafariOperator
 
 
         if ($this->custom_sort_by) {
-            if ($this->custom_sort_by == 'rating_low') {
+            if ($this->custom_sort_by == 1) {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['google_rating' => SORT_DESC]
+                ];
+            } else if ($this->custom_sort_by == 2) {
                 $dataProvider->sort = [
                     'defaultOrder' => ['google_rating' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == 'name_az') {
+            } else if ($this->custom_sort_by == 3) {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['register_comapany_name' => SORT_ASC]
+                    'defaultOrder' => ['business_name' => SORT_ASC]
                 ];
-            } else if ($this->custom_sort_by == 'name_za') {
+            } else if ($this->custom_sort_by == 4) {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['register_comapany_name' => SORT_DESC]
-                ];
-            } else {
-                $dataProvider->sort = [
-                    'defaultOrder' => ['google_rating' => SORT_DESC]
+                    'defaultOrder' => ['business_name' => SORT_DESC]
                 ];
             }
         }

@@ -10,17 +10,17 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 <div class="container-fluid mt-5 ">
     <div class="row margin_bottomfooter">
         <div class="col-md-12">
-            <div class="d-flex justify-content-between mb-4 align-items-center">
+            <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap">
                 <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center mt-xl-0 mt-2">
                     <button class="btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8 col-xl-9 col-xxl-10">
             <div class="card account-settingside ">
                 <div class="card-body p-4">
                     <div class="row">

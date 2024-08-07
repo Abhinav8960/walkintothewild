@@ -6655,3 +6655,7 @@ font-weight: 500;
     list-style: none;
     padding-left: 0;
 }
+.form-select-lg{
+
+    font-size: 14px;
+}
