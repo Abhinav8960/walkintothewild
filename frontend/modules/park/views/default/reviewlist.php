@@ -33,7 +33,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="row">
                         <div class="col-12 mb-4 mt-5">
                             <div class="comments_safari operator_comment bg-white">
-                                <div class="commentsOther  position-relative">
+                                <div class="commentsOther  position-relative px-5 pt-4">
                                     <div class=" d-flex justify-content-between flex-wrap">
                                         <?php
                                         if ($reviews) { ?>

@@ -240,9 +240,6 @@ Pjax::begin([
 
 <?php Pjax::end(); ?>
 
-<!-- <section class="safariduring_sesons innerpage ">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section> -->
 
 
 
