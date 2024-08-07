@@ -38,7 +38,6 @@ class SitePages extends \yii\db\ActiveRecord
         return [
             [['content_id',  'counter', 'status'], 'integer'],
             [['last_update_at', 'updated_at', 'created_at'], 'safe'],
-            [['content_type'], 'string', 'max' => 155],
             [['url'], 'string', 'max' => 555],
             ['url', 'required'],
             ['url', 'filter', 'filter' => 'trim'],
@@ -49,9 +48,10 @@ class SitePages extends \yii\db\ActiveRecord
         ];
     }
 
-    public function url_validation_creteria($model, $attribute){
+    public function url_validation_creteria($model, $attribute)
+    {
         if (isset($model->$attribute) and $model->$attribute != '') {
-        /*echo "<pre>";
+            /*echo "<pre>";
         print_r($model->url);
         echo "</pre>";
 //        die($model->$attribute);
@@ -59,7 +59,7 @@ class SitePages extends \yii\db\ActiveRecord
         die();
         */
             $this->addError($model, $attribute, 'inside loop');
-        }else{
+        } else {
             $this->addError($model, $attribute, 'Invalid GST number');
         }
     }

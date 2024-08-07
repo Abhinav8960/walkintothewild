@@ -9,7 +9,7 @@ use Yii;
 use yii\helpers\Url;
 use common\models\trierror\SitePages;
 use common\models\GeneralModel;
-
+use common\models\trierror\FrontendRequestLog;
 
 /**
  * FrontendRequestLogController implements the CRUD actions for FrontendRequestLog model.
@@ -49,6 +49,20 @@ class CreateSiteXmlController extends Controller
 
     $records = SitePages::find()->where(['status' => true])->all();
     if (count($records) > 0) {
+      $frontend_url = Yii::$app->params['frontend_url'];
+      //$frontend_url = 'http://staging.walkintothewild.in/';
+      foreach ($records as $row) {
+        $full_url =  $frontend_url . $row['url'];
+        $total_records = FrontendRequestLog::find()->where(['request_full_url' => $full_url])->andWhere(['is_count' => 0])->count();
+        $row->counter = $row->counter + $total_records;
+        $row->save();
+
+        FrontendRequestLog::updateAll(['is_count' => 1], ['request_full_url' => $full_url, 'is_count' => 0]);
+      }
     }
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
   }
 }
