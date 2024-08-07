@@ -246,7 +246,44 @@ document.addEventListener('DOMContentLoaded', function () {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
+$(document).ready(function(){
+    function initializeOwlCarousel() {
+        if ($(window).width() <= 1200) {
+            $('.slider_addmobile2').addClass('owl-carousel');
+            $('.slider_addmobile2').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: false,
+                center:true,
+                // stagePadding: 50,
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 3
+                    },
+                    600: {
+                        items: 4
+                    },
+                    991: {
+                        items: 4
+                    },
+                    1200: {
+                        items: 5
+                    }
+                }
+            });
+        } else {
+            $('.slider_addmobile2').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+            $('.slider_addmobile2').find('.owl-stage-outer').children().unwrap();
+        }
+    }
 
+    initializeOwlCarousel();
+
+    $(window).resize(function() {
+        initializeOwlCarousel();
+    });
+});
 document.addEventListener('DOMContentLoaded', function () {
     let profile = document.querySelector('.profile');
     let menu = document.querySelector('.menuprofile');

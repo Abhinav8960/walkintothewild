@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs  d-lg-flex gap-2 ps-3 mb-4 border-bottom " id="myTab" role="tablist">
+<ul class="nav nav-tabs slider_addmobile2 text-lg-left text-center d-lg-flex gap-2 ps-3 mb-4 border-bottom " id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <a href="/manage/sharedsafari/update-fixed-departure/<?= $sharedsafari->id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>" id="home-tab">Overview</a>
     </li>
@@ -21,3 +21,5 @@
         <a href="/manage/sharedsafari/gallery/<?= $sharedsafari->id ?>" class="nav-link <?= isset($gallery_active) ? $gallery_active : '' ?>" id="map-tab">Gallery</a>
     </li>
 </ul>
+
+
