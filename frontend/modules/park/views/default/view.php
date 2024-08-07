@@ -35,20 +35,17 @@ if ($model->meta_title != '') {
 
 
 
-<section class="articals_wrapper py-3 " style="background-color: #fff;">
-    <div class="container-fluid">
-
+<section >
         <?= $this->render('@frontend/modules/park/views/default/tablist', [
             'operator' => 'active',
             'model' => $model,
         ]) ?>
-    </div>
 </section>
 
-<div class="row my-lg-4 my-2 justify-content-center margin_bottomfooter mb-5">
-    <div class="col-lg-12 col-xl-10">
-        <div class="card">
-            <div class="card-body">
+<section class="px-lg-5 px-3">
+<div class="row my-lg-4 my-2 pt-3 justify-content-center margin_bottomfooter mb-5">
+    <div class="col-lg-12 col-xxl-11">
+  
                 <?= $this->render('_operators', [
                     'operators' => $operators,
                     'model' => $model,
@@ -56,9 +53,10 @@ if ($model->meta_title != '') {
                     'shared_safaries' => $shared_safaries,
                     'device' => $device,
                     'reviews' => $reviews
-                ]) ?></div>
-        </div>
+                ]) ?>
+     
 
     </div>
 
 </div>
+</section>
