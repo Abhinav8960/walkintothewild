@@ -129,15 +129,6 @@ class GenerateSitePagesController extends Controller
       'category' => 'Operator',
       'sub_category' => 'Operator'
     ];
-
-    $group_pages[] = [
-      'table' => 'safari_park',
-      'url' => 'park/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Park',
-      'sub_category' => 'Park'
-    ];
-
     $this->process($group_pages);
   }
 
@@ -153,6 +144,20 @@ class GenerateSitePagesController extends Controller
     $end = microtime(true);
     $executionTime = $end - $start;
     echo "Script execution time: " . $executionTime . " seconds";
+  }
+
+  public function actionSitePages5()
+  {
+    $group_pages = [];
+    $group_pages[] = [
+      'table' => 'safari_park',
+      'url' => 'park/_slug',
+      'url_type' => 'Primary',
+      'category' => 'Park',
+      'sub_category' => 'Park'
+    ];
+
+    $this->process($group_pages);
   }
 
   public function process($group_pages)
@@ -266,13 +271,14 @@ class GenerateSitePagesController extends Controller
         $insert_package_site_pages = [];
         foreach ($available_months as $ind => $month) {
           $url = "package/month/" . strtolower($month);
+
           $insert_package_site_pages[] = [
             'content_id' => $ind,
             'content_table' => '',
             'slug' => strtolower($month),
             'url' => $url,
             'url_type' => 'Secondary',
-            'method' => 'Get',
+            //'method' => 'Get',
             'category' => 'Package',
             'sub_category' => 'Monthly',
             'get_parameter'  => "{'slug':'" . strtolower($month) . "'}",
@@ -300,13 +306,23 @@ class GenerateSitePagesController extends Controller
         $insert_package_site_pages = [];
         foreach ($available_months as $ind => $month) {
           $url = "sharedsafari/month/" . strtolower($month);
+
+          $s_request = $this->getrequestinfo($url);
+          $get_parameter = $s_request['get_parameter'];
+          $post_parameter = $s_request['post_parameter'];
+          $is_get = $s_request['is_get'];
+          $is_post = $s_request['is_post'];
+          $is_ajax = $s_request['is_ajax'];
+
           $insert_package_site_pages[] = [
             'content_id' => $ind,
             'content_table' => '',
             'slug' => strtolower($month),
             'url' => $url,
             'url_type' => 'Secondary',
-            'method' => 'Get',
+            'is_get' => $is_get,
+            'is_post' => $is_post,
+            'is_ajax' => $is_ajax,
             'category' => 'Shared Safari',
             'sub_category' => 'Monthly',
             'get_parameter'  => "{'slug':'" . strtolower($month) . "'}",
@@ -318,7 +334,7 @@ class GenerateSitePagesController extends Controller
           ];
         }
 
-        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'slug', 'url', 'url_type', 'method', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status', 'updated_at'], $insert_package_site_pages)->execute();
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'slug', 'url', 'url_type', 'is_get', 'is_post', 'is_ajax', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status', 'updated_at'], $insert_package_site_pages)->execute();
       }
     }
   }
@@ -334,17 +350,27 @@ class GenerateSitePagesController extends Controller
         $insert_package_site_pages = [];
         foreach ($animals as $ind => $month) {
           $url = "animal/" . $month['slug'];
+
+          $s_request = $this->getrequestinfo($url);
+          $get_parameter = $s_request['get_parameter'];
+          $post_parameter = $s_request['post_parameter'];
+          $is_get = $s_request['is_get'];
+          $is_post = $s_request['is_post'];
+          $is_ajax = $s_request['is_ajax'];
+
           $insert_package_site_pages[] = [
             'content_id' => $month['id'],
             'content_table' => '',
             'slug' => $month['slug'],
             'url' => $url,
             'url_type' => 'Secondary',
-            'method' => 'Get',
             'category' => 'Animal',
             'sub_category' => 'Usual',
             'get_parameter'  => "{'slug':'" . $month['slug'] . "'}",
             'post_parameter'  => "[]",
+            'is_get' => $is_get,
+            'is_post' => $is_post,
+            'is_ajax' => $is_ajax,
             'last_update_at' => date('Y-m-d H:i:s'),
             'counter' => 0,
             'status' => 1,
@@ -352,7 +378,7 @@ class GenerateSitePagesController extends Controller
           ];
         }
 
-        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'slug', 'url', 'url_type', 'method', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status', 'updated_at'], $insert_package_site_pages)->execute();
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'slug', 'url', 'url_type', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'is_get', 'is_post', 'is_ajax', 'last_update_at', 'counter', 'status', 'updated_at'], $insert_package_site_pages)->execute();
       }
     }
   }
@@ -370,15 +396,13 @@ class GenerateSitePagesController extends Controller
             $data_url = "operator/_slug";
             $url = str_replace("_slug", $row['slug'], $data_url);
             $url = $url . $tab;
-            $method = $get_parameter = $post_parameter = '';
 
-            $s_request = FrontendRequestLog::find()->where(['request_url' => $url])->orderBy('id DESC')->asArray()->one();
-
-            if ($s_request) {
-              $method = $s_request['request_type'];
-              $get_parameter = $s_request['request_parameter'];
-              $post_parameter = $s_request['request_data'];
-            }
+            $s_request = $this->getrequestinfo($url);
+            $get_parameter = $s_request['get_parameter'];
+            $post_parameter = $s_request['post_parameter'];
+            $is_get = $s_request['is_get'];
+            $is_post = $s_request['is_post'];
+            $is_ajax = $s_request['is_ajax'];
 
             $model = SitePages::find()->where(['content_table' => 'safari_operator'])->andWhere(['url' => $url])->one();
             if ($model) {
@@ -395,7 +419,9 @@ class GenerateSitePagesController extends Controller
                 'content_table' => 'safari_operator',
                 'url' => $url,
                 'url_type' => 'Primary',
-                'method' => $method,
+                'is_get' => $is_get,
+                'is_post' => $is_post,
+                'is_ajax' => $is_ajax,
                 'slug' => $row['slug'],
                 'category' => 'Operator',
                 'sub_category' => $ind,
@@ -417,7 +443,7 @@ class GenerateSitePagesController extends Controller
       }
 
       if (count($temp_insert_data)) {
-        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'method', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'is_get', 'is_post', 'is_ajax', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
       }
     }
   }

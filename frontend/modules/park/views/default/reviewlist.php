@@ -15,24 +15,24 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
 
-<section class="articals_wrapper py-3 " style="background-color: #fff;">
-    <div class="container-fluid">
+<section >
+
         <?= $this->render('@frontend/modules/park/views/default/tablist', [
             'review' => 'active',
             'model' => $model,
         ]) ?>
-    </div>
+   
 </section>
 
 
-<div class="row my-4 justify-content-center padding_added">
-    <div class="col-lg-12 col-xl-10">
-        <div class="row ">
+<div class="row px-lg-5 px-3 pt-3 justify-content-center">
+    <div class="col-lg-12 col-xxl-11">
+        <div class="row margin_bottomfooter">
             <div class="col-lg-12 col-md-11 col-xxl-12 col-xl-10 ">
                 <div class="tab-content_tour mb-4 active">
                     <div class="row">
                         <div class="col-12 mb-4 mt-5">
-                            <div class="comments_safari operator_comment">
+                            <div class="comments_safari operator_comment bg-white">
                                 <div class="commentsOther  position-relative">
                                     <div class=" d-flex justify-content-between flex-wrap">
                                         <?php

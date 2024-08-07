@@ -12,20 +12,20 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
-<section class="articals_wrapper py-3 " style="background-color: #fff;">
-    <div class="container-fluid">
+<section style="background-color: #fff;">
+
         <?= $this->render('@frontend/modules/park/views/default/tablist', [
             'package' => 'active',
             'model' => $model,
         ]) ?>
-    </div>
+
 </section>
 
-<div class="row my-lg-4 my-2 justify-content-center margin_bottomfooter mb-5">
-    <div class="col-lg-12 col-xl-10">
+<div class="row my-lg-4 my-2 pt-3 px-lg-5 px-3 justify-content-center margin_bottomfooter mb-5">
+    <div class="col-lg-12 col-xxl-11">
         <div class="row">
             <div class="col-12 mb-3">
-                <div class="card">
+                <div class="card card_bodyPadding">
                     <div class="card-body">
                         <?php if ($packages) { ?>
                             <div class="backgroud_oprator py-4">
