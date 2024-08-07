@@ -1,4 +1,4 @@
-<li><span class="iconSize copytoclipboard" data-href="<?php echo Yii::$app->request->absoluteUrl; ?>"><i class="fa-solid fa-link" ></i></span></li>
+<li><span class="iconSize copytoclipboard" data-href="<?php echo Yii::$app->request->absoluteUrl; ?>"><i class="fa-solid fa-link"></i></span></li>
 
 <?php
 $script = <<< Js
@@ -11,7 +11,7 @@ $(document).ready(function() {
             temp.val($(this).attr('data-href')).select();
             document.execCommand("copy");
             temp.remove();
-            $(this).html('Copied');
+            alert('Link Copied');
         });
     }
     copyToClipboard();
@@ -21,4 +21,3 @@ $(document).ready(function() {
 Js;
 $this->registerJs($script);
 ?>
-
