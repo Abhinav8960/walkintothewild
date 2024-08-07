@@ -108,6 +108,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 w-100 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
                                             <?php } else if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
+                                            <?php } else { ?>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
                                             <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/site/auth?authclient=google"> Join Safari</a>
