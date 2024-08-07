@@ -144,7 +144,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                         <div class="col-xxl-5 col-6">
                                                                             <div class="safari text-center">
                                                                                 <div class="joinsafari package">
-                                                                                    <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>
+                                                                                    <h6 class=" titlePrice"><?= number_format($model->total_price) ?></h6>
                                                                                     <a href="/package/<?= $model->package_slug ?>">View Details</a>
                                                                                 </div>
                                                                             </div>
