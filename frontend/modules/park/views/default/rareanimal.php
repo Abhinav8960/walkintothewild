@@ -33,7 +33,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </section>
-<section class="articals_wrapper mt-4 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
+<section class="articals_wrapper mt-md-4 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
     <div class="container-fluid">
         <!-- <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
