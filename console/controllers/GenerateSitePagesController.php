@@ -44,6 +44,8 @@ class GenerateSitePagesController extends Controller
 
   public function actionSitePages1()
   {
+    $group_pages = [];
+
     $group_pages[] = [
       'table' => 'master_article_tag',
       'url' => 'article/tag/_slug',
@@ -90,6 +92,7 @@ class GenerateSitePagesController extends Controller
       'category' => 'Shared Safari',
       'sub_category' => 'Shared Safari'
     ];
+
 
     $group_pages[] = [
       'table' => 'package',
@@ -201,20 +204,10 @@ class GenerateSitePagesController extends Controller
     if (count($records)) {
       $temp_insert_data = [];
       foreach ($records as $row) {
-        if ($row['status']) {
+        if ($row['status'] == 1) {
           //update existing record
           $url = str_replace("_slug", $row['slug'], $data['url']);
 
-          /*
-          $s_request = FrontendRequestLog::find()->where(['request_url' => $url])->orderBy('id DESC')->asArray()->one();
-          if ($s_request) {
-            $method = $s_request['request_type'];
-            $get_parameter = $s_request['request_parameter'];
-            $post_parameter = $s_request['request_data'];
-          }
-          */
-
-          //
           $s_request = $this->getrequestinfo($url);
           $get_parameter = $s_request['get_parameter'];
           $post_parameter = $s_request['post_parameter'];
