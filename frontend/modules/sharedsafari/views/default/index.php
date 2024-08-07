@@ -48,22 +48,7 @@ $recentposts = ArticleSearch::recentpost();
 
     </div>
 </section>
-<?php
-Pjax::begin([
-    'id' => 'grid-data',
-    'enablePushState' => FALSE,
-    'enableReplaceState' => FALSE,
-    'timeout' => FALSE,
-]);
-?>
-<?php $form = ActiveForm::begin([
-    'options' => [
-        'data-pjax' => true,
-        'id' => 'side-search-form'
-    ],
-    'action' => ['index'],
-    'method' => 'get',
-]); ?>
+
 <section class="articals_wrapper py-3 bg-white margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
         <div class="row justify-content-center ">
@@ -94,6 +79,22 @@ Pjax::begin([
                         </div>
                     </div>
                 </div>
+                <?php
+                Pjax::begin([
+                    'id' => 'grid-data',
+                    'enablePushState' => FALSE,
+                    'enableReplaceState' => FALSE,
+                    'timeout' => FALSE,
+                ]);
+                ?>
+                <?php $form = ActiveForm::begin([
+                    'options' => [
+                        'data-pjax' => true,
+                        'id' => 'side-search-form'
+                    ],
+                    'action' => ['index'],
+                    'method' => 'get',
+                ]); ?>
                 <div class="row">
                     <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
                         <div id="targetDiv">
@@ -211,6 +212,27 @@ Pjax::begin([
                         </div>
                     </div>
                 </div>
+                <?php ActiveForm::end(); ?>
+                <script>
+                    var mobileSearchDivShared = document.getElementById('mobileSearchDiv');
+                    var targetDivShared = document.getElementById('targetDiv');
+                    var formSelectShared = document.querySelector('.form-select');
+
+                    if (mobileSearchDivShared && targetDivShared) {
+                        mobileSearchDivShared.addEventListener('click', function(event) {
+                            event.stopPropagation(); // Prevent the default behavior
+                            targetDivShared.style.display = targetDivShared.style.display === 'none' ? 'block' : 'block';
+                        });
+
+                        if (formSelectShared) {
+                            formSelectShared.addEventListener('click', function(event) {
+                                event.stopPropagation();
+                            });
+                        }
+                    }
+                </script>
+
+                <?php Pjax::end(); ?>
             </div>
 
         </div>
@@ -218,27 +240,7 @@ Pjax::begin([
     </div>
 
 </section>
-<?php ActiveForm::end(); ?>
-<script>
-    var mobileSearchDivShared = document.getElementById('mobileSearchDiv');
-    var targetDivShared = document.getElementById('targetDiv');
-    var formSelectShared = document.querySelector('.form-select');
 
-    if (mobileSearchDivShared && targetDivShared) {
-        mobileSearchDivShared.addEventListener('click', function(event) {
-            event.stopPropagation(); // Prevent the default behavior
-            targetDivShared.style.display = targetDivShared.style.display === 'none' ? 'block' : 'block';
-        });
-
-        if (formSelectShared) {
-            formSelectShared.addEventListener('click', function(event) {
-                event.stopPropagation();
-            });
-        }
-    }
-</script>
-
-<?php Pjax::end(); ?>
 
 
 
