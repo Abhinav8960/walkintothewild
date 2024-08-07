@@ -45,12 +45,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="touroprator_section bg-white">
     <div class="container-fluid">
         <?= $this->render('_operator_overview', ['operator' => $operator]) ?>
-        <div class="row justify-content-center  mb-4">
-            <?= $this->render('_free_quote', [
-                'model' => $model,
-                'operator' => $operator,
-            ]) ?>
-        </div>
+        <?php if (Yii::$app->user->identity) { ?>
+            <div class="row justify-content-center  mb-4">
+                <?= $this->render('_free_quote', [
+                    'model' => $model,
+                    'operator' => $operator,
+                ]) ?>
+            </div>
+        <?php } ?>
     </div>
     <div class="container-fluid">
         <?= $this->render('_view_navbar', ['active' => 'contact', 'operator' => $operator]) ?>

@@ -19,14 +19,27 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?= $form->field($model, 'url')->textInput(["placeholder" => "Search by url"]) ?>
     </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'category')->dropDownList(
             $content_type,
             [
                 'prompt' => 'Select Category',
+                'onchange' => '$.get("' . Yii::$app->urlManager->createUrl('/trierror/site-pages/getsubcategorylist?category_id=') . '"+$(this).val(), function( data ) {
+                    $( "select#searchsitepages-sub_category" ).html( data );
+                })'
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'sub_category')->dropDownList(
+            GeneralModel::getsitepagessubcategory($model->category),
+            [
+                'prompt' => 'Select Sub-Category',
             ]
         ) ?>
     </div>
