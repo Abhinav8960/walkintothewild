@@ -30,7 +30,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <?php if ($packages) { ?>
                             <div class="backgroud_oprator py-4">
 
-                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-xxl-4 ">
+                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-xxl-4 ">
 
                                     <?php
                                     foreach ($packages as $model) { ?>
