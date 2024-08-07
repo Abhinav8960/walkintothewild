@@ -13,19 +13,19 @@ $this->params['title'] = $this->title;
 ?>
 
 <div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
-        <div class="col-md-12 d-flex justify-content-between mb-4">
+    <div class="row mb-5 margin_bottomfooter">
+        <div class="col-md-12 d-flex justify-content-between align-itemx-center mb-4 flex-wrap ">
         <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
-            <div class="d-flex justify-content-between gap-2" style="flex-basis:18%">
-                <button class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?>">+ Create FAQ</button>
-                <button class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?>">+ Select FAQ</button>
+            <div class="mb-0 mt-xl-0 mt-3" >
+                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?> " style="cursor:pointer">+ Create FAQ</a>
+                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?>" style="cursor:pointer">+ Select FAQ</a>
             </div>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-9 itenary_tabs">
+        <div class="col-md-8 col-xxl-10 col-xl-9 itenary_tabs">
         <div class="card account-settingside safartabs">
                 <div class="card-body">
                     <div class="row">

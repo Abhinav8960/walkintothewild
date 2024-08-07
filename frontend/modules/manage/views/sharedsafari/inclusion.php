@@ -12,14 +12,14 @@ $this->params['title'] = $this->title;
 
 
 <div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
+    <div class="row mb-5 margin_bottomfooter">
     <div class="col-md-12 d-flex justify-content-between mb-4">
         <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
         </div>
-        <div class="col-md-9 itenary_tabs">
+        <div class="col-md-8 col-xxl-10 col-xl-9 itenary_tabs">
             <div class="card account-settingside safartabs">
                 <div class="card-body p-4">
                     <div class="row">

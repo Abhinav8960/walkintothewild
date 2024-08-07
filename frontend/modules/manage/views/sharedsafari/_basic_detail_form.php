@@ -14,8 +14,7 @@ use yii\helpers\Html;
     'action' => $model->action_url,
     'validationUrl' => $model->action_validate_url,
 ]); ?>
-<div class="card">
-    <div class="card-body">
+
         <div class="row">
             <div class="col-md-6 mb-1">
                 <label for="" class="Modal_label">Select Park</label>
@@ -99,8 +98,7 @@ use yii\helpers\Html;
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
 <?php ActiveForm::end() ?>
 
 <?php
