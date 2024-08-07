@@ -18,7 +18,7 @@ class SearchSitePages extends SitePages
     {
         return [
             [['id', 'content_id', 'counter', 'status'], 'integer'],
-            [['url_type', 'content_type', 'category', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at'], 'safe'],
+            [['sub_category', 'url_type', 'content_type', 'category', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at'], 'safe'],
         ];
     }
 
@@ -47,6 +47,9 @@ class SearchSitePages extends SitePages
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 100,
+            ],
         ]);
 
         $this->load($params);
@@ -72,6 +75,10 @@ class SearchSitePages extends SitePages
             //print_r($params);
             //die();
             $query->andFilterWhere(['category' => $this->category]);
+        }
+
+        if (!empty($this->sub_category)) {
+            $query->andFilterWhere(['sub_category' => $this->sub_category]);
         }
 
         $query->andFilterWhere(['like', 'url', $this->url])

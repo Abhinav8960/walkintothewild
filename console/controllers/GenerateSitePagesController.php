@@ -2,27 +2,27 @@
 
 namespace console\controllers;
 
-use yii\console\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use Yii;
 use yii\helpers\Url;
-use common\models\trierror\FrontendRequestLog;
-use common\models\trierror\FrontendRequestLogSearch;
-use common\models\cms\article\Article;
-use common\models\cms\article\MasterArticleTopic;
-use common\models\cms\article\MasterArticleTag;
-//use common\models\park\Park;
-use common\models\park\SafariPark;
-use common\models\operator\SafariOperator;
-use common\models\trierror\SitePages;
-use common\models\cms\article\ArticleAuthor;
-use common\models\sharesafari\ShareSafari;
-use common\models\trierror\SiteRobots;
-use common\models\package\Package;
-use common\models\master\animal\MasterRareAnimal;
+use yii\console\Controller;
+use yii\filters\VerbFilter;
 use common\models\GeneralModel;
+use common\models\package\Package;
+use common\models\park\SafariPark;
+use yii\web\NotFoundHttpException;
+use common\models\trierror\SitePages;
+use common\models\cms\article\Article;
+//use common\models\park\Park;
+use common\models\trierror\SiteRobots;
+use common\models\operator\SafariOperator;
+use common\models\sharesafari\ShareSafari;
+use common\models\cms\article\ArticleAuthor;
 use common\models\master\animal\MasterAnimal;
+use common\models\trierror\FrontendRequestLog;
+use common\models\cms\article\MasterArticleTag;
+use common\models\cms\article\MasterArticleTopic;
+use common\models\master\animal\MasterRareAnimal;
+use common\models\trierror\FrontendRequestLogSearch;
 
 
 class GenerateSitePagesController extends Controller
@@ -145,9 +145,9 @@ class GenerateSitePagesController extends Controller
   {
     $start = microtime(true);
 
-    $this->get_monthly_package_site_pages();
-    $this->get_monthly_shared_safari_site_pages();
-    $this->get_operator_tabs_site_pages();
+    // $this->get_monthly_package_site_pages();
+    // $this->get_monthly_shared_safari_site_pages();
+    //$this->get_operator_tabs_site_pages();
     $this->get_static_pages('static pages');
 
     $end = microtime(true);
@@ -199,18 +199,25 @@ class GenerateSitePagesController extends Controller
         if ($row['status']) {
           //update existing record
           $url = str_replace("_slug", $row['slug'], $data['url']);
-          $method = $get_parameter = $post_parameter = '';
 
+          /*
           $s_request = FrontendRequestLog::find()->where(['request_url' => $url])->orderBy('id DESC')->asArray()->one();
           if ($s_request) {
             $method = $s_request['request_type'];
             $get_parameter = $s_request['request_parameter'];
             $post_parameter = $s_request['request_data'];
           }
+          */
 
+          //
+          $s_request = $this->getrequestinfo($url);
+          $get_parameter = $s_request['get_parameter'];
+          $post_parameter = $s_request['post_parameter'];
+          $is_get = $s_request['is_get'];
+          $is_post = $s_request['is_post'];
+          $is_ajax = $s_request['is_ajax'];
           $model = SitePages::find()->where(['content_id' => $row['id']])->andWhere(['content_table' => $data['table']])->one();
           if ($model) {
-            $model->method = $method;
             $model->get_parameter  = $get_parameter;
             $model->post_parameter  = $post_parameter;
             $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
@@ -223,7 +230,6 @@ class GenerateSitePagesController extends Controller
               'content_table' => $data['table'],
               'url' => $url,
               'url_type' => $data['url_type'],
-              'method' => $method,
               'slug' => $row['slug'],
               'category' => $data['category'],
               'sub_category' => $data['sub_category'],
@@ -231,7 +237,10 @@ class GenerateSitePagesController extends Controller
               'post_parameter' => $post_parameter,
               'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
               'counter' => 0,
-              'status' => 1,
+              'is_get' => $is_get,
+              'is_post' => $is_post,
+              'is_ajax' => $is_ajax,
+              'status' => 1
             ];
           }
         } else {
@@ -241,7 +250,7 @@ class GenerateSitePagesController extends Controller
       }
 
       if (count($temp_insert_data)) {
-        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'method', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status'], $temp_insert_data)->execute();
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
       }
     }
   }
@@ -364,6 +373,7 @@ class GenerateSitePagesController extends Controller
             $method = $get_parameter = $post_parameter = '';
 
             $s_request = FrontendRequestLog::find()->where(['request_url' => $url])->orderBy('id DESC')->asArray()->one();
+
             if ($s_request) {
               $method = $s_request['request_type'];
               $get_parameter = $s_request['request_parameter'];
@@ -372,7 +382,7 @@ class GenerateSitePagesController extends Controller
 
             $model = SitePages::find()->where(['content_table' => 'safari_operator'])->andWhere(['url' => $url])->one();
             if ($model) {
-              $model->method = $method;
+              //$model->method = $method;
               $model->get_parameter  = $get_parameter;
               $model->post_parameter  = $post_parameter;
               $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
@@ -415,18 +425,17 @@ class GenerateSitePagesController extends Controller
   protected function get_static_pages()
   {
     $pages = [
+      'article',
+      'park',
+      'shared-safari',
+      'safari-packages',
+      'sharedsafari',
+      'operator',
+      'plan-safari',
       'safaritour-registration',
       'birdingtour-registration',
       'termsandcondition',
-      'operator',
-      'plan-safari',
       'contact',
-      'article',
-      'parklist',
-      'shared-safari',
-      'safari-packages',
-      'parklist',
-      'sharedsafari',
       '/',
       'account',
     ];
@@ -434,39 +443,91 @@ class GenerateSitePagesController extends Controller
     foreach ($pages as $page) {
       $url = $page;
 
-      $method = $get_parameter = $post_parameter = '';
-      $s_request = FrontendRequestLog::find()->where(['request_url' => $url])->orderBy('id DESC')->asArray()->one();
-      if ($s_request) {
-        $method = $s_request['request_type'];
-        $get_parameter = $s_request['request_parameter'];
-        $post_parameter = $s_request['request_data'];
-      }
+      $s_request = $this->getrequestinfo($url);
+      $get_parameter = $s_request['get_parameter'];
+      $post_parameter = $s_request['post_parameter'];
+      $is_get = $s_request['is_get'];
+      $is_post = $s_request['is_post'];
+      $is_ajax = $s_request['is_ajax'];
 
-      $model = SitePages::find()->where(['content_table' => 'content_management'])->andWhere(['url' => $url])->one();
+      $model = SitePages::find()->where(['content_table' => 'cms'])->andWhere(['url' => $url])->one();
+
       if ($model) {
-        $model->method = $method;
-        $model->get_parameter  = $get_parameter;
+        $model->get_parameter  = $s_request['get_parameter'];
         $model->post_parameter  = $post_parameter;
         $model->last_update_at = date('Y-m-d H:i:s');
         $model->status = 1;
         $model->save(false);
       } else {
+        $category = 'CMS';
+        $sub_category = 'Pages';
+        if ($page == 'operator') {
+          $category = 'Operator';
+          $sub_category = 'Operator';
+        } else if ($page == 'article') {
+          $category = 'Article';
+          $sub_category = 'Article';
+        } else if ($page == 'park') {
+          $category = 'Park';
+          $sub_category = 'Park';
+        } else if ($page == 'shared-safari') {
+          $category = 'Shared Safari';
+          $sub_category = 'Shared Safari';
+        } else if ($page == 'safari-packages') {
+          $category = 'Package';
+          $sub_category = 'Package';
+        } else if ($page == 'sharedsafari') {
+          $category = 'Shared Safari';
+          $sub_category = 'Shared Safari';
+        }
+
         //insert new record
         $model = new SitePages();
         $model->content_id = 0;
         $model->content_table = 'content_management';
         $model->url = $url;
         $model->url_type = 'Primary';
-        $model->method = $method;
-        $model->category = 'CMS';
-        $model->sub_category = 'Pages';
-        $model->get_parameter  = $get_parameter;
-        $model->post_parameter  = $post_parameter;
+        $model->category = $category;
+        $model->sub_category = $sub_category;
+        $model->get_parameter  = $s_request['get_parameter'];
+        $model->post_parameter  = $s_request['post_parameter'];
+        $model->is_get = $is_get;
+        $model->is_post = $is_post;
+        $model->is_ajax = $is_ajax;
         $model->last_update_at = date('Y-m-d H:i:s');
         $model->counter = 0;
         $model->status = 1;
         $model->save(false);
       }
     }
+  }
+
+  protected function getrequestinfo($url)
+  {
+    $return = [
+      'is_get' => 1,
+      'get_parameter' => '[]',
+      'post_parameter' => '[]',
+      'is_ajax' => 0,
+      'is_get' => 0,
+      'is_post' => 0
+    ];
+
+    $full = Yii::$app->params['frontend_url'] . $url;
+    $s_request = FrontendRequestLog::find()->where(['request_full_url' => $full])->andWhere(['request_code' => 200])->orderBy('id DESC')->asArray()->one();
+    if (!empty($s_request)) {
+      $return['get_parameter'] = $s_request['request_parameter'];
+      $return['post_parameter'] = $s_request['request_data'];
+      if ($s_request['request_type'] == 'GET') {
+        $return['is_get'] = 1;
+      }
+
+      if ($s_request['request_type'] == 'POST') {
+        $return['is_post'] = 1;
+      }
+      $return['is_ajax'] = $s_request['isAjax'];
+    }
+
+    return $return;
   }
 }
