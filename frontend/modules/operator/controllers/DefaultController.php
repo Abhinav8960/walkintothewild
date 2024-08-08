@@ -259,7 +259,7 @@ class DefaultController extends FrontendBaseController
                     Yii::$app->session->setFlash('error', 'You can not follow this operator currently!');
                 }
             } else {
-                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/operator/default/follow', 'id' => $operator->id])]);
+                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute(['/operator/default/follow', 'id' => $operator->id])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
         }
@@ -304,7 +304,7 @@ class DefaultController extends FrontendBaseController
                     }
                 }
             } else {
-                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/operator/default/unfollow', 'id' => $operator->id])]);
+                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute(['/operator/default/unfollow', 'id' => $operator->id])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
         }
