@@ -103,7 +103,7 @@ use yii\helpers\Url;
         if (Yii::$app->user->id) { ?>
             <?= $this->render('_comment_form', ['model' => $model]) ?>
     <?php } else {
-            echo 'Please <a href="/site/auth?authclient=google" class="sign_intext">Sign in</a> for start Comment';
+            echo 'Please <a href="/site/login?authclient=google&referrer=/package/' . $package->package_slug . '" class="sign_intext">Sign in</a> for start Comment';
         }
     } ?>
 
