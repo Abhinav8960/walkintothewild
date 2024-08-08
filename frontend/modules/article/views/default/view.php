@@ -60,7 +60,7 @@ if ($article->meta_title != '') {
     </div>
 </section>
 
-<section class="articals_wrapper py-3">
+<section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-lg">
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-5 py-3">
@@ -156,9 +156,7 @@ if ($article->meta_title != '') {
     </div>
     </div>
 </section>
-<section class="safariduring_sesons margin_bottomfooter mb-5 paddiinTop_add">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
+
 
 
 

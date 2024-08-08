@@ -760,6 +760,11 @@ a {
     border-radius: 10px;
     color: var(--colorwhite);
 }
+.btn_newsafari.departureBtn.newbg{
+    background-color: var(--background-primary);
+    border-radius: 10px;
+    color: var(--colorwhite);
+}
 
 .icons {
 
@@ -1421,10 +1426,13 @@ figure {
 .artical_cards .lower-content h3 {
     position: relative;
     display: block;
-    font-size: var(--fs-20);
+    font-size: var(--fs-25);
     padding-top: 10px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     margin-bottom: 10px;
+    font-family: "Roboto", sans-serif !important;
+    line-height: 32px;
+    font-weight: 700;
 }
 
 .artical_cards .lower-content h3 a {
@@ -1791,7 +1799,10 @@ figure {
 
 .articald-title {
 
-    font-size: var(--fs-25);
+    font-size: var(--fs-30);
+    font-family: "Roboto", sans-serif !important;
+    font-weight: 700;
+    line-height: 40px;
 }
 
 .aritcla-details p {
@@ -1799,10 +1810,7 @@ figure {
     font-size: var(--fs-16);
 }
 
-.aritcla-details h1 {
 
-    font-size: 28px;
-}
 
 .aritcla-details h2,
 .aritcla-details h3,

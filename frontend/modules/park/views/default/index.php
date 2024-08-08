@@ -93,15 +93,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="right-select mb-md-0 mb-4">
                         <div class="input_check pb-0">
 
-                            <form id="custom_sort_by_form">
-                                <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
+                            <?php if ($device == 'desktop') { ?>
+                                <form id="custom_sort_by_form">
+                                    <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
 
-                                    <option value="" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Most Demanding</option>
-                                    <option value="2" <?= $searchModel->custom_sort_by == '2' ? 'selected' : '' ?>>Sort by: A to Z</option>
-                                    <option value="3" <?= $searchModel->custom_sort_by == '3' ? 'selected' : '' ?>>Sort by: Z to A</option>
+                                        <option value="" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Most Demanding</option>
+                                        <option value="2" <?= $searchModel->custom_sort_by == '2' ? 'selected' : '' ?>>Sort by: A to Z</option>
+                                        <option value="3" <?= $searchModel->custom_sort_by == '3' ? 'selected' : '' ?>>Sort by: Z to A</option>
 
-                                </select>
-                            </form>
+                                    </select>
+                                </form>
+                            <?php } ?>
                         </div>
 
                     </div>

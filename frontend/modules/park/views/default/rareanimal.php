@@ -52,8 +52,8 @@ Pjax::begin([
         </div>
     </div>
 </section>
-<section class="articals_wrapper mt-md-4 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
-    <div class="container-fluid">
+<section class="articals_wrapper  margin_bottomfooter mt-lg-4 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
+    <div class="container-fluid ">
         <!-- <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
                 <div class="advertisment ">
@@ -89,7 +89,7 @@ Pjax::begin([
 
                     </div>
                 </div>
-                <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
+                <div class="top_mobilefilter mb-4 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                     <div class="left_text">
                         <p class="mb-0">We found <strong><?= count($models) ?> parks</strong> for you</p>
                     </div>
@@ -154,7 +154,7 @@ Pjax::begin([
             </div>
         </div>
     </div>
-    </div>
+  
 </section>
 <?php ActiveForm::end(); ?>
 <script>
@@ -178,7 +178,3 @@ Pjax::begin([
 <?php Pjax::end(); ?>
 
 
-
-<section class="safariduring_sesons innerpage mb-5 margin_bottomfooter paddiinTop_add">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>

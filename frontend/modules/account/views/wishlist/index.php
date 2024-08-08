@@ -33,61 +33,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 }
                                         ?>
                                                 <div class="col-md-4 mb-4 padding_righ pt-4">
-                                                    <div class="sharesafri-card tourpackage">
-                                                        <div class="flotingdate">
-                                                            <div class="icons text-center">
-                                                                <p class="mb-0"><?= isset($package_model->no_of_day) ? $package_model->packagedaynightlabels : " " ?> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="floating-watchlist">
-                                                            <div class="heart_bx">
-                                                                <a href="/package/unwishlist/<?= $package_model->package_slug ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
-                                                            </div>
-                                                        </div>
-                                                        <div class="shareimg">
-                                                            <a href="/package/<?= $package_model->package_slug ?>">
-                                                                <img src="<?= isset($package_model->package_image) ? $package_model->imagepath : $this->params['baseurl'] . '/img/blog_details01.jpg' ?>" alt=""></a>
-                                                        </div>
-                                                        <div class="card_body">
-                                                            <div class="titleDate">
-                                                                <h6 class="pt-1"><a href=""><?= $package_model->package_name ?> </a></h6>
-                                                                <div class="orgnizer_tour d-flex justify-content-between pt-2">
-                                                                    <div class="icons_restro">
-                                                                        <i class="fa-solid fa-car-side"></i>
-                                                                        <p class="mb-0"><?= $package_model->no_of_safari ?>Safaris</p>
-                                                                    </div>
-                                                                    <div class="icons_restro">
-                                                                        <i class="fa-solid fa-car"></i>
-                                                                        <p class="mb-0"><?= $package_model->pickanddrop ?></p>
-                                                                    </div>
-                                                                    <div class="icons_restro">
-                                                                        <i class="fa-solid fa-utensils"></i>
-                                                                        <p class="mb-0"><?= $package_model->meals ?></p>
-                                                                    </div>
-                                                                    <div class="icons_restro">
-
-                                                                        <i class="fa-solid fa-building"></i>
-                                                                        <p class="mb-0"><?= isset($package_model->packagerange) ? $package_model->packagerange->title : "" ?></p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="footer_card row pb-2 px-2 align-items-center">
-                                                                <div class="col-6">
-                                                                    <div class="safaritourlogo">
-                                                                        <img src="<?= isset($package_model->safarioperator) ? $package_model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6">
-                                                                    <div class="safari text-center">
-                                                                        <div class="joinsafari package">
-                                                                            <h6 class=" titlePrice"><?= $package_model->total_price ?> </h6>
-                                                                            <a href="/package/<?= $package_model->package_slug ?>">View Details</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <?= $this->render('@frontend/modules/package/views/default/_package_card', ['model' => $package_model]) ?>
                                                 </div>
                                         <?php }
                                         } else {
