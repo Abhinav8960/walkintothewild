@@ -68,7 +68,7 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
 
-                        <div class="card  mb-5 card_bodyPadding">
+                        <div class="card  mb-4 card_bodyPadding">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12">

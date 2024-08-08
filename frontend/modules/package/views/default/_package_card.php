@@ -59,12 +59,12 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="footer_card row pb-2 px-2 align-items-center">
-            <div class="col-7">
+            <div class="col-6 col-lg-7 col-md-7">
                 <div class="safaritourlogo">
                     <img src="<?= isset($model->safarioperator->imagepath) ? $model->safarioperator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="" class="w-100">
                 </div>
             </div>
-            <div class="col-5">
+            <div class="col-6 col-md-5 col-lg-5">
                 <div class="safari text-center">
                     <div class="joinsafari package">
                         <h6 class=" titlePrice">₹<?= number_format($model->total_price) ?> </h6>

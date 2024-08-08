@@ -20,7 +20,7 @@ $this->params['title'] = $this->title;
             <div class="col-xxl-11 mb-5">
                 <div class="row  mb-5">
                     <div class="col-md-12">
-                        <h6 class="fs-5 fw-bold">Following</h6>
+                        <h6 class="fs-5 fw-bold pb-3">Following</h6>
                     </div>
                     <div class="col-12">
                         <div class="card">

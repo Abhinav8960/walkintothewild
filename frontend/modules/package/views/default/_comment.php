@@ -24,11 +24,15 @@ use yii\helpers\Url;
                         </div>
                         <div class="postcomment d-flex gap-2 pt-3 w-100">
                             <div class="avatar">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+                                </a>
                             </div>
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center">
-                                    <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?></h6>
+                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
+                                        <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?></h6>
+                                    </a>
                                 </div>
                                 <p><?= $comments->comment ?></p>
                                 <?php if (Yii::$app->user->id) {  ?>
@@ -45,10 +49,12 @@ use yii\helpers\Url;
                                         <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
                                             <div class="d-flex gap-2">
                                                 <div class="avatar">
-                                                    <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>">
+                                                        <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                                    </a>
                                                 </div>
                                                 <div class="font-color">
-                                                    <span class="comment-author"><a href=""><?= isset($reply->user) ? $reply->user->name : '' ?></a></span>
+                                                    <span class="comment-author"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>"><?= isset($reply->user) ? $reply->user->name : '' ?></a></span>
                                                     <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>
