@@ -32,7 +32,7 @@ $this->params['title'] = $this->title;
                                         foreach ($userfollowers as $userfollower) { ?>
                                             <div class="col-md-4 col-lg-3 col-sm-6">
                                                 <section class="mx-auto" style="max-width: 23rem;">
-                                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
+                                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user, 'profile_user' => $user]);  ?>
                                                 </section>
                                             </div>
                                     <?php  }

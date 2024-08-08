@@ -34,7 +34,7 @@ class BirdingtourRegistrationController extends FrontendBaseController
                 Yii::$app->end();
             }
         }
-        
+
         $model = new BirdingtourRegistrationForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->action_url = '/birdingtour-registration';
