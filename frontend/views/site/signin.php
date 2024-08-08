@@ -68,12 +68,22 @@ $this->params['title'] = $this->title;
               <div class="contenss pt-3">
                 <p>By login an account, I accept the WalkIntoTheWild <a href="/termsandcondition" target="_blank">Terms of Service</a> and acknowledge the Privacy Policy.</p>
               </div>
-
-              <div class="btnssss-g">
-                <?= \yii\authclient\widgets\AuthChoice::widget([
-                  'baseAuthUrl' => ['site/auth'],
-                  'popupMode' => false,
-                ]), 'Continue with Google' ?>
+              <div class="btnssss-g"><?php
+                                      if (!empty($_REQUEST['referrer'])) { ?>
+                  <?= \yii\authclient\widgets\AuthChoice::widget(
+                                          [
+                                            'baseAuthUrl' => ['site/auth', 'referrer' => $_REQUEST['referrer']],
+                                            'popupMode' => false,
+                                          ]
+                                        ), 'Continue with Google' ?><?php
+                                                                  } else {  ?>
+                  <?= \yii\authclient\widgets\AuthChoice::widget(
+                                                                      [
+                                                                        'baseAuthUrl' => ['site/auth'],
+                                                                        'popupMode' => false,
+                                                                      ]
+                                                                    ), 'Continue with Google' ?><?php
+                                                                                              } ?>
               </div>
             </div>
             <!-- <div class="btnssss-g">

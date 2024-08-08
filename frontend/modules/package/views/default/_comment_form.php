@@ -2,6 +2,7 @@
 
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 
@@ -9,7 +10,9 @@ use yii\helpers\Html;
 <div class="comments-persons pe-0 pt-4">
     <div class="postcomment d-flex gap-3">
         <div class="avatar">
-            <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity && Yii::$app->user->identity->user_handle <> '' ? Yii::$app->user->identity->user_handle : '']) ?>">
+                <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+            </a>
         </div>
         <div class="text-area">
             <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>

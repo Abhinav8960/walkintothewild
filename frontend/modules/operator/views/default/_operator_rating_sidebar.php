@@ -2,6 +2,7 @@
 
 use common\models\operator\SafariOperatorRating;
 use common\models\operator\SafariOperatorRatingSearch;
+use yii\helpers\Url;
 
 $ratingsearchModel = new SafariOperatorRatingSearch();
 $ratingsearchModel->safari_operator_id = $operator->id;
@@ -30,7 +31,12 @@ $reviews = $ratingdataProvider->getModels();
                                 <div class="text_com colors_p">
                                     <div class="providerNamerating ">
                                         <div class="googlerating names">
-                                            <h6 class="mb-0 fs-6 pb-0"><?= isset($review->user) ? $review->user->name : '' ?></h6>
+                                            <?php if ($review->user) { ?>
+                                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
+                                                    <h6 class="mb-0 fs-6 pb-0"><?= $review->user->name ?></h6>
+                                                </a>
+                                            <?php } ?>
+
                                         </div>
                                         <div class="ratings colors">
                                             <p class="mb-0">
