@@ -922,18 +922,19 @@ a {
 
 }
 
-.users img:nth-child(1) {
+.users a:nth-child(1) {
 
     z-index: 0;
 }
 
-.users img:nth-child(2) {
+
+.users a:nth-child(2) {
 
     margin-left: -15px;
     z-index: 1;
 }
 
-.users img:nth-child(3) {
+.users a:nth-child(3) {
 
     margin-left: -15px;
     z-index: 1;
