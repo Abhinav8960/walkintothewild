@@ -26,9 +26,10 @@ $this->params['title'] = $this->title;
                     </div>
                     <div class="card">
                         <div class="card-body">
-                        <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
+                            <div class="row">
+                            <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
                         foreach ($userfollowers as $userfollower) { ?>
-                            <div class="col-md-3">
+                            <div class="col-md-4 col-lg-3 col-sm-6">
                                 <section class="mx-auto" style="max-width: 23rem;">
                                     <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
                                 </section>
@@ -39,6 +40,8 @@ $this->params['title'] = $this->title;
                     There is no follower!
                 </div>';
                     } ?>
+                            </div>
+               
                         </div>
                     </div>
                 
@@ -48,3 +51,34 @@ $this->params['title'] = $this->title;
 
     </div>
 </section>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dots = document.querySelectorAll('.dots-blockbox');
+
+        dots.forEach(dot => {
+            const icon = dot.querySelector('.fa-ellipsis');
+            const box = dot.querySelector('.box_dropdown');
+
+            icon.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const currentlyOpen = document.querySelector('.box_dropdown.show');
+                if (currentlyOpen && currentlyOpen !== box) {
+                    currentlyOpen.classList.remove('show');
+                    currentlyOpen.style.display = 'none';
+                }
+                box.style.display = box.style.display === 'none' || !box.style.display ? 'block' : 'none';
+                box.classList.toggle('show');
+            });
+        });
+
+        document.addEventListener('click', function() {
+            const openBox = document.querySelector('.box_dropdown.show');
+            if (openBox) {
+                openBox.style.display = 'none';
+                openBox.classList.remove('show');
+            }
+        });
+    });
+</script>

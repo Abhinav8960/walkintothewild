@@ -51,3 +51,33 @@ $this->params['title'] = $this->title;
 
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dots = document.querySelectorAll('.dots-blockbox');
+
+        dots.forEach(dot => {
+            const icon = dot.querySelector('.fa-ellipsis');
+            const box = dot.querySelector('.box_dropdown');
+
+            icon.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const currentlyOpen = document.querySelector('.box_dropdown.show');
+                if (currentlyOpen && currentlyOpen !== box) {
+                    currentlyOpen.classList.remove('show');
+                    currentlyOpen.style.display = 'none';
+                }
+                box.style.display = box.style.display === 'none' || !box.style.display ? 'block' : 'none';
+                box.classList.toggle('show');
+            });
+        });
+
+        document.addEventListener('click', function() {
+            const openBox = document.querySelector('.box_dropdown.show');
+            if (openBox) {
+                openBox.style.display = 'none';
+                openBox.classList.remove('show');
+            }
+        });
+    });
+</script>
