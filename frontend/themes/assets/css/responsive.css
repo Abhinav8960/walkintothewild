@@ -1044,6 +1044,12 @@
     height: 400px;
   } */
 }
+@media only screen and (max-width: 850px) and (min-width: 768px){
+
+  .margin_n5 {
+    margin-top: 23px;
+}
+}
 @media only screen and (max-width: 1399px) and (min-width: 768px) {
   .safartabs .nav-tabs .nav-link {
     padding: 7px 20px;
@@ -1088,6 +1094,7 @@
      border: 0 !important;
 
   }
+
 
   .mobileAccordion.itenary_tabs  .tab-pane{
 
