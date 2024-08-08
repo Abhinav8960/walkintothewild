@@ -150,10 +150,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                         </p>
                                                                     </div>
 
-                                                                    <div class="googlerating">
-                                                                        <p class="mb-0"> <?= isset($review->user) ?  $review->user->name : ''  ?></p>
-
-                                                                    </div>
+                                                                    <?php if ($review->user) { ?>
+                                                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
+                                                                            <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                        </a>
+                                                                    <?php } ?>
                                                                 </div>
                                                                 <p><?= $review->review ?> &nbsp;
                                                                     <?php if (Yii::$app->user->id == $review->user_id) { ?>
