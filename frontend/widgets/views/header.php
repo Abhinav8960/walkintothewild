@@ -72,7 +72,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								<ul>
 									<?php if (!Yii::$app->user->identity) { ?>
 										<li>
-											<a href="/site/auth?authclient=google"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+											<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 										</li>
 									<?php } else { ?>
 										<?php
