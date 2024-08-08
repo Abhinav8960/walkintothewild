@@ -74,7 +74,7 @@ $recentposts = ArticleSearch::recentpost();
                                     Safari</a>
                             <?php } ?>
                             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
-                                <button class="btn_newsafari organizeBtn  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                <button class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
                             <?php } ?>
                         </div>
                     </div>
