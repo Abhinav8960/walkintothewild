@@ -70,7 +70,7 @@ class SiteController extends FrontendBaseController
      */
     public function beforeAction($action)
     {
-        if ($action->id == 'auth') {
+        if ($action->id == 'auth' || $action->id == 'login') {
             $referrer = Yii::$app->request->referrer;
             if (isset($this->request->queryParams['referrer'])) {
                 $referrer = $this->request->queryParams['referrer'];

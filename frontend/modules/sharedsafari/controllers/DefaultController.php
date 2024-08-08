@@ -278,7 +278,7 @@ class DefaultController extends FrontendBaseController
                     Yii::$app->session->setFlash('error', 'You can not Join this Shared Safari currently!');
                 }
             } else {
-                return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug])]);
+                return $this->redirect(['/site/login?referrer=' . Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug])]);
             }
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
         }
