@@ -1790,6 +1790,10 @@ display: none;
 }
 
 @media only screen and (max-width: 576px) {
+  .profile_coverbnner .follow_massge{
+
+    padding: 8px 11px !important;
+  }
   .articald-title{
 
     font-size: 22px;

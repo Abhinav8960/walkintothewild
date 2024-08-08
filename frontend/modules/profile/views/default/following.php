@@ -28,7 +28,7 @@ $this->params['title'] = $this->title;
                                 <div class="row">
                                     <?php if ($userfollowers = $user->getUserfollowings()->where(['status' => 1])->all()) {
                                         foreach ($userfollowers as $userfollower) { ?>
-                                            <div class="col-md-4 col-lg-3 col-sm-6">
+                                            <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
 
                                                 <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->follower, 'profile_user' => $user]);  ?>
 
