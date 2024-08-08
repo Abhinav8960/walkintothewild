@@ -46,7 +46,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
     </div>
 </section>
 
-<section class="articals_wrapper py-3">
+<section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-7 mb-4">
@@ -123,7 +123,4 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
         </div>
     </div>
     </div>
-</section>
-<section class="safariduring_sesons innerpage margin_bottomfooter mb-5">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>

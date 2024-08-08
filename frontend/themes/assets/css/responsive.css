@@ -1411,6 +1411,9 @@ padding:0.5rem  1rem!important;
 }
 
 @media only screen and (max-width: 767px) {
+  .topSlider_tour .owl-dots {
+    position: absolute;
+    bottom: -7px;}
   .flowers-content{
 
     justify-content: center;
@@ -1775,6 +1778,22 @@ display: none;
 }
 
 @media only screen and (max-width: 576px) {
+  .articald-title{
+
+    font-size: 22px;
+    line-height: 30px;
+  }
+  .mobile_searchBox .select_boxes .fs-5{
+
+    font-size: 12px !important;
+  }
+  .mobile_searchBox .select_boxes .icomns i{
+    font-size: 12px;
+  }
+  .mobile_searchBox .select_boxes + i{
+
+    font-size: 12px !important;
+  }
   .profile_coverbnner .banner-cover{
 
     height: 200px;
