@@ -11,7 +11,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
-<div class="container-lg mt-5 pt-5">
+<div class="container-lg mt-5 pt-5" style="min-height: 600px;">
     <div class="row margin_bottomfooter">
         <div class="col-md-12  ">
             <h6 class="fs-3 fw-bold mb-4">Wishlist</h6>
