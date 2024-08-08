@@ -17,34 +17,37 @@ $this->params['title'] = $this->title;
 </section>
 
 <section class="margin_bottomfooter">
-    <div class="container">
+    <div class="container-lg">
         <div class="row justify-content-center mb-5">
             <div class="col-xxl-11 mb-5">
                 <div class="row mb-5">
                     <div class="col-md-12">
-                        <h6 class="fs-5 fw-bold">Followers</h5>
+                        <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                            <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
-                        foreach ($userfollowers as $userfollower) { ?>
-                            <div class="col-md-4 col-lg-3 col-sm-6">
-                                <section class="mx-auto" style="max-width: 23rem;">
-                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
-                                </section>
-                            </div>
-                    <?php  }
-                    } else {
-                        echo '<div class="col-md-12">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
+                                        foreach ($userfollowers as $userfollower) { ?>
+                                            <div class="col-md-4 col-lg-3 col-sm-6">
+                                                <section class="mx-auto" style="max-width: 23rem;">
+                                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
+                                                </section>
+                                            </div>
+                                    <?php  }
+                                    } else {
+                                        echo '<div class="col-md-12">
                     There is no follower!
                 </div>';
-                    } ?>
+                                    } ?>
+                                </div>
+
                             </div>
-               
                         </div>
                     </div>
-                
+
+
                 </div>
             </div>
         </div>

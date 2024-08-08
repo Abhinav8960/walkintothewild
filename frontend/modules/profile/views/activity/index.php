@@ -16,14 +16,14 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 <section>
-<div class="container ">
+<div class="container-lg ">
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
         <div class="row justify-content-center ">
             <div class="col-xxl-11 margin_bottomfooter">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="card card_bodyPadding">
+                    <div class="card mb-4 card_bodyPadding">
                         <div class="card-body">
                             No Activity Found!
                         </div>
