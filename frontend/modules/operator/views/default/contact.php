@@ -58,18 +58,18 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <?= $this->render('_view_navbar', ['active' => 'contact', 'operator' => $operator]) ?>
     </div>
 </section>
-<section class="touroprator_section ">
+<section class="touroprator_section margin_bottomfooter">
     <div class="container-fluid" id="viewcontent">
         <div class="row justify-content-center">
-            <div class="col-xl-9 col-lg-12">
+            <div class="col-xl-10 col-xxl-9 col-lg-12">
                 <div class="row pt-5">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-xxl-8 col-lg-8">
+                                <div class="col-xxl-8 col-lg-8 ">
 
                                     <?php if (Yii::$app->user->identity) { ?>
-                                        <div class="card card_bodyPadding">
+                                        <div class="card mb-4 card_bodyPadding">
                                             <div class="card-body">
                                                 <?php if ($operator->register_comapany_name <> '' || $operator->address <> '') { ?>
                                                     <h6 class="fs-6 fw-bold">Address</h6>
@@ -163,7 +163,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <?php } ?>
                                 </div>
                                 <div class="col-xxl-4 col-lg-4">
-
                                     <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
 
                                     <?= $this->render('_shared_safari_sidebar', ['operator' => $operator]) ?>
@@ -177,9 +176,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 </section>
 
 
-<section class="safariduring_sesons innerpage">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
+
 
 <div class="modal fade _standard-text order--modal" id="review-write-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
