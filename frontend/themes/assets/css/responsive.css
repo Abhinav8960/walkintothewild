@@ -2187,6 +2187,44 @@ margin: 0;
   .inner_animals > img {
     height: 270px;
   }
+  .header_wrapper .container-fluid{
+
+flex-wrap: nowrap;
+  }
+  .logo {
+    width: 136px;
+}
+.initial_headers{
+
+  gap: 14px !important;
+}
+.coverbtns{
+
+  right: 16px;
+}
+.itenary_tabs .safartabs .nav-tabs.slider_addmobile{
+
+  gap: 13px !important;
+}
+.itenary_tabs .nav-tabs .nav-link{
+
+  font-size: 12px !important;
+}
+.left_text p{
+  font-size: 12px;
+}
+.btn-info.bg-blues{
+
+  padding: 4px 17px;
+  font-size: 12px;
+}
+.packageSfari .imagesSafari img {
+  height: 150px !important;
+  max-height: 150px !important;
+}
+.card_bodyPadding .card-body {
+  padding: 24px 18px 15px 18px !important;
+}
 }
 @media (max-width: 305px) {
   .footer_object img {
