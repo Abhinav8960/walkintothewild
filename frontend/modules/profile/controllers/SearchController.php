@@ -31,15 +31,9 @@ class SearchController extends FrontendBaseController
         $blocked_model = BlockedModel::find()->where(['blocked_user_id' => $id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
         if ($blocked_model) {
             $blocked_model->status = 2;
-            if ($blocked_model->save()) {
-                $follow_model = UserFollow::find()->where(['follow_user_id' => $id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
-                if ($follow_model) {
-                    $follow_model->status = 1;
-                    if ($follow_model->save()) {
-                        Yii::$app->session->setFlash('success', "Unblocked Successfully!!");
-                        return $this->redirect(Yii::$app->request->referrer);
-                    };
-                }
+            if ($blocked_model->save(false)) {
+                Yii::$app->session->setFlash('success', "Unblocked Successfully!!");
+                return $this->redirect(Yii::$app->request->referrer);
             }
             return $this->redirect(Yii::$app->request->referrer);
         }
@@ -53,34 +47,33 @@ class SearchController extends FrontendBaseController
             Yii::$app->session->setFlash('error', "You can't Block yourself!");
             return $this->redirect(Yii::$app->request->referrer);
         }
-        $blocked_user = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
-        if ($blocked_user) {
-            $blocked_user->status = 2;
-            if ($blocked_user->save()) {
-                $model = BlockedModel::find()->where(['user_id' => Yii::$app->user->identity->id, 'blocked_user_id' => $user->id])->limit(1)->one();
-                if (!$model) {
-                    $model = new BlockedModel();
-                }
-                $model->user_id = $blocked_user->user_id;
-                $model->blocked_user_id = $blocked_user->follow_user_id;
-                $model->status = 1;
-                if ($model->save()) {
-                    Yii::$app->session->setFlash('success', "Blocked Successfully!!");
-                    return $this->redirect(Yii::$app->request->referrer);
-                }
-            };
-        } else {
-            $model = BlockedModel::find()->where(['user_id' => Yii::$app->user->identity->id, 'blocked_user_id' => $user->id])->limit(1)->one();
-            if (!$model) {
-                $model = new BlockedModel();
-            }
-            $model->user_id = Yii::$app->user->identity->id;
-            $model->blocked_user_id = $user->id;
-            $model->status = 1;
-            if ($model->save()) {
-                Yii::$app->session->setFlash('success', "Blocked Successfully!!");
-                return $this->redirect(Yii::$app->request->referrer);
-            }
+
+        // Follower
+        $follow_user = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+        if ($follow_user) {
+            $follow_user->status = 2;
+            $follow_user->save(false);
+        }
+
+        // My Following
+        $following_user = UserFollow::find()->where(['user_id' => $user->id, 'follow_user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+        if ($following_user) {
+            $following_user->status = 2;
+            $following_user->save(false);
+        }
+
+
+
+        $model = BlockedModel::find()->where(['user_id' => Yii::$app->user->identity->id, 'blocked_user_id' => $user->id])->limit(1)->one();
+        if (!$model) {
+            $model = new BlockedModel();
+        }
+        $model->user_id = Yii::$app->user->identity->id;
+        $model->blocked_user_id = $user->id;
+        $model->status = 1;
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', "Blocked Successfully!!");
+            return $this->redirect(Yii::$app->request->referrer);
         }
     }
 }

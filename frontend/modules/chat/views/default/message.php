@@ -54,7 +54,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
                                             <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
                                                 <div class="d-flex chat-user_message">
-                                                    <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
+                                                    <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon">
                                                     <div class="chat-user_name">
                                                         <h6><?= $user->name ?></h6>
                                                         <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
@@ -83,7 +83,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                         <div class="card-body">
                             <div class="d-flex chat-message-header justify-content-between">
                                 <div class="chat-profile">
-                                    <img src="<?= $individual_user->avatar <> '' ? $individual_user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon">
+                                    <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon">
                                     <?= $individual_user->name ?>
                                 </div>
                                 <div class="chat-action-in-right">

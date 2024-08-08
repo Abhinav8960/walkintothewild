@@ -56,19 +56,20 @@ class DefaultController extends FrontendBaseController
         );
     }
 
-    public function actionFollow($id)
+    public function actionFollow($user_handle)
     {
+        $user = $this->findUserbyHandle($user_handle);
         if (Yii::$app->user->identity) {
-            if (Yii::$app->user->identity->id == $id) {
+            if (Yii::$app->user->identity->id == $user->id) {
                 Yii::$app->session->setFlash('error', "You can't follow yourself!");
                 return $this->redirect(Yii::$app->request->referrer);
             }
-            $follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $id])->one();
+            $follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id])->one();
             if (!$follower) {
                 $follower = new UserFollow();
             }
             $follower->user_id = Yii::$app->user->identity->id;
-            $follower->follow_user_id = $id;
+            $follower->follow_user_id = $user->id;
             $follower->status = 1;
             $follower->save(false);
             Yii::$app->session->setFlash('success', "Follow Successfully!!");
@@ -77,14 +78,15 @@ class DefaultController extends FrontendBaseController
         return $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionUnfollow($id)
+    public function actionUnfollow($user_handle)
     {
+        $user = $this->findUserbyHandle($user_handle);
         if (Yii::$app->user->identity) {
-            $follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $id])->one();
-            $follower->user_id = Yii::$app->user->identity->id;
-            $follower->follow_user_id = $id;
-            $follower->status = 0;
-            $follower->save(false);
+            $my_follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id])->one();
+            $my_follower->user_id = Yii::$app->user->identity->id;
+            $my_follower->follow_user_id = $user->id;
+            $my_follower->status = 0;
+            $my_follower->save(false);
             Yii::$app->session->setFlash('success', "Unfollow Successfully!!");
             return $this->redirect(Yii::$app->request->referrer);
         }

@@ -32,7 +32,7 @@ $this->title = 'Account Settings';
                                     <tbody>
                                         <td><?= isset($blocked_user->user) ? $blocked_user->user->name : "" ?></td>
                                         <td><?= date('Y-m-d', $blocked_user->created_at) ?></td>
-                                        <td><a class="btn_newsafari btn-sm" href="<?= Url::toRoute(['/profile/search/unblocked', 'id' => $blocked_user->blocked_user_id]) ?>">Unblocked</a></td>
+                                        <td><a class="btn_newsafari btn-sm" href="<?= Url::toRoute(['/profile/search/unblocked', 'id' => $blocked_user->blocked_user_id]) ?>">Unblock</a></td>
                                     </tbody>
 
 
