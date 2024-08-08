@@ -32,11 +32,11 @@ $this->params['title'] = $this->title;
 
                                         </div>
 
-                                        <div class="row gx-5">
+                                        <div class="row gx-xxl-5">
                                             <?php if ($dataProvider->models) {
                                                 foreach ($dataProvider->models as $share_safari) {
                                             ?>
-                                                    <div class="col-md-6 col-lg-4 mb-4">
+                                                    <div class="col-md-6 col-sm-6 col-lg-4 mb-4">
                                                         <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                     </div>
                                             <?php }
@@ -50,7 +50,7 @@ $this->params['title'] = $this->title;
                                                     if ($share_safari = $shared_safari->sharesafari) {
 
                                             ?>
-                                                        <div class="col-md-6 col-lg-4 mb-4">
+                                                        <div class="col-md-6 col-sm-6 col-lg-4 mb-4">
                                                             <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                                         </div>
                                             <?php }

@@ -10,20 +10,20 @@ $this->title = $user->name . ' | Contribution';
 $this->params['title'] = $this->title;
 ?>
 <section class="profile-wrapper">
-    <div class="container mb-5">
+    <div class="container-lg mb-5">
         <?= $this->render('@frontend/modules/profile/views/default/tablist', ['contribution' => 'active', 'user' => $user]) ?>
 
     </div>
 </section>
 
 <section>
-    <div class="container ">
+    <div class="container-lg ">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
                 <div class="row justify-content-center mb-5">
                     <div class="col-xxl-11 margin_bottomfooter">
                         <div class="row">
-                            <div class="col-lg-8">
+                            <div class="col-xl-8">
                                 <div class="card  mb-4 card_bodyPadding">
                                     <div class="card-body">
                                         <div class="row">
@@ -55,7 +55,7 @@ $this->params['title'] = $this->title;
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-xl-4">
                                 <?= $this->render('@frontend/modules/profile/views/default/_following_card', ['user' => $user]) ?>
 
                                 <?= $this->render('@frontend/modules/profile/views/default/_instagram', ['user' => $user]) ?>

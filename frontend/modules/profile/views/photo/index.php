@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
 
 
 <section>
-    <div class="container ">
+    <div class="container-lg ">
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
                 <div class="row justify-content-center ">
@@ -71,7 +71,7 @@ $this->params['title'] = $this->title;
                                                 ?>
                                                         <div class="col-md-4 gap-2  mb-2">
                                                             <div class=" parksImgireview h-100 position-relative">
-                                                                <img src="<?= isset($share_safari->sharedimagepath) ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="">
+                                                                <img src="<?= isset($share_safari->sharedimagepath) ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="rounded-2">
                                                             </div>
 
                                                         </div>
@@ -93,7 +93,7 @@ $this->params['title'] = $this->title;
                                                 ?>
                                                         <div class="col-md-4 gap-2  mb-2">
                                                             <div class="parksImgireview rounded h-100 position-relative">
-                                                                <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt="">
+                                                                <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt="" class="rounded-2">
                                                             </div>
 
                                                         </div>

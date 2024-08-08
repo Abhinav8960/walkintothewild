@@ -37,7 +37,7 @@ $park = GeneralModel::operatorresquestpark($safari_operator_request->id);
 </section>
 
 <section>
-<div class="container">
+<div class="container-lg">
 <div class="row justify-content-center margin_bottomfooter">
     <div class="col-xl-11 ">
     <div class="card account-settingside">

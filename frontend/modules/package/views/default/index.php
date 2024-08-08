@@ -177,7 +177,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
               <?php if ($models) {
                 foreach ($models as $model) { ?>
-                  <div class="col mb-4 padding_righ">
+                  <div class="col mb-xl-4 mb-md-3 mb-4 padding_righ">
                     <?= $this->render('_package_card', ['model' => $model]) ?>
                   </div>
               <?php }

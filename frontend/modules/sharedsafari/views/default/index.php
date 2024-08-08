@@ -204,7 +204,7 @@ $recentposts = ArticleSearch::recentpost();
                             <?php if ($models = $dataProvider->models) {
                                 foreach ($models as $share_safari) {
                             ?>
-                                    <div class="col mb-4 padding_righ">
+                                    <div class="col mb-xl-2 mb-md-3 mb-4">
                                         <?= $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                     </div>
                             <?php }
