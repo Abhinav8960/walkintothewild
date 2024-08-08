@@ -66,7 +66,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             if ($business_request) { ?>
                                 <a href="<?= Url::toRoute(['/profile/business']) ?>" class="follow_massge rounded-2 text-capitalize">Pending Business Request</a>
                             <?php } else { ?>
-                                <a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="follow_massge rounded-2 text-capitalize">Create Your Page </a>
+                                <a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="follow_massge rounded-2 text-capitalize">Create Your Business Page </a>
                             <?php }
                             ?>
                         <?php }

@@ -11,7 +11,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
-<div class="container-lg mt-5 pt-5">
+<div class="container-lg mt-5 pt-5" style="min-height: 600px;">
     <div class="row margin_bottomfooter">
         <div class="col-md-12  ">
             <h6 class="fs-3 fw-bold mb-4">Wishlist</h6>
@@ -24,7 +24,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <?= $this->render('@frontend/modules/account/views/wishlist/_navbar', ['shared_safari' => 'active']) ?>
                             <div class="tab-content " id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-shared-safari" role="tabpanel" aria-labelledby="pills-shared-safari-tab">
-                                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
 
                                         <?php if ($wishlist_items) {
                                             foreach ($wishlist_items as $wishlist_item) {

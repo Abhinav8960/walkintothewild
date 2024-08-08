@@ -922,18 +922,19 @@ a {
 
 }
 
-.users img:nth-child(1) {
+.users a:nth-child(1) {
 
     z-index: 0;
 }
 
-.users img:nth-child(2) {
+
+.users a:nth-child(2) {
 
     margin-left: -15px;
     z-index: 1;
 }
 
-.users img:nth-child(3) {
+.users a:nth-child(3) {
 
     margin-left: -15px;
     z-index: 1;
@@ -1945,16 +1946,24 @@ figure {
 .requestContact {
     margin-bottom: 9px;
 }
+.requestContact a{
 
+    color: #040404;
+}
 .nameavatr {
 
     font-size: var(--fs-16);
     font-weight: 500;
+
 }
 
 .text_com p {
 
     font-size: var(--fs-14);
+}
+.text_com a{
+
+    color: #040404;
 }
 
 .avatar {
@@ -7067,4 +7076,8 @@ font-weight: 500;
 .slider_addmobile3 .nav-link {
 
     text-align: center;
+}
+.fss-3{
+
+    font-size: 12px;
 }

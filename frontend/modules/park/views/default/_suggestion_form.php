@@ -62,5 +62,5 @@ use common\models\GeneralModel;
     </div>
     <?php ActiveForm::end(); ?>
 <?php } else {
-    echo 'For suggest correction you need to <a href="/site/login">Login</a>';
+    echo 'For suggest correction you need to <a href="/site/login?authclient=google&referrer=/park/' . $safari_park->slug . '">Login</a>';
 } ?>

@@ -88,7 +88,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
                             <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
-                                <div class="right_button mb-2 w-100 text-center">
+                                <div class="right_button mb-1">
 
                                     <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
                                         <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
@@ -105,14 +105,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                             if ($share_safari_intrested) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 w-100 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
                                             <?php } else if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
-                                            <?php } else { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2  w-100 d-block" href="/site/auth?authclient=google"> Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
                                     <?php }
                                     } ?>
                                 </div>
@@ -197,7 +195,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
                         <div class="col-lg-6">

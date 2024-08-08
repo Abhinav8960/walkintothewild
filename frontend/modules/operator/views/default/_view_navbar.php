@@ -10,7 +10,7 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
 ?>
 
 <div class="row  mt-4 pt-4 itenary_tabs justify-content-center">
-    <div class="col-lg-12 col-xl-9 safartabs position-relative">
+    <div class="col-lg-12 col-xl-10 col-xxl-9 safartabs position-relative">
         <ul class="nav nav-tabs slider_addmobile3 gap-2" role="tablist">
             <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>">
                     Shared Safari</i>

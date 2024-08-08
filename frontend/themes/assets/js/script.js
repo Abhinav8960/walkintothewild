@@ -12,12 +12,15 @@ if ($('.safari-carousel').length) {
                 items: 1
             },
             480: {
-                items: 2
+                items: 1
             },
             600: {
                 items: 2
             },
             800: {
+                items: 2
+            },
+            900: {
                 items: 3
             },
             1200: {

@@ -78,40 +78,41 @@ $this->params['title'] = $this->title;
                                         </h5>
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
-                                        </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
-
+                                        </div><?php
+                                                if (Yii::$app->user->identity) { ?>
+                                            <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                                                                                                                                                                                                                                    } else { ?>
+                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=/profile/user/<?= $share_safari->getOrganizedbyuserhandel() ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                                                                                                                                                                                                                                    } ?>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
-                            <div class="btn_wrap float-lg-end pt-lg-0 ">
+                            <div class="right_button  ">
+                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
+                                    <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
+                                        Safari</button>
+                                <?php } ?>
+
+                            </div>
+                            <div class="btns-safaries">
                                 <?php if ($share_safari->status == 2) { ?>
-                                    <a class="join_btn newbgjoin text-center mt-sm-0  d-block w-100" href="#">Closed Safari</a>
+                                    <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="#">Closed Safari</a>
+                                <?php } else if ($share_safari->status == 3) { ?>
+                                    <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="#">No Seat Available</a>
                                     <?php } else {
                                     if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                         if ($share_safari_intrested) { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 d-block w-100" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0  d-block w-100" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                         <?php }
                                     } else { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0  d-block w-100" href="/site/auth?authclient=google"> Join Safari</a>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>"> Join Safari</a>
                                 <?php }
                                 } ?>
-
-                            </div>
-                            <div class="right_button  mt-2">
-                                <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->type == 1) { ?>
-                                    <button class="btn_newsafari organizeBtn " value="<?= Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                        Safari</button>
-                                <?php }  ?>
-
-
-
                             </div>
                         </div>
                         <div class="col-lg-5 pt-lg-0 pt-4">
@@ -237,7 +238,7 @@ $this->params['title'] = $this->title;
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/auth?authclient=google"> Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>"> Join Safari</a>
                                     <?php }
                                     } ?>
                                 </div>

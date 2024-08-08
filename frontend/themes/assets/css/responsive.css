@@ -1044,6 +1044,12 @@
     height: 400px;
   } */
 }
+@media only screen and (max-width: 870px) and (min-width: 768px){
+
+  .margin_n5 {
+    margin-top: 23px ;
+}
+}
 @media only screen and (max-width: 1399px) and (min-width: 768px) {
   .safartabs .nav-tabs .nav-link {
     padding: 7px 20px;
@@ -1069,6 +1075,10 @@
   }
 }
 @media (max-width: 991px) {
+  .modal {
+    --bs-modal-width: 700px;
+  
+  }
 
   .mobile-hidelink{
 
@@ -1084,6 +1094,7 @@
      border: 0 !important;
 
   }
+
 
   .mobileAccordion.itenary_tabs  .tab-pane{
 
@@ -1411,10 +1422,7 @@ padding:0.5rem  1rem!important;
 }
 
 @media only screen and (max-width: 767px) {
-  .modal {
-    --bs-modal-width: 700px;
-  
-  }
+
   .topSlider_tour .owl-dots {
     position: absolute;
     bottom: -7px;}
