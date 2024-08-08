@@ -222,9 +222,11 @@ class SiteController extends FrontendBaseController
 
     public function actionLogin()
     {
+        /*
         if (!Yii::$app->user->isGuest) {
             return $this->redirect('/park');
         }
+        */
 
         $model = new LoginForm();
         $model->action_url = '/site/login';
