@@ -31,7 +31,9 @@ use yii\helpers\Url;
                                     <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?></h6>
                                 </div>
                                 <p><?= $comments->comment ?></p>
-                                <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                <?php if (Yii::$app->user->id) {  ?>
+                                    <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="comment-reply">
