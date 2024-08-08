@@ -43,8 +43,6 @@ class AuthHandler
             'source_id' => $id,
         ])->one();
 
-
-
         if (Yii::$app->user->isGuest) {
             if ($auth) { // login
 
