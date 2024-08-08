@@ -223,6 +223,7 @@ class DefaultController extends FrontendBaseController
         if (!$share_safari) {
             return $this->redirect(['index']);
         }
+
         if ($share_safari->type == 1) {
             return $this->render('view', [
                 'share_safari' => $share_safari,
@@ -231,7 +232,6 @@ class DefaultController extends FrontendBaseController
                 'login_safarioperator' => $login_safarioperator,
             ]);
         } else {
-
             $searchModel = new ShareSafariFaqSearch();
             $searchModel->share_safari_id = $share_safari->id;
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);

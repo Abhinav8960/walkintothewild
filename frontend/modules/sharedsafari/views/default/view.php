@@ -78,11 +78,13 @@ $this->params['title'] = $this->title;
                                         </h5>
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
-                                        </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
-
+                                        </div><?php
+                                                if (Yii::$app->user->identity) { ?>
+                                            <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                                                                                                                                                                                                                                    } else { ?>
+                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=/profile/user/<?= $share_safari->getOrganizedbyuserhandel() ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                                                                                                                                                                                                                                    } ?>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
