@@ -15,29 +15,39 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 <section class="margin_bottomfooter">
-    <div class="container">
-    <div class="row justify-content-center mb-5">
-                    <div class="col-xxl-11 mb-5">
-                    <div class="row mt-3 mb-5">
-            <div class="col-md-12">
-                <h6 class="fs-5 fw-bold">Following</h6>
-            </div>
-            <?php if ($userfollowers = $user->getUserfollowings()->where(['status' => 1])->all()) {
-                foreach ($userfollowers as $userfollower) { ?>
-                    <div class="col-md-3">
-
-                        <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->follower]);  ?>
-
+    <div class="container-lg">
+        <div class="row justify-content-center mb-5">
+            <div class="col-xxl-11 mb-5">
+                <div class="row  mb-5">
+                    <div class="col-md-12">
+                        <h6 class="fs-5 fw-bold">Following</h6>
                     </div>
-            <?php  }
-            } else {
-                echo '<div class="col-md-12">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <?php if ($userfollowers = $user->getUserfollowings()->where(['status' => 1])->all()) {
+                                        foreach ($userfollowers as $userfollower) { ?>
+                                            <div class="col-md-4 col-lg-3 col-sm-6">
+
+                                                <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->follower]);  ?>
+
+                                            </div>
+                                    <?php  }
+                                    } else {
+                                        echo '<div class="col-md-12">
                     There is no following!
                 </div>';
-            } ?>
-        </div>
+                                    } ?>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
+
                 </div>
-       
+            </div>
+        </div>
+
     </div>
 </section>
