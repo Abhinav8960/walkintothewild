@@ -82,6 +82,8 @@ return [
     '/profile/user/<user_handle>' => '/profile/default/index',
     '/profile/follower/<user_handle>' => '/profile/default/follower',
     '/profile/following/<user_handle>' => '/profile/default/following',
+    '/profile/follow/<user_handle>' => '/profile/default/follow',
+    '/profile/unfollow/<user_handle>' => '/profile/default/unfollow',
 
 
     '/profile/article/validate' => '/profile/article/validate',
