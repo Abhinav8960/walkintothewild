@@ -84,7 +84,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-md-4 d-md-block d-lg-none d-none">
                             <div class="text-left">
                                 <div class="pakageCost">
-                                    <h6 class="fs-3 mb-0 fw-bold text-center"><img src="/assets/f9595a2a/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?></h6>
+                                    <h6 class="fs-3 mb-0 fw-bold text-center"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?></h6>
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <div class="message">
