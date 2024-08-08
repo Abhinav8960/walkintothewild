@@ -110,7 +110,7 @@ $this->params['title'] = $this->title;
                                             <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                         <?php }
                                     } else { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/auth?authclient=google"> Join Safari</a>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>"> Join Safari</a>
                                 <?php }
                                 } ?>
                             </div>
@@ -238,7 +238,7 @@ $this->params['title'] = $this->title;
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/auth?authclient=google"> Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>"> Join Safari</a>
                                     <?php }
                                     } ?>
                                 </div>
