@@ -155,7 +155,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <div class="logininfo text-center">
                                                     <h6>Please log in to view the tour <br> operator's contact information.</h6>
                                                     <div class="viewAllreview">
-                                                        <a href="/site/auth?authclient=google">Login</a>
+                                                        <a href="/site/login?authclient=google&referrer=/operator/<?= $operator->slug ?>/contact">Login</a>
                                                     </div>
                                                 </div>
                                             </div>
