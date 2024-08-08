@@ -45,7 +45,7 @@ class DefaultController extends FrontendBaseController
     public function actionIndex($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-      
+
         $user_experiences = UserExperience::find()->where(['user_id' => $user->id, 'status' => UserExperience::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         return $this->render(
             'index',
