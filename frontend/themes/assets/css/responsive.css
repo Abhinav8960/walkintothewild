@@ -1069,6 +1069,10 @@
   }
 }
 @media (max-width: 991px) {
+  .modal {
+    --bs-modal-width: 700px;
+  
+  }
 
   .mobile-hidelink{
 
@@ -1411,10 +1415,7 @@ padding:0.5rem  1rem!important;
 }
 
 @media only screen and (max-width: 767px) {
-  .modal {
-    --bs-modal-width: 700px;
-  
-  }
+
   .topSlider_tour .owl-dots {
     position: absolute;
     bottom: -7px;}
