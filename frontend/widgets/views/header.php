@@ -162,7 +162,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<?php } ?>
 							<?php if (!Yii::$app->user->identity) { ?>
 								<li>
-									<a href="/site/login?authclient=google&referrer=<?= $_SERVER['REDIRECT_URL'] ?>"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+									<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 								</li>
 							<?php } else { ?>
 
