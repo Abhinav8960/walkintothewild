@@ -1960,6 +1960,7 @@ figure {
 .text_com p {
 
     font-size: var(--fs-14);
+    word-break: break-all;
 }
 .text_com a{
 
@@ -2275,6 +2276,7 @@ figure {
 
     font-weight: 500;
     font-size: 15px;
+    word-break: break-all;
 }
 
 .commentsOther {
@@ -6070,6 +6072,7 @@ a.desc:after {
 
     font-size: 12px;
     font-weight: 400;
+    word-break: break-all;
 }
 
 .sizecontact i {
