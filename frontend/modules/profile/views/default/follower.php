@@ -24,7 +24,9 @@ $this->params['title'] = $this->title;
                     <div class="col-md-12">
                         <h6 class="fs-5 fw-bold">Followers</h5>
                     </div>
-                    <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
+                    <div class="card">
+                        <div class="card-body">
+                        <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
                         foreach ($userfollowers as $userfollower) { ?>
                             <div class="col-md-3">
                                 <section class="mx-auto" style="max-width: 23rem;">
@@ -37,6 +39,9 @@ $this->params['title'] = $this->title;
                     There is no follower!
                 </div>';
                     } ?>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
         </div>

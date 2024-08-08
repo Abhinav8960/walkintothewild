@@ -6161,9 +6161,37 @@ a.desc:after {
 
 .card_profile.card {
 
-    background-color: #fff;
-    border-radius: 15px;
-    padding: 0px 0px 30px 0px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding: 47px 0px 0px 0px;
+    border: 1px solid #7070704D;
+}
+.joint-text{
+
+    color: #1E1E1E;
+    font-size: 14px !important;
+    font-weight: 400;
+}
+.folloerwstext{
+
+    color: #1E1E1E;
+    font-size: 14px !important;
+    font-weight: 500; 
+}
+.folollowBtns button,.massegses button{
+
+background-color: transparent;
+border: 0;
+color:#1E1E1E ;
+font-weight: 500;
+padding: 6px;
+width: 100%;
+display: block;
+text-align: center;
+}
+.divider{
+    border-right: 1px solid #7070704D;
+    height: 35px;
 }
 
 .cover_profile img {
@@ -6220,8 +6248,12 @@ a.desc:after {
 
 .dots-blockbox i {
 
-    color: #fff;
+    color: #1E1E1E;
     font-size: 20px;
+}
+.usename{
+
+    color: #1E1E1E;
 }
 
 .tag-container {
