@@ -80,72 +80,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php if ($dataProvider->models) {
                                                     foreach ($dataProvider->models as $model) { ?>
                                                         <div class="col-md-6 col-lg-4 mb-4 padding_righ">
-                                                            <div class="sharesafri-card tourpackage">
-                                                                <div class="flotingdate">
-                                                                    <div class="icons text-center">
-                                                                        <p class="mb-0">3N/4D</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="floating-watchlist">
-                                                                    <?php
-                                                                    if (Yii::$app->user->identity) { ?>
-                                                                        <div class="heart_bx">
-                                                                            <?php
-                                                                            $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
-                                                                            if ($wishlist) {
-                                                                            ?>
-                                                                                <a href="/package/unwishlist/<?= $model->package_slug ?>" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
-                                                                            <?php } else { ?>
-                                                                                <a href="/package/wishlist/<?= $model->package_slug ?>" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
-                                                                            <?php }
-                                                                            ?>
-                                                                        </div>
-                                                                    <?php } ?>
-                                                                </div>
-                                                                <div class="shareimg">
-                                                                    <a href="/package/<?= $model->package_slug ?>">
-                                                                        <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt=""></a>
-                                                                </div>
-                                                                <div class="card_body">
-                                                                    <div class="titleDate">
-                                                                        <h6 class="pt-1"><a href=""><?= $model->package_name ?> </a></h6>
-                                                                        <div class="orgnizer_tour d-flex justify-content-between pt-2">
-                                                                            <div class="icons_restro">
-                                                                                <i class="fa-solid fa-car-side"></i>
-                                                                                <p class="mb-0">5 Safaris</p>
-                                                                            </div>
-                                                                            <div class="icons_restro">
-                                                                                <i class="fa-solid fa-car"></i>
-                                                                                <p class="mb-0">Pick & Drop</p>
-                                                                            </div>
-                                                                            <div class="icons_restro">
-                                                                                <i class="fa-solid fa-utensils"></i>
-                                                                                <p class="mb-0">Meals</p>
-                                                                            </div>
-                                                                            <div class="icons_restro">
-
-                                                                                <i class="fa-solid fa-building"></i>
-                                                                                <p class="mb-0">Premium</p>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="footer_card row pb-2 px-2 align-items-center">
-                                                                        <div class="col-6 col-xxl-7">
-                                                                            <div class="safaritourlogo">
-                                                                                <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-xxl-5 col-6">
-                                                                            <div class="safari text-center">
-                                                                                <div class="joinsafari package">
-                                                                                    <h6 class=" titlePrice"><?= $model->cost_per_person ?> + GST </h6>
-                                                                                    <a href="/package/<?= $model->package_slug ?>">View Details</a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <?= $this->render('@frontend/modules/package/views/default/_package_card', ['model' => $model]) ?>
                                                         </div>
                                                 <?php }
                                                 } else {
