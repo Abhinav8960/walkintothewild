@@ -15,13 +15,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 ?>
 
-<section >
+<section>
 
-        <?= $this->render('@frontend/modules/park/views/default/tablist', [
-            'review' => 'active',
-            'model' => $model,
-        ]) ?>
-   
+    <?= $this->render('@frontend/modules/park/views/default/tablist', [
+        'review' => 'active',
+        'model' => $model,
+    ]) ?>
+
 </section>
 
 
@@ -108,7 +108,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                             </div>
 
                                                             <div class="googlerating">
-                                                                <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                <?php if ($review->user) { ?>
+                                                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
+                                                                        <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                    </a>
+                                                                <?php } ?>
 
                                                             </div>
                                                         </div>

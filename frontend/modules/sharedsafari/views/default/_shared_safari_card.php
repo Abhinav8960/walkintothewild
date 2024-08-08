@@ -79,9 +79,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         $count = $share_safari->getIntrested()->count();
                         $avatar_count = 3;
                         foreach ($interests as $interest) {
+                            if ($user_interested = $interest->user) {
                     ?>
-                            <img src="<?= $interest->user && $interest->user->avatar <> '' ? $interest->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
-                        <?php
+                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_interested->user_handle]) ?>"><img src="<?= $user_interested->profileimage <> '' ? $user_interested->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle"></a>
+                            <?php }
                         };
                         $count = $share_safari->getIntrested()->count();
                         $avatar_count = 3;
@@ -92,7 +93,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         <?php }
                     } else { ?>
-                        <img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle">
+                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($share_safari->user) ? $share_safari->user->user_handle : '']) ?>"><img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
                     <?php } ?>
                 </div>
             </div>
