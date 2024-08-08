@@ -160,62 +160,63 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									</div>
 								</div>
 							<?php } ?>
-							<?php if (!Yii::$app->user->identity) { ?>
-								<li>
-									<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
-								</li>
-							<?php } else { ?>
+							<ul>
+								<?php if (!Yii::$app->user->identity) { ?>
+									<li>
+										<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+									</li>
+								<?php } else { ?>
 
 
-								<!-- <?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
+									<!-- <?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
 											<li>
 												<a class="" target="_blank" href="<?= Yii::$app->params['backend_url'] ?>">
 													<i class="fa-solid fa-cog"></i>
 													Manage</a>
 											</li>
 										<?php } ?> -->
-								<?php
-								if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
+									<?php
+									if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
+										<li>
+											<a class="" href="/manage">
+												<i class="fa-solid fa-cog"></i>
+												Manage Safari Tour Business</a>
+										</li>
+									<?php }
+									?>
+
+
 									<li>
-										<a class="" href="/manage">
-											<i class="fa-solid fa-cog"></i>
-											Manage Safari Tour Business</a>
+										<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
+											<i class="fa-solid fa-user"></i>
+											Profile</a>
 									</li>
-								<?php }
-								?>
-
-
-								<li>
-									<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
-										<i class="fa-solid fa-user"></i>
-										Profile</a>
-								</li>
-								<li>
-									<a class="" href="/account">
-										<i class="fa-solid fa-cog"></i>
-										Account Setting</a>
-								</li>
-								<!-- <li>
+									<li>
+										<a class="" href="/account">
+											<i class="fa-solid fa-cog"></i>
+											Account Setting</a>
+									</li>
+									<!-- <li>
 										<a class="" href="/chat">
 											<i class="fa-solid fa-message"></i>
 											Messages</a>
 									</li> -->
-								<!-- <li>
+									<!-- <li>
 											<a class="" href="/profile/search">
 												<i class="fa-solid fa-search"></i>
 												Search Profile</a>
 										</li> -->
-								<li>
-									<a class="" href="/account/wishlist">
-										<i class="fa-solid fa-heart"></i>
-										Whishlist</a>
-								</li>
-								<li class="border-top">
-									<a class="py-3" href="/site/logout" data-method="POST">
-										<i class="fa-solid fa-arrow-right-from-bracket"></i>
-										Log Out</a>
-								</li>
-							<?php } ?>
+									<li>
+										<a class="" href="/account/wishlist">
+											<i class="fa-solid fa-heart"></i>
+											Whishlist</a>
+									</li>
+									<li class="border-top">
+										<a class="py-3" href="/site/logout" data-method="POST">
+											<i class="fa-solid fa-arrow-right-from-bracket"></i>
+											Log Out</a>
+									</li>
+								<?php } ?>
 							</ul>
 
 
