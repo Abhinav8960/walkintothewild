@@ -43,6 +43,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
                 <div class="avatar">
                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity && Yii::$app->user->identity->user_handle <> '' ? Yii::$app->user->identity->user_handle : '']) ?>">
                         <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                    </a>
                 </div>
                 <div class="text-area">
                     <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>
