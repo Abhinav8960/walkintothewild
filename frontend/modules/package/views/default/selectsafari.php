@@ -263,7 +263,7 @@ $this->params['title'] = $this->title;
                                 <div class="col-12">
                                   <div class="titles_locations">
                                     <h6 class="fs-5">Meal</h6>
-                                    <div class="mealchecks d-flex gap-4 align-items-center">
+                                    <div class="mealchecks d-flex gap-sm-4 gap-2 align-items-center flex-wrap">
                                       <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
                                         <input type="checkbox" id="check">
                                         <label for="check">Breackfast</label>
