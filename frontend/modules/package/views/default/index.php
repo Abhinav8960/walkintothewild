@@ -83,7 +83,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
       'action' => ['index'],
       'method' => 'get',
     ]); ?>
-    <div class="row justify-content-center mb-4 pt-lg-5">
+    <div class="row justify-content-center mb-4 pt-lg-5 margin_bottomfooter">
       <div class="col-xl-11 col-lg-12">
         <div class="row mb-5 justify-content-center">
           <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 mb-4 pt-3">
