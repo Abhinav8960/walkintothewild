@@ -44,6 +44,7 @@ $this->title = 'Contact';
                 </div>
             </div>
             <div class="col-md-12 form-bg">
+                <div class="row">
                 <div class="Up">
                     <h5>get in touch</h5>
                     <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
@@ -77,6 +78,8 @@ $this->title = 'Contact';
                     </form>
                     <?php ActiveForm::end(); ?>
                 </div>
+                </div>
+               
             </div>
         </div>
     </div>
