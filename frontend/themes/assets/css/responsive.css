@@ -1788,7 +1788,11 @@ display: none;
     object-fit: cover; /* This maintains the aspect ratio and covers the area */
   }
 }
-
+@media only screen and (min-device-width: 200px) and (max-device-width: 576px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: portrait) {
+  .select_searcjBox .select_boxes {
+      margin-bottom: 5px; 
+  }
+}
 @media only screen and (max-width: 576px) {
   .profile_coverbnner .follow_massge{
 
