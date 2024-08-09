@@ -193,7 +193,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 </div>
 
 <div class="modal fade _standard-text" id="share-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Share Link</h1>
@@ -201,7 +201,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
             <div class="modal-body p-3">
                 <div id='modalContent'>
-                    <ul class="shrelinkssss ps-0">
+                    <ul class="shrelinkssss ps-0 mb-0">
                         <?= \frontend\widgets\ShareButton::widget([
                             'style' => 'horizontal',
                             'networks' => ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'telegram', 'clipboard'],

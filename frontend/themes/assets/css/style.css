@@ -6978,7 +6978,7 @@ padding: 12px 18px;
 font-weight:400;
 -o-text-overflow: ellipsis;
    text-overflow: ellipsis;
-display: inline-block;
+display: block;
 overflow: hidden;
 }
 
@@ -7001,6 +7001,10 @@ font-weight: 500;
     background-color: #d8d8d8;
 }
 
+.viewallNotification .follow_massge{
+
+    text-transform: capitalize !important;
+}
 
 
 .moreviewMobile {
@@ -7065,11 +7069,13 @@ font-weight: 500;
     display: flex;
     -webkit-box-pack: justify;
         -ms-flex-pack: justify;
-            justify-content: space-between;
+            /* justify-content: space-between; */
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
     list-style: none;
+    gap: 12px;
+    justify-content: center;
     padding-left: 0;
 }
 .form-select-lg{
