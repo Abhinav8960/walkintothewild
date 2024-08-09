@@ -854,6 +854,7 @@ a {
     color: var(--colorwhite);
     border-radius: 20px;
     font-weight: 500;
+    /* border: 1px solid var(--background-primary); */
 }
 
 
@@ -2255,8 +2256,12 @@ figure {
 
 .comments_safari {
 
-    border: 1px solid #0000004D;
+    /* border: 1px solid #0000004D; */
     border-radius: 10px;
+}
+.font-color a{
+
+    color: #1E1E1E !important;
 }
 
 .comments_safari .commentsOther:last-child {

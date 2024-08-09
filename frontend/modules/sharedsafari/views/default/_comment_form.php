@@ -27,7 +27,7 @@ use yii\helpers\Url;
     </div>
     <div class="col-lg-12 col-xl-3 ">
         <div class="comment_button float-end mb-lg-0 mb-3">
-            <?= Html::submitButton('Post Comment', ['class' => 'post-comment newbg']) ?>
+            <?= Html::submitButton('Post Comment', ['class' => 'post-comment ']) ?>
         </div>
     </div>
 </div>

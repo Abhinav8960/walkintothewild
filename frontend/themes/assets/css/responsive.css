@@ -1794,6 +1794,14 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .commentsOther .objec-flgs{
+
+    right: 10px;
+  }
+  .flags_reply .flagBtn{
+
+    right: 2px;
+  }
   .artical_cards .lower-content h3{
 
     line-height: 26px;

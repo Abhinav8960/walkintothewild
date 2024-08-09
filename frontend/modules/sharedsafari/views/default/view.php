@@ -242,10 +242,7 @@ $this->params['title'] = $this->title;
                                     <?php }
                                     } ?>
                                 </div>
-
-
                             </div>
-
                         </div>
                     </div>
                 </div>
