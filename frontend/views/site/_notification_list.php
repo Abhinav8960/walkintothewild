@@ -17,7 +17,7 @@ $notification_list = FrontendNotification::find()->where(['status' => 1, 'user_i
 
                 <a href="<?= Url::toRoute(['/account/notification/view', 'id' => $notification->id]) ?>">
                     <?= $notification->notification_text ?>
-                    <span class="d-block fss-3"><?= Yii::$app->formatter->format($notification->created_at, 'relativeTime') ?></span>
+                    <span class=" fss-3"><?= Yii::$app->formatter->format($notification->created_at, 'relativeTime') ?></span>
                 </a>
             </li>
     <?php }
