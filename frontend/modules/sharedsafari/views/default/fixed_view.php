@@ -88,35 +88,30 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
                             <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
-                                <div class="right_button mb-1">
 
-                                    <?php if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) { ?>
-                                        <a class="btn_newsafari" href="<?= Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug]) ?>"><i class="fas fa-edit me-1"></i>Update
-                                            Fixed Departure</a>
-                                    <?php } ?>
-
-                                </div>
-                                <div class="btns-safaries">
-
-
-                                    <?php if ($share_safari->status == 2) { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>
-                                    <?php } else if ($share_safari->status == 3) { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>
-                                        <?php } else {
-                                        if (Yii::$app->user->identity) {
-                                            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-                                            if ($share_safari_intrested) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
-                                            <?php } else if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
-                                            <?php }
-                                        } else { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
-                                    <?php }
-                                    } ?>
-                                </div>
-
+                                <?php if ($share_safari->status == 2) {
+                                    echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>';
+                                } else if ($share_safari->status == 3) {
+                                    echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>';
+                                } else {
+                                    if (Yii::$app->user->identity) {
+                                        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                        if ($share_safari_intrested) {
+                                            echo \yii\helpers\Html::a('Leave Safari', ['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-method' => "POST", 'data-pjax' => '0']);
+                                        } else {
+                                            if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) {
+                                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
+                                            } else if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) {
+                                                echo \yii\helpers\Html::a('Update
+                                                    Fixed Departure', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['class' => 'btn_newsafari', 'data-method' => "POST", 'data-pjax' => '0']);
+                                            } else {
+                                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
+                                            }
+                                        }
+                                    } else {
+                                        echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
+                                    }
+                                } ?>
 
                             </div>
                         </div>
@@ -254,19 +249,19 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                             if ($share_safari_intrested) {
-                                                echo \yii\helpers\Html::a('Leave Safari', ['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug], ['style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-method' => "POST", 'data-pjax' => '0']);
+                                                echo \yii\helpers\Html::a('Leave Safari', ['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-method' => "POST", 'data-pjax' => '0']);
                                             } else {
                                                 if ($login_safarioperator && $share_safari->host_user_id != $login_safarioperator->id) {
-                                                    echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['data-method' => "POST", 'data-pjax' => '0']);
+                                                    echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
                                                 } else if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) {
-                                                    echo \yii\helpers\Html::a('Update
+                                                    echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>Update
                                                     Fixed Departure', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['class' => 'btn_newsafari', 'data-method' => "POST", 'data-pjax' => '0']);
                                                 } else {
-                                                    echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['data-method' => "POST", 'data-pjax' => '0']);
+                                                    echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
                                                 }
                                             }
                                         } else {
-                                            echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['data-method' => "POST", 'data-pjax' => '0']);
+                                            echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
                                         }
                                     } ?>
                                 </div>
