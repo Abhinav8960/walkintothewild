@@ -30,7 +30,7 @@ $this->params['title'] = $this->title;
                                 <div class="row">
                                     <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
                                         foreach ($userfollowers as $userfollower) { ?>
-                                            <div class="col-md-4 col-lg-3 col-sm-6">
+                                            <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
                                                 <section class="mx-auto" style="max-width: 23rem;">
                                                     <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user, 'profile_user' => $user]);  ?>
                                                 </section>

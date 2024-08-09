@@ -57,7 +57,7 @@ $this->params['title'] = $this->title;
                                 <a class="join_btn text-center mt-sm-0 mt-2" href="/sharedsafari/default/join?slug=<?= $share_safari_request->slug ?>">Join Safari</a>
                             <?php  }
                         } else { ?>
-                            <a class="join_btn text-center mt-sm-0 mt-2" href="/site/auth?authclient=google"> Join Safari</a>
+                            <a class="join_btn text-center mt-sm-0 mt-2" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari_request->slug ?>"> Join Safari</a>
                         <?php } ?>
 
                     </div>
