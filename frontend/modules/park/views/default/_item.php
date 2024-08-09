@@ -2,7 +2,7 @@
 
 use yii\helpers\Url;
 ?>
-<a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" class="parking_Box">
+<a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" class="parking_Box" data-pjax="0">
     <div class="searchSafari_wraper mb-4">
         <div class="row">
             <div class="col-xl-3 col-sm-4 col-md-3">
@@ -13,9 +13,7 @@ use yii\helpers\Url;
             <div class="col-md-9 col-sm-8 col-xl-9">
                 <div class="safariSearch_wrap">
                     <div class="safrititles tite_parklist pt-sm-0 pt-3">
-
                         <h4 class=""><?= $model->title ?> | <span><?= isset($model->state) ? $model->state->state_name . ', ' : '' ?><?= isset($model->location) ? $model->location->title : '' ?></span></h4>
-
                     </div>
                     <div class="seelctes_text  pb-4 ">
                         <p>

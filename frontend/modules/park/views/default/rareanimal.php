@@ -106,7 +106,6 @@ Pjax::begin([
                     foreach ($models as $model) { ?>
                         <a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" class="parking_Box" data-pjax="0">
                             <div class="searchSafari_wraper mb-4">
-
                                 <div class="row">
                                     <div class="col-xl-3 col-sm-4 col-md-3">
                                         <div class="Slider_safariimg3 h-100">
@@ -129,7 +128,7 @@ Pjax::begin([
                                                     <p>Top Safari Tour Operators</p>
                                                 </div>
                                                 <div class="touroprators">
-                                                    <div class="opratios-slider owl-carousel imagzise owl-theme">
+                                                    <div class="opratios-slider owl-carousel owl-theme">
                                                         <?php if ($operator_list = $model->getSafarioperatorlist()->joinwith(['operator' => function ($operator_park_query) {
                                                             $operator_park_query->where(['safari_operator.status' => 1]);
                                                         }])->where(['safari_operator_park.status' => 1])->all()) {
