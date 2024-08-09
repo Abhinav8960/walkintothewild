@@ -201,21 +201,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <?php
                                     $shared_url = urlencode(Url::to('', true));
                                     ?>
+
                                     <ul>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
-                                        </li>
-                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
-                                        </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-linkedin-in"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-solid fa-paper-plane"></i></a>
-                                        </li>
+                                        <?= \frontend\widgets\ShareButton::widget([
+                                            'style' => 'horizontal',
+                                            'networks' => ['facebook', 'twitter', 'instagram', 'whatsapp', 'linkedin', 'telegram', 'clipboard'],
+                                        ]); ?>
 
                                     </ul>
+
                                 </div>
                             </div>
                         </div>
@@ -407,6 +401,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
+                <hr>
                 <div class="desclaimers pb-3 pt-lg-0 pt-3">
                     <div class="itenary-title">
                         <h6 class="fs-5 pb-2">Disclaimer</h6>
