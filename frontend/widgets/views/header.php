@@ -80,7 +80,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											<li>
 												<a class="" href="/manage">
 													<i class="fa-solid fa-cog"></i>
-													Manage Safari Tour Business</a>
+													Manage My page</a>
 											</li>
 										<?php }
 										?>
@@ -180,7 +180,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										<li>
 											<a class="" href="/manage">
 												<i class="fa-solid fa-cog"></i>
-												Manage Safari Tour Business</a>
+												Manage My page</a>
 										</li>
 									<?php }
 									?>

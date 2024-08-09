@@ -79,7 +79,7 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-
+        $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
@@ -131,6 +131,7 @@ class DefaultController extends FrontendBaseController
                 'model' => $model,
                 'replymodel' => $replymodel,
                 'packagemodel' => $packagemodel,
+                'login_safarioperator' => $login_safarioperator,
             ]
         );
     }

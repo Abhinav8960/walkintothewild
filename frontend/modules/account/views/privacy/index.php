@@ -19,13 +19,13 @@ use yii\helpers\Url;
         <div class="col-xxl-9 col-lg-8 itenary_tabs">
             <div class="card account-settingside" style="min-height:500px">
                 <div class="card-body p-4">
-                    <h6 class="fs-5 fw-bold mb-4"> Select who may see your profile details</h6>
+                    <h6 class="fs-5 fw-bold mb-5"> Select who may see your profile details</h6>
 
                     <?php $form = ActiveForm::begin([
                         'id' => 'privacy-form',
                         'method' => 'POST',
                     ]); ?>
-                    <div class="row align-items-center">
+                    <div class="row align-items-center ">
                         <div class="col-md-3">
                           <label for="" class="Modal_label">  Gender</label>
                         </div>

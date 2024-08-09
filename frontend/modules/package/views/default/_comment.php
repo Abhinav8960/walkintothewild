@@ -18,8 +18,18 @@ use yii\helpers\Url;
                     <div class="one_box">
                         <div class="objec-flgs">
                             <?php if (Yii::$app->user->id) {  ?>
-                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
+
                             <?php } ?>
+
+                            <?php if ($login_safarioperator) {
+                                if ($login_safarioperator && Yii::$app->user->id != $login_safarioperator->user_id) { ?>
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
+                                <?php }
+                            } else {
+                                if (Yii::$app->user->identity && Yii::$app->user->id !=  $package->owned_by_id) { ?>
+                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
+                            <?php }
+                            } ?>
 
                         </div>
                         <div class="postcomment d-flex gap-2 pt-3 w-100">
@@ -58,10 +68,16 @@ use yii\helpers\Url;
                                                     <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>
-                                                    </div>
-                                                    <?php if (Yii::$app->user->id) {  ?>
-                                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
-                                                    <?php } ?>
+                                                    </div>                                                   
+                                                    <?php if ($login_safarioperator) {
+                                                        if ($login_safarioperator && Yii::$app->user->id != $login_safarioperator->user_id) { ?>
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
+                                                        <?php }
+                                                    } else {
+                                                        if (Yii::$app->user->identity && Yii::$app->user->id !=  $package->owned_by_id) { ?>
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
+                                                    <?php }
+                                                    } ?>
                                                 </div>
                                             </div>
                                         </div>
