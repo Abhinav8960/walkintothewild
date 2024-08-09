@@ -256,6 +256,9 @@ class DefaultController extends FrontendBaseController
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
+
+
+                
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id])->one();
                 if (!$share_safari_intrested) {
                     $share_safari_intrested = new ShareSafariIntrested();
@@ -277,6 +280,9 @@ class DefaultController extends FrontendBaseController
                 } else {
                     Yii::$app->session->setFlash('error', 'You can not Join this Shared Safari currently!');
                 }
+
+
+
             } else {
                 return $this->redirect(['/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug]);
             }
