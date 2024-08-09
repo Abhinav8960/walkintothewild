@@ -143,8 +143,7 @@ class ShareSafariSearch extends ShareSafari
             if ($this->estimate_price_max >= 15000) {
                 $dataProvider->query->andWhere([
                     'or',
-                    ['and', ['>=', 'estimate_price_min', $this->estimate_price_min], ['<=', 'estimate_price_min', $this->estimate_price_max]],
-                    ['and', ['>=', 'estimate_price_max', $this->estimate_price_min], ['<=', 'estimate_price_max', $this->estimate_price_max]],
+                    ['or', ['>=', 'estimate_price_max', $this->estimate_price_min], ['>=', 'estimate_price_min', $this->estimate_price_max]],
                     ['>=', 'cost_per_person', $this->estimate_price_min]
                 ]);
             } else {
@@ -156,6 +155,8 @@ class ShareSafariSearch extends ShareSafari
                 ]);
             }
         }
+
+
 
 
         if ($this->no_of_safari_min && $this->no_of_safari_max) {
