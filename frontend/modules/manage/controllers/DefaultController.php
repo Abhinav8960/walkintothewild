@@ -89,14 +89,22 @@ class DefaultController extends FrontendBaseController
                             }
                         }
 
-                        $to_mail = $model->safari_operator_request_model->email;
-                        $subject = 'Information Update Successfully!';
-                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
-                        $req = ['username' => $model->safari_operator_request_model->business_name];
+                        // $to_mail = $model->safari_operator_request_model->email;
+                        // $subject = 'Information Update Successfully!';
+                        // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        // $req = ['username' => $model->safari_operator_request_model->business_name];
 
-                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        \Yii::$app->session->setFlash('success', 'Safari Operator Update Request Sent Successfully, Please Wait Until Approval');
-                        return $this->redirect(['index']);
+                        // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        // \Yii::$app->session->setFlash('success', 'Safari Operator Update Request Sent Successfully, Please Wait Until Approval');
+                        // return $this->redirect(['index']);
+                        $model->safari_operator_request_model->is_approved = 1;
+                        if ($model->safari_operator_request_model->save(false)) {
+                            $safari_operator = $model->safari_operator_request_model->safariapproved($model->safari_operator_request_model);
+                            if ($safari_operator) {
+                                \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                                return $this->redirect(['index']);
+                            }
+                        }
                     }
                 }
             }
