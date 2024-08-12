@@ -348,8 +348,12 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                                 </thead>
                                 <tbody>
                                     <?php if ($model->bufferzones) {
-                                        foreach ($model->bufferzones as $bufferzone) { ?>
-                                            <tr>
+                                        foreach ($model->bufferzones as $bufferzone) {
+                                            $class = '';
+                                            if ($bufferzone->is_open_in_monsoon == 0) {
+                                                $class = 'bufferzone_inactive';
+                                            } ?>
+                                            <tr class="<?= $class ?>">
                                                 <td><?= $bufferzone->zone_name ?></td>
                                                 <td><?= $bufferzone->entry_gate_name ?></td>
                                             </tr>

@@ -2447,6 +2447,11 @@ figure {
     background-color: #127729 !important;
     color: var(--colorwhite) !important;
 }
+.bufferzone_inactive td{
+    background-color: gray !important;
+    color: #cbcbcb !important;
+
+}
 
 .tabledesigncore table td {
 
@@ -7100,4 +7105,9 @@ font-weight: 500;
 .fss-3{
 
     font-size: 12px;
+}
+
+.select2-container--krajee-bs5 li.select2-results__option{
+
+    font-size: 14px !important;
 }

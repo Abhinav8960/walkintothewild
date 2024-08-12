@@ -207,11 +207,11 @@ $this->registerJs($script);
 ?>
 
 <?php
-$script = <<< JS
-$('html, body').animate({
-        'scrollTop' : $("#safari_tour_operator_container").position().top
-});
+// $script = <<< JS
+// $('html, body').animate({
+//         'scrollTop' : $("#safari_tour_operator_container").position().top
+// });
              
-JS;
-$this->registerJs($script);
+// JS;
+// $this->registerJs($script);
 ?>
