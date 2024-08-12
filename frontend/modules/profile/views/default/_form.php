@@ -7,8 +7,6 @@ use yii\bootstrap5\ActiveForm;
 ?>
 <div class="col-md-12">
 
-    <div class="card">
-        <div class="card-body">
             <?php $form = ActiveForm::begin([
                 'id' => 'experience-form',
                 'enableAjaxValidation' => true,
@@ -24,18 +22,20 @@ use yii\bootstrap5\ActiveForm;
                         GeneralModel::safariparkoption(),
                         [
                             'prompt' => 'Select Park',
+                            
                         ]
-                    ) ?>
+                    )->label('Types of Park', ['class' => 'Modal_label']) // Add your desired class here
+                    ?>
                 </div>
                 <div class="col-md-12">
-                    <?= $form->field($model, 'file')->fileInput()->label('Photo (JPEG /JPG or PNG / 250 KB)') ?>
+                    <?= $form->field($model, 'file')->fileInput()->label('Photo (JPEG /JPG or PNG / 250 KB)',['class' => 'Modal_label']) ?>
                 </div>
                 <div class="col-md-12">
-                    <?= $form->field($model, 'description')->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description <span class="necessary">*</span>') ?>
+                    <?= $form->field($model, 'description')->textarea(['rows' => '6', 'placeholder' => 'Description Detail '])->label('Description <span class="necessary">*</span>',['class' => 'Modal_label']) ?>
 
                 </div>
             </div>
-            <div class="row">
+            <div class="row py-2">
                 <div class="col-lg-12 ">
                     <div class="creat-safri d-flex justify-content-end">
                         <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
@@ -48,7 +48,7 @@ use yii\bootstrap5\ActiveForm;
                     </div>
                 </div>
             </div>
-        </div>
+      
         <?php ActiveForm::end(); ?>
-    </div>
+   
 </div>
