@@ -64,15 +64,13 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
 
                     [
-                        'label' => 'Flagged Reason',
+                        'label' => 'No. of Flags',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $reasons = [];
-                            foreach ($model->getReports()->where(['status' => 1])->all() as $report) {
-                                $reasons[] =  $report->reportreason->reason;
-                            }
-                            return implode(", ", $reasons);
+                            $all_flags_count = $model->getReports()->where(['status' => 1])->count();
+                            return $all_flags_count;
                         }
                     ],
 

@@ -47,6 +47,14 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         }
                     ],
                     [
+                        'label' => 'Comment',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->comment;
+                        }
+                    ],
+                    [
                         'label' => 'Creator Name',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -56,15 +64,12 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
 
                     [
-                        'label' => 'Flagged Reason',
+                        'label' => 'No. of Flags',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $reasons = [];
-                            foreach ($model->getReports()->where(['status' => 1])->all() as $report) {
-                                $reasons[] =  $report->reportreason->reason;
-                            }
-                            return implode(", ", $reasons);
+                            $counter = $model->getReports()->count();
+                            return $counter;
                         }
                     ],
 
