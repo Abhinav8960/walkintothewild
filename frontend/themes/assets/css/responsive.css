@@ -970,6 +970,10 @@
   }
 }
 @media only screen and (max-width: 1200px) {
+  .terms a,.copyright p{
+
+    font-size: 14px;
+  }
 
   .itenary_tabs .safartabs .nav-tabs.slider_addmobile{
 
@@ -1075,6 +1079,13 @@
   }
 }
 @media (max-width: 991px) {
+  .copyright p {
+    padding-top: 20px;
+  }
+  .terms p{
+
+    padding-top: 10px !important;
+  }
   .modal {
     --bs-modal-width: 700px;
   
@@ -1387,9 +1398,7 @@ padding:0.5rem  1rem!important;
     text-align: center;
   }
 
-  .copyright p {
-    padding-top: 20px;
-  }
+ 
 
   .terms p {
     padding-top: 20px;
@@ -1431,6 +1440,7 @@ padding:0.5rem  1rem!important;
 }
 
 @media only screen and (max-width: 767px) {
+  
 
   .topSlider_tour .owl-dots {
     position: absolute;
