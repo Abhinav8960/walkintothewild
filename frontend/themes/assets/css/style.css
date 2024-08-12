@@ -7106,3 +7106,8 @@ font-weight: 500;
 
     font-size: 12px;
 }
+
+.select2-container--krajee-bs5 li.select2-results__option{
+
+    font-size: 14px !important;
+}
