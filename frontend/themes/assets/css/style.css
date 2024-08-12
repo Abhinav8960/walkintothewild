@@ -1106,7 +1106,7 @@ a {
     color: var(--background-primary);
     font-weight: 600;
     font-size: var(--fs-12);
-    text-transform: uppercase;
+    text-transform: capitalize;
     border: 0;
     letter-spacing: 0.15px;
     border: 1px solid #7070704D;
@@ -1121,7 +1121,7 @@ a {
     color: var(--background-primary);
     font-weight: 600;
     font-size: var(--fs-12);
-    text-transform: uppercase;
+    text-transform: capitalize;
     border: 0;
     letter-spacing: 0.15px;
     border: 1px solid #7070704D;

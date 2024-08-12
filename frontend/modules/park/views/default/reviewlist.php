@@ -64,7 +64,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     <?php if (Yii::$app->user->identity) { ?>
                                                         <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $model->id]) ?>" class="parkrevieBtn writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
                                                     <?php } else { ?>
-                                                        <a class="btn_review" href="/site/login?authclient=google&referrer=/park/<?= $model->slug ?>/reviewlist">Please Login to Review</a>
+                                                        <a class="parkrevieBtn py-2" href="/site/login?authclient=google&referrer=/park/<?= $model->slug ?>/reviewlist">Please Login to Review</a>
                                                     <?php } ?>
                                                 </div>
                                             </div>

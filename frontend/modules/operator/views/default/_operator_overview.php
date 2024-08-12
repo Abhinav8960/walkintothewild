@@ -42,19 +42,19 @@ use common\models\operator\SafariOperatorFollow;
                                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) {
                                         $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id, 'status' => 1])->limit(1)->one();
                                         if ($operator_follow) { ?>
-                                            <a class="follow_btn" href="/operator/default/unfollow?id=<?= $operator->id ?>"></i> UNFOLLOW</a>
+                                            <a class="parkrevieBtn" href="/operator/default/unfollow?id=<?= $operator->id ?>"></i> Unfollow</a>
                                         <?php } else { ?>
-                                            <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"> FOLLOW</a>
+                                            <a class="parkrevieBtn" href="/operator/default/follow?id=<?= $operator->id ?>"> Follow</a>
                                         <?php  }
                                     } else if (Yii::$app->user->identity && Yii::$app->user->identity->id == $operator->user_id) { ?>
-                                        <a class="follow_btn" href="<?= Url::toRoute(['/manage/default/edit-request']) ?>">Update</a>
+                                        <a class="parkrevieBtn" href="<?= Url::toRoute(['/manage/default/edit-request']) ?>">Update</a>
                                     <?php } else { ?>
-                                        <a class="follow_btn" href="/operator/default/follow?id=<?= $operator->id ?>"> FOLLOW</a>
+                                        <a class="parkrevieBtn" href="/operator/default/follow?id=<?= $operator->id ?>"> Follow</a>
                                     <?php } ?>
                                 </div>
                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
                                     <div class="message">
-                                        <a href="" class="follow_massge">Message</a>
+                                        <a href="" class="parkrevieBtn">Message</a>
                                     </div>
                                 <?php } ?>
                             </div>

@@ -98,9 +98,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                                                 <div class="whiteReview mt-2 ">
                                                     <?php if (Yii::$app->user->identity) { ?>
-                                                        <button class="follow_btn writeAReviewBtn text-capitlize" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
+                                                        <button class="parkrevieBtn  writeAReviewBtn text-capitlize" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
                                                     <?php } else { ?>
-                                                        <a class="follow_btn" href="/site/login?authclient=google&referrer=/operator/<?= $operator->slug ?>/reviewlist">Please Login to Review</a>
+                                                        <a class="parkrevieBtn " href="/site/login?authclient=google&referrer=/operator/<?= $operator->slug ?>/reviewlist">Please Login to Review</a>
                                                     <?php } ?>
                                                 </div>
                                             </div>

@@ -63,7 +63,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
         echo 'Comment are not allowed!!!';
     }
 } else {
-    echo 'Please <a href="/site/login?authclient=google&referrer=/article/' . $article->slug . '" class="sign_intext">Sign in</a> for start Comment';
+    echo 'Please <a href="/site/login?authclient=google&referrer=/article/' . $article->slug . '" class="sign_intext parkrevieBtn">Sign in</a> for start Comment';
 } ?>
 
 <?php
