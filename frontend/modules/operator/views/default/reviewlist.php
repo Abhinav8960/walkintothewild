@@ -19,9 +19,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $park_constant = Constants::OPERATOR_VIEW;
-$banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
-?>
-
+$banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one(); ?>
 
 <section class="banner_section-inner   packagebnner position-relative">
     <picture class="position-relative">
@@ -134,7 +132,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                             <div class="text_com">
                                                                 <h6 class="nameavatr"><?= isset($review->park) ? $review->park->title : '' ?></h6>
                                                                 <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
-
                                                                     <div class="ratings">
                                                                         <p class="mb-0">
                                                                             <?php if ($rating_count = $review->rating) {
@@ -161,6 +158,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                         <span class="writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
                                                                     <?php } ?>
                                                                 </p>
+                                                                <?php if (Yii::$app->user->identity->id == $operator->user_id) { ?>
+                                                                    <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button><?php } ?>
                                                             </div>
                                                         </div>
                                                     </div>

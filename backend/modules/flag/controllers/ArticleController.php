@@ -19,7 +19,6 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleCommentSearch();
-        $searchModel->flaged = 1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -56,7 +55,7 @@ class ArticleController extends Controller
     {
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  ArticleCommentReport::find()->where(['article_comment_id' => $id, 'status' => [1, 20]]),
+            'query' =>  ArticleCommentReport::find()->where(['article_comment_id' => $id]),
             'pagination' => [
                 'pageSize' => 20,
             ],
