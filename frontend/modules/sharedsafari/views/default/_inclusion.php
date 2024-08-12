@@ -25,7 +25,7 @@
                             <ul>
                                 <li><label class="control-label font_sizes"><?= $optionLabel ?></label></li>
                             </ul>
-                         
+
                         </div>
                         <div class="col-sm-8 col-md-9">
                             <div class="form-check form-check-inline">
@@ -33,11 +33,11 @@
                                     <?php if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 1)) {
                                         echo 'Include';
                                     } elseif ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 2)) {
-                                        echo 'Exclude';
+                                        echo 'Not Include';
                                     } else if ((isset($selectedOptions[$optionValue]) && $selectedOptions[$optionValue] == 3)) {
                                         echo 'Optional';
                                     } else {
-                                        echo 'N/A';
+                                        echo '';
                                     } ?>
                                 </label>
                             </div>

@@ -14,20 +14,22 @@ $this->params['title'] = $this->title;
 
 <div class="container-fluid mt-5 ">
     <div class="row margin_bottomfooter">
-    <div class="col-md-12 ">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-            <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
-            <div class="d-flex justify-content-end align-items-center flex-basis-50  gap-2">
-            <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 w-25" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
-            <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 w-50" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery?package_id=' . $package_model->id . '']) ?>">+ Add Gallery</button>
+        <div class="d-flex justify-content-between align-items-center  flex-wrap mb-4">
+            <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
+            <div class=" mt-xxl-0 mt-3">
+                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2" target="_blank">
+                    <i class="fa fa-eye"></i> View
+                </a>
+                &nbsp;
+                <a  href="javascript:void(0)" class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery?package_id=' . $package_model->id]) ?>">
+                    + Add Gallery
+                </a>
             </div>
-            </div>
-           
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-10">
+        <div class="col-md-8 col-xl-9 col-xxl-10">
             <div class="card account-settingside itenary_tabs">
                 <div class="card-body safartabs p-4">
                     <div class="row">

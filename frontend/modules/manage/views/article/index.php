@@ -53,7 +53,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return  Html::a('<i class="fa fa-edit"></i> Update', ['update', 'slug' => $model->slug], ['class' => 'btn btn-info', 'title' => 'Edit Article']);
+                                                return  Html::a('<i class="fa fa-edit"></i> Update', ['update', 'slug' => $model->slug], ['class' => 'btn btn-info join_btn py-2', 'title' => 'Edit Article']);
                                             }
                                         ],
                                     ],

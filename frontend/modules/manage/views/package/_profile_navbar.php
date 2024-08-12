@@ -1,6 +1,6 @@
-<ul class="nav nav-tabs mb-4  border-bottom" id="myTab" role="tablist">
+<ul class="nav nav-tabs mb-4 slider_addmobile2 border-bottom" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <a href="/manage/package/update/<?= $package->id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>" id="home-tab">OVERVIEW</a>
+        <a href="/manage/package/update/<?= $package->id ?>" class="nav-link <?= isset($overview_active) ? $overview_active : '' ?>" id="home-tab">Overview</a>
     </li>
     <li class="nav-item" role="presentation">
         <a href="/manage/package/itinerary/<?= $package->id ?>/1" class="nav-link <?= isset($itinerary_active) ? $itinerary_active : '' ?>" id="profile-tab">Itinerary</a>
