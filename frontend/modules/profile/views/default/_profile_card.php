@@ -23,7 +23,7 @@ use yii\helpers\Url;
         </div> -->
     <div class="profileDetails  text-center">
         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>">
-            <div class=" mx-auto white">
+            <div class=" mx-auto white" style="width: 90px; height:90px">
                 <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" class="rounded-circle img-fluid" alt="profile-image">
 
             </div>
