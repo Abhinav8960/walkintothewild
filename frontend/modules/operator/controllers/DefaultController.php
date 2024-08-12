@@ -24,6 +24,7 @@ use frontend\models\SafariOperatorRatingReportForm;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\package\Package;
 use yii\data\ActiveDataProvider;
+use frontend\models\SafariOperatorRatingCommentForm;
 
 /**
  * DefaultController.
@@ -131,6 +132,8 @@ class DefaultController extends FrontendBaseController
     public function actionReviewlist($slug, $sort_by = null)
     {
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $replymodel = new SafariOperatorRatingCommentForm();
+
         if (empty($operator)) {
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -150,6 +153,34 @@ class DefaultController extends FrontendBaseController
             Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
             return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
         }
+
+        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate()) {
+            $post_data =  \Yii::$app->request->post('SafariOperatorRatingCommentForm');
+
+            $safari_operator_rating = SafariOperatorRating::find()->where(['id' => $post_data['safari_operator_rating_id']])->limit(1)->one();
+            $new_safari_operator_rating = new SafariOperatorRating();
+            $new_safari_operator_rating->safari_operator_id = $safari_operator_rating->safari_operator_id;
+            $new_safari_operator_rating->park_id = $safari_operator_rating->park_id;
+            $new_safari_operator_rating->user_id = Yii::$app->user->identity->id;
+            $new_safari_operator_rating->rating = 0;
+            $new_safari_operator_rating->review = $post_data['comment'];
+            $new_safari_operator_rating->parent_id = $safari_operator_rating->id;
+            $new_safari_operator_rating->status = 1;
+            if ($new_safari_operator_rating->save(false)) {
+                Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+                return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
+            }
+
+            /*
+            $new_safari_operator_rating->safari_operator_rating_id = $post_data['safari_operator_rating_id'];
+            $rating_comment->comment = $post_data['comment'];
+            if ($rating_comment->save(false)) {
+                Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+                return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
+            }
+                */
+        }
+
         $organized_by = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->all();
 
         return $this->render(
@@ -162,6 +193,7 @@ class DefaultController extends FrontendBaseController
                 'ratingsearchModel' => $ratingsearchModel,
                 'ratingdataProvider' => $ratingdataProvider,
                 'organized_by' => $organized_by,
+                'replymodel' => $replymodel
             ]
         );
     }
@@ -480,7 +512,9 @@ class DefaultController extends FrontendBaseController
         }
 
         $query = Article::find()->where([
-            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'status' => Article::STATUS_ACTIVE, 'user_id' => $operator->id
+            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
+            'status' => Article::STATUS_ACTIVE,
+            'user_id' => $operator->id
         ]);
         $articledataProvider = new \yii\data\ActiveDataProvider([
             'query' => $query,
@@ -695,7 +729,9 @@ class DefaultController extends FrontendBaseController
         }
 
         $query = Article::find()->where([
-            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR, 'status' => Article::STATUS_ACTIVE, 'user_id' => $operator->id
+            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
+            'status' => Article::STATUS_ACTIVE,
+            'user_id' => $operator->id
         ]);
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $query,

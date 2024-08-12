@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         <h6 class="nameRating">Average User Rating</h6>
                                                         <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
                                                             <div class="ratings">
-                                                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
+                                                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->andWhere(['parent_id' => 0])->average('rating');
                                                                 if ($avg) { ?>
                                                                     <p class="mb-0">
                                                                         <?= round($avg, 1) ?>
@@ -82,7 +82,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </p>
                                                                 <?php } ?>
                                                             </div>
-                                                            <?php $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->count(); {
+                                                            <?php $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->andWhere(['parent_id' => 0])->count(); {
                                                                 if ($count) { ?>
                                                                     <div class="googlerating">
                                                                         <p class="mb-0"><?= $count . " " ?>Reviews</p>
@@ -157,9 +157,51 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     <?php if (Yii::$app->user->id == $review->user_id) { ?>
                                                                         <span class="writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
                                                                     <?php } ?>
-                                                                </p>
-                                                                <?php if (Yii::$app->user->identity->id == $operator->user_id) { ?>
-                                                                    <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button><?php } ?>
+                                                                </p><?php
+                                                                    //                                                                    if (Yii::$app->user->identity->id == $operator->user_id) {
+                                                                    if (true) { ?>
+                                                                    <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $review->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+
+                                                                    <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $review->id ?>">
+                                                                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                                                                        <div class="mb-3">
+                                                                            <?= $form->field($replymodel, 'safari_operator_rating_id')->hiddenInput(['value' => $review->id])->label(false) ?>
+                                                                        </div>
+                                                                        <div class="mb-3">
+                                                                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
+                                                                        </div>
+                                                                        <div class="btn-wrapper">
+                                                                            <?= Html::submitButton('Submit', ['class' => 'post-comment  ']) ?>
+                                                                        </div>
+                                                                        <?php ActiveForm::end(); ?>
+                                                                    </div>
+                                                                <?php } ?>
+
+                                                                <!-- start reply here -->
+                                                                <!-- put reply here -->
+                                                                <div class="comment-reply"><?php
+                                                                                            $replies = $review->getcommentreply($review->id);
+                                                                                            if ($replies) {
+                                                                                                foreach ($replies as $reply) { ?>
+                                                                            <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
+                                                                                <div class="d-flex gap-2">
+                                                                                    <div class="avatar">
+                                                                                        <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                                                                    </div>
+                                                                                    <div class="font-color">
+                                                                                        <?= isset($reply->user) ? $reply->user->name : '' ?></span>
+                                                                                        <div class="comment-text">
+                                                                                            <p><?= $reply->review ?></p>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        <?php } ?>
+                                                                    <?php } ?>
+                                                                </div>
+                                                                <!-- end reply here -->
+
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -222,6 +264,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </div>
+
 <?php
 $script = <<< JS
 
@@ -253,6 +296,30 @@ function writeareviewfunction() {
 writeareviewfunction();
               
              
+JS;
+$this->registerJs($script);
+?>
+<script>
+    function toggleReplyForm(link) {
+        var target = link.getAttribute('data-target');
+        var replyForm = document.querySelector('#' + target);
+        if (replyForm.style.display === "none" || replyForm.style.display === "") {
+            replyForm.style.display = "block";
+        } else {
+            replyForm.style.display = "none";
+        }
+    }
+</script>
+
+<?php
+$script = <<< JS
+$('.toggle-replies').click(function() {
+        var target = $(this).data('target');
+        var container = $('#' + target);
+        var isVisible = container.is(':visible');
+        container.slideToggle();
+        $(this).text(isVisible ? 'View replies' : 'Hide replies');
+    });        
 JS;
 $this->registerJs($script);
 ?>

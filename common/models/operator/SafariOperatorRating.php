@@ -105,4 +105,9 @@ class SafariOperatorRating extends \yii\db\ActiveRecord
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
+
+    public function getCommentreply($review_id)
+    {
+        return SafariOperatorRating::find()->where(['parent_id' => $review_id])->orderBy('id DESC')->all();
+    }
 }
