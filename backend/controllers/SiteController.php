@@ -54,9 +54,9 @@ class SiteController extends Controller
     public function actions()
     {
         return [
-            // 'error' => [
-            //     'class' => \yii\web\ErrorAction::class,
-            // ],
+            'error' => [
+                'class' => \yii\web\ErrorAction::class,
+            ],
             'auth' => [
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'onAuthSuccess'],
