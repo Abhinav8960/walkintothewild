@@ -3,6 +3,7 @@
 namespace common\models\park;
 
 use common\traits\CommanRelationship;
+use common\models\master\animal\MasterAnimal;
 use Yii;
 
 /**
@@ -58,5 +59,10 @@ class SafariParkAnimal extends \yii\db\ActiveRecord implements \common\interface
     public function getSafaripark()
     {
         return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
+    }
+
+    public function getSafariparkanimalinfo()
+    {
+        return $this->hasOne(MasterAnimal::className(), ['id' => 'master_animal_id']);
     }
 }
