@@ -22,7 +22,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <?php
     if ((!$model->safarioperator_request_model->id)) { ?>
         <div class="col-md-6">
-            <?= $form->field($model, 'user_id')->dropDownList(GeneralModel::users(), ['prompt' => 'Select person who owns'])->label('Person who owns') ?>
+            <?= $form->field($model, 'user_id')->dropDownList(GeneralModel::tourusers(), ['prompt' => 'Select person who owns'])->label('Person who owns') ?>
         </div>
     <?php } ?>
     <div class="col-md-6">

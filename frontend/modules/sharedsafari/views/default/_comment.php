@@ -151,7 +151,7 @@ use yii\helpers\Url;
                     echo '<p class="px-3 pt-2">Please Join in for start Comment</p>';
                 }
             } else {
-                echo '<p class="px-3 pt-2">Please <a href="/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug . '" class="sign_intext">Sign In</a> for start Comment</p>';
+                echo '<p class="px-3 pt-2">Please <a href="/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug . '" class="parkrevieBtn">Sign In</a> for start Comment</p>';
             }
         } ?>
     </div>

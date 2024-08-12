@@ -52,11 +52,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="follow_massage d-flex justify-content-center mt-4 gap-3 align-items-center">
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $user->id) {
                         if (UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id, 'status' => '1'])->one()) { ?>
-                            <a href="<?= Url::toRoute(['/profile/default/unfollow', 'user_handle' =>  $user->user_handle]) ?>" class="follow_btn" data-method="POST">Unfollow</a>
+                            <a href="<?= Url::toRoute(['/profile/default/unfollow', 'user_handle' =>  $user->user_handle]) ?>" class="parkrevieBtn" data-method="POST">Unfollow</a>
                         <?php } else { ?>
-                            <a href="<?= Url::toRoute(['/profile/default/follow', 'user_handle' =>  $user->user_handle]) ?>" class="follow_btn " data-method="POST">Follow</a>
+                            <a href="<?= Url::toRoute(['/profile/default/follow', 'user_handle' =>  $user->user_handle]) ?>" class="parkrevieBtn " data-method="POST">Follow</a>
                         <?php } ?>
-                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="follow_massge">Message</a>
+                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
                     <?php } else { ?>
                         <a href="<?= Url::toRoute(['/account', 'id' =>  $user->id]) ?>" class="follow_massge rounded-2"><i class="fa fa-edit"></i> Edit Profile</a>
                     <?php } ?>
