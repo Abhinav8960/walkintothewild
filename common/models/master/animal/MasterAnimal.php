@@ -4,6 +4,7 @@ namespace common\models\master\animal;
 
 use common\models\meta\MetaAnimalType;
 use common\traits\CommanRelationship;
+use common\models\park\SafariParkAnimal;
 use Yii;
 
 /**
@@ -23,6 +24,10 @@ use Yii;
 class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
+
+    const USUAL_ANIMAL_TYPE = 1;
+    const RARE_ANIMAL_TYPE = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -95,5 +100,25 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getImagepath()
+    {
+        if ($this->feature_image != '') {
+            return '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
+        }
+    }
+
+    public function getBannerimagepath()
+    {
+        if ($this->banner != '') {
+            return '/storage/rareanimal/' . $this->id . '/' . $this->banner;
+        }
+    }
+
+
+    public function getRareparkanimals()
+    {
+        return $this->hasMany(SafariParkAnimal::className(), ['master_animal_id' => 'id'])->andWhere(['safari_park_animal.status' => 1]);
     }
 }

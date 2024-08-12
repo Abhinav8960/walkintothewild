@@ -28,7 +28,7 @@ $this->params['title'] = $this->title;
             <div class="col-md-10">
                 <div class="text-box">
                     <p>
-                        <span class="font-weight-bold">Animal Name: </span><?= $model->animal_name ?>
+                        <span class="font-weight-bold">Animal Name: </span><?= $model->name ?>
                     </p>
                     <p>
                         <span class="font-weight-bold">Short Description: </span><?= $model->short_description ?>

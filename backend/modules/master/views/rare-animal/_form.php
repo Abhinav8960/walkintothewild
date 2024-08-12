@@ -13,7 +13,7 @@ use common\models\GeneralModel;
 <div class="row">
 
     <div class="col-md-6">
-        <?= $form->field($model, 'animal_name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>
+        <?= $form->field($model, 'name')->textInput(['maxlength' => true, 'placeholder' => 'Enter Name']) ?>
     </div>
 
     <div class="col-md-6">

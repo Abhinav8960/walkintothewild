@@ -23,7 +23,7 @@ class MasterAnimalForm extends model
     public $status;
     public $status_option = [];
     public $animal_model;
-
+    public $animal_type;
 
     public function __construct(MasterAnimal $animal_model = null)
     {
@@ -36,6 +36,7 @@ class MasterAnimalForm extends model
 
         if ($animal_model  != '') {
             $this->animal_model = $animal_model;
+            $this->animal_type = $animal_model->animal_type;
             $this->slug = $this->animal_model->slug;
             $this->name = $this->animal_model->name;
             $this->short_description = $this->animal_model->short_description;
@@ -53,12 +54,20 @@ class MasterAnimalForm extends model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'name', 'short_description', 'status', 'slug',
-            'is_filter', 'is_filter_sequence'
+            'name',
+            'short_description',
+            'status',
+            'slug',
+            'is_filter',
+            'is_filter_sequence'
         ];
         $scenarios['update'] = [
-            'name', 'short_description', 'status', 'slug',
-            'is_filter', 'is_filter_sequence'
+            'name',
+            'short_description',
+            'status',
+            'slug',
+            'is_filter',
+            'is_filter_sequence'
         ];
         return $scenarios;
     }
@@ -72,8 +81,12 @@ class MasterAnimalForm extends model
             [['name', 'slug'], 'string', 'max' => 125],
             [['short_description'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
+            [['animal_type'], 'safe'],
             [
-                ['name'], 'unique', 'targetClass' => MasterAnimal::className(), 'message' => 'This name has already been taken.',
+                ['name'],
+                'unique',
+                'targetClass' => MasterAnimal::className(),
+                'message' => 'This name has already been taken.',
                 'filter' => function ($query) {
                     if (!$this->animal_model->isNewRecord) {
                         $query->andWhere(['not', ['id' => $this->animal_model->id]]);
@@ -102,6 +115,7 @@ class MasterAnimalForm extends model
      */
     public function initializeForm()
     {
+        $this->animal_model->animal_type = $this->animal_type;
         $this->animal_model->slug = $this->slug;
         $this->animal_model->name = $this->name;
         $this->animal_model->short_description = $this->short_description;

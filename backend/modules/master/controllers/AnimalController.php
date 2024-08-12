@@ -25,6 +25,7 @@ class AnimalController extends Controller
     {
         $searchModel = new MasterAnimalSearch();
         $searchModel->status = 1;
+        $searchModel->animal_type = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -45,6 +46,7 @@ class AnimalController extends Controller
         $model = new MasterAnimalForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->scenario = 'create';
+        $model->animal_type = MasterAnimal::USUAL_ANIMAL_TYPE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

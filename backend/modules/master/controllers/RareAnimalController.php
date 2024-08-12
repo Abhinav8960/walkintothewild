@@ -9,6 +9,8 @@ use common\models\master\animal\MasterAnimal;
 use common\models\master\animal\MasterRare;
 use common\models\master\animal\MasterRareAnimal;
 use common\models\master\animal\MasterRareAnimalSearch;
+use common\models\master\animal\MasterAnimalSearch;
+use common\models\park\SafariParkAnimal;
 use yii\web\UploadedFile;
 
 use yii\web\Controller;
@@ -26,8 +28,9 @@ class RareAnimalController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MasterRareAnimalSearch();
+        $searchModel = new MasterAnimalSearch();
         $searchModel->status = 1;
+        $searchModel->animal_type = MasterAnimal::RARE_ANIMAL_TYPE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,6 +51,7 @@ class RareAnimalController extends Controller
         $model = new MasterRareAnimalForm();
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->scenario = 'create';
+        $model->animal_type = MasterAnimal::RARE_ANIMAL_TYPE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -135,6 +139,7 @@ class RareAnimalController extends Controller
         $model->name = $model->id . '_' . $model->name;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
+
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
     }
@@ -148,7 +153,7 @@ class RareAnimalController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterRareAnimal::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

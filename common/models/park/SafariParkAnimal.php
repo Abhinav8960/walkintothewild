@@ -13,10 +13,6 @@ use Yii;
  * @property int $master_animal_id
  * @property string|null $animal_name
  * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property int $created_by
- * @property int $updated_by
  */
 class SafariParkAnimal extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
@@ -29,24 +25,6 @@ class SafariParkAnimal extends \yii\db\ActiveRecord implements \common\interface
         return 'safari_parks_animal';
     }
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-        ];
-    }
 
     /**
      * {@inheritdoc}
@@ -75,5 +53,10 @@ class SafariParkAnimal extends \yii\db\ActiveRecord implements \common\interface
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getSafaripark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
     }
 }

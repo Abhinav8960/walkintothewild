@@ -66,6 +66,7 @@ class MasterAnimalSearch extends MasterAnimal
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'status' => $this->status,
+            'animal_type' => $this->animal_type
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

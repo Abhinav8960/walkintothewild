@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
-        <?= $form->field($model, 'animal_name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
+        <?= $form->field($model, 'name')->textInput(['placeholder' => 'Search by Name'])->label(false) ?>
     </div>
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
