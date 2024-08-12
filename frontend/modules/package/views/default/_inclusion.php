@@ -50,7 +50,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="itenary_text">
+            <div class="itenary_text font_familydd">
                 <p><?= $package->package_inclusion ?></p>
             </div>
         </div>

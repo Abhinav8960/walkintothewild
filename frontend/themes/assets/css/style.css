@@ -7111,3 +7111,11 @@ font-weight: 500;
 
     font-size: 14px !important;
 }
+
+.font_familydd p,
+.font_familydd span
+{
+
+    font-size: 15px !important;
+    font-family: "Roboto", sans-serif !important;
+}
