@@ -26,7 +26,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <?php if ($showFooterContent) : ?>
                     <div class="footer_text">
                         <div class="heading-footer">
-                            <h6>ABOUT US</h6>
+                            <h6>About Us</h6>
                         </div>
                         <div class="footerContent">
                             <div class="content_terms" style="word-break: break-word;">
@@ -39,9 +39,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="footer_text float-lg-end">
-                    <!-- <div class="heading-footer">
-                        <h6>Become A Partner </h6>
-                    </div> -->
+                    <div class="heading-footer">
+                        <h6>Useful Links </h6>
+                    </div>
                     <div class="footerContent">
                         <ul class="footer_listing">
                             <!-- <li><a href="/safaritour-registration">Safari Tour Operator</a></li> -->
