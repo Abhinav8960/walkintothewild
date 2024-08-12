@@ -17,8 +17,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
             'model' => $model,
         ]) ?>  
 </section>
-
-<div class="row my-lg-4 my-2 pt-3 px-lg-5 px-3 justify-content-center margin_bottomfooter mb-5">
+<section class="">
+<div class="container-fluid">
+<div class="row my-lg-4 my-2 pt-3  justify-content-center margin_bottomfooter mb-5">
     <div class="col-lg-12 col-xxl-11">
         <div class="row">
             <div class="col-12 mb-3">
@@ -32,5 +33,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
     </div>
+</div>
+</section>
+
 
 </div>
