@@ -9,19 +9,17 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 ?>
 
 <div class="container-fluid mt-5 mb-5">
-    <div class="row mb-5">
-        <div class="col-md-12">
-            <h5><?= $this->title ?></h5>
+    <div class="row margin_bottomfooter">
+    <div class="col-md-12">
+        <h6 class="fs-3 fw-bold mb-4"><?= $this->title ?></h6>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'article']); ?>
         </div>
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-body">
+        <div class="col-md-8 col-xl-9 col-xxl-10">
+      
                     <?= $this->render('_form', ['model' => $model]) ?>
                 </div>
-            </div>
-        </div>
+           
     </div>
 </div>

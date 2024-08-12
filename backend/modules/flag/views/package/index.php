@@ -62,8 +62,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'value' => function ($model) {
                             return $model->user->name;
                         }
-                    ],
-
+                    ],/*
                     [
                         'label' => 'Flagged Reason',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -75,8 +74,16 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             }
                             return implode(", ", $reasons);
                         }
+                    ],*/
+                    [
+                        'label' => 'No. of Flags',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $flags = $model->getReports()->where(['status' => 1])->all();
+                            return count($flags);
+                        }
                     ],
-
                     [
                         'label' => 'Action',
                         'contentOptions' => ['style' => 'width: 10%;'],

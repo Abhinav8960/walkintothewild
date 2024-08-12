@@ -58,7 +58,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="row">
-                <div class="col-6">
+                <div class="col-md-6">
                     <?= $form->field($model, 'banner_image', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->fileInput()->label('Article Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>

@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="card">
     <div class="card-body p-4 modal_form">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
                 <?= $form->field($model, 'package_name', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
@@ -35,12 +35,12 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
                 <?= $form->field($model, 'no_of_day', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Day/Night'])->label('Day/Night') ?>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6 col-lg-4">
                 <?= $form->field($model, 'no_of_safari', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
