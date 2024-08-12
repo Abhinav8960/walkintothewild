@@ -222,16 +222,24 @@ class SafariOperatorTourController extends Controller
                             }
                         }
 
-                        $to_mail = $model->safarioperator_request_model->email;
-                        // $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
-                        $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
-                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
-                        $req = ['username' => $model->safarioperator_request_model->business_name];
+                        // $to_mail = $model->safarioperator_request_model->email;
+                        // // $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
+                        // $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
+                        // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        // $req = ['username' => $model->safarioperator_request_model->business_name];
 
-                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        //$model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['index']);
+                        // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        // //$model->uploadFile();
+                        // \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        // return $this->redirect(['index']);
+                        $model->safarioperator_request_model->is_approved = 1;
+                        if ($model->safarioperator_request_model->save(false)) {
+                            $safari_operator = $model->safarioperator_request_model->safariapproved($model->safarioperator_request_model);
+                            if ($safari_operator) {
+                                \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                                return $this->redirect(['index']);
+                            }
+                        }
                     }
                 }
             }
@@ -286,16 +294,24 @@ class SafariOperatorTourController extends Controller
                             }
                         }
 
-                        $to_mail = $model->safarioperator_request_model->email;
-                        // $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
-                        $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
-                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
-                        $req = ['username' => $model->safarioperator_request_model->business_name];
+                        // $to_mail = $model->safarioperator_request_model->email;
+                        // // $subject = 'Welcome to ' . $model->safarioperator_request_model->business_name . ' – Your Registration is Successful!';
+                        // $subject = 'Safari Tour Operator Submission Received: Let`s Walk into the Wild!';
+                        // $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_REGISTRATION;
+                        // $req = ['username' => $model->safarioperator_request_model->business_name];
 
-                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        //$model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Safari Operator Added Successfully');
-                        return $this->redirect(['index']);
+                        // MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        // //$model->uploadFile();
+                        // \Yii::$app->session->setFlash('success', 'Safari Operator Added Successfully');
+                        // return $this->redirect(['index']);
+                        $model->safarioperator_request_model->is_approved = 1;
+                        if ($model->safarioperator_request_model->save(false)) {
+                            $safari_operator = $model->safarioperator_request_model->safariapproved($model->safarioperator_request_model);
+                            if ($safari_operator) {
+                                \Yii::$app->session->setFlash('success', 'Update Successfully');
+                                return $this->redirect(['index']);
+                            }
+                        }
                     }
                 }
             }

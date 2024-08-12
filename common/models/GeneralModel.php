@@ -314,12 +314,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function rareanimaloption()
     {
-        return ArrayHelper::map(MasterRareAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['animal_name' => SORT_ASC])->all(), 'id', 'animal_name');
+        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
     public static function animaloption()
     {
-        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
     public static function animalfilteroption()
@@ -631,9 +631,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         if ($ids) {
             $query->andWhere("master_rare_animal.id NOT IN ($ids)");
         }
-        // $query->joinwith(['rareparkanimals' => function ($query) {
-        //     $query->andFilterWhere(['safari_park_rare_animal.status' => 1]);
-        // }]);
         $parks = $query->asarray()->all();
         $result = ArrayHelper::map($parks, 'id', 'animal_name');
         return $result;
@@ -1094,5 +1091,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         }
 
         return $return;
+    }
+    public static function tourusers()
+    {
+
+        return ArrayHelper::map(User::find()->where(['status' => 10, 'is_safari_operator' => 0])->andWhere(['<>', 'is_adminstrator', 1])->andWhere(['<>', 'is_admin', 1])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 }

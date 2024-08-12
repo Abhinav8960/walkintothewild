@@ -13,7 +13,6 @@ use common\models\park\SafariParkAccomodation;
 use common\models\park\SafariParkAnimal;
 use common\models\park\SafariParkGallerySearch;
 use common\models\park\SafariParkMonth;
-use common\models\park\SafariParkRareAnimal;
 use common\models\park\SafariParkSearch;
 use common\models\park\SafariParkSession;
 use common\models\park\SafariParkVehicle;
@@ -119,10 +118,6 @@ class DefaultController extends Controller
                                 $parkAnimal = new SafariParkAnimal();
                                 $parkAnimal->safari_park_id = $model->safari_park_model->id;
                                 $parkAnimal->master_animal_id = $animal;
-                                if ($animal) {
-                                    $parkAnimal->animal_name =  GeneralModel::animaloption()[$animal];
-                                }
-
                                 $parkAnimal->save(false);
                             }
                         }
@@ -130,12 +125,9 @@ class DefaultController extends Controller
                         $rare_animals = $model->master_rare_animal_id;
                         if ($rare_animals) {
                             foreach ($rare_animals as $rare_animal) {
-                                $parkrareAnimal = new SafariParkRareAnimal();
+                                $parkrareAnimal = new SafariParkAnimal();
                                 $parkrareAnimal->safari_park_id = $model->safari_park_model->id;
-                                $parkrareAnimal->master_rare_animal_id = $rare_animal;
-                                if ($rare_animal) {
-                                    $parkrareAnimal->animal_name =  GeneralModel::rareanimaloption()[$rare_animal];
-                                }
+                                $parkrareAnimal->master_animal_id = $rare_animal;
                                 $parkrareAnimal->save(false);
                             }
                         }
@@ -228,15 +220,11 @@ class DefaultController extends Controller
 
                         $rare_animals = $model->master_rare_animal_id;
                         if ($rare_animals) {
-                            SafariParkRareAnimal::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $id]);
                             foreach ($rare_animals as $rare_animal) {
-                                $parkrareAnimal = new SafariParkRareAnimal();
+                                $parkrareAnimal = new SafariParkAnimal();
                                 $parkrareAnimal->safari_park_id = $model->safari_park_model->id;
-                                $parkrareAnimal->master_rare_animal_id = $rare_animal;
-                                if ($rare_animal) {
-                                    $parkrareAnimal->animal_name =  GeneralModel::rareanimaloption()[$rare_animal];
-                                }
-
+                                $parkrareAnimal->master_animal_id = $rare_animal;
                                 $parkrareAnimal->save(false);
                             }
                         }

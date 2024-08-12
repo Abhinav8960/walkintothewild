@@ -56,9 +56,11 @@ $this->params['buttons'][] = Html::a('Edit Profile', ['/park/safari/profile', 's
                         <span>Animals: </span> <?php if ($model->animals) {
 
                                                     foreach ($model->animals as $animal) {
-                                                        echo $animal->animal_name . ',' ?>
+                                                        echo 'Name,'
+                                                ?>
                         <?php }
-                                                } ?>
+                                                }
+                        ?>
                     </p>
                     <p>
                         <span>Average Safari Price: </span><?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?>

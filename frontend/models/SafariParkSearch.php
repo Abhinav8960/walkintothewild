@@ -117,8 +117,6 @@ class SafariParkSearch extends SafariPark
 
         if ($this->master_rare_animal_id && $this->master_rare_animal_id != 0) {
             $query->joinwith(['animals' => function ($query) {
-                //$query->andFilterWhere(['safari_park_rare_animal.master_rare_animal_id' => $this->master_rare_animal_id]);
-
                 $query->andFilterWhere(['safari_parks_animal.master_animal_id' => $this->master_rare_animal_id]);
             }]);
         }
@@ -173,11 +171,12 @@ class SafariParkSearch extends SafariPark
 
         // If Rare EXOTIC ANIMAL Selected
         if ($this->master_rare_animal_id == '') {
-            $query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_park_animal WHERE status=1)");
+            $query->andWhere("safari_park.id IN (SELECT distinct safari_park_id from safari_parks_animal WHERE status=1)");
             // $query->andFilterWhere(['like', 'title', 'Tiger Reserve']);
             $query->andWhere(['show_in_filter' => 1]);
         }
-        //$rawSql = $query->createCommand()->getRawSql();dd($rawSql);
+        //$rawSql = $query->createCommand()->getRawSql();
+        //dd($rawSql);
         return $dataProvider;
     }
 }
