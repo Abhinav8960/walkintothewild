@@ -58,6 +58,44 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             return  $model->report_detail;
                         }
                     ],
+                    [
+                        'label' => 'Flagged Detail',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return  $model->report_detail;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Action',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $return = 'N/A';
+                            if ($model->status == 2) {
+                                $return = 'Delete';
+                            } else if ($model->status == 3) {
+                                $return = 'Ignore';
+                            } else if ($model->status == 20) {
+                                $return = 'Blocked User';
+                            }
+                            return $return;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Admin Comment',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $return = 'N/A';
+                            if (!empty($model->reason)) {
+                                $return = $model->reason;
+                            }
+                            return $return;
+                        }
+                    ],
 
                     [
                         'label' => 'Action',

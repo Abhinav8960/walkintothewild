@@ -35,7 +35,7 @@ use yii\helpers\Url;
                         $replies = $comments->getReplies()->where(['status' => 1])->all();
 
                 ?>
-                        <div class="one_box">
+                        <div class="one_box position-relative">
                             <div class="objec-flgs">
                                 <?php if ($login_safarioperator) {
                                     if ($login_safarioperator && Yii::$app->user->id != $login_safarioperator->user_id) { ?>
