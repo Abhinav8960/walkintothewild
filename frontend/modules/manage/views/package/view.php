@@ -20,10 +20,10 @@ $this->params['title'] = $this->title;
         <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-8 col-xl-9 col-xxl-10">
-            <div class="card account-settingside ">
+        <div class="col-md-8 col-xl-9 col-xxl-10 itenary_tabs">
+            <div class="card account-settingside safartabs ">
                 <div class="card-body p-4">
-                    <div class="row">
+                    <div class="row  mb-4">
                         <?= $this->render('_navbar', ['package' => $package_model, 'quote_active' => 'active']) ?>
                     </div>
                     <div class="row">

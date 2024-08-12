@@ -13,7 +13,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap">
                 <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
                 <div class="d-flex align-items-center mt-xl-0 mt-2">
-                    <button class="btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
+                    <button class="btn_newsafari organizeBtn newbg departureBtn py-2 rounded-2 " value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                 </div>
             </div>
         </div>
