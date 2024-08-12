@@ -970,6 +970,10 @@
   }
 }
 @media only screen and (max-width: 1200px) {
+  .itenary_tabs .safartabs .nav-tabs.slider_addmobile2  .nav-link{
+
+text-align: center !important;
+  }
   .terms a,.copyright p{
 
     font-size: 14px;

@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
 <div class="card">
     <div class="card-body p-4 modal_form">
         <div class="row">
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'package_name', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
@@ -33,14 +33,12 @@ use yii\bootstrap5\ActiveForm;
                     'id' => 'packageform-package_name', // Add an ID for JavaScript targeting
                 ]) ?>
             </div>
-
-
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'no_of_day', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Day/Night'])->label('Day/Night') ?>
             </div>
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'no_of_safari', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
@@ -48,7 +46,7 @@ use yii\bootstrap5\ActiveForm;
                     'placeholder' => 'Enter Number of Safaries',
                 ]) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'start_location', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
@@ -56,7 +54,7 @@ use yii\bootstrap5\ActiveForm;
                     'placeholder' => 'Enter Start Location',
                 ]) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'end_location', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
@@ -64,7 +62,7 @@ use yii\bootstrap5\ActiveForm;
                     'placeholder' => 'Enter End Location',
                 ]) ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'start_date', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->widget(\kartik\datetime\DateTimePicker::classname(), [
@@ -80,7 +78,7 @@ use yii\bootstrap5\ActiveForm;
                     ]
                 ]); ?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'end_date', [
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->widget(\kartik\datetime\DateTimePicker::classname(), [
@@ -96,19 +94,18 @@ use yii\bootstrap5\ActiveForm;
                     ]
                 ]); ?>
             </div>
-
             <?php
             if ($model->package_model->package_image) { ?>
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'package_image', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
                 </div>
             <?php } else { ?>
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'package_image', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
@@ -118,7 +115,7 @@ use yii\bootstrap5\ActiveForm;
 
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'package_park', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->widget(\kartik\select2\Select2::classname(), [
@@ -130,13 +127,13 @@ use yii\bootstrap5\ActiveForm;
                         ],
                     ])->label('Safari Park') ?>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'stay_category_id', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Category']) ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'cost_per_person', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->textInput([
@@ -145,13 +142,13 @@ use yii\bootstrap5\ActiveForm;
                     ]) ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'type', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion']) ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'gst_percentage', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->textInput([
@@ -159,7 +156,7 @@ use yii\bootstrap5\ActiveForm;
                     ]) ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'package_feature', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->widget(\kartik\select2\Select2::classname(), [
@@ -172,7 +169,7 @@ use yii\bootstrap5\ActiveForm;
                     ])->label('Package Feature') ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'master_vehicle_id', [
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->widget(\kartik\select2\Select2::classname(), [
@@ -199,12 +196,12 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <?php
             if (!empty($model->package_model->id)) { ?>
-                <div class="col-md-3">
+                <div class="col-md-12 col-lg-12">
                     <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
                 </div>
             <?php } ?>
         </div>
-        <div class="row">
+        <div class="row pt-3">
             <div class="col-md-12">
                 <div class="creat-safri float-end w-auto">
                     <?= Html::submitButton('Update Package ', ['class' => 'safari_create font_set ']) ?>

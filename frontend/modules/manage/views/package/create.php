@@ -159,13 +159,13 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                     ]) ?>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-lg-6 col-md-6">
                                     <?= $form->field($model, 'type', [
                                         'labelOptions' => ['class' => 'Modal_label']
                                     ])->dropDownList(['0' => 'Exclusion', '1' => 'Inclusion']) ?>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-lg-6 col-md-12">
                                     <?= $form->field($model, 'gst_percentage', [
                                         'labelOptions' => ['class' => 'Modal_label']
                                     ])->textInput([
@@ -186,7 +186,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                     ])->label('Package Feature') ?>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-12">
                                     <?= $form->field($model, 'master_vehicle_id', [
                                         'labelOptions' => ['class' => 'Modal_label']
                                     ])->widget(\kartik\select2\Select2::classname(), [
