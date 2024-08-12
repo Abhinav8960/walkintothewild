@@ -291,7 +291,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     }
     public static function users()
     {
-        return ArrayHelper::map(User::find()->where(['status' => 10])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(User::find()->where(['status' => 10, 'is_safari_operator' => 0])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
     public static function stateoption()
     {
