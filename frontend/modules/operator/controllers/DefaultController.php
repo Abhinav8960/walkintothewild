@@ -653,7 +653,7 @@ class DefaultController extends FrontendBaseController
         $dataProvider = new ActiveDataProvider([
             'query' => $operator_parks,
             'pagination' => [
-                'pageSize' => 6,
+                'pageSize' => 8,
             ],
         ]);
 
