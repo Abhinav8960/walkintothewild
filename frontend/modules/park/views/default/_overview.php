@@ -352,7 +352,11 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                                             $class = '';
                                             if ($bufferzone->is_open_in_monsoon == 0) {
                                                 $class = 'bufferzone_inactive';
-                                            } ?>
+                                            } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 0) {
+                                                $class = 'bufferzone_inactive';
+                                            } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 1) {
+                                                $class = '';
+                                            }    ?>
                                             <tr class="<?= $class ?>">
                                                 <td><?= $bufferzone->zone_name ?></td>
                                                 <td><?= $bufferzone->entry_gate_name ?></td>
