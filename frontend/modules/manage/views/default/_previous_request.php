@@ -7,7 +7,7 @@ use common\models\GeneralModel;
 ?>
 <div class="card card account-settingside">
     <div class="card-body p-4">
-        <h6 class="fs-6 fw-bold mb-4" id="w1-button">Previous Request</h6>
+        <h6 class="fs-6 fw-bold mb-4" id="w1-button">Previous</h6>
         <div class="table-responsive table_design_manage">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
