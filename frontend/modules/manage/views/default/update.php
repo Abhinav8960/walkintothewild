@@ -160,7 +160,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
-            <?= $this->render('_previous_request', ['dataProvider' => $dataProvider]) ?>
+         
         </div>
     </div>
 </div>
