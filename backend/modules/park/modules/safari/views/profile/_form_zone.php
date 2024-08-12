@@ -57,7 +57,7 @@ $script = <<< JS
 
         $("#safariparkzoneform-master_zone_type_id").on("change",function(){
             var selectedValue = $("#safariparkzoneform-master_zone_type_id").val();
-            if(selectedValue ==1){
+            if(selectedValue ==1 || selectedValue ==2){
                 document.getElementById("is_open_in_monsoon").style.display= "block";
             }else{
                 document.getElementById("is_open_in_monsoon").style.display= "none";

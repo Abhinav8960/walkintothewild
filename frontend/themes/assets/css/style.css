@@ -2447,6 +2447,11 @@ figure {
     background-color: #127729 !important;
     color: var(--colorwhite) !important;
 }
+.bufferzone_inactive td{
+    background-color: gray !important;
+    color: #cbcbcb !important;
+
+}
 
 .tabledesigncore table td {
 
