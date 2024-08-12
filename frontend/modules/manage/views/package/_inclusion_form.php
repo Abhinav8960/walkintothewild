@@ -34,7 +34,7 @@ use yii\bootstrap5\ActiveForm;
                                 <?= $form->field($model, 'package_included[' . $optionValue . ']')->radioList(
                                     [
                                         '1' => 'Include',
-                                        '2' => 'Exclude',
+                                        '2' => 'Not Include',
                                         '3' => 'Optional',
                                     ],
                                     [
@@ -65,10 +65,10 @@ use yii\bootstrap5\ActiveForm;
         <hr>
         <div class="row">
             <div class="col-md-12">
-            <div class="creat-safri float-end w-auto">
+                <div class="creat-safri float-end w-auto">
                     <?= Html::submitButton('Create ', ['class' => 'safari_create font_set ']) ?>
                 </div>
-               
+
             </div>
         </div>
     </div>

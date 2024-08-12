@@ -34,7 +34,7 @@ use yii\bootstrap5\ActiveForm;
                                 <?= $form->field($model, 'share_safari_included[' . $optionValue . ']')->radioList(
                                     [
                                         '1' => 'Include',
-                                        '2' => 'Exclude',
+                                        '2' => 'Not Include',
                                         '3' => 'Optional',
                                     ],
                                     [
