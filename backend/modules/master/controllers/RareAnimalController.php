@@ -7,7 +7,6 @@ use common\models\master\animal\form\MasterAnimalForm;
 use common\models\master\animal\form\MasterRareAnimalForm;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\animal\MasterRare;
-use common\models\master\animal\MasterRareAnimal;
 use common\models\master\animal\MasterRareAnimalSearch;
 use common\models\master\animal\MasterAnimalSearch;
 use common\models\park\SafariParkAnimal;
@@ -32,7 +31,6 @@ class RareAnimalController extends Controller
         $searchModel->status = 1;
         $searchModel->animal_type = MasterAnimal::RARE_ANIMAL_TYPE;
         $dataProvider = $searchModel->search($this->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

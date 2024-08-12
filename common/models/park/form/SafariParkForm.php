@@ -6,11 +6,11 @@ use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
 use common\models\park\SafariPark;
+use common\models\master\animal\MasterAnimal;
 use common\models\park\SafariParkAccomodation;
 use common\models\park\SafariParkAnimal;
 use common\models\park\SafariParkBonusExperience;
 use common\models\park\SafariParkMonth;
-use common\models\park\SafariParkRareAnimal;
 use common\models\park\SafariParkSession;
 use common\models\park\SafariParkVehicle;
 
@@ -160,8 +160,13 @@ class SafariParkForm extends model
             $this->is_shared_safari = $this->safari_park_model->is_shared_safari;
             $this->status = $this->safari_park_model->status;
             $this->vehicle_id = SafariParkVehicle::find()->select('vehicle_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
-            $this->master_animal_id = SafariParkAnimal::find()->select('master_animal_id', 'master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
-            $this->master_rare_animal_id = SafariParkRareAnimal::find()->select('master_rare_animal_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
+
+            //$this->master_animal_id = SafariParkAnimal::find()->select('master_animal_id', 'master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
+
+            $this->master_animal_id = SafariParkAnimal::find()->leftJoin('master_animal', 'master_animal.id = safari_parks_animal.master_animal_id')->select('master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id])->andWhere(['safari_parks_animal.status' => 1])->andWhere(['master_animal.animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->column();
+
+            $this->master_rare_animal_id = SafariParkAnimal::find()->leftJoin('master_animal', 'master_animal.id = safari_parks_animal.master_animal_id')->select('master_animal_id')->where(['safari_park_id' => $this->safari_park_model->id])->andWhere(['safari_parks_animal.status' => 1])->andWhere(['master_animal.animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->column();
+
             $this->master_bonus_experience_id = SafariParkBonusExperience::find()->select('master_bonus_experience_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->month = SafariParkMonth::find()->select('month_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
             $this->safari_session = SafariParkSession::find()->select('session_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
@@ -193,9 +198,42 @@ class SafariParkForm extends model
             [['long_description'], 'validateMaxWords', 'params' => ['max' => 140]],
             [['status', 'country_id', 'is_published'], 'default', 'value' => 1],
             [[
-                'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description', 'long_description',
-                'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'nearest_railway_station', 'nearest_airport', 'nearest_railway_station_two', 'nearest_airport_two',
-                'about_title', 'about_description', 'meta_keywords', 'module_title', 'module_description', 'month_note', 'safri_cost_note', 'animal_text', 'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'
+                'master_bonus_experience_id',
+                'official_website',
+                'country_name',
+                'state_name',
+                'city_name',
+                'short_description',
+                'long_description',
+                'vehicle_id',
+                'master_animal_id',
+                'master_rare_animal_id',
+                'safari_session',
+                'month',
+                'accomodation',
+                'logo',
+                'feature_image',
+                'pincode',
+                'latitude',
+                'longitude',
+                'nearest_railway_station',
+                'nearest_airport',
+                'nearest_railway_station_two',
+                'nearest_airport_two',
+                'about_title',
+                'about_description',
+                'meta_keywords',
+                'module_title',
+                'module_description',
+                'month_note',
+                'safri_cost_note',
+                'animal_text',
+                'nearest_railway_station_three',
+                'nearest_railway_station_four',
+                'nearest_railway_station_five',
+                'nearest_airport_three',
+                'nearest_airport_four',
+                'nearest_airport_five'
             ], 'safe'],
             [['uploadfile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'csv'],
             ['uploadfile', 'required', 'on' => 'uploadfile'],
@@ -394,7 +432,9 @@ class SafariParkForm extends model
             //////////////////////////////////////////////////////////////////////////////////
 
             [
-                ['feature_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['feature_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 380,
                 'maxWidth' => 380,
                 'maxHeight' => 600,
@@ -402,7 +442,9 @@ class SafariParkForm extends model
                 'maxSize' => 250 * 1024
             ],
             [
-                ['logo'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['logo'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 350,
                 'maxWidth' => 350,
                 'maxHeight' => 350,
@@ -418,26 +460,121 @@ class SafariParkForm extends model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'show_in_filter', 'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
-            'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
-            'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
-            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'month_note', 'safri_cost_note', 'animal_text'
+            'show_in_filter',
+            'title',
+            'slug',
+            'status',
+            'avg_safari_price_min',
+            'avg_safari_price_max',
+            'nearest_airport_distance',
+            'nearest_airport',
+            'nearest_railway_station_distance',
+            'nearest_railway_station',
+            'long_description',
+            'meta_title',
+            'meta_description',
+            'status',
+            'master_location_id',
+            'country_id',
+            'state_id',
+            'city_id',
+            'master_bonus_experience_id',
+            'official_website',
+            'country_name',
+            'state_name',
+            'city_name',
+            'short_description',
+            'vehicle_id',
+            'master_animal_id',
+            'master_rare_animal_id',
+            'safari_session',
+            'month',
+            'accomodation',
+            'logo',
+            'feature_image',
+            'pincode',
+            'latitude',
+            'longitude',
+            'month_note',
+            'safri_cost_note',
+            'animal_text'
         ];
         $scenarios['update'] = [
-            'show_in_filter', 'title', 'slug', 'status', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station',
-            'long_description', 'meta_title', 'meta_description', 'status', 'master_location_id', 'country_id', 'state_id', 'city_id',
-            'master_bonus_experience_id', 'official_website', 'country_name', 'state_name', 'city_name', 'short_description',
-            'vehicle_id', 'master_animal_id', 'master_rare_animal_id', 'safari_session', 'month', 'accomodation', 'logo', 'feature_image', 'pincode', 'latitude', 'longitude', 'about_title', 'about_description', 'meta_keywords', 'month_note', 'safri_cost_note', 'animal_text', 'is_most_demanding', 'is_shared_safari'
+            'show_in_filter',
+            'title',
+            'slug',
+            'status',
+            'avg_safari_price_min',
+            'avg_safari_price_max',
+            'nearest_airport_distance',
+            'nearest_airport',
+            'nearest_railway_station_distance',
+            'nearest_railway_station',
+            'long_description',
+            'meta_title',
+            'meta_description',
+            'status',
+            'master_location_id',
+            'country_id',
+            'state_id',
+            'city_id',
+            'master_bonus_experience_id',
+            'official_website',
+            'country_name',
+            'state_name',
+            'city_name',
+            'short_description',
+            'vehicle_id',
+            'master_animal_id',
+            'master_rare_animal_id',
+            'safari_session',
+            'month',
+            'accomodation',
+            'logo',
+            'feature_image',
+            'pincode',
+            'latitude',
+            'longitude',
+            'about_title',
+            'about_description',
+            'meta_keywords',
+            'month_note',
+            'safri_cost_note',
+            'animal_text',
+            'is_most_demanding',
+            'is_shared_safari'
         ];
         $scenarios['howtoreach'] = [
-            'status', 'nearest_airport_distance', 'nearest_airport', 'nearest_railway_station_distance', 'nearest_railway_station', 'nearest_airport_distance_two', 'nearest_airport_two', 'nearest_railway_station_distance_two', 'nearest_railway_station_two',
-            'module_title', 'module_description', 'nearest_railway_station_distance_three', 'nearest_railway_station_distance_four', 'nearest_railway_station_distance_five', 'nearest_airport_distance_three', 'nearest_airport_distance_four', 'nearest_airport_distance_five',
-            'nearest_railway_station_three', 'nearest_railway_station_four', 'nearest_railway_station_five', 'nearest_airport_three', 'nearest_airport_four', 'nearest_airport_five'
+            'status',
+            'nearest_airport_distance',
+            'nearest_airport',
+            'nearest_railway_station_distance',
+            'nearest_railway_station',
+            'nearest_airport_distance_two',
+            'nearest_airport_two',
+            'nearest_railway_station_distance_two',
+            'nearest_railway_station_two',
+            'module_title',
+            'module_description',
+            'nearest_railway_station_distance_three',
+            'nearest_railway_station_distance_four',
+            'nearest_railway_station_distance_five',
+            'nearest_airport_distance_three',
+            'nearest_airport_distance_four',
+            'nearest_airport_distance_five',
+            'nearest_railway_station_three',
+            'nearest_railway_station_four',
+            'nearest_railway_station_five',
+            'nearest_airport_three',
+            'nearest_airport_four',
+            'nearest_airport_five'
         ];
         $scenarios['media'] = ['logo', 'feature_image', 'status'];
         $scenarios['florafauna'] = ['florafauna'];
         $scenarios['map'] = [
-            'latitude', 'longitude', 'status'
+            'latitude',
+            'longitude',
+            'status'
         ];
         $scenarios['meta'] = ['meta_title', 'meta_keywords', 'meta_description', 'status', 'slug'];
         return $scenarios;

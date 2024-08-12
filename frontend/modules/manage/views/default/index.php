@@ -33,7 +33,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class=" mt-xxl-0 mt-3">
                 <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]) ?>" class="post-comment newbg rounded-2 padding_btn" target="_blank"><i class="fa fa-eye"></i> View as Member</a> &nbsp;
-                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update Request</a>
+                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update</a>
             </div>
         </div>
         <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">

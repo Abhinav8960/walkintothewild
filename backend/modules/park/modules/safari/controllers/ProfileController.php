@@ -23,7 +23,6 @@ use common\models\park\SafariParkFloraFaunaSearch;
 use common\models\park\SafariParkGallery;
 use common\models\park\SafariParkGallerySearch;
 use common\models\park\SafariParkMonth;
-use common\models\park\SafariParkRareAnimal;
 use common\models\park\SafariParkRatingSearch;
 use common\models\park\SafariParkSession;
 use common\models\park\SafariParkVehicle;
@@ -153,26 +152,17 @@ class ProfileController extends Controller
                                 $parkAnimal = new SafariParkAnimal();
                                 $parkAnimal->safari_park_id = $model->safari_park_model->id;
                                 $parkAnimal->master_animal_id = $animal;
-                                if ($animal) {
-                                    $parkAnimal->animal_name =  GeneralModel::animaloption()[$animal];
-                                }
-
                                 $parkAnimal->save(false);
                             }
                         }
 
 
                         $rare_animals = $model->master_rare_animal_id;
-                        SafariParkRareAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
                         if ($rare_animals) {
                             foreach ($rare_animals as $rare_animal) {
-                                $parkrareAnimal = new SafariParkRareAnimal();
+                                $parkrareAnimal = new SafariParkAnimal();
                                 $parkrareAnimal->safari_park_id = $model->safari_park_model->id;
-                                $parkrareAnimal->master_rare_animal_id = $rare_animal;
-                                if ($rare_animal) {
-                                    $parkrareAnimal->animal_name =  GeneralModel::rareanimaloption()[$rare_animal];
-                                }
-
+                                $parkrareAnimal->master_animal_id = $rare_animal;
                                 $parkrareAnimal->save(false);
                             }
                         }
