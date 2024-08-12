@@ -5,6 +5,7 @@ namespace common\models\park;
 use Yii;
 use common\traits\CommanRelationship;
 use common\models\master\city\MasterCity;
+use common\models\park\SafariParkAnimal;
 use common\models\master\state\MasterState;
 use common\models\operator\SafariOperatorPark;
 use common\models\master\airport\MasterAirport;

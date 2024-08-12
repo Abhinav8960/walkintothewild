@@ -119,6 +119,6 @@ class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\St
 
     public function getRareparkanimals()
     {
-        return $this->hasMany(SafariParkAnimal::className(), ['master_animal_id' => 'id'])->andWhere(['safari_park_animal.status' => 1]);
+        return $this->hasMany(SafariParkAnimal::className(), ['master_animal_id' => 'id'])->andWhere(['safari_parks_animal.status' => 1]);
     }
 }
