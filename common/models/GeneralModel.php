@@ -324,7 +324,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function animalfilteroption()
     {
-        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE, 'is_filter' => 1])->orderBy(['is_filter_sequence' => SORT_ASC, 'name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(MasterAnimal::find()->where(['status' => self::STATUS_ACTIVE, 'is_filter' => 1, 'animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->orderBy(['is_filter_sequence' => SORT_ASC, 'name' => SORT_ASC])->all(), 'id', 'name');
     }
 
     public static function birdoption()
@@ -617,7 +617,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $query = SafariPark::find()->where(['safari_park.status' => SafariPark::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC]);
 
         $query->joinwith(['rareanimals' => function ($query) {
-            $query->andFilterWhere(['safari_park_rare_animal.status' => 1]);
+            $query->andFilterWhere(['safari_parks_animal.status' => 1]);
         }]);
         $parks = $query->all();
         $result = ArrayHelper::map($parks, 'id', 'title');

@@ -5,7 +5,8 @@ namespace frontend\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\park\SafariPark;
-use common\models\master\animal\MasterRareAnimal;
+//use common\models\master\animal\MasterRareAnimal;
+use common\models\master\animal\MasterAnimal;
 
 /**
  * SafariParkSearch represents the model behind the search form of `common\models\park\SafariPark`.
@@ -106,7 +107,7 @@ class SafariParkSearch extends SafariPark
         }
 
         if (isset($params['slug']) && !empty($params['slug'])) {
-            $is_exist = MasterRareAnimal::find()->where(['slug' => $params['slug']])->andWhere(['status' => true])->one();
+            $is_exist = MasterAnimal::find()->where(['slug' => $params['slug']])->andWhere(['status' => true])->one();
             if (!empty($is_exist)) {
                 $query->joinwith(['animals' => function ($query) {
                     //$query->andFilterWhere(['safari_parks_animal.master_animal_id' => $is_exist->id]);
@@ -115,8 +116,10 @@ class SafariParkSearch extends SafariPark
         }
 
         if ($this->master_rare_animal_id && $this->master_rare_animal_id != 0) {
-            $query->joinwith(['rareanimals' => function ($query) {
-                $query->andFilterWhere(['safari_park_rare_animal.master_rare_animal_id' => $this->master_rare_animal_id]);
+            $query->joinwith(['animals' => function ($query) {
+                //$query->andFilterWhere(['safari_park_rare_animal.master_rare_animal_id' => $this->master_rare_animal_id]);
+
+                $query->andFilterWhere(['safari_parks_animal.master_animal_id' => $this->master_rare_animal_id]);
             }]);
         }
 
@@ -170,11 +173,11 @@ class SafariParkSearch extends SafariPark
 
         // If Rare EXOTIC ANIMAL Selected
         if ($this->master_rare_animal_id == '') {
-            $query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_park_rare_animal WHERE status=1)");
+            $query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_park_animal WHERE status=1)");
             // $query->andFilterWhere(['like', 'title', 'Tiger Reserve']);
             $query->andWhere(['show_in_filter' => 1]);
         }
-
+        //$rawSql = $query->createCommand()->getRawSql();dd($rawSql);
         return $dataProvider;
     }
 }

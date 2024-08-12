@@ -26,7 +26,7 @@ if ($rare_exotics) {
                             </div>
                             <div class="col-lg-6 col-md-7 col-8">
                                 <div class="safari_content">
-                                    <h3><?= $animal->animal_name ?></h3>
+                                    <h3><?= $animal->name ?></h3>
                                     <p><?= $animal->short_description ?></p>
                                     <div class="knowmore">
                                         <a href="<?= \yii\helpers\Url::toRoute(['/park/default/rareanimal', 'slug' => $animal->slug]) ?>" class="btn-knowmore">Know More</a>

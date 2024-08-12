@@ -31,16 +31,16 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn', 'contentOptions' => ['style' => 'text-align: center;']],
                     [
-                        'attribute' => 'animal_name',
+                        'attribute' => 'name',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a($model->animal_name, ['view', 'id' => $model->id], [
+                            return Html::a($model->name, ['view', 'id' => $model->id], [
                                 'style' => 'color: black !important;',
                                 'title' => 'View',
                             ]);
                         },
                         'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
-                    ],                    
+                    ],/*
                     [
                         'label' => 'Know As',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
@@ -48,7 +48,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'value' => function ($model) {
                             return $model->know_as;
                         }
-                    ],
+                    ],*/
                     [
                         'attribute' => 'Feature Image',
                         'format' => 'html',
@@ -96,7 +96,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                                     'class' => 'btn p-0 change-menuicon',
                                     'title' => 'Delete',
                                     'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->animal_name . '?',
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->name . '?',
                                         'method' => 'post',
                                     ],
                                 ]);
