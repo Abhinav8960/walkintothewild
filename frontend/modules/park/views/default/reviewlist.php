@@ -24,119 +24,119 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 </section>
 
-
-<div class="row px-lg-5 px-3 pt-3 justify-content-center">
-    <div class="col-lg-12 col-xxl-11">
-        <div class="row margin_bottomfooter">
-            <div class="col-lg-12 col-md-11 col-xxl-12 col-xl-10 ">
-                <div class="tab-content_tour mb-4 active">
-                    <div class="row">
-                        <div class="col-12 mb-4 mt-5">
-                            <div class="comments_safari operator_comment bg-white">
-                                <div class="commentsOther  position-relative px-5 pt-4">
-                                    <div class=" d-flex justify-content-between flex-wrap">
-                                        <?php
-                                        if ($reviews) { ?>
-                                            <div class="userRatingTitle">
-                                                <h6 class="nameRating">Average User Rating</h6>
-                                                <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
-                                                    <div class="ratings">
-                                                        <?php $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $model->id])->average('rating');
-                                                        if ($avg) { ?>
-                                                            <p class="mb-0">
-                                                                <?= round($avg, 1) ?>
-                                                                <?= GeneralModel::review_rating($avg); ?>
-                                                            </p>
-                                                        <?php } ?>
-                                                    </div>
-                                                    <?php $count = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $model->id])->count(); {
-                                                        if ($count) { ?>
-                                                            <div class="googlerating">
-                                                                <p class="mb-0"><?= $count . " " ?>Reviews</p>
+<section class="">
+    <div class="container-fluid">
+        <div class="row my-lg-4 my-2 pt-3 justify-content-center margin_bottomfooter mb-">
+            <div class="col-lg-12 col-xxl-11">
+            <div class="tab-content_tour mb-4 active">
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <div class="comments_safari operator_comment bg-white">
+                                        <div class="commentsOther  position-relative px-5 pt-4">
+                                            <div class=" d-flex justify-content-between flex-wrap">
+                                                <?php
+                                                if ($reviews) { ?>
+                                                    <div class="userRatingTitle">
+                                                        <h6 class="nameRating">Average User Rating</h6>
+                                                        <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
+                                                            <div class="ratings">
+                                                                <?php $avg = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $model->id])->average('rating');
+                                                                if ($avg) { ?>
+                                                                    <p class="mb-0">
+                                                                        <?= round($avg, 1) ?>
+                                                                        <?= GeneralModel::review_rating($avg); ?>
+                                                                    </p>
+                                                                <?php } ?>
                                                             </div>
-                                                    <?php }
-                                                    } ?>
+                                                            <?php $count = SafariParkRating::find()->select('rating')->where(['status' => 1, 'safari_park_id' => $model->id])->count(); {
+                                                                if ($count) { ?>
+                                                                    <div class="googlerating">
+                                                                        <p class="mb-0"><?= $count . " " ?>Reviews</p>
+                                                                    </div>
+                                                            <?php }
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+
+
+                                                <div class="whiteReview mt-2">
+                                                    <?php if (Yii::$app->user->identity) { ?>
+                                                        <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $model->id]) ?>" class="parkrevieBtn writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
+                                                    <?php } else { ?>
+                                                        <a class="btn_review" href="/site/login?authclient=google&referrer=/park/<?= $model->slug ?>/reviewlist">Please Login to Review</a>
+                                                    <?php } ?>
                                                 </div>
                                             </div>
-                                        <?php } ?>
 
 
-                                        <div class="whiteReview mt-2">
-                                            <?php if (Yii::$app->user->identity) { ?>
-                                                <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $model->id]) ?>" class="parkrevieBtn writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
-                                            <?php } else { ?>
-                                                <a class="btn_review" href="/site/login?authclient=google&referrer=/park/<?= $model->slug ?>/reviewlist">Please Login to Review</a>
+                                            <?php if ($reviews) { ?>
+                                                <div class="sort_wrapper py-3">
+                                                    <div class="sortBy">Sort by</div>
+                                                    <div class="d-flex flex-wrap align-items-center">
+                                                        <a class="review-button btn_sort <?= $searchModel->custom_sort_by == 'newest' || $searchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug, 'sort_by' => 'newest']) ?>">Newest</a>
+                                                        <a class="review-button btn_sort <?= $searchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug, 'sort_by' => 'highest']) ?>">Highest</a>
+                                                        <a class="review-button btn_sort <?= $searchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug, 'sort_by' => 'lowest']) ?>">Lowest</a>
+                                                    </div>
+                                                </div>
                                             <?php } ?>
+
                                         </div>
-                                    </div>
 
+                                        <div id="review-list">
+                                            <?php
+                                            if ($reviews) {
+                                                foreach ($reviews as $review) {  ?>
+                                                    <div class="commentsOther  position-relative">
+                                                        <div class="postcomment  pt-3">
+                                                            <div class="text_com">
+                                                                <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
+                                                                    <div class="ratings">
+                                                                        <p class="mb-0">
+                                                                            <?php if ($rating_count = $review->rating) {
+                                                                                for ($i = 1; $i <= $rating_count; $i++) { ?>
+                                                                                    <i class="fa-solid fa-star"></i>
+                                                                                <?php }
 
-                                    <?php if ($reviews) { ?>
-                                        <div class="sort_wrapper py-3">
-                                            <div class="sortBy">Sort by</div>
-                                            <div class="d-flex flex-wrap align-items-center">
-                                                <a class="review-button btn_sort <?= $searchModel->custom_sort_by == 'newest' || $searchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug, 'sort_by' => 'newest']) ?>">Newest</a>
-                                                <a class="review-button btn_sort <?= $searchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug, 'sort_by' => 'highest']) ?>">Highest</a>
-                                                <a class="review-button btn_sort <?= $searchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug, 'sort_by' => 'lowest']) ?>">Lowest</a>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
+                                                                                for ($i = $rating_count; $i < 5; $i++) { ?>
+                                                                                    <i class='far fa-star'></i>
+                                                                            <?php
+                                                                                }
+                                                                            } ?>
+                                                                        </p>
+                                                                    </div>
 
-                                </div>
+                                                                    <div class="googlerating">
+                                                                        <?php if ($review->user) { ?>
+                                                                            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
+                                                                                <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                            </a>
+                                                                        <?php } ?>
 
-                                <div id="review-list">
-                                    <?php
-                                    if ($reviews) {
-                                        foreach ($reviews as $review) {  ?>
-                                            <div class="commentsOther  position-relative">
-                                                <div class="postcomment  pt-3">
-                                                    <div class="text_com">
-                                                        <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
-                                                            <div class="ratings">
-                                                                <p class="mb-0">
-                                                                    <?php if ($rating_count = $review->rating) {
-                                                                        for ($i = 1; $i <= $rating_count; $i++) { ?>
-                                                                            <i class="fa-solid fa-star"></i>
-                                                                        <?php }
-
-                                                                        for ($i = $rating_count; $i < 5; $i++) { ?>
-                                                                            <i class='far fa-star'></i>
-                                                                    <?php
-                                                                        }
-                                                                    } ?>
+                                                                    </div>
+                                                                </div>
+                                                                <p><?= $review->review ?> &nbsp;
+                                                                    <?php if (Yii::$app->user->id == $review->user_id) { ?>
+                                                                        <span class="writeAReviewBtn" value="<?= Url::toRoute(['/park/default/reviewupdate', 'park_id' => $model->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
+                                                                    <?php } ?>
                                                                 </p>
                                                             </div>
-
-                                                            <div class="googlerating">
-                                                                <?php if ($review->user) { ?>
-                                                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
-                                                                        <p class="mb-0"> <?= $review->user->name ?></p>
-                                                                    </a>
-                                                                <?php } ?>
-
-                                                            </div>
                                                         </div>
-                                                        <p><?= $review->review ?> &nbsp;
-                                                            <?php if (Yii::$app->user->id == $review->user_id) { ?>
-                                                                <span class="writeAReviewBtn" value="<?= Url::toRoute(['/park/default/reviewupdate', 'park_id' => $model->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
-                                                            <?php } ?>
-                                                        </p>
                                                     </div>
-                                                </div>
-                                            </div>
-                                    <?php
-                                        }
-                                    } ?>
+                                            <?php
+                                                }
+                                            } ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
+
         </div>
     </div>
+</section>
 
-</div>
 
 
 

@@ -35,17 +35,18 @@ if ($model->meta_title != '') {
 
 
 
-<section >
-        <?= $this->render('@frontend/modules/park/views/default/tablist', [
-            'operator' => 'active',
-            'model' => $model,
-        ]) ?>
+<section>
+    <?= $this->render('@frontend/modules/park/views/default/tablist', [
+        'operator' => 'active',
+        'model' => $model,
+    ]) ?>
 </section>
 
-<section class="px-lg-5 px-3">
-<div class="row my-lg-4 my-2 pt-3 justify-content-center margin_bottomfooter mb-5">
-    <div class="col-lg-12 col-xxl-11">
-  
+<section class="">
+    <div class="container-fluid">
+        <div class="row my-lg-4 my-2 pt-3 justify-content-center margin_bottomfooter mb-5">
+            <div class="col-lg-12 col-xxl-11">
+
                 <?= $this->render('_operators', [
                     'operators' => $operators,
                     'model' => $model,
@@ -54,9 +55,11 @@ if ($model->meta_title != '') {
                     'device' => $device,
                     'reviews' => $reviews
                 ]) ?>
-     
 
+
+            </div>
+
+        </div>
     </div>
 
-</div>
 </section>

@@ -4091,7 +4091,13 @@ figure {
 .terms a {
 
     color: var(--colorwhite);
+    font-weight: 400;
+    margin-bottom: 0;
+    opacity: 0.7;
+    font-size: 16px;
 }
+
+
 
 .slider_safariimg.owl-carousel .owl-nav button.owl-prev,
 .slider_resorts.owl-carousel .owl-nav button.owl-prev {

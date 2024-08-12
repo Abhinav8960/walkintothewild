@@ -11,28 +11,31 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
-<section  >
-   
-        <?= $this->render('@frontend/modules/park/views/default/tablist', [
-            'update' => 'active',
-            'model' => $model,
-        ]) ?>
+<section>
+
+    <?= $this->render('@frontend/modules/park/views/default/tablist', [
+        'update' => 'active',
+        'model' => $model,
+    ]) ?>
 
 </section>
+<section class="">
+    <div class="container-fluid">
+        <div class="row my-lg-4 my-2 pt-3 justify-content-center margin_bottomfooter mb-5">
+            <div class="col-lg-12 col-xxl-11">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <div class="card card_bodyPadding">
+                            <div class="card-body">
+                                <h6 class="fs-5 fw-bold">Update</h6>
 
-<div class="row my-lg-4 my-2 pt-3 px-lg-5 px-3  justify-content-center margin_bottomfooter mb-5">
-    <div class="col-lg-12 col-xxl-11">
-        <div class="row">
-            <div class="col-12 mb-3">
-                <div class="card card_bodyPadding">
-                    <div class="card-body">
-                    <h6 class="fs-5 fw-bold">Update</h6>
-        
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
-</div>
-
+</section>

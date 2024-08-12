@@ -9,7 +9,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 $this->params['title'] = $this->title;
 ?>
 
-<div class="container-fluid mt-5 mb-5">
+<div class="container-fluid mt-5 mb-5 margin_bottomfooter">
     <div class="row mb-5">
         <div class="col-md-12 d-flex justify-content-between">
         <h6 class="fs-3 fw-bold mb-4"><?= $this->title ?></h6>

@@ -18,11 +18,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
         <div class="col-12">
             <div class="card account-settingside mb-5 itenary_tabs">
-                <div class="card-body p-4 safartabs">
-                    <div class="row ">
-                        <div class="col-md-12">
+                <div class="card-body p-md-4 safartabs">
                             <?= $this->render('@frontend/modules/account/views/wishlist/_navbar', ['package' => 'active']) ?>
-                            <div class="tab-content m-3" id="pills-tabContent">
+                            <div class="tab-content m-0 m-md-3" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-packages" role="tabpanel" aria-labelledby="pills-packages-tab">
                                     <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
                                         <?php if ($wishlist_items) {
@@ -32,7 +30,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     continue;
                                                 }
                                         ?>
-                                                <div class="col-md-4 mb-4 padding_righ pt-4">
+                                                <div class="col padding_righ pt-4">
                                                     <?= $this->render('@frontend/modules/package/views/default/_package_card', ['model' => $package_model]) ?>
                                                 </div>
                                         <?php }
@@ -43,12 +41,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
-
 
 </div>
