@@ -73,7 +73,7 @@ $this->params['title'] = $this->title;
                                                             'template' => '{update}',
                                                             'buttons' => [
                                                                 'update' => function ($url, $model) {
-                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?package_id=$model->package_id&id=$model->id", 'class' => 'packageBtn join_btn px-3', 'title' => 'Create Gallery']);
+                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?package_id=$model->package_id&id=$model->id", 'class' => 'packageBtn btn btn-info join_btn py-2', 'title' => 'Edit Gallery Image']);
                                                                 },
                                                             ]
                                                         ],
