@@ -66,10 +66,12 @@ class ShareSafariCommentSearch extends ShareSafariComment
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'share_safari_id' => $this->share_safari_id,
+            'park_id' => $this->share_safari_id,
             'flaged' => $this->flaged,
         ]);
 
+        //        $rawSql = $query->createCommand()->getRawSql();
+        //        dd($rawSql);
 
         return $dataProvider;
     }

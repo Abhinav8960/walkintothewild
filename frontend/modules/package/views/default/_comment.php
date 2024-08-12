@@ -68,11 +68,11 @@ use yii\helpers\Url;
                                                     </div>
                                                     <?php if ($login_safarioperator) {
                                                         if ($login_safarioperator && Yii::$app->user->id != $login_safarioperator->user_id) { ?>
-                                                            222<img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
                                                         <?php }
                                                     } else {
                                                         if (Yii::$app->user->identity && Yii::$app->user->id !=  $package->owned_by_id) { ?>
-                                                            111<img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
                                                     <?php }
                                                     } ?>
                                                 </div>
