@@ -13,7 +13,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <thead>
             <tr>
                 <th scope="col">S.No</th>
-                <th scope="col">Avatar</th>
                 <th scope="col">Name</th>
                 <th scope="col">Join At</th>
             </tr>
@@ -26,11 +25,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <tr>
                         <th scope="row"><?= $srn; ?></th>
                         <td>
-                            <div class="profileavtar">
-                                <img src="<?= $model->user && $model->user->avatar <> '' ? $model->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $model->user ? $model->user->name : '' ?>">
-                            </div>
+                            <a style="color:inherit;" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $model->user ? $model->user->user_handle : '']); ?>">
+                                <div class="profileavtar">
+                                    <img src="<?= $model->user && $model->user->profileimage <> '' ? $model->user->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $model->user ? $model->user->name : '' ?>">
+                                    <?= $model->user->name ?>
+                                </div>
+                            </a>
                         </td>
-                        <td><?= $model->user->name ?></td>
                         <td><?= date('Y-m-d', $model->intrested_at) ?></td>
                 </tbody>
         <?php $srn++;

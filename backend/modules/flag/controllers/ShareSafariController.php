@@ -3,6 +3,7 @@
 namespace backend\modules\flag\controllers;
 
 use common\models\sharesafari\form\ShareSafariCommentActionForm;
+use common\models\sharesafari\form\ShareSafariCommentFlagActionForm;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
 use common\models\sharesafari\ShareSafariCommentSearch;
@@ -67,6 +68,30 @@ class ShareSafariController extends Controller
         ]);
         return $this->renderAjax('view', [
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFlagview($id)
+    {
+        $review = ShareSafariComment::find()->where(['id' => $id])->one();
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+
+        //form model
+        $model = new ShareSafariCommentFlagActionForm();
+
+        return $this->render('flagview', [
+            'review' => $review,
+            'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 }

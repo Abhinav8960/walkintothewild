@@ -3,14 +3,15 @@
 use yii\helpers\Url;
 use common\models\sharesafari\ShareSafari;
 
-$shared_safari_list = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'host_user_id' => $operator->id])->limit(3)->all();
+$shared_safari_list = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'host_user_id' => $operator->id])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(3)->all();
+$shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'host_user_id' => $operator->id])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
 
 ?>
 <?php if ($shared_safari_list) { ?>
 
     <div class="request_quote mt-4">
         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
-            Organized Safari <span><?= count($shared_safari_list); ?></span></button>
+            Organized Safari <span><?= $shared_safari_count ?></span></button>
         <div class="interst_wrapper py-4 px-xxl-5 bg-white">
 
             <div class="row justify-content-center">

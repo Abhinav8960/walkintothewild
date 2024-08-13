@@ -15,10 +15,7 @@ $this->params['title'] = $this->title;
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
 
 ?>
-
-
 <div class="card">
-
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
         <div id="w1-button" class="mb-3"></div>
@@ -64,7 +61,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
 
                     [
-                        'label' => 'No. of Flags',
+                        'label' => '#Flags',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -79,10 +76,12 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->flaged == 1) {
-                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">', [
-                                    'value' => Url::toRoute(['view', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning choose-option mb-2',
-                                    'title' => 'Edit'
+
+
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['flagview', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'name' => 'View',
                                 ]);
                             } else {
                                 return "";
@@ -115,14 +114,13 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
 <?php
 $script = <<< JS
-
-
-    $('.choose-option').on('click', function () {
-        $('#modalAction').modal('show')
-		.find('#modalContent')
-		.load($(this).attr('value'));
-	});
-
+    /*
+        $('.choose-option').on('click', function () {
+            $('#modalAction').modal('show')
+            .find('#modalContent')
+            .load($(this).attr('value'));
+        });
+    */
 JS;
 $this->registerJs($script);
 ?>

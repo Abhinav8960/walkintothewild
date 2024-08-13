@@ -278,7 +278,7 @@ class DefaultController extends FrontendBaseController
                 if ($share_safari_intrested->save()) {
                     Yii::$app->session->setFlash('success', 'You Just Join the Shared Safari!');
                 } else {
-                    Yii::$app->session->setFlash('error', 'You can not Join this Shared Safari currently!');
+                    Yii::$app->session->setFlash('success', 'You can not Join this Shared Safari currently!');
                 }
             } else {
                 return $this->redirect(['/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug]);
@@ -312,9 +312,9 @@ class DefaultController extends FrontendBaseController
                     $share_safari_intrested->status = 0; //UNfollow
                     $share_safari_intrested->unintrested_at = time();
                     if ($share_safari_intrested->save()) {
-                        Yii::$app->session->setFlash('error', 'You are not part of this Shared Safari!');
+                        Yii::$app->session->setFlash('success', 'You Just Leave the Shared Safari!');
                     } else {
-                        Yii::$app->session->setFlash('error', 'You can not unfollow this Shared Safari currently!');
+                        Yii::$app->session->setFlash('success', 'You can not unfollow this Shared Safari currently!');
                     }
                 }
             } else {

@@ -73,9 +73,7 @@ $this->params['title'] = $this->title;
                             if ($model->shared_safari_model->image) { ?>
                                 <div class="col-md-3">
                                     <label for="" class="Modal_label">Current Display Image</label>
-                                    <?php echo '<
-                                     src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image"></
-                                    >'; ?>
+                                    <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image">'; ?>
                                 </div>
 
                                 <div class="col-6 mb-2">
