@@ -77,6 +77,7 @@ class PackageController extends FrontendBaseController
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->package_image = UploadedFile::getInstance($model, 'package_image');
+                $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
@@ -132,6 +133,7 @@ class PackageController extends FrontendBaseController
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->package_image = UploadedFile::getInstance($model, 'package_image');
+                $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {

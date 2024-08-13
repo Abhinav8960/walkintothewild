@@ -105,7 +105,7 @@ $this->params['title'] = $this->title;
                                     if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                         if ($share_safari_intrested) { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
+                                            <a class="join_btn leavesafrai text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                             <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                         <?php }
@@ -233,7 +233,7 @@ $this->params['title'] = $this->title;
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                             if ($share_safari_intrested) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
+                                                <a class="join_btn leavesafrai text-center mt-sm-0 mt-2 d-inline-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
                                             <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
                                             <?php }

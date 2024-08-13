@@ -2156,6 +2156,12 @@ figure {
     background-color: var(--background-primary);
     color: var(--colorwhite) !important;
 }
+.join_btn.leavesafrai{
+
+    background-color: #F5F5F5 !important;
+    border: 1px solid #7070704D !important;
+    color: #4B4B4B !important;
+}
 
 .social-share p {
 
@@ -6048,11 +6054,17 @@ a.desc:after {
     color: var(--background-primary);
 }
 
+.safaritourlogo{
+
+    height: 54px;
+}
 .safaritourlogo img {
 
-    aspect-ratio: 16/4;
+    aspect-ratio: 8/2;
     -o-object-fit: cover;
        object-fit: cover;
+       margin-top: 4px;
+       height: inherit;
 }
 
 .items_img img {
@@ -7157,4 +7169,10 @@ font-weight: 500;
 
     font-size: 15px !important;
     font-family: "Roboto", sans-serif !important;
+}
+
+select.custom_sort_by_input  option.selected{
+
+    background-color: var(--background-primary) !important;
+    color: #fff !important;
 }

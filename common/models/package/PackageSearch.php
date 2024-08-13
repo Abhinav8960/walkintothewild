@@ -20,7 +20,7 @@ class PackageSearch extends Package
     public $estimated_price_filter_max = 50000;
     public $no_of_safari_min = 1;
     public $no_of_safari_max = 10;
-    public $no_of_night_min = 1;
+    public $no_of_night_min = 0;
     public $no_of_night_max = 10;
     public $package_feature;
     public $package_include;
