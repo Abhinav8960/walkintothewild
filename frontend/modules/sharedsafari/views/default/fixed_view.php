@@ -420,7 +420,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
-                <div class="interst_wrapper bg-white " >
+                <div class="interst_wrapper bg-white ">
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
@@ -459,6 +459,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             </div>
         </div>
 </section>
+
+
+<div class="modal fade _standard-text" id="interest-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Interest</h1>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered  modal-md">
@@ -504,6 +519,15 @@ function enquiryfunction() {
 }
 enquiryfunction();
        
+
+function interestfucntion() {
+	$('.intested_btn').on('click', function () {
+        $('#interest-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+interestfucntion();
 JS;
 $this->registerJs($script);
 ?>
