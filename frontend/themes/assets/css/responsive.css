@@ -2,6 +2,10 @@
   .padding_setCard {
     padding: 0px 70px;
   }
+  .titlePrice{
+
+font-size: 19px;
+  }
   .padding_setCard .shareimg {
     height: 190px;
   }
@@ -977,6 +981,10 @@
   }
 }
 @media only screen and (max-width: 1200px) {
+  #flashMessage{
+
+    display: none !important;
+  }
   .itenary_tabs .safartabs .nav-tabs.slider_addmobile2  .nav-link{
 
 text-align: center !important;
@@ -1097,6 +1105,17 @@ text-align: center !important;
   }
 }
 @media (max-width: 991px) {
+  .px-slider{
+
+    padding: 0 !important;
+  }
+  .custom-col{
+
+    max-width: 100% !important;
+  }
+  .topSlider_tour .items_slider img{
+    border-radius: 0 !important;
+  }
   .copyright p {
     padding-top: 20px;
   }

@@ -158,30 +158,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                         <span class="writeAReviewBtn" value="<?= Url::toRoute(['/operator/default/reviewupdate', 'operator_id' => $operator->id, 'user_id' => Yii::$app->user->id, 'id' => $review->id]) ?>"><i class="fa fa-edit"></i></span>
                                                                     <?php } ?>
                                                                 </p><?php
-                                                                    //                                                                    if (Yii::$app->user->identity->id == $operator->user_id) {
-                                                                    if (true) { ?>
-                                                                    <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $review->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
-
-                                                                    <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $review->id ?>">
-                                                                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                                                                        <div class="mb-3">
-                                                                            <?= $form->field($replymodel, 'safari_operator_rating_id')->hiddenInput(['value' => $review->id])->label(false) ?>
-                                                                        </div>
-                                                                        <div class="mb-3">
-                                                                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                                                                        </div>
-                                                                        <div class="btn-wrapper">
-                                                                            <?= Html::submitButton('Submit', ['class' => 'post-comment  ']) ?>
-                                                                        </div>
-                                                                        <?php ActiveForm::end(); ?>
-                                                                    </div>
-                                                                <?php } ?>
-
-                                                                <!-- start reply here -->
-                                                                <!-- put reply here -->
-                                                                <div class="comment-reply"><?php
-                                                                                            $replies = $review->getcommentreply($review->id);
-                                                                                            if ($replies) {
+                                                                    $replies = $review->getcommentreply($review->id);
+                                                                    if ($replies) { ?>
+                                                                    <!-- put reply here -->
+                                                                    <div class="comment-reply"><?php
                                                                                                 foreach ($replies as $reply) { ?>
                                                                             <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
                                                                                 <div class="d-flex gap-2">
@@ -189,19 +169,35 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                                         <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                                                                                     </div>
                                                                                     <div class="font-color">
-                                                                                        <?= isset($reply->user) ? $reply->user->name : '' ?></span>
+                                                                                        <span class="comment-author"><?= isset($reply->user) ? $reply->user->name : '' ?></span>
+                                                                                        <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
                                                                                         <div class="comment-text">
                                                                                             <p><?= $reply->review ?></p>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+                                                                            </div><?php
+                                                                                                } ?>
+                                                                    </div><?php
+                                                                        } else {
+                                                                            if (Yii::$app->user->identity && Yii::$app->user->id ==  $operator->user_id) { ?>
+                                                                        <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $review->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+
+                                                                        <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $review->id ?>">
+                                                                            <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                                                                            <div class="mb-3">
+                                                                                <?= $form->field($replymodel, 'safari_operator_rating_id')->hiddenInput(['value' => $review->id])->label(false) ?>
                                                                             </div>
-                                                                        <?php } ?>
-                                                                    <?php } ?>
-                                                                </div>
-                                                                <!-- end reply here -->
-
-
+                                                                            <div class="mb-3">
+                                                                                <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100 reply-comment'])->label(false) ?>
+                                                                            </div>
+                                                                            <div class="btn-wrapper">
+                                                                                <button type="button" class='post-comment post-comment-operator'>Submit</button>
+                                                                            </div>
+                                                                            <?php ActiveForm::end(); ?>
+                                                                        </div><?php
+                                                                            }
+                                                                        } ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -313,6 +309,17 @@ $this->registerJs($script);
 
 <?php
 $script = <<< JS
+
+$('.reply-comment').focusout(function(e){
+    e.preventDefault();
+    return false;
+    //$("#reply-form").submit();
+});
+
+$('.post-comment-operator').focusout(function(){
+    $("#reply-form").submit();
+});
+
 $('.toggle-replies').click(function() {
         var target = $(this).data('target');
         var container = $('#' + target);

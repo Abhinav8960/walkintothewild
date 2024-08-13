@@ -6,6 +6,34 @@ use common\models\park\SafariParkMonth;
 
 $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->orderBy(['month_id' => SORT_ASC])->all(), 'month_id', 'mastermonth.month_name');
 
+$total_closed_zone = 0;
+if ($model->bufferzones) {
+    foreach ($model->bufferzones as $bufferzone) {
+        if ($bufferzone->is_open_in_monsoon == 0) {
+            $total_closed_zone++;
+        } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 0) {
+            $total_closed_zone++;
+        } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 1) {
+            $class = '';
+        }
+    }
+}
+
+$total_core_closed_zone = 0;
+if ($model->corezones) {
+    foreach ($model->corezones as $corezone) {
+        if ($corezone->is_open_in_monsoon == 0) {
+            $total_core_closed_zone++;
+        } else if ($corezone->zone_name == 'N/A' && $corezone->entry_gate_name == 'N/A' && $corezone->is_open_in_monsoon == 0) {
+            $total_core_closed_zone++;
+        } else if ($corezone->zone_name == 'N/A' && $corezone->entry_gate_name == 'N/A' && $corezone->is_open_in_monsoon == 1) {
+        }
+        if ($corezone->is_open_in_monsoon == 1) {
+            $class = 'zone_active';
+            $total_core_closed_zone--;
+        }
+    }
+}
 
 ?>
 
@@ -293,7 +321,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
         </div>
         <div class="row pt-2">
             <div class="col-lg-6 col-xl-6 mb-3 mb-xl-0">
-                <div class="row gx-2 <?= in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
+                <div class="row gx-2 <?= $total_core_closed_zone == count($model->corezones) || in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
                     <div class="col-sm-3 mb-sm-0 mb-3 ">
                         <div class="coreZone h-100">
                             <h3>CORE ZONE</h3>
@@ -313,6 +341,14 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                                     <?php if ($model->corezones) {
                                         foreach ($model->corezones as $corezone) {
                                             $class = '';
+                                            $class = '';
+                                            if ($corezone->is_open_in_monsoon == 0) {
+                                                $class = 'inactive_core_zone';
+                                            } else if ($corezone->zone_name == 'N/A' && $corezone->entry_gate_name == 'N/A' && $corezone->is_open_in_monsoon == 0) {
+                                                $class = 'inactive_core_zone';
+                                            } else if ($corezone->zone_name == 'N/A' && $corezone->entry_gate_name == 'N/A' && $corezone->is_open_in_monsoon == 1) {
+                                                $class = '';
+                                            }
                                             if ($corezone->is_open_in_monsoon == 1) {
                                                 $class = 'zone_active';
                                             }
@@ -330,7 +366,7 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
                 </div>
             </div>
             <div class="col-lg-6 col-xl-6">
-                <div class="row gx-2">
+                <div class="row gx-2 <?= $total_closed_zone == count($model->bufferzones) ? 'bufferzone_inactive' : '' ?>">
                     <div class="col-sm-3 mb-sm-0 mb-3">
                         <div class="bufferzone h-100">
                             <h3>BUFFER ZONE</h3>

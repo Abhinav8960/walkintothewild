@@ -10,7 +10,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="title_top pb-4">
             <h4>Select Operator</h4>
         </div>
-        <div class="title_filter mb-2">
+        <div class="title_filter mb-3">
             <h6>Budget Segment</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'budget_segment')->checkboxList(
@@ -21,7 +21,7 @@ use yii\bootstrap5\ActiveForm;
                 )->label(false); ?>
             </div>
         </div>
-        <div class="title_filter mb-2">
+        <div class="title_filter mb-3">
             <h6>Operator Credibility</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'credibility')->checkboxList(
@@ -86,7 +86,18 @@ use yii\bootstrap5\ActiveForm;
                 </div>
                 <div class="col-7">
                     <div class="input_check pb-0">
-                        <?= $form->field($model, 'custom_sort_by')->dropDownList([1 => 'Short By: Rating High', 2 => 'Short By: Rating Low', 3 => 'Short By: Name A-Z', 4 => 'Short By: Name Z-A'], ['class' => 'form-select mb-2'])->label(false) ?>
+                        <?php
+                        $sort_option = [1 => 'Rating High', 2 => 'Rating Low', 3 => 'Name A-Z', 4 => 'Name Z-A'];
+                        ?>
+                        <div class="form-group field-safarioperatorsearch-custom_sort_by">
+                            <select id="safarioperatorsearch-custom_sort_by" class="form-select mb-2 custom_sort_by_input" name="SafariOperatorSearch[custom_sort_by]">
+                                <option style="display:none;" selected value="">Sort by : <?= isset($sort_option[$model->custom_sort_by]) ? $sort_option[$model->custom_sort_by] : 'Rating High' ?></option>
+                                <option value="1" class="<?= $model->custom_sort_by == 1 ? 'selected' : '' ?>">Rating High</option>
+                                <option value="2" class="<?= $model->custom_sort_by == 2 ? 'selected' : '' ?>">Rating Low</option>
+                                <option value="3" class="<?= $model->custom_sort_by == 3 ? 'selected' : '' ?>">Name A-Z</option>
+                                <option value="4" class="<?= $model->custom_sort_by == 4 ? 'selected' : '' ?>">Name Z-A</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -465,6 +465,7 @@ a {
     border: 1px solid #0000004D;
     padding: 20px 10px;
     /* background-color: #F5F5F5; */
+    background-color: #fff;
     border-radius: 4px;
     color: var(--background-primary);
 }
@@ -824,6 +825,9 @@ a {
     margin-bottom: 0;
     font-size: var(--fs-12);
     color: var(--background-primary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .footer_card {
@@ -1227,9 +1231,9 @@ figure {
     margin-top: 2px;
 }
 
-.safari-box .link a {
+.safari-box .link p  {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 42px;
     height: 42px;
     line-height: 40px;
@@ -1238,9 +1242,10 @@ figure {
     font-size: 16px;
     border: 2px solid var(--background-yellow);
     color: var(--background-yellow);
+    margin-bottom: 0;
 }
 
-.safari-box .link a:hover {
+.safari-box .link p:hover {
     background: var(--background-yellow);
     color: var(--colorwhite);
 }
@@ -2418,7 +2423,7 @@ figure {
 
 .inactive_core_zone .coreZone {
 
-    background-color: gray;
+    background-color: gray !important;
 
 }
 
@@ -2433,15 +2438,16 @@ figure {
     margin-bottom: 0;
 }
 
-.inactive_core_zone .tabledesigncore table tr th {
-    background-color: gray;
-    color: #cbcbcb;
+.inactive_core_zone   th {
+    background-color: gray !important;
+    color: #cbcbcb !important;
 }
 
-.inactive_core_zone .tabledesigncore table tr td {
-    background-color: gray;
-    color: #cbcbcb;
+.inactive_core_zone   td {
+    background-color: gray !important;
+    color: #cbcbcb !important;
 }
+
 
 .zone_active td {
     background-color: #127729 !important;
@@ -2452,7 +2458,18 @@ figure {
     color: #cbcbcb !important;
 
 }
+.bufferzone_inactive .bufferzone{
 
+    background-color: gray;
+}
+.bufferzone_inactive .bufferzone h3 {
+    color: #cbcbcb;
+}
+.bufferzone_inactive .tabledesignbuffer table tr th{
+
+    background-color: gray;
+    color: #cbcbcb;
+}
 .tabledesigncore table td {
 
     position: relative;
@@ -7140,4 +7157,10 @@ font-weight: 500;
 
     font-size: 15px !important;
     font-family: "Roboto", sans-serif !important;
+}
+
+select.custom_sort_by_input  option.selected{
+
+    background-color: var(--background-primary) !important;
+    color: #fff !important;
 }

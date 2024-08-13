@@ -88,18 +88,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             <div class="col-lg-9 col-xl-10 col-12 paddingset_desktop ">
                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 mb-2">
                     <div class="left_text">
-                        <p class="mb-0">We found <strong class="parklistcount"><?= count($models) ?> parks</strong> for you</p>
+                        <p class="mb-0">Total <strong><?= $dataProvider->totalcount ?> Parks</strong> We found <strong class="parklistcount"><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select mb-md-0 mb-4">
                         <div class="input_check pb-0">
 
                             <?php if ($device == 'desktop') { ?>
                                 <form id="custom_sort_by_form">
-                                    <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
-
-                                        <option value="" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Most Demanding</option>
-                                        <option value="2" <?= $searchModel->custom_sort_by == '2' ? 'selected' : '' ?>>Sort by: A to Z</option>
-                                        <option value="3" <?= $searchModel->custom_sort_by == '3' ? 'selected' : '' ?>>Sort by: Z to A</option>
+                                    <select class="form-select mb-2 custom_sort_by_input" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
+                                        <?php
+                                        $sort_option = [1 => 'Most Demanding', 2 => 'A to Z', 3 => 'Z to A'];
+                                        ?>
+                                        <option value="" style="display:none;" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Sort by : <?= isset($sort_option[$searchModel->custom_sort_by]) ? $sort_option[$searchModel->custom_sort_by] : 'Most Demanding' ?></option>
+                                        <option value="1" class="<?= $searchModel->custom_sort_by == '1' ? 'selected' : '' ?>">Most Demanding</option>
+                                        <option value="2" class="<?= $searchModel->custom_sort_by == '2' ? 'selected' : '' ?>">A to Z</option>
+                                        <option value="3" class="<?= $searchModel->custom_sort_by == '3' ? 'selected' : '' ?>">Z to A</option>
 
                                     </select>
                                 </form>
@@ -110,7 +113,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 </div>
                 <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                     <div class="left_text">
-                        <p class="mb-0">We found <strong class="parklistcount"><?= count($models) ?> parks</strong> for you</p>
+                        <p class="mb-0">Total <strong><?= $dataProvider->totalcount ?> Parks</strong> We found <strong class="parklistcount"><?= count($models) ?> parks</strong> for you</p>
                     </div>
                     <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                         <div class="input_check pb-0">

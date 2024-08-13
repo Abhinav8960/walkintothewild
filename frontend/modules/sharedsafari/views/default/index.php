@@ -49,7 +49,7 @@ $recentposts = ArticleSearch::recentpost();
     </div>
 </section>
 
-<section class="articals_wrapper py-3 bg-white margin_bottomfooter  paddiinTop_add">
+<section class="articals_wrapper py-3  margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
         <div class="row justify-content-center ">
             <div class="col-lg-6 mb-4 d-lg-block d-none">
