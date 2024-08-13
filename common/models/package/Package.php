@@ -165,6 +165,28 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         return $image_path;
     }
 
+
+    public function getImagebannerpath()
+    {
+        $image_path = '';
+        if (isset($this->package_banner_image)) {
+            $image_path = '/storage/package/' . $this->id . '/' . $this->package_banner_image;
+        } else {
+
+            if (isset($this->singlepark)) {
+                if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
+                    $image_path = $this->singlepark->park->logoimagepath;
+                } else {
+                    $image_path = '';
+                }
+            } else {
+                $image_path = '';
+            }
+        }
+
+        return $image_path;
+    }
+
     public function getComments()
     {
         return $this->hasMany(PackageComment::class, ['package_id' => 'id']);

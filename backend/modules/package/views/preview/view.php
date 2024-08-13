@@ -6,7 +6,7 @@ use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
 use yii\helpers\Url;
 
-$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 FrontAppAsset::register($this);
 AppAsset::register($this);
@@ -19,7 +19,7 @@ $this->params['title'] = $this->title;
         <div class="row my-4 packageSfari">
             <div class="col-12">
                 <div class="imagesSafari">
-                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+                    <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
                 </div>
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
