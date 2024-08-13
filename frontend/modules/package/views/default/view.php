@@ -88,7 +88,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <div class="message">
-                                        <a href="" class="parkrevieBtn d-block w-100 text-center">View Oprator</a>
+                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" class="parkrevieBtn d-block w-100 text-center">View Oprator</a>
                                     </div>
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button> -->
                                 </div>
@@ -211,7 +211,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button> -->
                                     <div class="message">
-                                        <a href="" class="parkrevieBtn">View Oprator</a>
+                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" class="parkrevieBtn">View Oprator</a>
                                     </div>
                                 </div>
                             </div>
