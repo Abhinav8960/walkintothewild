@@ -2423,7 +2423,7 @@ figure {
 
 .inactive_core_zone .coreZone {
 
-    background-color: gray;
+    background-color: gray !important;
 
 }
 
@@ -2438,15 +2438,16 @@ figure {
     margin-bottom: 0;
 }
 
-.inactive_core_zone .tabledesigncore table tr th {
-    background-color: gray;
-    color: #cbcbcb;
+.inactive_core_zone   th {
+    background-color: gray !important;
+    color: #cbcbcb !important;
 }
 
-.inactive_core_zone .tabledesigncore table tr td {
-    background-color: gray;
-    color: #cbcbcb;
+.inactive_core_zone   td {
+    background-color: gray !important;
+    color: #cbcbcb !important;
 }
+
 
 .zone_active td {
     background-color: #127729 !important;
@@ -2457,7 +2458,18 @@ figure {
     color: #cbcbcb !important;
 
 }
+.bufferzone_inactive .bufferzone{
 
+    background-color: gray;
+}
+.bufferzone_inactive .bufferzone h3 {
+    color: #cbcbcb;
+}
+.bufferzone_inactive .tabledesignbuffer table tr th{
+
+    background-color: gray;
+    color: #cbcbcb;
+}
 .tabledesigncore table td {
 
     position: relative;

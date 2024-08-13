@@ -257,7 +257,7 @@ $this->params['title'] = $this->title;
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
-                <div class="interst_wrapper bg-white " style="min-height: 200px;">
+                <div class="interst_wrapper bg-white " >
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->

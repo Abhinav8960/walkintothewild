@@ -1101,6 +1101,10 @@ text-align: center !important;
 
     padding: 0 !important;
   }
+  .custom-col{
+
+    max-width: 100% !important;
+  }
   .topSlider_tour .items_slider img{
     border-radius: 0 !important;
   }
