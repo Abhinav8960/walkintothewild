@@ -6048,11 +6048,13 @@ a.desc:after {
     color: var(--background-primary);
 }
 
+
 .safaritourlogo img {
 
     aspect-ratio: 16/4;
     -o-object-fit: cover;
        object-fit: cover;
+       margin-top: 4px;
 }
 
 .items_img img {
