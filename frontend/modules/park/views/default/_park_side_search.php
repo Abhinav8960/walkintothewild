@@ -84,7 +84,19 @@ use yii\widgets\ActiveForm;
                 <div class="col-7">
                     <div class="input_check pb-0">
 
-                        <?= $form->field($model, 'custom_sort_by')->dropDownList([2 => 'Sort by: A to Z', 3 => 'Sort by: Z to A'], ['prompt' => 'Most Demanding', 'class' => 'form-select'])->label(false); ?>
+                        <?php
+                        $sort_option = [1 => 'Most Demanding', 2 => 'A to Z', 3 => 'Z to A'];
+                        ?>
+
+                        <div class="form-group field-safariparksearch-custom_sort_by">
+                            <select id="safariparksearch-custom_sort_by" class="form-select custom_sort_by_input" name="SafariParkSearch[custom_sort_by]">
+                                <option value="" style="display:none;" <?= $model->custom_sort_by == '' ? 'selected' : '' ?>>Sort by : <?= isset($sort_option[$model->custom_sort_by]) ? $sort_option[$model->custom_sort_by] : 'Most Demanding' ?></option>
+                                <option value="1" class="<?= $model->custom_sort_by == '1' ? 'selected' : '' ?>">Most Demanding</option>
+                                <option value="2" class="<?= $model->custom_sort_by == '2' ? 'selected' : '' ?>">A to Z</option>
+                                <option value="3" class="<?= $model->custom_sort_by == '3' ? 'selected' : '' ?>">Z to A</option>
+                            </select>
+                            <div class="help-block"></div>
+                        </div>
                     </div>
 
                 </div>
