@@ -36,7 +36,7 @@ class ShareSafariSearch extends ShareSafari
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['start_date', 'end_date', 'estimated_price_filter', 'title'], 'safe'],
-            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'no_of_safari_min', 'no_of_safari_max'], 'safe'],
+            [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'no_of_safari_min', 'no_of_safari_max', 'type'], 'safe'],
         ];
     }
 
@@ -82,6 +82,7 @@ class ShareSafariSearch extends ShareSafari
         $query->andFilterWhere([
             'id' => $this->id,
             'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.type' => $this->type,
             'share_safari.host_type' => $this->host_type,
             'share_safari.park_id' => $this->park_id,
             'share_safari.share_safari_agenda_id' => $this->share_safari_agenda_id,
