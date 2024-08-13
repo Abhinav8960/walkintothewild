@@ -325,6 +325,14 @@ if ($model->bufferzones) {
                                     <?php if ($model->corezones) {
                                         foreach ($model->corezones as $corezone) {
                                             $class = '';
+                                            $class = '';
+                                            if ($corezone->is_open_in_monsoon == 0) {
+                                                $class = 'inactive_core_zone';
+                                            } else if ($corezone->zone_name == 'N/A' && $corezone->entry_gate_name == 'N/A' && $corezone->is_open_in_monsoon == 0) {
+                                                $class = 'inactive_core_zone';
+                                            } else if ($corezone->zone_name == 'N/A' && $corezone->entry_gate_name == 'N/A' && $corezone->is_open_in_monsoon == 1) {
+                                                $class = '';
+                                            }
                                             if ($corezone->is_open_in_monsoon == 1) {
                                                 $class = 'zone_active';
                                             }
