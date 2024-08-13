@@ -54,7 +54,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="icons_restro">
 
                     <i class="fa-solid fa-building"></i>
-                    <p class="mb-0"><?= isset($model->packagerange) ? $model->packagerange->title : "" ?></p>
+                    <p class="mb-0"><?= isset($model->packagerange) ? $model->packagerange->title : "N/A" ?></p>
                 </div>
             </div>
         </div>
