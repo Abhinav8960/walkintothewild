@@ -177,11 +177,11 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         $name = $this->business_name;
 
         $category = '';
-        if ($this->category_id = 2) {
-            $category = ' (Wild Life)';
-        } else if ($this->category_id = 1) {
-            $category = ' (safari Operator)';
-        }
+        // if ($this->category_id = 2) {
+        //     $category = ' (Wild Life)';
+        // } else if ($this->category_id = 1) {
+        //     $category = ' (safari Operator)';
+        // }
 
         return $name . $category;
     }
