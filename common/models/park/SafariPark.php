@@ -13,6 +13,7 @@ use common\models\master\country\MasterCountry;
 use common\models\master\location\MasterLocation;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\suggestions\SafariSuggestions;
+use common\models\UserExperience;
 
 /**
  * This is the model class for table "park".
