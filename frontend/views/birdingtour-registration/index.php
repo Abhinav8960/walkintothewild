@@ -95,7 +95,7 @@ $this->params['title'] = $this->title;
                                             <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
                                                 'data' => GeneralModel::birdingparkoption(),
                                                 // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
-                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'data-label' => 'Parks', 'multiple' => true],
+                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Influencer...', 'data-label' => 'Parks', 'multiple' => true],
                                                 'pluginOptions' => [
                                                     'allowClear' => true
                                                 ],

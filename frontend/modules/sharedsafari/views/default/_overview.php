@@ -44,7 +44,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="titles_locations">
-                                                <h6 class="fs-5">Meal</h6>
+                                                <h6 class="fs-5">Meals</h6>
                                                 <div class="mealchecks d-flex gap-sm-4 gap-2 align-items-center flex-wrap">
                                                     <div class="inputsCheck mb-2 d-flex align-items-center gap-2 ">
                                                         <input type="checkbox" id="check" <?= ($share_safariday->meal_breakfast == 1) ? 'checked' : '' ?> onclick="return false;">

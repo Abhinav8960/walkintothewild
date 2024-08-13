@@ -64,7 +64,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 'labelOptions' => ['class' => 'Modal_label']
                             ])->widget(Select2::classname(), [
                                 'data' => GeneralModel::safariparkoption(),
-                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...', 'data-label' => 'Parks', 'multiple' => true],
+                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Influencer...', 'data-label' => 'Parks', 'multiple' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],

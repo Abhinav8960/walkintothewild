@@ -39,7 +39,7 @@ $this->title = 'Account Settings';
 
                                 <div class="col-md-6 typeaccount">
                                     <?php
-                                    $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer/Photographer', 3 => 'Safari Operator'];
+                                    $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer', 3 => 'Safari Operator'];
                                     if (Yii::$app->user->identity->is_safari_operator == 1 && !in_array($model->account_type, [1])) {
                                         echo 'Account Type <br> <b>' . (isset($account_type[$model->account_type]) ? $account_type[$model->account_type] : $model->account_type) . '</b>';
                                     } else { ?>

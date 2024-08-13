@@ -103,7 +103,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
                                             } else if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) {
                                                 echo \yii\helpers\Html::a('Update
-                                                    Fixed Departure', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['class' => 'btn_newsafari', 'data-method' => "POST", 'data-pjax' => '0']);
+                                                    Fixed Departure', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['class' => 'btn_newsafari text-center', 'data-method' => "POST", 'data-pjax' => '0']);
                                             } else {
                                                 echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
                                             }
@@ -155,7 +155,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meal">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?php
@@ -249,7 +249,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                     echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
                                                 } else if ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id) {
                                                     echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>Update
-                                                    Fixed Departure', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['class' => 'btn_newsafari', 'data-method' => "POST", 'data-pjax' => '0']);
+                                                    Fixed Departure', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['class' => 'btn_newsafari text-center', 'data-method' => "POST", 'data-pjax' => '0']);
                                                 } else {
                                                     echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['class' => 'join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block', 'data-method' => "POST", 'data-pjax' => '0']);
                                                 }
@@ -420,7 +420,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
-                <div class="interst_wrapper bg-white " >
+                <div class="interst_wrapper bg-white ">
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
@@ -459,6 +459,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             </div>
         </div>
 </section>
+
+
+<div class="modal fade _standard-text" id="interest-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Interest</h1>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id='modalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered  modal-md">
@@ -504,6 +519,15 @@ function enquiryfunction() {
 }
 enquiryfunction();
        
+
+function interestfucntion() {
+	$('.intested_btn').on('click', function () {
+        $('#interest-modal').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+}
+interestfucntion();
 JS;
 $this->registerJs($script);
 ?>

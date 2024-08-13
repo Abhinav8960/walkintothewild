@@ -93,7 +93,7 @@ $this->params['title'] = $this->title;
 
                                             <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
                                                 'data' => GeneralModel::safariparkoption(),
-                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...',  'multiple' => true],
+                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Influencer...',  'multiple' => true],
                                                 'pluginOptions' => [
                                                     'initialize' => true,
                                                     'allowClear' => true

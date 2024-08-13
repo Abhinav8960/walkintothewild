@@ -101,8 +101,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-6">
                 <div class="safari text-center">
                     <div class="joinsafari">
-
-
                         <?php
 
                         if ($share_safari->status == 2) { // Closed
@@ -119,11 +117,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         if ($safarioperator = $share_safari->safarioperator) {
                                             if ($safarioperator->user_id <> Yii::$app->user->identity->id) {
                                                 echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['data-method' => "POST", 'data-pjax' => '0']);
+                                            } else {
+                                                echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>Update', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-method' => "POST", 'data-pjax' => '0']);
                                             }
                                         }
                                     } else {
                                         if ($share_safari->host_user_id != Yii::$app->user->identity->id) {
                                             echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['data-method' => "POST", 'data-pjax' => '0']);
+                                        } else {
+                                            echo '<a class="updateSafariBtn " value="' . Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) . '" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;cursor:pointer;"><i class="fas fa-edit me-1"></i>Update</a>';
                                         }
                                     }
                                 }

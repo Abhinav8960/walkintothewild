@@ -75,7 +75,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 <label for="">Operates in Parks <span>*</span></label>
                                                 <p class="mb-0 pb-xl-0 pb-2">In case of multiple parks, select the parks you operate in.</p>
                                             </div>
-                                            <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Safari Tour Operator, Wildlife Photographer...'])->label(false) ?>
+                                            <?= $form->field($model, 'park_id')->dropDownList(GeneralModel::parkoption(), ['prompt' => 'Safari Tour Operator, Wildlife Influencer...'])->label(false) ?>
 
                                         </div>
                                     </div>
