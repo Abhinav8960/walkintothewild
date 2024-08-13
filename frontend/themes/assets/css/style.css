@@ -2457,7 +2457,18 @@ figure {
     color: #cbcbcb !important;
 
 }
+.bufferzone_inactive .bufferzone{
 
+    background-color: gray;
+}
+.bufferzone_inactive .bufferzone h3 {
+    color: #cbcbcb;
+}
+.bufferzone_inactive .tabledesignbuffer table tr th{
+
+    background-color: gray;
+    color: #cbcbcb;
+}
 .tabledesigncore table td {
 
     position: relative;
