@@ -60,10 +60,10 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
         </div>
         <?php ActiveForm::end(); ?>
 <?php } else {
-        echo 'Comment are not allowed!!!';
+        echo '<p class="text-center">Comment are not allowed!!!</p>';
     }
 } else {
-    echo 'Please <a href="/site/login?authclient=google&referrer=/article/' . $article->slug . '" class="sign_intext parkrevieBtn">Sign in</a> for start Comment';
+    echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=/article/' . $article->slug . '" class="sign_intext parkrevieBtn text-center">Sign in</a> to Comment</p>';
 } ?>
 
 <?php
