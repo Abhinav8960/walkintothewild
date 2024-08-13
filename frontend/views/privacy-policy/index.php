@@ -9,14 +9,14 @@ use yii\bootstrap5\ActiveForm;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Terms of Use';
+$this->title = 'Privacy Policy';
 $this->params['title'] = $this->title;
 ?>
 
 <section class="banner_section-inner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/t&c.jpg" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/t&c.jpg" class="d-block w-100 " alt="banner">
+        <source srcset="<?= $this->params['baseurl'] ?>/img/safariformbanner.jpg" media="(max-width:576px)" type="image/webp">
+        <img src="<?= $this->params['baseurl'] ?>/img/safariformbanner.jpg" class="d-block w-100 " alt="banner">
     </picture>
 
 </section>
@@ -25,13 +25,13 @@ $this->params['title'] = $this->title;
         <div class="row pb-5 mb-5">
             <div class="col-12">
                 <div class="title_terms">
-                    <h2>Terms of Use</h2>
+                    <h2>Privacy Policy</h2>
                 </div>
             </div>
             <div class="col-12">
                 <div class="terms_details">
                     <?php
-                    $content = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
+                    $content = ContentManagement::findOne(['id' => ContentManagement::CMS_PRIVACY_POLICY]);
                     ?>
                     <div class="content_terms">
                         <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>

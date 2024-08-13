@@ -31,6 +31,7 @@ class ContentManagement extends \yii\db\ActiveRecord implements \common\interfac
     const CM_RESORT_TERM_AND_CONDITION = 5;
     const CM_DISCLAIMER = 6;
     const CM_DESCRIPTION = 7;
+    const CMS_PRIVACY_POLICY = 8;
 
 
     public function behaviors()
@@ -45,9 +46,9 @@ class ContentManagement extends \yii\db\ActiveRecord implements \common\interfac
                 'class' => \yii\behaviors\TimestampBehavior::className(),
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return date('Y-m-d H:i:s');
-                },
+                // 'value' => function () {
+                //     return date('Y-m-d H:i:s');
+                // },
             ],
 
         ];

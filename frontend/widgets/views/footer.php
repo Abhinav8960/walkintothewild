@@ -104,7 +104,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-lg-4 col-xxl-3 ">
                 <div class="d-flex gap-3  justify-content-lg-end justify-content-center">
                     <div class="terms">
-                        <p class="mb-0  pt-0"><a href="" style="cursor: default;">PRIVACY POLICY</a></p>
+                        <p class="mb-0  pt-0"><a href="/privacy-policy">PRIVACY POLICY</a></p>
                     </div>
                     <span>|</span>
                     <div class="terms">
