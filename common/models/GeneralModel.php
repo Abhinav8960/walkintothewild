@@ -895,7 +895,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         //     '3' => 'Wildlife Influencer',
         //     '4' => 'Safari Tour Operator'
         // ];
-        $return = [1 => 'Individual', 2 => 'Wildlife Influencer/Photographer', 3 => 'Safari Operator'];
+        $return = [1 => 'Individual', 2 => 'Wildlife Influencer', 3 => 'Safari Operator'];
 
         return $return;
     }

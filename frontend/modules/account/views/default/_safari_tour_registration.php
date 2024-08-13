@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
                     ]); ?>
                     <div class="col-md-6 typeaccount">
                         <?php
-                        $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer/Photographer', 3 => 'Safari Operator'];
+                        $account_type = [1 => 'Individual/Personal', 2 => 'Wildlife Influencer', 3 => 'Safari Operator'];
                         ?>
                         <?= $form->field($model, 'account_type')->radioList($account_type) ?>
                     </div>
@@ -86,7 +86,7 @@ $this->params['title'] = $this->title;
 
                                             <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
                                                 'data' => GeneralModel::safariparkoption(),
-                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Photographer...',  'multiple' => true],
+                                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Influencer...',  'multiple' => true],
                                                 'pluginOptions' => [
                                                     'initialize' => true,
                                                     'allowClear' => true

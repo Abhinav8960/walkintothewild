@@ -224,11 +224,6 @@ $this->params['title'] = $this->title;
                 </div>
                 <div class="input_check d-flex gap-3 align-items-center">
                   <input type="checkbox" name="" id="text" class="checkbox_design">
-                  <label for="text" class=" text_check">Wildlife Photographer</label>
-
-                </div>
-                <div class="input_check d-flex gap-3 align-items-center">
-                  <input type="checkbox" name="" id="text" class="checkbox_design">
                   <label for="text" class=" text_check">Wildlife Influencer</label>
 
                 </div>

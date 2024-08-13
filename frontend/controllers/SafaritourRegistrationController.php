@@ -47,7 +47,7 @@ class SafaritourRegistrationController extends FrontendBaseController
         $model->user_id = Yii::$app->user->identity->id;
         // $model->is_approved = 1;
         if (Yii::$app->user->identity->account_type == 2) {
-            $model->category_id = 2; // Wild Life Photographer
+            $model->category_id = 2; // Wild Life Influencer
         } else if (Yii::$app->user->identity->account_type == 3) {
             $model->category_id = 1; // safari Operator
         }
