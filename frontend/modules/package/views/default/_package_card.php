@@ -32,7 +32,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <?php } ?>
     </div>
     <div class="shareimg">
-        <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>">
+        <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>" data-pjax="0">
             <img src="<?= isset($model->imagepath) ? $model->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt=""></a>
     </div>
     <div class="card_body">
@@ -68,7 +68,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="safari text-center">
                     <div class="joinsafari package">
                         <h6 class=" titlePrice">₹ <?= number_format($model->total_price) ?> </h6>
-                        <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>">View Details</a>
+                        <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>" data-pjax="0">View Details</a>
                     </div>
                 </div>
             </div>

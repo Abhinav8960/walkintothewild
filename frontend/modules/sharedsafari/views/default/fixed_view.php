@@ -456,6 +456,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                 <?php } ?>
+
+
+                <?php
+                if ($share_safari->safarioperator) {
+                    echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $share_safari->safarioperator]);
+                } ?>
+
             </div>
         </div>
 </section>

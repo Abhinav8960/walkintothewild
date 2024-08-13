@@ -44,7 +44,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <?php } ?>
 
     <div class="shareimg">
-        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+        <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>" data-pjax="0"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
     </div>
     <div class="card_body">
         <?php
@@ -68,7 +68,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="titleDate">
-            <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></a></h6>
+            <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>" data-pjax="0"><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></a></h6>
             <div class="orgnizer">
                 <p>Organized by: <strong><?= $share_safari->organizedbyname ?></strong></p>
             </div>
