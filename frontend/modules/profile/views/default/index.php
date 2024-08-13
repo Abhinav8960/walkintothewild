@@ -86,7 +86,7 @@ $this->params['title'] = $this->title;
                                                 ?>
                                                         <div class="col-md-4 col-sm-6 col-lg-4 gap-2 mt-2 mb-2">
                                                             <div class="parksImgireview h-100 position-relative">
-                                                                <div class="floating-watchlist">
+                                                                <!-- <div class="floating-watchlist">
                                                                     <?php
                                                                     if (Yii::$app->user->identity) {
                                                                         if (Yii::$app->user->identity->id == $user_experience->user_id) { ?>
@@ -101,7 +101,7 @@ $this->params['title'] = $this->title;
                                                                             </div>
                                                                     <?php }
                                                                     } ?>
-                                                                </div>
+                                                                </div> -->
                                                                 <img src="<?= isset($user_experience->file) ? $user_experience->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                                                                 <div class="footer_safariname">
                                                                     <h6 class=""><?= isset(GeneralModel::safariparkoption()[$user_experience->park_id]) ? GeneralModel::safariparkoption()[$user_experience->park_id] : '' ?></h6>
