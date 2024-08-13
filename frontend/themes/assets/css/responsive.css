@@ -1097,6 +1097,13 @@ text-align: center !important;
   }
 }
 @media (max-width: 991px) {
+  .px-slider{
+
+    padding: 0 !important;
+  }
+  .topSlider_tour .items_slider img{
+    border-radius: 0 !important;
+  }
   .copyright p {
     padding-top: 20px;
   }

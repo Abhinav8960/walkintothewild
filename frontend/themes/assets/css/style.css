@@ -465,6 +465,7 @@ a {
     border: 1px solid #0000004D;
     padding: 20px 10px;
     /* background-color: #F5F5F5; */
+    background-color: #fff;
     border-radius: 4px;
     color: var(--background-primary);
 }
@@ -1227,9 +1228,9 @@ figure {
     margin-top: 2px;
 }
 
-.safari-box .link a {
+.safari-box .link p  {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 42px;
     height: 42px;
     line-height: 40px;
@@ -1238,9 +1239,10 @@ figure {
     font-size: 16px;
     border: 2px solid var(--background-yellow);
     color: var(--background-yellow);
+    margin-bottom: 0;
 }
 
-.safari-box .link a:hover {
+.safari-box .link p:hover {
     background: var(--background-yellow);
     color: var(--colorwhite);
 }

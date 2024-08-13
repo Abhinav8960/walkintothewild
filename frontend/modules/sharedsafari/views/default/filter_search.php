@@ -19,7 +19,7 @@ use common\models\park\SafariPark;
         <div class="title_top pb-4">
             <h4>Select</h4>
         </div>
-        <div class="title_filter ">
+        <div class="title_filter mb-3">
             <h6>Safari Park</h6>
             <div class="input_check ">
                 <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>
@@ -57,7 +57,7 @@ use common\models\park\SafariPark;
                 <span class="float-end"><?= $searchModel->no_of_safari_max >= 10 ? '10+' : $searchModel->no_of_safari_max ?> </span>
             </div>
         </div>
-        <div class="title_filter mb-4">
+        <div class="title_filter mb-3">
             <h6>Theme</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'share_safari_agenda_id')->checkboxList(
@@ -69,7 +69,7 @@ use common\models\park\SafariPark;
                 )->label(false); ?>
             </div>
         </div>
-        <div class="title_filter mb-4">
+        <div class="title_filter mb-3">
             <h6>Organizer</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'host_type')->checkboxList(
@@ -98,7 +98,7 @@ use common\models\park\SafariPark;
             </div> -->
 
         </div>
-        <div class="title_filter mb-4">
+        <div class="title_filter mb-3">
             <h6>Budget</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($searchModel, 'stay_category_id')->checkboxList(

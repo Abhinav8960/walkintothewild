@@ -18,19 +18,21 @@ if ($featured_parks) {    ?>
         foreach ($featured_parks as $featured_park) {
         ?>
             <div class="safari-box">
+            <a href="/park/<?= $featured_park->slug ?>">
                 <figure class="image-box">
                     <img src="<?= isset($featured_park->feature_image) ? $featured_park->featureimagepath : $this->params['baseurl'] . '/img/Jim Corbett.jpg' ?>" alt="" loading="lazy">
                 </figure>
                 <div class="content-box">
-                    <h3><a href="/park/<?= $featured_park->slug ?>"><?= $featured_park->title ?></a></h3>
+                    <h3><?= $featured_park->title ?></h3>
                 </div>
                 <div class="overlay-content d-flex align-items-center justify-content-between">
                     <div class="content_o pe-2">
-                        <h3><a href="/park/<?= $featured_park->slug ?>"><?= $featured_park->title ?></a></h3>
+                        <h3><?= $featured_park->title ?></h3>
                         <p><?= $featured_park->short_description ?></p>
                     </div>
-                    <div class="link"><a href="/park/<?= $featured_park->slug ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
+                    <div class="link"><p><i class="fa-solid fa-arrow-right"></i></p></div>
                 </div>
+                </a>
             </div>
         <?php }
         ?>
