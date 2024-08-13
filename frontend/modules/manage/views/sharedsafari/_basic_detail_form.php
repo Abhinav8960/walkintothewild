@@ -94,7 +94,7 @@ use yii\helpers\Html;
             <div class="col-lg-12 ">
                 <div class="creat-safri d-flex justify-content-end">
                     <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                    <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                 </div>
             </div>
         </div>
