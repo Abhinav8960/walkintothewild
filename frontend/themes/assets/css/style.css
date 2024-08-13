@@ -7158,3 +7158,9 @@ font-weight: 500;
     font-size: 15px !important;
     font-family: "Roboto", sans-serif !important;
 }
+
+#custom_sort_by_form select option.selected{
+
+    background-color: var(--background-primary) !important;
+    color: #fff !important;
+}

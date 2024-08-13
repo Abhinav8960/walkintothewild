@@ -2,6 +2,10 @@
   .padding_setCard {
     padding: 0px 70px;
   }
+  .titlePrice{
+
+font-size: 19px;
+  }
   .padding_setCard .shareimg {
     height: 190px;
   }
