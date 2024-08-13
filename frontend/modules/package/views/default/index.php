@@ -43,7 +43,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="articals_wrapper  py-3 ">
   <div class="container-fluid px-slider">
-  <div class="custom-row pt-4">
+    <div class="custom-row pt-4">
       <div class="custom-col">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
@@ -106,8 +106,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                   <div class="left_text">
                     <p class="mb-0">There are currently <strong><?= count($models) ?></strong> active package.</p>
                   </div>
-                  <?= $this->render('_sort_by_form', ['form' => $form, 'searchModel' => $searchModel]) ?>
-
+                  <?php if ($device == 'desktop') { ?>
+                    <?= $this->render('_sort_by_form', ['form' => $form, 'searchModel' => $searchModel]) ?>
+                  <?php } ?>
                 </div>
                 <div class="top_mobilefilter d-flex gap-2 d-lg-none justify-content-between align-items-center w-100 mb-4">
                   <div class="left_text">

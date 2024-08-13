@@ -95,9 +95,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                             <?php if ($device == 'desktop') { ?>
                                 <form id="custom_sort_by_form">
-                                    <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
-
-
+                                    <select class="form-select mb-2 custom_sort_by_input" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
                                         <?php
                                         $sort_option = [1 => 'Most Demanding', 2 => 'A to Z', 3 => 'Z to A'];
                                         ?>
