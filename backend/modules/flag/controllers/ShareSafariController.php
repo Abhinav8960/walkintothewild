@@ -69,4 +69,17 @@ class ShareSafariController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionFlagview($id)
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id]),
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->render('flagview', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }

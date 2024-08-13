@@ -316,8 +316,8 @@ a {
 
 #ui_notifIt {
 
-    width: 600px !important;
-    height: 200px;
+    width: 500px !important;
+    height: 100px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -6711,7 +6711,7 @@ text-align: center;
 .error,
 .success {
     position: fixed !important;
-    top: 50% !important;
+    top: 90% !important;
     left: 50% !important;
     -webkit-transform: translate(-50%, -50%) !important;
         -ms-transform: translate(-50%, -50%) !important;

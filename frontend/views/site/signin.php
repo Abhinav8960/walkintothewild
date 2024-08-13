@@ -5,6 +5,7 @@ use common\models\GeneralModel;
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\authclient\widgets\AuthChoice;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -65,35 +66,44 @@ $this->params['title'] = $this->title;
             <?php ActiveForm::end(); */ ?>
             <div class="content_terms">
               <h5 class="text-center">Login your account</h5>
-              <div class="contenss pt-3">
-                <p>By login an account, I accept the WalkIntoTheWild <a href="/termsandcondition" target="_blank">Terms of Service</a> and acknowledge the Privacy Policy.</p>
+              <div class="btnssss-g pt-3" style="border:none;">
+                <?php if (!empty($_REQUEST['referrer'])) {
+                  $authAuthChoice = AuthChoice::begin([
+                    'baseAuthUrl' => [
+                      'site/auth',
+                      'referrer' => $_REQUEST['referrer']
+                    ],
+                    'popupMode' => false,
+                  ]);
+                } else {
+                  $authAuthChoice = AuthChoice::begin([
+                    'baseAuthUrl' => [
+                      'site/auth'
+                    ],
+                    'popupMode' => false,
+                  ]);
+                } ?>
+                <?php foreach ($authAuthChoice->getClients() as $client): ?>
+                  <?= $authAuthChoice->clientLink(
+                    $client,
+                    '<button class="googlelogin w-100 py-2 px-5 mb-3 d-flex align-items-center gap-2"> <img src="' . $this->params['baseurl'] . '/img/google-logo.5867462c.svg" width="25" alt="banner">Continue with Google</button>',
+                  ) ?>
+                <?php endforeach; ?>
+                <?php AuthChoice::end(); ?>
               </div>
-              <div class="btnssss-g"><?php
-                                      if (!empty($_REQUEST['referrer'])) { ?>
-                  <?= \yii\authclient\widgets\AuthChoice::widget(
-                                          [
-                                            'baseAuthUrl' => ['site/auth', 'referrer' => $_REQUEST['referrer']],
-                                            'popupMode' => false,
-                                          ]
-                                        ), 'Continue with Google' ?><?php
-                                                                  } else {  ?>
-                  <?= \yii\authclient\widgets\AuthChoice::widget(
-                                                                      [
-                                                                        'baseAuthUrl' => ['site/auth'],
-                                                                        'popupMode' => false,
-                                                                      ]
-                                                                    ), 'Continue with Google' ?><?php
-                                                                                              } ?>
+              <div class="contenss pt-3">
+                <p class="text-center">By login an account, I accept the <b>WalkIntoTheWild</b> <a href="/termsandcondition" target="_blank">Terms of Service</a> and <a href="/termsandcondition" target="_blank">Privacy Policy</a>.</p>
               </div>
             </div>
-            <!-- <div class="btnssss-g">
+            <!-- 
+            <div class="btnssss-g">
               <a href="/site/auth?authclient=google">
                 <button class="googlelogin w-100 py-2  mb-3 d-flex align-items-center gap-2"> <img src="<?= $this->params['baseurl'] ?>/img/google-logo.5867462c.svg" width="25" alt="banner"> Google</button>
               </a>
               <a href="/site/auth?authclient=google">
                 <button class="googlelogin w-100 py-2  mb-3 d-flex align-items-center gap-2"> <img src="<?= $this->params['baseurl'] ?>/img/apple-logo.54e0d711.svg" width="25" alt="banner"> Apple</button>
               </a>
-            </div> -->
+            </div>-->
           </div>
         </div>
       </div>

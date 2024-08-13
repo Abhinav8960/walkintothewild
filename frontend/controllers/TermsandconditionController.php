@@ -22,7 +22,6 @@ class TermsandconditionController extends FrontendBaseController
      */
     public function actionIndex()
     {
-
         return $this->render(
             'index'
         );
