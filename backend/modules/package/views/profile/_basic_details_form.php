@@ -109,6 +109,20 @@ use yii\bootstrap5\ActiveForm;
             <?php  } ?>
 
 
+            <?php
+            if ($model->package_model->package_banner_image) { ?>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'package_banner_image')->fileInput()->label('Package Banner Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                </div>
+                <div class="col-md-1">
+                    <?php echo '<img src="' . $model->package_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
+                </div>
+            <?php } else { ?>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'package_banner_image')->fileInput()->label('Package Banner Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                </div>
+            <?php  } ?>
+
 
             <div class="row">
                 <div class="col-md-3">

@@ -44,7 +44,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         <div class="row my-4 packageSfari">
             <div class="col-12">
                 <div class="imagesSafari">
-                    <img src="<?= isset($package->imagepath) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+                    <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
                 </div>
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
