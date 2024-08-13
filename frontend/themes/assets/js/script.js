@@ -120,7 +120,7 @@ owl.owlCarousel({
             items: itemCount >= 3 ? 3 : itemCount
         },
         1400: {
-            items: itemCount >= 6 ? 6 : itemCount
+            items: itemCount >= 4 ? 4 : itemCount
         }
     }
 });
@@ -289,7 +289,7 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     function initializeOwlCarousel() {
-        if ($(window).width() <= 768) {
+        if ($(window).width() <= 700) {
             $('.slider_addmobile3').addClass('owl-carousel');
             $('.slider_addmobile3').owlCarousel({
                 loop: true,
@@ -300,16 +300,16 @@ $(document).ready(function(){
                 dots: false,
                 responsive: {
                     0: {
-                        items: 3
+                        items: 3.5
                     },
                     600: {
-                        items: 5
+                        items: 5.5
                     },
                     991: {
-                        items: 5
+                        items: 5.5
                     },
                     1200: {
-                        items: 5
+                        items: 5.5
                     }
                 }
             });

@@ -1655,7 +1655,7 @@ figure {
 .slidesImg {
 
     background-color: #f5f5f5;
-    padding: 4px 0px;
+    /* padding: 4px 0px; */
     border-radius: 5px;
 }
 
@@ -3420,7 +3420,8 @@ figure {
 .touroprators {
 
     background-color: var(--colorwhite);
-    padding: 12px 10px;
+    /* padding: 12px 10px; */
+    padding: 0px 10px;
     border: 1px solid #0000004D;
     border-radius: 0px 10px 10px 10px;
 }
@@ -6537,7 +6538,28 @@ text-align: center;
     width: 2000px;
     height: 2px;
 }
-
+.dual_range::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: #09422d;
+    cursor: pointer;
+    -moz-appearance: none;
+    position: relative;
+    margin: 0;
+    pointer-events: all;
+  }
+  
+  .dual_range::-moz-range-track {
+    background: #09422d;
+    height: 2px;
+    border: none;
+  }
+  
+  .dual_range::-moz-range-progress {
+    background: transparent;
+    height: 2px;
+  }
 .multi-range {
     position: relative;
     height: 13px;
