@@ -825,6 +825,9 @@ a {
     margin-bottom: 0;
     font-size: var(--fs-12);
     color: var(--background-primary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .footer_card {

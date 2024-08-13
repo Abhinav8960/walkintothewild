@@ -148,10 +148,10 @@ use yii\helpers\Url;
                 if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id || ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id)) { ?>
                     <?= $this->render('_comment_form', ['model' => $model]) ?>
         <?php } else {
-                    echo '<p class="px-3 pt-2">Please Join in for start Comment</p>';
+                    echo '<p class="px-3 pt-2 text-center">Please Join in for start Comment</p>';
                 }
             } else {
-                echo '<p class="px-3 pt-2">Please <a href="/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug . '" class="parkrevieBtn">Sign In</a> for start Comment</p>';
+                echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug . '" class="parkrevieBtn">Sign In</a> to Comment</p>';
             }
         } ?>
     </div>
