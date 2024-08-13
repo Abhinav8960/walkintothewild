@@ -2156,6 +2156,12 @@ figure {
     background-color: var(--background-primary);
     color: var(--colorwhite) !important;
 }
+.join_btn.leavesafrai{
+
+    background-color: #F5F5F5 !important;
+    border: 1px solid #7070704D !important;
+    color: #4B4B4B !important;
+}
 
 .social-share p {
 
