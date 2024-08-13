@@ -67,7 +67,18 @@ Pjax::begin([
             <div class="right-select d-flex gap-2 align-items-center pe-xl-2">
                 <div class="input_check pb-0">
                     <?php if ($device == 'desktop') {  ?>
-                        <?= $form->field($operatorsearchModel, 'custom_sort_by')->dropDownList([1 => 'Short By: Rating High', 2 => 'Short By: Rating Low', 3 => 'Short By: Name A-Z', 4 => 'Short By: Name Z-A'], ['class' => 'form-select mb-2'])->label(false) ?>
+                        <?php
+                        $sort_option = [1 => 'Rating High', 2 => 'Rating Low', 3 => 'Name A-Z', 4 => 'Name Z-A'];
+                        ?>
+                        <div class="form-group field-safarioperatorsearch-custom_sort_by">
+                            <select id="safarioperatorsearch-custom_sort_by" class="form-select mb-2 custom_sort_by_input" name="SafariOperatorSearch[custom_sort_by]">
+                                <option style="display:none;" selected value="">Sort by : <?= isset($sort_option[$operatorsearchModel->custom_sort_by]) ? $sort_option[$operatorsearchModel->custom_sort_by] : 'Rating High' ?></option>
+                                <option value="1" class="<?= $operatorsearchModel->custom_sort_by == 1 ? 'selected' : '' ?>">Rating High</option>
+                                <option value="2" class="<?= $operatorsearchModel->custom_sort_by == 2 ? 'selected' : '' ?>">Rating Low</option>
+                                <option value="3" class="<?= $operatorsearchModel->custom_sort_by == 3 ? 'selected' : '' ?>">Name A-Z</option>
+                                <option value="4" class="<?= $operatorsearchModel->custom_sort_by == 4 ? 'selected' : '' ?>">Name Z-A</option>
+                            </select>
+                        </div>
                     <?php } ?>
                 </div>
                 <!-- <div class="gridListview">
@@ -191,4 +202,3 @@ Pjax::begin([
 // JS;
 // $this->registerJs($script);
 ?>
-
