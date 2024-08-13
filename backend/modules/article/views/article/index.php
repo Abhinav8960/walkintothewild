@@ -54,7 +54,7 @@ $this->params['title'] = $this->title;
                             ]);
                         },
                         'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
-                    ], 
+                    ],
 
 
 
@@ -104,17 +104,17 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             // Decode the tag_id if it's a JSON string, otherwise use it directly
                             $tagIds = is_string($model->tag_id) ? json_decode($model->tag_id, true) : $model->tag_id;
-        
+
                             if (!empty($tagIds) && is_array($tagIds)) {
                                 // Initialize an array to store tag names
                                 $tagNames = [];
-        
+
                                 // Loop through each tag ID and fetch its name
                                 foreach ($tagIds as $tagId) {
                                     // Get the tag name from the options list, default to 'Unknown' if not found
                                     $tagNames[] = GeneralModel::articletagoption()[$tagId] ?? 'Unknown';
                                 }
-        
+
                                 // Convert the array of tag names into a comma-separated string
                                 return implode(', ', $tagNames);
                             } else {

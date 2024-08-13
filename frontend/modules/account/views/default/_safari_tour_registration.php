@@ -263,31 +263,34 @@ $this->params['title'] = $this->title;
 $content = ContentManagement::findOne(['id' => ContentManagement::CM_SAFARI_TERM_AND_CONDITION]);
 $showModal = $content && $content->status == \common\interfaces\StatusInterface::STATUS_ACTIVE;
 ?>
-<?php if ($showModal) {  ?>
-    <div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & conditions</h1>
-                </div>
-                <div class="modal-body px-3">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="content_terms">
-                                <h5>Terms & Conditions</h5>
-                                <p><?= $content ? Html::decode($content->content) : 'No content available' ?></p>
-                            </div>
+<div class="modal fade _standard-text" id="termsmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Terms & conditions</h1>
+            </div>
+            <div class="modal-body px-3">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content_terms">
+                            <h5>Terms & Conditions</h5>
+                            <?php if ($showModal) {  ?>
+                                <p><?= $content->content  ?></p>
+                            <?php } else {  ?>
+                                <p><?= 'No content available' ?></p>
+                            <?php } ?>
+
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <a href="" class="backtohome">Back to Home</a>
-                    <button type="button" class="btns_submit">Agree</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="" class="backtohome">Back to Home</a>
+                <button type="button" class="btns_submit">Agree</button>
             </div>
         </div>
     </div>
-<?php } ?>
+</div>
 
 <?php
 $script = <<< JS
