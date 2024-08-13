@@ -21,6 +21,7 @@ class PackageForm extends \yii\base\Model
     public $start_date;
     public $end_date;
     public $package_image;
+    public $package_banner_image;
     public $stay_category_id;
     public $cost_per_person;
     public $package_description;
@@ -78,6 +79,7 @@ class PackageForm extends \yii\base\Model
             $this->owned_by_id = $this->package_model->owned_by_id;
             $this->package_name = $this->package_model->package_name;
             $this->package_image = $this->package_model->package_image;
+            $this->package_banner_image = $this->package_model->package_banner_image;
             // $this->package_slug = $this->package_model->package_slug;
             $this->no_of_day = $this->package_model->no_of_day;
             $this->no_of_night = $this->package_model->no_of_night;
@@ -118,7 +120,9 @@ class PackageForm extends \yii\base\Model
     {
         return [
             [
-                ['package_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['package_image', 'package_banner_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 940,
                 'maxWidth' => 940,
                 'maxHeight' => 430,
@@ -132,7 +136,7 @@ class PackageForm extends \yii\base\Model
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price', 'master_vehicle_id'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_itinerary_overview', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry'], 'string'],
-            [['package_feature', 'package_included', 'package_park', 'package_image', 'getting_there'], 'safe'],
+            [['package_feature', 'package_included', 'package_park', 'package_image', 'package_banner_image', 'getting_there'], 'safe'],
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
@@ -154,28 +158,79 @@ class PackageForm extends \yii\base\Model
     {
         $scenarios = parent::scenarios();
         $scenarios['create'] = [
-            'package_name', 'package_image', 'no_of_day', 'no_of_night', 'no_of_safari',
-            'stay_category_id', 'status', 'cost_per_person', 'package_description', 'package_itinerary_overview',
-            'package_inclusion', 'package_exclusion', 'package_terms_condtition',
-            'package_feature', 'package_included', 'package_park', 'package_image',
-            'start_location', 'end_location', 'start_date', 'end_date', 'owned_by_id',
-            'type', 'gst_percentage', 'total_price', 'master_vehicle_id'
+            'package_name',
+            'package_image',
+            'no_of_day',
+            'no_of_night',
+            'no_of_safari',
+            'stay_category_id',
+            'status',
+            'cost_per_person',
+            'package_description',
+            'package_itinerary_overview',
+            'package_inclusion',
+            'package_exclusion',
+            'package_terms_condtition',
+            'package_feature',
+            'package_included',
+            'package_park',
+            'package_banner_image',
+            'start_location',
+            'end_location',
+            'start_date',
+            'end_date',
+            'owned_by_id',
+            'type',
+            'gst_percentage',
+            'total_price',
+            'master_vehicle_id'
         ];
         $scenarios['update'] = [
-            'package_name', 'package_image', 'no_of_day', 'no_of_night', 'no_of_safari',
-            'stay_category_id', 'status', 'cost_per_person', 'package_description', 'package_itinerary_overview',
-            'package_inclusion', 'package_exclusion', 'package_terms_condtition',
-            'package_feature', 'package_included', 'package_park', 'package_image',
-            'start_location', 'end_location', 'start_date', 'end_date',
-            'type', 'gst_percentage', 'total_price', 'master_vehicle_id'
+            'package_name',
+            'package_image',
+            'no_of_day',
+            'no_of_night',
+            'no_of_safari',
+            'stay_category_id',
+            'status',
+            'cost_per_person',
+            'package_description',
+            'package_itinerary_overview',
+            'package_inclusion',
+            'package_exclusion',
+            'package_terms_condtition',
+            'package_feature',
+            'package_included',
+            'package_park',
+            'package_banner_image',
+            'start_location',
+            'end_location',
+            'start_date',
+            'end_date',
+            'type',
+            'gst_percentage',
+            'total_price',
+            'master_vehicle_id'
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
         $scenarios['getting_there'] = ['getting_there'];
         $scenarios['day'] = [
-            'package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'day_status',
-            'day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title',
-            'day_start_location', 'day_end_location', 'hotel_name', 'day_image',
+            'package_id',
+            'day',
+            'meal_lunch',
+            'meal_breakfast',
+            'meal_dinner',
+            'day_status',
+            'day_description',
+            'day_activity',
+            'day_accommodation',
+            'day_note',
+            'day_title',
+            'day_start_location',
+            'day_end_location',
+            'hotel_name',
+            'day_image',
         ];
         return $scenarios;
     }
@@ -195,6 +250,7 @@ class PackageForm extends \yii\base\Model
             'start_location' => 'Tour Start',
             'end_location' => 'Tour End',
             'package_image' => 'Package Image',
+            'package_banner_image' => 'Package Banner Image',
             'stay_category_id' => 'Stay Category',
             'cost_per_person' => 'Cost Per Person',
             'package_description' => 'Package Description',
@@ -255,7 +311,7 @@ class PackageForm extends \yii\base\Model
 
         $this->package_model->status = $this->status;
 
-        $this->package_model->package_slug = $this->package_slug;
+        // $this->package_model->package_slug = $this->package_slug;
         $this->package_model->master_vehicle_id = $this->master_vehicle_id;
 
         if ($this->package_model->package_slug == '') {
@@ -292,6 +348,29 @@ class PackageForm extends \yii\base\Model
 
             if ($this->package_image->saveAs($filePath)) {
                 $this->package_model->package_image = $fileName;
+                $this->package_model->save(false);
+            }
+        }
+
+
+        if ($this->package_banner_image) {
+            $storagePath = Yii::$app->params['datapath'] . '/package';
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+            $storagePath = $storagePath . '/' . $this->package_model->id;
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath);
+                chmod($storagePath, 0777);
+            }
+
+            $fileName = 'package_banner_image' . '-' . time() . '.' . $this->package_banner_image->extension;
+            $filePath = $storagePath . '/' . $fileName;
+
+            if ($this->package_banner_image->saveAs($filePath)) {
+                $this->package_model->package_banner_image = $fileName;
                 $this->package_model->save(false);
             }
         }
