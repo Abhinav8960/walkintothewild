@@ -147,7 +147,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                         if ($user->is_safari_operator == 1) { ?>
-                            <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link  <?= isset($business) ? $business : '' ?> " target="_blank">Manage Safari Tour Business <i class="fa fa-external-link"></i></a></li>
+                            <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link  <?= isset($business) ? $business : '' ?> " target="_blank">Manage My Page <i class="fa fa-external-link"></i></a></li>
                     <?php }
                     } ?>
                 </ul>
