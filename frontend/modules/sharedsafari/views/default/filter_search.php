@@ -48,8 +48,8 @@ use common\models\park\SafariPark;
         <div class="title_filter mb-3">
             <h6 class="">Budget Price Per Person</h6>
             <div class="multi-range">
-                <input type="range" name="ShareSafariSearch[estimate_price_min]" min="1" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="ShareSafariSearch[estimate_price_max]" min="1" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="ShareSafariSearch[estimate_price_min]" step="100" min="0" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="ShareSafariSearch[estimate_price_max]" step="100" min="0" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
                 <span class="value"><?= $searchModel->estimate_price_min ?> </span>
@@ -209,8 +209,8 @@ use common\models\park\SafariPark;
                 </div>
                 <div class="col-7">
                     <div class="multi-range">
-                        <input type="range" name="ShareSafariSearch[estimate_price_min]" min="1" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                        <input type="range" name="ShareSafariSearch[estimate_price_max]" min="1" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="ShareSafariSearch[estimate_price_min]" step="100" min="0" max="15000" value="<?= $searchModel->estimate_price_min ?>" id="sharesafarisearch-estimate_price_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="ShareSafariSearch[estimate_price_max]" step="100" min="0" max="15000" value="<?= $searchModel->estimate_price_max ?>" id="sharesafarisearch-estimate_price_max" class="dual_range range_values d-flex align-items-center justify-content-between">
                     </div>
                     <div class="range-label">
                         <span class="value"><?= $searchModel->estimate_price_min ?> </span>

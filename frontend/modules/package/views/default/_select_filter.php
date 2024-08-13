@@ -65,8 +65,8 @@ use yii\helpers\ArrayHelper;
         <div class="title_filter mb-3">
             <h6 class="">Cost (Per Person)</h6>
             <div class="multi-range">
-                <input type="range" name="PackageSearch[estimated_price_filter_min]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                <input type="range" name="PackageSearch[estimated_price_filter_max]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageSearch[estimated_price_filter_min]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                <input type="range" name="PackageSearch[estimated_price_filter_max]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
             </div>
             <div class="range-label">
                 <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
@@ -227,8 +227,8 @@ use yii\helpers\ArrayHelper;
                 </div>
                 <div class="col-7">
                     <div class="multi-range">
-                        <input type="range" name="PackageSearch[estimated_price_filter_min]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
-                        <input type="range" name="PackageSearch[estimated_price_filter_max]" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageSearch[estimated_price_filter_min]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_min ?>" id="packagesearch-estimated_price_filter_min" class="dual_range range_values d-flex align-items-center justify-content-between">
+                        <input type="range" name="PackageSearch[estimated_price_filter_max]" step="100" min="1000" max="50000" value="<?= $searchModel->estimated_price_filter_max ?>" id="packagesearch-estimated_price_filter_max" class="dual_range range_values d-flex align-items-center justify-content-between">
                     </div>
                     <div class="range-label">
                         <span class="value">₹<?= $searchModel->estimated_price_filter_min ?> </span>
