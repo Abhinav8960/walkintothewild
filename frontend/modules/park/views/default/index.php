@@ -97,9 +97,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <form id="custom_sort_by_form">
                                     <select class="form-select mb-2" aria-label="Default select example" name="SafariParkSearch[custom_sort_by]" id="safariparksearch-custom_sort_by">
 
-                                        <option value="" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Most Demanding</option>
-                                        <option value="2" <?= $searchModel->custom_sort_by == '2' ? 'selected' : '' ?>>Sort by: A to Z</option>
-                                        <option value="3" <?= $searchModel->custom_sort_by == '3' ? 'selected' : '' ?>>Sort by: Z to A</option>
+
+                                        <?php
+                                        $sort_option = [1 => 'Most Demanding', 2 => 'A to Z', 3 => 'Z to A'];
+                                        ?>
+                                        <option value="" style="display:none;" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Sort by : <?= isset($sort_option[$searchModel->custom_sort_by]) ? $sort_option[$searchModel->custom_sort_by] : 'Most Demanding' ?></option>
+                                        <option value="1" class="<?= $searchModel->custom_sort_by == '1' ? 'selected' : '' ?>">Most Demanding</option>
+                                        <option value="2" class="<?= $searchModel->custom_sort_by == '2' ? 'selected' : '' ?>">A to Z</option>
+                                        <option value="3" class="<?= $searchModel->custom_sort_by == '3' ? 'selected' : '' ?>">Z to A</option>
 
                                     </select>
                                 </form>
