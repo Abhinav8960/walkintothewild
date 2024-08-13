@@ -64,6 +64,8 @@ class SafaritourRegistrationForm extends model
     public $action_url;
     public $action_validate_url;
 
+    public $account_type;
+
     public function __construct(SafariOperatorRequest $safarioperator_request_model = null)
     {
 
@@ -143,7 +145,9 @@ class SafaritourRegistrationForm extends model
             [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities', 'user_id'], 'safe'],
             [['referrer_url', 'registration_platform'], 'safe'],
             [
-                ['logo'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['logo'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'minWidth' => 500,
                 // 'maxWidth' => 500,
                 // 'maxHeight' => 123,
@@ -221,7 +225,12 @@ class SafaritourRegistrationForm extends model
      */
     public function initializeForm()
     {
-        $this->safarioperator_request_model->category_id                     =  $this->category_id;
+        if ($this->account_type == 2) {
+            $this->safarioperator_request_model->category_id                     =  2;
+        } else if ($this->account_type == 3) {
+            $this->safarioperator_request_model->category_id                     =  1;
+        }
+
         $this->safarioperator_request_model->safari_operator_id              =  $this->safari_operator_id;
         $this->safarioperator_request_model->business_name                   =  $this->business_name;
         $this->safarioperator_request_model->register_comapany_name          =  $this->register_comapany_name;
