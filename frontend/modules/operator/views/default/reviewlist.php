@@ -179,23 +179,25 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                             </div><?php
                                                                                                 } ?>
                                                                     </div><?php
-                                                                        } else { ?>
-                                                                    <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $review->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                                                        } else {
+                                                                            if (Yii::$app->user->identity && Yii::$app->user->id ==  $operator->user_id) { ?>
+                                                                        <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $review->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
 
-                                                                    <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $review->id ?>">
-                                                                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                                                                        <div class="mb-3">
-                                                                            <?= $form->field($replymodel, 'safari_operator_rating_id')->hiddenInput(['value' => $review->id])->label(false) ?>
-                                                                        </div>
-                                                                        <div class="mb-3">
-                                                                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100 reply-comment'])->label(false) ?>
-                                                                        </div>
-                                                                        <div class="btn-wrapper">
-                                                                            <button type="button" class='post-comment post-comment-operator'>Submit</button>
-                                                                        </div>
-                                                                        <?php ActiveForm::end(); ?>
-                                                                    </div>
-                                                                <?php } ?>
+                                                                        <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $review->id ?>">
+                                                                            <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                                                                            <div class="mb-3">
+                                                                                <?= $form->field($replymodel, 'safari_operator_rating_id')->hiddenInput(['value' => $review->id])->label(false) ?>
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100 reply-comment'])->label(false) ?>
+                                                                            </div>
+                                                                            <div class="btn-wrapper">
+                                                                                <button type="button" class='post-comment post-comment-operator'>Submit</button>
+                                                                            </div>
+                                                                            <?php ActiveForm::end(); ?>
+                                                                        </div><?php
+                                                                            }
+                                                                        } ?>
                                                             </div>
                                                         </div>
                                                     </div>
