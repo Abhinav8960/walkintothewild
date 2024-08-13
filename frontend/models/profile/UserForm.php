@@ -61,7 +61,7 @@ class UserForm extends Model
     public function rules()
     {
         return [
-            [['user_handle', 'account_type', 'name'], 'required'],
+            [['user_handle', 'name'], 'required'],
             ['account_type', 'integer'],
             ['name', 'trim'],
             ['name', 'required'],
@@ -77,22 +77,29 @@ class UserForm extends Model
                 }
             }],
             [
-                'user_handle', 'unique', 'when' => function ($model, $attribute) {
+                'user_handle',
+                'unique',
+                'when' => function ($model, $attribute) {
                     return strtolower($this->user_model->$attribute) != strtolower($model->$attribute);
                 },
-                'targetClass' => User::className(), 'targetAttribute' => ['user_handle'],
+                'targetClass' => User::className(),
+                'targetAttribute' => ['user_handle'],
                 'message' => 'This username has already been taken'
             ],
             [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url', 'website_url', 'youtube_url'], 'string'],
             [['about'], 'string'],
 
             [
-                ['cover_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['cover_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'maxSize' => 250 * 1024
             ],
 
             [
-                ['profile_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['profile_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'maxSize' => 250 * 1024
             ],
 
@@ -139,7 +146,7 @@ class UserForm extends Model
         $this->user_model->youtube_url = $this->youtube_url;
         $this->user_model->about = $this->about;
         $this->user_model->user_bio = $this->user_bio;
-        $this->user_model->account_type = $this->account_type;
+        // $this->user_model->account_type = $this->account_type;
         $this->user_model->gender = $this->gender;
         $this->user_model->date_of_birth = $this->date_of_birth;
     }

@@ -35,7 +35,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                         ?>
                                             <tr>
                                                 <td><?= $srn ?></td>
-                                                <td><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>"> <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" style="height:30px;"> <?= $park_detail->title ?></a></td>
+                                                <td><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $park_detail->slug]) ?>"> <img src="<?= isset($park_detail->logoimagepath) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" style="height:30px;"> <?= $park_detail->title ?></a></td>
                                                 <td><?= isset($park_detail->state) ? $park_detail->state->state_name . ', ' : '' ?> <?= isset($park_detail->location) ? $park_detail->location->title : '' ?></td>
                                             </tr>
                                         <?php $srn++;
