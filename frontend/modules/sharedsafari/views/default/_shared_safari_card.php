@@ -119,11 +119,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                         if ($safarioperator = $share_safari->safarioperator) {
                                             if ($safarioperator->user_id <> Yii::$app->user->identity->id) {
                                                 echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['data-method' => "POST", 'data-pjax' => '0']);
+                                            } else {
+                                                echo \yii\helpers\Html::a('Update', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['class' => 'btn_newsafari', 'data-method' => "POST", 'data-pjax' => '0']);
                                             }
                                         }
                                     } else {
                                         if ($share_safari->host_user_id != Yii::$app->user->identity->id) {
                                             echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug], ['data-method' => "POST", 'data-pjax' => '0']);
+                                        } else {
+                                            echo '<button class="btn_newsafari updateSafariBtn " value="' . Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) . '"><i class="fas fa-edit me-1"></i>Update</button>';
                                         }
                                     }
                                 }
