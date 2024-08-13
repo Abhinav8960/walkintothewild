@@ -70,7 +70,7 @@ $recentposts = ArticleSearch::recentpost();
                                 <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
                                     Safari</button>
                             <?php } else {  ?>
-                                <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/auth?authclient=google">+ Organize a New
+                                <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari">+ Organize a New
                                     Safari</a>
                             <?php } ?>
                             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>

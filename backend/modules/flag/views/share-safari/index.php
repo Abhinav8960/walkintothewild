@@ -15,10 +15,7 @@ $this->params['title'] = $this->title;
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
 
 ?>
-
-
 <div class="card">
-
     <div class="card-body">
         <?php echo $this->render('_search', ['model' => $searchModel]); ?>
         <div id="w1-button" class="mb-3"></div>
@@ -64,7 +61,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
 
                     [
-                        'label' => 'No. of Flags',
+                        'label' => '#Flags',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
