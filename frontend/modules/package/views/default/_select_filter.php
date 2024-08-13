@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
         <div class="title_top pb-4">
             <h4>Select Filters</h4>
         </div>
-        <div class="title_filter mb-2">
+        <div class="title_filter mb-3">
             <h6>Safari Park</h6>
             <div class="input_check ">
                 <?= $form->field($searchModel, 'park_id')->dropDownlist($searchModel->parkoption, ['prompt' => 'Select Safari Park'])->label(false) ?>

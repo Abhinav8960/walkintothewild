@@ -23,7 +23,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<div class="offcanvas-header ps-1">
 						<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
 							<a href="/park">
-								<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" class="logo">
+								<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" class="logo ps-2">
 							</a>
 						</h5>
 						<svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" fill="#fff" class="bi bi-x-lg" viewBox="0 0 16 16" type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">

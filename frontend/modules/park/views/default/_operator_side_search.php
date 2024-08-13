@@ -10,7 +10,7 @@ use yii\bootstrap5\ActiveForm;
         <div class="title_top pb-4">
             <h4>Select Operator</h4>
         </div>
-        <div class="title_filter mb-2">
+        <div class="title_filter mb-3">
             <h6>Budget Segment</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'budget_segment')->checkboxList(
@@ -21,7 +21,7 @@ use yii\bootstrap5\ActiveForm;
                 )->label(false); ?>
             </div>
         </div>
-        <div class="title_filter mb-2">
+        <div class="title_filter mb-3">
             <h6>Operator Credibility</h6>
             <div class="input_check d-flex gap-3 align-items-center">
                 <?= $form->field($model, 'credibility')->checkboxList(

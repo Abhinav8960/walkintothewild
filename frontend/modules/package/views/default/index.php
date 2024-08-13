@@ -42,8 +42,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 
 <section class="articals_wrapper  py-3 ">
-  <div class="container-fluid ">
-    <div class="custom-row pt-4">
+  <div class="container-fluid px-slider">
+  <div class="custom-row pt-4">
       <div class="custom-col">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
@@ -67,6 +67,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         </div>
       </div>
     </div>
+  </div>
+  <div class="container-fluid ">
     <?php
     Pjax::begin([
       'id' => 'grid-data',

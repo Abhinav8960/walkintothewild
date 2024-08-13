@@ -22,7 +22,7 @@ $this->params['title'] = $this->title;
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1>Join or Organize a Sharing Safari</h1>
+                        <h1>Join or Organize a Shared Safari</h1>
                         <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
                             Their Adventures</p>
                     </div>

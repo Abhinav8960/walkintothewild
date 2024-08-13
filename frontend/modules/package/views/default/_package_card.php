@@ -54,7 +54,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="icons_restro">
 
                     <i class="fa-solid fa-building"></i>
-                    <p class="mb-0"><?= isset($model->packagerange) ? $model->packagerange->title : "" ?></p>
+                    <p class="mb-0"><?= isset($model->packagerange) ? $model->packagerange->title : "N/A" ?></p>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-6 col-md-5 col-lg-5">
                 <div class="safari text-center">
                     <div class="joinsafari package">
-                        <h6 class=" titlePrice">₹<?= number_format($model->total_price) ?> </h6>
+                        <h6 class=" titlePrice">₹ <?= number_format($model->total_price) ?> </h6>
                         <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>">View Details</a>
                     </div>
                 </div>

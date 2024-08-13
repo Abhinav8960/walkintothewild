@@ -16,7 +16,8 @@ if ($rare_exotics) {
     </div>
     <?php foreach ($rare_exotics as $animal) { ?>
         <div class="animal-safari mb-4">
-            <div class="inner_animals position-relative">
+        <a href="<?= \yii\helpers\Url::toRoute(['/park/default/rareanimal', 'slug' => $animal->slug]) ?>" >
+        <div class="inner_animals position-relative">
                 <img src="<?= isset($animal->banner) ? $animal->bannerimagepath : $this->params['baseurl'] . '/img/brownbearbg.jpg' ?>" alt="" class="position-relative w-100">
                 <div class="safariBox">
                     <div class="container">
@@ -27,9 +28,11 @@ if ($rare_exotics) {
                             <div class="col-lg-6 col-md-7 col-8">
                                 <div class="safari_content">
                                     <h3><?= $animal->name ?></h3>
-                                    <p><?= $animal->short_description ?></p>
+                                    <p class="two-line-text"><?= $animal->short_description ?></p>
                                     <div class="knowmore">
-                                        <a href="<?= \yii\helpers\Url::toRoute(['/park/default/rareanimal', 'slug' => $animal->slug]) ?>" class="btn-knowmore">Know More</a>
+                                        <!-- <a href="<?= \yii\helpers\Url::toRoute(['/park/default/rareanimal', 'slug' => $animal->slug]) ?>" class="btn-knowmore">Know More</a> -->
+                                        <div class="btn-knowmore mb-0">Know More</div>
+
                                     </div>
                                 </div>
                             </div>
@@ -38,6 +41,8 @@ if ($rare_exotics) {
                 </div>
 
             </div>
+        </a>
+           
         </div>
     <?php
     }

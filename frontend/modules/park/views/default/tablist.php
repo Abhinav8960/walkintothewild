@@ -148,8 +148,8 @@ if ($model->meta_title != '') {
                     <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($operator) ? $operator : '' ?>">Operator</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/sharedsafari', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safari</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($review) ? $review : '' ?>">Review</a></li>
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/discussion', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($discussion) ? $discussion : '' ?>">Discussion</a></li>
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/update', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($update) ? $update : '' ?>">Update</a></li>
+                    <!-- <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/discussion', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($discussion) ? $discussion : '' ?>">Discussion</a></li>
+                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/update', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($update) ? $update : '' ?>">Update</a></li> -->
                     <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/package', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($package) ? $package : '' ?>">Package</a></li>
 
                 </ul>

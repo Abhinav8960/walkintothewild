@@ -39,7 +39,7 @@ class DefaultController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new SafariParkSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams, 6);
         $models = $dataProvider->getModels();
 
         return $this->render('index', [
