@@ -289,17 +289,21 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     function initializeOwlCarousel() {
-        if ($(window).width() <= 700) {
+        if ($(window).width() <= 576) {
             $('.slider_addmobile3').addClass('owl-carousel');
             $('.slider_addmobile3').owlCarousel({
-                loop: true,
+                loop: false,
                 margin: 10,
                 nav: false,
-                center:true,
+                center:false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
+                        items: 2.5
+                    },
+                    
+                    400: {
                         items: 3.5
                     },
                     600: {

@@ -7159,7 +7159,7 @@ font-weight: 500;
     font-family: "Roboto", sans-serif !important;
 }
 
-#custom_sort_by_form select option.selected{
+select.custom_sort_by_input  option.selected{
 
     background-color: var(--background-primary) !important;
     color: #fff !important;
