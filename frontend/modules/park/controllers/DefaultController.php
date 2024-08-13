@@ -5,6 +5,8 @@ namespace frontend\modules\park\controllers;
 use Yii;
 use yii\helpers\Url;
 use common\models\GeneralModel;
+use yii\data\ActiveDataProvider;
+use common\models\package\Package;
 use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;
@@ -15,12 +17,11 @@ use common\models\park\SafariParkRating;
 use frontend\models\SafariOperatorSearch;
 use frontend\models\SafariParkReviewForm;
 use common\models\sharesafari\ShareSafari;
+use common\models\package\PackageSafariPark;
+use common\models\master\animal\MasterAnimal;
 use common\models\park\SafariParkRatingSearch;
 use common\models\suggestions\SafariSuggestions;
 use frontend\controllers\FrontendBaseController;
-use common\models\master\animal\MasterAnimal;
-use common\models\package\Package;
-use common\models\package\PackageSafariPark;
 use common\models\suggestions\form\SafariSuggestionsForm;
 
 /**
@@ -388,12 +389,20 @@ class DefaultController extends FrontendBaseController
         if (!$model) {
             return $this->redirect(['/park']);
         }
-        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
+        $shared_safaries_query = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->andWhere(['>=', 'start_date', date("Y-m-d")]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $shared_safaries_query,
+            'pagination' => [
+                'pageSize' => 4,
+            ],
+        ]);
+
         return $this->render(
             '_shared_safari',
             [
                 'model' => $model,
-                'shared_safaries' => $shared_safaries,
+                'dataProvider' => $dataProvider,
             ]
         );
     }
