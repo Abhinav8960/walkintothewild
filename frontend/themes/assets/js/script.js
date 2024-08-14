@@ -391,23 +391,20 @@ $(document).ready(function() {
                     },
                     300: {
                         items: 2,
-                        stagePadding: 20,
+                        stagePadding: 10,
+                       
                        
                     },
 
                     400: {
                         items: 2,
-                        stagePadding: 0,
-                        center: true,
-                   
-                        
+                        stagePadding: 0,  
                     },
                     600: {
-                        items: 2.2,
+                        items: 3.2,
                         stagePadding: 10,
-                        center: true,
-                    }
-                    ,
+                      
+                    } ,
                     800: {
                         items: 3.2,
                         center: true,

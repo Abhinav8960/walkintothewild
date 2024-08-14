@@ -2,7 +2,7 @@
 if ($followings = $user->getUserfollowings()->where(['status' => 1])->all()) {
 ?>
     <div class="request_quote ">
-        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;cursor:default;">
             Following</button>
         <div class="interst_wrapper py-4 px-md-5 bg-white">
             <?php
