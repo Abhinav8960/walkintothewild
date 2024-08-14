@@ -71,7 +71,7 @@ $this->title = 'Contact';
                         </div>
                         <div class="col-12 btn-bg">
                             <?= $form->field($model, 'reCaptcha')->widget(\kekaadrenalin\recaptcha3\ReCaptchaWidget::class)->label(false) ?>
-                            <?= Html::submitButton('Submit', ['class' => 'btn btn_newsafari.organizeBtn.newbg w-100 py-3 ', 'name' => 'register-button']) ?>
+                            <?= Html::submitButton('Submit', ['class' => 'btn btn_newsafari organizeBtn newbg w-100 py-3 ', 'name' => 'register-button']) ?>
                             <!-- <button class="btn w-100 py-3" type="submit" fdprocessedid="0fdl2">Send Message</button> -->
                         </div>
                     </div>

@@ -4776,41 +4776,45 @@ figure {
     background: rgba(255, 255, 255, 0.22);
     -webkit-box-shadow: none;
             box-shadow: none;
-    color: #000;
+    color: #000  !important;
     padding: 8px 10px;
+}
+.contact-wrappers .form-floating .form-control::placeholder{
+
+    color: #000!important;
 }
 
 .contact-wrappers .form-floating .form-control::-webkit-input-placeholder {
 
-    color: var(--colorwhite);
+    color: #000!important;
 }
 
 .contact-wrappers .form-floating .form-control::-moz-placeholder {
 
-    color: var(--colorwhite);
+    color: #000!important;
 }
 
 .contact-wrappers .form-floating .form-control:-ms-input-placeholder {
 
-    color: var(--colorwhite);
+    color: #000!important;
 }
 
 .contact-wrappers .form-floating .form-control::-ms-input-placeholder {
 
-    color: var(--colorwhite);
+      color: #000  !important;
 }
 
 .contact-wrappers .form-floating .form-control::placeholder {
 
-    color: var(--colorwhite);
+      color: #000  !important;
 }
 
 .contact-wrappers .form-floating {
-    color: #fff;
+    color: #000  !important;
 }
 
 .contact-wrappers .form-bg .Up h6 {
-    color: #FFFFFF;
+    color: #000  !important;
     text-transform: capitalize;
 }
 
