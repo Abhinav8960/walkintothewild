@@ -7220,5 +7220,10 @@ select.custom_sort_by_input  option.selected{
     background-color: var(--background-primary) !important;
     color: #fff !important;
 }
+.oprators_boxes .listingSafari  {
+
+    background-color: #fff !important;
+    border-radius: 5px 5px 0px 0px !important;
+}
 
 
