@@ -45,7 +45,7 @@ Pjax::begin([
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1>Rare and Exotic Animal Safaris</h1>
+                        <h1><?= $rare_animal->name ?></h1>
                     </div>
                 </div>
             </div>
@@ -153,7 +153,7 @@ Pjax::begin([
             </div>
         </div>
     </div>
-  
+
 </section>
 <?php ActiveForm::end(); ?>
 <script>
@@ -175,5 +175,3 @@ Pjax::begin([
     }
 </script>
 <?php Pjax::end(); ?>
-
-
