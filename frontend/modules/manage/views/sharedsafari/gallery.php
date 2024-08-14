@@ -20,10 +20,10 @@ $this->params['title'] = $this->title;
                 <button class="packageBtn btn_newsafari organizeBtn newbg " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-gallery?share_safari_id=' . $shared_safari_departure_model->id . '']) ?>">+ Add Gallery</button>
             </div>
         </div>
-        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
+        <div class="col-md-12 mb-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
         </div>
-        <div class="col-md-8 col-xxl-10 col-xl-9 itenary_tabs">
+        <div class="col-md-12 itenary_tabs">
         <div class="card account-settingside safartabs">
                 <div class="card-body">
                     <div class="row">
