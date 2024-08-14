@@ -85,7 +85,7 @@ class SafariOperatorSearch extends SafariOperator
         ]);
 
         if ($this->budget_segment) {
-            foreach ($this->budget_segment as $segment) {
+            foreach ((array)$this->budget_segment as $segment) {
                 switch ($segment) {
                     case 1:
                         // Apply filter for premium budget
@@ -108,7 +108,7 @@ class SafariOperatorSearch extends SafariOperator
         }
 
         if ($this->credibility) {
-            foreach ($this->credibility as $data) {
+            foreach ((array)$this->credibility as $data) {
                 switch ($data) {
                     case 1:
                         // Apply filter for premium budget
