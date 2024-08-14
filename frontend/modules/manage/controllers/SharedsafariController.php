@@ -39,12 +39,15 @@ class SharedsafariController extends FrontendBaseController
     public function actionIndex()
     {
         $safari_operator = $this->module->operatormodel();
-        $fixed_safari = ShareSafari::find()->where(['host_user_id' => $safari_operator->id, 'status' => 1, 'type' => 2]);
+        $fixed_safari = ShareSafari::find()->where(['host_user_id' => $safari_operator->id, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
         $fixed_safari_provider = new ActiveDataProvider([
             'query' => $fixed_safari,
             'pagination' => [
                 'pageSize' => 10,
             ],
+            'sort' => [
+                'defaultOrder' => ['updated_at' => SORT_DESC]
+            ]
         ]);
         return $this->render(
             'index',
@@ -63,9 +66,10 @@ class SharedsafariController extends FrontendBaseController
         $model->host_user_id =  $safari_operator->id;
         $model->type = 2;
         $model->host_type = Yii::$app->user->identity->account_type;
-        $model->status = ShareSafari::STATUS_ACTIVE;
+        $model->status = ShareSafari::STATUS_SUSPEND;
         $model->action_url = '/manage/sharedsafari/create-fixed-departure';
         $model->action_validate_url = '/manage/sharedsafari/departure-validate';
+        $model->rand_text = substr(sha1(mt_rand()), 17, 6) . '-' . $model->host_user_id . time();
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -592,7 +596,7 @@ class SharedsafariController extends FrontendBaseController
 
     protected function findModel($slug)
     {
-        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => StatusInterface::STATUS_ACTIVE])) !== null) {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');

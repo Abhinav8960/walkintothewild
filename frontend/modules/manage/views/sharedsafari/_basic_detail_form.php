@@ -27,7 +27,7 @@ use yii\helpers\Html;
                 ])->label(false) ?>
             </div>
             <div class="col-md-6 mb-1">
-                <label for="" class="Modal_label">Number of Safaris (1-10)</label>
+                <label for="" class="Modal_label">Number of Safaris</label>
                 <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'number', 'min' => 0, 'placeholder' => 'Enter Number of safari'])->label(false) ?>
             </div>
 

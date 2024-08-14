@@ -203,7 +203,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
 
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
@@ -507,7 +507,7 @@ class DefaultController extends FrontendBaseController
 
     protected function findModel($slug)
     {
-        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED]])) !== null) {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
             return $model;
         }
 

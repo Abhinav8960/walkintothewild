@@ -34,6 +34,7 @@ class CreateDepartureForm extends \yii\base\Model
     public $date_change_policy;
     public $refund_policy;
     public $getting_there;
+    public $rand_text;
 
     public $action_url;
     public $action_validate_url;
@@ -83,7 +84,7 @@ class CreateDepartureForm extends \yii\base\Model
         return [
             [['host_type', 'park_list', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'tour_duration', 'status', 'type'], 'integer'],
-            [['start_date', 'end_date', 'park_list'], 'safe'],
+            [['start_date', 'end_date', 'park_list', 'rand_text'], 'safe'],
             [['safari_plan'], 'string'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
@@ -168,7 +169,9 @@ class CreateDepartureForm extends \yii\base\Model
         if ($this->shared_safari_departure_model->slug == '') {
             $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_departure_model->safarioperator->business_name));
             $string = preg_replace('/[^A-Za-z0-9\-]/', '', $without_space_string);
-            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_departure_model->host_user_id . time() . '-shared-safari';
+            
+            $slug =  $string . '-' . $this->rand_text . '-shared-safari';
+            // $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_departure_model->host_user_id . time() . '-shared-safari';
             $this->shared_safari_departure_model->slug = $slug;
         }
     }

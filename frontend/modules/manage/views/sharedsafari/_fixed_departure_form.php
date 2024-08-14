@@ -82,6 +82,7 @@ use yii\helpers\Html;
                 </div>
 
             </div>
+            <p class="text-danger"><i>Note : You need to fill all the details and then published your Fixed Shared Safari</i></p>
 
         </div>
 
