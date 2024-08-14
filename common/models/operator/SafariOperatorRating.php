@@ -5,6 +5,7 @@ namespace common\models\operator;
 use Yii;
 use common\models\User;
 use common\models\park\SafariPark;
+use common\models\operator\SafariOperatorRatingReport;
 
 /**
  * This is the model class for table "safari_operator_rating".
@@ -109,5 +110,10 @@ class SafariOperatorRating extends \yii\db\ActiveRecord
     public function getCommentreply($review_id)
     {
         return SafariOperatorRating::find()->where(['parent_id' => $review_id])->orderBy('id DESC')->all();
+    }
+
+    public function getReports()
+    {
+        return $this->hasMany(SafariOperatorRatingReport::className(), ['safari_operator_rating_id' => 'id']);
     }
 }
