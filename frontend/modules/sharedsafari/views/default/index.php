@@ -77,7 +77,7 @@ $recentposts = ArticleSearch::recentpost();
                                         Safari</button>
                                 <?php } ?>
                             <?php } else {  ?>
-                                <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari">+ Organize a New
+                                <a class="btn_newsafari organizeblankBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari">+ Organize a New
                                     Safari</a>
                             <?php } ?>
 

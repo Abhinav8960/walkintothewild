@@ -766,6 +766,11 @@ a {
     border-radius: 10px;
     color: var(--colorwhite);
 }
+.btn_newsafari.organizeblankBtn.newbg{
+    background-color: var(--background-primary);
+    border-radius: 10px;
+    color: var(--colorwhite);
+}
 
 
 .btn_newsafari.ChoiceOrganizeSafariBtn.newbg {
