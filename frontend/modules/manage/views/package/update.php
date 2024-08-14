@@ -17,10 +17,10 @@ $this->params['title'] = $this->title;
                 <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
             </div>
         </div>
-        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
+        <div class="col-md-12 mb-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-8 col-xxl-10 col-xl-9  ">
+        <div class="col-md-12">
             <div class="card account-settingside itenary_tabs">
                 <div class="card-body p-4 safartabs" >
                     <div class="row">

@@ -29,7 +29,7 @@ use yii\bootstrap5\ActiveForm;
                                 <li><a class="tab-items active_safri" data-tab="tab21">
                                         <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
                                     </a></li>
-                                <li><a class="tab-items " data-tab="tab22">
+                                <!-- <li><a class="tab-items " data-tab="tab22">
                                         <div class="numparks">Privacy Policy</div><i class="fa-solid fa-chevron-right"></i>
                                     </a></li>
                                 <li><a class="tab-items" data-tab="tab23">
@@ -37,7 +37,7 @@ use yii\bootstrap5\ActiveForm;
                                     </a></li>
                                 <li><a class="tab-items " data-tab="tab24">
                                         <div class="numparks">What You Must Carry </div><i class="fa-solid fa-chevron-right"></i>
-                                    </a></li>
+                                    </a></li> -->
                                 <li><a class="tab-items " data-tab="tab25">
                                         <div class="numparks">Date Change Policy </div><i class="fa-solid fa-chevron-right"></i>
                                     </a></li>

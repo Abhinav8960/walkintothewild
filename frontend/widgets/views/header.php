@@ -135,7 +135,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 					<div class="massge pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
 					<div class="chatnotification" >
-						<h6 class="fs-5 fw-semibold px-3 pt-3 pb-3 border-bottom mb-3">Notifications</h6>
+						<h6 class="fs-5 fw-semibold px-3 pt-3 pb-3 border-bottom mb-3">Messages</h6>
 		
 						<div class="viewallNotification float-end pe-3 pt-2">
 							<a href="/chat" class="follow_massge ms-3">View All Message</a>

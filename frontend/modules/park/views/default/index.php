@@ -99,7 +99,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <?php
                                         $sort_option = [1 => 'Most Demanding', 2 => 'A to Z', 3 => 'Z to A'];
                                         ?>
-                                        <option value="" style="display:none;" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Sort by : <?= isset($sort_option[$searchModel->custom_sort_by]) ? $sort_option[$searchModel->custom_sort_by] : 'Most Demanding' ?></option>
+                                        <option value="" style="display:none;" <?= $searchModel->custom_sort_by == '' ? 'selected' : '' ?>>Sort by : <span class="font_colorSet "> <?= isset($sort_option[$searchModel->custom_sort_by]) ? $sort_option[$searchModel->custom_sort_by] : 'Most Demanding' ?></span></option>
                                         <option value="1" class="<?= $searchModel->custom_sort_by == '1' ? 'selected' : '' ?>">Most Demanding</option>
                                         <option value="2" class="<?= $searchModel->custom_sort_by == '2' ? 'selected' : '' ?>">A to Z</option>
                                         <option value="3" class="<?= $searchModel->custom_sort_by == '3' ? 'selected' : '' ?>">Z to A</option>
