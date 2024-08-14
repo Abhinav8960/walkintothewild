@@ -15,9 +15,6 @@
                                 <div class="wrap_days">
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="days_title">
-                                                <h4 class="fs-5">Nights jim corbett tiger</h4>
-                                            </div>
                                             <div class="text_wrapperite">
                                                 <p><?= $packageday->day_description ?></p>
                                             </div>

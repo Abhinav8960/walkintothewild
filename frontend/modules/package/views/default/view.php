@@ -64,9 +64,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
-                                                    <a href="/package/unwishlist/<?= $package->package_slug ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                                                    <a href="/package/unwishlist/<?= $package->package_slug ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist" data-pjax="0"><i class="fa-solid fa-heart"></i></a>
                                                 <?php } else { ?>
-                                                    <a href="/package/wishlist/<?= $package->package_slug ?>" data-method="post" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
+                                                    <a href="/package/wishlist/<?= $package->package_slug ?>" data-method="post" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist" data-pjax="0"><i class="fa-regular fa-heart"></i></a>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
-                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>"><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong></a></p>
+                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-pjax="0"><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong></a></p>
 
                                     </div>
 
@@ -88,7 +88,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <div class="message">
-                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" class="parkrevieBtn d-block w-100 text-center">View Operator</a>
+                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-pjax="0" class="parkrevieBtn d-block w-100 text-center">View Operator</a>
                                     </div>
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button> -->
                                 </div>
@@ -211,7 +211,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button> -->
                                     <div class="message">
-                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" class="parkrevieBtn">View Operator</a>
+                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-pjax="0" class="parkrevieBtn">View Operator</a>
                                     </div>
                                 </div>
                             </div>

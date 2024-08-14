@@ -67,15 +67,20 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 ">
                         <div class="right_button ">
                             <?php if (Yii::$app->user->identity) { ?>
-                                <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
-                                    Safari</button>
+                                <?php if (Yii::$app->user->identity->is_safari_operator == 1) { ?>
+                                    <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>"> Organize a New Safari</button>
+                                    <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                                        Safari</button>
+                                    <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                <?php } else { ?>
+                                    <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
+                                        Safari</button>
+                                <?php } ?>
                             <?php } else {  ?>
                                 <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari">+ Organize a New
                                     Safari</a>
                             <?php } ?>
-                            <?php if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
-                                <button class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
-                            <?php } ?>
+
                         </div>
                     </div>
                 </div>
@@ -253,7 +258,7 @@ $recentposts = ArticleSearch::recentpost();
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body px-2 pt-0">
-                <div id='modalContent'></div>
+                <div id='sharedsafarimodalContent'></div>
             </div>
         </div>
     </div>
@@ -267,11 +272,49 @@ $recentposts = ArticleSearch::recentpost();
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body ">
-                <div id='modalContent'></div>
+                <div id='departuremodalContent'></div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade _standard-text" id="choice-organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Is it a shared safari or a fixed departure</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='choicemodalContent'>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="" class="Modal_label">Select a Shared Safari Type <span class="necessary">*</span></label>
+                            <div class="mb-3 field-shared_safari_choice">
+                                <select id="shared_safari_choice" class="form-select form-select-lg mb-3"
+                                    name="shared_safari_choice"
+                                    onchange="
+                                        $('#choice-organize-modal').modal('hide');
+                                        $('#departure-modal').modal('hide');
+                                        $('#organize-modal').modal('hide');
+                                        $('.'+$(this).val()).trigger('click');
+                                    "
+                                    aria-required="true" aria-invalid="true">
+                                    <option style="display:none;" value="">Select Safari Type</option>
+                                    <option value="organizeBtn">New Shared Safari </option>
+                                    <option value="departureBtn">New Fixed Departure</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <?php
 $script = <<< JS
@@ -279,7 +322,7 @@ $script = <<< JS
     function departurefunction() {
         $('.departureBtn').on('click', function () {
             $('#departure-modal').modal('show')
-            .find('#modalContent')
+            .find('#departuremodalContent')
             .load($(this).attr('value'));
         });
     }
@@ -297,7 +340,7 @@ $script = <<< JS
 function organizefunction() {
 	$('.organizeBtn').on('click', function () {
         $('#organize-modal').modal('show')
-		.find('#modalContent')
+		.find('#sharedsafarimodalContent')
 		.load($(this).attr('value'));
 	});
 }
@@ -306,6 +349,20 @@ organizefunction();
 JS;
 $this->registerJs($script);
 ?>
+
+<?php
+$script = <<< JS
+function choiceorganizefunction() {
+	$('.ChoiceOrganizeSafariBtn').on('click', function () {
+        $('#choice-organize-modal').modal('show');
+	});
+}
+choiceorganizefunction();
+
+JS;
+$this->registerJs($script);
+?>
+
 <script>
     // JavaScript to add a class to the parent element based on the child element
     document.addEventListener('DOMContentLoaded', (event) => {
