@@ -12,6 +12,7 @@ use common\models\BlockedModel;
 use common\models\UserExperience;
 use frontend\models\profile\UserForm;
 use common\models\sharesafari\ShareSafari;
+use common\Helper\FrontendNotificationHelper;
 use frontend\models\profile\UserExperienceForm;
 use frontend\controllers\FrontendBaseController;
 
@@ -72,6 +73,9 @@ class DefaultController extends FrontendBaseController
             $follower->follow_user_id = $user->id;
             $follower->status = 1;
             $follower->save(false);
+
+            FrontendNotificationHelper::userNewFollower($user, Yii::$app->user->identity);
+
             Yii::$app->session->setFlash('success', "Follow Successfully!!");
             return $this->redirect(Yii::$app->request->referrer);
         }
