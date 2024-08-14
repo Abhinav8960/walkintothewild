@@ -88,11 +88,32 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                             </div>
                             <div class="row postion_setsfari  pe-lg-4 ps-lg-4 ps-xxl-5 padding_mobileAdded">
                                 <div class="col-lg-12 col-sm-12 col-xxl-3 col-md-12 mb-4"></div>
-                                <?php foreach ($shared_safaries as $share_safari) { ?>
+                                <?php
+                                $safari_printed = 0;
+                                foreach ($shared_safaries as $share_safari) {
+                                    if ($safari_printed >= 3) {
+                                        continue;
+                                    }
+
+                                    if (Yii::$app->user->identity) {
+                                        if ($share_safari->type == 2) { // Fixed  Safai
+                                            if ($safarioperator = $share_safari->safarioperator) {
+                                                if ($safarioperator->user_id == Yii::$app->user->identity->id) {
+                                                    continue;
+                                                }
+                                            }
+                                        } else {
+                                            if ($share_safari->host_user_id == Yii::$app->user->identity->id) {
+                                                continue;
+                                            }
+                                        }
+                                    }
+                                ?>
                                     <div class="col-lg-4 col-sm-6 col-xxl-3 col-md-6 mb-4 ">
                                         <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                     </div>
-                                <?php } ?>
+                                <?php $safari_printed++;
+                                } ?>
                             </div>
                         </div>
                     </div>

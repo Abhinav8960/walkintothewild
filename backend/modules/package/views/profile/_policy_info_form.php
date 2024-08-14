@@ -31,9 +31,9 @@ use yii\bootstrap5\ActiveForm;
                                 <!-- Tabs -->
                                 <ul class="nav panel-tabs me-3">
                                     <li class=""><a href="#tab21" class="active" data-bs-toggle="tab"> Terms Condtition</a></li>
-                                    <li><a href="#tab22" data-bs-toggle="tab"> Privacy Policy</a></li>
+                                    <!-- <li><a href="#tab22" data-bs-toggle="tab"> Privacy Policy</a></li>
                                     <li><a href="#tab23" data-bs-toggle="tab"> Change Policy</a></li>
-                                    <li><a href="#tab24" data-bs-toggle="tab"> What You Must Carry</a></li>
+                                    <li><a href="#tab24" data-bs-toggle="tab"> What You Must Carry</a></li> -->
                                     <li><a href="#tab25" data-bs-toggle="tab"> Date Change Policy</a></li>
                                     <li><a href="#tab26" data-bs-toggle="tab"> Refund Policy</a></li>
                                 </ul>
