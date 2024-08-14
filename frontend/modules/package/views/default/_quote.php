@@ -49,5 +49,3 @@ use yii\bootstrap5\ActiveForm;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-
-</div>
