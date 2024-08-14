@@ -31,6 +31,10 @@ class FrontendNotification extends \yii\db\ActiveRecord
 
     const ACTION_PACKAGE_NEW_COMMENT = 1;
     const ACTION_PACKAGE_COMMENT_REPLY = 2;
+    const ACTION_OPERATOR_NEW_FOLLOWER = 3;
+    const ACTION_OPERATOR_NEW_QUOTE = 4;
+    const ACTION_OPERATOR_NEW_REVIEW = 5;
+    const ACTION_SHARED_SAFARI_JOIN = 6;
 
     /**
      * {@inheritdoc}
