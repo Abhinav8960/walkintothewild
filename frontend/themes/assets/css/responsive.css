@@ -507,7 +507,10 @@ font-size: 19px;
 }
 
 
-@media only screen and (max-width: 986px) and (min-width: 874px) {
+@media only screen and (max-width: 1400px) and (min-width: 991px) {
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle {
+    padding-left: 17px;
+}
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 1200px) {
@@ -752,6 +755,12 @@ font-size: 19px;
 
   .placeholder_select {
     left: 16%;
+  }
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle,
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle,
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .dropdown-toggle{
+
+    width: 209px;
   }
 
   /* .parksImg img {
@@ -1105,6 +1114,10 @@ text-align: center !important;
   }
 }
 @media (max-width: 991px) {
+  .px_serach{
+
+    padding: 0px 5px;
+  }
   .title_safari.JoinPadding{
 
     padding-top: 13px;
@@ -1381,13 +1394,13 @@ margin-bottom: 0 !important;
     .select_searcjBox
     .select_boxes:nth-child(1)
     .dropdown-toggle {
-    padding-left: 29px;
+    padding-left: 28px;
   }
   .planSearch_box
     .select_searcjBox
     .select_boxes:nth-child(3)
     .dropdown-toggle {
-    padding-left: 29px;
+    padding-left: 28px;
   }
   .planSearch_box .placeholder_select {
     left: 6% !important;

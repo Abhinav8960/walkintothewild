@@ -31,7 +31,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                     <span>|</span>
                     <div class="terms">
-                        <p class="mb-0 pt-0"><a href="/termsandcondition">TERMS & CONDITIONS</a></p>
+                        <p class="mb-0 pt-0"><a href="/termsandcondition">TERMS OF USE</a></p>
                     </div>
                 </div>
             </div>
