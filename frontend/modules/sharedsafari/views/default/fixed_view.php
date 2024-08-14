@@ -59,16 +59,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3">
                                     <div class="safrititles">
-                                        <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>"><?= $share_safari->park->title ?></a>
+                                        <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a>
                                             <?php
                                             if (Yii::$app->user->identity) { ?>
                                                 <?php
                                                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
-                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" data-method="POST" data-pjax="0" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
                                                 <?php } else { ?>
-                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
+                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" data-method="POST" data-pjax="0" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
@@ -76,7 +76,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <div class="date_bx">
                                             <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
+                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
 
                                     </div>
 

@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 <?php if ($device == 'desktop') { ?>
     <div class="filter-wrapper d-lg-block d-none sticky-sidebar">
         <div class="title_top pb-4">
-            <h4>Select Filter</h4>
+            <h4>Select Filters</h4>
         </div>
         <div class="title_filter mb-4">
             <h6>Accommodation</h6>

@@ -98,7 +98,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <?php if (Yii::$app->user->identity) { ?>
                                                         <button class="parkrevieBtn  writeAReviewBtn text-capitlize" value="<?= Url::toRoute(['/operator/default/review', 'operator_id' => $operator->id]) ?>">+ Write a Review</button>
                                                     <?php } else { ?>
-                                                        <a class="parkrevieBtn " href="/site/login?authclient=google&referrer=/operator/<?= $operator->slug ?>/reviewlist">Please Login to Review</a>
+                                                        <a class="parkrevieBtn " href="/site/login?authclient=google&referrer=/operator/<?= $operator->slug ?>/reviewlist" data-pjax="0">Please Login to Review</a>
                                                     <?php } ?>
                                                 </div>
                                             </div>
@@ -108,9 +108,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <div class="sort_wrapper py-3">
                                                     <div class="sortBy">Sort by</div>
                                                     <div class="d-flex flex-wrap align-items-center">
-                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'newest']) ?>">Newest</a>
-                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'highest']) ?>">Highest</a>
-                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'lowest']) ?>">Lowest</a>
+                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'newest' || $ratingsearchModel->custom_sort_by == '' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'newest']) ?>" data-pjax="0">Newest</a>
+                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'highest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'highest']) ?>" data-pjax="0">Highest</a>
+                                                        <a class="review-button btn_sort <?= $ratingsearchModel->custom_sort_by == 'lowest' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, 'sort_by' => 'lowest']) ?>" data-pjax="0">Lowest</a>
                                                         <?= $this->render('_filter_park', ['model' => $ratingsearchModel, 'operator_id' => $operator->id, 'operator' => $operator]) ?>
                                                     </div>
                                                 </div>
@@ -148,7 +148,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </div>
 
                                                                     <?php if ($review->user) { ?>
-                                                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
+                                                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>" data-pjax="0">
                                                                             <p class="mb-0"> <?= $review->user->name ?></p>
                                                                         </a>
                                                                     <?php } ?>

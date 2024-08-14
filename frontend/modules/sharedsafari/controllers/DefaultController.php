@@ -283,9 +283,9 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
+            return $this->redirect(Yii::$app->request->referrer);
         }
-        return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
 
@@ -320,9 +320,9 @@ class DefaultController extends FrontendBaseController
             } else {
                 return $this->redirect(['/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]));
+            return $this->redirect(Yii::$app->request->referrer);
         }
-        return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionFlag($slug, $park_id, $share_safari_comment_id)

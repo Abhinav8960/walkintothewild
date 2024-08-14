@@ -32,7 +32,7 @@ $reviews = $ratingdataProvider->getModels();
                                     <div class="providerNamerating ">
                                         <div class="googlerating names">
                                             <?php if ($review->user) { ?>
-                                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
+                                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>" data-pjax="0">
                                                     <h6 class="mb-0 fs-6 pb-0"><?= $review->user->name ?></h6>
                                                 </a>
                                             <?php } ?>
@@ -67,7 +67,7 @@ $reviews = $ratingdataProvider->getModels();
                 <div class="col-12">
                     <div class="safari text-end">
                         <div class="viewAllreview">
-                            <a href="<?= \yii\helpers\Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'memberview']) ?>">View All</a>
+                            <a href="<?= \yii\helpers\Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'memberview']) ?>" data-pjax="0">View All</a>
                         </div>
                     </div>
                 </div>

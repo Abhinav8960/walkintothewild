@@ -373,31 +373,48 @@ $(document).ready(function(){
 });
 $(document).ready(function() {
     function initializeOwlCarousel() {
-        if ($(window).width() <= 900) {
+        if ($(window).width() <= 991) {
             $('.slider_profilemobile').addClass('owl-carousel');
             $('.slider_profilemobile').owlCarousel({
                 loop: false,
                 margin: 10,
                 nav: false,
+                responsiveClass:true,
                 center: false,
-                // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2.5
+                        items: 1.2,
+                        stagePadding: 10,
+                        center: true,
+                       
+                    },
+                    300: {
+                        items: 2,
+                        stagePadding: 20,
+                       
                     },
 
                     400: {
-                        items: 3.5
+                        items: 2,
+                        stagePadding: 0,
+                        center: true,
+                   
+                        
                     },
                     600: {
-                        items: 3.5
+                        items: 2.2,
+                        stagePadding: 10,
+                        center: true,
+                    }
+                    ,
+                    800: {
+                        items: 3.2,
+                        center: true,
                     },
                     991: {
-                        items: 5.5
-                    },
-                    1200: {
-                        items: 5.5
+                        items: 5.2,
+                        stagePadding: 0,
                     }
                 }
             });
@@ -788,3 +805,19 @@ function initializeDualrange(min_selector, max_selector) {
         }
     };
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    var massge = document.querySelector('.massge');
+    var menunotification = document.querySelector('.chatnotification');
+
+    massge.addEventListener('click', function(event) {
+        event.stopPropagation(); 
+        menunotification.classList.toggle('active');
+    });
+
+    document.addEventListener('click', function() {
+        if (menunotification.classList.contains('active')) {
+            menunotification.classList.remove('active');
+        }
+    });
+});
