@@ -30,7 +30,7 @@ class ContentManagement extends \yii\db\ActiveRecord implements \common\interfac
     const CM_SAFARI_TERM_AND_CONDITION = 4;
     const CM_RESORT_TERM_AND_CONDITION = 5;
     const CM_DISCLAIMER = 6;
-    const CM_DESCRIPTION = 7;
+    const CM_ABOUT_US = 7;
     const CMS_PRIVACY_POLICY = 8;
 
 
