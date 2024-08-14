@@ -37,8 +37,7 @@
         "kartik-v/yii2-widget-datetimepicker": "dev-master",
         "jenssegers/agent": "^2.6",
         "skeeks/yii2-mobile-detect": "^1.0.2",
-        "pusher/pusher-php-server": "^7.2",
-        "daxslab/yii2-taggedview": "*"
+        "pusher/pusher-php-server": "^7.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
