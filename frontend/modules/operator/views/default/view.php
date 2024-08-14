@@ -72,7 +72,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <div class="d-flex justify-content-between flex-wrap mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Operates in <span class="numberFont"><?= count($operator_parks) ?></span> Parks</h6>
                                                 <?php if (count($operator_parks) >= 2) { ?>
-                                                    <a class="SeeAll mt-md-0 mt-3" href="<?= Url::toRoute(['/operator/default/parkseeall', 'slug' => $operator->slug]) ?>">See All</a>
+                                                    <a class="SeeAll mt-md-0 mt-3" href="<?= Url::toRoute(['/operator/default/parkseeall', 'slug' => $operator->slug]) ?>" data-pjax="0">See All</a>
                                                 <?php } ?>
                                                 <!-- <div class="whiteReview ">
                                                     <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
@@ -88,7 +88,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 ?>
                                                             <div class="col-md-4 col-lg-6 col-xxl-4 col-sm-6 gap-2  mb-4">
                                                                 <div class="parksImgireview h-100">
-                                                                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' =>  $park_detail->slug]) ?>">
+                                                                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' =>  $park_detail->slug]) ?>" data-pjax="0">
                                                                         <img src="<?= isset($park_detail->logo) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
 
                                                                     </a>

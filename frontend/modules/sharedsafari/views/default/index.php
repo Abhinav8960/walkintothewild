@@ -68,17 +68,14 @@ $recentposts = ArticleSearch::recentpost();
                         <div class="right_button ">
                             <?php if (Yii::$app->user->identity) { ?>
                                 <?php if (Yii::$app->user->identity->is_safari_operator == 1) { ?>
-                                    <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>"> Organize a New Safari</button>
-                                    <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
-                                        Safari</button>
+                                    <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                    <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                                     <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
                                 <?php } else { ?>
-                                    <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a New
-                                        Safari</button>
+                                    <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                                 <?php } ?>
                             <?php } else {  ?>
-                                <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari">+ Organize a New
-                                    Safari</a>
+                                <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari" data-pjax="0">+ Organize a Shared Safari</a>
                             <?php } ?>
 
                         </div>
@@ -254,7 +251,7 @@ $recentposts = ArticleSearch::recentpost();
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a New Safari</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a Shared Safari</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body px-2 pt-0">
@@ -268,7 +265,7 @@ $recentposts = ArticleSearch::recentpost();
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a New Fixed Departure</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Organize a Fixed Departure</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body ">
@@ -303,8 +300,8 @@ $recentposts = ArticleSearch::recentpost();
                                     "
                                     aria-required="true" aria-invalid="true">
                                     <option style="display:none;" value="">Select Safari Type</option>
-                                    <option value="organizeBtn">New Shared Safari </option>
-                                    <option value="departureBtn">New Fixed Departure</option>
+                                    <option value="organizeBtn">Organize a Shared Safari </option>
+                                    <option value="departureBtn">Organize a Fixed Departure</option>
                                 </select>
                             </div>
                         </div>

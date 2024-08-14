@@ -42,14 +42,14 @@ use common\models\operator\SafariOperatorFollow;
                                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) {
                                         $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id, 'status' => 1])->limit(1)->one();
                                         if ($operator_follow) { ?>
-                                            <a class="parkrevieBtn" href="/operator/default/unfollow?id=<?= $operator->id ?>"></i> Unfollow</a>
+                                            <a class="parkrevieBtn" href="/operator/default/unfollow?id=<?= $operator->id ?>" data-pjax="0"></i> Unfollow</a>
                                         <?php } else { ?>
-                                            <a class="parkrevieBtn" href="/operator/default/follow?id=<?= $operator->id ?>"> Follow</a>
+                                            <a class="parkrevieBtn" href="/operator/default/follow?id=<?= $operator->id ?>" data-pjax="0"> Follow</a>
                                         <?php  }
                                     } else if (Yii::$app->user->identity && Yii::$app->user->identity->id == $operator->user_id) { ?>
-                                        <a class="parkrevieBtn" href="<?= Url::toRoute(['/manage/default/edit-request']) ?>">Update</a>
+                                        <a class="parkrevieBtn" href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" data-pjax="0">Update</a>
                                     <?php } else { ?>
-                                        <a class="parkrevieBtn" href="/operator/default/follow?id=<?= $operator->id ?>"> Follow</a>
+                                        <a class="parkrevieBtn" href="/operator/default/follow?id=<?= $operator->id ?>" data-pjax="0"> Follow</a>
                                     <?php } ?>
                                 </div>
                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
@@ -68,7 +68,7 @@ use common\models\operator\SafariOperatorFollow;
                                 <p class="mb-0"><?= round($operator->google_rating, 1) ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
                             </div>
                             <div class="googlerating">
-                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'viewcontent']) ?>" style="color:inherit;"> <?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?></a></p>
+                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'viewcontent']) ?>" data-pjax="0" style="color:inherit;"> <?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?></a></p>
                             </div>
                         </div>
                         <div class="detailsText pb-3">

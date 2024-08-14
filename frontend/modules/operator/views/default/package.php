@@ -75,7 +75,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <div class="d-flex justify-content-between flex-wrap mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Created <span class="numberFont"><?= count($operator_packages) ?></span> Packages</h6>
                                                 <?php if (count($operator_packages) >= 2) { ?>
-                                                    <a class="SeeAll mt-sm-0 mt-3" href="<?= Url::toRoute(['/operator/default/packageseeall', 'slug' => $operator->slug]) ?>">See All</a>
+                                                    <a class="SeeAll mt-sm-0 mt-3" href="<?= Url::toRoute(['/operator/default/packageseeall', 'slug' => $operator->slug]) ?>" data-pjax="0">See All</a>
                                                 <?php } ?>
                                                 <!-- <div class="whiteReview ">
                                                     <button class="follow_btn writeAReviewBtn text-capitlize" value="">View All</button>
