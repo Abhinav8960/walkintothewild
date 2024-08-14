@@ -237,3 +237,23 @@ $active_url = "/" . Yii::$app->requestedRoute;
 		</div>
 	</nav>
 </header>
+
+<?php if (Yii::$app->user->identity) { ?>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var massge = document.querySelector('.massge');
+			var menunotification = document.querySelector('.chatnotification');
+
+			massge.addEventListener('click', function(event) {
+				event.stopPropagation();
+				menunotification.classList.toggle('active');
+			});
+
+			document.addEventListener('click', function() {
+				if (menunotification.classList.contains('active')) {
+					menunotification.classList.remove('active');
+				}
+			});
+		});
+	</script>
+<?php } ?>
