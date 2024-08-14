@@ -15,45 +15,68 @@ $this->params['title'] = $this->title;
         <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active', 'user' => $user]) ?>
     </div>
 </section>
-
-<section class="margin_bottomfooter">
-    <div class="container-lg">
-        <div class="row justify-content-center mb-5">
-            <div class="col-xxl-11 mb-5">
-                <div class="row mb-5">
-                    <div class="col-md-12">
-                        <h6 class="fs-5 fw-bold pb-3">Followers</h5>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
-                                        foreach ($userfollowers as $userfollower) { ?>
-                                            <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
-                                                <section class="mx-auto" style="max-width: 23rem;">
-                                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user, 'profile_user' => $user]);  ?>
-                                                </section>
-                                            </div>
-                                    <?php  }
-                                    } else {
-                                        echo '<div class="col-md-12">
+<?php if (Yii::$app->user->identity) { ?>
+    <section class="margin_bottomfooter">
+        <div class="container-lg">
+            <div class="row justify-content-center mb-5">
+                <div class="col-xxl-11 mb-5">
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h6 class="fs-5 fw-bold pb-3">Followers</h5>
+                        </div>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
+                                            foreach ($userfollowers as $userfollower) { ?>
+                                                <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
+                                                    <section class="mx-auto" style="max-width: 23rem;">
+                                                        <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user, 'profile_user' => $user]);  ?>
+                                                    </section>
+                                                </div>
+                                        <?php  }
+                                        } else {
+                                            echo '<div class="col-md-12">
                     There is no follower!
                 </div>';
-                                    } ?>
-                                </div>
+                                        } ?>
+                                    </div>
 
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+<?php } else { ?>
+
+    <div class="container-lg">
+        <div class="row justify-content-center">
+            <div class="col-xxl-11 margin_bottomfooter">
+                <div class="card position-relative" style="min-height: 350px;">
+                    <div class="card-body">
+                        <div class="withoutlogedin">
+                            <h6 class="fs-6 fw-bold">Followers</h6>
+                        </div>
+
+                        <div class="logininfo text-center">
+                            <h6>Please log in to view the Followers</h6>
+                            <div class="viewAllreview">
+                                <a href="/site/login?authclient=google&referrer=/profile/follower/<?= $user->user_handle ?>">Login</a>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-
     </div>
-</section>
+<?php } ?>
 
 
 <script>
