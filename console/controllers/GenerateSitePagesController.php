@@ -21,7 +21,6 @@ use common\models\master\animal\MasterAnimal;
 use common\models\trierror\FrontendRequestLog;
 use common\models\cms\article\MasterArticleTag;
 use common\models\cms\article\MasterArticleTopic;
-use common\models\master\animal\MasterRareAnimal;
 use common\models\trierror\FrontendRequestLogSearch;
 
 
@@ -139,9 +138,9 @@ class GenerateSitePagesController extends Controller
   {
     $start = microtime(true);
 
-    // $this->get_monthly_package_site_pages();
-    // $this->get_monthly_shared_safari_site_pages();
-    //$this->get_operator_tabs_site_pages();
+    $this->get_monthly_package_site_pages();
+    $this->get_monthly_shared_safari_site_pages();
+    $this->get_operator_tabs_site_pages();
     $this->get_static_pages('static pages');
 
     $end = microtime(true);
@@ -196,9 +195,9 @@ class GenerateSitePagesController extends Controller
     } else if ($data['table'] == 'package') {
       $records = Package::find()->select(['id', 'package_slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     } else if ($data['table'] == 'master_rare_animal') {
-      $records = MasterRareAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->where(['animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->asArray()->all();
     } else if ($data['table'] == 'master_animal') {
-      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->where(['animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->asArray()->all();
     }
 
     if (count($records)) {
@@ -283,7 +282,7 @@ class GenerateSitePagesController extends Controller
           ];
         }
 
-        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'slug', 'url', 'url_type', 'method', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status', 'updated_at'], $insert_package_site_pages)->execute();
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'slug', 'url', 'url_type', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'status', 'updated_at'], $insert_package_site_pages)->execute();
       }
     }
   }
@@ -469,7 +468,29 @@ class GenerateSitePagesController extends Controller
       $is_post = $s_request['is_post'];
       $is_ajax = $s_request['is_ajax'];
 
-      $model = SitePages::find()->where(['content_table' => 'cms'])->andWhere(['url' => $url])->one();
+      $category = 'CMS';
+      $sub_category = 'Pages';
+      if ($page == 'operator') {
+        $category = 'Operator';
+        $sub_category = 'Operator';
+      } else if ($page == 'article') {
+        $category = 'Article';
+        $sub_category = 'Article';
+      } else if ($page == 'park') {
+        $category = 'Park';
+        $sub_category = 'Park';
+      } else if ($page == 'shared-safari') {
+        $category = 'Shared Safari';
+        $sub_category = 'Shared Safari';
+      } else if ($page == 'safari-packages') {
+        $category = 'Package';
+        $sub_category = 'Package';
+      } else if ($page == 'sharedsafari') {
+        $category = 'Shared Safari';
+        $sub_category = 'Shared Safari';
+      }
+
+      $model = SitePages::find()->where(['category' => $category])->andWhere(['url' => $url])->one();
 
       if ($model) {
         $model->get_parameter  = $s_request['get_parameter'];
@@ -478,28 +499,6 @@ class GenerateSitePagesController extends Controller
         $model->status = 1;
         $model->save(false);
       } else {
-        $category = 'CMS';
-        $sub_category = 'Pages';
-        if ($page == 'operator') {
-          $category = 'Operator';
-          $sub_category = 'Operator';
-        } else if ($page == 'article') {
-          $category = 'Article';
-          $sub_category = 'Article';
-        } else if ($page == 'park') {
-          $category = 'Park';
-          $sub_category = 'Park';
-        } else if ($page == 'shared-safari') {
-          $category = 'Shared Safari';
-          $sub_category = 'Shared Safari';
-        } else if ($page == 'safari-packages') {
-          $category = 'Package';
-          $sub_category = 'Package';
-        } else if ($page == 'sharedsafari') {
-          $category = 'Shared Safari';
-          $sub_category = 'Shared Safari';
-        }
-
         //insert new record
         $model = new SitePages();
         $model->content_id = 0;

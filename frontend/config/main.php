@@ -41,6 +41,7 @@ return [
             ],
         ],
         'view' => [
+            //'class' => 'daxslab\taggedview\View',
             'on afterRender' => function ($event) {
                 // Your custom logic here
                 $event->output .= "\n<!-- Rendered on " . date('Y-m-d H:i:s') . " -->";
