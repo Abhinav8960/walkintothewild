@@ -371,6 +371,49 @@ $(document).ready(function(){
         initializeOwlCarousel();
     });
 });
+$(document).ready(function() {
+    function initializeOwlCarousel() {
+        if ($(window).width() <= 900) {
+            $('.slider_profilemobile').addClass('owl-carousel');
+            $('.slider_profilemobile').owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: false,
+                responsiveClass:true,
+                center: false,
+                // stagePadding: 50,
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 2.5
+                    },
+
+                    400: {
+                        items: 3.5
+                    },
+                    600: {
+                        items: 3.5
+                    },
+                    991: {
+                        items: 5.5
+                    },
+                    1200: {
+                        items: 5.5
+                    }
+                }
+            });
+        } else {
+            $('.slider_profilemobile').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+            $('.slider_profilemobile').find('.owl-stage-outer').children().unwrap();
+        }
+    }
+
+    initializeOwlCarousel();
+
+    $(window).resize(function() {
+        initializeOwlCarousel();
+    });
+});
 document.addEventListener('DOMContentLoaded', function () {
     let profile = document.querySelector('.profile');
     let menu = document.querySelector('.menuprofile');
