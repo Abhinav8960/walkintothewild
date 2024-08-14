@@ -2,29 +2,30 @@
 
 namespace frontend\modules\operator\controllers;
 
-use common\interfaces\StatusInterface;
 use Yii;
 use yii\helpers\Url;
-use common\models\GeneralModel;
 use common\models\MailLog;
+use common\models\GeneralModel;
+use yii\data\ActiveDataProvider;
+use common\models\package\Package;
 use yii\web\NotFoundHttpException;
 use frontend\models\SafariParkSearch;
+use common\interfaces\StatusInterface;
+use common\models\cms\article\Article;
 use frontend\models\OperatorQuoteForm;
 use frontend\models\SafariOperatorSearch;
 use common\models\operator\SafariOperator;
-use common\models\cms\article\Article;
-use common\models\operator\form\SafariOperatorReportProfileForm;
 use common\models\sharesafari\ShareSafari;
+use common\Helper\FrontendNotificationHelper;
 use frontend\models\SafariOperatorReviewForm;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\SafariOperatorRatingReportForm;
-use common\models\operator\SafariOperatorRatingSearch;
-use common\models\package\Package;
-use yii\data\ActiveDataProvider;
 use frontend\models\SafariOperatorRatingCommentForm;
+use common\models\operator\SafariOperatorRatingSearch;
+use common\models\operator\form\SafariOperatorReportProfileForm;
 
 /**
  * DefaultController.
@@ -82,11 +83,18 @@ class DefaultController extends FrontendBaseController
 
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
         }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/view',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/view',  'slug' => $slug]);
+            }
         }
 
         return $this->render(
@@ -108,10 +116,20 @@ class DefaultController extends FrontendBaseController
         }
         $operator_packages = Package::find()->where(['owned_by_id' => $operator->id])->all();
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+            }
         }
 
         return $this->render(
@@ -148,10 +166,20 @@ class DefaultController extends FrontendBaseController
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
+            }
         }
 
         if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate()) {
@@ -218,10 +246,20 @@ class DefaultController extends FrontendBaseController
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->all();
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+            }
         }
 
         return $this->render(
@@ -290,6 +328,8 @@ class DefaultController extends FrontendBaseController
                     $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name];
 
                     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                    FrontendNotificationHelper::operatorNewFollower($operator, Yii::$app->user->identity);
+
                     Yii::$app->session->setFlash('success', 'You are start following ' . $operator->business_name);
                 } else {
                     Yii::$app->session->setFlash('error', 'You can not follow this operator currently!');
@@ -365,6 +405,7 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->rating_model->save(false)) {
                         $model->updateRatingintoTable($operator);
+                        FrontendNotificationHelper::operatorNewReview($operator, $model->rating_model, Yii::$app->user->identity);
                         Yii::$app->session->setFlash('success', 'Thanks for Review!!');
                         return $this->redirect([
                             '/operator/default/reviewlist',
@@ -509,10 +550,20 @@ class DefaultController extends FrontendBaseController
 
 
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                    Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                    return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+                }
+            }
         }
 
         $query = Article::find()->where([
@@ -551,10 +602,20 @@ class DefaultController extends FrontendBaseController
 
 
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+            }
         }
 
         $ratingsearchModel = new SafariOperatorRatingSearch();
@@ -621,10 +682,20 @@ class DefaultController extends FrontendBaseController
         }
 
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+            }
         }
 
         $shared_safaries = ShareSafari::find()->where([
@@ -660,10 +731,20 @@ class DefaultController extends FrontendBaseController
         }
 
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
+            }
         }
 
         $operator_packages = Package::find()->where(['owned_by_id' => $operator->id]);
@@ -704,11 +785,18 @@ class DefaultController extends FrontendBaseController
 
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
         }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/view',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/view',  'slug' => $slug]);
+            }
         }
 
         return $this->render(
@@ -731,10 +819,20 @@ class DefaultController extends FrontendBaseController
 
 
         $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
         $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->request($operator)) {
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
-            return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+                return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+            }
         }
 
         $query = Article::find()->where([

@@ -99,14 +99,14 @@ class OperatorQuoteForm extends Model
         $operator_quote->status = 1;
 
 
-        if ($operator_quote->save()) {
+        if ($operator_quote->save(false)) {
             $to_mail = $operator_quote->email;
             $subject = 'Request Free Quote';
             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
             $req = ['username' => $operator_quote->full_name];
 
             MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-            return $operator_quote->save();
+            return $operator_quote;
         }
     }
 }

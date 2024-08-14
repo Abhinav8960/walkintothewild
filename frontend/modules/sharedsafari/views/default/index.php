@@ -297,6 +297,7 @@ $recentposts = ArticleSearch::recentpost();
                                         $('#departure-modal').modal('hide');
                                         $('#organize-modal').modal('hide');
                                         $('.'+$(this).val()).trigger('click');
+                                        $('#shared_safari_choice').prop('selectedIndex', 0);
                                     "
                                     aria-required="true" aria-invalid="true">
                                     <option style="display:none;" value="">Select Safari Type</option>

@@ -11,7 +11,7 @@ class FrontAppAsset extends AssetBundle
 {
     public $sourcePath = '@frontend/themes/assets/';
     public $publishOptions = [
-        'forceCopy' =>true,
+        'forceCopy' =>false,
     ];
     public $css = [
         'css/style.css',

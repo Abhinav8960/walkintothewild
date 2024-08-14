@@ -24,17 +24,19 @@ $cluster = Yii::$app->params['PUSHER_CLUSTER'];
 $script = <<< JS
     // Enable pusher logging - don't include this in production
     // Pusher.logToConsole = true;
+    $(document).ready(function() {
 
-    var pusher = new Pusher('{$PUSHER_AUTH_KEY}', {
-        cluster: '{$cluster}'
-    });
+        var pusher = new Pusher('{$PUSHER_AUTH_KEY}', {
+            cluster: '{$cluster}'
+        });
 
-    var channel = pusher.subscribe('UserNotificationChannel');
-    channel.bind('UserEvent', function(data) {
-        if($login_user_id==data.user_id){
-            success_notify(data);
-        }
-    });                  
+        var channel = pusher.subscribe('UserNotificationChannel');
+        channel.bind('UserEvent', function(data) {
+            if($login_user_id==data.user_id){
+                success_notify(data);
+            }
+        });    
+    })
 JS;
 $this->registerJs($script);
 ?>
