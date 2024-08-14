@@ -1105,6 +1105,10 @@ text-align: center !important;
   }
 }
 @media (max-width: 991px) {
+  .title_safari.JoinPadding{
+
+    padding-top: 13px;
+  }
   .px-slider{
 
     padding: 0 !important;
