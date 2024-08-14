@@ -3394,7 +3394,7 @@ figure {
 
 .searchSafari_wraper {
 
-    background-color: #F5F5F5;
+    background-color: #ffffff;
     border: 1px solid #0000004D;
     border-radius: 10px;
     /* -webkit-box-shadow: 0px 5px 10px #00000029;
@@ -7220,10 +7220,9 @@ select.custom_sort_by_input  option.selected{
     background-color: var(--background-primary) !important;
     color: #fff !important;
 }
-.oprators_boxes .listingSafari  {
+.listingSafari {
 
     background-color: #fff !important;
-    border-radius: 5px 5px 0px 0px !important;
 }
 
 
