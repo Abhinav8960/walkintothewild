@@ -1,9 +1,12 @@
 <?php
 if ($followings = $user->getUserfollowings()->where(['status' => 1])->all()) {
+    $model_count = $user->getUserfollowings()->where(['status' => 1])->count();
 ?>
     <div class="request_quote ">
         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
-            Following</button>
+            Following
+            <span><?= $model_count ?></span></button>
+        </button>
         <div class="interst_wrapper py-4 px-md-5 bg-white">
             <?php
             foreach ($followings as $following) { ?>
