@@ -29,11 +29,11 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        //'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
                         'label' => 'User',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        //'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($user = $model->user) {
@@ -45,7 +45,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
                     [
                         'label' => 'Safari Operator',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        //'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return  isset($model->safari_operator_id) ? GeneralModel::safariparkoperatoroption()[$model->safari_operator_id] : '';
@@ -61,7 +61,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
                     [
                         'label' => 'Rating',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        //'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->rating;
@@ -69,31 +69,35 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
                     [
                         'label' => 'Review',
-                        'contentOptions' => ['style' => 'width: 20%;'],
+                        //'contentOptions' => ['style' => 'width: 20%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->review;
                         }
                     ],
                     [
-                        'label' => 'Flaged',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'label' => '#Flags',
+                        //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return ($model->flaged == 1) ? 'Yes' : 'No';
+                            $reasons = [];
+                            $all_flags_count = $model->getReports()->where(['status' => 1])->count();
+                            return $all_flags_count;
                         }
                     ],
 
                     [
                         'label' => 'Action',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->flaged == 1) {
-                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">', [
-                                    'value' => Url::toRoute(['view', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning choose-option mb-2',
-                                    'title' => 'Edit'
+
+
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['flagview', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'name' => 'View',
                                 ]);
                             } else {
                                 return "";

@@ -10,7 +10,7 @@ use yii\helpers\Url;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
 
-$this->title = 'Package Comment Flag';
+$this->title = 'Safari Operator Comment Flag';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -22,15 +22,20 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
       <table class="table table-striped table-bordered">
         <tr>
           <td class="px-3"><b>Comment:</b></td>
-          <td class="px-3"><?= ucfirst($review->comment) ?></td>
+          <td class="px-3"><?= ucfirst($review->review) . " (Rating: " . round($review->rating) . ")" ?></td>
         </tr>
         <tr>
-          <td class="px-3"><b>Package:</b></td>
-          <td class="px-3"><?= ucfirst($review->package->package_name) ?></td>
+          <td class="px-3"><b>Operator:</b></td>
+          <td class="px-3"><?= ucfirst($review->operator->business_name) ?></td>
+        </tr>
+
+        <tr>
+          <td class="px-3"><b>Park:</b></td>
+          <td class="px-3"><?= ucfirst($review->park->title) ?></td>
         </tr>
         <tr>
           <td class="px-3"><b>Comment By:</b></td>
-          <td class="px-3"><?= ucfirst($review->user->name) ?></td>
+          <td class="px-3"><?= $review->user->name ?></td>
         </tr>
         <tr>
           <td class="px-3"><b>Date:</b></td>

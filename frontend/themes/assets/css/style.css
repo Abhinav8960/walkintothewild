@@ -7003,6 +7003,7 @@ text-align: center;
     border-radius: 10px;
 }
 
+
 /* .menunotification::before {
     content: '';
     position: absolute;
@@ -7014,14 +7015,15 @@ text-align: center;
     transform: rotate(45deg);
     z-index: -1;
 } */
-.menunotification.active {
+.menunotification.active{
     opacity: 1;
     -webkit-transform: translateY(0);
         -ms-transform: translateY(0);
             transform: translateY(0);
     visibility: visible;
 }
-.menunotification ul{
+.menunotification ul,
+.chatnotification ul{
 
     padding-left: 0;
     list-style: none;
@@ -7078,6 +7080,36 @@ font-weight: 500;
 .viewallNotification .follow_massge{
 
     text-transform: capitalize !important;
+}
+.chatnotification {
+    position: absolute;
+    top: calc(100% + -5px);
+    right: 100px;
+    min-height: 100px;
+    background: #fff;
+    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
+    opacity: 0;
+    -webkit-transform: translateY(-10px);
+        -ms-transform: translateY(-10px);
+            transform: translateY(-10px);
+    visibility: hidden;
+    -webkit-transition: 300ms;
+    -o-transition: 300ms;
+    transition: 300ms;
+    z-index: 100;
+    width: auto;
+    max-width: 500px;
+    padding-bottom: 20px;
+    /* padding: 15px 10px; */
+    border-radius: 10px;
+}
+.chatnotification.active {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+            transform: translateY(0);
+    visibility: visible;
 }
 
 
@@ -7188,3 +7220,5 @@ select.custom_sort_by_input  option.selected{
     background-color: var(--background-primary) !important;
     color: #fff !important;
 }
+
+
