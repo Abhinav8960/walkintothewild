@@ -373,32 +373,45 @@ $(document).ready(function(){
 });
 $(document).ready(function() {
     function initializeOwlCarousel() {
-        if ($(window).width() <= 900) {
+        if ($(window).width() <= 991) {
             $('.slider_profilemobile').addClass('owl-carousel');
             $('.slider_profilemobile').owlCarousel({
-                loop: true,
+                loop: false,
                 margin: 10,
                 nav: false,
                 responsiveClass:true,
                 center: false,
-                // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2.5
+                        items: 1.2,
+                        stagePadding: 10,
+                        center: true,
+                       
+                    },
+                    300: {
+                        items: 2,
+                        stagePadding: 20,
+                       
                     },
 
                     400: {
-                        items: 3.5
+                        items: 2,
+                        stagePadding: 10,
+                   
+                        
                     },
                     600: {
-                        items: 3.5
+                        items: 2.2,
+                        stagePadding: 10,
+                    }
+                    ,
+                    800: {
+                        items: 3.2,
                     },
                     991: {
-                        items: 5.5
-                    },
-                    1200: {
-                        items: 5.5
+                        items: 5.2,
+                        stagePadding: 0,
                     }
                 }
             });
