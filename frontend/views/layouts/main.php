@@ -76,21 +76,21 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\frontend\assets\Fron
                     <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
                 </div>
                 <div class="modal-body pt-0">
-                    <div id='modalContent'></div>
+                    <div id='updatesafarimodalContent'></div>
                 </div>
             </div>
         </div>
     </div>
     <?php
     $script = <<< JS
-        function organizefunction() {
+        function updateorganizefunction() {
             $('.updateSafariBtn').on('click', function () {
                 $('#update-organize-modal').modal('show')
-                .find('#modalContent')
+                .find('#updatesafarimodalContent')
                 .load($(this).attr('value'));
             });
         }
-        organizefunction();
+        updateorganizefunction();
              
     JS;
     $this->registerJs($script);

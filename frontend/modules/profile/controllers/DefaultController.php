@@ -157,23 +157,23 @@ class DefaultController extends FrontendBaseController
         $model = new UserExperienceForm();
         $model->action_url = '/profile/default/create';
         $model->action_validate_url = '/profile/default/validate';
-        $model->user_id = $user->id;
-        $model->status = UserExperience::STATUS_ACTIVE;
+        // $model->user_id = $user->id;
+        // $model->status = UserExperience::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->file = UploadedFile::getInstance($model, 'file');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->user_experience_model->save(false)) {
-                        $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/profile/default/index', 'user_handle' => $user->user_handle]);
+                foreach ($model->parks as $park) {
+                    $model_user_experience =  UserExperience::find()->where(['user_id' => $user->id, 'park_id' => $park])->limit(1)->one();
+                    if (!$model_user_experience) {
+                        $model_user_experience = new UserExperience();
                     }
-                } else {
-                    print_r($model->errors);
-                    die();
+                    $model_user_experience->park_id = $park;
+                    $model_user_experience->user_id = $user->id;
+                    $model_user_experience->status = UserExperience::STATUS_ACTIVE;
+                    $model_user_experience->save(false);
                 }
+                \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                return $this->redirect(['/profile/default/index', 'user_handle' => $user->user_handle]);
             }
         } else {
             $model->user_experience_model->loadDefaultValues();

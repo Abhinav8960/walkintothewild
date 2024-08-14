@@ -103,7 +103,7 @@ use yii\bootstrap5\ActiveForm;
             <div class="row">
                 <div class="col-md-12">
                 <div class="creat-safri d-flex justify-content-end ">
-                    <?= Html::submitButton('Create ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+                    <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                 </div>
                 </div>
             </div>

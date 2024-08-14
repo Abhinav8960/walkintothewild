@@ -117,13 +117,13 @@ $recentposts = ArticleSearch::recentpost();
                             <div class="col-12">
                                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center flex-wrap w-100 mb-2">
                                     <div class="left_text">
-                                        <p class="mb-0">There are currently <strong><?= count($models) ?> </strong> active shared safaris created by individuals</p>
+                                        <p class="mb-0">There are currently <strong><?= count($models) ?> </strong> active shared safaris</p>
                                     </div>
                                     <?= $this->render('sort_by_month', ['form' => $form, 'searchModel' => $searchModel]) ?>
                                 </div>
                                 <div class="top_mobilefilter mb-3 d-flex gap-2 d-lg-none justify-content-between align-items-center w-100">
                                     <div class="left_text">
-                                        <p class="mb-0">There are currently <strong><?= $dataProvider->totalcount ?></strong> active shared safaris created by individuals</p>
+                                        <p class="mb-0">There are currently <strong><?= $dataProvider->totalcount ?></strong> active shared safaris</p>
                                     </div>
                                     <div class="right-select mobile_serach mb-md-0 " id="mobileSearchDiv">
                                         <div class="input_check pb-0">

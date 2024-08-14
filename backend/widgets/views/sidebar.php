@@ -55,6 +55,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/share-safari-reason/index",
 											"/master/share-safari-reason/create",
 											"/master/share-safari-reason/update",
+											"/cms/flag-reason"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/master",
@@ -87,6 +88,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/share-safari-reason/index",
 														"/master/share-safari-reason/create",
 														"/master/share-safari-reason/update",
+														"/cms/flag-reason"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
@@ -160,6 +162,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/master/share-safari-reason/create",
 															"/master/share-safari-reason/update",
 														)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/cms/flag-reason",
+														)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
 						</ul>
 					</li>
 
@@ -423,7 +428,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/feature-article/index",
 											"/cms/feature-rare-exotic/index",
 											"/cms/feature-tag/index",
-											"/cms/flag-reason"
+											"/cms/content-management"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
@@ -455,7 +460,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/feature-article/index",
 														"/cms/feature-rare-exotic/index",
 														"/cms/feature-tag/index",
-														"/cms/flag-reason"
+														"/cms/content-management"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 													"/cms",
@@ -487,7 +492,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/feature-article/index",
 													"/cms/feature-rare-exotic/index",
 													"/cms/feature-tag/index",
-													"/cms/flag-reason"
+													"/cms/content-management"
 												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/article-category/index",
@@ -511,7 +516,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/about",
 																				"/cms/disclaimer",
 																				"/cms/privacypolicy",
-																				"/cms/termscondition",	"/cms/faqcategory",
+																				"/cms/termscondition",
+																				"/cms/faqcategory",
 																				"/cms/faqs",
 																				"/cms/feature-park/index",
 																				"/cms/banner/index",
@@ -520,7 +526,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/feature-article/index",
 																				"/cms/feature-rare-exotic/index",
 																				"/cms/feature-tag/index",
-																				"/cms/flag-reason"
+																				"/cms/content-management"
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -661,13 +667,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								</ul>
 							</li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/banner/index", "/cms/banner/create", "/cms/banner/update")) ? "active" : "" ?>" href="/cms/banner/index">Banners</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/cms/about")) ? "active" : "" ?>" href="/cms/about">About</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/cms/flag-reason",
-														)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/about")) ? "active" : "" ?>" href="/cms/about">About</a></li> -->
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li> -->
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li> -->
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/content-management")) ? "active" : "" ?>" href="/cms/content-management">Content Management</a></li>
 
 						</ul>

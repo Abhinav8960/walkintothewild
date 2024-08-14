@@ -1097,4 +1097,24 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
         return ArrayHelper::map(User::find()->where(['status' => 10, 'is_safari_operator' => 0])->andWhere(['<>', 'is_adminstrator', 1])->andWhere(['<>', 'is_admin', 1])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
+
+
+    public static function experiencesafariparkoption($user_id)
+    {
+
+        $query = SafariPark::find()
+            ->where(['safari_park.status' => SafariPark::STATUS_ACTIVE])
+            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+
+        // Get all the models
+        // $not_parks = $query->joinWith('experiencepark', function ($additional_query) {
+        //     $additional_query->where(['<>',  'user_experience.park_id', 'safari_park.id']);
+        // });
+
+        $parks = $query->andWhere(['NOT IN', 'id', UserExperience::find()->select(['park_id'])->andWhere(['user_id' => $user_id, 'status' => 1])->column()])->all();
+
+        $result = ArrayHelper::map($parks, 'id', 'title');
+        return $result;
+    }
 }

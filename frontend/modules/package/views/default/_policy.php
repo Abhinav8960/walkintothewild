@@ -1,4 +1,4 @@
-<div class="row px-lg-0 px-3">
+<div class="row px-lg-0 px-3 ">
     <div class="col-lg-4 col-md-4 col-xl-4 col-xxl-3  mb-lg-0 mb-3">
         <div class="safri_tour sticky-top border-0">
             <div class="topics_listing px-0 safariChanges ">
