@@ -1114,10 +1114,10 @@ text-align: center !important;
   }
 }
 @media (max-width: 991px) {
-  .px_serach{
+  /* .px_serach{
 
     padding: 0px 5px;
-  }
+  } */
   .title_safari.JoinPadding{
 
     padding-top: 13px;
