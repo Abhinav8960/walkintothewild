@@ -36,6 +36,16 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
           <td class="px-3"><b>Date:</b></td>
           <td class="px-3"><?= date('d-m-Y', $review->created_at) ?></td>
         </tr>
+        <tr>
+          <td class="px-3"><b>Status:</b></td>
+          <td class="px-3">
+            <?php
+            $c_status = "Active";
+            if ($review->status == '2') {
+              $c_status = "Delete";
+            }
+            echo $c_status; ?></td>
+        </tr>
       </table>
     </div>
   </div>
@@ -46,97 +56,53 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
     <div id="w1-button" class="mb-3"></div>
     <div class="table-responsive">
       <?php $form = ActiveForm::begin(['id' => 'action-form']); ?>
-
-      <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-          [
-            'class' => 'yii\grid\SerialColumn',
-            'contentOptions' => ['style' => 'width: 5%;'],
-          ],
-          [
-            'label' => 'Date',
-            'contentOptions' => ['style' => 'width: 15%;'],
-            'format' => 'raw',
-            'value' => function ($model) {
-              return date('Y-m-d', $model->created_at);
-            }
-          ],
-
-          [
-            'label' => 'Flagged Reason',
-            'contentOptions' => ['style' => 'width: 10%;'],
-            'format' => 'raw',
-            'value' => function ($model) {
-              return  $model->reportreason->reason;
-            }
-
-          ],
-
-          [
-            'label' => 'Flagged Detail',
-            'contentOptions' => ['style' => 'width: 10%;'],
-            'format' => 'raw',
-            'value' => function ($model) {
-              return  $model->report_detail;
-            }
-          ],
-          [
-            'label' => 'Action',
-            'contentOptions' => ['style' => 'width: 10%;'],
-            'format' => 'raw',
-            'value' => function ($model) {
-              $return = 'N/A';
-              if ($model->status == 2) {
-                $return = 'Delete';
-              } else if ($model->status == 3) {
-                $return = 'Ignore';
-              } else if ($model->status == 20) {
-                $return = 'Blocked User';
-              }
-              return $return;
-            }
-          ],
-
-          [
-            'label' => 'Admin Comment',
-            'contentOptions' => ['style' => 'width: 10%;'],
-            'format' => 'raw',
-            'value' => function ($model) {
-              $return = 'N/A';
-              if (!empty($model->reason)) {
-                $return = $model->reason;
-              }
-              return $return;
-            }
-          ],
-          [
-            'label' => 'Action',
-            'contentOptions' => ['style' => 'width: 10%;'],
-            'format' => 'raw',
-            'value' => function ($model) {
-              $return = 'N/A';
-              if (!empty($model->reason)) {
-                $return = $model->reason;
-              }
-              return $return;
-            }
-          ],
-
-          [
-            'label' => 'Action',
-            'contentOptions' => ['style' => 'width: 10%;'],
-            'format' => 'raw',
-            'value' => function ($model, $form) {
-              /*$temp = $form->field($model, "ignore_flag", [
-                'labelOptions' => ['class' => 'bold_lable']
-              ])->radioList($model->ignore_flag)->label('Ignored');*/
-              return "";
-            }
-          ],
-
-        ],
-      ]); ?>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Flagged Reason</th>
+            <th>Flagged Detail</th>
+            <th style="width:250px;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (count($review_flags) > 0) {
+            $counter = 1;
+            foreach ($review_flags as $flags) { ?>
+              <tr>
+                <td><?= $counter ?>.</td>
+                <td><?= date('d-m-Y', $flags->created_at) ?></td>
+                <td><?= ucfirst($flags->reportreason->reason) ?></td>
+                <td><?= ucfirst($flags->report_detail) ?></td>
+                <td style="width:250px;">
+                  <?php
+                  if ($flags->status == 1) { ?>
+                    <span>&nbsp;&nbsp; </span>
+                    <input type="radio" id="radioignore<?= $flags->id ?>" name="flag_action[<?= $flags->id ?>]" value="3" <?php if ($flags->status == 3) {
+                                                                                                                            echo "checked";
+                                                                                                                          } ?>>
+                    <label for="radioignore<?= $flags->id ?>">Ignore</label>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp; </span>
+                    <input type="radio" id="radiodelete<?= $flags->id ?>" name="flag_action[<?= $flags->id ?>]" value="2" <?php if ($flags->status == 2) {
+                                                                                                                            echo "checked";
+                                                                                                                          } ?>>
+                    <label for="radiodelete<?= $flags->id ?>">Delete</label>
+                  <?php
+                  } else {
+                    $c_status = "Ignore";
+                    if ($flags->status == '2') {
+                      $c_status = "Delete";
+                    }
+                    echo "<span>&nbsp;&nbsp; </span>" . $c_status;
+                  } ?>
+                </td>
+              </tr><?php
+                    $counter++;
+                  }
+                } ?>
+        </tbody>
+      </table>
       <div class="form-group text-end">
         <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white float-right']) ?>
       </div>

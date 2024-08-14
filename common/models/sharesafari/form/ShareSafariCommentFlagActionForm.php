@@ -16,8 +16,7 @@ use yii\base\Model;
  */
 class ShareSafariCommentFlagActionForm extends model
 {
-  public $delete_flag;
-  public $ignore_flag;
+  public $flag_action;
 
   /**
    * {@inheritdoc}
@@ -27,7 +26,7 @@ class ShareSafariCommentFlagActionForm extends model
 
 
     return [
-      [['delete_flag', 'ignore_flag'], 'safe']
+      [['flag_action'], 'safe']
     ];
   }
 
@@ -37,8 +36,7 @@ class ShareSafariCommentFlagActionForm extends model
   public function attributeLabels()
   {
     return [
-      'delete_flag' => 'Delete',
-      'ignore_flag' => 'Ignored',
+      'flag_action' => 'Action'
     ];
   }
 }
