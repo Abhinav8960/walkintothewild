@@ -26,7 +26,7 @@ class PhotoController extends FrontendBaseController
         $user = $this->findUserbyHandle($user_handle);
         // $userposts = UserPosts::find()->where(['user_id' => $user->id, 'status' => UserPosts::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         $shared_safari = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
-        if (Yii::$app->user->identity->id == $user->id) {
+        if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
             $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
         } else {
             $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
