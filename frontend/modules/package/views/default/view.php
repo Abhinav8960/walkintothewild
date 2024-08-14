@@ -229,7 +229,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                     <div class="row  mt-4 itenary_tabs">
                         <div class="col-lg-12 col-xl-11 safartabs position-relative">
-                            <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+                            <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
                                 </li>
@@ -258,80 +258,49 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="safari_wrapper margin_bottomfooter ">
     <div class="container-lg">
-        <div class="row mb-5  mt-4 mobileAccordion itenary_tabs px-md-3">
+        <div class="row mb-5  mt-4 itenary_tabs px-md-3">
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
-                <div class="tab-content accordion " id="myTabContent">
-                    <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ITENARY</button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse bg-set collapse show card_bodyPadding  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
-                            <div class="accordion-body card-body p-3">
-                                <div class="col-lg-12 mb-3">
-                                    <div class="itenary-title">
-                                        <h6 class="fs-6 fw-bold mb-4">ABOUT TRIP / OVERVIEW</h6>
-                                    </div>
-                                    <div class="itenary_text">
-                                        <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p>
-                                    </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
+                                <div class="itenary-title">
+                                    <h6 class="fs-6 fw-bold mb-4">ABOUT TRIP / OVERVIEW</h6>
+                                </div>
+                                <div class="itenary_text">
+                                    <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p>
                                 </div>
                             </div>
                         </div>
                         <?= $this->render('_overview', ['package' => $package]) ?>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-
-                    <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                INCLUSION
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse card_bodyPadding   bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
-                            <div class="accordion-body  card-body">
+                    <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
                                 <?= $this->render('_inclusion', ['package' => $package]) ?>
                             </div>
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingGetting">
-                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseGetting" aria-expanded="false" aria-controls="collapseGetting">
-                                GETTING THERE
-                            </button>
-                        </h2>
-                        <div id="collapseGetting" class="accordion-collapse bg-set card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body card-body ">
+                    <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
                                 <?= $this->render('_getting_there', ['package' => $package]) ?>
                             </div>
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item mb-3" id="policy" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                POLICY INFO
-                            </button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse   card_bodyPadding  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set px-0 py-0">
+                    <div class="tab-pane fade  accordion-item mb-3" id="policy" role="tabpanel" aria-labelledby="policy-tab">
+                        <div class="policytabs">
+                          
                                 <?= $this->render('_policy', ['package' => $package]) ?>
-                            </div>
+                           
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFive">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                FAQ
-                            </button>
-                        </h2>
-                        <div id="collapseFive" class="accordion-collapse bg-set collapse card_bodyPadding  d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-                            <div class="accordion-body card-body height_set">
-                                <?= $this->render('_faq', ['faqs' => $faqs]) ?>
+                    <div class="tab-pane fade  accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab">
+                    <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
+                            <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                             </div>
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
 
@@ -460,5 +429,15 @@ $this->registerJs($script);
         opacity: 1;
 
 
+    }
+
+    .tab-content {
+        >.tab-pane {
+            display: none;
+        }
+
+        >.active {
+            display: block;
+        }
     }
 </style>
