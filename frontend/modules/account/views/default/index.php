@@ -14,12 +14,12 @@ $this->title = 'Account Settings';
 ]); ?>
 <div class="container-lg mt-5 pt-5">
     <div class="row margin_bottomfooter">
-        <div class="col-12 d-flex align-items-center justify-content-between mb-4">
+        <div class="col-12 d-flex align-items-center justify-content-between flex-wrap mb-4">
             <h6 class="fs-3 fw-bold ">Account Settings</h6>
             <div class="unsaved_changes text-danger"></div>
             <div class="justify-content-between">
-                <?= Html::submitButton('<i class="fa fa-save"></i> Save Changes', ['class' => 'post-comment']) ?>
-                <a class="post-comment newbg rounded-2 padding_btn" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">View Profile</a>
+                <?= Html::submitButton('<i class="fa fa-save"></i> Save Changes', ['class' => 'btn btn-info bg-blues py-2 rounded-5']) ?>
+                <a class="btn btn-info bg-blues py-2 rounded-5" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">View Profile</a>
             </div>
         </div>
         <div class=" col-xxl-3 col-lg-4 mb-4">

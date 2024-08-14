@@ -94,7 +94,7 @@ use yii\bootstrap5\ActiveForm;
                 <?php } ?>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 pb-3">
                     <div class="creat-safri float-end w-auto">
                         <?= Html::submitButton('Save', ['class' => 'safari_create font_set px-5']) ?>
                     </div>

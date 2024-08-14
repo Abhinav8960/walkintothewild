@@ -13,11 +13,12 @@ use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
 use frontend\models\ShareSafariSearch;
+use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use frontend\models\form\SharedSafariForm;
 use common\models\master\month\MasterMonth;
-use common\models\operator\SafariOperator;
 use frontend\models\ShareSafariCommentForm;
+use common\Helper\FrontendNotificationHelper;
 use frontend\models\form\CreateDepartureForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariComment;
@@ -276,6 +277,7 @@ class DefaultController extends FrontendBaseController
                 $share_safari_intrested->status = 1;
                 $share_safari_intrested->intrested_at = time();
                 if ($share_safari_intrested->save()) {
+                    FrontendNotificationHelper::sharedSafariJoin($share_safari, Yii::$app->user->identity);
                     Yii::$app->session->setFlash('success', 'You Just Join the Shared Safari!');
                 } else {
                     Yii::$app->session->setFlash('success', 'You can not Join this Shared Safari currently!');
@@ -312,6 +314,7 @@ class DefaultController extends FrontendBaseController
                     $share_safari_intrested->status = 0; //UNfollow
                     $share_safari_intrested->unintrested_at = time();
                     if ($share_safari_intrested->save()) {
+                        FrontendNotificationHelper::sharedSafariLeave($share_safari, Yii::$app->user->identity);
                         Yii::$app->session->setFlash('success', 'You Just Leave the Shared Safari!');
                     } else {
                         Yii::$app->session->setFlash('success', 'You can not unfollow this Shared Safari currently!');
