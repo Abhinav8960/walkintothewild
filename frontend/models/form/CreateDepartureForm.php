@@ -87,7 +87,7 @@ class CreateDepartureForm extends \yii\base\Model
             [['safari_plan'], 'string'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
-            ['no_of_safari', 'integer', 'max' => 100],
+            [['no_of_safari', 'total_seat'], 'integer', 'max' => 100],
             ['cost_per_person', 'integer', 'max' => 1000000]
         ];
     }
