@@ -774,7 +774,6 @@ function bulleteditor(editor_id) {
 }
 
 
-
 function initializeDualrange(min_selector, max_selector) {
     var lowerSlider = $('#' + min_selector),
         upperSlider = $('#' + max_selector),
@@ -806,10 +805,12 @@ document.addEventListener('DOMContentLoaded', function() {
     var massge = document.querySelector('.massge');
     var menunotification = document.querySelector('.chatnotification');
 
-    massge.addEventListener('click', function(event) {
-        event.stopPropagation(); 
-        menunotification.classList.toggle('active');
-    });
+    if (massge) { // Check if the element exists
+        massge.addEventListener('click', function(event) {
+            event.stopPropagation(); 
+            menunotification.classList.toggle('active');
+        });
+    }
 
     document.addEventListener('click', function() {
         if (menunotification.classList.contains('active')) {
