@@ -6,7 +6,7 @@
         <a href="/manage/sharedsafari/itinerary/<?= $sharedsafari->slug ?>/1" class="nav-link <?= isset($itinerary_active) ? $itinerary_active : '' ?>" id="profile-tab">Itinerary</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a href="/manage/sharedsafari/inclusion/<?= $sharedsafari->id ?>" class="nav-link <?= isset($inclusions_active) ? $inclusions_active : '' ?>" id="contact-tab">Inclusions</a>
+        <a href="/manage/sharedsafari/inclusion/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($inclusions_active) ? $inclusions_active : '' ?>" id="contact-tab">Inclusions</a>
     </li>
     <li class="nav-item" role="presentation">
         <a href="/manage/sharedsafari/getting-there/<?= $sharedsafari->id ?>" class="nav-link <?= isset($getting_there_active) ? $getting_there_active : '' ?>" id="howto-reach">Getting There</a>

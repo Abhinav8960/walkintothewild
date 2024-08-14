@@ -130,7 +130,7 @@ return [
 
     '/manage/sharedsafari/update-fixed-departure/<slug>' => '/manage/sharedsafari/update-fixed-departure',
     '/manage/sharedsafari/itinerary/<slug>/<day>' => '/manage/sharedsafari/itinerary', //sharedsafari profile itenary url          
-    '/manage/sharedsafari/inclusion/<share_safari_id>' => '/manage/sharedsafari/inclusion', //sharedsafari profile inclusion url          
+    '/manage/sharedsafari/inclusion/<slug>' => '/manage/sharedsafari/inclusion', //sharedsafari profile inclusion url          
     '/manage/sharedsafari/getting-there/<share_safari_id>' => '/manage/sharedsafari/getting-there', //sharedsafari profile getting-there url          
     '/manage/sharedsafari/policy-info/<share_safari_id>' => '/manage/sharedsafari/policy-info', //sharedsafari profile policy-info url          
     '/manage/sharedsafari/faq/<share_safari_id>' => '/manage/sharedsafari/faq', //sharedsafari profile faq url          
