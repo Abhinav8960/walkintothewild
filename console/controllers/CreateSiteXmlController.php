@@ -119,7 +119,7 @@ class CreateSiteXmlController extends Controller
     $start = microtime(true);
 
     $connection = \Yii::$app->getDb();
-    $command = $connection->createCommand("SELECT DISTINCT(request_full_url) FROM site_frontend_request WHERE is_count = 0 and request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_pages where status = 1) AND request_full_url NOT IN (SELECT DISTINCT(url) AS url FROM site_untraced_request)");
+    $command = $connection->createCommand("SELECT DISTINCT(request_full_url) FROM site_frontend_request WHERE is_count = 0 and request_url NOT IN (SELECT DISTINCT(url) AS url FROM site_pages where status = 1) AND request_url NOT IN (SELECT DISTINCT(url) AS url FROM site_untraced_request)");
     $un_traced_record = $command->queryAll();
     if (count($un_traced_record) > 0) {
       $temp_array = [];
