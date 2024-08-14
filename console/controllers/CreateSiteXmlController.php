@@ -20,15 +20,43 @@ class CreateSiteXmlController extends Controller
   {
     $start = microtime(true);
 
-    $records = SitePages::find()->where(['status' => true])->all();
+    $additional_sitemap = [];
+    $records = SitePages::find()->select('category')->distinct('category')->where(['status' => true])->asArray()->all();
     if (count($records) > 0) {
+      foreach ($records as $rec) {
+        $all_urls = SitePages::find()->where(['status' => true])->andWhere(['category' => $rec['category']])->asArray()->all();
+        if (count($all_urls) > 0) {
+          $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
+          $xml_content .= "<sitemapindex xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
+
+          foreach ($all_urls as $page) {
+            $xml_content .= "<sitemap>";
+            $xml_content .= "<loc>" . $base_url = Yii::$app->params['frontend_url'] . $page['url'] . "</loc>";
+            $xml_content .= "<lastmod>" . date('Y-m-d', strtotime($page['last_update_at'])) . "</lastmod>";
+            $xml_content .= "</sitemap>";
+          }
+          $xml_content .= "</sitemapindex>";
+
+          $cat_name = strtolower(str_replace(" ", "_", $rec['category']));
+          $myFile = Yii::$app->params['datapath'] . "/" . "sitemap/" . $cat_name . ".xml";
+          $additional_sitemap[] = Yii::$app->params['frontend_url'] . "storage/sitemap/" . $cat_name . ".xml";
+          $fh = fopen($myFile, 'w') or die("can't open file");
+          fwrite($fh, $xml_content);
+          fclose($fh);
+        }
+      }
+    }
+
+    if (count($additional_sitemap) > 0) {
       $xml_content = "<?xml version='1.0' encoding='UTF-8'?>";
       $xml_content .= "<sitemapindex xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>";
-      foreach ($records as $rec) {
-        $xml_content .= "<sitemap>";
-        $xml_content .= "<loc>" . $base_url = Yii::$app->params['frontend_url'] . $rec->url . "</loc>";
-        $xml_content .= "<lastmod>" . date('Y-m-d', strtotime($rec->last_update_at)) . "</lastmod>";
-        $xml_content .= "</sitemap>";
+      foreach ($additional_sitemap as $sitemap) {
+        if (!empty($sitemap)) {
+          $xml_content .= "<sitemap>";
+          $xml_content .= "<loc>" . $sitemap . "</loc>";
+          $xml_content .= "<lastmod>" . date('Y-m-d') . "</lastmod>";
+          $xml_content .= "</sitemap>";
+        }
       }
       $xml_content .= "</sitemapindex>";
 
@@ -36,7 +64,26 @@ class CreateSiteXmlController extends Controller
       $fh = fopen($myFile, 'w') or die("can't open file");
       fwrite($fh, $xml_content);
       fclose($fh);
+      //chmod($fh, 0777);
     }
+
+    /*
+    //create robots.txt to make entry of sitemap_icdndex.xml
+    $content = "Sitemap: " . Yii::$app->params['frontend_url'] . "storage/sitemap/sitemap.xml";
+    $all_url = SiteRobots::find()->where(['status' => true])->all();
+    if (count($all_url) > 0) {
+      $content .= "\nUser-agent: *";
+      foreach ($all_url as $row) {
+        $content .= "\n" . "Disallow: : " . $row->url;
+      }
+    }
+
+    $robots_actual_url = \Yii::$app->getBasePath(true);
+    $robots_actual_url = str_replace("console", "frontend/web", $robots_actual_url);
+    $fp = fopen($robots_actual_url . "/robots.txt", "w");
+    fwrite($fp, $content);
+    fclose($fp);
+    */
 
     $end = microtime(true);
     $executionTime = $end - $start;
