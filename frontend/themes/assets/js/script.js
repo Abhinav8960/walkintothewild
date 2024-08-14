@@ -397,17 +397,20 @@ $(document).ready(function() {
 
                     400: {
                         items: 2,
-                        stagePadding: 10,
+                        stagePadding: 0,
+                        center: true,
                    
                         
                     },
                     600: {
                         items: 2.2,
                         stagePadding: 10,
+                        center: true,
                     }
                     ,
                     800: {
                         items: 3.2,
+                        center: true,
                     },
                     991: {
                         items: 5.2,
