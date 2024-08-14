@@ -64,7 +64,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
 
                     [
-                        'label' => 'No. of Flags',
+                        'label' => '#Flags',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {

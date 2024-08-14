@@ -10,7 +10,7 @@ use yii\helpers\Url;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\ArrayHelper;
 
-$this->title = 'Share Safari Comment Flag';
+$this->title = 'Article Comment Flag';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -26,11 +26,11 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
         </tr>
         <tr>
           <td class="px-3"><b>Article:</b></td>
-          <td class="px-3"><?= $review->article->title ?></td>
+          <td class="px-3"><?= ucfirst($review->article->title) ?></td>
         </tr>
         <tr>
           <td class="px-3"><b>Comment By:</b></td>
-          <td class="px-3"><?= $review->user->name ?></td>
+          <td class="px-3"><?= ucfirst($review->user->name) ?></td>
         </tr>
         <tr>
           <td class="px-3"><b>Date:</b></td>

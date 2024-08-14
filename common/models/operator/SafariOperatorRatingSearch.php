@@ -99,8 +99,6 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
             'safari_operator_rating.status' => $this->status,
         ]);
 
-
-
         return $dataProvider;
     }
 

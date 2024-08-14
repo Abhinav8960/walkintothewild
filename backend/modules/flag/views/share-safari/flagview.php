@@ -22,15 +22,15 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
       <table class="table table-striped table-bordered">
         <tr>
           <td class="px-3"><b>Comment:</b></td>
-          <td class="px-3"><?= $review->comment ?></td>
+          <td class="px-3"><?= ucfirst($review->comment) ?></td>
         </tr>
         <tr>
           <td class="px-3"><b>Park:</b></td>
-          <td class="px-3"><?= $review->park->title ?></td>
+          <td class="px-3"><?= ucfirst($review->park->title) ?></td>
         </tr>
         <tr>
           <td class="px-3"><b>Comment By:</b></td>
-          <td class="px-3"><?= $review->user->name ?></td>
+          <td class="px-3"><?= ucfirst($review->user->name) ?></td>
         </tr>
         <tr>
           <td class="px-3"><b>Date:</b></td>

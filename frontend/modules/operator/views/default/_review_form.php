@@ -7,6 +7,11 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
 ?>
+<style>
+    .field-safarioperatorreviewform-rating .invalid-feedback {
+        text-align: center;
+    }
+</style>
 <div class="modal-body modal_form">
     <?php $form = ActiveForm::begin(['id' => 'review-form']); ?>
     <div class="row">
@@ -16,7 +21,6 @@ use yii\helpers\Html;
         </div>
         <div class="col-12 my-4">
             <div class="stars d-flex gap-4 justify-content-center">
-                <?= $form->field($model, 'rating')->hiddenInput()->label(''); ?>
                 <div class="stars d-flex gap-4 justify-content-center">
                     <i class="fa-regular fa-star star_icon_1" value='1'></i>
                     <i class="fa-regular fa-star star_icon_2" value='2'></i>
@@ -25,7 +29,7 @@ use yii\helpers\Html;
                     <i class="fa-regular fa-star star_icon_5" value='5'></i>
                 </div>
             </div>
-
+            <?= $form->field($model, 'rating')->hiddenInput()->label(false); ?>
         </div>
         <div class="col-lg-12 mb-2 ">
             <div class="textarea">
