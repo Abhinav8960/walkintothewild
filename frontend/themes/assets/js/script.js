@@ -800,21 +800,3 @@ function initializeDualrange(min_selector, max_selector) {
         }
     };
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    var massge = document.querySelector('.massge');
-    var menunotification = document.querySelector('.chatnotification');
-
-    if (massge) { // Check if the element exists
-        massge.addEventListener('click', function(event) {
-            event.stopPropagation(); 
-            menunotification.classList.toggle('active');
-        });
-    }
-
-    document.addEventListener('click', function() {
-        if (menunotification.classList.contains('active')) {
-            menunotification.classList.remove('active');
-        }
-    });
-});
