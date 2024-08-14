@@ -14,7 +14,7 @@ use yii\base\Model;
  * 
  * Update and Create Approval
  */
-class ShareSafariCommentFlagActionForm extends model
+class FlagActionForm extends model
 {
   public $flag_action;
 

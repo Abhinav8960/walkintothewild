@@ -59,16 +59,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3">
                                     <div class="safrititles">
-                                        <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>"><?= $share_safari->park->title ?></a>
+                                        <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a>
                                             <?php
                                             if (Yii::$app->user->identity) { ?>
                                                 <?php
                                                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
-                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" data-method="POST" data-pjax="0" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
                                                 <?php } else { ?>
-                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
+                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" data-method="POST" data-pjax="0" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
@@ -76,7 +76,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <div class="date_bx">
                                             <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
+                                        <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
 
                                     </div>
 
@@ -274,7 +274,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
                 <div class="row  mt-4 itenary_tabs">
                     <div class="col-lg-12 col-xl-11 safartabs position-relative">
-                        <ul class="nav nav-tabs d-none d-lg-flex gap-2" id="myTab" role="tablist">
+                        <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="discussion-tab" data-bs-toggle="tab" data-bs-target="#discussion-tab-pane" type="button" role="tab" aria-controls="discussion-tab-pane" aria-selected="true">DISCUSSION</button>
                             </li>
@@ -306,99 +306,62 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="safari_wrapper mb-5 margin_bottomfooter">
     <div class="container-lg">
-        <div class="row mb-5  mt-5 mobileAccordion itenary_tabs">
+        <div class="row mb-5  mt-5  itenary_tabs">
             <div class="col-lg-9 col-xl-9  safartabs position-relative">
-                <div class="tab-content accordion" id="myTabContent">
-                    <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Discussion</button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse bg-set card_bodyPadding collapse show mb-3 d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
-                            <div class="accordion-body p-3 card-body">
-                                <div class="col-lg-12 mb-3">
-                                    <div class="itenary-title">
-                                        <h6 class="fs-6 fw-bold pb-2">Discussion</h6>
-                                    </div>
-                                    <div class="itenary_text">
-                                        <p><?= $share_safari->safari_plan ?></p>
-                                    </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding mb-3">
+                            <div class="card-body p-3">
+                                <div class="itenary-title">
+                                    <h6 class="fs-6 fw-bold pb-2">Discussion</h6>
+                                </div>
+                                <div class="itenary_text">
+                                    <p><?= $share_safari->safari_plan ?></p>
                                 </div>
                             </div>
                         </div>
                         <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingItenary">
-                            <button class="accordion-button  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseItenary" aria-expanded="true" aria-controls="collapseItenary">ITENARY</button>
-                        </h2>
-                        <div id="collapseItenary" class="accordion-collapse collapse card_bodyPadding bg-set d-lg-block" aria-labelledby="headingItenary" data-bs-parent="#myTabContent">
-                            <div class="accordion-body card-body p-3">
-                                <div class="col-lg-12 mb-3">
-                                    <div class="itenary-title">
-                                        <h6 class="fs-6 fw-bold pb-2">ABOUT TRIP / OVERVIEW</h6>
-                                    </div>
-                                    <div class="itenary_text">
-                                        <p><?= $share_safari->safari_plan ?></p>
-                                    </div>
+                    <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
+                                <div class="itenary-title">
+                                    <h6 class="fs-6 fw-bold pb-2">About Trip / Overview</h6>
+                                </div>
+                                <div class="itenary_text">
+                                    <p><?= $share_safari->safari_plan ?></p>
                                 </div>
                             </div>
                         </div>
                         <?= $this->render('_overview', ['share_safari' => $share_safari]) ?>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-
-                    <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                INCLUSION
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse card_bodyPadding bg-set d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
-                            <div class="accordion-body  card-body">
+                    <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
                                 <?= $this->render('_inclusion', ['share_safari' => $share_safari]) ?>
                             </div>
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingGetting">
-                            <button class="accordion-button collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#collapseGetting" aria-expanded="false" aria-controls="collapseGetting">
-                                GETTING THERE
-                            </button>
-                        </h2>
-                        <div id="collapseGetting" class="accordion-collapse bg-set card_bodyPadding collapse d-lg-block" aria-labelledby="headingGetting" data-bs-parent="#myTabContent">
-                            <div class="accordion-body  card-body">
+                    <div class="tab-pane fade accordion-item mb-3" id="getting-there" role="tabpanel" aria-labelledby="howto-reach">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
                                 <?= $this->render('_getting_there', ['share_safari' => $share_safari]) ?>
                             </div>
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item mb-3" id="policy" role="tabpanel" aria-labelledby="howto-reach" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFour">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                POLICY INFO
-                            </button>
-                        </h2>
-                        <div id="collapseFour" class="accordion-collapse  collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
-                            <div class="accordion-body  pt-0">
-                                <?= $this->render('_policy', ['share_safari' => $share_safari]) ?>
-                            </div>
+                    <div class="tab-pane fade  accordion-item mb-3" id="policy" role="tabpanel" aria-labelledby="policy-tab">
+                        <div class="policytabs">
+
+                            <?= $this->render('_policy', ['share_safari' => $share_safari]) ?>
+
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
-                    <div class="tab-pane fade accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab" tabindex="0">
-                        <h2 class="accordion-header d-lg-none" id="headingFive">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                FAQ
-                            </button>
-                        </h2>
-                        <div id="collapseFive" class="accordion-collapse bg-set card_bodyPadding collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
-                            <div class="accordion-body height_set">
+                    <div class="tab-pane fade  accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
                                 <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                             </div>
                         </div>
-                        <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
                 <hr>
@@ -418,31 +381,34 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
-                <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
-                    Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
-                <div class="interst_wrapper bg-white ">
-                    <!-- <div class="titlerescent pb-3">
+                <div class="request_quote mb-4">
+                    <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
+                        Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
+                    <div class="interst_wrapper bg-white ">
+                        <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
-                    <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
-                        <?php if ($intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all()) {
-                            foreach ($intrested_users as $intrested_user) {
-                        ?>
-                                <?php if ($user_intersted = $intrested_user->user) { ?>
-                                    <div class="profileavtar">
-                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>">
-                                            <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
-                                        </a>
-                                    </div>
-                                <?php } ?>
-                        <?php }
-                        } ?>
+                        <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
+                            <?php if ($intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all()) {
+                                foreach ($intrested_users as $intrested_user) {
+                            ?>
+                                    <?php if ($user_intersted = $intrested_user->user) { ?>
+                                        <div class="profileavtar">
+                                            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>">
+                                                <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
+                                            </a>
+                                        </div>
+                                    <?php } ?>
+                            <?php }
+                            } ?>
+                        </div>
                     </div>
                 </div>
+
                 <?php if ($share_safari->sharesafarigallery) {
                     $galleries = $share_safari->sharesafarigallery;
                 ?>
-                    <div class="request_quote mt-4">
+                    <div class="request_quote mb-4">
                         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                             Photo Gallery <span><?= count($galleries) ?></span></button>
                         <div class="interst_wrapper p-0 bg-white">
@@ -552,5 +518,15 @@ $this->registerJs($script);
         opacity: 1;
 
 
+    }
+
+    .tab-content {
+        >.tab-pane {
+            display: none;
+        }
+
+        >.active {
+            display: block;
+        }
     }
 </style>

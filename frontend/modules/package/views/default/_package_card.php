@@ -23,9 +23,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $model->id, 'item_type_id' => 1, 'status' => 1])->limit(1)->one();
                 if ($wishlist) {
                 ?>
-                    <a href="<?= Url::toRoute(['/package/default/unwishlist', 'slug' => $model->package_slug]) ?>" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                    <a href="<?= Url::toRoute(['/package/default/unwishlist', 'slug' => $model->package_slug]) ?>" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist" data-pjax="0"><i class="fa-solid fa-heart"></i></a>
                 <?php } else { ?>
-                    <a href="<?= Url::toRoute(['/package/default/wishlist', 'slug' => $model->package_slug]) ?>" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
+                    <a href="<?= Url::toRoute(['/package/default/wishlist', 'slug' => $model->package_slug]) ?>" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist" data-pjax="0"><i class="fa-regular fa-heart"></i></a>
                 <?php }
                 ?>
             </div>
@@ -37,7 +37,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
     <div class="card_body">
         <div class="titleDate">
-            <h6 class="pt-1"><a href=""><?= $model->package_name ?> </a></h6>
+            <h6 class="pt-1"><a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>" data-pjax="0"><?= $model->package_name ?> </a></h6>
             <div class="orgnizer_tour d-flex justify-content-between pt-2">
                 <div class="icons_restro">
                     <i class="fa-solid fa-car-side"></i>

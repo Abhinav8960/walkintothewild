@@ -3,7 +3,7 @@
 namespace backend\modules\flag\controllers;
 
 use common\models\sharesafari\form\ShareSafariCommentActionForm;
-use common\models\sharesafari\form\ShareSafariCommentFlagActionForm;
+use common\models\sharesafari\form\FlagActionForm;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
 use common\models\sharesafari\ShareSafariCommentSearch;
@@ -99,7 +99,7 @@ class ShareSafariController extends Controller
         }
 
         //form model
-        $model = new ShareSafariCommentFlagActionForm();
+        $model = new FlagActionForm();
 
         $review_flags = ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id])->orderBy('id DESC')->all();
 

@@ -77,7 +77,7 @@ $recentposts = ArticleSearch::recentpost();
                                         Safari</button>
                                 <?php } ?>
                             <?php } else {  ?>
-                                <a class="btn_newsafari organizeblankBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari">+ Organize a New
+                                <a class="btn_newsafari organizeBtn newbg d-block text-center" href="/site/login?authclient=google&referrer=/sharedsafari" data-pjax="0">+ Organize a New
                                     Safari</a>
                             <?php } ?>
 
@@ -287,11 +287,11 @@ $recentposts = ArticleSearch::recentpost();
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Is it a shared safari or a fixed departure</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
-            <div class="modal-body px-2 pt-0">
+            <div class="modal-body p-3">
                 <div id='choicemodalContent'>
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="" class="Modal_label">Select a Shared Safari Type <span class="necessary">*</span></label>
+                            <label for="" class="Modal_label pb-2">Select a Shared Safari Type <span class="necessary">*</span></label>
                             <div class="mb-3 field-shared_safari_choice">
                                 <select id="shared_safari_choice" class="form-select form-select-lg mb-3"
                                     name="shared_safari_choice"

@@ -62,19 +62,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'value' => function ($model) {
                             return $model->user->name;
                         }
-                    ],/*
-                    [
-                        'label' => 'Flagged Reason',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            $reasons = [];
-                            foreach ($model->getReports()->where(['status' => 1])->all() as $report) {
-                                $reasons[] =  $report->reportreason->reason;
-                            }
-                            return implode(", ", $reasons);
-                        }
-                    ],*/
+                    ],
                     [
                         'label' => 'No. of Flags',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -90,17 +78,18 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->flaged == 1) {
-                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">', [
-                                    'value' => Url::toRoute(['view', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning choose-option mb-2',
-                                    'title' => 'Edit'
+
+
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['flagview', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'name' => 'View',
                                 ]);
                             } else {
                                 return "";
                             }
                         }
                     ],
-
                 ],
             ]); ?>
         </div>
