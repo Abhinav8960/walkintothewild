@@ -274,6 +274,7 @@ class DefaultController extends FrontendBaseController
             'models' => $models,
             'device' => $this->device(),
             'slug' => $slug,
+            'rare_animal' => $rare_animal
         ]);
     }
 
