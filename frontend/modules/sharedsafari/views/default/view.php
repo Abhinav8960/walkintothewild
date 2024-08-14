@@ -62,16 +62,16 @@ $this->params['title'] = $this->title;
                                 </div>
                                 <div class="col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3">
                                     <div class="safrititles 44">
-                                        <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>"><?= $share_safari->park->title ?></a>
+                                        <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a>
                                             <?php
                                             if (Yii::$app->user->identity) { ?>
                                                 <?php
                                                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $share_safari->id, 'item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
-                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                                                    <a href="/sharedsafari/unwishlist/<?= $share_safari->slug ?>" data-pjax="0" data-method="POST" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
                                                 <?php } else { ?>
-                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" data-method="POST" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
+                                                    <a href="/sharedsafari/wishlist/<?= $share_safari->slug ?>" data-pjax="0" data-method="POST" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
@@ -80,9 +80,9 @@ $this->params['title'] = $this->title;
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div><?php
                                                 if (Yii::$app->user->identity) { ?>
-                                            <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                            <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
                                                                                                                                                                                                                                                     } else { ?>
-                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=/profile/user/<?= $share_safari->getOrganizedbyuserhandel() ?>"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=/profile/user/<?= $share_safari->getOrganizedbyuserhandel() ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
                                                                                                                                                                                                                                                     } ?>
                                     </div>
                                 </div>
@@ -105,12 +105,12 @@ $this->params['title'] = $this->title;
                                     if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                         if ($share_safari_intrested) { ?>
-                                            <a class="join_btn leavesafrai text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST"> Leave Safari</a>
+                                            <a class="join_btn leavesafrai text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/unjoin?slug=<?= $share_safari->slug ?>" data-method="POST" data-pjax="0"> Leave Safari</a>
                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST">Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/sharedsafari/default/join?slug=<?= $share_safari->slug ?>" data-method="POST" data-pjax="0">Join Safari</a>
                                         <?php }
                                     } else { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>"> Join Safari</a>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>" data-pjax="0"> Join Safari</a>
                                 <?php }
                                 } ?>
                             </div>
@@ -257,7 +257,7 @@ $this->params['title'] = $this->title;
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                     Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
-                <div class="interst_wrapper bg-white " >
+                <div class="interst_wrapper bg-white ">
                     <!-- <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div> -->
@@ -267,7 +267,7 @@ $this->params['title'] = $this->title;
                         ?>
                                 <?php if ($user_intersted = $intrested_user->user) { ?>
                                     <div class="profileavtar">
-                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>">
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_intersted->user_handle]); ?>" data-pjax="0">
                                             <img src="<?= $user_intersted->profileimage <> '' ? $user_intersted->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle" title="<?= $intrested_user->user ? $intrested_user->user->name : '' ?>">
                                         </a>
                                     </div>
@@ -409,4 +409,4 @@ $this->registerJs($script);
         border-radius: 8px;
         margin: 2px;
     }
-</style> 
+</style>
