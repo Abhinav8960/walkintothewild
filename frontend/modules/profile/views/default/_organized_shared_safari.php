@@ -10,7 +10,7 @@ $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count(
 
 <?php if ($model) { ?>
     <div class="request_quote mt-4">
-        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;cursor:default;">
             Organized Shared Safari <span><?= $model_count ?></span></button>
         <div class="interst_wrapper py-4 px-xxl-5 bg-white">
             <div class="row justify-content-center">

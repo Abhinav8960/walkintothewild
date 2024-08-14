@@ -3,7 +3,7 @@ if ($followings = $user->getUserfollowings()->where(['status' => 1])->all()) {
     $model_count = $user->getUserfollowings()->where(['status' => 1])->count();
 ?>
     <div class="request_quote ">
-        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;cursor:default;">
             Following
             <span><?= $model_count ?></span></button>
         </button>
