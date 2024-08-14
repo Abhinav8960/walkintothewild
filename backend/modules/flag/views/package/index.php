@@ -28,11 +28,11 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        //'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
                         'label' => 'Date',
-                        'contentOptions' => ['style' => 'width: 15%;'],
+                        //'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return date('Y-m-d', $model->created_at);
@@ -40,7 +40,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
                     [
                         'label' => 'Package Name',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->package->package_name;
@@ -49,7 +49,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
                     [
                         'label' => 'Comment',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->comment;
@@ -57,7 +57,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
                     [
                         'label' => 'Creator Name',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             return $model->user->name;
@@ -65,7 +65,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
                     [
                         'label' => 'No. of Flags',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             $flags = $model->getReports()->where(['status' => 1])->all();
@@ -74,12 +74,10 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                     ],
                     [
                         'label' => 'Action',
-                        'contentOptions' => ['style' => 'width: 10%;'],
+                        //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
                             if ($model->flaged == 1) {
-
-
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
                                 ', ['flagview', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
