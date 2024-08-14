@@ -376,9 +376,10 @@ $(document).ready(function() {
         if ($(window).width() <= 900) {
             $('.slider_profilemobile').addClass('owl-carousel');
             $('.slider_profilemobile').owlCarousel({
-                loop: false,
+                loop: true,
                 margin: 10,
                 nav: false,
+                responsiveClass:true,
                 center: false,
                 // stagePadding: 50,
                 dots: false,
