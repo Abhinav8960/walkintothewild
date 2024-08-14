@@ -236,6 +236,33 @@ class FrontendNotificationHelper
         }
     }
 
+
+    /**
+     *  User got New Followers
+     *
+     * @param [type] $User
+     * @return void
+     */
+    public static function userNewFollower(User $user, User $follow_by_user)
+    {
+        if ($user) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_USER_NEW_FOLLOWER;
+            $model->notification_url = Url::toRoute(['/profile/default/index', 'user_handle' => $follow_by_user->user_handle]);
+            $model->parent_id = $user->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            $model->user_id = $user->id;
+            $model->is_seen = false;
+            $model->is_read = False;
+            $model->notification_text = $follow_by_user->name . ' started following you!';
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+
     public static function eventSendtoPusher($model)
     {
         if (isset(Yii::$app->params['PUSHER_AUTH_KEY']) && Yii::$app->params['PUSHER_AUTH_KEY'] != '') {

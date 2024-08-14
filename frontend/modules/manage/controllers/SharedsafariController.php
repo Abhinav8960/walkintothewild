@@ -111,7 +111,7 @@ class SharedsafariController extends FrontendBaseController
     public function actionUpdateFixedDeparture($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_departure_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+        $shared_safari_departure_model = $this->findModel($slug);
         $model = new CreateDepartureForm($shared_safari_departure_model);
         $model->action_url = '/manage/sharedsafari/update-fixed-departure?slug=' . $slug . '';
         $model->action_validate_url = '/manage/sharedsafari/update-departure-validate?id=' . $shared_safari_departure_model->id . '';
@@ -163,12 +163,13 @@ class SharedsafariController extends FrontendBaseController
     }
 
 
-    public function actionItinerary($share_safari_id, $day = 1)
+    public function actionItinerary($slug, $day = 1)
     {
         $safari_operator = $this->module->operatormodel();
-
+        $shared_safari_departure_model = $this->findModel($slug);
+        $share_safari_id = $shared_safari_departure_model->id;
         $share_safari_day_model = $this->findModelDay($share_safari_id, $day);
-        $shared_safari_departure_model = ShareSafari::find()->where(['id' => $share_safari_id])->limit(1)->one();
+
         if ($share_safari_day_model) {
             $model = new DayItineraryForm($share_safari_day_model);
         } else {
@@ -188,7 +189,7 @@ class SharedsafariController extends FrontendBaseController
                     if ($model->share_safari_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['itinerary', 'share_safari_id' => $share_safari_id, 'day' => $day]);
+                        return $this->redirect(['itinerary', 'slug' => $slug, 'day' => $day]);
                     }
                 }
             }
@@ -205,11 +206,11 @@ class SharedsafariController extends FrontendBaseController
 
 
 
-    public function actionInclusion($share_safari_id)
+    public function actionInclusion($slug)
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = ShareSafari::find()->where(['id' => $share_safari_id])->limit(1)->one();
+        $shared_safari_departure_model = $this->findModel($slug);
         $model = new CreateDepartureForm($shared_safari_departure_model);
         $model->scenario = 'inclusion';
 
@@ -221,11 +222,11 @@ class SharedsafariController extends FrontendBaseController
                     try {
                         if ($model->shared_safari_departure_model->save(false)) {
                             foreach ($model->share_safari_included as $optionId => $selection) {
-                                $sharesafariIncluded = ShareSafariIncluded::findOne(['include_id' => $optionId, 'share_safari_id' => $share_safari_id]);
+                                $sharesafariIncluded = ShareSafariIncluded::findOne(['include_id' => $optionId, 'share_safari_id' => $shared_safari_departure_model->id]);
                                 if (!$sharesafariIncluded) {
                                     $sharesafariIncluded = new ShareSafariIncluded();
                                     $sharesafariIncluded->include_id = $optionId;
-                                    $sharesafariIncluded->share_safari_id = $share_safari_id;
+                                    $sharesafariIncluded->share_safari_id = $shared_safari_departure_model->id;
                                 }
                                 $sharesafariIncluded->selection = $selection;
                                 if (!$sharesafariIncluded->save()) {
@@ -233,7 +234,7 @@ class SharedsafariController extends FrontendBaseController
                                 }
 
                                 if ($sharesafariIncluded->include_id == 2 && $sharesafariIncluded->selection == 1) {
-                                    $share_safari_days = ShareSafariDay::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->all();
+                                    $share_safari_days = ShareSafariDay::find()->where(['share_safari_id' => $shared_safari_departure_model->id, 'status' => 1])->all();
                                     if ($share_safari_days) {
                                         foreach ($share_safari_days as $share_safari_day) {
                                             $share_safari_day->meal_breakfast = 1;
@@ -247,7 +248,7 @@ class SharedsafariController extends FrontendBaseController
 
                             $transaction->commit();
                             Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                            return $this->redirect(['inclusion', 'share_safari_id' => $share_safari_id]);
+                            return $this->redirect(['inclusion', 'slug' => $slug]);
                         } else {
                             Yii::$app->session->setFlash('error', 'Failed to update package details.');
                         }
@@ -587,5 +588,13 @@ class SharedsafariController extends FrontendBaseController
         if (($model = ShareSafariDay::findOne(['share_safari_id' => $share_safari_id, 'day' => $day, 'status' => [ShareSafariDay::STATUS_ACTIVE, ShareSafariDay::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
+    }
+
+    protected function findModel($slug)
+    {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => StatusInterface::STATUS_ACTIVE])) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
