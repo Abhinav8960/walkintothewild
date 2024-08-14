@@ -8,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
 <?php if ($device == 'desktop') { ?>
     <div class="filter-wrapper custoM-inputs d-lg-block d-none mb-2">
         <div class="title_top pb-4">
-            <h4>Select Operator</h4>
+            <h4>Select Filters</h4>
         </div>
         <div class="title_filter mb-3">
             <h6>Budget Segment</h6>
