@@ -203,7 +203,7 @@ class ArticleController extends FrontendBaseController
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Artical Updated Successfully');
                         return $this->redirect(['/profile/article/index', 'user_handle' => $user->user_handle]);
                     }
                 }

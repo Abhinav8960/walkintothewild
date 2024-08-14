@@ -323,7 +323,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <?php if (Yii::$app->user->identity) { ?>
-                    <div class="request_quote">
+                    <div class="request_quote mb-4">
                         <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
                             Request Quote</button>
                         <div class="interst_wrapper p-0 bg-white">
@@ -339,7 +339,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <?php if ($package->packagegallery) {
                     $galleries = $package->packagegallery;
                 ?>
-                    <div class="request_quote mt-4">
+                    <div class="request_quote mb-4">
                         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                             Photo Gallery <span><?= count($galleries) ?></span></button>
                         <div class="interst_wrapper p-0 bg-white">
@@ -354,7 +354,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                 <?php } ?>
 
-                <div class="mt-2">
+                <div class="">
                     <?php
                     if ($package->safarioperator) {
                         echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $package->safarioperator]);
