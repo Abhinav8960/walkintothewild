@@ -109,7 +109,7 @@ class ArticleController extends FrontendBaseController
                                 $articleTag->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Article Created Successfully');
                         return $this->redirect(['/profile/article/index', 'user_handle' => $user->user_handle]);
                     }
                 }

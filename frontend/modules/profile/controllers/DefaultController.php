@@ -62,7 +62,7 @@ class DefaultController extends FrontendBaseController
         $user = $this->findUserbyHandle($user_handle);
         if (Yii::$app->user->identity) {
             if (Yii::$app->user->identity->id == $user->id) {
-                Yii::$app->session->setFlash('error', "You can't follow yourself!");
+                Yii::$app->session->setFlash('success', "You can't follow yourself!");
                 return $this->redirect(Yii::$app->request->referrer);
             }
             $follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $user->id])->one();
@@ -176,7 +176,7 @@ class DefaultController extends FrontendBaseController
                     $model_user_experience->status = UserExperience::STATUS_ACTIVE;
                     $model_user_experience->save(false);
                 }
-                \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                \Yii::$app->session->setFlash('success', 'Experience Add Successfully');
                 return $this->redirect(['/profile/default/index', 'user_handle' => $user->user_handle]);
             }
         } else {

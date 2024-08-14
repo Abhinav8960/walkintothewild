@@ -104,7 +104,7 @@ class ArticleController extends FrontendBaseController
                                 $articleTag->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Article Created Successfully!!!');
                         return $this->redirect(['/manage/article/index']);
                     }
                 }
@@ -203,7 +203,7 @@ class ArticleController extends FrontendBaseController
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Article Update Successfully');
                         return $this->redirect(['/manage/article/index']);
                     }
                 }

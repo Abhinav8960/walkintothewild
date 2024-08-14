@@ -161,7 +161,7 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->shared_safari_model->save(false)) {
                         $model->UploadFiles($model->shared_safari_model->id);
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Shared Safari Updated Successfully');
                         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug]));
                     }
                 }
@@ -426,7 +426,7 @@ class DefaultController extends FrontendBaseController
 
                 MailLog::createMailLog($to_mail, $subject, $template, $req, []);
             } else {
-                Yii::$app->session->setFlash('error', 'You can not request this user currently!');
+                Yii::$app->session->setFlash('success', 'You can not request this user currently!');
             }
 
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $slug]));
@@ -597,7 +597,7 @@ class DefaultController extends FrontendBaseController
                 if ($wishlist->save(false)) {
                     Yii::$app->session->setFlash('success', 'You added share safari to wishlist ');
                 } else {
-                    Yii::$app->session->setFlash('error', 'You can not add this sharedsafari to wishlist currently!');
+                    Yii::$app->session->setFlash('success', 'You can not add this sharedsafari to wishlist currently!');
                 }
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);

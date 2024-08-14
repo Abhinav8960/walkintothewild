@@ -248,7 +248,7 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
                         $safari_operator->user_id = $user->id;
                         $safari_operator->save(false);
                         if ($user->save(false)) {
-                            \Yii::$app->session->setFlash('success', 'Operator Approved Successfully');
+                            \Yii::$app->session->setFlash('success', 'Bussiness Registered Successfully');
                             return $safari_operator;
                         }
                     }

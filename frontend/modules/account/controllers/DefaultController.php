@@ -31,7 +31,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                     $model->initializeForm();
                     if ($model->user_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Information Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -58,7 +58,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                     $model->initializeForm();
                     if ($model->user_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Profile Photo Update Successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -85,7 +85,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                     $model->initializeForm();
                     if ($model->user_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Cover Photo Update Successfully');
                         return $this->redirect(['index']);
                     }
                 }

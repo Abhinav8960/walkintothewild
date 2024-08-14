@@ -119,7 +119,7 @@ class DefaultController extends FrontendBaseController
             // Send Notification for Package Quote
             FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity);
 
-            Yii::$app->session->setFlash('success', 'quote Requested Successfully submitted');
+            Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
             return $this->redirect(['/package/' . $package->package_slug . '']);
         }
 
@@ -182,7 +182,7 @@ class DefaultController extends FrontendBaseController
                 if ($wishlist->save(false)) {
                     Yii::$app->session->setFlash('success', 'You added ' . $package->package_name . ' to wishlist ');
                 } else {
-                    Yii::$app->session->setFlash('error', 'You can not add this package to wishlist currently!');
+                    Yii::$app->session->setFlash('success', 'You can not add this package to wishlist currently!');
                 }
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug])]);
@@ -207,7 +207,7 @@ class DefaultController extends FrontendBaseController
                     if ($wishlist->save(false)) {
                         Yii::$app->session->setFlash('success', 'You removed ' . $package->package_name . ' from wishlist ');
                     } else {
-                        Yii::$app->session->setFlash('error', 'You can not add this package to wishlist currently!');
+                        Yii::$app->session->setFlash('success', 'You can not add this package to wishlist currently!');
                     }
                 }
             } else {
