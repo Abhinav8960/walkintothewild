@@ -78,20 +78,35 @@ class ShareSafariController extends Controller
             \Yii::$app->session->setFlash('error', 'Invalid request');
             return $this->redirect(['index']);
         }
-        $dataProvider = new ActiveDataProvider([
-            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
+
+        if ($this->request->isPost && isset($_POST['flag_action'])) {
+            $post_data = $_POST['flag_action'];
+            $is_comment_mark_as_delete = 'mark_as_not_delete';
+            foreach ($post_data as $key => $new_status) {
+                $flag = ShareSafariCommentReport::findOne($key);
+                $flag->status = $new_status;
+                if ($flag->save(false)) {
+                    if ($new_status == 2 && $is_comment_mark_as_delete = 'mark_as_not_delete') {
+                        $comment = ShareSafariComment::findOne($flag->share_safari_comment_id);
+                        $comment->status = $new_status;
+                        if ($comment->save()) {
+                            $is_comment_mark_as_delete = 'mark_as_delete';
+                        }
+                    }
+                }
+            }
+            \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+        }
 
         //form model
         $model = new ShareSafariCommentFlagActionForm();
 
+        $review_flags = ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id])->orderBy('id DESC')->all();
+
         return $this->render('flagview', [
             'review' => $review,
-            'dataProvider' => $dataProvider,
-            'model' => $model
+            'model' => $model,
+            'review_flags' => $review_flags
         ]);
     }
 }

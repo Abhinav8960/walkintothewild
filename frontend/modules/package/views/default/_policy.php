@@ -3,7 +3,7 @@
         <div class="safri_tour sticky-top border-0">
             <div class="topics_listing px-0 safariChanges ">
                 <ul id="tabList">
-                    <li><a class="tab-items active_safri" data-tab="tab21">
+                    <li><a class="tab-items active_safri" data-tab="tab21" >
                             <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
                     <!-- <li><a class="tab-items " data-tab="tab22">

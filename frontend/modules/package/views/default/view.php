@@ -64,9 +64,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
-                                                    <a href="/package/unwishlist/<?= $package->package_slug ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist"><i class="fa-solid fa-heart"></i></a>
+                                                    <a href="/package/unwishlist/<?= $package->package_slug ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist" data-pjax="0"><i class="fa-solid fa-heart"></i></a>
                                                 <?php } else { ?>
-                                                    <a href="/package/wishlist/<?= $package->package_slug ?>" data-method="post" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist"><i class="fa-regular fa-heart"></i></a>
+                                                    <a href="/package/wishlist/<?= $package->package_slug ?>" data-method="post" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist" data-pjax="0"><i class="fa-regular fa-heart"></i></a>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
-                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>"><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong></a></p>
+                                        <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-pjax="0"><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong></a></p>
 
                                     </div>
 
@@ -88,7 +88,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <div class="message">
-                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" class="parkrevieBtn d-block w-100 text-center">View Operator</a>
+                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-pjax="0" class="parkrevieBtn d-block w-100 text-center">View Operator</a>
                                     </div>
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn w-100" value="/package/default/enquiry?slug=adventures-park">Book Now</button> -->
                                 </div>
@@ -211,7 +211,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button> -->
                                     <div class="message">
-                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" class="parkrevieBtn">View Operator</a>
+                                        <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-pjax="0" class="parkrevieBtn">View Operator</a>
                                     </div>
                                 </div>
                             </div>
@@ -290,15 +290,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                     <div class="tab-pane fade  accordion-item mb-3" id="policy" role="tabpanel" aria-labelledby="policy-tab">
                         <div class="policytabs">
-                          
-                                <?= $this->render('_policy', ['package' => $package]) ?>
-                           
+
+                            <?= $this->render('_policy', ['package' => $package]) ?>
+
                         </div>
                     </div>
                     <div class="tab-pane fade  accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab">
-                    <div class="card bg-set accordion-collapse  card_bodyPadding">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
                             <div class="card-body p-3">
-                            <?= $this->render('_faq', ['faqs' => $faqs]) ?>
+                                <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                             </div>
                         </div>
                     </div>
@@ -320,6 +320,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                 </div>
             </div>
+
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <?php if (Yii::$app->user->identity) { ?>
                     <div class="request_quote">
@@ -332,40 +333,39 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
 
-                        <?php
-                        if (Yii::$app->user->identity->is_safari_operator == 1 && Yii::$app->user->identity->account_type == 3) {
-                            if (true || Yii::$app->user->identity->id == $package->owned_by_id) {
-                        ?>
+                    </div>
+                <?php } ?>
 
-                                <!-- <div class="right_button py-lg-5 py-3 d-lg-block d-none">
-                                <a class="btn_newsafari organizeBtn w-100" href="/package/profile/<?= $package->id ?>"><i class="fas fa-edit me-1"></i>Update Package</a>
-                            </div> -->
-                        <?php }
-                        } ?>
-                    <?php } else { ?>
-                        <!-- <p>Please Login to Request Quote</p> -->
-                    <?php } ?>
-                    <?php if ($package->packagegallery) {
-                        $galleries = $package->packagegallery;
-                    ?>
-                        <div class="request_quote mt-4">
-                            <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
-                                Photo Gallery <span><?= count($galleries) ?></span></button>
-                            <div class="interst_wrapper p-0 bg-white">
-                                <div class="photoSlider owl-carousel owl-theme">
-                                    <?php foreach ($galleries as $gallery) { ?>
-                                        <div class="items_img">
-                                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
-                                        </div>
-                                    <?php } ?>
-                                </div>
+                <?php if ($package->packagegallery) {
+                    $galleries = $package->packagegallery;
+                ?>
+                    <div class="request_quote mt-4">
+                        <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
+                            Photo Gallery <span><?= count($galleries) ?></span></button>
+                        <div class="interst_wrapper p-0 bg-white">
+                            <div class="photoSlider owl-carousel owl-theme">
+                                <?php foreach ($galleries as $gallery) { ?>
+                                    <div class="items_img">
+                                        <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
-                    <?php } ?>
-
                     </div>
+                <?php } ?>
+
+                <div class="mt-2">
+                    <?php
+                    if ($package->safarioperator) {
+                        echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $package->safarioperator]);
+                    } ?>
+                </div>
+
             </div>
+
+
         </div>
+    </div>
 </section>
 
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
