@@ -38,7 +38,7 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 <section class="safari_wrapper bg-white pt-3 pb-0 ">
-    <div class="container-lg mt-4 px-slider2">
+    <div class="container-lg  px-slider2">
         <div class="wrapper-skybgsafri bg-white pb-0 px-slider2">
             <div class="row packageSfari ">
                 <div class="col-12">

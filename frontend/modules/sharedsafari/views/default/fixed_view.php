@@ -42,12 +42,23 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 <section class="safari_wrapper  bg-white pt-4">
-    <div class="container-lg">
-        <div class="row my-4 packageSfari">
-            <div class="col-12">
-                <div class="imagesSafari">
-                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+<div class="container-lg  px-slider2">
+        <div class=" bg-white pb-0 px-slider2">
+            <div class="row packageSfari mt-4">
+                <div class="col-12">
+                    <div class="imagesSafari">
+                        <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-lg">
+        <div class="row packageSfari">
+            <div class="col-12">
+                <!-- <div class="imagesSafari">
+                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+                </div> -->
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
