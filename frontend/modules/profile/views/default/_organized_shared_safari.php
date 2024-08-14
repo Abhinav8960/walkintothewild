@@ -3,8 +3,21 @@
 use yii\helpers\Url;
 use common\models\sharesafari\ShareSafari;
 
-$model = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
-$model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
+
+
+
+if (Yii::$app->user->identity) {
+    if ($user->id == Yii::$app->user->identity->id) {
+        $model = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
+        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
+    } else {
+        $model = ShareSafari::find()->where(['host_user_id' => $user->id])->andWhere(['>=', 'start_date', date("Y-m-d")])->orderby(['id' => SORT_DESC])->limit(2)->all();
+        $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
+    }
+}
+
+
+
 
 ?>
 

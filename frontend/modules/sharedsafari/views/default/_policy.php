@@ -6,7 +6,7 @@
                     <li><a class="tab-items active_safri" data-tab="tab21">
                             <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
-                    <li><a class="tab-items " data-tab="tab22">
+                    <!-- <li><a class="tab-items " data-tab="tab22">
                             <div class="numparks">Privacy Policy</div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
                     <li><a class="tab-items" data-tab="tab23">
@@ -14,7 +14,7 @@
                         </a></li>
                     <li><a class="tab-items " data-tab="tab24">
                             <div class="numparks">What You Must Carry </div><i class="fa-solid fa-chevron-right"></i>
-                        </a></li>
+                        </a></li> -->
                     <li><a class="tab-items " data-tab="tab25">
                             <div class="numparks">Date Change Policy </div><i class="fa-solid fa-chevron-right"></i>
                         </a></li>
@@ -85,24 +85,24 @@
         </div>
 
         <div class="tab-content_tour " id="tab24">
-        
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <?php if ($share_safari->what_you_must_carry) { ?>
-                                    <div class="itenary-title">
-                                        <h6 class="fs-5 pb-2">What You Must Carry</h6>
-                                    </div>
-                                <?php } ?>
-                                <div class="itenary_text">
-                                    <p><?= $share_safari->what_you_must_carry ?></p>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <?php if ($share_safari->what_you_must_carry) { ?>
+                                <div class="itenary-title">
+                                    <h6 class="fs-5 pb-2">What You Must Carry</h6>
                                 </div>
+                            <?php } ?>
+                            <div class="itenary_text">
+                                <p><?= $share_safari->what_you_must_carry ?></p>
                             </div>
                         </div>
                     </div>
                 </div>
-            
+            </div>
+
         </div>
 
         <div class="tab-content_tour" id="tab25">
