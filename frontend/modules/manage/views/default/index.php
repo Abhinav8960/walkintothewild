@@ -36,10 +36,10 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                 <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update</a>
             </div>
         </div>
-        <div class="col-md-4 col-xl-3 col-xxl-2 mb-4">
+        <div class="col-md-12 col-xl-12 col-xxl-12 mb-3">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-8 col-xxl-10 col-xl-9">
+        <div class="col-md-12 col-xxl-12 col-xl-12">
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">
