@@ -30,7 +30,7 @@ class ArticleController extends FrontendBaseController
     {
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
-        if (Yii::$app->user->identity->id == $user->id) {
+        if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
             $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
         } else {
             $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
@@ -109,7 +109,7 @@ class ArticleController extends FrontendBaseController
                                 $articleTag->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Article Created Successfully');
                         return $this->redirect(['/profile/article/index', 'user_handle' => $user->user_handle]);
                     }
                 }
@@ -203,7 +203,7 @@ class ArticleController extends FrontendBaseController
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Artical Updated Successfully');
                         return $this->redirect(['/profile/article/index', 'user_handle' => $user->user_handle]);
                     }
                 }

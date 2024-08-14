@@ -9,9 +9,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="profile_coverbnner mt-5 pt-5">
-    <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="col-xxl-10 banner-cover position-relative">
+    <div class="container-lg px-slider2">
+        <div class="row justify-content-center px-slider2">
+            <div class="col-xxl-10 banner-cover position-relative px-slider2">
                 <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
                 <?php if (Yii::$app->user->id == $user->id) { ?>
                     <label for="coverImageUpload" class="coverbtns">
@@ -57,8 +57,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <a href="<?= Url::toRoute(['/profile/default/follow', 'user_handle' =>  $user->user_handle]) ?>" class="parkrevieBtn " data-method="POST">Follow</a>
                         <?php } ?>
                         <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
-                    <?php } else { ?>
+                    <?php } else if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
                         <a href="<?= Url::toRoute(['/account', 'id' =>  $user->id]) ?>" class="follow_massge rounded-2"><i class="fa fa-edit"></i> Edit Profile</a>
+                    <?php } else {  ?> <a href="/site/login?authclient=google&referrer=/profile/share-safari/<?= $user->user_handle ?>" class="parkrevieBtn " data-method="POST">Follow</a>
+                        <a href="/site/login?authclient=google&referrer=/profile/share-safari/<?= $user->user_handle ?>" class="parkrevieBtn">Message</a>
                     <?php } ?>
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                         if ($user->is_safari_operator != 1 && in_array($user->account_type, [2, 3])) {

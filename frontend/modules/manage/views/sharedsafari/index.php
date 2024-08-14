@@ -89,6 +89,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                                 return $model->cost_per_person;
                                             }
                                         ],
+                                        'statuslabel:raw:Status',
                                         [
                                             'label' => 'View',
                                             'format' => 'raw',

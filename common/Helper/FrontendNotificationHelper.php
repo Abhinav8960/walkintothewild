@@ -7,13 +7,17 @@ use Pusher\Pusher;
 use yii\helpers\Url;
 use common\models\User;
 use common\models\package\Package;
+use common\models\operator\OperatorQuote;
+use common\models\operator\SafariOperator;
+use common\models\sharesafari\ShareSafari;
+use common\models\operator\SafariOperatorRating;
 use common\models\notification\FrontendNotification;
 
 class FrontendNotificationHelper
 {
 
     /**
-     * Order Added Into Queued
+     *  New Comment Added into Package
      *
      * @param [type] $package
      * @return void
@@ -40,7 +44,7 @@ class FrontendNotificationHelper
     }
 
     /**
-     * Order Added Into Queued
+     * Package got new Comment Reply
      *
      * @param [type] $package
      * @return void
@@ -66,7 +70,7 @@ class FrontendNotificationHelper
 
 
     /**
-     * Order Added Into Queued
+     * New Quote send to a package
      *
      * @param [type] $package
      * @return void
@@ -86,6 +90,172 @@ class FrontendNotificationHelper
             $model->is_seen = false;
             $model->is_read = False;
             $model->notification_text = "New Request Quote Recivied From $user->name | " . $package->package_name;
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+
+    /**
+     * Operator got new Follower
+     *
+     * @param [type] $operator
+     * @return void
+     */
+    public static function operatorNewFollower(SafariOperator $operator, User $user)
+    {
+        if ($operator) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_OPERATOR_NEW_FOLLOWER;
+            $model->notification_url = Url::toRoute(['/manage/follower']);
+            $model->parent_id = $operator->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            $model->user_id = $operator->user_id;
+            $model->is_seen = false;
+            $model->is_read = False;
+            $model->notification_text = "New Follower Recivied From $user->name | " . $operator->business_name;
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+
+    /**
+     * Operator got new Quote
+     *
+     * @param [type] $operator
+     * @return void
+     */
+    public static function operatorNewQuote(SafariOperator $operator, OperatorQuote $operator_quote, User $user)
+    {
+        if ($operator) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_OPERATOR_NEW_QUOTE;
+            $model->notification_url = Url::toRoute(['/manage/quote']);
+            $model->parent_id = $operator->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            $model->user_id = $operator->user_id;
+            $model->is_seen = false;
+            $model->is_read = False;
+            $user_name = $user ? $user->name : $operator_quote->full_name;
+            $model->notification_text = "New Quote Recivied From $user_name | " . $operator->business_name;
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+
+    /**
+     * Operator got new Review
+     *
+     * @param [type] $operator
+     * @return void
+     */
+    public static function operatorNewReview(SafariOperator $operator, SafariOperatorRating $rating_model, User $user)
+    {
+        if ($operator) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_OPERATOR_NEW_REVIEW;
+            $model->notification_url = Url::toRoute(['/manage/review']);
+            $model->parent_id = $operator->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            $model->user_id = $operator->user_id;
+            $model->is_seen = false;
+            $model->is_read = False;
+            $model->notification_text = "New Rating($rating_model->rating) Recivied From $user->name | " . $operator->business_name;
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+
+    /**
+     * Shared Safari Join by User
+     *
+     * @param [type] $share_safari
+     * @return void
+     */
+    public static function sharedSafariJoin(ShareSafari $share_safari, User $user)
+    {
+        if ($share_safari) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_SHARED_SAFARI_JOIN;
+            $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]);
+            $model->parent_id = $share_safari->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                $model->user_id = $share_safari->host_user_id;
+            } else {
+                $model->user_id = $share_safari->safarioperator ? $share_safari->safarioperator->user_id : NULL;
+            }
+            $model->is_seen = false;
+            $model->is_read = False;
+            $park_name = $share_safari->park ? ' | ' . $share_safari->park->title : '';
+            $model->notification_text = "$user->name Joined Shared Safari " . $park_name;
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+    /**
+     * Shared Safari Leave by User
+     *
+     * @param [type] $share_safari
+     * @return void
+     */
+    public static function sharedSafariLeave(ShareSafari $share_safari, User $user)
+    {
+        if ($share_safari) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_SHARED_SAFARI_JOIN;
+            $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]);
+            $model->parent_id = $share_safari->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                $model->user_id = $share_safari->host_user_id;
+            } else {
+                $model->user_id = $share_safari->safarioperator ? $share_safari->safarioperator->user_id : NULL;
+            }
+            $model->is_seen = false;
+            $model->is_read = False;
+            $park_name = $share_safari->park ? ' | ' . $share_safari->park->title : '';
+            $model->notification_text = "$user->name Leaved Shared Safari " . $park_name;
+            if ($model->save(false)) {
+                self::eventSendtoPusher($model);
+            }
+        }
+    }
+
+
+    /**
+     *  User got New Followers
+     *
+     * @param [type] $User
+     * @return void
+     */
+    public static function userNewFollower(User $user, User $follow_by_user)
+    {
+        if ($user) {
+            $model = new FrontendNotification();
+            $model->action_id = FrontendNotification::ACTION_USER_NEW_FOLLOWER;
+            $model->notification_url = Url::toRoute(['/profile/default/index', 'user_handle' => $follow_by_user->user_handle]);
+            $model->parent_id = $user->id;
+            $model->channel = 'UserNotificationChannel';
+            $model->status = 1;
+            $model->user_id = $user->id;
+            $model->is_seen = false;
+            $model->is_read = False;
+            $model->notification_text = $follow_by_user->name . ' started following you!';
             if ($model->save(false)) {
                 self::eventSendtoPusher($model);
             }

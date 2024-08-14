@@ -13,11 +13,12 @@ use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
 use common\interfaces\StatusInterface;
 use frontend\models\ShareSafariSearch;
+use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use frontend\models\form\SharedSafariForm;
 use common\models\master\month\MasterMonth;
-use common\models\operator\SafariOperator;
 use frontend\models\ShareSafariCommentForm;
+use common\Helper\FrontendNotificationHelper;
 use frontend\models\form\CreateDepartureForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariComment;
@@ -160,7 +161,7 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->shared_safari_model->save(false)) {
                         $model->UploadFiles($model->shared_safari_model->id);
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Shared Safari Updated Successfully');
                         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug]));
                     }
                 }
@@ -202,7 +203,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
 
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
@@ -276,6 +277,7 @@ class DefaultController extends FrontendBaseController
                 $share_safari_intrested->status = 1;
                 $share_safari_intrested->intrested_at = time();
                 if ($share_safari_intrested->save()) {
+                    FrontendNotificationHelper::sharedSafariJoin($share_safari, Yii::$app->user->identity);
                     Yii::$app->session->setFlash('success', 'You Just Join the Shared Safari!');
                 } else {
                     Yii::$app->session->setFlash('success', 'You can not Join this Shared Safari currently!');
@@ -312,6 +314,7 @@ class DefaultController extends FrontendBaseController
                     $share_safari_intrested->status = 0; //UNfollow
                     $share_safari_intrested->unintrested_at = time();
                     if ($share_safari_intrested->save()) {
+                        FrontendNotificationHelper::sharedSafariLeave($share_safari, Yii::$app->user->identity);
                         Yii::$app->session->setFlash('success', 'You Just Leave the Shared Safari!');
                     } else {
                         Yii::$app->session->setFlash('success', 'You can not unfollow this Shared Safari currently!');
@@ -423,7 +426,7 @@ class DefaultController extends FrontendBaseController
 
                 MailLog::createMailLog($to_mail, $subject, $template, $req, []);
             } else {
-                Yii::$app->session->setFlash('error', 'You can not request this user currently!');
+                Yii::$app->session->setFlash('success', 'You can not request this user currently!');
             }
 
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $slug]));
@@ -504,7 +507,7 @@ class DefaultController extends FrontendBaseController
 
     protected function findModel($slug)
     {
-        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_COMPLETED]])) !== null) {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
             return $model;
         }
 
@@ -594,7 +597,7 @@ class DefaultController extends FrontendBaseController
                 if ($wishlist->save(false)) {
                     Yii::$app->session->setFlash('success', 'You added share safari to wishlist ');
                 } else {
-                    Yii::$app->session->setFlash('error', 'You can not add this sharedsafari to wishlist currently!');
+                    Yii::$app->session->setFlash('success', 'You can not add this sharedsafari to wishlist currently!');
                 }
             } else {
                 return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/wishlist', 'slug' => $share_safari->slug])]);

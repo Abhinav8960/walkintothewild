@@ -1075,8 +1075,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function sharesafarioptions()
     {
         $return = [
-            '1' => 'Active',
-            '2' => 'Deactive',
+            '1' => 'Published',
+            '2' => 'Inactive',
             '3' => 'Seat Full',
         ];
         return $return;

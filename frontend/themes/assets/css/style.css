@@ -3394,7 +3394,7 @@ figure {
 
 .searchSafari_wraper {
 
-    background-color: #F5F5F5;
+    background-color: #ffffff;
     border: 1px solid #0000004D;
     border-radius: 10px;
     /* -webkit-box-shadow: 0px 5px 10px #00000029;
@@ -4766,8 +4766,9 @@ figure {
 }
 
 .contact-wrappers .form-bg {
-    background: var(--background-primary);
+    background: #fff;
     padding: 20px;
+    border: 1px solid #7070704D;
     border-radius: 10px;
 }
 
@@ -4775,7 +4776,7 @@ figure {
     background: rgba(255, 255, 255, 0.22);
     -webkit-box-shadow: none;
             box-shadow: none;
-    color: #fff;
+    color: #000;
     padding: 8px 10px;
 }
 
@@ -4825,7 +4826,7 @@ figure {
 
 .Up h5 {
 
-    color: var(--colorwhite);
+    color: var(--background-primary);
     padding-bottom: 8px;
 }
 
@@ -7220,5 +7221,14 @@ select.custom_sort_by_input  option.selected{
     background-color: var(--background-primary) !important;
     color: #fff !important;
 }
+.listingSafari {
 
+    background-color: #fff !important;
+}
+
+
+/* .slider_profilemobile.owl-carousel .owl-stage-outer .owl-item.active{
+
+    margin-right: 20px !important;
+} */
 

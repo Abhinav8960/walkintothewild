@@ -48,7 +48,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <!-- <li><a href="/birdingtour-registration">Birding Tour Operator</a></li> -->
                             <!-- <li><a href="#" style="cursor: default;">Resorts / Lodge / Home Stay</a></li> -->
                             <li><a href="/article">Articles and Tips</a></li>
-                            <li><a href="#" style="cursor: default;">About us</a></li>
+                            <li><a href="/about-us">About us</a></li>
                             <li><a href="/contact">Contact Us</a></li>
                             <li><a href="/faq">FAQs</a></li>
                         </ul>
@@ -66,7 +66,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <div class="d-flex align-items-center gap-2">
                             <div class="insticon"><i class="fa-brands fa-instagram"></i> </div>
 
-                            <a href="">walkintothewild.in</a>
+                            <a href="https://www.instagram.com/walkintothewild.in/" target="_blank">walkintothewild.in</a>
 
                         </div>
                     </div>

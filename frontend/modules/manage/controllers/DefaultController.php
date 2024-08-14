@@ -101,7 +101,7 @@ class DefaultController extends FrontendBaseController
                         if ($model->safari_operator_request_model->save(false)) {
                             $safari_operator = $model->safari_operator_request_model->safariapproved($model->safari_operator_request_model);
                             if ($safari_operator) {
-                                \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                                \Yii::$app->session->setFlash('success', 'Safari Update Successfully');
                                 return $this->redirect(['index']);
                             }
                         }

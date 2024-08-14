@@ -382,36 +382,35 @@ $(document).ready(function() {
                 responsiveClass:true,
                 center: false,
                 dots: false,
+                stagePadding: 10,
                 responsive: {
                     0: {
                         items: 1.2,
-                        stagePadding: 10,
-                        center: true,
+                       
                        
                     },
                     300: {
                         items: 2,
                         stagePadding: 10,
-                       
-                       
+  
                     },
 
                     400: {
-                        items: 2,
-                        stagePadding: 0,  
+                        items: 2.2,
+                       
                     },
                     600: {
                         items: 3.2,
-                        stagePadding: 10,
+                      
                       
                     } ,
                     800: {
-                        items: 3.2,
-                        center: true,
+                        items: 4,
+                      
                     },
                     991: {
                         items: 5.2,
-                        stagePadding: 0,
+                        
                     }
                 }
             });

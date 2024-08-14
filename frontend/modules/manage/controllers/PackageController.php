@@ -105,7 +105,7 @@ class PackageController extends FrontendBaseController
                                 $packagesafaripark->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Package Create Successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -163,7 +163,7 @@ class PackageController extends FrontendBaseController
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Package Updated Successfully');
                         return $this->redirect(['update', 'package_id' => $package_id]);
                     }
                 }
@@ -189,7 +189,7 @@ class PackageController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Policy Information Updated Successfully');
                         return $this->redirect(['policy-info', 'package_id' => $package_id]);
                     }
                 }
@@ -216,7 +216,7 @@ class PackageController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Getting there Updated Successfully');
                         return $this->redirect(['getting-there', 'package_id' => $package_id]);
                     }
                 }
@@ -271,14 +271,14 @@ class PackageController extends FrontendBaseController
                             }
 
                             $transaction->commit();
-                            Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                            Yii::$app->session->setFlash('success', 'Inclusion Updated Successfully');
                             return $this->redirect(['inclusion', 'package_id' => $package_id]);
                         } else {
-                            Yii::$app->session->setFlash('error', 'Failed to update package details.');
+                            Yii::$app->session->setFlash('success', 'Failed to update package details.');
                         }
                     } catch (\Exception $e) {
                         $transaction->rollBack();
-                        Yii::$app->session->setFlash('error', 'An error occurred while updating data: ' . $e->getMessage());
+                        Yii::$app->session->setFlash('success', 'An error occurred while updating data: ' . $e->getMessage());
                     }
                 }
             }
@@ -320,7 +320,7 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Itinerary Updated Successfully');
                         return $this->redirect(['itinerary', 'package_id' => $package_id, 'day' => $day]);
                     }
                 }
@@ -375,7 +375,7 @@ class PackageController extends FrontendBaseController
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Faq Submitted Successfully');
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
@@ -628,7 +628,7 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->package_gallery_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Gallery Updated Successfully');
                         return $this->redirect(['gallery', 'package_id' => $package_id]);
                     }
                 }

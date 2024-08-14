@@ -211,7 +211,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->validate()) {
                         $model->initializeForm();
                         if ($model->safari_suggestion_model->save(false)) {
-                            \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                            \Yii::$app->session->setFlash('success', 'Suggestion Submitted Successfully');
                             return $this->redirect(['/park/' . $safari_park->slug . '']);
                         }
                     }

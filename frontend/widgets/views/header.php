@@ -75,6 +75,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 										</li>
 									<?php } else { ?>
+										<li>
+											<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
+												<i class="fa-solid fa-user"></i>
+												Profile</a>
+										</li>
 										<?php
 										if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
 											<li>
@@ -85,12 +90,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										<?php }
 										?>
 
-
-										<li>
-											<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
-												<i class="fa-solid fa-user"></i>
-												Profile</a>
-										</li>
 										<li>
 											<a class="" href="/account">
 												<i class="fa-solid fa-cog"></i>
@@ -134,9 +133,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<div class="menunotification" id="menunotification_menu"></div>
 
 					<div class="massge pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
-					<div class="chatnotification" >
+					<div class="chatnotification">
 						<h6 class="fs-5 fw-semibold px-3 pt-3 pb-3 border-bottom mb-3">Messages</h6>
-		
+
 						<div class="viewallNotification float-end pe-3 pt-2">
 							<a href="/chat" class="follow_massge ms-3">View All Message</a>
 						</div>
@@ -180,6 +179,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													Manage</a>
 											</li>
 										<?php } ?> -->
+
+
+									<li>
+										<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
+											<i class="fa-solid fa-user"></i>
+											Profile</a>
+									</li>
 									<?php
 									if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
 										<li>
@@ -191,11 +197,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									?>
 
 
-									<li>
-										<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
-											<i class="fa-solid fa-user"></i>
-											Profile</a>
-									</li>
 									<li>
 										<a class="" href="/account">
 											<i class="fa-solid fa-cog"></i>
@@ -236,6 +237,3 @@ $active_url = "/" . Yii::$app->requestedRoute;
 		</div>
 	</nav>
 </header>
-
-
-

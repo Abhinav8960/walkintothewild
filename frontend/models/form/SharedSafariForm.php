@@ -80,6 +80,7 @@ class SharedSafariForm extends \yii\base\Model
             ['total_seat', 'compare', 'compareAttribute' => 'share_seat', 'operator' => '>='],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
+            [['estimate_price_min', 'estimate_price_max'], 'integer', 'max' => 1000000]
         ];
     }
 

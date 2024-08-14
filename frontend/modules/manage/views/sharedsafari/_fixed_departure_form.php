@@ -33,7 +33,7 @@ use yii\helpers\Html;
 
         <div class="col-md-12 mb-1">
             <label for="" class="Modal_label">Theme <span class="necessary">*</span></label>
-            <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['_prompt' => 'Select Theme', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
 
         </div>
 
@@ -82,7 +82,8 @@ use yii\helpers\Html;
                 </div>
 
             </div>
-            
+            <p class="text-danger"><i>Note : You need to fill all the details and then published your Fixed Shared Safari</i></p>
+
         </div>
 
         <?= $form->field($model, 'host_type')->hiddenInput()->label(false); ?>

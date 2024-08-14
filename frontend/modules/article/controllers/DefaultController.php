@@ -62,7 +62,7 @@ class DefaultController extends FrontendBaseController
 
         $model = new CommentForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($article)) {
-            Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
+            Yii::$app->session->setFlash('success', 'Comment submitted Successfully');
             return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
         }
 

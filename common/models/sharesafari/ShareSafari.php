@@ -37,7 +37,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
 
 
     const STATUS_APPROVED = 1;
-    const STATUS_COMPLETED = 2;
+    const STATUS_SUSPEND = 2;
     const STATUS_FULL_SEAT = 3;
 
     const TYPE_SAFARI = 1;
@@ -100,6 +100,13 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
             'updated_by' => 'Updated By',
             'status' => 'Status',
         ];
+    }
+
+    public function getStatuslabel()
+    {
+
+        $options = [ShareSafari::STATUS_APPROVED => 'Published', ShareSafari::STATUS_SUSPEND => 'Inactive', ShareSafari::STATUS_FULL_SEAT => 'Seat Full'];
+        return isset($options[$this->status]) ? $options[$this->status] : '';
     }
 
     public function getPark()
