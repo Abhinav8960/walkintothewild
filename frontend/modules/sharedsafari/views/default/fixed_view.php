@@ -42,22 +42,33 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 <section class="safari_wrapper  bg-white pt-4">
-    <div class="container-lg">
-        <div class="row my-4 packageSfari">
-            <div class="col-12">
-                <div class="imagesSafari">
-                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+<div class="container-lg  px-slider2">
+        <div class=" bg-white pb-0 px-slider2">
+            <div class="row packageSfari mt-4">
+                <div class="col-12">
+                    <div class="imagesSafari">
+                        <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-lg">
+        <div class="row packageSfari">
+            <div class="col-12">
+                <!-- <div class="imagesSafari">
+                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
+                </div> -->
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
-                                <div class="col-sm-3 col-md-3 col-lg-2">
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-2 maxWidth">
                                     <div class="safritimg innerImg">
                                         <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
-                                <div class="col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3">
+                                <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
                                     <div class="safrititles">
                                         <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a>
                                             <?php

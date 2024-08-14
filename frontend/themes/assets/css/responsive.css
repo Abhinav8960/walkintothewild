@@ -1105,6 +1105,10 @@ text-align: center !important;
   }
 }
 @media (max-width: 991px) {
+  .title_safari.JoinPadding{
+
+    padding-top: 13px;
+  }
   .px-slider{
 
     padding: 0 !important;
@@ -1478,7 +1482,19 @@ padding:0.5rem  1rem!important;
 
 @media only screen and (max-width: 767px) {
   
+  .px-slider2{
 
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .px-slider2 img.banner-cover{
+    border-radius: 0px ;
+
+  }
+  .px-slider2 .imagesSafari img{
+
+    border-radius: 0px;
+  }
   .topSlider_tour .owl-dots {
     position: absolute;
     bottom: -7px;}
@@ -1851,6 +1867,14 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .maxWidth .safritimg.innerImg img{
+
+    height: auto !important;
+  }
+  .maxWidth {
+
+    padding-top: 0px !important;
+  }
   .two-line-text {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -2283,6 +2307,8 @@ margin: 0;
     left: 16%;
   }
 }
+
+
 @media (max-width: 340px) {
   .placeholder_select {
     left: 22%;
@@ -2351,7 +2377,17 @@ flex-wrap: nowrap;
     font-size: 12px;
   }
 }
+@media (max-width: 319px){
 
+  .maxWidth{
+    width: 100%;
+    
+  }
+  .pt-3.maxWidth{
+
+    padding-top: 1rem !important;
+  }
+}
 .necessary {
   color: red;
 }

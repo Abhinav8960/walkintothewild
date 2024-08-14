@@ -23,10 +23,10 @@ class Module extends \yii\base\Module
     {
         parent::init();
 
-        if (!isset(Yii::$app->user->identity)) {
-            return Yii::$app->getResponse()->redirect('/site/login')->send();
-            exit;
-        }
+        // if (!isset(Yii::$app->user->identity)) {
+        //     return Yii::$app->getResponse()->redirect('/site/login')->send();
+        //     exit;
+        // }
     }
 
 

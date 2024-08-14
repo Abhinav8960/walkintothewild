@@ -38,29 +38,30 @@ $this->params['title'] = $this->title;
     </div>
 </section>
 <section class="safari_wrapper bg-white pt-3 pb-0 ">
-    <div class="container-lg">
-        <div class="row my-4">
-            <div class="col-12">
-                <!-- <div class="btn_set float-end">
-                    <button class=" history_btn" value="<?= Url::toRoute(['/sharedsafari/default/history', 'share_safari_id' => $share_safari->id]) ?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View History"><i class="fas fa-history"></i></i></button>
-                </div> -->
-                <div class="wrapper-skybgsafri bg-white">
-                    <div class="row packageSfari pb-3">
-                        <div class="col-12">
-                            <div class="imagesSafari">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
-                            </div>
-                        </div>
+    <div class="container-lg  px-slider2">
+        <div class="wrapper-skybgsafri bg-white pb-0 px-slider2">
+            <div class="row packageSfari ">
+                <div class="col-12">
+                    <div class="imagesSafari">
+                        <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-lg">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="wrapper-skybgsafri bg-white pt-3">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
-                                <div class="col-sm-3 col-md-3 col-lg-2">
+                                <div class="col-3 col-sm-3 col-md-3 col-lg-2 maxWidth">
                                     <div class="safritimg innerImg">
                                         <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
-                                <div class="col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3">
+                                <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
                                     <div class="safrititles 44">
                                         <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a>
                                             <?php
@@ -81,9 +82,9 @@ $this->params['title'] = $this->title;
                                         </div><?php
                                                 if (Yii::$app->user->identity) { ?>
                                             <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
-                                                                                                                                                                                                                                                    } else { ?>
+                                                                                                                                                                                                                                                                } else { ?>
                                             <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=/profile/user/<?= $share_safari->getOrganizedbyuserhandel() ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
-                                                                                                                                                                                                                                                    } ?>
+                                                                                                                                                                                                                                                                } ?>
                                     </div>
                                 </div>
                             </div>
