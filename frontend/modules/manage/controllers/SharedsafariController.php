@@ -163,12 +163,17 @@ class SharedsafariController extends FrontendBaseController
     }
 
 
-    public function actionItinerary($share_safari_id, $day = 1)
+    public function actionItinerary($slug, $day = 1)
     {
         $safari_operator = $this->module->operatormodel();
+        $shared_safari_departure_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
 
+
+
+
+        $share_safari_id = $shared_safari_departure_model->id;
         $share_safari_day_model = $this->findModelDay($share_safari_id, $day);
-        $shared_safari_departure_model = ShareSafari::find()->where(['id' => $share_safari_id])->limit(1)->one();
+
         if ($share_safari_day_model) {
             $model = new DayItineraryForm($share_safari_day_model);
         } else {
@@ -188,7 +193,7 @@ class SharedsafariController extends FrontendBaseController
                     if ($model->share_safari_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['itinerary', 'share_safari_id' => $share_safari_id, 'day' => $day]);
+                        return $this->redirect(['itinerary', 'slug' => $slug, 'day' => $day]);
                     }
                 }
             }
@@ -588,4 +593,6 @@ class SharedsafariController extends FrontendBaseController
             return $model;
         }
     }
+
+   
 }
