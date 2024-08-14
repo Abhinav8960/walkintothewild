@@ -1483,6 +1483,10 @@ padding:0.5rem  1rem!important;
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+  .px-slider2 img.banner-cover{
+    border-radius: 0px ;
+
+  }
   .px-slider2 .imagesSafari img{
 
     border-radius: 0px;

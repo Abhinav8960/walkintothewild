@@ -9,9 +9,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 <div class="profile_coverbnner mt-5 pt-5">
-    <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="col-xxl-10 banner-cover position-relative">
+    <div class="container-lg px-slider2">
+        <div class="row justify-content-center px-slider2">
+            <div class="col-xxl-10 banner-cover position-relative px-slider2">
                 <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
                 <?php if (Yii::$app->user->id == $user->id) { ?>
                     <label for="coverImageUpload" class="coverbtns">
