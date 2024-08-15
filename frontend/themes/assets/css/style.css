@@ -7229,8 +7229,28 @@ select.custom_sort_by_input  option.selected{
 
     background-color: #fff !important;
 }
+.opratios-slider .owl-item {
+    width: auto; 
+    max-width: 250px;
+    margin: 0 auto; 
+}
 
+.opratios-slider .owl-item img {
+    width: 100%; 
+    height: auto;
+    max-width: 100%;
+}
 
+/* .opratios-slider .owl-item {
+    max-width: calc(100% / 4);
+    width: 100%; 
+    margin: 0 auto; 
+}
+.opratios-slider .owl-item img {
+    width: 100%; 
+    max-width: 100%; 
+    height: auto; 
+} */
 /* .slider_profilemobile.owl-carousel .owl-stage-outer .owl-item.active{
 
     margin-right: 20px !important;

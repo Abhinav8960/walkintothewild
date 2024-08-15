@@ -105,7 +105,7 @@ if ($('.topSlider_tour').length) {
 var owl = $(".opratios-slider");
 var itemCount = owl.children().length;
 owl.owlCarousel({
-    items: itemCount >= 6 ? 6 : itemCount,
+    items: itemCount >= 4 ? 4 : itemCount,
     loop: false,
     margin: 10,
     dots: false,
