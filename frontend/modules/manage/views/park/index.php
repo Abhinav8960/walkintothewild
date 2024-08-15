@@ -21,7 +21,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                         <?php foreach ($operator_parks as $operator_park) {
                             $park_detail = $operator_park->park;
                         ?>
-                            <div class="col-md-3 col-sm-6 col-lg-3 gap-2 mt-2 mb-2">
+                            <div class="col-md-6 col-sm-6 col-lg-3 col-xxl-2 col-xl-3 gap-2 mt-2 mb-2">
                                 <div class="parksImgireview h-100 position-relative">
                                     <img src="<?= isset($park_detail->logoimagepath) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                                     <div class="footer_safariname">

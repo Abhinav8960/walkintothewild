@@ -3,8 +3,9 @@
 use yii\helpers\Url;
 
 ?>
-<div class="card account-settingside">
-    <div class="nav flex-column nav-pills card-body">
+<div class="itenary_tabs">
+<div class="card account-settingside sidebar_account">
+    <div class="nav nav-tabs flex-column nav-pills card-body slider_accountsidebar">
         <a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link mb-2 <?= $active == 'profile' ? 'active' : '' ?>">Overview</a>
         <a href="<?= Url::toRoute(['/manage/sharedsafari']) ?>" class="nav-link mb-2 <?= $active == 'sharedsafari' ? 'active' : '' ?>">Shared Safaries</a>
         <a href="<?= Url::toRoute(['/manage/package']) ?>" class="nav-link mb-2 <?= $active == 'package' ? 'active' : '' ?>">Packages</a>
@@ -15,4 +16,5 @@ use yii\helpers\Url;
         <a href="<?= Url::toRoute(['/manage/park']) ?>" class="nav-link mb-2 <?= $active == 'park' ? 'active' : '' ?>">My Safari Parks</a>
         <!-- <a href="<?= Url::toRoute(['/manage/user']) ?>" class="nav-link mb-2 <?= $active == 'user' ? 'active' : '' ?>">Users</a> -->
     </div>
+</div>
 </div>
