@@ -1361,7 +1361,7 @@ margin-bottom: 0 !important;
 }
 .itenary_tabs .account-settingside.safartabs .nav-tabs{
 
-  gap: 15px !important;
+  gap: 40px !important;
 }
 
   .header_wrapper.navigation_hide {
@@ -1378,6 +1378,19 @@ margin-bottom: 0 !important;
 }
 
 @media only screen and (max-width: 991px) {
+  .itenary_tabs .sidebar_account.safartabs .nav-tabs .nav-link.active{
+
+border-radius: 0px !important;
+display: inline-block;
+  }
+  .itenary_tabs .sidebar_account.safartabs .nav-tabs .nav-link{
+
+    margin-bottom: 3px !important;
+  }
+  .sidebar_account  .card-body{
+
+    padding-bottom: 0px !important;
+  }
   .planSearch_box
     .select_searcjBox
     .select_boxes:nth-child(4)

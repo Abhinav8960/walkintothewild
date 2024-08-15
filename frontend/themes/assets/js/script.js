@@ -289,6 +289,44 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     function initializeOwlCarousel() {
+        if ($(window).width() <= 767) {
+            $('.slider_accountsetting').addClass('owl-carousel');
+            $('.slider_accountsetting').owlCarousel({
+                loop: false,
+                margin: 10,
+                nav: false,
+                center:false,
+                // stagePadding: 50,
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 3
+                    } ,
+                    767: {
+                        items: 4
+                    },
+                    991: {
+                        items: 4
+                    }
+                }
+            });
+        } else {
+            $('.slider_accountsetting').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+            $('.slider_accountsetting').find('.owl-stage-outer').children().unwrap();
+        }
+    }
+
+    initializeOwlCarousel();
+
+    $(window).resize(function() {
+        initializeOwlCarousel();
+    });
+});
+$(document).ready(function(){
+    function initializeOwlCarousel() {
         if ($(window).width() <= 576) {
             $('.slider_addmobile3').addClass('owl-carousel');
             $('.slider_addmobile3').owlCarousel({
@@ -425,6 +463,55 @@ $(document).ready(function() {
     $(window).resize(function() {
         initializeOwlCarousel();
     });
+});
+$(document).ready(function(){
+    function initializeOwlCarousel() {
+        if ($(window).width() <= 991) {
+            $('.slider_accountsidebar').addClass('owl-carousel');
+            $('.slider_accountsidebar').owlCarousel({
+                loop: false,
+                margin: 10,
+                nav: false,
+                center:false,
+                // stagePadding: 50,
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 2
+                    },
+                    600: {
+                        items: 3
+                    } ,
+                    767: {
+                        items: 4
+                    },
+                    991: {
+                        items: 4
+                    }
+                }
+            });
+        } else {
+            $('.slider_accountsidebar').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+            $('.slider_accountsidebar').find('.owl-stage-outer').children().unwrap();
+        }
+    }
+    initializeOwlCarousel();
+    $(window).resize(function() {
+        initializeOwlCarousel();
+    });
+    function addClassOnResize() {
+        // Check if the window width is 767px or less
+        if ($(window).width() <= 991) {
+            $('.sidebar_account').addClass('safartabs ');
+        } else {
+            $('.sidebar_account').removeClass('safartabs ');
+        }
+    }
+    addClassOnResize();
+    $(window).resize(function() {
+        addClassOnResize();
+    });
+   
 });
 document.addEventListener('DOMContentLoaded', function () {
     let profile = document.querySelector('.profile');
