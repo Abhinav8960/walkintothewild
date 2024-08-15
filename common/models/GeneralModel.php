@@ -236,7 +236,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             // 2 => 'Has a Website',
             3 => 'Offers Other Wildlife Activities',
             4 => 'Has Cancellation Policy',
-            5 => 'Wildlife Photographer',
+            // 5 => 'Wildlife Photographer',
             6 => 'Wildlife Influencer',
         ];
     }
