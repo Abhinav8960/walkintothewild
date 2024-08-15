@@ -382,10 +382,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                     <div class="itenary_text">
                         <ul>
-                            <li>This tour is operated by <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> and not by Walk Into The Wild.</li>
-                            <li><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
+                            <li>This tour is operated by <strong><?= isset($share_safari->safarioperator) ? $share_safari->safarioperator->businessname : '' ?></strong> and not by Walk Into The Wild.</li>
+                            <li><strong><?= isset($share_safari->safarioperator) ? $share_safari->safarioperator->businessname : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
                             <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong> will propose a suitable alternative.</li>
+                            <li>In the event that accommodations are fully booked, <strong><?= isset($share_safari->safarioperator) ? $share_safari->safarioperator->businessname : '' ?></strong> will propose a suitable alternative.</li>
                             <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
                         </ul>
                     </div>
