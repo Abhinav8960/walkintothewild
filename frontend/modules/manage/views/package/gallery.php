@@ -26,10 +26,10 @@ $this->params['title'] = $this->title;
                 </a>
             </div>
         </div>
-        <div class="col-md-12 mb-3">
+        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-9 col-xl-10 col-xxl-10">
             <div class="card account-settingside itenary_tabs">
                 <div class="card-body safartabs p-4">
                     <div class="row">

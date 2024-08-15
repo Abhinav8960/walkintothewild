@@ -13,10 +13,10 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
         <div class="col-md-12">
         <h6 class="fs-3 fw-bold mb-4"><?= $this->title ?></h6>
         </div>
-        <div class="col-md-12 mb-3">
+        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'review']); ?>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-9 col-xl-10 col-xxl-10">
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">

@@ -12,12 +12,12 @@ $this->params['title'] = $this->title;
 <div class="container-fluid mt-5 mb-5 pt-5">
     <div class="row margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between mb-4">
-        <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
+            <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
         </div>
-        <div class="col-md-12 mb-3">
+        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
-        </div> 
-        <div class="col-md-12  itenary_tabs">
+        </div>
+        <div class="col-md-9 col-xl-10 col-xxl-10  itenary_tabs">
             <div class="card account-settingside safartabs">
                 <div class="card-body p-4">
                     <div class="row">
@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
                                                 </a>
                                             </h2>
 
-                                           
+
                                             <div id="flush-collapse<?= $i ?>" class="accordion-collapse collapse <?= ($i == $model->day) ? 'show' : ''; ?>" aria-labelledby="flush-heading<?= $i ?>" data-bs-parent="#accordionFlushExample">
                                                 <?php if ($i == $model->day) { ?>
                                                     <div class="accordion-body p-0">
@@ -55,14 +55,14 @@ $this->params['title'] = $this->title;
                                                                             'value' => $i,
                                                                             'placeholder' => 'Enter Day',
                                                                             'id' => 'dayitineraryform-day' . $i,
-                                                                        ]) ->label('Day', ['class' => 'Modal_label']) ?>
+                                                                        ])->label('Day', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                     <div class="col-md-6 mb-3">
                                                                         <?= $form->field($model, 'day_title')->textInput([
                                                                             'maxlength' => true,
                                                                             'placeholder' => 'Enter Day Title',
                                                                             'id' => 'dayitineraryform-day_title' . $i,
-                                                                        ]) ->label('Day Title', ['class' => 'Modal_label']) ?>
+                                                                        ])->label('Day Title', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
@@ -87,7 +87,7 @@ $this->params['title'] = $this->title;
                                                                             'maxlength' => true,
                                                                             'placeholder' => 'Enter End Location',
                                                                             'id' => 'dayitineraryform-end_location' . $i,
-                                                                        ]) ->label('End Location', ['class' => 'Modal_label']) ?>
+                                                                        ])->label('End Location', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                     <div class="col-md-4 mb-3">
                                                                         <?= $form->field($model, 'hotel_name')->textInput([

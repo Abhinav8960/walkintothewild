@@ -25,6 +25,9 @@ class QuoteController extends FrontendBaseController
             'pagination' => [
                 'pageSize' => 20,
             ],
+            'sort' => [
+                'defaultOrder' => ['updated_at' => SORT_DESC]
+            ]
         ]);
 
         return $this->render('index', [
