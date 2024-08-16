@@ -33,7 +33,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
     <div class="shareimg">
         <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>" data-pjax="0">
-            <img src="<?= $model->imagepath ? $model->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt=""></a>
+            <img src="<?= $model->imagepath ? $model->imagepath : $this->params['baseurl'] . '/img/thumbnailpakage.png' ?>" alt=""></a>
     </div>
     <div class="card_body">
         <div class="titleDate">
