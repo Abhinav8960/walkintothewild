@@ -61,8 +61,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 
                                         <div class="whiteReview mt-2">
-                                            <?php if (Yii::$app->user->identity) { ?>
-                                                <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $model->id]) ?>" class="parkrevieBtn writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
+                                            <?php if (Yii::$app->user->identity) {
+                                                if ($my_review) {
+                                                    echo 'Review Already Submitted!';
+                                                } else { ?>
+                                                    <button value="<?= Url::toRoute(['/park/default/review', 'park_id' => $model->id]) ?>" class="parkrevieBtn writeSuggestionBtn " data-bs-toggle="modal" data-bs-target="#exampleModal3">Write Review</button>
+                                                <?php  }
+                                                ?>
                                             <?php } else { ?>
                                                 <a class="parkrevieBtn py-2" href="/site/login?authclient=google&referrer=/park/<?= $model->slug ?>/reviewlist">Please Login to Review</a>
                                             <?php } ?>
@@ -109,7 +114,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                             <div class="googlerating">
                                                                 <?php if ($review->user) { ?>
                                                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
-                                                                        <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                        <p class="mb-0"> <?= $review->user->name ?> <?= date("F j, Y", $review->created_at) . ' at ' . date("H:i A", $review->created_at) ?></p>
                                                                     </a>
                                                                 <?php } ?>
 
