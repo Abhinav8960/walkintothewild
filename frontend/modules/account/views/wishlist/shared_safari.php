@@ -24,7 +24,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <?= $this->render('@frontend/modules/account/views/wishlist/_navbar', ['shared_safari' => 'active']) ?>
                             <div class="tab-content " id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-shared-safari" role="tabpanel" aria-labelledby="pills-shared-safari-tab">
-                                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
+                                    <div class="row row-cols-1 row-cols-sm-2 pt-4 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-5">
 
                                         <?php if ($wishlist_items) {
                                             foreach ($wishlist_items as $wishlist_item) {
@@ -34,7 +34,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                 }
 
                                         ?>
-                                                <div class="col mb-4 padding_righ pt-4">
+                                                <div class="col mb-4 padding_righ ">
                                                 <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari_model]) ?>
                                                 </div>
                                         <?php }
