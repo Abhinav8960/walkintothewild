@@ -44,7 +44,7 @@ $shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STAT
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>" data-pjax="0"><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></a></h6>
+                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-pjax="0"><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong><?= $share_safari->organizedbyname ?></strong></p>
                                     </div>
