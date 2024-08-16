@@ -68,7 +68,7 @@ if ($model->corezones) {
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Mode">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -87,7 +87,7 @@ if ($model->corezones) {
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
+                                <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Nearest Railway Station">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -120,7 +120,7 @@ if ($model->corezones) {
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport">
+                                <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Nearest Airport">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0"><?= $model->airportlist ?></p>
@@ -159,7 +159,7 @@ if ($model->corezones) {
                     <div class="col-md-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Month when park is closed">
+                                <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Closed Month">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -201,7 +201,7 @@ if ($model->corezones) {
                     <div class="col-md-6 col-sm-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Mode">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -220,7 +220,7 @@ if ($model->corezones) {
                     <div class="col-md-6 col-sm-6 mb-3">
                         <div class="safridetails_form d-flex gap-3">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Railway Station">
+                                <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Nearest Railway Station">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">
@@ -253,7 +253,7 @@ if ($model->corezones) {
                     <div class="col-md-6 col-sm-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Airport">
+                                <img src="<?= $this->params['baseurl'] ?>/img/airport.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Nearest Airport">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0"><?= $model->airportlist ?></p>
@@ -292,7 +292,7 @@ if ($model->corezones) {
                     <div class="col-md-6 col-sm-6 mb-3">
                         <div class="safridetails_form d-flex gap-3 ">
                             <div class="iconImg">
-                                <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Month when park is closed">
+                                <img src="<?= $this->params['baseurl'] ?>/img/park_lock.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Closed Month">
                             </div>
                             <div class="text-form">
                                 <p class="mb-0">

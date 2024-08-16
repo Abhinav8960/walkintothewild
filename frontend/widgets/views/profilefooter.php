@@ -13,7 +13,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
     <div class="container-fluid">
 
-    <div class="row pt-4 justify-content-between mobile-responsive align-items-center">
+    <div class="row pt-4 justify-content-between mobile-responsive align-items-center border_top">
             <div class="col-lg-2 col-xxl-2 ">
                 <div class="footerlogo">
                     <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" width="160">
@@ -27,11 +27,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-lg-4 col-xxl-3 ">
                 <div class="d-flex gap-3  justify-content-lg-end justify-content-center">
                     <div class="terms">
-                        <p class="mb-0  pt-0"><a href="/privacy-policy">PRIVACY POLICY</a></p>
+                        <p class="mb-0  pt-0"><a href="<?= \yii\helpers\Url::toRoute(['/privacy-policy']) ?>">PRIVACY POLICY</a></p>
                     </div>
                     <span>|</span>
                     <div class="terms">
-                        <p class="mb-0 pt-0"><a href="/termsandcondition">TERMS OF USE</a></p>
+                        <p class="mb-0 pt-0"><a href="<?= \yii\helpers\Url::toRoute(['/terms-of-use']) ?>">TERMS OF USE</a></p>
                     </div>
                 </div>
             </div>

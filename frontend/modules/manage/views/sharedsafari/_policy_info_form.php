@@ -20,7 +20,7 @@ use yii\bootstrap5\ActiveForm;
 ]); ?>
 
 <div class="row">
-    <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+    <div class="col-xxl-3 col-lg-4 col-md-4  mb-lg-0 mb-3">
         <div class="safri_tour">
             <div class="topics_listing">
                 <ul id="tabList">
@@ -46,7 +46,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
         </div>
     </div>
-    <div class="col-lg-8 col-xxl-10 col-xl-9">
+    <div class="col-xxl-9 col-lg-8 col-md-8">
         <div class="tab-content_tour active " id="tab21">
             <!-- Safari Parks content goes here -->
             <div class="row">

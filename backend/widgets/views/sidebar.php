@@ -2,7 +2,7 @@
 <?php
 $active_url = "/" . Yii::$app->requestedRoute;
 ?>
-
+ 
 <!-- main-sidebar -->
 <div class="sticky">
 	<aside class="app-sidebar ">
@@ -963,6 +963,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/portalsetting/default/index",
 											"/portalsetting/default/params",
 											"/portalsetting/log/index",
+											"/portalsetting/log/frontlog",
 											"/portalsetting/default/clear-assets",
 											"/portalsetting/default/clear-cache",
 											"/portalsetting/pageview/index",
@@ -972,6 +973,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/portalsetting/default/index",
 														"/portalsetting/default/params",
 														"/portalsetting/log/index",
+														"/portalsetting/log/frontlog",
 														"/portalsetting/default/clear-assets",
 														"/portalsetting/default/clear-cache",
 														"/portalsetting/pageview/index",
@@ -983,6 +985,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/params")) ? "active" : "" ?>" href="/portalsetting/default/params">Params</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/export")) ? "active" : "" ?>" href="/portalsetting/log/export">Export Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/frontlog")) ? "active" : "" ?>" href="/portalsetting/log/frontlog">Export Front Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/clear")) ? "active" : "" ?>" href="/portalsetting/log/clear" data-method="post">Clear Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/console-log")) ? "active" : "" ?>" href="/portalsetting/log/console-log">Console Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets" data-method="post">Clear Assets</a></li>

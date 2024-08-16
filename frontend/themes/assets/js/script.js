@@ -189,7 +189,7 @@ $(document).ready(function () {
 
     if (itemCount > 1) {
         $slider.owlCarousel({
-            loop: true,
+            loop: false,
             margin: 10,
             nav: false,
             dots: true,
@@ -243,6 +243,16 @@ if ($('.slider_resorts').length) {
         }
     });
 }
+
+$(document).ready(function() {
+    $(".photoGallry").on("click", function() {
+        $.fancybox.open($("[data-fancybox='gallery']"), {
+            loop: false, 
+            buttons: ["close"], 
+            infobar: false, 
+        });
+    });
+});
 document.addEventListener('DOMContentLoaded', function () {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

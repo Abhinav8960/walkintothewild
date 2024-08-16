@@ -4,6 +4,9 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
@@ -24,89 +27,20 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="card account-settingside ">
                 <div class="card-body p-4">
                     <div class="row">
-                        <div class="col-md-12">
+                        <?php if ($models = $fixed_safari_provider->models) {
+                            foreach ($models as $share_safari) {
+                                echo '<div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-4">';
+                                echo $this->render('_shared_safari_card', ['share_safari' => $share_safari]);
+                                echo '</div>';
+                            }
+                        } else {
+                            echo 'No Share Safari Created';
+                        } ?>
+                        <div class="col-md-12 ">
                             <div class="table-responsive table_design_manage">
                                 <?= GridView::widget([
                                     'dataProvider' => $fixed_safari_provider,
-                                    'columns' => [
-                                        [
-                                            'class' => 'yii\grid\SerialColumn',
-                                            'contentOptions' => ['style' => 'width: 2%;'],
-                                        ],
-                                        [
-                                            'label' => 'Park List',
-                                            'contentOptions' => ['style' => 'width: 18%;'],
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return Html::a($model->park->title, ['/sharedsafari/default/view', 'slug' => $model->slug]);
-                                            }
-                                        ],
-                                        [
-                                            'label' => 'Start Date',
-                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return $model->start_date;
-                                            }
-                                        ],
-                                        [
-                                            'label' => 'End Date',
-                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return $model->end_date;
-                                            }
-                                        ],
-                                        [
-                                            'label' => 'No of Safari',
-                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return $model->no_of_safari;
-                                            }
-                                        ],
-                                        [
-                                            'label' => 'Total Seat',
-                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return $model->total_seat;
-                                            }
-                                        ],
-                                        [
-                                            'label' => 'Tour Duration',
-                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return $model->tour_duration;
-                                            }
-                                        ],
-                                        [
-                                            'label' => 'Cost Per Person',
-                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                            'format' => 'raw',
-                                            'value' => function ($model) {
-                                                return $model->cost_per_person;
-                                            }
-                                        ],
-                                        'statuslabel:raw:Status',
-                                        [
-                                            'label' => 'View',
-                                            'format' => 'raw',
-                                            'contentOptions' => ['style' => 'width: 5%;'],
-                                            'value' => function ($model) {
-                                                return   Html::a('View', [Url::toRoute(['view', 'slug' => $model->slug])], ['class' => 'btn btn-info bg-blues py-2', 'title' => 'View']);
-                                            }
-                                        ],
-                                        [
-                                            'label' => 'Update',
-                                            'format' => 'raw',
-                                            'contentOptions' => ['style' => 'width: 5%;'],
-                                            'value' => function ($model) {
-                                                return   Html::a('Update', [Url::toRoute(['update-fixed-departure', 'slug' => $model->slug])], ['class' => 'btn btn-info join_btn py-2', 'title' => 'Update']);
-                                            }
-                                        ],
-                                    ],
+                                    'layout' => '{summary}<br>{pager}',
                                 ]); ?>
                             </div>
                         </div>

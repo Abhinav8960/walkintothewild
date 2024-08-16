@@ -47,23 +47,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
       <div class="custom-col">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="custom-image">
+            <img src="<?= $this->params['baseurl'] ?>/img/Eagle-Safaris.jpg" alt="" class="custom-image">
           </div>
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/soonbanner.jpg" alt="" class="custom-image">
+            <img src="<?= $this->params['baseurl'] ?>/img/TravelersCo.jpg" alt="" class="custom-image">
           </div>
           <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/slideeee.png" alt="" class="custom-image">
+            <img src="<?= $this->params['baseurl'] ?>/img/Package-Banner.jpg" alt="" class="custom-image">
           </div>
-          <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="custom-image">
-          </div>
-          <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="custom-image">
-          </div>
-          <div class="items_slider">
-            <img src="<?= $this->params['baseurl'] ?>/img/blog_details01.jpg" alt="" class="custom-image">
-          </div>
+        
         </div>
       </div>
     </div>

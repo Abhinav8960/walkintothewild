@@ -57,7 +57,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         <div class="row my-4 packageSfari">
             <div class="col-12">
                 <div class="imagesSafari">
-                    <img src="<?= $package->imagebannerpath ? $package->imagebannerpath : $this->params['baseurl'] . '/img/thumbnailpakage.png' ?>" alt="" class="w-100">
+                    <img src="<?= $package->imagebannerpath ? $package->imagebannerpath : $this->params['baseurl'] . '/img/thumbnailpakage.jpg' ?>" alt="" class="w-100">
                 </div>
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
@@ -146,11 +146,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($package_includes) ? 'All meals' : 'N/A';
-                                                            ?></p>
+                                            <p class="mb-0"><?= $package->meals; ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +240,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-lg-12 col-xl-11 safartabs position-relative">
                             <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">OVERVIEW</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="itenery-tab" data-bs-toggle="tab" data-bs-target="#itenery-tab-pane" type="button" role="tab" aria-controls="itenery-tab-pane" aria-selected="true">ITINERARY</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
@@ -278,14 +277,26 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
-                                    <h6 class="fs-6 fw-bold mb-4">ABOUT TRIP / OVERVIEW</h6>
+                                    <h6 class="fs-6 fw-bold mb-4">OVERVIEW</h6>
                                 </div>
                                 <div class="itenary_text">
                                     <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="tab-pane fade accordion-item mb-3" id="itenery-tab-pane" role="tabpanel" aria-labelledby="itenery-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
+                                <div class="itenary-title">
+                                    <h6 class="fs-6 fw-bold mb-4">ITINERARY</h6>
+                                </div>
+                                <div class="itenary_text">
+                                </div>
+                            </div>
+                        </div>
                         <?= $this->render('_overview', ['package' => $package]) ?>
+
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
@@ -337,7 +348,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <?php if (Yii::$app->user->identity) { ?>
                     <div class="request_quote mb-4">
-                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;cursor: default;">
                             Request Quote</button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
@@ -352,14 +363,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <?php if ($package->packagegallery) {
                     $galleries = $package->packagegallery;
                 ?>
-                    <div class="request_quote mb-4">
+                     <div class="request_quote photoGallry mb-4">
                         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
-                            Photo Gallery <span><?= count($galleries) ?></span></button>
+                            Photo Gallery <span><?= count($galleries) ?></span>
+                        </button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="photoSlider owl-carousel owl-theme">
                                 <?php foreach ($galleries as $gallery) { ?>
                                     <div class="items_img">
-                                        <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        <a href="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" data-fancybox="gallery" data-caption="No caption available" class="gallery-item">
+                                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        </a>
                                     </div>
                                 <?php } ?>
                             </div>

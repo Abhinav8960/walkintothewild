@@ -22,7 +22,7 @@
                 foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
                     <div class="row mb-2">
                         <div class="col-md-3 col-sm-4">
-                            <ul class="mb-0 ">
+                            <ul class="mb-0 px-3">
                                 <li><label class="control-label font_sizes"><?= $optionLabel ?> </label></li>
                             </ul>
 
@@ -48,15 +48,14 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row inclusions">
+        <div class="col-md-12 pt-3">
             <div class="itenary_text font_familydd">
-                <p><?= $package->package_inclusion ?></p>
+                <p class="mb-2"><?= $package->package_inclusion ?></p>
             </div>
-        </div>
-        <div class="col-md-6">
             <div class="itenary_text">
-                <p><?= $package->package_exclusion ?></p>
+                <p class="mb-2"><?= $package->package_exclusion ?></p>
             </div>
         </div>
+       
     </div>

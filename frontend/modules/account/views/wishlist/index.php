@@ -22,7 +22,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <?= $this->render('@frontend/modules/account/views/wishlist/_navbar', ['package' => 'active']) ?>
                             <div class="tab-content m-0 m-md-3" id="pills-tabContent">
                                 <div class="tab-pane fade show active" id="pills-packages" role="tabpanel" aria-labelledby="pills-packages-tab">
-                                    <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
+                                    <div class="row row-cols-1 row-cols-sm-2 pt-4 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
                                         <?php if ($wishlist_items) {
                                             foreach ($wishlist_items as $wishlist_item) {
                                                 $package_model = Package::find()->where(['id' => $wishlist_item->item_id])->limit(1)->one();
@@ -30,7 +30,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                     continue;
                                                 }
                                         ?>
-                                                <div class="col padding_righ pt-4">
+                                                <div class="col padding_righ mb-4">
                                                     <?= $this->render('@frontend/modules/package/views/default/_package_card', ['model' => $package_model]) ?>
                                                 </div>
                                         <?php }

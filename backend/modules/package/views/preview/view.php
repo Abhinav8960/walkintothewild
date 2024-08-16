@@ -89,7 +89,7 @@ $this->params['title'] = $this->title;
                                             <p class="mb-0"><?php
                                                             $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($package_includes) ? 'All meals' : '';
+                                                            echo ($package_includes) ? 'Meals' : '';
                                                             ?></p>
                                         </div>
                                     </div>
