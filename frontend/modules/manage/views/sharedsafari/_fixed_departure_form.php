@@ -82,7 +82,7 @@ use yii\helpers\Html;
                 </div>
 
             </div>
-            <p class="text-danger"><i>Note : You need to fill all the details and then published your Fixed Shared Safari</i></p>
+            <p class="text-danger"><i>Please note: Fixed departures are not published directly. You must fill in all the details and then set the status to "publish."</i></p>
 
         </div>
 
