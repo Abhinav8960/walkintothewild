@@ -21,25 +21,25 @@ $this->params['title'] = $this->title;
     ],
 
 ]); ?>
-<div class="row mt-2">
+<div class="row mt-2 p-3">
     <div class="col-md-12">
-        <?= $form->field($model, 'question')->textarea(['rows' => '2', 'placeholder' => 'Question'])->label('Question')->label('Question') ?>
+        <?= $form->field($model, 'question')->textarea(['rows' => '2', 'placeholder' => 'Question',])->label('Question')->label('Question',['class' => 'Modal_label']) ?>
     </div>
     <div class="col-md-12">
-        <?= $form->field($model, 'answer')->textarea(['rows' => '2', 'placeholder' => 'Answer'])->label('Answer')->label('Answer') ?>
+        <?= $form->field($model, 'answer')->textarea(['rows' => '2', 'placeholder' => 'Answer'])->label('Answer')->label('Answer',['class' => 'Modal_label']) ?>
     </div>
     <?php
     if (!empty($model->package_faq_model->id)) { ?>
-        <div class="col-md-3">
+        <div class="col-md-12 pt-2">
             <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--'])->label(false) ?>
         </div>
     <?php } ?>
 </div>
-<hr>
-<div class="row">
+
+<div class="row px-3">
     <div class="col-md-12">
-        <div class="form-group float-end">
-            <?= Html::submitButton('Save ', ['class' => 'btn_newsafari btn-info btn-primary font_set w-auto ms-2']) ?>
+        <div class="creat-safri float-end w-auto pb-2">
+            <?= Html::submitButton('Save ', ['class' => 'safari_create font_set w-auto']) ?>
         </div>
     </div>
 </div>

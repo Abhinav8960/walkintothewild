@@ -15,11 +15,11 @@ $this->params['title'] = $this->title;
 <div class="container-lg mt-5 mb-5 pt-5  ">
     <div class="row margin_bottomfooter">
         <div class="col-md-12 ">
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap">
                 <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
-                <div class="d-flex justify-content-between align-items-center flex-basis-50 gap-2">
-                    <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" target="_blank"><i class="fa fa-eye"></i> View </a>
-                    <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-faq', 'package_id' => $package_model->id]) ?>">+ Create FAQ</button>
+                <div class=" mt-xxl-0 mt-3">
+                    <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2  " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
+                    <a href="javascript:void(0)"  class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-faq', 'package_id' => $package_model->id]) ?>" >+ Create FAQ</a>
                     <!-- <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/select-faq/' . $package_model->id . '']) ?>">+ Select FAQ</button> -->
                 </div>
             </div>
@@ -32,7 +32,6 @@ $this->params['title'] = $this->title;
                 <div class="card-body safartabs p-4">
                     <div class="row">
                         <div class="col-12">
-
                             <?= $this->render('_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
                         </div>
                     </div>
