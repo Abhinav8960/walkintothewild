@@ -13,7 +13,7 @@ $this->title = 'Message | ' . $individual_user->name;
 $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')->baseUrl;
 ?>
 
-<div class="container-fluid mt-5 margin_bottomfooter mb-5 pt-5">
+<div class="container mt-5 margin_bottomfooter pt-5">
     <div class="row mb-5">
         <div class="col-md-12">
             <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
@@ -169,11 +169,11 @@ function sendmessage(){
     });   
 }
 
-$('.submit_on_enter').keydown(function(event) {
-    if (event.keyCode == 13 && !event.shiftKey) {
-        sendmessage();
-    }
-  });
+// $('.submit_on_enter').keydown(function(event) {
+//     if (event.keyCode == 13 && !event.shiftKey) {
+//         sendmessage();
+//     }
+//   });
 
 $('#message_sent_btn').click(function(){
     sendmessage();
@@ -181,4 +181,14 @@ $('#message_sent_btn').click(function(){
 
 JS;
 $this->registerJs($script);
+?>
+
+<?php
+// $script = <<< JS
+// $('html, body').animate({
+//         'scrollTop' : $("#chatmessageform").position().top
+// });
+
+// JS;
+// $this->registerJs($script);
 ?>
