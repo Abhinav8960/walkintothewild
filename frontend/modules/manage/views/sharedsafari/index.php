@@ -95,7 +95,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                             'format' => 'raw',
                                             'contentOptions' => ['style' => 'width: 5%;'],
                                             'value' => function ($model) {
-                                                return   Html::a('View', [Url::toRoute(['view', 'id' => $model->id])], ['class' => 'btn btn-info bg-blues py-2', 'title' => 'View']);
+                                                return   Html::a('View', [Url::toRoute(['view', 'slug' => $model->slug])], ['class' => 'btn btn-info bg-blues py-2', 'title' => 'View']);
                                             }
                                         ],
                                         [
