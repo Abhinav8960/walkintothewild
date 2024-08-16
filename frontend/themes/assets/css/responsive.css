@@ -1211,7 +1211,7 @@ margin-bottom: 0 !important;
     padding: 9px 35px !important;
   }
   .images_tour {
-    height: 250px;
+    height: auto;
   }
   .logoutBox {
     position: absolute;
