@@ -123,6 +123,7 @@ class User extends ActiveRecord implements IdentityInterface
                 ['is_admin' => 1],
                 ['is_cms_manager' => 1],
                 ['is_resort_manager' => 1],
+                ['is_report_manager' => 1],
             ])
             ->one();
     }
