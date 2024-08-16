@@ -259,7 +259,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionRareanimal($slug)
     {
-        $rare_animal = MasterAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug, 'animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->limit(1)->one();
+        $rare_animal = MasterAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         $searchModel = new SafariParkSearch();
         if ($rare_animal) {
             $searchModel->master_rare_animal_id = $rare_animal->id;

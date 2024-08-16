@@ -62,7 +62,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'color:#000;'],
                         'value' => function ($model) {
                             $short_url = $model->url;
-                            $temp = "<a target='_blank' href='" . $model->url . "'>" . $short_url . "</a>";
+                            $temp = "<a target='_blank' href='" . Yii::$app->params['frontend_url'] . $model->url . "'>" . $short_url . "</a>";
                             return $temp;
                         }
                     ],

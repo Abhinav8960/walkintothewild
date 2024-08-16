@@ -69,6 +69,7 @@ class GenerateSitePagesController extends Controller
       'sub_category' => 'Topic'
     ];
 
+
     $group_pages[] = [
       'table' => 'article_author',
       'url' => 'article/author/_slug',
@@ -92,21 +93,12 @@ class GenerateSitePagesController extends Controller
       'sub_category' => 'Shared Safari'
     ];
 
-
     $group_pages[] = [
       'table' => 'package',
       'url' => 'package/_slug',
       'url_type' => 'Primary',
       'category' => 'Package',
       'sub_category' => 'Package'
-    ];
-
-    $group_pages[] = [
-      'table' => 'master_rare_animal',
-      'url' => 'animal/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Animal',
-      'sub_category' => 'Rare'
     ];
 
     $group_pages[] = [
@@ -131,6 +123,8 @@ class GenerateSitePagesController extends Controller
       'category' => 'Operator',
       'sub_category' => 'Operator'
     ];
+
+    $this->get_join_safari_site_pages();
     $this->process($group_pages);
   }
 
@@ -194,10 +188,8 @@ class GenerateSitePagesController extends Controller
       $records = ArticleAuthor::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     } else if ($data['table'] == 'package') {
       $records = Package::find()->select(['id', 'package_slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
-    } else if ($data['table'] == 'master_rare_animal') {
-      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->where(['animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->asArray()->all();
     } else if ($data['table'] == 'master_animal') {
-      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->where(['animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->asArray()->all();
+      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     }
 
     if (count($records)) {
@@ -377,7 +369,7 @@ class GenerateSitePagesController extends Controller
 
   protected function get_operator_tabs_site_pages()
   {
-    $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+    $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->where(['status' => 1])->asArray()->all();
     $tab_urls = ['package' => '/package', 'park' => '/park', 'review' => '/reviewlist', 'article' => '/article', 'contact' => '/contact'];
     if (count($records)) {
       $temp_insert_data = [];
@@ -445,15 +437,18 @@ class GenerateSitePagesController extends Controller
     $pages = [
       'article',
       'park',
-      'shared-safari',
-      'safari-packages',
+      // 'shared-safari',
+      'package',
       'sharedsafari',
       'operator',
       'plan-safari',
       'safaritour-registration',
       'birdingtour-registration',
       'termsandcondition',
+      'privacy-policy',
+      'about-us',
       'contact',
+      'faq',
       '/',
       'account',
     ];
@@ -479,10 +474,10 @@ class GenerateSitePagesController extends Controller
       } else if ($page == 'park') {
         $category = 'Park';
         $sub_category = 'Park';
-      } else if ($page == 'shared-safari') {
+      } else if ($page == 'sharedsafari') {
         $category = 'Shared Safari';
         $sub_category = 'Shared Safari';
-      } else if ($page == 'safari-packages') {
+      } else if ($page == 'package') {
         $category = 'Package';
         $sub_category = 'Package';
       } else if ($page == 'sharedsafari') {
@@ -547,5 +542,60 @@ class GenerateSitePagesController extends Controller
     }
 
     return $return;
+  }
+
+  protected function get_join_safari_site_pages()
+  {
+    $records = ShareSafari::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+    if (count($records)) {
+      $temp_insert_data = [];
+      foreach ($records as $row) {
+        if ($row['status'] == 1) {
+          //update existing record
+          $url = str_replace("_slug", $row['slug'], $data['url']);
+
+          $s_request = $this->getrequestinfo($url);
+          $get_parameter = $s_request['get_parameter'];
+          $post_parameter = $s_request['post_parameter'];
+          $is_get = $s_request['is_get'];
+          $is_post = $s_request['is_post'];
+          $is_ajax = $s_request['is_ajax'];
+          $model = SitePages::find()->where(['content_id' => $row['id']])->andWhere(['content_table' => $data['table']])->one();
+          if ($model) {
+            $model->get_parameter  = $get_parameter;
+            $model->post_parameter  = $post_parameter;
+            $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
+            $model->status = 1;
+            $model->save(false);
+          } else {
+            //insert new record
+            $temp_insert_data[] = [
+              'content_id' => $row['id'],
+              'content_table' => $data['table'],
+              'url' => $url,
+              'url_type' => $data['url_type'],
+              'slug' => $row['slug'],
+              'category' => $data['category'],
+              'sub_category' => $data['sub_category'],
+              'get_parameter' => $get_parameter,
+              'post_parameter' => $post_parameter,
+              'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+              'counter' => 0,
+              'is_get' => $is_get,
+              'is_post' => $is_post,
+              'is_ajax' => $is_ajax,
+              'status' => 1
+            ];
+          }
+        } else {
+          //mark as disabled
+          SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_id' => $row['id'], 'content_table' => $data['table']]);
+        }
+      }
+
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
+      }
+    }
   }
 }
