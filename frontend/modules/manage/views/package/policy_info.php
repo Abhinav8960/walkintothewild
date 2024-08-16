@@ -11,7 +11,7 @@ $this->params['title'] = $this->title;
 ?>
 
 
-<div class="container-fluid mt-5">
+<div class="container-lg mt-5 mb-5 pt-5 ">
     <div class="row margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between align-items-center mb-4">
         <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
@@ -19,10 +19,10 @@ $this->params['title'] = $this->title;
                 <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
             </div>
         </div>
-        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
+        <div class="col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-9 col-xl-10 col-xxl-10">
+        <div class="col-xxl-9 col-lg-8">
             <div class="card account-settingside itenary_tabs">
                 <div class="card-body safartabs p-4">
                     <div class="row">
