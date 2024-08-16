@@ -120,7 +120,7 @@ $this->params['title'] = $this->title;
                         'label' => 'is traced',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->is_count;
+                            return $model->is_reqeust_trace;
                         }
                     ],
                     [
