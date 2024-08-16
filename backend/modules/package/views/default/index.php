@@ -15,6 +15,8 @@ $this->params['title'] = $this->title;
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 ?>
+
+
 <div class="card">
 
     <div class="card-body">
