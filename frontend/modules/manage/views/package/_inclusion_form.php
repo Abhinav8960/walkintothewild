@@ -33,9 +33,9 @@ use yii\bootstrap5\ActiveForm;
                             <div class="col-sm-9">
                                 <?= $form->field($model, 'package_included[' . $optionValue . ']')->radioList(
                                     [
-                                        '1' => 'Include',
-                                        '2' => 'Not Include',
-                                        '3' => 'Optional',
+                                        '1' => 'Included',
+                                        '2' => 'Not Included',
+                                        // '3' => 'Optional',
                                     ],
                                     [
                                         'item' => function ($index, $label, $name, $checked, $value) {
