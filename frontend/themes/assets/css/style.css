@@ -1651,9 +1651,11 @@ figure {
 } */
 
 .opratios-slider .slidesImg img {
-    aspect-ratio: 14/3;
+    /* aspect-ratio: 14/3;
     -o-object-fit: contain;
-       object-fit: contain;
+       object-fit: contain; */
+       height: 70px !important;
+       object-fit: cover;
 }
 
 /* .opratios-slider2 .slidesImg img{
@@ -1671,7 +1673,7 @@ figure {
 
 .slidesImg {
 
-    background-color: #f5f5f5;
+    /* background-color: #f5f5f5; */
     /* padding: 4px 0px; */
     border-radius: 5px;
 }
@@ -4383,6 +4385,10 @@ figure {
 }
 
 .parking_Box {
+
+    color: #212529;
+}
+.parking_Box:hover{
 
     color: #212529;
 }
