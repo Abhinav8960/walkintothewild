@@ -189,6 +189,30 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+    public static function rolesforform()
+    {
+        if (Yii::$app->user->identity && Yii::$app->user->identity->is_adminstrator) {
+            return [
+                1 => 'Administrator',
+                2 => 'Admin',
+                3 => 'Safari Operator',
+                4 => 'Operator',
+                5 => 'Cms Manager',
+                6 => 'Resort Manager',
+                7 => 'Report Manager',
+            ];
+        } else
+        if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
+            return [
+                2 => 'Admin',
+                3 => 'Safari Operator',
+                4 => 'Operator',
+                5 => 'Cms Manager',
+                6 => 'Resort Manager',
+            ];
+        }
+    }
+
     public static function pages()
     {
         return [

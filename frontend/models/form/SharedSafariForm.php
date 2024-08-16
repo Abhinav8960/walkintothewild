@@ -141,7 +141,7 @@ class SharedSafariForm extends \yii\base\Model
         if ($this->shared_safari_model->slug == '') {
             $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_model->user->name));
             $string = preg_replace('/[^A-Za-z0-9\-]/', '', $without_space_string);
-            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_model->host_user_id . time() . '-shared-safari';
+            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_model->host_user_id . time();
             $this->shared_safari_model->slug = $slug;
         }
     }

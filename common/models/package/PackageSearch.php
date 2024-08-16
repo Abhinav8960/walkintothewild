@@ -66,7 +66,7 @@ class PackageSearch extends Package
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['updated_at' => SORT_DESC]],
+            'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'updated_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -170,6 +170,10 @@ class PackageSearch extends Package
             } else if ($this->custom_sort_by == '4') {
                 $dataProvider->sort = [
                     'defaultOrder' => ['cost_per_person' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '5') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['popular_package' => SORT_DESC]
                 ];
             }
         }

@@ -76,7 +76,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         return [
             [['package_name', 'package_slug'], 'required'],
-            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
             [['cost_per_person'], 'number'],
             [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
             [['package_name'], 'string', 'max' => 512],

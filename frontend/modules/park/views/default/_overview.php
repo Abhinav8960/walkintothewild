@@ -412,7 +412,7 @@ if ($model->corezones) {
                 <div class="legends_wrap d-flex justify-content-end gap-md-4 gap-2 pt-3">
                     <div class="legends_bx d-flex align-items-center gap-2">
                         <div class="legends closedbg"></div>
-                        <p>Closed</p>
+                        <p>Currently Closed</p>
                     </div>
                     <div class="legends_bx d-flex align-items-center gap-2">
                         <div class="legends Core-Open"></div>

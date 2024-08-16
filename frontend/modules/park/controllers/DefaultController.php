@@ -148,6 +148,7 @@ class DefaultController extends FrontendBaseController
             // throw new NotFoundHttpException('The requested page does not exist.');
         }
 
+        $my_review = SafariParkRating::find()->where(['safari_park_id' => $model->id, 'user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->one();
 
         $searchModel = new SafariParkRatingSearch();
         $searchModel->safari_park_id = $model->id;
@@ -163,7 +164,8 @@ class DefaultController extends FrontendBaseController
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
                 'device' => $this->device(),
-                'reviews' => $reviews
+                'reviews' => $reviews,
+                'my_review' => $my_review
             ]
         );
     }
@@ -323,8 +325,8 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->rating_model->save(false)) {
                         $model->updateRatingintoTable($safari_park);
-                        Yii::$app->session->setFlash('success', 'Thanks for Review!!');
-                        return $this->redirect(Url::toRoute(['/park/default/reviewlist', 'slug' => $safari_park->slug, '#' => 'safari_tour_operator_container']));
+                        Yii::$app->session->setFlash('success', 'Thanks for Review! Your review sent for approval');
+                        return $this->redirect(Url::toRoute(['/park/default/reviewlist', 'slug' => $safari_park->slug]));
                     }
                 }
             }

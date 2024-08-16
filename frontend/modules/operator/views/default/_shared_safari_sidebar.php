@@ -9,7 +9,7 @@ $shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STAT
 ?>
 <?php if ($shared_safari_list) { ?>
 
-    <div class="request_quote mt-4">
+    <div class="request_quote ">
         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
             Organized Safari <span><?= $shared_safari_count ?></span></button>
         <div class="interst_wrapper py-4 px-xxl-5 bg-white">
@@ -27,7 +27,7 @@ $shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STAT
                                 </div>
                             </div>
                             <div class="shareimg">
-                                <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>" data-pjax="0"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                                <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-pjax="0"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                             </div>
                             <div class="card_body">
                                 <div class="top_seats">
@@ -44,7 +44,7 @@ $shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STAT
                                     </div>
                                 </div>
                                 <div class="titleDate">
-                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>" data-pjax="0"><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></a></h6>
+                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-pjax="0"><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></a></h6>
                                     <div class="orgnizer">
                                         <p>Organized by: <strong><?= $share_safari->organizedbyname ?></strong></p>
                                     </div>
@@ -91,7 +91,7 @@ $shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STAT
             <div class="col-12">
                 <div class="safari text-end">
                     <div class="viewAllreview">
-                        <a href="<?= \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug, '#' => 'memberview']) ?>" data-pjax="0">View All</a>
+                        <a href="<?= \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" data-pjax="0">View All</a>
                     </div>
                 </div>
             </div>

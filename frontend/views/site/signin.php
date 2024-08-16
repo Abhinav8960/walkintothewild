@@ -1,12 +1,16 @@
 <?php
 
-use common\models\cms\contentmanagement\ContentManagement;
-use common\models\GeneralModel;
-use kartik\select2\Select2;
 use yii\helpers\Html;
+use kartik\select2\Select2;
+use frontend\assets\AppAsset;
 use yii\bootstrap5\ActiveForm;
+use common\models\GeneralModel;
+use frontend\assets\FrontAppAsset;
 use yii\authclient\widgets\AuthChoice;
+use common\models\cms\contentmanagement\ContentManagement;
 
+FrontAppAsset::register($this);
+AppAsset::register($this);
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
@@ -92,11 +96,7 @@ $this->params['title'] = $this->title;
                 <?php AuthChoice::end(); ?>
               </div>
               <div class="contenss pt-3">
-<<<<<<< HEAD
-                <p class="text-center">By login an account, I accept the <b>WalkIntoTheWild</b> <a href="/termsandcondition">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
-=======
-                <p class="text-center">By login an account, I accept the <b>Walk Into The Wild</b> <a href="/terms-of-use" target="_blank">Terms of Use</a> and <a href="/privacy-policy" target="_blank">Privacy Policy</a>.</p>
->>>>>>> a7f3d1bff30204d9a613332d6dd5f1bbf54d9353
+                <p class="text-center">By login an account, I accept the <b>Walk Into The Wild</b> <a href="<?= Yii::$app->params['frontend_url'] ?>/terms-of-use" target="_blank">Terms of Use</a> and <a href="<?= Yii::$app->params['frontend_url'] ?>/privacy-policy" target="_blank">Privacy Policy</a>.</p>
               </div>
             </div>
             <!-- 

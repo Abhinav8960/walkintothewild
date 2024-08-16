@@ -14,7 +14,8 @@ use yii\widgets\ActiveForm;
             $sort_option = [1 => 'Created Recently', 2 => 'Less Safaris', 3 => 'More Safaris', 4 => 'Cheapest'];
             ?>
             <select id="packagesearch-custom_sort_by" class="form-control custom_sort_by_input" name="PackageSearch[custom_sort_by]">
-                <option style="display:none;" selected value="">Sort by : <?= isset($sort_option[$searchModel->custom_sort_by]) ? $sort_option[$searchModel->custom_sort_by] : 'Created Recently' ?></option>
+                <option style="display:none;" selected value="">Sort by : <?= isset($sort_option[$searchModel->custom_sort_by]) ? $sort_option[$searchModel->custom_sort_by] : 'Popular' ?></option>
+                <option value="5" class="<?= $searchModel->custom_sort_by == 5 ? 'selected' : '' ?>">Popular</option>
                 <option value="1" class="<?= $searchModel->custom_sort_by == 1 ? 'selected' : '' ?>">Created Recently</option>
                 <option value="2" class="<?= $searchModel->custom_sort_by == 2 ? 'selected' : '' ?>">Less Safaris</option>
                 <option value="3" class="<?= $searchModel->custom_sort_by == 3 ? 'selected' : '' ?>">More Safaris</option>
