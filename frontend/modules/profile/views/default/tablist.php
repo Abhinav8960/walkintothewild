@@ -6,6 +6,26 @@ use common\models\registration\SafariOperatorRequest;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
+
+$this->title = 'Share Safari';
+
+if (isset($user->about)) {
+    $shortdescription = implode(' ', array_slice(explode(' ', strip_tags($user->about)), 0, 200));
+    $this->description = $shortdescription;
+} else {
+    //$this->description = $shortdescription;
+}
+
+if (isset($user->coverimage)) {
+    $this->image = Yii::$app->params['frontend_url'] .  ltrim($user->coverimage, "/");
+} else {
+    $this->image = Yii::$app->params['frontend_url'] . 'img/banner-share.png';
+}
+
+$this->url = Yii::$app->params['frontend_url'] . "share-safari/" . $user->user_handle;
+$this->type = 'Website';
+$this->site = 'WalkIntoTheWild';
+$this->site_name = 'WalkIntoTheWild'
 ?>
 
 <div class="profile_coverbnner mt-5 pt-5">
