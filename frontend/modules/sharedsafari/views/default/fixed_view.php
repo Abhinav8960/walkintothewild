@@ -42,7 +42,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 <section class="safari_wrapper  bg-white pt-4">
-<div class="container-lg  px-slider2">
+    <div class="container-lg  px-slider2">
         <div class=" bg-white pb-0 px-slider2">
             <div class="row packageSfari mt-4">
                 <div class="col-12">
@@ -56,16 +56,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     <div class="container-lg">
         <div class="row packageSfari">
             <div class="col-12">
-                <!-- <div class="imagesSafari">
-                    <img src="<?= isset($package->package_image) ? $package->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
-                </div> -->
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-3 col-sm-3 col-md-3 col-lg-2 maxWidth">
                                     <div class="safritimg innerImg">
-                                        <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
+                                        <img src="<?= isset($share_safari->safarioperator->imagepath) ? $share_safari->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
                                     </div>
                                 </div>
                                 <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
