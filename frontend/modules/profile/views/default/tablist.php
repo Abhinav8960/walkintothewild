@@ -58,7 +58,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         <?php } ?>
                         <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
                     <?php } else if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
-                        <a href="<?= Url::toRoute(['/account', 'id' =>  $user->id]) ?>" class="follow_massge rounded-2"><i class="fa fa-edit"></i> Edit Profile</a>
+                        <a href="<?= Url::toRoute(['/account/default/index', 'id' =>  $user->id]) ?>" class="follow_massge rounded-2"><i class="fa fa-edit"></i> Edit Profile</a>
                     <?php } else {  ?> <a href="/site/login?authclient=google&referrer=/profile/share-safari/<?= $user->user_handle ?>" class="parkrevieBtn " data-method="POST">Follow</a>
                         <a href="/site/login?authclient=google&referrer=/profile/share-safari/<?= $user->user_handle ?>" class="parkrevieBtn">Message</a>
                     <?php } ?>
