@@ -497,7 +497,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function suggestioncategory()
     {
-        return ArrayHelper::map(MasterSuggestionCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterSuggestionCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['sequence' => SORT_ASC, 'title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function birdingoperatorcategory()
