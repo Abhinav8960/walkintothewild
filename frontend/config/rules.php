@@ -144,6 +144,7 @@ return [
     '/manage/sharedsafari/gallery/<slug>' => '/manage/sharedsafari/gallery', //sharedsafari profile faq url          
     '/manage/sharedsafari/create-gallery/<slug>' => '/manage/sharedsafari/create-gallery',
     '/manage/sharedsafari/view/<slug>' => '/manage/sharedsafari/view', //sharedsafari profile create faq url 
+    '/manage/sharedsafari/comment/<slug>' => '/manage/sharedsafari/comment',
 
     '/manage/article/update/<slug>' => '/manage/article/update',
 
