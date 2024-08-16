@@ -909,7 +909,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
 					<li class="slide <?= in_array($active_url, array(
 											"/log/default/index",
 											"/log/default/front-index",
@@ -945,7 +945,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
 
 					<li class="slide">
 						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Progress Tracking</span><i class="angle fe fe-chevron-right"></i></a>
@@ -958,7 +958,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
+				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
 					<li class="slide <?= in_array($active_url, array(
 											"/portalsetting/default/index",
 											"/portalsetting/default/params",
