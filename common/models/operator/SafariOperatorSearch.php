@@ -13,6 +13,8 @@ class SafariOperatorSearch extends SafariOperator
     public $budget_segment;
     public $credibility;
     public $park_id;
+    public $business_name;
+    public $register_comapany_name;
 
     /**
      * {@inheritdoc}
@@ -83,9 +85,11 @@ class SafariOperatorSearch extends SafariOperator
             'updated_by' => $this->updated_by,
             'safari_operator.status' => $this->status,
         ]);
+        $query->andFilterWhere(['like', 'business_name', $this->business_name]);
+        $query->andFilterWhere(['like', 'register_comapany_name', $this->register_comapany_name]);
 
         if ($this->budget_segment) {
-            foreach ($this->budget_segment as $segment) {
+            foreach ((array)$this->budget_segment as $segment) {
                 switch ($segment) {
                     case 1:
                         // Apply filter for premium budget
@@ -108,7 +112,7 @@ class SafariOperatorSearch extends SafariOperator
         }
 
         if ($this->credibility) {
-            foreach ($this->credibility as $data) {
+            foreach ((array)$this->credibility as $data) {
                 switch ($data) {
                     case 1:
                         // Apply filter for premium budget

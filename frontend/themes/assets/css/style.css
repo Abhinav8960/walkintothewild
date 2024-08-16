@@ -7229,8 +7229,63 @@ select.custom_sort_by_input  option.selected{
 
     background-color: #fff !important;
 }
+.opratios-slider .owl-item {
+    width: auto; 
+    max-width: 250px;
+    margin: 0 auto; 
+}
+
+.opratios-slider .owl-item img {
+    width: 100%; 
+    height: auto;
+    max-width: 100%;
+}
 
 
+.slider_profilemobile .owl-item,
+.slider_addmobile3 .owl-item,
+.slider_orprator .owl-item,
+.slider_packagemobile .owl-item,
+.slider_accountsetting .owl-item,
+.slider_accountsidebar .owl-item{
+
+    white-space: nowrap;
+    width: auto !important;
+    padding-right: 30px !important;
+
+
+}
+.slider_profilemobile .owl-item.active,
+.slider_addmobile3 .owl-item.active,
+.slider_orprator .owl-item.active,
+.slider_packagemobile .owl-item.active,
+.slider_accountsetting .owl-item.active,
+.slider_accountsidebar .owl-item.active{
+
+    white-space: nowrap;
+    width: auto !important; 
+}
+.slider_profilemobile .owl-stage,
+.slider_addmobile3 .owl-stage,
+.slider_orprator .owl-stage,
+.slider_packagemobile .owl-stage,
+.slider_accountsetting .owl-stage,
+.slider_accountsidebar .owl-stage
+{
+
+    display: flex;
+    padding-left: 0 !important;
+}
+/* .opratios-slider .owl-item {
+    max-width: calc(100% / 4);
+    width: 100%; 
+    margin: 0 auto; 
+}
+.opratios-slider .owl-item img {
+    width: 100%; 
+    max-width: 100%; 
+    height: auto; 
+} */
 /* .slider_profilemobile.owl-carousel .owl-stage-outer .owl-item.active{
 
     margin-right: 20px !important;

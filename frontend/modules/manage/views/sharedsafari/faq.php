@@ -15,18 +15,18 @@ $this->params['title'] = $this->title;
 <div class="container-fluid mt-5 mb-5">
     <div class="row mb-5 margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between align-itemx-center mb-4 flex-wrap ">
-        <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
-            <div class="mb-0 mt-xl-0 mt-3" >
+            <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
+            <div class="mb-0 mt-xl-0 mt-3">
                 <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?> " style="cursor:pointer">+ Create FAQ</a>
                 <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?>" style="cursor:pointer">+ Select FAQ</a>
             </div>
         </div>
-        
-        <div class="col-md-12 mb-3">
+
+        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
-        <div class="col-md-12 itenary_tabs">
-        <div class="card account-settingside safartabs">
+        <div class="col-md-9 col-xl-10 col-xxl-10 itenary_tabs">
+            <div class="card account-settingside safartabs">
                 <div class="card-body">
                     <div class="row">
                         <?= $this->render('_profile_navbar', ['sharedsafari' => $shared_safari_departure_model, 'faq_active' => 'active']) ?>
@@ -35,52 +35,52 @@ $this->params['title'] = $this->title;
                         <div class="col-md-12">
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                                
-                                            <div class="table-responsive table_design_manage" >
-                                                <?= GridView::widget([
-                                                    'dataProvider' => $dataProvider,
-                                                    'columns' => [
-                                                        [
-                                                            'class' => 'yii\grid\SerialColumn',
-                                                            'contentOptions' => ['style' => 'width: 5%;'],
-                                                        ],
-                                                        [
-                                                            'label' => 'Question',
-                                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                                            'format' => 'raw',
-                                                            'value' => function ($model) {
-                                                                return $model->question;
+
+                                    <div class="table-responsive table_design_manage">
+                                        <?= GridView::widget([
+                                            'dataProvider' => $dataProvider,
+                                            'columns' => [
+                                                [
+                                                    'class' => 'yii\grid\SerialColumn',
+                                                    'contentOptions' => ['style' => 'width: 5%;'],
+                                                ],
+                                                [
+                                                    'label' => 'Question',
+                                                    'contentOptions' => ['style' => 'width: 10%;'],
+                                                    'format' => 'raw',
+                                                    'value' => function ($model) {
+                                                        return $model->question;
+                                                    }
+                                                ],
+                                                [
+                                                    'label' => 'Answer',
+                                                    'contentOptions' => ['style' => 'width: 10%;'],
+                                                    'format' => 'raw',
+                                                    'value' => function ($model) {
+                                                        return $model->answer;
+                                                    }
+                                                ],
+                                                [
+                                                    'class' => 'yii\grid\ActionColumn',
+                                                    'header' => "Actions",
+                                                    'contentOptions' => ['style' => 'width: 15%;'],
+                                                    'template' => '{delete}&nbsp;&nbsp;{suspend}',
+                                                    'buttons' => [
+                                                        'delete' => function ($url, $model) {
+                                                            if ($model->status != -1) {
+                                                            } else {
+                                                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
                                                             }
-                                                        ],
-                                                        [
-                                                            'label' => 'Answer',
-                                                            'contentOptions' => ['style' => 'width: 10%;'],
-                                                            'format' => 'raw',
-                                                            'value' => function ($model) {
-                                                                return $model->answer;
-                                                            }
-                                                        ],
-                                                        [
-                                                            'class' => 'yii\grid\ActionColumn',
-                                                            'header' => "Actions",
-                                                            'contentOptions' => ['style' => 'width: 15%;'],
-                                                            'template' => '{delete}&nbsp;&nbsp;{suspend}',
-                                                            'buttons' => [
-                                                                'delete' => function ($url, $model) {
-                                                                    if ($model->status != -1) {
-                                                                    } else {
-                                                                        return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                                                                    }
-                                                                },
-                                                                'suspend' => function ($url, $model) {
-                                                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
-                                                                },
-                                                            ]
-                                                        ],
-                                                    ],
-                                                ]); ?>
-                                            </div>
-                                    
+                                                        },
+                                                        'suspend' => function ($url, $model) {
+                                                            return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
+                                                        },
+                                                    ]
+                                                ],
+                                            ],
+                                        ]); ?>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

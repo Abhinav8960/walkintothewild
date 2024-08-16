@@ -21,8 +21,8 @@ class ShareSafariSearch extends ShareSafari
     public $title;
     public $no_of_safari_min = 1;
     public $no_of_safari_max = 10;
-    public $estimate_price_min = 1;
-    public $estimate_price_max = 15000;
+    public $estimate_price_min = 500;
+    public $estimate_price_max = 50000;
 
 
 
@@ -141,7 +141,7 @@ class ShareSafariSearch extends ShareSafari
         // }
 
         if ($this->estimate_price_min && $this->estimate_price_max) {
-            if ($this->estimate_price_max >= 15000) {
+            if ($this->estimate_price_max >= 50000) {
                 $dataProvider->query->andWhere([
                     'or',
                     ['or', ['>=', 'estimate_price_max', $this->estimate_price_min], ['>=', 'estimate_price_min', $this->estimate_price_max]],

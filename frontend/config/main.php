@@ -36,7 +36,7 @@ return [
 
                     'clientId' => '631766851704-lbmn5e7lqhp6gnhf1jnumdrelbg5b00k.apps.googleusercontent.com',
                     'clientSecret' => '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',
-                    'returnUrl' => 'https://staging.walkintothewild.in/site/auth?authclient=google',
+                    'returnUrl' => 'https://walkintothewild.in/site/auth?authclient=google',
                 ],
             ],
         ],
@@ -64,7 +64,7 @@ return [
             'targets' => [
                 [
                     'class' => \yii\log\FileTarget::class,
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error'],
                 ],
             ],
         ],

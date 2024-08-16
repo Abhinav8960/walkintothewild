@@ -2,8 +2,9 @@
 
 namespace common\models;
 
-use common\traits\CommanRelationship;
 use Yii;
+use common\models\park\SafariPark;
+use common\traits\CommanRelationship;
 
 /**
  * This is the model class for table "user_experience".
@@ -84,5 +85,10 @@ class UserExperience extends \yii\db\ActiveRecord implements \common\interfaces\
         if ($this->file != '') {
             return '/storage/userpost/' . $this->id . '/' . $this->file;
         }
+    }
+
+    public function getPark()
+    {
+        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
     }
 }

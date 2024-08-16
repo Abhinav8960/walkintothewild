@@ -164,7 +164,9 @@ class SafaritourRegistrationForm extends model
             [['park_id', 'logo', 'budget_segment', 'offers_other_wildlifeactivities'], 'safe'],
             [['referrer_url', 'registration_platform'], 'safe'],
             [
-                ['logo'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['logo'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 // 'minWidth' => 500,
                 // 'maxWidth' => 500,
                 // 'maxHeight' => 123,
@@ -182,6 +184,7 @@ class SafaritourRegistrationForm extends model
                     $this->addError('operator_email', 'Email Should not match');
                 }
             }],
+            [['website', 'instagram_url', 'facebook_url', 'youtube_link'], 'url', 'defaultScheme' => 'http'],
         ];
 
         if (\Yii::$app->params['isGoogleV3CaptchaValidateNeeded'] == true) {

@@ -33,13 +33,13 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class=" mt-xxl-0 mt-3">
                 <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]) ?>" class="post-comment newbg rounded-2 padding_btn" target="_blank"><i class="fa fa-eye"></i> View as Member</a> &nbsp;
-                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update</a>
+                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update Page</a>
             </div>
         </div>
-        <div class="col-md-12 col-xl-12 col-xxl-12 mb-3">
+        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-12 col-xxl-12 col-xl-12">
+        <div class="col-md-9 col-xl-10 col-xxl-10">
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">

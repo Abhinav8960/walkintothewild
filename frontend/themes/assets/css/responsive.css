@@ -507,7 +507,10 @@ font-size: 19px;
 }
 
 
-@media only screen and (max-width: 986px) and (min-width: 874px) {
+@media only screen and (max-width: 1400px) and (min-width: 991px) {
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle {
+    padding-left: 17px;
+}
 }
 
 @media only screen and (max-width: 1400px) and (min-width: 1200px) {
@@ -753,6 +756,12 @@ font-size: 19px;
   .placeholder_select {
     left: 16%;
   }
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle,
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle,
+  .planSearch_box .select_searcjBox .select_boxes:nth-child(4) .dropdown-toggle{
+
+    width: 209px;
+  }
 
   /* .parksImg img {
 
@@ -840,6 +849,10 @@ font-size: 19px;
 }
 
 @media only screen and (min-width: 991px) {
+  .copyright p{
+
+    padding-left: 180px;
+  }
   .moreviewMobile{
 
     display: none;
@@ -1104,7 +1117,12 @@ text-align: center !important;
     font-size: 13px;
   }
 }
-@media (max-width: 991px) {
+@media only screen and  (max-width: 991px) {
+  .px_serach{
+
+    padding: 0px 5px;
+  }
+ 
   .title_safari.JoinPadding{
 
     padding-top: 13px;
@@ -1348,7 +1366,7 @@ margin-bottom: 0 !important;
 }
 .itenary_tabs .account-settingside.safartabs .nav-tabs{
 
-  gap: 15px !important;
+  gap: 40px !important;
 }
 
   .header_wrapper.navigation_hide {
@@ -1362,122 +1380,133 @@ margin-bottom: 0 !important;
   .sahreSafari.active {
     background-color: transparent;
   }
-}
 
-@media only screen and (max-width: 991px) {
-  .planSearch_box
-    .select_searcjBox
-    .select_boxes:nth-child(4)
-    .placeholder_select {
-    left: 6% !important;
-  }
-  .planSearch_box
-    .select_searcjBox
-    .select_boxes:nth-child(4)
-    .dropdown-toggle {
-    padding-left: 29px;
-  }
-  .planSearch_box
-    .select_searcjBox
-    .select_boxes:nth-child(1)
-    .dropdown-toggle {
-    padding-left: 29px;
-  }
-  .planSearch_box
-    .select_searcjBox
-    .select_boxes:nth-child(3)
-    .dropdown-toggle {
-    padding-left: 29px;
-  }
-  .planSearch_box .placeholder_select {
-    left: 6% !important;
-  }
+  .itenary_tabs .sidebar_account.safartabs .nav-tabs .nav-link.active{
 
-  #flashMessage {
-    right: 35px;
-  }
-  #targetDiv {
-    background-color: #faf7f3;
-    position: fixed;
-    top: 0px;
-    height: 100%;
-    width: 100%;
-    z-index: 1000;
-    left: 0px;
-    display: none;
-  }
-  /* .filter-wrapper {
-
-        opacity: 0 !important; 
-        pointer-events: none !important;
-    } */
-
-  .nav-link {
-    padding: 0;
-  }
-.card.account-settingside .nav-link{
-
-padding:0.5rem  1rem!important;
-
-}
-
-  .card-img {
-    display: none;
-  }
-
-  .inner_animals > img {
-    height: 225px;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .inner_animals .safariBox {
-    text-align: center;
-  }
-
-  .mobile-responsive {
-    text-align: center;
-  }
-
- 
-
-  .terms p {
-    padding-top: 20px;
-  }
-
-  .border_bottom_mobile {
-    border-bottom: 1.5px solid #0000004d;
-  }
-
-  .border-right.border_bottom_mobile {
-    border-right: 0;
-  }
-
-  .author_wrapper .artical-info {
-    padding-top: 10px !important;
-  }
-
-  /* .banner_section-inner img {
-
-        height: 300px;
+    border-radius: 0px !important;
+    display: inline-block;
+      }
+      .itenary_tabs .sidebar_account.safartabs .nav-tabs .nav-link{
+    
+        margin-bottom: 3px !important;
+      }
+      .sidebar_account  .card-body{
+    
+        padding-bottom: 0px !important;
+      }
+      .planSearch_box
+        .select_searcjBox
+        .select_boxes:nth-child(4)
+        .placeholder_select {
+        left: 6% !important;
+      }
+      .planSearch_box
+        .select_searcjBox
+        .select_boxes:nth-child(4)
+        .dropdown-toggle {
+        padding-left: 29px;
+      }
+      .planSearch_box
+        .select_searcjBox
+        .select_boxes:nth-child(1)
+        .dropdown-toggle {
+        padding-left: 28px;
+      }
+      .planSearch_box
+        .select_searcjBox
+        .select_boxes:nth-child(3)
+        .dropdown-toggle {
+        padding-left: 28px;
+      }
+      .planSearch_box .placeholder_select {
+        left: 6% !important;
+      }
+    
+      #flashMessage {
+        right: 35px;
+      }
+      #targetDiv {
+        background-color: #faf7f3;
+        position: fixed;
+        top: 0px;
+        height: 100%;
+        width: 100%;
+        z-index: 1000;
+        left: 0px;
+        display: none;
+      }
+      /* .filter-wrapper {
+    
+            opacity: 0 !important; 
+            pointer-events: none !important;
+        } */
+    
+      .nav-link {
+        padding: 0;
+      }
+    .card.account-settingside .nav-link{
+    
+    padding:0.5rem  1rem!important;
+    
+    }
+    
+      .card-img {
+        display: none;
+      }
+    
+      .inner_animals > img {
+        height: 225px;
         object-fit: cover;
-    } */
-  .banner_section-inner .banner_search {
-    height: 330px;
-    object-fit: cover;
-  }
-
-  .parksImg img {
-    border-radius: 10px 10px 0px 0px;
-  }
-
-  .form-wrapper .input-group2 {
-    width: 50%;
-  }
-  .form-wrap  .form-wrapper{
-
-    width: 49%;
-  }
+        width: 100%;
+      }
+    
+      .inner_animals .safariBox {
+        text-align: center;
+      }
+    
+      .mobile-responsive {
+        text-align: center;
+      }
+    
+     
+    
+      .terms p {
+        padding-top: 20px;
+      }
+    
+      .border_bottom_mobile {
+        border-bottom: 1.5px solid #0000004d;
+      }
+    
+      .border-right.border_bottom_mobile {
+        border-right: 0;
+      }
+    
+      .author_wrapper .artical-info {
+        padding-top: 10px !important;
+      }
+    
+      /* .banner_section-inner img {
+    
+            height: 300px;
+            object-fit: cover;
+        } */
+      .banner_section-inner .banner_search {
+        height: 330px;
+        object-fit: cover;
+      }
+    
+      .parksImg img {
+        border-radius: 10px 10px 0px 0px;
+      }
+    
+      .form-wrapper .input-group2 {
+        width: 50%;
+      }
+      .form-wrap  .form-wrapper{
+    
+        width: 49%;
+      }
 }
 
 @media only screen and (max-width: 767px) {
@@ -2348,7 +2377,7 @@ flex-wrap: nowrap;
 }
 .itenary_tabs .nav-tabs .nav-link{
 
-  font-size: 12px !important;
+  font-size: 14px !important;
 }
 .left_text p{
   font-size: 12px;
