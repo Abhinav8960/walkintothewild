@@ -22,14 +22,14 @@ $this->params['title'] = $this->title;
 </section>
 <section class="terms_wrapper">
     <div class="container-lg">
-        <div class="row pb-5 mb-5">
+        <div class="row pb-5  margin_bottomfooter justify-content-center ">
             <div class="col-12">
                 <div class="title_terms">
                     <h2>About Us</h2>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="terms_details">
+            <div class="col-lg-8 col-md-10">
+                <div class="terms_details text-center">
                     <?php
                     $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT_US]);
                     ?>
