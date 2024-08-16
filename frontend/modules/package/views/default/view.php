@@ -146,11 +146,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($package_includes) ? 'Meals' : 'N/A';
-                                                            ?></p>
+                                            <p class="mb-0"><?= $package->meals; ?></p>
                                         </div>
                                     </div>
                                 </div>
