@@ -285,7 +285,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade show active accordion-item mb-3" id="itenery-tab-pane" role="tabpanel" aria-labelledby="itenery-tab">
+                    <div class="tab-pane fade accordion-item mb-3" id="itenery-tab-pane" role="tabpanel" aria-labelledby="itenery-tab">
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
@@ -348,7 +348,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
                 <?php if (Yii::$app->user->identity) { ?>
                     <div class="request_quote mb-4">
-                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;">
+                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;cursor: default;">
                             Request Quote</button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
@@ -363,14 +363,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <?php if ($package->packagegallery) {
                     $galleries = $package->packagegallery;
                 ?>
-                    <div class="request_quote mb-4">
+                     <div class="request_quote photoGallry mb-4">
                         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
-                            Photo Gallery <span><?= count($galleries) ?></span></button>
+                            Photo Gallery <span><?= count($galleries) ?></span>
+                        </button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="photoSlider owl-carousel owl-theme">
                                 <?php foreach ($galleries as $gallery) { ?>
                                     <div class="items_img">
-                                        <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        <a href="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" data-fancybox="gallery" data-caption="No caption available" class="gallery-item">
+                                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        </a>
                                     </div>
                                 <?php } ?>
                             </div>

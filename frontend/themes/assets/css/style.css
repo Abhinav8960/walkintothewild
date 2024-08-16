@@ -2104,6 +2104,29 @@ figure {
 
     display: none !important;
 }
+.inclusions .itenary_text p:empty{
+
+    display: none !important;
+}
+.inclusions .itenary_text p{
+    margin-bottom: 0.5rem !important;
+
+}
+.itenary_text.inclusions p{
+
+    margin-bottom: 0.5rem !important;
+}
+.inclusions .itenary_text ol,
+.itenary_text.inclusions ol{
+    padding-left: 18px !important;
+
+}
+.inclusions .itenary_text ol li,
+.itenary_text.inclusions ol li{
+
+    padding-bottom: 5px;
+}
+
 
 .seelctes_text p:empty {
 
