@@ -243,6 +243,15 @@ if ($('.slider_resorts').length) {
         }
     });
 }
+$(document).ready(function() {
+    $(".photoGallry").on("click", function() {
+        $.fancybox.open($("[data-fancybox='gallery']"), {
+            loop: false, // Loop through images
+            buttons: ["close"], // Show only the close button
+            infobar: false, // Disable the "1/7" image counter
+        });
+    });
+});
 document.addEventListener('DOMContentLoaded', function () {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
