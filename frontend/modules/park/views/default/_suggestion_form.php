@@ -22,7 +22,7 @@ use common\models\GeneralModel;
             </div>
             <div class="col-12 mb-2">
                 <label for="" class="Modal_label">Select Category</label>
-                <?= $form->field($model, 'master_suggestion_id')->dropDownList(GeneralModel::suggestioncategory(), ['prompt' => 'Select', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
+                <?= $form->field($model, 'master_suggestion_id')->dropDownList(GeneralModel::suggestioncategory(), ['prompt' => 'Select Category', 'class' => "form-select form-select-lg ", 'aria-label' => "Large select example"])->label(false) ?>
             </div>
 
             <div class="col-lg-12 mb-2 mt-2">
