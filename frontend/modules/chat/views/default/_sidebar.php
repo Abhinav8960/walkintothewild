@@ -81,6 +81,7 @@ use yii\helpers\Url;
 
     .chat-sidebar-user-card .user-icon {
         height: 45px;
+        width: 45px;
     }
 
     .chat-sidebar-user-card .chat-user_name {
