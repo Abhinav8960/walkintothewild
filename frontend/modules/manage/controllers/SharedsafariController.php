@@ -507,14 +507,14 @@ class SharedsafariController extends FrontendBaseController
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionView($id)
+    public function actionView($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
 
 
 
-        $safari_interested = ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => 1]);
+        $safari_interested = ShareSafariIntrested::find()->where(['share_safari_id' => $shared_safari_model->id, 'status' => 1]);
         $safari_interested_provider = new ActiveDataProvider([
             'query' => $safari_interested,
             'pagination' => [

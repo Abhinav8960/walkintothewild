@@ -237,6 +237,39 @@ class FrontendNotificationHelper
     }
 
 
+
+    /**
+     * Shared Safari Updated
+     *
+     * @param [type] $share_safari
+     * @return void
+     */
+    public static function sharedSafariUpdate(ShareSafari $share_safari)
+    {
+        if ($share_safari) {
+
+            $intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
+            if ($intrested_users) {
+                foreach ($intrested_users as $intrested_user) {
+                    $model = new FrontendNotification();
+                    $model->action_id = FrontendNotification::ACTION_SHARED_SAFARI_JOIN;
+                    $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]);
+                    $model->parent_id = $share_safari->id;
+                    $model->channel = 'UserNotificationChannel';
+                    $model->status = 1;
+                    $model->user_id = $intrested_user->user_id;
+                    $model->is_seen = false;
+                    $model->is_read = False;
+                    $park_name = $share_safari->park ? $share_safari->park->title : '';
+                    $model->notification_text = $park_name . " Shared Safari Updated ";
+                    if ($model->save(false)) {
+                        self::eventSendtoPusher($model);
+                    }
+                }
+            }
+        }
+    }
+
     /**
      *  User got New Followers
      *
