@@ -271,6 +271,6 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-        return ($package_includes) ? 'All meals' : 'N/A';
+        return ($package_includes) ? 'Meals' : 'N/A';
     }
 }

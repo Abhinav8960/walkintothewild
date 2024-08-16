@@ -169,7 +169,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $share_safari_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($share_safari_includes) ? 'All meals' : 'N/A';
+                                                            echo ($share_safari_includes) ? 'Meals' : 'N/A';
                                                             ?></p>
                                         </div>
                                     </div>
