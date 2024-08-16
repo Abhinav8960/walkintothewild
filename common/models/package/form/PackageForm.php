@@ -121,17 +121,17 @@ class PackageForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [
-                ['package_image', 'package_banner_image'],
-                'image',
-                'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 940,
-                'maxWidth' => 940,
-                'maxHeight' => 430,
-                'minHeight' => 430,
-                'maxSize' => 250 * 1024,
-                'skipOnEmpty' => true,
-            ],
+            // [
+            //     ['package_image', 'package_banner_image'],
+            //     'image',
+            //     'extensions' => ['jpeg', 'jpg', 'png'],
+            //     'minWidth' => 940,
+            //     'maxWidth' => 940,
+            //     'maxHeight' => 430,
+            //     'minHeight' => 430,
+            //     'maxSize' => 250 * 1024,
+            //     'skipOnEmpty' => true,
+            // ],
             [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person'], 'required', 'on' => ['create', 'update']],
             [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
