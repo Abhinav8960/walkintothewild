@@ -22,10 +22,10 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-2">
-        <?= $form->field($model, 'package_name')->textInput(['placeholder' => 'Search by Package Name'])->label(false) ?>
+        <?= $form->field($model, 'username')->textInput(['placeholder' => 'Search by Login ID'])->label(false) ?>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => 'Select Status'])->label(false) ?>
+        <?= $form->field($model, 'email')->textInput(['placeholder' => 'Search by Email'])->label(false) ?>
     </div>
     <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>

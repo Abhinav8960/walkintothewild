@@ -57,7 +57,7 @@ $this->params['title'] = $this->title;
 
                     <div class="col-md-4 select_width">
                         <?= $form->field($model, 'role_id')->widget(\kartik\select2\Select2::classname(), [
-                            'data' => GeneralModel::roles(),
+                            'data' => GeneralModel::rolesforform(),
                             // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                             'options' => ['placeholder' => 'Select User Role', 'multiple' => true],
                             'pluginOptions' => [
