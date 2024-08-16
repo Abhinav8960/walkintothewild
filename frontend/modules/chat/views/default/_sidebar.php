@@ -101,6 +101,7 @@ use yii\helpers\Url;
 
     .chat-message-header .user-icon {
         height: 45px;
+        width: 45px;
     }
 
     .chat-message-input {
@@ -156,7 +157,7 @@ use yii\helpers\Url;
         line-height: 1.5;
         font-weight: 400;
         padding: 15px;
-       
+
         background-color: #f5f5f5;
         max-width: 30rem;
         border-top-left-radius: 10px;
@@ -184,7 +185,7 @@ use yii\helpers\Url;
         z-index: 1;
     }
 
-    .reciverchta{
+    .reciverchta {
 
         display: flex;
         justify-content: end;

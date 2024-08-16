@@ -23,7 +23,7 @@ class Footer extends Widget
 
         // return $this->render('footer');
 
-        if (str_starts_with($active_url, '/profile') || str_starts_with($active_url, '/manage') || str_starts_with($active_url, '/account')){
+        if (str_starts_with($active_url, '/chat') || str_starts_with($active_url, '/profile') || str_starts_with($active_url, '/manage') || str_starts_with($active_url, '/account')){
             return $this->render('profilefooter');
         } else {
             return $this->render('footer');
