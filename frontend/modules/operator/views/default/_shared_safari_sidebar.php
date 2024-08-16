@@ -91,7 +91,7 @@ $shared_safari_count = ShareSafari::find()->where(['status' => ShareSafari::STAT
             <div class="col-12">
                 <div class="safari text-end">
                     <div class="viewAllreview">
-                        <a href="<?= \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug, '#' => 'memberview']) ?>" data-pjax="0">View All</a>
+                        <a href="<?= \yii\helpers\Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" data-pjax="0">View All</a>
                     </div>
                 </div>
             </div>

@@ -68,7 +68,7 @@ use common\models\operator\SafariOperatorFollow;
                                 <p class="mb-0"><?= round($operator->google_rating, 1) ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
                             </div>
                             <div class="googlerating">
-                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug, '#' => 'viewcontent']) ?>" data-pjax="0" style="color:inherit;"> <?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?></a></p>
+                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"> <?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?></a></p>
                             </div>
                         </div>
                         <div class="detailsText pb-3">

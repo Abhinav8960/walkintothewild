@@ -411,8 +411,7 @@ class DefaultController extends FrontendBaseController
                         Yii::$app->session->setFlash('success', 'Thanks for Review!!');
                         return $this->redirect([
                             '/operator/default/reviewlist',
-                            'slug' => $operator->slug,
-                            '#' => 'viewcontent'
+                            'slug' => $operator->slug
                         ]);
                     }
                 }
@@ -443,8 +442,7 @@ class DefaultController extends FrontendBaseController
                         Yii::$app->session->setFlash('success', 'Thanks for Edit Review!!');
                         return $this->redirect([
                             '/operator/default/reviewlist',
-                            'slug' => $operator->slug,
-                            '#' => 'viewcontent'
+                            'slug' => $operator->slug
                         ]);
                     }
                 }
@@ -501,8 +499,7 @@ class DefaultController extends FrontendBaseController
                         Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
                         return $this->redirect([
                             '/operator/default/reviewlist',
-                            'slug' => $operator->slug,
-                            '#' => 'viewcontent'
+                            'slug' => $operator->slug
                         ]);
                     }
                 }

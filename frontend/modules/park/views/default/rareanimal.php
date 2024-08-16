@@ -124,7 +124,7 @@ Pjax::begin([
                                             </div>
                                             <div class="tour_logosliders ">
                                                 <div class="taglines">
-                                                    <!-- <p><a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $model->slug, '#' => 'safari_tour_operator_container']) ?>" style="color:inherit;">Top Safari Tour Operators</a></p> -->
+                                                    <!-- <p><a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" style="color:inherit;">Top Safari Tour Operators</a></p> -->
                                                     <p>Top Safari Tour Operators</p>
                                                 </div>
                                                 <div class="touroprators">

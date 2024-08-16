@@ -324,7 +324,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->rating_model->save(false)) {
                         $model->updateRatingintoTable($safari_park);
                         Yii::$app->session->setFlash('success', 'Thanks for Review!!');
-                        return $this->redirect(Url::toRoute(['/park/default/reviewlist', 'slug' => $safari_park->slug, '#' => 'safari_tour_operator_container']));
+                        return $this->redirect(Url::toRoute(['/park/default/reviewlist', 'slug' => $safari_park->slug]));
                     }
                 }
             }
