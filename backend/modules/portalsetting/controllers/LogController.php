@@ -55,6 +55,12 @@ class LogController extends Controller
         ]);
     }
 
+    public function actionFrontlog()
+    {
+        return Yii::$app->response->sendFile(Yii::getAlias('@frontend/runtime/logs/app.log'), 'frontend-app.log');
+
+    }
+
     public function actionConsoleLog()
     {
         $robots_actual_url = \Yii::$app->getBasePath(true);
