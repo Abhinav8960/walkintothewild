@@ -149,7 +149,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($package_includes) ? 'All meals' : 'N/A';
+                                                            echo ($package_includes) ? 'Meals' : 'N/A';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -244,7 +244,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-lg-12 col-xl-11 safartabs position-relative">
                             <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ITINERARY</button>
+                                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">OVERVIEW</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="itenery-tab" data-bs-toggle="tab" data-bs-target="#itenery-tab-pane" type="button" role="tab" aria-controls="itenery-tab-pane" aria-selected="true">ITINERARY</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" tabindex="-1">INCLUSIONS</button>
@@ -278,14 +281,25 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
-                                    <h6 class="fs-6 fw-bold mb-4">ABOUT TRIP / OVERVIEW</h6>
+                                    <h6 class="fs-6 fw-bold mb-4">OVERVIEW</h6>
                                 </div>
                                 <div class="itenary_text">
                                     <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p>
                                 </div>
                             </div>
                         </div>
-                        <?= $this->render('_overview', ['package' => $package]) ?>
+                    </div>
+                    <div class="tab-pane fade show active accordion-item mb-3" id="itenery-tab-pane" role="tabpanel" aria-labelledby="itenery-tab">
+                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                            <div class="card-body p-3">
+                                <div class="itenary-title">
+                                    <h6 class="fs-6 fw-bold mb-4">ITINERARY</h6>
+                                </div>
+                                <div class="itenary_text">
+                                    <?= $this->render('_overview', ['package' => $package]) ?>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
