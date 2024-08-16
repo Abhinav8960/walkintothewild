@@ -77,7 +77,7 @@ return [
     '/operator/<slug>/articleall' => '/operator/default/articleall',
     '/operator/<slug>/contact' => '/operator/default/contact', //operator view url
     '/operator/<slug>/report-operator' => '/operator/default/report-operator',
-    // '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
+    '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
     '/operator/<slug>/park' => '/operator/default/view', //operator view url
     '/operator/<slug>/parkseeall' => '/operator/default/parkseeall',
     '/operator/<slug>' => '/operator/default/sharedsafari', //operator view url
