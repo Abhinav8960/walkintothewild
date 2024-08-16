@@ -1656,6 +1656,7 @@ figure {
        object-fit: contain; */
        height: 75px !important;
        object-fit: cover;
+       border-radius: 10px;
 }
 
 /* .opratios-slider2 .slidesImg img{
@@ -6102,7 +6103,7 @@ a.desc:after {
 
 .safaritourlogo{
 
-    height: 65px;
+    height: 67px;
 }
 .safaritourlogo img {
 
@@ -6111,6 +6112,7 @@ a.desc:after {
        object-fit: cover;
        margin-top: 1px;
        height: inherit;
+       border-radius: 10px;
 }
 
 .items_img img {
