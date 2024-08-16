@@ -26,9 +26,9 @@ class LogController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'index' => ['GET'],
-                    'export' => ['GET'], // Allow GET request for export action
-                    'clear' => ['POST'], // Allow POST request for clear action
+                    // 'index' => ['GET'],
+                    // 'export' => ['GET'], // Allow GET request for export action
+                    // 'clear' => ['GET'], // Allow POST request for clear action
                 ],
             ],
         ];

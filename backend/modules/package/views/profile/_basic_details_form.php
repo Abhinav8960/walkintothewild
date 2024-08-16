@@ -188,6 +188,9 @@ use yii\bootstrap5\ActiveForm;
             </div>
             <?php
             if (!empty($model->package_model->id)) { ?>
+                <div class="col-md-2 mt-4">
+                    <?= $form->field($model, 'popular_package')->checkbox() ?>
+                </div>
                 <div class="col-md-3">
                     <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
                 </div>
