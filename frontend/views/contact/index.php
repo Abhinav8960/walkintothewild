@@ -37,7 +37,7 @@ $this->title = 'Contact';
                                 <div class="icon me-3">
                                     <i class="fa fa-phone-alt "></i>
                                 </div>
-                                <span><a href="tel:212 386 5575">212 386 5575</a></span>
+                                <span><a href="tel:+918882135724">+918882135724</a></span>
                             </div>
                         </div>
                     </div>
