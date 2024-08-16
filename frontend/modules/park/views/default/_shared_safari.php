@@ -36,7 +36,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     <?php } ?>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php } else {
+                            echo '<div class="justify-content-between flex-wrap bg-white px-5 pt-4 pb-4">No Shared Safari Found</div>';
+                        } ?>
 
                         <?php
                         echo \yii\widgets\LinkPager::widget([
