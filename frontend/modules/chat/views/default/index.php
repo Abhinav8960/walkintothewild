@@ -9,7 +9,7 @@ $this->title = 'Message';
 
 ?>
 
-<div class="container-fluid mt-5 margin_bottomfooter pt-5 ">
+<div class="container mt-5 margin_bottomfooter pt-5 ">
     <div class="row mb-5">
         <div class="col-md-12">
             <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
