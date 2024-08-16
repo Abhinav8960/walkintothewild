@@ -166,11 +166,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $share_safari_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($share_safari_includes) ? 'Meals' : 'N/A';
-                                                            ?></p>
+                                            <p class="mb-0"><?= $share_safari->meals ?></p>
                                         </div>
                                     </div>
                                 </div>

@@ -146,11 +146,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($package_includes) ? 'Meals' : 'N/A';
-                                                            ?></p>
+                                            <p class="mb-0"><?= $package->meals; ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -296,10 +292,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <h6 class="fs-6 fw-bold mb-4">ITINERARY</h6>
                                 </div>
                                 <div class="itenary_text">
-                                    <?= $this->render('_overview', ['package' => $package]) ?>
                                 </div>
                             </div>
                         </div>
+                        <?= $this->render('_overview', ['package' => $package]) ?>
+
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="card bg-set accordion-collapse  card_bodyPadding">

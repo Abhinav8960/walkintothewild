@@ -271,6 +271,21 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-        return ($package_includes) ? 'Meals' : 'N/A';
+        $meals_text = '';
+        if ($package_includes) {
+            $meals_text = 'Breakfast,';
+        }
+
+        $package_includes_lunch = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 7, 'selection' => 1, 'status' => 1])->limit(1)->one();
+        if ($package_includes_lunch) {
+            $meals_text .= 'Lunch,';
+        }
+
+        $package_includes_dinner = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 8, 'selection' => 1, 'status' => 1])->limit(1)->one();
+        if ($package_includes_dinner) {
+            $meals_text .= 'Dinner,';
+        }
+
+        return ($meals_text) ? substr($meals_text, 0, -1) : 'N/A';
     }
 }
