@@ -27,7 +27,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                     <div class="row">
                         <?php if ($models = $dataProvider->models) {
                             foreach ($models as $featured_article) { ?>
-                                <div class="col-xl-4 mb-5">
+                                <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-6 mb-5">
                                     <div class="artical_cards h-100">
                                         <div class="image-box">
                                             <figure class="image"><img src="<?= isset($featured_article->banner_image) ? $featured_article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt="">

@@ -45,3 +45,29 @@ use yii\helpers\Url;
         </div>
     </div>
 </a>
+
+
+<script>
+    var owl = $(".opratios-slider");
+    var itemCount = owl.children().length;
+    owl.owlCarousel({
+        items: itemCount >= 5 ? 5 : itemCount,
+        loop: false,
+        margin: 10,
+        dots: false,
+        smartSpeed: 900,
+        autoplay: false,
+        nav: false,
+        responsive: {
+            0: {
+                items: itemCount >= 2 ? 2 : itemCount
+            },
+            1000: {
+                items: itemCount >= 3 ? 3 : itemCount
+            },
+            1400: {
+                items: itemCount >= 5 ? 5 : itemCount
+            }
+        }
+    });
+</script>

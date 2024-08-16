@@ -314,13 +314,13 @@ class PackageForm extends \yii\base\Model
         // $this->package_model->package_slug = $this->package_slug;
         $this->package_model->master_vehicle_id = $this->master_vehicle_id;
 
-        if ($this->package_model->package_slug == '') {
-            $without_space_string = str_replace(' ', '-', strtolower($this->package_model->safarioperator->business_name));
-            $package_name = str_replace(' ', '-', strtolower($this->package_model->package_name));
-            $string = preg_replace('/[^A-Za-z0-9\-]/', '', ($without_space_string . '-' . $package_name));
-            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->package_model->owned_by_id . time() . '-safari-package';
-            $this->package_model->package_slug = $slug;
-        }
+        // if ($this->package_model->package_slug == '') {
+        //     $without_space_string = str_replace(' ', '-', strtolower($this->package_model->safarioperator->business_name));
+        //     $package_name = str_replace(' ', '-', strtolower($this->package_model->package_name));
+        //     $string = preg_replace('/[^A-Za-z0-9\-]/', '', ($without_space_string . '-' . $package_name));
+        //     $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->package_model->owned_by_id . time() . '-safari-package';
+        //     $this->package_model->package_slug = $slug;
+        // }
     }
 
     /**

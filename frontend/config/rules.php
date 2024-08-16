@@ -50,14 +50,20 @@ return [
 
     // Shared Safari URLs
     '/sharedsafari' => '/sharedsafari/default/index',
+    '/sharedsafari/organize-safari' => '/sharedsafari/default/organize-safari',
+    '/sharedsafari/default/getparkimage' => '/sharedsafari/default/getparkimage',
+    '/sharedsafari/default/dynamicsharedseat' => '/sharedsafari/default/dynamicsharedseat',
     '/sharedsafari/default/validate' => '/sharedsafari/default/validate',
+    '/sharedsafari/default/updatevalidate' => '/sharedsafari/default/updatevalidate',
     '/sharedsafari/default/update' => '/sharedsafari/default/update',
-    '/sharedsafari/default/join/<slug>' => '/sharedsafari/default/join',
-    '/sharedsafari/default/unjoin/<slug>' => '/sharedsafari/default/unjoin',
-    '/sharedsafari/default/organize-safari' => '/sharedsafari/default/organize-safari',
-    '/sharedsafari/<slug>' => '/sharedsafari/default/view',
-    '/sharedsafari/wishlist/<slug>' => '/sharedsafari/default/wishlist', //sharedsafari page url
-    '/sharedsafari/unwishlist/<slug>' => '/sharedsafari/default/unwishlist', //sharedsafari page url
+    '/sharedsafari/default/flag' => '/sharedsafari/default/flag',
+    '/sharedsafari/default/validateflag' => '/sharedsafari/default/validateflag',
+    '/sharedsafari/default/interestview' => '/sharedsafari/default/interestview',
+    '/sharedsafari/<organized_slug>/<slug>/join' => '/sharedsafari/default/join',
+    '/sharedsafari/<organized_slug>/<slug>/unjoin' => '/sharedsafari/default/unjoin',
+    '/sharedsafari/<organized_slug>/<slug>/wishlist' => '/sharedsafari/default/wishlist', //sharedsafari page url
+    '/sharedsafari/<organized_slug>/<slug>/unwishlist' => '/sharedsafari/default/unwishlist', //sharedsafari page url
+    '/sharedsafari/<organized_slug>/<slug>' => '/sharedsafari/default/view',
     '/sharedsafari/month/<month>' => '/sharedsafari/default/month', //url for site xml
 
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
@@ -77,9 +83,11 @@ return [
     '/operator/<slug>' => '/operator/default/sharedsafari', //operator view url
 
     '/package' => '/package/default/index', //package page url
-    '/package/<slug>' => '/package/default/view', //package page url
-    '/package/wishlist/<slug>' => '/package/default/wishlist', //package page url
-    '/package/unwishlist/<slug>' => '/package/default/unwishlist', //package page url
+    '/package/default/flag' => '/package/default/flag',
+    '/package/default/validateflag' => '/package/default/validateflag',
+    '/package/<operator_slug>/<slug>/wishlist' => '/package/default/wishlist', //package page url
+    '/package/<operator_slug>/<slug>/unwishlist' => '/package/default/unwishlist', //package page url
+    '/package/<operator_slug>/<slug>' => '/package/default/view', //package page url
     '/package/month/<month>' => '/package/default/month', //url for site xml
 
     '/profile/user-experience' => '/profile/default/create',

@@ -29,14 +29,14 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                     <div class="row">
                         <?php if ($models = $fixed_safari_provider->models) {
                             foreach ($models as $share_safari) {
-                                echo '<div class="col-md-4">';
+                                echo '<div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-4">';
                                 echo $this->render('_shared_safari_card', ['share_safari' => $share_safari]);
                                 echo '</div>';
                             }
                         } else {
                             echo 'No Share Safari Created';
                         } ?>
-                        <div class="col-md-12 mt-4">
+                        <div class="col-md-12 ">
                             <div class="table-responsive table_design_manage">
                                 <?= GridView::widget([
                                     'dataProvider' => $fixed_safari_provider,

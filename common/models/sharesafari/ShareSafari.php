@@ -200,6 +200,15 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
         return $this->hasMany(ShareSafariGallery::className(), ['share_safari_id' => 'id']);
     }
 
+    public function getOrganizedslug()
+    {
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return $this->user ? $this->user->user_handle : 'N/A';
+        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return isset($this->safarioperator) ? $this->safarioperator->slug : "N/A";
+        }
+    }
+
     public function getMeals()
     {
         $package_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $this->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();

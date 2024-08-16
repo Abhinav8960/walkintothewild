@@ -54,7 +54,7 @@ class DefaultController extends Controller
                 $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->package_model->save(false)) {
+                    if ($model->package_model->save()) {
                         $model->uploadFile();
 
                         $package_feature = $model->package_feature;

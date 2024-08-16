@@ -77,9 +77,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 $wishlist = UserWishlist::find()->where(['user_id' => Yii::$app->user->identity->id, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1])->limit(1)->one();
                                                 if ($wishlist) {
                                                 ?>
-                                                    <a href="/package/unwishlist/<?= $package->package_slug ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist" data-pjax="0"><i class="fa-solid fa-heart"></i></a>
+                                                    <a href="<?= Url::toRoute(['/package/default/unwishlist', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-method="post" style="color:#FD5634;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Remove to watchlist" data-pjax="0"><i class="fa-solid fa-heart"></i></a>
                                                 <?php } else { ?>
-                                                    <a href="/package/wishlist/<?= $package->package_slug ?>" data-method="post" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist" data-pjax="0"><i class="fa-regular fa-heart"></i></a>
+                                                    <a href="<?= Url::toRoute(['/package/default/wishlist', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-method="post" style="color:black;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add to watchlist" data-pjax="0"><i class="fa-regular fa-heart"></i></a>
                                                 <?php }
                                                 ?>
                                             <?php } ?>
