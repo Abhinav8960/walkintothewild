@@ -44,12 +44,12 @@ class DefaultController extends FrontendBaseController
 
         $searchModel = new SafariOperatorRequestSearch();
         $searchModel->safari_operator_id = $safari_operator_id;
-        $searchModel->user_id = Yii::$app->user->identity->id;
+        $searchModel->user_id = $safari_operator->user_id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
         $model = new SafariOperatorRequestForm($safari_operator_model);
-        $model->user_id = Yii::$app->user->identity->id;
+        $model->user_id = $safari_operator->user_id;
         $model->status = StatusInterface::STATUS_ACTIVE;
         $model->action_url = '/manage/default/edit-request';
         $model->action_validate_url = '/manage/default/validate';
