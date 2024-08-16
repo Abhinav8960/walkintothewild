@@ -129,10 +129,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 			<div class="d-flex gap-4 align-items-center justify-content-end initial_headers">
 
 				<?php if (Yii::$app->user->identity) { ?>
-					<div class="notification pt-2 dotsnotifications position-relative"><i class="fa-solid fa-bell"></i></div>
+					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
 
-					<div class="massge pt-2 dotsnotifications" style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
+					<div class="massge pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
 					<div class="chatnotification">
 						<h6 class="fs-5 fw-semibold px-3 pt-3 pb-3 border-bottom mb-3">Messages</h6>
 
