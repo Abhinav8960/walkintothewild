@@ -94,7 +94,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         <?php }
                     } else { ?>
-                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($share_safari->user) ? $share_safari->user->user_handle : '']) ?>" data-pjax="0"><img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
+                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $share_safari->user ? $share_safari->user->user_handle : '']) ?>" data-pjax="0"><img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
                     <?php } ?>
                 </div>
             </div>
