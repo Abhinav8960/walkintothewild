@@ -57,24 +57,8 @@ class LogController extends Controller
 
     public function actionFrontlog()
     {
-        // Path to your log file
-        $logFile = Yii::getAlias('@frontend/runtime/logs/app.log');
+        return Yii::$app->response->sendFile(Yii::getAlias('@frontend/runtime/logs/app.log'), 'frontend-app.log');
 
-        // Check if the log file exists
-        if (!file_exists($logFile)) {
-            throw new \yii\web\NotFoundHttpException('Log file does not exist.');
-        }
-
-        // Read the log file content
-        $logs = file_get_contents($logFile);
-
-        // Set response format to plain text
-        // Yii::$app->response->format = Response::FORMAT_RAW;
-        Yii::$app->response->headers->add('Content-Type', 'text/plain');
-
-        return $this->render('index', [
-            'logs' => $logs
-        ]);
     }
 
     public function actionConsoleLog()
