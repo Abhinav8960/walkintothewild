@@ -322,6 +322,50 @@ class ProfileController extends Controller
      * 
      * @return mixed
      */
+    public function actionUpdateFaq($package_id, $faq_id)
+    {
+        $package_model = $this->findModel($package_id);
+        $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
+        $model = new PackageFaqForm($faq_model);
+        $model->package_id = $package_id;
+        $model->status = StatusInterface::STATUS_ACTIVE;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_faq_model->save(false)) {
+                        $faq = new MasterFaq();
+                        $faq->question = $model->question;
+                        $faq->answer = $model->answer;
+                        $faq->position = 0;
+                        $faq->status = StatusInterface::STATUS_ACTIVE;
+                        if ($faq->save(false)) {
+                            $model->package_faq_model->faq_id = $faq->id;
+                            $model->package_faq_model->save(false);
+                        }
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        return $this->redirect(['faq', 'package_id' => $package_id]);
+                    }
+                }
+            }
+        } else {
+            $model->package_faq_model->loadDefaultValues();
+        }
+
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_faq', [
+                'model' => $model,
+                'package_model' => $package_model,
+            ]);
+        }
+    }
+
+    /**
+     * Create PackageFaqForm.
+     * 
+     * @return mixed
+     */
     public function actionSelectFaq($package_id)
     {
         $package_model = $this->findModel($package_id);

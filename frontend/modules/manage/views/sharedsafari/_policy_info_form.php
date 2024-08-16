@@ -19,15 +19,15 @@ use yii\bootstrap5\ActiveForm;
 
 ]); ?>
 
-            <div class="row">
-                <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
-                    <div class="safri_tour">
-                        <div class="topics_listing">
-                            <ul id="tabList">
-                                <li><a class="tab-items active_safri" data-tab="tab21">
-                                        <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
-                                    </a></li>
-                                <!-- <li><a class="tab-items " data-tab="tab22">
+<div class="row">
+    <div class="col-lg-4 col-xl-3 col-xxl-2  mb-lg-0 mb-3">
+        <div class="safri_tour">
+            <div class="topics_listing">
+                <ul id="tabList">
+                    <li><a class="tab-items active_safri" data-tab="tab21">
+                            <div class="numparks">Terms Condtition</div><i class="fa-solid fa-chevron-right"></i>
+                        </a></li>
+                    <!-- <li><a class="tab-items " data-tab="tab22">
                                         <div class="numparks">Privacy Policy</div><i class="fa-solid fa-chevron-right"></i>
                                     </a></li>
                                 <li><a class="tab-items" data-tab="tab23">
@@ -36,78 +36,78 @@ use yii\bootstrap5\ActiveForm;
                                 <li><a class="tab-items " data-tab="tab24">
                                         <div class="numparks">What You Must Carry </div><i class="fa-solid fa-chevron-right"></i>
                                     </a></li> -->
-                                <li><a class="tab-items " data-tab="tab25">
-                                        <div class="numparks">Date Change Policy </div><i class="fa-solid fa-chevron-right"></i>
-                                    </a></li>
-                                <li><a class="tab-items " data-tab="tab26">
-                                        <div class="numparks">Refund Policy </div><i class="fa-solid fa-chevron-right"></i>
-                                    </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8 col-xxl-10 col-xl-9">
-                    <div class="tab-content_tour active " id="tab21">
-                        <!-- Safari Parks content goes here -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?= $form->field($model, 'share_safari_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Terms Condtition'])->label(false) ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content_tour" id="tab22">
-                        <!-- Safari Parks content goes here -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Privacy Policy'])->label(false) ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content_tour" id="tab23">
-                        <!-- Safari Parks content goes here -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Change Policy'])->label(false) ?>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-content_tour " id="tab24">
-                        <div class="searchSafari_parks mb-4">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Share Safari What You Must Carry'])->label(false) ?>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                    <div class="tab-content_tour" id="tab25">
-                        <!-- Shared Safari content goes here -->
-                        <div class="row">
-                            <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Date Change Policy'])->label(false) ?>
-                        </div>
-                    </div>
-
-                    <div class="tab-content_tour mb-4" id="tab26">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Refund Policy'])->label(false) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <li><a class="tab-items " data-tab="tab25">
+                            <div class="numparks">Date Change Policy </div><i class="fa-solid fa-chevron-right"></i>
+                        </a></li>
+                    <li><a class="tab-items " data-tab="tab26">
+                            <div class="numparks">Refund Policy </div><i class="fa-solid fa-chevron-right"></i>
+                        </a></li>
+                </ul>
             </div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-xxl-10 col-xl-9">
+        <div class="tab-content_tour active " id="tab21">
+            <!-- Safari Parks content goes here -->
             <div class="row">
                 <div class="col-md-12">
-                <div class="creat-safri d-flex justify-content-end ">
-                    <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
-                </div>
+                    <?= $form->field($model, 'share_safari_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Mention Terms & Condtition'])->label('Terms Condtition') ?>
                 </div>
             </div>
-  
+        </div>
+        <div class="tab-content_tour" id="tab22">
+            <!-- Safari Parks content goes here -->
+            <div class="row">
+                <div class="col-md-12">
+                    <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Privacy Policy'])->label(false) ?>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content_tour" id="tab23">
+            <!-- Safari Parks content goes here -->
+            <div class="row">
+                <div class="col-md-12">
+                    <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Change Policy'])->label(false) ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content_tour " id="tab24">
+            <div class="searchSafari_parks mb-4">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?= $form->field($model, 'what_you_must_carry')->textarea(['rows' => '2', 'placeholder' => 'Share Safari What You Must Carry'])->label(false) ?>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="tab-content_tour" id="tab25">
+            <!-- Shared Safari content goes here -->
+            <div class="row">
+                <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Date Change Policy'])->label('Date Change Policy') ?>
+            </div>
+        </div>
+
+        <div class="tab-content_tour mb-4" id="tab26">
+            <div class="row">
+                <div class="col-md-12">
+                    <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Refund Policy'])->label('Refund Policy') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="creat-safri d-flex justify-content-end ">
+            <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
+        </div>
+    </div>
+</div>
+
 <?php ActiveForm::end(); ?>
 
 

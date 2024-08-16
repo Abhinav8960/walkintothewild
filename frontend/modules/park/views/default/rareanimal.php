@@ -34,7 +34,8 @@ Pjax::begin([
     ],
     'action' => Url::toRoute(['/park/default/rareanimal', 'slug' => $slug]),
     'method' => 'get',
-]); ?>
+]);
+?>
 <section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" media="(max-width:576px)" type="image/webp">

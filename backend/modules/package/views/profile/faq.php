@@ -3,15 +3,16 @@
 /* @var $this yii\web\View */
 /* @var $model apps\models\employee\Employee */
 
-use yii\grid\GridView;
+use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\grid\GridView;
 
 $this->title = 'Package : ' . $package_model->package_name . '';
 $this->params['breadcrumbs_home_url'] = '#';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::Button('+ Add FAQ', ['value' => "/package/profile/create-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
-$this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/profile/select-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange', 'title' => 'Select FAQ']);
+$this->params['buttons'][] = Html::Button('+ Add FAQ', ['value' => Url::toRoute(['/package/profile/create-faq', 'package_id' => $package_model->id]), 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
+// $this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/profile/select-faq?package_id=$package_model->id", 'class' => 'btn popupButton btn-orange', 'title' => 'Select FAQ']);
 ?>
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@backend/modules/package/views/profile/_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
@@ -60,8 +61,11 @@ $this->params['buttons'][] = Html::Button('+ Select FAQ', ['value' => "/package/
                                         'class' => 'yii\grid\ActionColumn',
                                         'header' => "Actions",
                                         'contentOptions' => ['style' => 'width: 15%;'],
-                                        'template' => '{delete}&nbsp;&nbsp;{suspend}',
+                                        'template' => '{update}&nbsp;{delete}&nbsp;&nbsp;{suspend}',
                                         'buttons' => [
+                                            'update' => function ($url, $model) {
+                                                return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toROute(['/package/profile/update-faq', 'package_id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'btn popupButton btn-orange me-2', 'title' => 'Create FAQ']);
+                                            },
                                             'delete' => function ($url, $model) {
                                                 if ($model->status != -1) {
                                                 } else {

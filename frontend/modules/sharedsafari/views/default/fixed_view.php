@@ -166,11 +166,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $share_safari_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($share_safari_includes) ? 'All meals' : 'N/A';
-                                                            ?></p>
+                                            <p class="mb-0"><?= $share_safari->meals ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -416,14 +412,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <?php if ($share_safari->sharesafarigallery) {
                     $galleries = $share_safari->sharesafarigallery;
                 ?>
-                    <div class="request_quote mb-4">
+                    <div class="request_quote photoGallry mb-4">
                         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
-                            Photo Gallery <span><?= count($galleries) ?></span></button>
+                            Photo Gallery <span><?= count($galleries) ?></span>
+                        </button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="photoSlider owl-carousel owl-theme">
                                 <?php foreach ($galleries as $gallery) { ?>
                                     <div class="items_img">
-                                        <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        <a href="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" data-fancybox="gallery" data-caption="No caption available" class="gallery-item">
+                                            <img src="<?= isset($gallery->image) ? $gallery->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" width="100%">
+                                        </a>
                                     </div>
                                 <?php } ?>
                             </div>

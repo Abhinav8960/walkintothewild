@@ -136,15 +136,16 @@ return [
     '/manage/sharedsafari/update-fixed-departure/<slug>' => '/manage/sharedsafari/update-fixed-departure',
     '/manage/sharedsafari/itinerary/<slug>/<day>' => '/manage/sharedsafari/itinerary', //sharedsafari profile itenary url          
     '/manage/sharedsafari/inclusion/<slug>' => '/manage/sharedsafari/inclusion', //sharedsafari profile inclusion url          
-    '/manage/sharedsafari/getting-there/<share_safari_id>' => '/manage/sharedsafari/getting-there', //sharedsafari profile getting-there url          
-    '/manage/sharedsafari/policy-info/<share_safari_id>' => '/manage/sharedsafari/policy-info', //sharedsafari profile policy-info url          
-    '/manage/sharedsafari/faq/<share_safari_id>' => '/manage/sharedsafari/faq', //sharedsafari profile faq url          
-    '/manage/sharedsafari/create-faq/<share_safari_id>' => '/manage/sharedsafari/create-faq', //sharedsafari profile create faq url          
-    '/manage/sharedsafari/select-faq/<share_safari_id>' => '/manage/sharedsafari/select-faq',
-    '/manage/sharedsafari/gallery/<share_safari_id>' => '/manage/sharedsafari/gallery', //sharedsafari profile faq url          
-    '/manage/sharedsafari/create-gallery/<share_safari_id>' => '/manage/sharedsafari/create-gallery',
+    '/manage/sharedsafari/getting-there/<slug>' => '/manage/sharedsafari/getting-there', //sharedsafari profile getting-there url          
+    '/manage/sharedsafari/policy-info/<slug>' => '/manage/sharedsafari/policy-info', //sharedsafari profile policy-info url          
+    '/manage/sharedsafari/faq/<slug>' => '/manage/sharedsafari/faq', //sharedsafari profile faq url          
+    '/manage/sharedsafari/create-faq/<slug>' => '/manage/sharedsafari/create-faq', //sharedsafari profile create faq url          
+    '/manage/sharedsafari/select-faq/<slug>' => '/manage/sharedsafari/select-faq',
+    '/manage/sharedsafari/gallery/<slug>' => '/manage/sharedsafari/gallery', //sharedsafari profile faq url          
+    '/manage/sharedsafari/create-gallery/<slug>' => '/manage/sharedsafari/create-gallery',
     '/manage/sharedsafari/view/<slug>' => '/manage/sharedsafari/view', //sharedsafari profile create faq url 
-    
+    '/manage/sharedsafari/comment/<slug>' => '/manage/sharedsafari/comment',
+
     '/manage/article/update/<slug>' => '/manage/article/update',
 
     // Chat Routes

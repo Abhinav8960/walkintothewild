@@ -22,7 +22,7 @@
                 foreach (GeneralModel::packageincludeoption() as $optionValue => $optionLabel) : ?>
                     <div class="row ">
                         <div class="col-sm-4 col-md-3">
-                            <ul>
+                            <ul class="px-3">
                                 <li><label class="control-label font_sizes"><?= $optionLabel ?></label></li>
                             </ul>
 
@@ -49,13 +49,13 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12 inclusions">
             <div class="itenary_text">
                 <p><?= $share_safari->share_safari_inclusion ?></p>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="itenary_text">
+        <div class="col-md-12 ">
+            <div class="itenary_text inclusions">
                 <p><?= $share_safari->share_safari_exclusion ?></p>
             </div>
         </div>

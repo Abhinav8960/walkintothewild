@@ -232,7 +232,7 @@ font-size: 19px;
     overflow: visible;
   }
   .searchSafari_wraper .safariSearch_wrap .taglines {
-    margin-top: 17px;
+    margin-top: 6px;
   }
 
   .searchSafari_parks .parks_body {
@@ -1211,7 +1211,7 @@ margin-bottom: 0 !important;
     padding: 9px 35px !important;
   }
   .images_tour {
-    height: 250px;
+    height: auto;
   }
   .logoutBox {
     position: absolute;

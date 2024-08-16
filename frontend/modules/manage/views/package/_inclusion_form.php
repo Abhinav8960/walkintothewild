@@ -56,10 +56,10 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'package_inclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Inclusion'])->label('Package Inclusion') ?>
+                <?= $form->field($model, 'package_inclusion')->textarea(['rows' => '2', 'placeholder' => 'List everything included'])->label('Package Inclusion') ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Package Exclusion'])->label('Package Exclusion') ?>
+                <?= $form->field($model, 'package_exclusion')->textarea(['rows' => '2', 'placeholder' => 'List what is not included'])->label('Package Exclusion') ?>
             </div>
         </div>
         <hr>

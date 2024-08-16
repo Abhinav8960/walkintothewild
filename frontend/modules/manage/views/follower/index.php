@@ -9,15 +9,15 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
 
-<div class="container-fluid mt-5 ">
+<div class="container-lg mt-5 mb-5 pt-5 ">
     <div class="row margin_bottomfooter">
         <div class="col-md-12">
             <h6 class="fs-3 fw-bold mb-4"><?= $this->title ?></h6>
         </div>
-        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
+        <div class="col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'follower']); ?>
         </div>
-        <div class="col-md-9 col-xl-10 col-xxl-10">
+        <div class="col-xxl-9 col-lg-8">
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">

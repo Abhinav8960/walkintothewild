@@ -17,10 +17,9 @@ class PackageGallerySearch extends PackageGallery
     public function rules()
     {
         return [
-            [['package_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
-            [['package_id', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['image'], 'string', 'max' => 255],
-            [['image_caption'], 'string', 'max' => 512],
+            [['package_id', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
+            [['image'], 'safe'],
+            [['image_caption'], 'safe'],
         ];
     }
 

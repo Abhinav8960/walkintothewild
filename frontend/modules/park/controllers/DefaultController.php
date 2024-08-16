@@ -259,7 +259,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionRareanimal($slug)
     {
-        $rare_animal = MasterAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug, 'animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->limit(1)->one();
+        $rare_animal = MasterAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         $searchModel = new SafariParkSearch();
         if ($rare_animal) {
             $searchModel->master_rare_animal_id = $rare_animal->id;
@@ -444,15 +444,18 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/park']);
         }
 
-        $packages = Package::find()->where(['package.status' => Package::STATUS_ACTIVE])
-            ->joinWith('packagepark', function ($additional_query) use ($model) {
-                $additional_query->andWhere(['park_id' => $model->id, 'package_safari_park.status' => 1]);
-            })->all();
+        $park_id = $model->id;
+        $query = Package::find()->where(['package.status' => Package::STATUS_ACTIVE]);
+        $query->joinwith(['packagepark' => function ($query) use ($park_id) {
+            $query->andWhere(['park_id' => $park_id, 'package_safari_park.status' => 1]);
+        }]);
+
+
         return $this->render(
             '_package',
             [
                 'model' => $model,
-                'packages' => $packages,
+                'packages' => $query->all(),
             ]
         );
     }

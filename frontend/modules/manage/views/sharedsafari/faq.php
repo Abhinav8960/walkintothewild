@@ -17,8 +17,8 @@ $this->params['title'] = $this->title;
         <div class="col-md-12 d-flex justify-content-between align-items-center mb-4 flex-wrap ">
             <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
             <div class="mb-0 mt-xl-0 mt-3">
-                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?> " style="cursor:pointer">+ Create FAQ</a>
-                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq?share_safari_id=' . $shared_safari_departure_model->id . '']) ?>" style="cursor:pointer">+ Select FAQ</a>
+                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq', 'slug' => $shared_safari_departure_model->slug]) ?> " style="cursor:pointer">+ Create FAQ</a>
+                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq', 'slug' => $shared_safari_departure_model->slug]) ?>" style="cursor:pointer">+ Select FAQ</a>
             </div>
         </div>
 

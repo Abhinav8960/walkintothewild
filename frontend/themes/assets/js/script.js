@@ -105,12 +105,12 @@ if ($('.topSlider_tour').length) {
 var owl = $(".opratios-slider");
 var itemCount = owl.children().length;
 owl.owlCarousel({
-    items: itemCount >= 4 ? 4 : itemCount,
+    items: itemCount >= 5 ? 5 : itemCount,
     loop: false,
     margin: 10,
     dots: false,
     smartSpeed: 900,
-    autoplay: true,
+    autoplay: false,
     nav: false,
     responsive: {
         0: {
@@ -120,7 +120,7 @@ owl.owlCarousel({
             items: itemCount >= 3 ? 3 : itemCount
         },
         1400: {
-            items: itemCount >= 4 ? 4 : itemCount
+            items: itemCount >= 5 ? 5 : itemCount
         }
     }
 });
@@ -189,7 +189,7 @@ $(document).ready(function () {
 
     if (itemCount > 1) {
         $slider.owlCarousel({
-            loop: true,
+            loop: false,
             margin: 10,
             nav: false,
             dots: true,
@@ -243,6 +243,16 @@ if ($('.slider_resorts').length) {
         }
     });
 }
+
+$(document).ready(function() {
+    $(".photoGallry").on("click", function() {
+        $.fancybox.open($("[data-fancybox='gallery']"), {
+            loop: false, 
+            buttons: ["close"], 
+            infobar: false, 
+        });
+    });
+});
 document.addEventListener('DOMContentLoaded', function () {
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -850,7 +860,7 @@ function bulleteditor(editor_id) {
             items: ['numberedList'] // Include only 'numberedList' in the toolbar items
         },
         heading: false, // Disable heading options
-        placeholder: 'Enter Page Detail!',
+        placeholder: document.getElementById(editor_id).placeholder,
         fontFamily: {
             options: [
                 'default', 'Arial, Helvetica, sans-serif', 'Courier New, Courier, monospace',

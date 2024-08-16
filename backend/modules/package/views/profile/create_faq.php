@@ -26,10 +26,10 @@ $this->params['title'] = $this->title;
 
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'question')->textInput(['rows' => '2', 'placeholder' => 'Package Question'])->label('Package Question') ?>
+                <?= $form->field($model, 'question')->textarea(['rows' => '2', 'placeholder' => 'Question'])->label('Question') ?>
             </div>
             <div class="col-md-12">
-                <?= $form->field($model, 'answer')->textInput(['rows' => '2', 'placeholder' => 'Package Answer'])->label('Package Answer') ?>
+                <?= $form->field($model, 'answer')->textarea(['rows' => '2', 'placeholder' => 'Answer'])->label('Answer') ?>
             </div>
             <?php
             if (!empty($model->package_faq_model->id)) { ?>

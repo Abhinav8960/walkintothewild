@@ -247,32 +247,32 @@ $this->registerJs($gst_script);
 ?>
 
 <?php
-$script = <<< JS
-    $(function(){
-        // Function to generate slug from title
-        function slugify(text) {
-            return text.toString().toLowerCase()
-                .replace(/\s+/g, '-')           // Replace spaces with -
-                .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-                .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-                .replace(/^-+/, '')             // Trim - from start of text
-                .replace(/-+$/, '');            // Trim - from end of text
-        }
+// $script = <<< JS
+//     $(function(){
+//         // Function to generate slug from title
+//         function slugify(text) {
+//             return text.toString().toLowerCase()
+//                 .replace(/\s+/g, '-')           // Replace spaces with -
+//                 .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+//                 .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+//                 .replace(/^-+/, '')             // Trim - from start of text
+//                 .replace(/-+$/, '');            // Trim - from end of text
+//         }
 
-        // Handle title change to update slug
-        $('#packageform-package_name').on('input', function() {
-            var package_name = $(this).val();
-            var package_slug = slugify(package_name);
-            $('#packageform-package_slug').val(package_slug);
-        });
+//         // Handle title change to update slug
+//         $('#packageform-package_name').on('input', function() {
+//             var package_name = $(this).val();
+//             var package_slug = slugify(package_name);
+//             $('#packageform-package_slug').val(package_slug);
+//         });
 
-        // Initialize slug when editing existing record
-        if (!$('#packageform-slug').val() && $('#packageform-package_name').val()) {
-            var package_name = $('#packageform-package_name').val();
-            var package_slug = slugify(package_name);
-            $('#packageform-package_slug').val(package_slug);
-        }
-    });
-JS;
-$this->registerJs($script);
+//         // Initialize slug when editing existing record
+//         if (!$('#packageform-slug').val() && $('#packageform-package_name').val()) {
+//             var package_name = $('#packageform-package_name').val();
+//             var package_slug = slugify(package_name);
+//             $('#packageform-package_slug').val(package_slug);
+//         }
+//     });
+// JS;
+// $this->registerJs($script);
 ?>

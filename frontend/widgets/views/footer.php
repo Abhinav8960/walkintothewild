@@ -48,7 +48,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <!-- <li><a href="/birdingtour-registration">Birding Tour Operator</a></li> -->
                             <!-- <li><a href="#" style="cursor: default;">Resorts / Lodge / Home Stay</a></li> -->
                             <li><a href="/article">Articles and Tips</a></li>
-                            <li><a href="/about-us">About us</a></li>
+                            <li><a href="/about-us">About Us</a></li>
                             <li><a href="/contact">Contact Us</a></li>
                             <li><a href="/faq">FAQs</a></li>
                         </ul>
@@ -104,11 +104,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-lg-4 col-xxl-3 ">
                 <div class="d-flex gap-3  justify-content-lg-end justify-content-center">
                     <div class="terms">
-                        <p class="mb-0  pt-0"><a href="/privacy-policy">PRIVACY POLICY</a></p>
+                        <p class="mb-0  pt-0"><a href="<?= \yii\helpers\Url::toRoute(['/privacy-policy']) ?>">PRIVACY POLICY</a></p>
                     </div>
                     <span class="pt-md-0 pt-2">|</span>
                     <div class="terms">
-                        <p class="mb-0 pt-0"><a href="/termsandcondition">TERMS OF USE</a></p>
+                        <p class="mb-0 pt-0"><a href="<?= \yii\helpers\Url::toRoute(['/terms-of-use']) ?>">TERMS OF USE</a></p>
                     </div>
                 </div>
             </div>

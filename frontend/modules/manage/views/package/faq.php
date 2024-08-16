@@ -15,15 +15,14 @@ $this->params['title'] = $this->title;
 <div class="container-lg mt-5 mb-5 pt-5  ">
     <div class="row margin_bottomfooter">
         <div class="col-md-12 ">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-            <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
-            <div class="d-flex justify-content-between align-items-center flex-basis-50 gap-2">
-                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" target="_blank"><i class="fa fa-eye"></i> View </a> 
-                <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-faq/' . $package_model->id . '']) ?>">+ Create FAQ</button>
-                <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/select-faq/' . $package_model->id . '']) ?>">+ Select FAQ</button>
+            <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap">
+                <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
+                <div class=" mt-xxl-0 mt-3">
+                    <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2  " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
+                    <a href="javascript:void(0)"  class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-faq', 'package_id' => $package_model->id]) ?>" >+ Create FAQ</a>
+                    <!-- <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/select-faq/' . $package_model->id . '']) ?>">+ Select FAQ</button> -->
+                </div>
             </div>
-            </div>
-           
         </div>
         <div class="col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
@@ -33,7 +32,6 @@ $this->params['title'] = $this->title;
                 <div class="card-body safartabs p-4">
                     <div class="row">
                         <div class="col-12">
-
                             <?= $this->render('_profile_navbar', ['package' => $package_model, 'faq_active' => 'active']) ?>
                         </div>
                     </div>
@@ -71,17 +69,20 @@ $this->params['title'] = $this->title;
                                                             'class' => 'yii\grid\ActionColumn',
                                                             'header' => "Actions",
                                                             'contentOptions' => ['style' => 'width: 15%;'],
-                                                            'template' => '{delete}&nbsp;&nbsp;{suspend}',
+                                                            'template' => '{update}&nbsp;',
                                                             'buttons' => [
-                                                                'delete' => function ($url, $model) {
-                                                                    if ($model->status != -1) {
-                                                                    } else {
-                                                                        return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                                                                    }
+                                                                'update' => function ($url, $model) {
+                                                                    return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toROute(['/manage/package/update-faq', 'package_id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'packageBtn btn btn-info bg-blues py-2 text-white', 'title' => 'Update FAQ']);
                                                                 },
-                                                                'suspend' => function ($url, $model) {
-                                                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
-                                                                },
+                                                                // 'delete' => function ($url, $model) {
+                                                                //     if ($model->status != -1) {
+                                                                //     } else {
+                                                                //         return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
+                                                                //     }
+                                                                // },
+                                                                // 'suspend' => function ($url, $model) {
+                                                                //     return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
+                                                                // },
                                                             ]
                                                         ],
                                                     ],
@@ -103,7 +104,7 @@ $this->params['title'] = $this->title;
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Select a FAQ</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel"> FAQ</h1>
                 <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
             </div>
             <div class="modal-body px-2 pt-0">

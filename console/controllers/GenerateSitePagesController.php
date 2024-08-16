@@ -123,6 +123,8 @@ class GenerateSitePagesController extends Controller
       'category' => 'Operator',
       'sub_category' => 'Operator'
     ];
+
+    $this->get_join_safari_site_pages();
     $this->process($group_pages);
   }
 
@@ -435,8 +437,8 @@ class GenerateSitePagesController extends Controller
     $pages = [
       'article',
       'park',
-      'shared-safari',
-      'safari-packages',
+      // 'shared-safari',
+      'package',
       'sharedsafari',
       'operator',
       'plan-safari',
@@ -472,10 +474,10 @@ class GenerateSitePagesController extends Controller
       } else if ($page == 'park') {
         $category = 'Park';
         $sub_category = 'Park';
-      } else if ($page == 'shared-safari') {
+      } else if ($page == 'sharedsafari') {
         $category = 'Shared Safari';
         $sub_category = 'Shared Safari';
-      } else if ($page == 'safari-packages') {
+      } else if ($page == 'package') {
         $category = 'Package';
         $sub_category = 'Package';
       } else if ($page == 'sharedsafari') {
@@ -540,5 +542,60 @@ class GenerateSitePagesController extends Controller
     }
 
     return $return;
+  }
+
+  protected function get_join_safari_site_pages()
+  {
+    $records = ShareSafari::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+    if (count($records)) {
+      $temp_insert_data = [];
+      foreach ($records as $row) {
+        if ($row['status'] == 1) {
+          //update existing record
+          $url = str_replace("_slug", $row['slug'], $data['url']);
+
+          $s_request = $this->getrequestinfo($url);
+          $get_parameter = $s_request['get_parameter'];
+          $post_parameter = $s_request['post_parameter'];
+          $is_get = $s_request['is_get'];
+          $is_post = $s_request['is_post'];
+          $is_ajax = $s_request['is_ajax'];
+          $model = SitePages::find()->where(['content_id' => $row['id']])->andWhere(['content_table' => $data['table']])->one();
+          if ($model) {
+            $model->get_parameter  = $get_parameter;
+            $model->post_parameter  = $post_parameter;
+            $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
+            $model->status = 1;
+            $model->save(false);
+          } else {
+            //insert new record
+            $temp_insert_data[] = [
+              'content_id' => $row['id'],
+              'content_table' => $data['table'],
+              'url' => $url,
+              'url_type' => $data['url_type'],
+              'slug' => $row['slug'],
+              'category' => $data['category'],
+              'sub_category' => $data['sub_category'],
+              'get_parameter' => $get_parameter,
+              'post_parameter' => $post_parameter,
+              'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+              'counter' => 0,
+              'is_get' => $is_get,
+              'is_post' => $is_post,
+              'is_ajax' => $is_ajax,
+              'status' => 1
+            ];
+          }
+        } else {
+          //mark as disabled
+          SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['content_id' => $row['id'], 'content_table' => $data['table']]);
+        }
+      }
+
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
+      }
+    }
   }
 }

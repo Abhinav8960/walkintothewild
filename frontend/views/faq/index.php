@@ -24,8 +24,6 @@ $this->params['title'] = $this->title;
                     <div class="headingBnner_inner">
                         <h1 class="mb-0">Frequently Asked Questions</h1>
                     </div>
-
-
                 </div>
 
             </div>
@@ -37,8 +35,8 @@ $this->params['title'] = $this->title;
 
 <section class="faqs-wrpper margin_bottomfooter pt-5">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
                 <div class="accordion accordion-flush" id="accordionFlushExample">
 
                     <?php

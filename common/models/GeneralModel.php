@@ -497,7 +497,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function suggestioncategory()
     {
-        return ArrayHelper::map(MasterSuggestionCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterSuggestionCategory::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['sequence' => SORT_ASC, 'title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function birdingoperatorcategory()
@@ -1095,7 +1095,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function tourusers()
     {
 
-        return ArrayHelper::map(User::find()->where(['status' => 10, 'is_safari_operator' => 0])->andWhere(['<>', 'is_adminstrator', 1])->andWhere(['<>', 'is_admin', 1])->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
+        return ArrayHelper::map(User::find()->where(['status' => 10, 'is_safari_operator' => 1])->andWhere("id NOT IN (SELECT user_id from safari_operator WHERE user_id IS NOT NULL)")
+            // ->andWhere(['<>', 'is_adminstrator', 1])->andWhere(['<>', 'is_admin', 1])
+
+            ->orderBy(['name' => SORT_ASC])->all(), 'id', 'name');
     }
 
 
