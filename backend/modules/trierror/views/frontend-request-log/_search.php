@@ -24,7 +24,7 @@ use kartik\select2\Select2;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?= $form->field($model, 'user_id')->widget(\kartik\select2\Select2::classname(), [
             'data' => yii\helpers\ArrayHelper::map(common\models\User::find()->orderBy('name', 'asc')->all(), 'id', 'name'),
             'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
@@ -40,7 +40,7 @@ use kartik\select2\Select2;
         ])->label(false) ?>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?= $form->field($model, 'request_group')->dropDownList(
             $request_group_type,
             [
@@ -49,20 +49,30 @@ use kartik\select2\Select2;
         ) ?>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <?= $form->field($model, 'request_code')->dropDownList(
             $request_codes_list,
             [
                 'prompt' => 'Select Response Code',
             ]
         ) ?>
-    </div><?php /*
-        <div class="col-md-3">
-            <?php  echo $form->field($model, 'request_code') ?>
-        </div>
-        <div class="col-md-3">
-            <?php  echo $form->field($model, 'request_code') ?>
-        </div> */ ?>
+    </div>
+    <div class="col-md-2">
+        <?= $form->field($model, 'is_count')->dropDownList(
+            ['' => "-- Select All --", '1' => 'Count Done', 'Count Pending'],
+            [
+                'prompt' => 'Select Count Status',
+            ]
+        ) ?>
+    </div>
+    <div class="col-md-2">
+        <?= $form->field($model, 'is_reqeust_trace')->dropDownList(
+            ['' => "-- Select All --", '1' => 'Traced', 'Not Traced'],
+            [
+                'prompt' => 'Select Trace Status',
+            ]
+        ) ?>
+    </div>
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>

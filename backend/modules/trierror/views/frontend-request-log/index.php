@@ -110,6 +110,27 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'is count',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->is_count;
+                        }
+                    ],
+                    [
+                        'label' => 'is traced',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->is_count;
+                        }
+                    ],
+                    [
+                        'label' => 'Created At',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date('d/m/Y H:i', strtotime($model->created_at));
+                        }
+                    ],
+                    [
                         'class' => 'yii\grid\ActionColumn',
                         //'header' => "Actions",
                         //'contentOptions' => ['style' => 'width: 15%;'],
