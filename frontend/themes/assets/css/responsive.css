@@ -849,6 +849,10 @@ font-size: 19px;
 }
 
 @media only screen and (min-width: 991px) {
+  .copyright p{
+
+    padding-left: 180px;
+  }
   .moreviewMobile{
 
     display: none;
@@ -2374,7 +2378,7 @@ flex-wrap: nowrap;
 }
 .itenary_tabs .nav-tabs .nav-link{
 
-  font-size: 12px !important;
+  font-size: 14px !important;
 }
 .left_text p{
   font-size: 12px;

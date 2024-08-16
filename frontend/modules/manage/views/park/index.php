@@ -23,7 +23,9 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                         ?>
                             <div class="col-md-6 col-sm-6 col-lg-3 col-xxl-2 col-xl-3 gap-2 mt-2 mb-2">
                                 <div class="parksImgireview h-100 position-relative">
-                                    <img src="<?= isset($park_detail->logoimagepath) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' =>  $park_detail->slug]) ?>" data-pjax="0">
+                                        <img src="<?= isset($park_detail->logoimagepath) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                    </a>
                                     <div class="footer_safariname">
                                         <h6 class=""><?= $park_detail->title ?></h6>
                                     </div>

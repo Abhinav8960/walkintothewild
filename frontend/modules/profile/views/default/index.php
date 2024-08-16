@@ -83,31 +83,20 @@ $this->params['title'] = $this->title;
                                                     <?php
                                                     if ($user_experiences) {
                                                         foreach ($user_experiences as $user_experience) {
+                                                            $park_detail = $user_experience->park;
+                                                            if (!$park_detail) {
+                                                                continue;
+                                                            }
                                                     ?>
                                                             <div class="col-md-4 col-sm-6 col-lg-4 gap-2 mt-2 mb-2">
                                                                 <div class="parksImgireview h-100 position-relative">
-                                                                    <!-- <div class="floating-watchlist">
-                                                                    <?php
-                                                                    if (Yii::$app->user->identity) {
-                                                                        if (Yii::$app->user->identity->id == $user_experience->user_id) { ?>
-                                                                            <div class="heart_bx">
-                                                                                <?= Html::a('<i class="fa-solid fa-trash"></i>', ['delete', 'id' => $user_experience->id], [
-                                                                                    'class' => 'btn btn-danger',
-                                                                                    'data' => [
-                                                                                        'confirm' => 'Are you sure you want to delete this photo?',
-                                                                                        'method' => 'post',
-                                                                                    ],
-                                                                                ]) ?>
-                                                                            </div>
-                                                                    <?php }
-                                                                    } ?>
-                                                                </div> -->
-                                                                    <img src="<?= isset($user_experience->file) ? $user_experience->imagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                                                    <a href="<?= \yii\helpers\Url::toRoute(['/park/default/view', 'slug' =>  $park_detail->slug]) ?>" data-pjax="0">
+                                                                        <img src="<?= isset($park_detail->logoimagepath) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
+                                                                    </a>
                                                                     <div class="footer_safariname">
-                                                                        <h6 class=""><?= isset(GeneralModel::safariparkoption()[$user_experience->park_id]) ? GeneralModel::safariparkoption()[$user_experience->park_id] : '' ?></h6>
+                                                                        <h6 class=""><?= $park_detail->title ?></h6>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
                                                         <?php }
                                                     } else { ?>
