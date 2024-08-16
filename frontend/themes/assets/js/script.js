@@ -189,7 +189,7 @@ $(document).ready(function () {
 
     if (itemCount > 1) {
         $slider.owlCarousel({
-            loop: true,
+            loop: false,
             margin: 10,
             nav: false,
             dots: true,
@@ -243,12 +243,13 @@ if ($('.slider_resorts').length) {
         }
     });
 }
+
 $(document).ready(function() {
     $(".photoGallry").on("click", function() {
         $.fancybox.open($("[data-fancybox='gallery']"), {
-            loop: false, // Loop through images
-            buttons: ["close"], // Show only the close button
-            infobar: false, // Disable the "1/7" image counter
+            loop: false, 
+            buttons: ["close"], 
+            infobar: false, 
         });
     });
 });

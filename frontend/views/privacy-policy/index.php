@@ -15,14 +15,14 @@ $this->params['title'] = $this->title;
 
 <section class="banner_section-inner position-relative">
     <picture class="position-relative">
-        <source srcset="<?= $this->params['baseurl'] ?>/img/safariformbanner.jpg" media="(max-width:576px)" type="image/webp">
-        <img src="<?= $this->params['baseurl'] ?>/img/safariformbanner.jpg" class="d-block w-100 " alt="banner">
+        <source srcset="<?= $this->params['baseurl'] ?>/img/pp_banner.jpg" media="(max-width:576px)" type="image/webp">
+        <img src="<?= $this->params['baseurl'] ?>/img/pp_banner.jpg" class="d-block w-100 " alt="banner">
     </picture>
 
 </section>
 <section class="terms_wrapper">
     <div class="container-lg">
-        <div class="row pb-5 mb-5">
+        <div class="row pb-5 mb-5  margin_bottomfooter">
             <div class="col-12">
                 <div class="title_terms">
                     <h2>Privacy Policy</h2>

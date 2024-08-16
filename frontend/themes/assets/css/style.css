@@ -6102,14 +6102,14 @@ a.desc:after {
 
 .safaritourlogo{
 
-    height: 54px;
+    height: 65px;
 }
 .safaritourlogo img {
 
     aspect-ratio: 8/2;
     -o-object-fit: cover;
        object-fit: cover;
-       margin-top: 4px;
+       margin-top: 1px;
        height: inherit;
 }
 
