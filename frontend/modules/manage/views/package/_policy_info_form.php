@@ -53,7 +53,7 @@ use yii\bootstrap5\ActiveForm;
                         <!-- Safari Parks content goes here -->
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Package Terms Condtition'])->label(false) ?>
+                                <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Mention Terms & Condtition'])->label('Terms Condtition') ?>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@ use yii\bootstrap5\ActiveForm;
                         <!-- Safari Parks content goes here -->
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Privacy Policy'])->label(false) ?>
+                                <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Privacy Policy'])->label(false) ?>
                             </div>
                         </div>
                     </div>
@@ -86,7 +86,7 @@ use yii\bootstrap5\ActiveForm;
                         <!-- Shared Safari content goes here -->
                         <div class="row">
                             <div class="col-12">
-                            <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Date Change Policy'])->label(false) ?>
+                            <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Date Change Policy'])->label('Date Change Policy') ?>
                             </div>
                            
                         </div>
@@ -95,7 +95,7 @@ use yii\bootstrap5\ActiveForm;
                     <div class="tab-content_tour " id="tab26">
                         <div class="row">
                             <div class="col-md-12">
-                                <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Refund Policy'])->label(false) ?>
+                                <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Refund Policy'])->label("Refund Policy") ?>
                             </div>
                         </div>
                     </div>

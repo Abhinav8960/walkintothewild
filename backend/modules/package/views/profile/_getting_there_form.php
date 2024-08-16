@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
     <div class="card-body">
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Package Getting There'])->label('Package Getting There') ?>
+                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach'])->label('Package Getting There') ?>
             </div>
         </div>
         <hr>

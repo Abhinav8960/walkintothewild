@@ -46,17 +46,17 @@ use yii\bootstrap5\ActiveForm;
                         <div class="tab-content">
                             <div class="tab-pane active" id="tab21">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Package Terms Condtition'])->label('Package Terms Condtition') ?>
+                                    <?= $form->field($model, 'package_terms_condtition')->textarea(['rows' => '2', 'placeholder' => 'Mention Terms & Condtitions'])->label('Package Terms Condtition') ?>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab22">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Privacy Policy'])->label('Package Privacy Policy') ?>
+                                    <?= $form->field($model, 'privacy_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Privacy Policy'])->label('Package Privacy Policy') ?>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab23">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package Change Policy'])->label('Package Change Policy') ?>
+                                    <?= $form->field($model, 'change_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Change Policy'])->label('Package Change Policy') ?>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab24">
@@ -67,12 +67,12 @@ use yii\bootstrap5\ActiveForm;
 
                             <div class="tab-pane" id="tab25">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
+                                    <?= $form->field($model, 'date_change_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Date Change Policy'])->label('Date Change Policy') ?>
                                 </div>
                             </div>
                             <div class="tab-pane" id="tab26">
                                 <div class="col-md-12">
-                                    <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Package What You Must Carry'])->label('Package What You Must Carry') ?>
+                                    <?= $form->field($model, 'refund_policy')->textarea(['rows' => '2', 'placeholder' => 'Mention Refund Policy'])->label('Refund Policy') ?>
                                 </div>
                             </div>
                         </div>

@@ -873,11 +873,11 @@ function editor(editor_id) {
 
 function bulleteditor(editor_id) {
 	CKEDITOR.ClassicEditor.create(document.getElementById(editor_id), {
-		toolbar: {
+		toolbar: { 
 			items: ['numberedList'] // Include only 'numberedList' in the toolbar items
 		},
 		heading: false, // Disable heading options
-		placeholder: 'Enter Page Detail!',
+		placeholder:document.getElementById(editor_id).placeholder,
 		fontFamily: {
 			options: [
 				'default', 'Arial, Helvetica, sans-serif', 'Courier New, Courier, monospace',
