@@ -147,5 +147,5 @@ return [
     '/chat/message/<user_handle>' => '/chat/default/message',
     '/site/signinagree/<key>' => '/site/signinagree',
 
-    '/account/<id>' => '/account/default/index',
+    // '/account/<id>' => '/account/default/index',
 ];
