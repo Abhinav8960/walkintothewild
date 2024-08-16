@@ -38,7 +38,7 @@ use yii\helpers\Url;
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center">
                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                        <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?></h6>
+                                        <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?> <?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></h6>
                                     </a>
                                 </div>
                                 <p><?= $comments->comment ?>
