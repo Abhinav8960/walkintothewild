@@ -7291,3 +7291,31 @@ select.custom_sort_by_input  option.selected{
     margin-right: 20px !important;
 } */
 
+
+.dotsnotifications .fa-bell,
+.dotsnotifications .fa-envelope{
+
+    position: relative;
+}
+.dotsnotifications .fa-bell::after{
+
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    top: -3px;
+    left: 14px;
+}
+.dotsnotifications .fa-envelope::after{
+
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: red;
+    position: absolute;
+    top: -1px;
+    left: 19px;
+}
