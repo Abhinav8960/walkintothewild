@@ -83,14 +83,16 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                         <div class="card-body">
                             <div class="d-flex chat-message-header justify-content-between">
                                 <div class="chat-profile">
-                                    <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
+                                        <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                    </a>
                                     <?= $individual_user->name ?>
                                 </div>
-                                <div class="chat-action-in-right">
+                                <!-- <div class="chat-action-in-right">
                                     <i class="fa fa-search"></i>
                                     &nbsp;
                                     <i class="fa fa-ellipsis-v"></i>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="chat-message-container">
