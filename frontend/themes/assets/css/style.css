@@ -7348,3 +7348,15 @@ select.custom_sort_by_input  option.selected{
     top: -1px;
     left: 19px;
 }
+
+.page-link.active, .active > .page-link{
+
+    background-color: var(--background-primary) !important;
+    color: #fff !important;
+    border-color: var(--background-primary) !important;
+}
+.page-link{
+
+    color: var(--background-primary ) !important;
+
+}
