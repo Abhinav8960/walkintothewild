@@ -282,7 +282,7 @@ class DefaultController extends FrontendBaseController
                         $comments->flaged = 1;
                         $comments->save(false);
                         Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
-                        return $this->redirect(['/package/default/view',  'slug' => $slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '', '#' => 'commentform-comment']);
+                        return $this->redirect(['/package/default/view',  'slug' => $slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
                     }
                 }
             }

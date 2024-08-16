@@ -220,7 +220,7 @@ class DefaultController extends FrontendBaseController
 
         if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($share_safari)) {
             Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
-            return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '', '#' => 'comments_safari']);
+            return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
         }
 
         if (!$share_safari) {
@@ -357,7 +357,7 @@ class DefaultController extends FrontendBaseController
                         return $this->redirect([
                             '/sharedsafari/default/view',
                             'slug' => $share_safari->slug,
-                            '#' => 'comments_safari',
+
                             'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
                         ]);
                     }
@@ -462,7 +462,7 @@ class DefaultController extends FrontendBaseController
                             return $this->redirect([
                                 '/sharedsafari/default/view',
                                 'slug' => $share_safari->slug,
-                                '#' => 'comments_safari'
+
                             ]);
                         }
                     }
