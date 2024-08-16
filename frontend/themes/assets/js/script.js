@@ -300,10 +300,12 @@ $(document).ready(function(){
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2
+                        items: 2,
+                        stagePadding: 20,  
                     },
                     600: {
-                        items: 3
+                        items: 3,
+                        stagePadding: 30,  
                     } ,
                     767: {
                         items: 4
@@ -338,20 +340,16 @@ $(document).ready(function(){
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2.5
+                        items: 2.5,   
+                     
                     },
-                    
                     400: {
-                        items: 3.5
+                        items: 3,
+                        stagePadding: 30,
                     },
                     600: {
-                        items: 5.5
-                    },
-                    991: {
-                        items: 5.5
-                    },
-                    1200: {
-                        items: 5.5
+                        items: 4,
+                        stagePadding: 10,
                     }
                 }
             });
@@ -369,31 +367,75 @@ $(document).ready(function(){
 });
 $(document).ready(function(){
     function initializeOwlCarousel() {
+        if ($(window).width() <= 768) {
+            $('.slider_orprator').addClass('owl-carousel');
+            $('.slider_orprator').owlCarousel({
+                loop: false,
+                margin: 10,
+                nav: false,
+                center:false,
+                // stagePadding: 50,
+                dots: false,
+                responsive: {
+                    0: {
+                        items: 2, 
+                        stagePadding: 30,  
+                     
+                    },
+                    400: {
+                        items: 3,
+                        stagePadding: 10,
+                    },
+                    600: {
+                        items: 4,
+                        stagePadding: 40,
+                    },
+                    700: {
+                        items: 5,
+                        stagePadding: 10,
+                    }
+                }
+            });
+        } else {
+            $('.slider_orprator').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+            $('.slider_orprator').find('.owl-stage-outer').children().unwrap();
+        }
+    }
+
+    initializeOwlCarousel();
+
+    $(window).resize(function() {
+        initializeOwlCarousel();
+    });
+});
+$(document).ready(function(){
+    function initializeOwlCarousel() {
         if ($(window).width() <= 767) {
             $('.slider_packagemobile').addClass('owl-carousel');
             $('.slider_packagemobile').owlCarousel({
                 loop: false,
                 margin: 10,
                 nav: false,
-                // center:false,
+                center:false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2.5
+                        items: 2, 
+                        stagePadding: 30,  
+                     
                     },
-                    
                     400: {
-                        items: 2.5
+                        items: 3,
+                        stagePadding: 10,
                     },
                     600: {
-                        items: 3.5
+                        items: 4,
+                        stagePadding: 40,
                     },
-                    991: {
-                        items: 4.5
-                    },
-                    1200: {
-                        items: 4.5
+                    700: {
+                        items: 5,
+                        stagePadding: 10,
                     }
                 }
             });
@@ -423,31 +465,36 @@ $(document).ready(function() {
                 stagePadding: 10,
                 responsive: {
                     0: {
-                        items: 1.2,
+                        items: 1,
+                        stagePadding: 10,
                        
                        
                     },
                     300: {
                         items: 2,
-                        stagePadding: 10,
+                        stagePadding: 0,
   
                     },
 
                     400: {
-                        items: 2.2,
+                        items: 2,
+                        stagePadding: 30,
                        
                     },
                     600: {
-                        items: 3.2,
+                        items: 3,
+                        stagePadding: 30,
                       
                       
                     } ,
                     800: {
                         items: 4,
+                        stagePadding: 10,
                       
                     },
                     991: {
-                        items: 5.2,
+                        items: 5,
+                        stagePadding: 10,
                         
                     }
                 }
@@ -477,16 +524,20 @@ $(document).ready(function(){
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2
+                        items: 2,
+                        stagePadding: 10,
                     },
                     600: {
-                        items: 3
+                        items: 3,
+                        stagePadding: 30,
                     } ,
                     767: {
-                        items: 4
+                        items: 4, 
+                        stagePadding: 10,
                     },
                     991: {
-                        items: 4
+                        items: 4,
+                        stagePadding: 10,
                     }
                 }
             });
