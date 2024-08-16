@@ -17,8 +17,9 @@ $this->params['title'] = $this->title;
         <div class="col-md-12 d-flex justify-content-between mb-4 flex-wrap">
             <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
             <div class="d-flex justify-content-between mt-xl-0 mt-3">
-                <button class="packageBtn btn_newsafari organizeBtn newbg " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-gallery?share_safari_id=' . $shared_safari_departure_model->id . '']) ?>">+ Add Gallery</button>
+                <button class="packageBtn btn_newsafari organizeBtn newbg " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-gallery', 'slug' => $shared_safari_departure_model->slug]) ?>">+ Add Gallery</button>
             </div>
+
         </div>
         <div class="col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'sharedsafari']); ?>
@@ -64,8 +65,8 @@ $this->params['title'] = $this->title;
                                                     'contentOptions' => ['style' => 'width: 15%;'],
                                                     'template' => '{update}',
                                                     'buttons' => [
-                                                        'update' => function ($url, $model) {
-                                                            return Html::Button('+ Edit Gallery Image', ['value' => "/manage/sharedsafari/create-gallery?share_safari_id=$model->share_safari_id&id=$model->id", 'class' => 'btn packageBtn join_btn me-2', 'title' => 'Create Gallery']);
+                                                        'update' => function ($url, $model) use ($shared_safari_departure_model) {
+                                                            return Html::Button('+ Edit Gallery Image', ['value' => \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-gallery', 'slug' => $shared_safari_departure_model->slug, 'id' => $model->id]), 'class' => 'btn packageBtn join_btn me-2', 'title' => 'Create Gallery']);
                                                         },
                                                     ]
                                                 ],
