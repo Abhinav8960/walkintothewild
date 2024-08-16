@@ -57,6 +57,7 @@ class DefaultController extends FrontendBaseController
     {
         $searchModel = new PackageSearch();
         $searchModel->status = Package::STATUS_ACTIVE;
+        $searchModel->custom_sort_by = 5;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $models = $dataProvider->getModels();
 
