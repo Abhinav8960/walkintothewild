@@ -100,8 +100,8 @@ class CreateSiteXmlController extends Controller
       $frontend_url = Yii::$app->params['frontend_url'];
       //$frontend_url = 'http://staging.walkintothewild.in/';
       foreach ($records as $row) {
-        $full_url =  $frontend_url . $row['url'];
-        $total_records = FrontendRequestLog::find()->where(['request_full_url' => $full_url])->andWhere(['is_count' => 0])->count();
+        $full_url =  $row['url'];
+        $total_records = FrontendRequestLog::find()->where(['request_url' => $full_url])->andWhere(['is_count' => 0])->count();
         $row->counter = $row->counter + $total_records;
         $row->save();
 
