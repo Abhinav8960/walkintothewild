@@ -9,15 +9,15 @@
         <a href="/manage/sharedsafari/inclusion/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($inclusions_active) ? $inclusions_active : '' ?>" id="contact-tab">Inclusions</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a href="/manage/sharedsafari/getting-there/<?= $sharedsafari->id ?>" class="nav-link <?= isset($getting_there_active) ? $getting_there_active : '' ?>" id="howto-reach">Getting There</a>
+        <a href="/manage/sharedsafari/getting-there/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($getting_there_active) ? $getting_there_active : '' ?>" id="howto-reach">Getting There</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a href="/manage/sharedsafari/policy-info/<?= $sharedsafari->id ?>" class="nav-link <?= isset($policy_info_active) ? $policy_info_active : '' ?>" id="map-tab">Policy Info</a>
+        <a href="/manage/sharedsafari/policy-info/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($policy_info_active) ? $policy_info_active : '' ?>" id="map-tab">Policy Info</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a href="/manage/sharedsafari/faq/<?= $sharedsafari->id ?>" class="nav-link <?= isset($faq_active) ? $faq_active : '' ?>" id="map-tab">FAQ</a>
+        <a href="/manage/sharedsafari/faq/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($faq_active) ? $faq_active : '' ?>" slug="map-tab">FAQ</a>
     </li>
     <li class="nav-item" role="presentation">
-        <a href="/manage/sharedsafari/gallery/<?= $sharedsafari->id ?>" class="nav-link <?= isset($gallery_active) ? $gallery_active : '' ?>" id="map-tab">Gallery</a>
+        <a href="/manage/sharedsafari/gallery/<?= $sharedsafari->slug ?>" class="nav-link <?= isset($gallery_active) ? $gallery_active : '' ?>" id="map-tab">Gallery</a>
     </li>
 </ul>
