@@ -2247,6 +2247,13 @@ margin: 0;
 }
 
 @media (max-width: 420px) {
+  .legends_bx p{
+
+    font-size: 10pxs;
+  }
+  .legends {
+    width: 10px;
+    height: 10px;}
   .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle,
   .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle,
   .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle,
