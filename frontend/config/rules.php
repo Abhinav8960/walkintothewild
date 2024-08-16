@@ -121,6 +121,7 @@ return [
 
 
     '/manage/package/update/<package_id>' => '/manage/package/update',
+    '/manage/package/view/<package_id>' => '/manage/package/view',
     '/manage/package/itinerary/<package_id>/<day>' => '/manage/package/itinerary', //package profile itenary url          
     '/manage/package/inclusion/<package_id>' => '/manage/package/inclusion', //package profile inclusion url          
     '/manage/package/getting-there/<package_id>' => '/manage/package/getting-there', //package profile getting-there url          
@@ -141,7 +142,10 @@ return [
     '/manage/sharedsafari/create-faq/<share_safari_id>' => '/manage/sharedsafari/create-faq', //sharedsafari profile create faq url          
     '/manage/sharedsafari/select-faq/<share_safari_id>' => '/manage/sharedsafari/select-faq',
     '/manage/sharedsafari/gallery/<share_safari_id>' => '/manage/sharedsafari/gallery', //sharedsafari profile faq url          
-    '/manage/sharedsafari/create-gallery/<share_safari_id>' => '/manage/sharedsafari/create-gallery', //sharedsafari profile create faq url          
+    '/manage/sharedsafari/create-gallery/<share_safari_id>' => '/manage/sharedsafari/create-gallery',
+    '/manage/sharedsafari/view/<slug>' => '/manage/sharedsafari/view', //sharedsafari profile create faq url 
+    
+    '/manage/article/update/<slug>' => '/manage/article/update',
 
     // Chat Routes
     '/chat/message/<user_handle>' => '/chat/default/message',
