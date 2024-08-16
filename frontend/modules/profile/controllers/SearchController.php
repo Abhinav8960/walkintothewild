@@ -20,6 +20,7 @@ class SearchController extends FrontendBaseController
      */
     public function actionIndex()
     {
+        return $this->redirect('/');
         $user_list = User::find()->where(['status' => 10])->andWhere("user_handle IS NOT NULL")
             ->andWhere('id NOT IN (select blocked_user_id from blocked_user where status = 1)')->all();
         return $this->render('index', ['user_list' => $user_list]);

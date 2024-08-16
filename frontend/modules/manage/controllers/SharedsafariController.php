@@ -528,15 +528,15 @@ class SharedsafariController extends FrontendBaseController
         ]);
     }
 
-    public function actionComment($id)
+    public function actionComment($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $shared_safari_model = $this->findModel($slug);
 
 
 
         $searchModel = new ShareSafariCommentSearch();
-        $searchModel->share_safari_id = $id;
+        $searchModel->share_safari_id = $shared_safari_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('comment', [

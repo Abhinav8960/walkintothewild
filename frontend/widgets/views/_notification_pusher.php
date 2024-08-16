@@ -33,6 +33,7 @@ $script = <<< JS
         var channel = pusher.subscribe('UserNotificationChannel');
         channel.bind('UserEvent', function(data) {
             if($login_user_id==data.user_id){
+                $('#notification_header_icon').addClass('dotsnotifications');
                 success_notify(data);
             }
         });    
