@@ -261,7 +261,7 @@ class FrontendNotificationHelper
                     $model->is_seen = false;
                     $model->is_read = False;
                     $park_name = $share_safari->park ? $share_safari->park->title : '';
-                    $model->notification_text = $park_name . " Shared Safari Updated ";
+                    $model->notification_text = "The details of a shared safari you have joined have been updated  | " . $park_name;
                     if ($model->save(false)) {
                         self::eventSendtoPusher($model);
                     }
