@@ -292,10 +292,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <h6 class="fs-6 fw-bold mb-4">ITINERARY</h6>
                                 </div>
                                 <div class="itenary_text">
-                                    <?= $this->render('_overview', ['package' => $package]) ?>
                                 </div>
                             </div>
                         </div>
+                        <?= $this->render('_overview', ['package' => $package]) ?>
+
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
