@@ -22,8 +22,13 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-
-        // custom initialization code goes here
+        if (!Yii::$app->user->identity) {
+            return Yii::$app->getResponse()->redirect('/site/login')->send();
+            exit;
+        }
+        if (Yii::$app->user->identity->is_safari_operator != 1) {
+            return Yii::$app->getResponse()->redirect('/')->send();
+        }
     }
 
     /**
@@ -31,12 +36,9 @@ class Module extends \yii\base\Module
      */
     public function operatormodel()
     {
-        if (!Yii::$app->user->identity) {
-            throw new ForbiddenHttpException('Please Login to Access Business Page');
+        if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one()) {
+            return $operator;
         }
-        if (Yii::$app->user->identity->is_safari_operator != 1) {
-            throw new ForbiddenHttpException('You are not Allowed to access this Page');
-        }
-        return SafariOperator::find()->where(['user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+        throw new ForbiddenHttpException('You are not Allowed to access this Page');
     }
 }
