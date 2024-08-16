@@ -94,8 +94,8 @@ class DefaultController extends FrontendBaseController
             }
         }
 
-        $model->action_url = '/sharedsafari/default/organize-safari';
-        $model->action_validate_url = '/sharedsafari/default/validate';
+        $model->action_url = Url::toRoute(['/sharedsafari/default/organize-safari']); //'/sharedsafari/default/organize-safari';
+        $model->action_validate_url = Url::toRoute(['/sharedsafari/default/validate']); //'/sharedsafari/default/validate';
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
