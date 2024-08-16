@@ -56,10 +56,10 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($model, 'share_safari_inclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Inclusion'])->label('Share Safari Inclusion', ['class' => 'Modal_label']) ?>
+                <?= $form->field($model, 'share_safari_inclusion')->textarea(['rows' => '2', 'placeholder' => 'List everything included'])->label('Share Safari Inclusion', ['class' => 'Modal_label']) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($model, 'share_safari_exclusion')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Exclusion'])->label('Share Safari Exclusion', ['class' => 'Modal_label']) ?>
+                <?= $form->field($model, 'share_safari_exclusion')->textarea(['rows' => '2', 'placeholder' => 'List what is not included'])->label('Share Safari Exclusion', ['class' => 'Modal_label']) ?>
             </div>
         </div>
         <div class="row">

@@ -23,7 +23,7 @@ use yii\bootstrap5\ActiveForm;
 
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'Share Safari Getting There'])->label('Share Safari Getting There', ['class' => 'Modal_label']) ?>
+                <?= $form->field($model, 'getting_there')->textarea(['rows' => '2', 'placeholder' => 'How to reach'])->label('Share Safari Getting There', ['class' => 'Modal_label']) ?>
             </div>
         </div>
      
