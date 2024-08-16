@@ -27,7 +27,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 ?>
 
 
-<div class="container-fluid mt-5 ">
+<div class="container-lg mt-5 pt-5 ">
     <div class="row margin_bottomfooter ">
         <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center flex-wrap">
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
@@ -36,10 +36,10 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                 <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update Page</a>
             </div>
         </div>
-        <div class="col-md-3 col-xl-2 col-xxl-2 mb-3">
+        <div class=" col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('_sidebar', ['active' => 'profile']); ?>
         </div>
-        <div class="col-md-9 col-xl-10 col-xxl-10">
+        <div class="col-xxl-9 col-lg-8 ">
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">
@@ -50,32 +50,32 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                         </div>
                         <div class="col-md-12 col-xl-9">
                             <div class="row">
-                                <div class="col-md-12  col-xl-4 col-lg-6">
+                                <div class="col-md-6  col-xxl-6 col-lg-6">
                                     <div class="text-box">
                                         <p><strong>Business Name : </strong><?= $safari_operator->business_name ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6  ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6  ">
                                     <div class="text-box">
                                         <p><strong>Phone Number : </strong><?= $safari_operator->phone_no ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6  ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6  ">
                                     <div class="text-box">
                                         <p><strong>Alternate Phone Number : </strong><?= $safari_operator->operator_phone_no ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6 ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Email Address : </strong><?= $safari_operator->email ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6">
+                                <div class="col-md-6  col-xxl-6 col-lg-6">
                                     <div class="text-box">
                                         <p><strong>Alternate Email Address : </strong><?= $safari_operator->operator_email ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6 ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Category : </strong><?php
 
@@ -85,12 +85,12 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                                                         } ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6 ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Registered Name : </strong><?= $safari_operator->operator_phone_no ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6 ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Approved Status : </strong> <?php
                                                                                 if ($safari_operator->is_approved) {
@@ -101,17 +101,17 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                                                                 ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6 ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Rating : </strong> <?= $safari_operator->google_rating ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6 ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Cancellation : </strong> <?= isset($safari_operator->has_cancellation_policy) ? GeneralModel::yesnooption()[$safari_operator->has_cancellation_policy] : '' ?></p>
                                     </div>
                                 </div>
-                                <div class="col-md-12  col-xl-4 col-lg-6 ">
+                                <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
                                         <p><strong>Budget Segment : </strong> <?= implode(', ', $budget) ?></p>
                                     </div>
