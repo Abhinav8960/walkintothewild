@@ -7274,6 +7274,7 @@ select.custom_sort_by_input  option.selected{
 {
 
     display: flex;
+    padding-left: 0 !important;
 }
 /* .opratios-slider .owl-item {
     max-width: calc(100% / 4);
