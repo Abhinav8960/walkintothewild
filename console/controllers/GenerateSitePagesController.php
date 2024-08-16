@@ -69,6 +69,7 @@ class GenerateSitePagesController extends Controller
       'sub_category' => 'Topic'
     ];
 
+
     $group_pages[] = [
       'table' => 'article_author',
       'url' => 'article/author/_slug',
@@ -92,21 +93,12 @@ class GenerateSitePagesController extends Controller
       'sub_category' => 'Shared Safari'
     ];
 
-
     $group_pages[] = [
       'table' => 'package',
       'url' => 'package/_slug',
       'url_type' => 'Primary',
       'category' => 'Package',
       'sub_category' => 'Package'
-    ];
-
-    $group_pages[] = [
-      'table' => 'master_rare_animal',
-      'url' => 'animal/_slug',
-      'url_type' => 'Primary',
-      'category' => 'Animal',
-      'sub_category' => 'Rare'
     ];
 
     $group_pages[] = [
@@ -194,10 +186,8 @@ class GenerateSitePagesController extends Controller
       $records = ArticleAuthor::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     } else if ($data['table'] == 'package') {
       $records = Package::find()->select(['id', 'package_slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
-    } else if ($data['table'] == 'master_rare_animal') {
-      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->where(['animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->asArray()->all();
     } else if ($data['table'] == 'master_animal') {
-      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->where(['animal_type' => MasterAnimal::USUAL_ANIMAL_TYPE])->asArray()->all();
+      $records = MasterAnimal::find()->select(['id', 'slug as slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
     }
 
     if (count($records)) {
@@ -377,7 +367,7 @@ class GenerateSitePagesController extends Controller
 
   protected function get_operator_tabs_site_pages()
   {
-    $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->asArray()->all();
+    $records = SafariOperator::find()->select(['id', 'slug', 'updated_at', 'total_view', 'status'])->where(['status' => 1])->asArray()->all();
     $tab_urls = ['package' => '/package', 'park' => '/park', 'review' => '/reviewlist', 'article' => '/article', 'contact' => '/contact'];
     if (count($records)) {
       $temp_insert_data = [];
@@ -453,7 +443,10 @@ class GenerateSitePagesController extends Controller
       'safaritour-registration',
       'birdingtour-registration',
       'termsandcondition',
+      'privacy-policy',
+      'about-us',
       'contact',
+      'faq',
       '/',
       'account',
     ];

@@ -92,7 +92,7 @@ $this->params['title'] = $this->title;
                 <?php AuthChoice::end(); ?>
               </div>
               <div class="contenss pt-3">
-                <p class="text-center">By login an account, I accept the <b>WalkIntoTheWild</b> <a href="/termsandcondition" target="_blank">Terms of Service</a> and <a href="/termsandcondition" target="_blank">Privacy Policy</a>.</p>
+                <p class="text-center">By login an account, I accept the <b>WalkIntoTheWild</b> <a href="/termsandcondition">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
               </div>
             </div>
             <!-- 
