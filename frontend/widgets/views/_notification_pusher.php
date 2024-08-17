@@ -44,8 +44,8 @@ $this->registerJs($script);
 
 
 <script>
-    let notification = document.querySelector('.notification');
-    let menunotification = document.querySelector('.menunotification');
+    let notification = document.querySelector('#notification_header_icon');
+    let menunotification = document.querySelector('#menunotification_menu');
 
     notification.onclick = function(event) {
         event.stopPropagation();
@@ -63,7 +63,7 @@ $this->registerJs($script);
 <?php
 $script = <<<JS
 $(document).ready(function() {
-    $(".notification").click(function(){
+    $("#notification_header_icon").click(function(){
         var notice_update_url='/site/updatenotificationlist';
         $.get(notice_update_url, function( data ) {
             $("#menunotification_menu").html(data);

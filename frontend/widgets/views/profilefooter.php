@@ -13,7 +13,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
     <div class="container-fluid">
 
-    <div class="row pt-4 justify-content-between mobile-responsive align-items-center border_top">
+        <div class="row pt-4 justify-content-between mobile-responsive align-items-center border_top">
             <div class="col-lg-2 col-xxl-2 ">
                 <div class="footerlogo">
                     <img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="" width="160">
@@ -39,3 +39,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
         </div>
     </div>
 </footer>
+
+
+<?php
+
+if (isset(Yii::$app->params['PUSHER_AUTH_KEY']) && Yii::$app->params['PUSHER_AUTH_KEY'] != '') {
+    if (Yii::$app->user->identity) {
+        echo $this->render('_notification_pusher');
+    }
+}
+?>
