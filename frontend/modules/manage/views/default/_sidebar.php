@@ -7,7 +7,7 @@ use yii\helpers\Url;
 <div class="card account-settingside sidebar_account">
     <div class="nav nav-tabs flex-column nav-pills card-body slider_accountsidebar">
         <a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link mb-2 <?= $active == 'profile' ? 'active' : '' ?>">Overview</a>
-        <a href="<?= Url::toRoute(['/manage/sharedsafari']) ?>" class="nav-link mb-2 <?= $active == 'sharedsafari' ? 'active' : '' ?>">Shared Safaries</a>
+        <a href="<?= Url::toRoute(['/manage/sharedsafari']) ?>" class="nav-link mb-2 <?= $active == 'sharedsafari' ? 'active' : '' ?>">Shared Safaris</a>
         <a href="<?= Url::toRoute(['/manage/package']) ?>" class="nav-link mb-2 <?= $active == 'package' ? 'active' : '' ?>">Packages</a>
         <a href="<?= Url::toRoute(['/manage/article']) ?>" class="nav-link mb-2 <?= $active == 'article' ? 'active' : '' ?>">Articles</a>
         <!-- <a href="<?= Url::toRoute(['/manage/follower']) ?>" class="nav-link mb-2 <?= $active == 'follower' ? 'active' : '' ?>">Followers</a> -->

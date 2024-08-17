@@ -43,7 +43,7 @@ use yii\bootstrap5\ActiveForm;
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->textInput([
                     'maxlength' => true,
-                    'placeholder' => 'Enter Number of Safaries',
+                    'placeholder' => 'Enter Number of Safaris',
                 ]) ?>
             </div>
             <div class="col-md-6 col-lg-6 col-xxl-4">

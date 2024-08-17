@@ -273,7 +273,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">3</h6>
                           </div>
                           <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                            <p class="text_safari">SAFARIES</p>
+                            <p class="text_safari">SAFARIS</p>
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>
@@ -338,7 +338,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">3</h6>
                           </div>
                           <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                            <p class="text_safari">SAFARIES</p>
+                            <p class="text_safari">SAFARIS</p>
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>
@@ -403,7 +403,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">3</h6>
                           </div>
                           <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                            <p class="text_safari">SAFARIES</p>
+                            <p class="text_safari">SAFARIS</p>
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>
@@ -468,7 +468,7 @@ $this->params['title'] = $this->title;
                             <h6 class="number-safari">3</h6>
                           </div>
                           <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                            <p class="text_safari">SAFARIES</p>
+                            <p class="text_safari">SAFARIS</p>
                             <h6 class="number-safari">1</h6>
                           </div>
                         </div>

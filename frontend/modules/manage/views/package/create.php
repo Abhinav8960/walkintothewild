@@ -58,7 +58,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                         'labelOptions' => ['class' => 'Modal_label']
                                     ])->textInput([
                                         'maxlength' => true,
-                                        'placeholder' => 'Enter Number of Safaries',
+                                        'placeholder' => 'Enter Number of Safaris',
                                     ]) ?>
                                 </div>
 

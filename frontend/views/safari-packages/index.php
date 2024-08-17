@@ -101,7 +101,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         <h6 class="number-safari"><?= $package->no_of_night ?></h6>
                                                     </div>
                                                     <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
-                                                        <p class="text_safari">SAFARIES</p>
+                                                        <p class="text_safari">SAFARIS</p>
                                                         <h6 class="number-safari"><?= $package->no_of_safari ?></h6>
                                                     </div>
                                                 </div>
