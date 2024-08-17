@@ -49,7 +49,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
                 <div class="icons_restro">
                     <i class="fa-solid fa-utensils"></i>
-                    <p class="mb-0"><?= $model->meals ?></p>
+                    <p class="mb-0"><?= $model->mealslisting ?></p>
                 </div>
                 <div class="icons_restro">
 
