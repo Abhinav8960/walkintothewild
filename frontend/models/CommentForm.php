@@ -51,8 +51,8 @@ class CommentForm extends Model
 
         $comment->status = 1;
 
-        if ($comment->save()) {
-            return $comment->save();
+        if ($comment->save(false)) {
+            return $comment;
         }
     }
 }

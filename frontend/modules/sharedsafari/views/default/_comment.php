@@ -116,7 +116,7 @@ use yii\helpers\Url;
                                 <?php } ?>
                                 <?php if (Yii::$app->user->id) {  ?>
                                     <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $comments->id ?>">
-                                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                                        <?php $form = ActiveForm::begin([]); ?>
                                         <div class="mb-3">
                                             <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
                                         </div>

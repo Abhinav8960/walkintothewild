@@ -71,8 +71,8 @@ class PackageQuoteForm extends Model
         $package_quote->os = $agent->platform();
         $package_quote->status = 1;
 
-        if ($package_quote->save()) {
-            return $package_quote->save();
+        if ($package_quote->save(false)) {
+            return $package_quote;
         }
         // if ($package_quote->save()) {
         //     $to_mail = $package_quote->email;

@@ -46,8 +46,8 @@ class PackageCommentForm extends Model
         $comment->status = StatusInterface::STATUS_ACTIVE;
 
 
-        if ($comment->save()) {
-            return $comment->save();
+        if ($comment->save(false)) {
+            return $comment;
         }
     }
 }

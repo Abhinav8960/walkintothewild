@@ -51,8 +51,8 @@ class ReplyForm extends Model
 
 
 
-        if ($reply->save()) {
-            return $reply->save();
+        if ($reply->save(false)) {
+            return $reply;
         }
     }
 }

@@ -322,7 +322,7 @@ class DefaultController extends FrontendBaseController
                 $operator_follow->user_id = Yii::$app->user->identity->id;
                 $operator_follow->status = 1;
                 $operator_follow->follow_datetime = date('Y-m-d h:i:s');
-                if ($operator_follow->save()) {
+                if ($operator_follow->save(false)) {
 
                     $to_mail = $operator->email;
                     $subject = 'Follow Request';
@@ -368,7 +368,7 @@ class DefaultController extends FrontendBaseController
                     $operator_follow->user_id = Yii::$app->user->identity->id;
                     $operator_follow->status = 0; //UNfollow
                     $operator_follow->unfollow_datetime = date('Y-m-d h:i:s');
-                    if ($operator_follow->save()) {
+                    if ($operator_follow->save(false)) {
 
                         $to_mail = $operator->email;
                         $subject = 'UnFollow Request';
