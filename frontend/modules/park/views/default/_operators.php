@@ -126,12 +126,12 @@ Pjax::begin([
 
                                                 <div class="ratings">
 
-                                                    <p class="mb-0">0 
+                                                    <p class="mb-0">0
                                                         <?= GeneralModel::ratiing_views(0); ?>
                                                     </p>
                                                 </div>
                                                 <div class="googlerating">
-<!--                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>-->
+                                                    <!--                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>-->
                                                     <p class="mb-0">0 Reviews </p>
                                                 </div>
                                             </div>
@@ -141,15 +141,15 @@ Pjax::begin([
                                     <div class="footer_provider ">
                                         <div class="slect_safricound d-flex justify-content-around">
                                             <div class="parks_text text-center">
-                                                <p><?= $operator->getPark()->andWhere(['status' => 1])->count() ?></p>
+                                                <p><?= $operator->parkcount ?></p>
                                                 <p>Parks</p>
                                             </div>
                                             <div class="parks_text text-center">
-                                                <p>0</p>
+                                                <p><?= $operator->packagecount ?></p>
                                                 <p>Packages</p>
                                             </div>
                                             <div class="parks_text text-center">
-                                                <p>0</p>
+                                                <p><?= $operator->sharedsafaricount ?></p>
                                                 <p>Shared Safari</p>
                                             </div>
                                         </div>

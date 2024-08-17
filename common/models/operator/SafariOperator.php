@@ -2,8 +2,10 @@
 
 namespace common\models\operator;
 
-use common\traits\CommanRelationship;
 use Yii;
+use common\models\package\Package;
+use common\traits\CommanRelationship;
+use common\models\sharesafari\ShareSafari;
 
 /**
  * This is the model class for table "safari_operator".
@@ -155,6 +157,25 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return $this->hasMany(SafariOperatorPark::className(), ['safari_operator_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
     }
 
+    public function getParkcount()
+    {
+        return SafariOperatorPark::find()->where(['safari_operator_id' => $this->id])->andWhere(['safari_operator_park.status' => 1])->count();
+    }
+
+    public function getPackagecount()
+    {
+        return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::STATUS_ACTIVE])->count();
+    }
+
+
+    public function getSharedsafaricount()
+    {
+        return ShareSafari::find()->where([
+            'status' => ShareSafari::STATUS_ACTIVE,
+            'host_user_id' => $this->id,
+            'type' => ShareSafari::TYPE_FIXED_DEPARTURE
+        ])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
+    }
 
     public function getFollowerlist()
     {
