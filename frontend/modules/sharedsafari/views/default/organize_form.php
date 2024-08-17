@@ -122,12 +122,12 @@ $this->params['title'] = $this->title;
                                 <div class="d-flex  gap-sm-3 align-items-center flex-sm-nowrap flex-wrap  w-100 mb-1">
                                     <div class="start w-100">
                                         <label for="" class="Modal_label">Start Date <span class="necessary">*</span></label>
-                                        <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
+                                        <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'max' => date('Y-m-d', strtotime('+1 year'))])->label(false) ?>
                                     </div>
                                     <span class="pt-sm-4 text-center">-</span>
                                     <div class="start w-100">
                                         <label for="" class="Modal_label">End Date <span class="necessary">*</span></label>
-                                        <?= $form->field($model, 'end_date')->textInput(['type' => 'date'])->label(false) ?>
+                                        <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'max' => date('Y-m-d', strtotime('+1 year'))])->label(false) ?>
                                     </div>
                                 </div>
                             </div>
