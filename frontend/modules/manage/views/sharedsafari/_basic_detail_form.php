@@ -1,9 +1,11 @@
 <?php
 
-use common\models\GeneralModel;
-use kartik\select2\Select2;
-use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap5\ActiveForm;
+use common\models\GeneralModel;
+use common\models\park\SafariPark;
 
 ?>
 <?php $form = ActiveForm::begin([
@@ -19,7 +21,7 @@ use yii\helpers\Html;
             <div class="col-md-6 mb-1">
                 <label for="" class="Modal_label">Select Park</label>
                 <?= $form->field($model, 'park_list')->widget(Select2::class, [
-                    'data' => GeneralModel::operatorsafariparkoption(Yii::$app->user->identity),
+                    'data' => ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->orderby(['title' => SORT_ASC])->all(), 'id', 'title'),
                     'options' => ['placeholder' => 'Select', 'multiple' => true],
                     'pluginOptions' => [
                         'allowClear' => true
