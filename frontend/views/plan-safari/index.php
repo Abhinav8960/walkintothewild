@@ -30,7 +30,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner pb-1">
-                        <h1>Find, plan and shared Safaris - Your Ultimate Portal to the Wild</h1>
+                        <h1>Find, plan and share Safaris - Your Ultimate Portal to the Wild</h1>
                     </div>
                 </div>
                 <div class="col-12 pt-4">
