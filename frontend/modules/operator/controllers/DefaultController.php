@@ -116,7 +116,7 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/operator']);
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::STATUS_ACTIVE])->all();
+        $operator_packages = Package::find()->where(['owned_by_id' => $operator->id, 'status' => Package::STATUS_ACTIVE])->limit(6)->all();
         $model = new OperatorQuoteForm();
         if (Yii::$app->user->identity) {
             $model->email = Yii::$app->user->identity->email;
