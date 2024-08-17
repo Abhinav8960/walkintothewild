@@ -82,6 +82,7 @@ use yii\helpers\Url;
     .chat-sidebar-user-card .user-icon {
         height: 45px;
         width: 45px;
+        border: 1px solid;
     }
 
     .chat-sidebar-user-card .chat-user_name {
@@ -102,6 +103,7 @@ use yii\helpers\Url;
     .chat-message-header .user-icon {
         height: 45px;
         width: 45px;
+        border: 1px solid;
     }
 
     .chat-message-input {

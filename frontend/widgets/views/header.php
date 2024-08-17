@@ -132,14 +132,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
 
-					<div class="massge pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
-					<div class="chatnotification">
-						<h6 class="fs-5 fw-semibold px-3 pt-3 pb-3 border-bottom mb-3">Messages</h6>
-
-						<div class="viewallNotification float-end pe-3 pt-2">
-							<a href="/chat" class="follow_massge ms-3">View All Message</a>
-						</div>
-					</div>
+					<a href="/chat">
+						<div class=" pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
+					</a>
 				<?php } ?>
 
 
@@ -238,22 +233,22 @@ $active_url = "/" . Yii::$app->requestedRoute;
 	</nav>
 </header>
 
-<?php if (Yii::$app->user->identity) { ?>
+<?php if (false && Yii::$app->user->identity) { ?>
 	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			var massge = document.querySelector('.massge');
-			var menunotification = document.querySelector('.chatnotification');
+		// document.addEventListener('DOMContentLoaded', function() {
+		// 	var massge = document.querySelector('.massge');
+		// 	var menunotification = document.querySelector('.chatnotification');
 
-			massge.addEventListener('click', function(event) {
-				event.stopPropagation();
-				menunotification.classList.toggle('active');
-			});
+		// 	massge.addEventListener('click', function(event) {
+		// 		event.stopPropagation();
+		// 		menunotification.classList.toggle('active');
+		// 	});
 
-			document.addEventListener('click', function() {
-				if (menunotification.classList.contains('active')) {
-					menunotification.classList.remove('active');
-				}
-			});
-		});
+		// 	document.addEventListener('click', function() {
+		// 		if (menunotification.classList.contains('active')) {
+		// 			menunotification.classList.remove('active');
+		// 		}
+		// 	});
+		// });
 	</script>
 <?php } ?>
