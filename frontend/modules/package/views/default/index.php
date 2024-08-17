@@ -62,6 +62,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
               <img src="<?= $this->params['baseurl'] ?>/img/Package-Banner.jpg" alt="" class="custom-image">
             </a>
           </div>
+          <div class="items_slider">
+            <a href="/operator/ankit-kankane-safaris/package">
+              <img src="<?= $this->params['baseurl'] ?>/img/OrangendWhiteHotelBooking.jpg" alt="" class="custom-image">
+            </a>
+          </div>
 
         </div>
       </div>
