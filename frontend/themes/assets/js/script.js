@@ -261,27 +261,36 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 $(document).ready(function(){
     function initializeOwlCarousel() {
-        if ($(window).width() <= 1200) {
+        if ($(window).width() <= 1400) {
             $('.slider_addmobile2').addClass('owl-carousel');
             $('.slider_addmobile2').owlCarousel({
-                loop: true,
+                loop: false,
                 margin: 10,
                 nav: false,
-                center:true,
+                center:false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
-                        items: 3
+                        items: 2,
+                        stagePadding: 10,
                     },
-                    600: {
-                        items: 4
+                    
+                    300: {
+                        items: 2,
+                        stagePadding: 10,
+                    },
+                    500: {
+                        items: 4,
+                        stagePadding: 10,
                     },
                     991: {
-                        items: 4
+                        items: 4,
+                        stagePadding: 10,
                     },
                     1200: {
-                        items: 5
+                        items: 5,
+                        stagePadding: 10,
                     }
                 }
             });

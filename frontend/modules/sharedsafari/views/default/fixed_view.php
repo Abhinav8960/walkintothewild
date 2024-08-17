@@ -47,7 +47,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="row packageSfari mt-4">
                 <div class="col-12">
                     <div class="imagesSafari">
-                        <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                        <img src="<?= $this->params['baseurl'] ?>/img/test.jpg" alt="" class="w-100">
                     </div>
                 </div>
             </div>
@@ -361,8 +361,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                     <div class="tab-pane fade  accordion-item mb-3" id="faq-tab-pane" role="tabpanel" aria-labelledby="faq-tab">
-                        <div class="card bg-set accordion-collapse  card_bodyPadding">
-                            <div class="card-body p-3">
+                        <div class="ff">
+                            <div class="faqsss">
                                 <?= $this->render('_faq', ['faqs' => $faqs]) ?>
                             </div>
                         </div>

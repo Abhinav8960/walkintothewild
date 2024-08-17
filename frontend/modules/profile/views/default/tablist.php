@@ -28,7 +28,7 @@ $this->site = 'WalkIntoTheWild';
 $this->site_name = 'WalkIntoTheWild'
 ?>
 
-<div class="profile_coverbnner mt-5 pt-5">
+<div class="profile_coverbnner mt-md-5 pt-5">
     <div class="container-lg px-slider2">
         <div class="row justify-content-center px-slider2">
             <div class="col-xxl-10 banner-cover position-relative px-slider2">
@@ -94,6 +94,9 @@ $this->site_name = 'WalkIntoTheWild'
                         <?php }
                         ?>
                     <?php } ?>
+                    <div class="sharerbtn d-md-none ">
+                            <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn py-2  "><i class="fa-solid fa-share"></i> <span class="mobileTexthide">Share Profile</span></button>
+                        </div>
 
                 </div>
 
@@ -145,7 +148,7 @@ $this->site_name = 'WalkIntoTheWild'
         <div class="row pt-5 itenary_tabs justify-content-center position-relative">
             <div class="col-xxl-11 safartabs position-relative">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-md-8 ">
                         <ul class="nav nav-tabs slider_profilemobile ">
                             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link d-inline-block <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
                             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link d-inline-block <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safaries</a></li>
@@ -173,7 +176,7 @@ $this->site_name = 'WalkIntoTheWild'
                             } ?>
                         </ul>
                     </div>
-                    <div class="col-4">
+                    <div class="col-md-4 d-md-block d-none">
                         <div class="sharerbtn float-end">
                             <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn mb-2  "><i class="fa-solid fa-share"></i> <span class="mobileTexthide">Share Profile</span></button>
                         </div>

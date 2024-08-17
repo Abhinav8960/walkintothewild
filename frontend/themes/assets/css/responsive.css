@@ -1196,11 +1196,11 @@ margin-bottom: 0 !important;
     border: 1px solid #0000004d !important;
   } */
 
-  .packageSfari .imagesSafari img{
+  /* .packageSfari .imagesSafari img{
 
     height: 230px;
     max-height: 230px;
-  }
+  } */
 
   .padding_mobileAdded{
 
@@ -1911,13 +1911,25 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .mobileSetimg{
+
+    display: flex;
+    flex-direction: column;
+  }
+  .mobileSetimg img{
+
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    
+  }
   .px_serach {
     padding: 0px 0px;
 }
-  .maxWidth .safritimg.innerImg img{
+  /* .maxWidth .safritimg.innerImg img{
 
     height: auto !important;
-  }
+  } */
   .maxWidth {
 
     padding-top: 0px !important;

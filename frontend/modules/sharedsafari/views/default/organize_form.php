@@ -71,7 +71,7 @@ $this->params['title'] = $this->title;
 
                             <?php
                             if ($model->shared_safari_model->image) { ?>
-                                <div class="col-md-3">
+                                <div class="col-md-3 mobileSetimg ">
                                     <label for="" class="Modal_label">Current Display Image</label>
                                     <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image">'; ?>
                                 </div>
@@ -87,12 +87,12 @@ $this->params['title'] = $this->title;
                             <?php
                             if ($model->shared_safari_model->image == null) {
                                 if ($model->shared_safari_model->park_id) { ?>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 mobileSetimg ">
                                         <label for="" class="Modal_label">Current Display Image</label>
                                         <?php echo '<img src="' . $model->shared_safari_model->sharedimagepath . '" width="100px" height="100px" id="park_image"></img>'; ?>
                                     </div>
                                 <?php } else { ?>
-                                    <div class="col-sm-3 mb-2">
+                                    <div class="col-sm-3 mb-2 mobileSetimg ">
                                         <label for="" class="Modal_label">Current Display Image</label>
                                         <img src="" id="park_image" alt="" width="100%" height="100px">
                                     </div>
@@ -115,7 +115,7 @@ $this->params['title'] = $this->title;
 
                             <div class="col-md-6 mb-1">
                                 <label for="" class="Modal_label">Number of Safaris (1-10)</label>
-                                <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 1])->label(false)->hint('No of Safaris : <span id="safariseat">' . $model->no_of_safari . '</span>') ?>
+                                <?= $form->field($model, 'no_of_safari')->textInput(['type' => 'range', 'min' => 1, 'max' => 10, 'class' => 'slider w-100', 'value' => ($model->no_of_safari) ? $model->no_of_safari : 1])->label(false)->hint('No of Safaris : <span id="safariseat">' . $model->no_of_safari . '</span>') ?>
                             </div>
 
                             <div class="col-md-12">
