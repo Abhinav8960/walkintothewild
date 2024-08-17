@@ -17,7 +17,7 @@ $this->params['title'] = $this->title;
         <div class="d-flex justify-content-between align-items-center  flex-wrap mb-4">
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
             <div class=" mt-xxl-0 mt-3">
-                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2" target="_blank">
+                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug, 'operator_slug' => $package_model->safarioperator ? $package_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2" target="_blank">
                     <i class="fa fa-eye"></i> View
                 </a>
                 &nbsp;

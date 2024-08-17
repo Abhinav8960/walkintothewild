@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
             <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap">
                 <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
                 <div class=" mt-xxl-0 mt-3">
-                    <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2  " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
+                    <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug, 'operator_slug' => $package_model->safarioperator ? $package_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2  " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
                     <a href="javascript:void(0)"  class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-faq', 'package_id' => $package_model->id]) ?>" >+ Create FAQ</a>
                     <!-- <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/select-faq/' . $package_model->id . '']) ?>">+ Select FAQ</button> -->
                 </div>

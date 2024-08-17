@@ -3,6 +3,9 @@
 use common\models\UserWishlist;
 use yii\helpers\Url;
 
+$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
+
 ?>
 
 

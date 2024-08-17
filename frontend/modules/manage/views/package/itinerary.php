@@ -14,7 +14,7 @@ $this->params['title'] = $this->title;
         <div class="col-md-12 d-flex justify-content-between align-items-center mb-4">
             <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
             <div class="d-flex justify-content-between">
-                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug]) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
+                <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug, 'operator_slug' => $package_model->safarioperator ? $package_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2 " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
             </div>
         </div>
         <div class="col-xxl-3 col-lg-4 mb-4">
