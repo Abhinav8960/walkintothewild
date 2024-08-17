@@ -37,7 +37,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     </div>
     <div class="card_body">
         <div class="titleDate">
-            <h6 class="pt-1"><a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>" data-pjax="0"><?= $model->package_name ?> </a></h6>
+            <h6 class="pt-1"><a href="<?= Url::toRoute(['/package/default/view', 'slug' => $model->package_slug]) ?>" data-pjax="0"><?= $model->packagename ?> </a></h6>
             <div class="orgnizer_tour d-flex justify-content-between pt-2">
                 <div class="icons_restro">
                     <i class="fa-solid fa-car-side"></i>

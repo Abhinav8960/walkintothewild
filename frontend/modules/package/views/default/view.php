@@ -12,7 +12,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 
-$this->title = 'Package : ' . ucwords($package->package_name);
+$this->title = 'Package : ' . ucwords($package->packagename);
 $this->params['title'] = ucfirst($this->title);
 
 $shortdescription = implode(' ', array_slice(explode(' ', strip_tags($package->package_description)), 0, 200));
@@ -43,7 +43,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1 class="mb-0"><?= $package->package_name ?></h1>
+                        <h1 class="mb-0"><?= $package->packagename ?></h1>
                         <!-- <p class="text-center text-white mb-0">Organized by <?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></p> -->
                     </div>
                 </div>
@@ -70,7 +70,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                                 <div class="col-lg-8 col-md-9 pt-sm-3 pt-md-0 pt-3">
                                     <div class="safrititles">
-                                        <h5 class="fs-4"><?= $package->package_name ?>
+                                        <h5 class="fs-4"><?= $package->packagename ?>
                                             <?php
                                             if (Yii::$app->user->identity) { ?>
                                                 <?php

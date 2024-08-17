@@ -116,6 +116,22 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     }
 
 
+    public function getPackagename()
+    {
+
+        $name = $this->package_name;
+
+        if ($singlepark = $this->singlepark) {
+            if ($park = $singlepark->park) {
+                $title_sub = explode(" ", $park->title);
+                if (isset($title_sub[0])) {
+                    $name .= " - " . $title_sub[0];
+                }
+            }
+        }
+
+        return $name;
+    }
 
     public function getPackageincluded()
     {
