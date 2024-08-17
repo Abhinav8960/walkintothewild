@@ -55,9 +55,9 @@ use yii\helpers\Url;
                                     </a>
                                 </div>
                                 <div class="text_com">
-                                    <div class="requestContact d-flex gap-2 align-items-center">
-                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                            <h6 class="nameavatr"><?= isset($comments->user) ? $comments->user->name : '' ?><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></h6>
+                                    <div class="requestContact d-flex gap-2 align-items-center font-color">
+                                        <span class="comment-author"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
+                                            <?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
                                         </a>
                                         <!-- <?php if (Yii::$app->user->identity) {
                                                     if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
