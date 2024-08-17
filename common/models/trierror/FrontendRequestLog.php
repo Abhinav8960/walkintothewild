@@ -13,6 +13,7 @@ use common\models\User;
  * @property string|null $request_url
  * @property string|null $request_data
  * @property int $request_code
+ * @property int $is_reqeust_trace
  * @property string $response_error
  * @property string $created_at
  */
@@ -35,7 +36,7 @@ class FrontendRequestLog extends \yii\db\ActiveRecord
             [['user_id', 'request_code'], 'integer'],
             [['request_data', 'response_error'], 'string'],
             [['response_error'], 'required'],
-            [['created_at', 'refer_url'], 'safe'],
+            [['created_at', 'refer_url', 'is_reqeust_trace'], 'safe'],
             [['request_url'], 'string', 'max' => 555],
         ];
     }

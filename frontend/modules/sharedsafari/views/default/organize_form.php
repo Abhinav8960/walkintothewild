@@ -57,7 +57,7 @@ $this->params['title'] = $this->title;
                             <div class="col-12 mb-2">
                                 <label for="" class="Modal_label">Select a Safari Park <span class="necessary">*</span></label>
                                 <?= $form->field($model, 'park_id')->dropDownList(
-                                    ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->all(), 'id', 'title'),
+                                    ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->orderby(['title' => SORT_ASC])->all(), 'id', 'title'),
                                     [
                                         'prompt' => 'Select a Safari Park',
                                         'class' => 'form-select form-select-lg mb-3',

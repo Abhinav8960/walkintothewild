@@ -53,7 +53,7 @@ class FrontendRequestLogController extends Controller
 
         $request_codes_list = [];
         if (count($request_code_data) > 0) {
-            $request_codes_list["0"] = "-- Select All --";
+            $request_codes_list["0"] = "Select All";
             foreach ($request_code_data as $val) {
                 $request_codes_list[$val['request_code']] = ucwords(str_replace("_", " ", $val['request_code']));
             }

@@ -93,7 +93,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <?php if ($operator->website <> '') { ?>
                                                         <div class="contaicts d-flex gap-2 align-items-center mb-2">
                                                             <strong>Website :</strong>
-                                                            <p class="mb-0"><a href="<?= $operator->website ?>"><?= $operator->website ?></a></p>
+                                                            <p class="mb-0"><a href="<?= $operator->website ?>" target="_blank"><?= $operator->website ?></a></p>
                                                         </div>
                                                 <?php }
                                                 } ?>
@@ -102,7 +102,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <h6 class="fs-6 fw-bold"> Social Media</h6>
                                                     <?php if ($operator->instagram_url <> '') { ?>
                                                         <div class="links_sociels d-flex gap-2">
-                                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-instagram me-1"></i></a>
+                                                            <a href="<?= $operator->instagram_url ?>" target="_blank" class="iconSize sizecontact"><i class="fa-brands fa-instagram me-1"></i></a>
                                                             <p>Instragram
                                                                 <span><?= $operator->instagram_url ?></span>
                                                             </p>
@@ -112,7 +112,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                                                     <?php if ($operator->facebook_url <> '') {  ?>
                                                         <div class="links_sociels d-flex gap-2">
-                                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-facebook-f me-1"></i></a>
+                                                            <a href="<?= $operator->facebook_url ?>" class="iconSize sizecontact" target="_blank"><i class="fa-brands fa-facebook-f me-1"></i></a>
                                                             <p>Facebook
                                                                 <span><?= $operator->facebook_url ?></span>
                                                             </p>
@@ -121,7 +121,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                     <?php } ?>
                                                     <?php if ($operator->youtube_link <> '') { ?>
                                                         <div class="links_sociels d-flex gap-2">
-                                                            <a href="" class="iconSize sizecontact"><i class="fa-brands fa-youtube me-1"></i></a>
+                                                            <a href="<?= $operator->youtube_link ?>" class="iconSize sizecontact" target="_blank"><i class="fa-brands fa-youtube me-1"></i></a>
                                                             <p>Youtube
                                                                 <span><?= $operator->youtube_link ?></span>
                                                             </p>

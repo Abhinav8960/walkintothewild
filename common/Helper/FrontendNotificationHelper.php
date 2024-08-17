@@ -27,11 +27,11 @@ class FrontendNotificationHelper
         if ($package) {
             $model = new FrontendNotification();
             $model->action_id = FrontendNotification::ACTION_PACKAGE_NEW_COMMENT;
-            $model->notification_url = Url::toRoute(['/package/default/view', 'slug' => $package->package_slug]);
             $model->parent_id = $package->id;
             $model->channel = 'UserNotificationChannel';
             $model->status = 1;
             if ($package->safarioperator) {
+                $model->notification_url = Url::toRoute(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator->slug]);
                 $model->user_id = $package->safarioperator->user_id;
             }
             $model->is_seen = false;
@@ -54,9 +54,11 @@ class FrontendNotificationHelper
         if ($package) {
             $model = new FrontendNotification();
             $model->action_id = FrontendNotification::ACTION_PACKAGE_COMMENT_REPLY;
-            $model->notification_url = Url::toRoute(['/package/default/view', 'slug' => $package->package_slug]);
             $model->parent_id = $package->id;
             $model->channel = 'UserNotificationChannel';
+            if ($package->safarioperator) {
+                $model->notification_url = Url::toRoute(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator->slug]);
+            }
             $model->status = 1;
             $model->user_id = $comment_user->id;
             $model->is_seen = false;
@@ -187,7 +189,7 @@ class FrontendNotificationHelper
         if ($share_safari) {
             $model = new FrontendNotification();
             $model->action_id = FrontendNotification::ACTION_SHARED_SAFARI_JOIN;
-            $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]);
+            $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug]);
             $model->parent_id = $share_safari->id;
             $model->channel = 'UserNotificationChannel';
             $model->status = 1;
@@ -217,7 +219,7 @@ class FrontendNotificationHelper
         if ($share_safari) {
             $model = new FrontendNotification();
             $model->action_id = FrontendNotification::ACTION_SHARED_SAFARI_JOIN;
-            $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]);
+            $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug]);
             $model->parent_id = $share_safari->id;
             $model->channel = 'UserNotificationChannel';
             $model->status = 1;
@@ -253,7 +255,7 @@ class FrontendNotificationHelper
                 foreach ($intrested_users as $intrested_user) {
                     $model = new FrontendNotification();
                     $model->action_id = FrontendNotification::ACTION_SHARED_SAFARI_JOIN;
-                    $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]);
+                    $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug]);
                     $model->parent_id = $share_safari->id;
                     $model->channel = 'UserNotificationChannel';
                     $model->status = 1;
