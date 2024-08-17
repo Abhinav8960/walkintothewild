@@ -44,7 +44,7 @@ $this->params['title'] = $this->title;
                                                                 </div>
                                                             </div>
                                                             <div class="shareimg">
-                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
+                                                                <a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>"><img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt=""></a>
                                                             </div>
                                                             <div class="card_body">
                                                                 <div class="top_seats">
@@ -61,7 +61,7 @@ $this->params['title'] = $this->title;
                                                                     </div>
                                                                 </div>
                                                                 <div class="titleDate">
-                                                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug]) ?>"><?= $share_safari->park->title ?></a></h6>
+                                                                    <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>"><?= $share_safari->park->title ?></a></h6>
                                                                     <div class="orgnizer">
                                                                         <p>Organized by: <strong><?= $share_safari->user->name ?></strong></p>
                                                                     </div>

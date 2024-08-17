@@ -462,7 +462,7 @@ class DefaultController extends FrontendBaseController
                             return $this->redirect([
                                 '/sharedsafari/default/view',
                                 'slug' => $share_safari->slug,
-
+                                'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
                             ]);
                         }
                     }
