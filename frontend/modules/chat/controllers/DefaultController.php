@@ -23,7 +23,11 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
         $login_user = Yii::$app->user->identity;
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->orderby(['last_message_at' => SORT_DESC])->all();
+        if ($login_user) {
+            $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->orderby(['last_message_at' => SORT_DESC])->all();
+        } else {
+            $active_chat_list = [];
+        }
 
         return $this->render(
             'index',
@@ -45,7 +49,11 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
         $login_user = Yii::$app->user->identity;
         $searchModel = new ChatSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->orderby(['last_message_at' => SORT_DESC])->all();
+        if ($login_user) {
+            $active_chat_list = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $login_user->id . ' OR recipient_user_id=' . $login_user->id)->orderby(['last_message_at' => SORT_DESC])->all();
+        } else {
+            $active_chat_list = [];
+        }
 
         return $this->render('message', [
             'individual_user' => $individual_user,

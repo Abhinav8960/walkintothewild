@@ -8,7 +8,7 @@ if ($dataProvider) {
         <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $model->user_handle]) ?>" class="chat-link" data-pjax="0">
             <div class="chat-sidebar-user-card ">
                 <div class="d-flex chat-user_message">
-                    <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon">
+                    <img src="<?= $model->profileimage ? $model->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                     <div class="chat-user_name">
                         <h6><?= $model->name ?></h6>
 

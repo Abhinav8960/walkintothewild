@@ -46,8 +46,8 @@ use yii\helpers\Url;
     </div>
 </a>
 
-
-<script>
+<?php
+$script = <<< JS
     var owl = $(".opratios-slider");
     var itemCount = owl.children().length;
     owl.owlCarousel({
@@ -70,4 +70,6 @@ use yii\helpers\Url;
             }
         }
     });
-</script>
+JS;
+$this->registerJs($script);
+?>

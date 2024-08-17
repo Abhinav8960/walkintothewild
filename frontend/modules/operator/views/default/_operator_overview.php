@@ -18,15 +18,15 @@ use common\models\operator\SafariOperatorFollow;
                         </div>
                         <div class="slect_safricound2 d-flex justify-content-around mt-4">
                             <div class="parks_text text-center">
-                                <p><?= count($operator->park) ?></p>
+                                <p><?= $operator->parkcount ?></p>
                                 <p>Parks</p>
                             </div>
                             <div class="parks_text text-center">
-                                <p>0</p>
+                                <p><?= $operator->packagecount ?></p>
                                 <p>Packages</p>
                             </div>
                             <div class="parks_text text-center">
-                                <p>0</p>
+                                <p><?= $operator->sharedsafaricount ?></p>
                                 <p>Shared Safaris</p>
                             </div>
                         </div>
