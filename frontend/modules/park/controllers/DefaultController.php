@@ -139,6 +139,98 @@ class DefaultController extends FrontendBaseController
             ]
         );
     }
+    
+    
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionOperator($slug)
+    {
+        $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (!$model) {
+            return $this->redirect(['/park']);
+            // throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $searchModel = new SafariParkSearch();
+        // $searchModel->master_location_id = 7;
+        // $searchModel->session_id = 1;
+        // $searchModel->master_animal_id = 13;
+        // $searchModel->master_vehicle_id = 5;
+        $searchModel->id = $model->slug; // for show Selected Park name in search
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+
+        $operatorsearchModel = new SafariOperatorSearch();
+        $operatorsearchModel->status = 1;
+        $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
+        $operators = $operatordataProvider->getModels();
+
+        // $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
+        // $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
+        $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
+
+
+
+
+        // $request = Yii::$app->request;
+        // $ip_address = $request->getRemoteIP();
+
+        // $suggestionmodel = new SafariSuggestionsForm();
+        // $suggestionmodel->name = Yii::$app->user->identity->name;
+        // $suggestionmodel->email = Yii::$app->user->identity->email;
+        // $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
+        // $suggestionmodel->park_id = isset($model) ? $model->id : '';
+        // $suggestionmodel->ip_address = $ip_address;
+        // $suggestionmodel->action_url = '/park/' . $slug . '';
+        // $suggestionmodel->action_validate_url = '/park/default/validate';
+
+        // if ($this->request->isPost) {
+        //     if ($suggestionmodel->load($this->request->post())) {
+        //         if ($suggestionmodel->validate()) {
+        //             $suggestionmodel->initializeForm();
+        //             if ($suggestionmodel->safari_suggestion_model->save(false)) {
+        //                 \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+        //                 return $this->redirect(['/park/' . $slug . '']);
+        //             }
+        //         } else {
+        //             print_r($suggestionmodel->errors);
+        //             exit;
+        //         }
+        //     }
+        // } else {
+        //     $suggestionmodel->safari_suggestion_model->loadDefaultValues();
+        // }
+
+
+
+        $ratingsearchModel = new SafariParkRatingSearch();
+        $ratingsearchModel->safari_park_id = $model->id;
+        $ratingsearchModel->status = 1;
+        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
+        $reviews = $ratingdataProvider->getModels();
+
+        return $this->render(
+            'view',
+            [
+                'model' => $model,
+                // 'first_month' => $first_month,
+                // 'last_month' => $last_month,
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                // 'suggestionmodel' => $suggestionmodel,
+
+                'operatorsearchModel' => $operatorsearchModel,
+                'operatordataProvider' => $operatordataProvider,
+                'operators' => $operators,
+                'shared_safaries' => $shared_safaries,
+                'device' => $this->device(),
+                'reviews' => $reviews
+            ]
+        );
+    }
+    
+    
 
     public function actionReviewlist($slug, $sort_by = null)
     {

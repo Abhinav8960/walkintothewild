@@ -13,6 +13,7 @@ return [
     // '/animal/<slug>' => '/animal/index', //home Page url
     '/home' => '/plan-safari', //home Page url
     '/park/<slug>' => '/park/default/view', //park view url
+    '/park/<slug>/operator' => '/park/default/operator',
     '/park/<slug>/sharedsafari' => '/park/default/sharedsafari',
     '/park/<slug>/discussion' => '/park/default/discussion',
     '/park/<slug>/update' => '/park/default/update',

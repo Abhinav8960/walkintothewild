@@ -32,7 +32,7 @@ if ($model->meta_title != '') {
     $this->title = 'Safari ' . $model->title;
 }
 ?>
-
+<div class="fixedbanner">
 <section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
@@ -51,8 +51,8 @@ if ($model->meta_title != '') {
 
     </div>
 </section>
-
-<section class="articals_wrapper pt-3 " style="background-color: #fff;">
+    </div>
+<section class="articals_wrapper pt-3 " style="background-color: #fff; margin-top: 190px !important;">
     <div class="container-fluid">
         <!-- <div class="row py-3">
             <div class="col-12">
@@ -145,7 +145,7 @@ if ($model->meta_title != '') {
         <div class="row pt-5 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">
             <div class="col-xxl-11 safartabs position-relative">
                 <ul class="nav nav-tabs slider_addmobile3 owl-theme owl-carousel">
-                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($operator) ? $operator : '' ?>">Operators</a></li>
+                    <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/operator', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($operator) ? $operator : '' ?>">Operators</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/sharedsafari', 'slug' => $model->slug]) ?>" class="nav-link <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safaries</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/package', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($package) ? $package : '' ?>">Packages</a></li>
                     <li class="nav-item"><a href="<?= Url::toRoute(['/park/default/reviewlist', 'slug' => $model->slug]) ?>" class=" nav-link <?= isset($review) ? $review : '' ?>">Reviews</a></li>
@@ -206,11 +206,13 @@ $this->registerJs($script);
 ?>
 
 <?php
-// $script = <<< JS
-// $('html, body').animate({
-//         'scrollTop' : $("#safari_tour_operator_container").position().top
-// });
-             
-// JS;
-// $this->registerJs($script);
+ $script = <<< JS
+         var loc= window.location.href;
+         if (loc.includes("operator") || loc.includes("package") || loc.includes("reviewlist") || loc.includes("sharedsafari") ){
+ $('html, body').animate({
+         'scrollTop' : $("#safari_tour_operator_container").position().top - 320
+ });
+            }
+ JS;
+ $this->registerJs($script);
 ?>
