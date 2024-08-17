@@ -146,14 +146,14 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
 <?php
 $script = <<< JS
 
-$(function() {
-    window.emojiPicker = new EmojiPicker({
-        emojiable_selector: '[data-emojiable=true]',
-        assetsPath: '{$emoji_base_url}/lib/img/',
-        popupButtonClasses: 'fa-solid fa-face-smile'
-    });
-    window.emojiPicker.discover();
-});
+// $(function() {
+//     window.emojiPicker = new EmojiPicker({
+//         emojiable_selector: '[data-emojiable=true]',
+//         assetsPath: '{$emoji_base_url}/lib/img/',
+//         popupButtonClasses: 'fa-solid fa-face-smile'
+//     });
+//     window.emojiPicker.discover();
+// });
 
 function sendmessage(){
     $.ajax({
