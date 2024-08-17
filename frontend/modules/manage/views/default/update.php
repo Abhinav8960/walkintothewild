@@ -49,11 +49,11 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 'labelOptions' => ['class' => 'Modal_label']
                             ])->textInput(['maxlength' => true, 'placeholder' => 'Enter Registered Company Name', 'data-label' => 'Registered Name']) ?>
                         </div>
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <?= $form->field($model, 'category_id', [
                                 'labelOptions' => ['class' => 'Modal_label']
                             ])->dropDownList(GeneralModel::operatorcategory(), ['prompt' => 'Select Category', 'data-label' => 'Category']) ?>
-                        </div>
+                        </div> -->
                         <div class="col-md-6">
                             <?= $form->field($model, 'address', [
                                 'labelOptions' => ['class' => 'Modal_label']
@@ -64,11 +64,11 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 'labelOptions' => ['class' => 'Modal_label']
                             ])->widget(Select2::classname(), [
                                 'data' => GeneralModel::safariparkoption(),
-                                'options' => ['placeholder' => 'Safari Tour Operator, Wildlife Influencer...', 'data-label' => 'Parks', 'multiple' => true],
+                                'options' => ['placeholder' => 'Select Parks', 'data-label' => 'Parks', 'multiple' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true
                                 ],
-                            ]) ?>
+                            ])->label('Operates in Parks') ?>
                         </div>
 
                         <div class="col-md-6">
