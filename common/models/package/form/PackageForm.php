@@ -133,7 +133,7 @@ class PackageForm extends \yii\base\Model
             //     'skipOnEmpty' => true,
             // ],
             [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person'], 'required', 'on' => ['create', 'update']],
-            [['package_inclusion'], 'required', 'on' => 'inclusion'],
+            // [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
             [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'status', 'type', 'gst_percentage', 'total_price', 'master_vehicle_id'], 'integer'],
             [['cost_per_person'], 'number'],
