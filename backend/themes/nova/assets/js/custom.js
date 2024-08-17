@@ -627,18 +627,18 @@ $(function () {
 
 
 
-window.onscroll = function () { myFunction() };
+// window.onscroll = function () { myFunction() };
 
-var header = document.getElementById("repository-container-header");
-var sticky = header.offsetTop;
+// var header = document.getElementById("repository-container-header");
+// var sticky = header.offsetTop;
 
-function myFunction() {
-	if (window.pageYOffset > sticky) {
-		header.classList.add("fixed-top");
-	} else {
-		header.classList.remove("fixed-top");
-	}
-}
+// function myFunction() {
+// 	if (window.pageYOffset > sticky) {
+// 		header.classList.add("fixed-top");
+// 	} else {
+// 		header.classList.remove("fixed-top");
+// 	}
+// }
 
 
 function toastMarkdown() {
