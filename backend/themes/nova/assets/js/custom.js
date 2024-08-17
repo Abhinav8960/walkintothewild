@@ -705,20 +705,25 @@ function editor(editor_id) {
 	CKEDITOR.ClassicEditor.create(document.getElementById(editor_id), {
 		// https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
 		toolbar: {
+			// items: [
+			// 	'findAndReplace', '|',
+			// 	'heading', '|',
+			// 	'bold', 'italic', 'strikethrough', 'underline', '|',
+			// 	'bulletedList', 'numberedList', 'todoList', '|',
+			// 	'outdent', 'indent', '|',
+			// 	'undo', 'redo', '|',
+			// 	'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+			// 	'alignment', '|',
+			// 	'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+			// 	'specialCharacters', 'horizontalLine', '|',
+			// 	// 'textPartLanguage', '|',
+			// 	// 'sourceEditing'
+			// ],
 			items: [
-				'findAndReplace', '|',
-				'heading', '|',
-				'bold', 'italic', 'strikethrough', 'underline', '|',
-				'bulletedList', 'numberedList', 'todoList', '|',
-				'outdent', 'indent', '|',
-				'undo', 'redo', '|',
-				'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-				'alignment', '|',
-				'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
-				'specialCharacters', 'horizontalLine', '|',
-				// 'textPartLanguage', '|',
-				// 'sourceEditing'
-			],
+                'heading', '|',
+                'bold', 'italic', 'strikethrough', 'underline', '|',
+                'bulletedList', 'numberedList'
+            ],
 			shouldNotGroupWhenFull: true
 		},
 		// Changing the language of the interface requires loading the language file using the <script> tag.
