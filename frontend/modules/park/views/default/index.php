@@ -185,6 +185,10 @@ $(document).ready(function() {
             isLoading = true; // Set loading flag to true to prevent multiple requests
 
             var nextPageUrl = $(".pagination .next a:first").attr("href");
+            if(nextPageUrl==undefined){
+                isLoading = false;
+                $(".loader").html('<div class="no-results-found">No more results found.</div>');
+            }
             var tabindex = $(".pagination .next a:first").attr("tabindex");
             if(tabindex==undefined){
                 if (nextPageUrl) { // Check if there are more pages and models exist
