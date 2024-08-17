@@ -66,7 +66,7 @@ $this->site_name = 'WalkIntoTheWild'
     </div>
 </section>
 <section class="safari_wrapper bg-white pt-4 pb-0 ">
-<!--    <div class="container-lg  px-slider2">
+    <!--    <div class="container-lg  px-slider2">
         <div class="wrapper-skybgsafri bg-white pb-0 px-slider2">
             <div class="row packageSfari ">
                 <div class="col-12">
@@ -226,7 +226,7 @@ $this->site_name = 'WalkIntoTheWild'
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-md-4 align-items-center gx-4">
+                    <div class="row pt-md-4 align-items-center gx-4 pb-4">
                         <div class="col-lg-6">
                             <div class="social-share flex-wrap d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
@@ -281,7 +281,7 @@ $this->site_name = 'WalkIntoTheWild'
 </section>
 <section class="safari_wrapper margin_bottomfooter pt-3">
     <div class="container-lg">
-        <div class="row mb-5 pb-5">
+        <div class="row mb-5 pb-lg-5 pb-0">
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
             <div class="col-lg-3 order-lg-2 order-1 mb-lg-0 mb-3">
                 <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
@@ -306,6 +306,13 @@ $this->site_name = 'WalkIntoTheWild'
                     </div>
                 </div>
 
+            </div>
+        </div>
+        <div class="row pb-5 d-lg-none">
+            <div class="col-12 text-center">
+                <div class="joinshareView mt-md-0 mt-3">
+                    <a href="/sharedsafari" class="btn_shareView pakage" data-pjax="0"> <i class="fa-solid fa-arrow-left me-2"></i> Back</a>
+                </div>
             </div>
         </div>
         <!-- <div class="row">

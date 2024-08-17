@@ -276,7 +276,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                 </div>-->
-                <div class="row  mt-4 itenary_tabs">
+                <div class="row  mt-5 itenary_tabs">
                     <div class="col-lg-12 col-xl-11 safartabs position-relative">
                         <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -310,7 +310,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 <section class="safari_wrapper mb-5 margin_bottomfooter">
     <div class="container-lg">
-        <div class="row mb-5  mt-5  itenary_tabs">
+        <div class="row mb-lg-5  mt-5  itenary_tabs">
             <div class="col-lg-9 col-xl-9  safartabs position-relative">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab">
@@ -384,7 +384,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-3 mb-5 pb-4">
+            <div class="col-xl-3 col-lg-3 mb-lg-5 pb-lg-4">
                 <div class="request_quote mb-4">
                     <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                         Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
@@ -436,6 +436,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $share_safari->safarioperator]);
                 } ?>
 
+            </div>
+        </div>
+        <div class="row pb-5 d-lg-none">
+            <div class="col-12 text-center">
+                <div class="joinshareView mt-md-0 mt-3">
+                    <a href="/sharedsafari" class="btn_shareView pakage" data-pjax="0"> <i class="fa-solid fa-arrow-left me-2"></i> Back</a>
+                </div>
             </div>
         </div>
 </section>
