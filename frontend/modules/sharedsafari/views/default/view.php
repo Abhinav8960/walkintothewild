@@ -55,7 +55,7 @@ $this->site_name = 'WalkIntoTheWild'
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1>Join or Organize a Shared Safari</h1>
+                        <h1>Shared Safari</h1>
                         <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
                             Their Adventures</p> -->
                     </div>
@@ -66,7 +66,7 @@ $this->site_name = 'WalkIntoTheWild'
     </div>
 </section>
 <section class="safari_wrapper bg-white pt-3 pb-0 ">
-    <div class="container-lg  px-slider2">
+<!--    <div class="container-lg  px-slider2">
         <div class="wrapper-skybgsafri bg-white pb-0 px-slider2">
             <div class="row packageSfari ">
                 <div class="col-12">
@@ -76,7 +76,7 @@ $this->site_name = 'WalkIntoTheWild'
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="container-lg">
         <div class="row mb-4">
             <div class="col-12">

@@ -33,7 +33,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="row">
                 <div class="col-12">
                     <div class="headingBnner_inner">
-                        <h1>Join or Organize a Shared Safari</h1>
+                        <h1>Shared Safari</h1>
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 <section class="safari_wrapper  bg-white pt-4">
-    <div class="container-lg  px-slider2">
+<!--    <div class="container-lg  px-slider2">
         <div class=" bg-white pb-0 px-slider2">
             <div class="row packageSfari mt-4">
                 <div class="col-12">
@@ -52,7 +52,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="container-lg">
         <div class="row packageSfari">
             <div class="col-12">
