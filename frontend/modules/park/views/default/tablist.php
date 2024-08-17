@@ -210,7 +210,7 @@ $this->registerJs($script);
          var loc= window.location.href;
          if (loc.includes("operator") || loc.includes("package") || loc.includes("reviewlist") || loc.includes("sharedsafari") ){
  $('html, body').animate({
-         'scrollTop' : $("#safari_tour_operator_container").position().top - 320
+         'scrollTop' : $("#safari_tour_operator_container").position().top - 180
  });
             }
  JS;
