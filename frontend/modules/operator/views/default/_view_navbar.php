@@ -13,7 +13,7 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
     <div class="col-lg-12 col-xl-10 col-xxl-9 safartabs position-relative">
         <ul class="nav nav-tabs slider_orprator gap-2" role="tablist">
             <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" data-pjax="0">
-                    Shared Safari</i>
+                    Shared Safaris</i>
                 </a></li>
             <li class="nav-item"><a class="nav-link <?= $active == 'package' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/package', 'slug' => $operator->slug]) ?>" data-pjax="0">
                     Packages</i>

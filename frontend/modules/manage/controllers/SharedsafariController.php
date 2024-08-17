@@ -84,7 +84,7 @@ class SharedsafariController extends FrontendBaseController
                                 $park_model->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Fixed Departure Created Successfully');
+                        \Yii::$app->session->setFlash('success', 'Fixed departure created successfully');
                         return $this->redirect(['update-fixed-departure', 'slug' => $model->shared_safari_departure_model->slug]);
                     }
                 }
@@ -135,7 +135,7 @@ class SharedsafariController extends FrontendBaseController
                                 $park_model->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Fixed Departure Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Fixed departure updated successfully');
                         return $this->redirect(\yii\helpers\Url::toRoute(['/manage/sharedsafari/update-fixed-departure', 'slug' => $slug]));
                     }
                 }
@@ -192,7 +192,7 @@ class SharedsafariController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->share_safari_day_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Itinerary Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Itinerary updated successfully');
                         return $this->redirect(['itinerary', 'slug' => $slug, 'day' => $day]);
                     }
                 }
@@ -251,7 +251,7 @@ class SharedsafariController extends FrontendBaseController
                             }
 
                             $transaction->commit();
-                            Yii::$app->session->setFlash('success', 'Inclusion Updated Successfully');
+                            Yii::$app->session->setFlash('success', 'Inclusion updated successfully');
                             return $this->redirect(['inclusion', 'slug' => $slug]);
                         } else {
                             Yii::$app->session->setFlash('success', 'Failed to update package details.');
@@ -292,7 +292,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Getting there Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Getting there updated successfully');
                         return $this->redirect(['getting-there', 'slug' => $slug]);
                     }
                 }
@@ -322,7 +322,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->shared_safari_departure_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Policy Info Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Policy info updated successfully');
                         return $this->redirect(['policy-info', 'slug' => $slug]);
                     }
                 }
@@ -384,7 +384,7 @@ class SharedsafariController extends FrontendBaseController
                             $model->share_safari_faq_model->faq_id = $faq->id;
                             $model->share_safari_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Faq Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Faq submitted successfully');
                         return $this->redirect(['faq', 'slug' => $slug]);
                     }
                 }
@@ -422,7 +422,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->share_safari_faq_select_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Data submitted successfully');
                         return $this->redirect(['faq', 'slug' => $slug]);
                     }
                 }
@@ -479,7 +479,7 @@ class SharedsafariController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->share_safari_gallery_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Gallery Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Gallery updated successfully');
                         return $this->redirect(['gallery', 'slug' => $slug]);
                     }
                 }
@@ -558,7 +558,7 @@ class SharedsafariController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                        \Yii::$app->session->setFlash('success', 'Action taken Successfully');
                         return $this->redirect(['/manage/sharedsafari/comment?id=' . $comment_action_model->share_safari_id . '']);
                     }
                 }

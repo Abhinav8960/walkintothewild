@@ -94,7 +94,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/view',  'slug' => $slug]);
             }
         }
@@ -129,7 +129,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -179,7 +179,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
             }
         }
@@ -197,7 +197,7 @@ class DefaultController extends FrontendBaseController
             $new_safari_operator_rating->parent_id = $safari_operator_rating->id;
             $new_safari_operator_rating->status = 1;
             if ($new_safari_operator_rating->save(false)) {
-                Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Reply successfully submitted');
                 return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
             }
 
@@ -205,7 +205,7 @@ class DefaultController extends FrontendBaseController
             $new_safari_operator_rating->safari_operator_rating_id = $post_data['safari_operator_rating_id'];
             $rating_comment->comment = $post_data['comment'];
             if ($rating_comment->save(false)) {
-                Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Reply successfully submitted');
                 return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
             }
                 */
@@ -259,7 +259,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -376,7 +376,7 @@ class DefaultController extends FrontendBaseController
                         $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name];
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        Yii::$app->session->setFlash('success', 'You UnFollowed ' . $operator->business_name);
+                        Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
                     } else {
                         Yii::$app->session->setFlash('success', 'You can not unfollow this operator currently!');
                     }
@@ -408,7 +408,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->rating_model->save(false)) {
                         $model->updateRatingintoTable($operator);
                         FrontendNotificationHelper::operatorNewReview($operator, $model->rating_model, Yii::$app->user->identity);
-                        Yii::$app->session->setFlash('success', 'Thanks for Review!!');
+                        Yii::$app->session->setFlash('success', 'Thanks for review!!');
                         return $this->redirect([
                             '/operator/default/reviewlist',
                             'slug' => $operator->slug
@@ -439,7 +439,7 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->rating_model->save(false)) {
                         $model->updateRatingintoTable($operator);
-                        Yii::$app->session->setFlash('success', 'Thanks for Edit Review!!');
+                        Yii::$app->session->setFlash('success', 'Thanks for edit review!!');
                         return $this->redirect([
                             '/operator/default/reviewlist',
                             'slug' => $operator->slug
@@ -496,7 +496,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->flag_model->save(false)) {
                         $rating->flaged = 1;
                         $rating->save(false);
-                        Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
+                        Yii::$app->session->setFlash('success', 'Review reported successfully!');
                         return $this->redirect([
                             '/operator/default/reviewlist',
                             'slug' => $operator->slug
@@ -559,7 +559,7 @@ class DefaultController extends FrontendBaseController
             if ($model->validate()) {
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
-                    Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                    Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                     return $this->redirect(['/operator/default/article',  'slug' => $slug]);
                 }
             }
@@ -612,7 +612,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -652,7 +652,7 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->report_model->save(false)) {
-                        Yii::$app->session->setFlash('success', 'Report Successfully!');
+                        Yii::$app->session->setFlash('success', 'Reported successfully!');
                         return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
                     }
                 }
@@ -692,7 +692,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -741,7 +741,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -793,7 +793,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/view',  'slug' => $slug]);
             }
         }
@@ -829,7 +829,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
                 return $this->redirect(['/operator/default/article',  'slug' => $slug]);
             }
         }

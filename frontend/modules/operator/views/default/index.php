@@ -149,7 +149,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         </div>
                                                         <div class="parks_text text-center">
                                                             <p>0</p>
-                                                            <p>Shared Safari</p>
+                                                            <p>Shared Safaris</p>
                                                         </div>
                                                     </div>
                                                     <div class="get_quote text-center">

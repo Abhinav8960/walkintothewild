@@ -105,7 +105,7 @@ class PackageController extends FrontendBaseController
                                 $packagesafaripark->save(false);
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Package Create Successfully');
+                        \Yii::$app->session->setFlash('success', 'Package create successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -163,7 +163,7 @@ class PackageController extends FrontendBaseController
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Package Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Package updated successfully');
                         return $this->redirect(['update', 'package_id' => $package_id]);
                     }
                 }
@@ -189,7 +189,7 @@ class PackageController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Policy Information Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Policy information updated successfully');
                         return $this->redirect(['policy-info', 'package_id' => $package_id]);
                     }
                 }
@@ -216,7 +216,7 @@ class PackageController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Getting there Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Getting there updated successfully');
                         return $this->redirect(['getting-there', 'package_id' => $package_id]);
                     }
                 }
@@ -271,7 +271,7 @@ class PackageController extends FrontendBaseController
                             }
 
                             $transaction->commit();
-                            Yii::$app->session->setFlash('success', 'Inclusion Updated Successfully');
+                            Yii::$app->session->setFlash('success', 'Inclusion updated successfully');
                             return $this->redirect(['inclusion', 'package_id' => $package_id]);
                         } else {
                             Yii::$app->session->setFlash('success', 'Failed to update package details.');
@@ -320,7 +320,7 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Itinerary Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Itinerary updated successfully');
                         return $this->redirect(['itinerary', 'package_id' => $package_id, 'day' => $day]);
                     }
                 }
@@ -375,7 +375,7 @@ class PackageController extends FrontendBaseController
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Faq Created Successfully');
+                        \Yii::$app->session->setFlash('success', 'Faq created successfully');
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
@@ -421,7 +421,7 @@ class PackageController extends FrontendBaseController
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
                         }
-                        \Yii::$app->session->setFlash('success', 'Faq Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Faq updated successfully');
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
@@ -455,7 +455,7 @@ class PackageController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_faq_select_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                        \Yii::$app->session->setFlash('success', 'Data submitted successfully');
                         return $this->redirect(['faq', 'package_id' => $package_id]);
                     }
                 }
@@ -625,7 +625,7 @@ class PackageController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                        \Yii::$app->session->setFlash('success', 'Action taken successfully');
                         return $this->redirect(['/manage/package/comment?package_id=' . $comment_action_model->package_id . '']);
                     }
                 }
@@ -673,7 +673,7 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->package_gallery_model->save(false)) {
                         $model->uploadFile();
-                        \Yii::$app->session->setFlash('success', 'Gallery Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Gallery updated successfully');
                         return $this->redirect(['gallery', 'package_id' => $package_id]);
                     }
                 }

@@ -95,7 +95,7 @@ class DefaultController extends FrontendBaseController
             // Notification for New Comment
             FrontendNotificationHelper::packageNewComment($package, Yii::$app->user->identity);
 
-            Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
+            Yii::$app->session->setFlash('success', 'Comment successfully submitted');
             return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']));
         }
 
@@ -107,7 +107,7 @@ class DefaultController extends FrontendBaseController
             if ($reply_comment) {
                 FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
             }
-            Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+            Yii::$app->session->setFlash('success', 'Reply successfully submitted');
             return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
         }
 
@@ -121,7 +121,7 @@ class DefaultController extends FrontendBaseController
             // Send Notification for Package Quote
             FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity);
 
-            Yii::$app->session->setFlash('success', 'Quote Requested Successfully submitted');
+            Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
             return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
         }
 
@@ -239,7 +239,7 @@ class DefaultController extends FrontendBaseController
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->package_enquiry_model->save(false)) {
-                        Yii::$app->session->setFlash('success', 'Request Sent Successfully!');
+                        Yii::$app->session->setFlash('success', 'Request sent successfully!');
                         return $this->redirect(['view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
                     }
                 }
@@ -282,7 +282,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->flag_model->save(false)) {
                         $comments->flaged = 1;
                         $comments->save(false);
-                        Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
+                        Yii::$app->session->setFlash('success', 'Review reported successfully!');
                         return $this->redirect(['/package/default/view',  'slug' => $slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
                     }
                 }

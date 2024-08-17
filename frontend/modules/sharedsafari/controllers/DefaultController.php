@@ -112,7 +112,7 @@ class DefaultController extends FrontendBaseController
                             MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Shared Safari Created Successfully');
+                        \Yii::$app->session->setFlash('success', 'Shared safari created successfully');
                         return $this->redirect(['index']);
                     }
                 }
@@ -162,7 +162,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->shared_safari_model->save(false)) {
                         $model->UploadFiles($model->shared_safari_model->id);
                         FrontendNotificationHelper::sharedSafariUpdate($model->shared_safari_model);
-                        \Yii::$app->session->setFlash('success', 'Shared Safari Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Shared safari updated successfully');
                         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $shared_safari_model->slug, 'organized_slug' => $shared_safari_model->organizedslug ? $shared_safari_model->organizedslug : '']));
                     }
                 }
@@ -212,14 +212,14 @@ class DefaultController extends FrontendBaseController
         $replymodel = new ReplyForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
-            Yii::$app->session->setFlash('success', 'Comment Successfully submitted');
+            Yii::$app->session->setFlash('success', 'Comment successfully submitted');
 
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
         }
 
 
         if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($share_safari)) {
-            Yii::$app->session->setFlash('success', 'Reply Successfully submitted');
+            Yii::$app->session->setFlash('success', 'Reply successfully submitted');
             return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
         }
 
@@ -280,9 +280,9 @@ class DefaultController extends FrontendBaseController
                 $share_safari_intrested->intrested_at = time();
                 if ($share_safari_intrested->save(false)) {
                     FrontendNotificationHelper::sharedSafariJoin($share_safari, Yii::$app->user->identity);
-                    Yii::$app->session->setFlash('success', 'You joined this Shared Safari!');
+                    Yii::$app->session->setFlash('success', 'You joined this shared safari!');
                 } else {
-                    Yii::$app->session->setFlash('success', 'You can not Join this Shared Safari currently!');
+                    Yii::$app->session->setFlash('success', 'You can not join this shared safari currently!');
                 }
             } else {
                 return $this->redirect(['/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug]);
@@ -317,9 +317,9 @@ class DefaultController extends FrontendBaseController
                     $share_safari_intrested->unintrested_at = time();
                     if ($share_safari_intrested->save(false)) {
                         FrontendNotificationHelper::sharedSafariLeave($share_safari, Yii::$app->user->identity);
-                        Yii::$app->session->setFlash('success', 'You left this Shared Safari!');
+                        Yii::$app->session->setFlash('success', 'You left this shared safari!');
                     } else {
-                        Yii::$app->session->setFlash('success', 'You can not unfollow this Shared Safari currently!');
+                        Yii::$app->session->setFlash('success', 'You can not unfollow this shared safari currently!');
                     }
                 }
             } else {
@@ -353,7 +353,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->flag_model->save(false)) {
                         $comments->flaged = 1;
                         $comments->save(false);
-                        Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
+                        Yii::$app->session->setFlash('success', 'Review reported successfully!');
                         return $this->redirect([
                             '/sharedsafari/default/view',
                             'slug' => $share_safari->slug,
@@ -458,7 +458,7 @@ class DefaultController extends FrontendBaseController
                     if ($model->validate()) {
                         $model->initializeForm();
                         if ($model->shared_safari_request_contact_model->save(false)) {
-                            Yii::$app->session->setFlash('success', 'Details Updated Successfully!');
+                            Yii::$app->session->setFlash('success', 'Details updated successfully!');
                             return $this->redirect([
                                 '/sharedsafari/default/view',
                                 'slug' => $share_safari->slug,
@@ -625,7 +625,7 @@ class DefaultController extends FrontendBaseController
                     if ($wishlist->save(false)) {
                         Yii::$app->session->setFlash('success', 'You removed share safari from wishlist ');
                     } else {
-                        Yii::$app->session->setFlash('error', 'You can not add this sharedsafari to wishlist currently!');
+                        Yii::$app->session->setFlash('error', 'You can not add this shared safari to wishlist currently!');
                     }
                 }
             } else {
