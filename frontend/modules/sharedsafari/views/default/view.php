@@ -71,7 +71,7 @@ $this->site_name = 'WalkIntoTheWild'
             <div class="row packageSfari ">
                 <div class="col-12">
                     <div class="imagesSafari">
-                        <img src="<?= $this->params['baseurl'] ?>/img/Bandhavgarhbig.jpg" alt="" class="w-100">
+                    <img src="<?= $this->params['baseurl'] ?>/img/test.jpg" alt="" class="w-100">
                     </div>
                 </div>
             </div>

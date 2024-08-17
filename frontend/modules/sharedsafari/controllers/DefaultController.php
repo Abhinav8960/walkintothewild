@@ -280,7 +280,7 @@ class DefaultController extends FrontendBaseController
                 $share_safari_intrested->intrested_at = time();
                 if ($share_safari_intrested->save(false)) {
                     FrontendNotificationHelper::sharedSafariJoin($share_safari, Yii::$app->user->identity);
-                    Yii::$app->session->setFlash('success', 'You Just Join the Shared Safari!');
+                    Yii::$app->session->setFlash('success', 'You joined this Shared Safari!');
                 } else {
                     Yii::$app->session->setFlash('success', 'You can not Join this Shared Safari currently!');
                 }
@@ -317,7 +317,7 @@ class DefaultController extends FrontendBaseController
                     $share_safari_intrested->unintrested_at = time();
                     if ($share_safari_intrested->save(false)) {
                         FrontendNotificationHelper::sharedSafariLeave($share_safari, Yii::$app->user->identity);
-                        Yii::$app->session->setFlash('success', 'You Just Leave the Shared Safari!');
+                        Yii::$app->session->setFlash('success', 'You left this Shared Safari!');
                     } else {
                         Yii::$app->session->setFlash('success', 'You can not unfollow this Shared Safari currently!');
                     }

@@ -7278,7 +7278,8 @@ select.custom_sort_by_input  option.selected{
 .slider_orprator .owl-item,
 .slider_packagemobile .owl-item,
 .slider_accountsetting .owl-item,
-.slider_accountsidebar .owl-item{
+.slider_accountsidebar .owl-item,
+.slider_addmobile2 .owl-item{
 
     white-space: nowrap;
     width: auto !important;
@@ -7291,7 +7292,8 @@ select.custom_sort_by_input  option.selected{
 .slider_orprator .owl-item.active,
 .slider_packagemobile .owl-item.active,
 .slider_accountsetting .owl-item.active,
-.slider_accountsidebar .owl-item.active{
+.slider_accountsidebar .owl-item.active,
+.slider_addmobile2 .owl-item.active{
 
     white-space: nowrap;
     width: auto !important; 
@@ -7301,7 +7303,8 @@ select.custom_sort_by_input  option.selected{
 .slider_orprator .owl-stage,
 .slider_packagemobile .owl-stage,
 .slider_accountsetting .owl-stage,
-.slider_accountsidebar .owl-stage
+.slider_accountsidebar .owl-stage,
+.slider_addmobile2 .owl-stage
 {
 
     display: flex;

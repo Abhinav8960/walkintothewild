@@ -12,16 +12,11 @@ $this->params['title'] = $this->title;
 
 ?>
 
-<div class="container-lg mt-5 mb-5 pt-5">
+<div class="container-lg mt-5 mb-5 pt-5" style="min-height: 800px;">
     <div class="row mb-5 margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between align-items-center mb-4 flex-wrap ">
             <h6 class="fs-3 fw-bold "><?= $this->title ?></h6>
-            <div class="mb-0 mt-xl-0 mt-3">
-                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq', 'slug' => $shared_safari_departure_model->slug]) ?> " style="cursor:pointer">+ Create FAQ</a>
-                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq', 'slug' => $shared_safari_departure_model->slug]) ?>" style="cursor:pointer">+ Select FAQ</a>
-            </div>
         </div>
-
         <div class="col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'package']); ?>
         </div>
@@ -32,7 +27,14 @@ $this->params['title'] = $this->title;
                         <?= $this->render('_profile_navbar', ['sharedsafari' => $shared_safari_departure_model, 'faq_active' => 'active']) ?>
                     </div>
                     <div class="row">
+                        <div class="col-12">
+                        <div class="mb-4 float-end">
+                                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq', 'slug' => $shared_safari_departure_model->slug]) ?> " style="cursor:pointer">+ Create FAQ</a>
+                                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq', 'slug' => $shared_safari_departure_model->slug]) ?>" style="cursor:pointer">+ Select FAQ</a>
+                            </div>
+                        </div>
                         <div class="col-md-12">
+                           
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
