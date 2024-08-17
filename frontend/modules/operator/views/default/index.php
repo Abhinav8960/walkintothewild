@@ -126,12 +126,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                                                             <div class="ratings">
 
-                                                                <p class="mb-0"><?= $operator->google_rating ?>
-                                                                    <?= GeneralModel::ratiing_views($operator->google_rating); ?>
+                                                                <p class="mb-0"> 0 
+                                                                    <?= GeneralModel::ratiing_views(0); ?>
                                                                 </p>
                                                             </div>
                                                             <div class="googlerating">
-                                                                <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
+                                                                <!--                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>-->
+                                                    <p class="mb-0">0 Reviews </p>
                                                             </div>
                                                         </div>
 
