@@ -50,7 +50,7 @@ $this->params['title'] = $this->title;
 
                                                             </div>
                                                             <div class="parksImgireview h-100 position-relative">
-                                                                <img src="<?= isset($user->cover_image) <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover rounded-2">
+                                                                <img src="<?= isset($user->cover_image) <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/defaultcover_walkwild.jpg' ?>" alt="" class=" banner-cover rounded-2">
                                                             </div>
 
                                                         </div>

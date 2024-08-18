@@ -12,7 +12,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class="container-lg">
         <div class="row justify-content-center">
             <div class="col-xxl-10 banner-cover position-relative">
-                <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" class=" banner-cover">
+                <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/defaultcover_walkwild.jpg' ?>" alt="" class=" banner-cover">
                 <?php if (Yii::$app->user->id == $user->id) { ?>
                     <label for="coverImageUpload" class="coverbtns">
                         <i class="fa-solid fa-cloud-arrow-up"></i> <span>Upload Cover Picture</span>
