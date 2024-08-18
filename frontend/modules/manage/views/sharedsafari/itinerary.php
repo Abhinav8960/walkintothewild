@@ -124,7 +124,7 @@ $this->params['title'] = $this->title;
                                                                 <div class="row">
                                                                     <?php if ($model->share_safari_day_model->day_image) { ?>
                                                                         <div class="col-md-6">
-                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Share Safari Image (JPEG / JPG / PNG / 940px * 430px / 250kb)', ['class' => 'Modal_label']) ?>
+                                                                            <?= $form->field($model, 'day_image')->fileInput()->label('Day Image (JPEG / JPG / PNG / 940px * 430px / 250kb)', ['class' => 'Modal_label']) ?>
                                                                         </div>
                                                                         <div class="col-md-2">
                                                                             <?= Html::img($model->share_safari_day_model->imagepath, ['width' => '75', 'height' => '75']) ?>
