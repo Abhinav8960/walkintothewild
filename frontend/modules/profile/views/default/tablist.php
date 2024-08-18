@@ -19,7 +19,7 @@ if (isset($user->about)) {
 if (isset($user->coverimage)) {
     $this->image = Yii::$app->params['frontend_url'] .  ltrim($user->coverimage, "/");
 } else {
-    $this->image = Yii::$app->params['frontend_url'] . 'img/banner-share.png';
+    $this->image = Yii::$app->params['frontend_url'] . 'img/defaultcover_walkwild.jpg';
 }
 
 $this->url = Yii::$app->params['frontend_url'] . "share-safari/" . $user->user_handle;

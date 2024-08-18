@@ -42,7 +42,7 @@ return [
         ],
         'view' => [
             'class' => 'daxslab\taggedview\View',
-            'image' => 'https://walkintothewild.in/img/witw.png',
+            'image' => 'https://walkintothewild.in/img/default_witw.png',
             'on afterRender' => function ($event) {
                 // Your custom logic here
                 $event->output .= "\n<!-- Rendered on " . date('Y-m-d H:i:s') . " -->";
