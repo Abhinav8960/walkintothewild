@@ -74,7 +74,7 @@
                                     <div class="row pt-2">
                                         <div class="col-lg-4 mb-2">
                                             <div class="hotelImages">
-                                                <img src="<?= isset($share_safariday->day_image) ? $share_safariday->imagepath : $this->params['baseurl'] . '/img/FESHwr.jpg' ?>" alt="" class="w-100">
+                                                <img src="<?= isset($share_safariday->day_image) ? $share_safariday->imagepath : $this->params['baseurl'] . '/img/default_witw.png' ?>" alt="" class="w-100">
                                             </div>
                                         </div>
                                         <?php
