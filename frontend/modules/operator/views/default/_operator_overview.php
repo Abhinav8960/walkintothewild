@@ -53,9 +53,9 @@ use common\models\operator\SafariOperatorFollow;
                                     <?php } ?>
                                 </div>
                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) { ?>
-                                    <div class="message">
+<!--                                    <div class="message">
                                         <a href="" class="parkrevieBtn">Message</a>
-                                    </div>
+                                    </div>-->
                                 <?php } ?>
                             </div>
 
