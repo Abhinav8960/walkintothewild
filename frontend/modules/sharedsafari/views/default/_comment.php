@@ -52,7 +52,7 @@ use yii\helpers\Url;
                                 <div class="avatar">
                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
 <!--                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">-->
-                                        <img src="<?=$comments->user->profileimage?>" alt="" class="rounded-circle" title="<?= $model->user ? $model->user->name : '' ?>">
+                                        <img src="<?=$comments->user->profileimage?>" alt="" class="rounded-circle" title="<?= $comments->user ? $comments->user->name : '' ?>">
                                     </a>
                                 </div>
                                 <div class="text_com">
