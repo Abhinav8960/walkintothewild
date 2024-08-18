@@ -21,7 +21,7 @@ use yii\helpers\Url;
 <div class="row justify-content-end pt-3 pe-3">
     <div class="col-lg-12 col-xl-8">
         <div class="post_text px-sm-3  px-lg-3 px-3">
-            <p>Commenting on this thread will notify all event attendees via email and will also be visible to
+            <p>Commenting on this thread will notify all event attendees and will also be visible to
                 everyone viewing the event.</p>
         </div>
     </div>
