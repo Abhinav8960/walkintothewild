@@ -97,7 +97,7 @@ $this->params['title'] = $this->title;
                                                                         ])->label('Accommodation', ['class' => 'Modal_label']) ?>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row" style='display: none;'>
                                                                     <div class="col-md-6 mb-3">
                                                                         <?= $form->field($model, 'latitude')->textInput(['maxlength' => true, 'placeholder' => 'Enter Accommodation Latitude'])->label('Accommodation Latitude', ['class' => 'Modal_label']) ?>
                                                                     </div>
@@ -121,7 +121,7 @@ $this->params['title'] = $this->title;
                                                                         </div>
                                                                     <?php } ?>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row" style='display: none;'>
                                                                     <?php if ($model->share_safari_day_model->day_image) { ?>
                                                                         <div class="col-md-6">
                                                                             <?= $form->field($model, 'day_image')->fileInput()->label('Day Image (JPEG / JPG / PNG / 940px * 430px / 250kb)', ['class' => 'Modal_label']) ?>

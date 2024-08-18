@@ -67,11 +67,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="titles_locations pt-4">
+                                    <div class="titles_locations pt-4" style='display: none;'>
                                         <h6 class="fs-5">Images</h6>
                                     </div>
 
-                                    <div class="row pt-2">
+                                    <div class="row pt-2" style='display: none;'>
 <!--                                        <div class="col-lg-4 mb-2">
                                             <div class="hotelImages">
                                                 <img src="<?= isset($share_safariday->day_image) ? $share_safariday->imagepath : $this->params['baseurl'] . '/img/default_witw.png' ?>" alt="" class="w-100">

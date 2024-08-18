@@ -112,7 +112,7 @@ $this->params['title'] = $this->title;
                                                                         ])->label('Accommodation') ?>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row" style='display: none;'>
                                                                     <div class="col-md-4 mb-4">
                                                                         <?= $form->field($model, 'latitude', [
                                                                             'labelOptions' => ['class' => 'Modal_label']
@@ -140,7 +140,7 @@ $this->params['title'] = $this->title;
                                                                         </div>
                                                                     <?php } ?>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row" style='display: none;'>
                                                                     <?php if ($model->package_day_model->day_image) { ?>
                                                                         <div class="col-md-5">
                                                                             <?= $form->field($model, 'day_image', [
