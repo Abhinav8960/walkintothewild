@@ -173,9 +173,9 @@ $this->params['title'] = $this->title;
 
                                                     <?php
                                                     $script = <<< JS
-                                                       // editor('dayitineraryform-day_description{$i}');
+                                                        editor('dayitineraryform-day_description{$i}');
                                                         JS;
-                                                    $this->registerJs($script);
+                                                   //$this->registerJs($script);
                                                     ?>
                                                 <?php } ?>
 
