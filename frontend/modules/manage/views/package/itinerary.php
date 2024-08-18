@@ -83,7 +83,7 @@ $this->params['title'] = $this->title;
                                                                         ])->label('Description') ?>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row">
+                                                                <div class="row" style='display: none;'>
                                                                     <div class="col-md-4 mb-4">
                                                                         <?= $form->field($model, 'start_location', [
                                                                             'labelOptions' => ['class' => 'Modal_label']

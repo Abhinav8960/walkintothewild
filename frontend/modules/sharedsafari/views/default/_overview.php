@@ -42,7 +42,7 @@
                                                 <p><?= $share_safariday->hotel_name ?></p>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-12" style='display: none;'>
                                             <div class="titles_locations">
                                                 <h6 class="fs-5">Meals</h6>
                                                 <div class="mealchecks d-flex gap-sm-4 gap-2 align-items-center flex-wrap">
