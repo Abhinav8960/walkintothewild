@@ -7,7 +7,7 @@ use common\models\registration\SafariOperatorRequest;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Share Safari';
+$this->title = 'Profile';
 
 if (isset($user->about)) {
     $shortdescription = implode(' ', array_slice(explode(' ', strip_tags($user->about)), 0, 200));
