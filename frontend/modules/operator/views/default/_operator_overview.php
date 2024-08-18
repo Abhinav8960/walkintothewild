@@ -13,7 +13,7 @@ use common\models\operator\SafariOperatorFollow;
                 <div class="col-lg-3 col-md-4">
                     <div class="tourLogoes ">
                         <div class="images_tour">
-                            <img src="<?= isset($operator->logo) ? $operator->imagepath : $this->params['baseurl'] . '/img/Pugdundee.jpg' ?>" alt="">
+                            <img src="<?= isset($operator->logo) ? $operator->imagepath : '/img/witw.png' ?>" alt="">
                             <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                         </div>
                         <div class="slect_safricound2 d-flex justify-content-around mt-4">
@@ -61,7 +61,7 @@ use common\models\operator\SafariOperatorFollow;
 
                         </div>
                         <div class="title_tours">
-                            <p class="pb-sm-0 pt-2"> Safari Tour Operator</p>
+                            <p class="pb-sm-0 pt-2"> <?= $operator->category_id==1 ? "Safari Tour Operator": ($operator->category_id==3 ?  "Wildelife Influencer":  "Safari Tour Operator") ?></p>
                         </div>
                         <div class="providerNamerating tours d-flex flex-wrap gap-4 align-items-center pb-3 pt-1">
                             <div class="ratings">
