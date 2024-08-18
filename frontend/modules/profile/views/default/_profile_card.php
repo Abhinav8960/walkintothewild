@@ -19,7 +19,7 @@ use yii\helpers\Url;
     </div>
 
     <!-- <div class="card-up cover_profile">
-            <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/banner-share.png' ?>" alt="" style="width: 100%; height: 130px;">
+            <img src="<?= $user->cover_image <> '' ?  $user->coverimage : $this->params['baseurl'] . '/img/defaultcover_walkwild.jpg' ?>" alt="" style="width: 100%; height: 130px;">
         </div> -->
     <div class="profileDetails  text-center">
         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>">
