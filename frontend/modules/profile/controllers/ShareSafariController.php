@@ -21,16 +21,16 @@ class ShareSafariController extends FrontendBaseController
     public function actionIndex($user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI]);
-        $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id]);
+        $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI,'status' => ShareSafari::STATUS_ACTIVE]);
+        $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id,'status' => ShareSafari::STATUS_ACTIVE]);
 
         if (Yii::$app->user->identity) {
             if ($user->id == Yii::$app->user->identity->id) {
                 $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI,'status' => ShareSafari::STATUS_ACTIVE]);
-                $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id]);
+                $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id,'status' => ShareSafari::STATUS_ACTIVE]);
             } else {
                 $organized_by = ShareSafari::find()->where(['host_user_id' => $user->id, 'type' => ShareSafari::TYPE_SAFARI,'status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'start_date', date("Y-m-d")]);
-                $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d")]);
+                $joined_by = ShareSafariIntrested::find()->where(['user_id' => $user->id])->joinwith(['sharesafari'])->andWhere(['>=', 'start_date', date("Y-m-d"),'status' => ShareSafari::STATUS_ACTIVE]);
             }
         }
 
