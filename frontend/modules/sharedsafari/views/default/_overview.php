@@ -23,7 +23,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style='display: none;'>
                                         <div class="col-lg-4 mb-3">
                                             <div class="titles_locations">
                                                 <h6 class="fs-5">Start Location</h6>
