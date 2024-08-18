@@ -125,14 +125,10 @@ Pjax::begin([
                                             <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
 
                                                 <div class="ratings">
-
-                                                    <p class="mb-0">0
-                                                        <?= GeneralModel::ratiing_views(0); ?>
-                                                    </p>
+                                                    <p class="mb-0"><?= round($operator->google_rating, 1) ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
                                                 </div>
                                                 <div class="googlerating">
-                                                    <!--                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>-->
-                                                    <p class="mb-0">0 Reviews </p>
+                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>
                                                 </div>
                                             </div>
 
