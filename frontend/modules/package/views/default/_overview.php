@@ -70,9 +70,9 @@
 
                                     <div class="row pt-2">
                                         <div class="col-lg-4 mb-2">
-                                            <div class="hotelImages">
+<!--                                            <div class="hotelImages">
                                                 <img src="<?= isset($packageday->day_image) ? $packageday->imagepath : $this->params['baseurl'] . '/img/default_witw.png' ?>" alt="" class="w-100">
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <?php
 
