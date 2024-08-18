@@ -77,7 +77,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-6">
                 <div class="users">
                     <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
-                        $count = $share_safari->getIntrested()->count();
+                        $count = $share_safari->getIntrested()->where(['status' => 1])->count();
                         $avatar_count = 3;
                         foreach ($interests as $interest) {
                             if ($user_interested = $interest->user) {
@@ -85,10 +85,10 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                 <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user_interested->user_handle]) ?>" data-pjax="0"><img src="<?= $user_interested->profileimage <> '' ? $user_interested->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpinterested.png' ?>" alt="" class="rounded-circle"></a>
                             <?php }
                         };
-                        $count = $share_safari->getIntrested()->count();
+                        $count = $share_safari->getIntrested()->where(['status' => 1])->count();
                         $avatar_count = 3;
                         $data = $count - $avatar_count;
-                        if ($data > 3) {  ?>
+                        if ($data >= 3) { ?>
                             <div class="roundes_countuser">
                                 <?= $data ?>+
                             </div>
