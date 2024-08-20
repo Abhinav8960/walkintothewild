@@ -1,4 +1,4 @@
-<li><span class="iconSize copytoclipboard" data-href="<?php echo Yii::$app->request->absoluteUrl; ?>"><i class="fa-solid fa-link"></i></span></li>
+<li><span class="iconSize copytoclipboard" data-href="<?php echo preg_replace("/^http:/i", "https:", Yii::$app->request->absoluteUrl); ?>"><i class="fa-solid fa-link"></i></span></li>
 
 <?php
 $script = <<< Js

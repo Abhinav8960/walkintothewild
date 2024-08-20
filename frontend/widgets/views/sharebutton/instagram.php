@@ -1,2 +1,2 @@
-<li><a href="https://www.instagram.com/?url=<?= Yii::$app->request->absoluteUrl; ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
+<li><a href="https://www.instagram.com/?url=<?php echo preg_replace("/^http:/i", "https:", Yii::$app->request->absoluteUrl); ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
 </li>
