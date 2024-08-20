@@ -43,7 +43,7 @@ class UserExperienceForm extends Model
     public function rules()
     {
         return [
-            // [['description'], 'required'],
+            [['parks'], 'required'],
             // [['file'], 'safe'],
             // [
             //     ['file'],
