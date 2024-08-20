@@ -11,7 +11,7 @@
     --background-primary: #09422D;
     --background-yellow: #f9d600;
     --background-orange: #FD5634;
-    --background-secondry: #add740;
+    --background-secondry: #99ff33;
     --color1: #FD5634;
     --colorwhite: #ffffff;
     --colorBlack: #000000;
@@ -358,7 +358,7 @@ a {
     font-size: var(--fs-25);
     text-align: center;
     color: var(--colorwhite);
-    color: #ADDC2C;
+    color:  #99ff33;
 }
 
 .sharesafri {
@@ -374,7 +374,7 @@ a {
 
 .title_safari h4 {
 
-    color: #ADDC2C;
+    color:  #99ff33;
     ;
     font-size: var(--fs-22);
 }
@@ -1981,7 +1981,7 @@ figure {
 .text_com p {
 
     font-size: var(--fs-14);
-    word-break: break-all;
+    word-break: break-word;
 }
 .text_com a{
 
@@ -2330,7 +2330,7 @@ figure {
 
     font-weight: 500;
     font-size: 15px;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .commentsOther {
@@ -6166,7 +6166,7 @@ a.desc:after {
 
     font-size: 12px;
     font-weight: 400;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .sizecontact i {

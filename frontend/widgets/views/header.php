@@ -18,7 +18,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<img src="<?= $this->params['baseurl'] ?>/img/logo.png" alt="logo" width="180px" class="logo">
 			</a>
 			<div class="d-flex align-items-center">
-
 				<div class="offcanvas offcanvas-end header_canvas" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
 					<div class="offcanvas-header ps-1">
 						<h5 class="offcanvas-title" id="offcanvasNavbarLabel">
@@ -66,68 +65,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								</a>
 							</li>
 						</ul>
-
-						<div class="logoutBox d-lg-none">
-							<div class="menuprofilemobile">
-								<ul>
-									<?php if (!Yii::$app->user->identity) { ?>
-										<li>
-											<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
-										</li>
-									<?php } else { ?>
-										<li>
-											<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
-												<i class="fa-solid fa-user"></i>
-												Profile</a>
-										</li>
-										<?php
-										if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
-											<li>
-												<a class="" href="/manage">
-													<i class="fa-solid fa-cog"></i>
-													Manage My page</a>
-											</li>
-										<?php }
-										?>
-
-										<li>
-											<a class="" href="/account">
-												<i class="fa-solid fa-cog"></i>
-												Account Setting</a>
-										</li>
-										<!-- <li>
-												<a class="" href="/chat">
-													<i class="fa-solid fa-message"></i>
-													Messages</a>
-											</li> -->
-										<!-- <li>
-												<a class="" href="/profile/search">
-													<i class="fa-solid fa-search"></i>
-													Search Profile</a>
-											</li> -->
-										<li>
-											<a class="" href="/account/wishlist">
-												<i class="fa-solid fa-heart"></i>
-												Whishlist</a>
-										</li>
-										<li>
-											<a class="" href="/site/logout" data-method="POST">
-												<i class="fa-solid fa-arrow-right-from-bracket"></i>
-												Log Out</a>
-
-										</li>
-
-									<?php } ?>
-
-
-								</ul>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
 			<div class="d-flex gap-4 align-items-center justify-content-end initial_headers">
-
 				<?php if (Yii::$app->user->identity) { ?>
 					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
@@ -136,7 +77,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<div class=" pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
 					</a>
 				<?php } ?>
-
 
 				<div class="proilewrapper">
 					<div class="profile">
