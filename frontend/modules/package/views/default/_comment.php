@@ -15,16 +15,13 @@ use yii\helpers\Url;
                     $replies = $comments->getReplies()->where(['status' => 1])->all(); ?>
                     <div class="one_box position-relative">
                         <div class="objec-flgs">
-                            <?php if (Yii::$app->user->id) {
-                                //nothing do do
-                            }
 
-                            if ($login_safarioperator) {
-                                if ($login_safarioperator && Yii::$app->user->id != $login_safarioperator->user_id) { ?>
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
-                                <?php }
-                            } else {
-                                if (Yii::$app->user->identity && Yii::$app->user->id !=  $package->owned_by_id) { ?>
+                            <?php if ($comments->user) {
+                                if ($login_safarioperator) {
+                                    if ($comments->user->id != $login_safarioperator->user_id) { ?>
+                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
+                                    <?php }
+                                } elseif ($comments->user->id != Yii::$app->user->id) { ?>
                                     <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
                             <?php }
                             } ?>
@@ -37,8 +34,8 @@ use yii\helpers\Url;
                             </div>
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                     <span class="comment-author"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                        <?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>    
+                                    <span class="comment-author"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
+                                            <?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
                                 </div>
                                 <p><?= $comments->comment ?>
                                     <?php if (Yii::$app->user->id) {  ?>

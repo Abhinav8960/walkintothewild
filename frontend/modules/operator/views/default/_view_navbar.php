@@ -9,7 +9,7 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
 
 ?>
 
-<div class="row  mt-4 pt-4 itenary_tabs justify-content-center">
+<div class="row  mt-4 pt-4 itenary_tabs justify-content-center" id="safari_tour_container">
     <div class="col-lg-12 col-xl-10 col-xxl-9 safartabs position-relative">
         <ul class="nav nav-tabs slider_orprator gap-2" role="tablist">
             <li class="nav-item"><a class="nav-link <?= $active == 'sharedsafari' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $operator->slug]) ?>" data-pjax="0">
@@ -128,3 +128,16 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
         /* Change color on hover */
     }
 </style>
+
+<?php
+// Except shared safari
+$script = <<< JS
+         var loc= window.location.href;
+         if (loc.includes("package") || loc.includes("reviewlist") || loc.includes("article") || loc.includes("contact") || loc.includes("park")){
+            $('html, body').animate({
+                    'scrollTop' : $("#safari_tour_container").position().top - 180
+            });
+            }
+ JS;
+$this->registerJs($script);
+?>
