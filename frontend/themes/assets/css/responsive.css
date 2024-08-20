@@ -2334,7 +2334,7 @@ margin: 0;
 }
   .Mobile_navbar .links-mobile a{
 
-    font-size: 10px;
+    font-size: 12px;
   }
   .card-img2 img{
 
@@ -2342,7 +2342,7 @@ margin: 0;
   }
   .mass img{
 
-    width: 14px;
+    width: 16px;
   }
   .fa-envelope.fs-5{
 
@@ -2350,7 +2350,7 @@ margin: 0;
   }
   .card-img22 img{
 
-    width: 13px;
+    width: 16px;
   }
   .legends_bx p{
 
@@ -2368,7 +2368,7 @@ padding-left: 21px;
   }
   .OrBox {
     top: 45px;
-    right: 42px;
+    right: 40%;
     width: 38px;
     height: 38px;
   }
