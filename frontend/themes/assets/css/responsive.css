@@ -1260,9 +1260,9 @@ margin-bottom: 0 !important;
   .card-img {
     display: none;
   }
-  .proilewrapper {
+  /* .proilewrapper {
     display: none;
-  }
+  } */
   .sahreSafari {
     margin-left: 0 !important;
     padding-left: 0;
@@ -1283,6 +1283,7 @@ margin-bottom: 0 !important;
   }
   .navbar-toggler {
     border: 0 !important;
+    padding-left: 0px;
   }
 
   .navbar-toggler:focus {
@@ -1911,6 +1912,19 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .initial_headers i{
+
+    font-size: 20px;
+  }
+  .initial_headers{
+
+    gap: 16px !important;
+  }
+  .img-box2 img{
+
+    width: 22px;
+    height: 22px;
+  }
   .mobileSetimg{
 
     display: flex;
