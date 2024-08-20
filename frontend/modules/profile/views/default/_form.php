@@ -33,7 +33,8 @@ use yii\bootstrap5\ActiveForm;
     <div class="row py-2">
         <div class="col-lg-12 ">
             <div class="creat-safri d-flex justify-content-end">
-                <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                <!-- <button class="cancel_btn" data-bs-dismiss="modal" aria-label="Close">Cancel</button> -->
+                <button type="button" class="cancel_btn" data-bs-dismiss="modal">Cancel</button>
                 <?php if (isset($model->user_experience_model->id)) { ?>
                     <?= Html::submitButton('Update ', ['class' => 'safari_create font_set w-auto ms-2']) ?>
                 <?php } else {  ?>
