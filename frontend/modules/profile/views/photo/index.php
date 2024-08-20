@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
 
 <?php if (Yii::$app->user->identity) { ?>
     <section>
-        <div class="container-lg ">
+        <div class="container-lg " id="profile_container">
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-followers" role="tabpanel" aria-labelledby="pills-followers-tab" tabindex="0">
                     <div class="row justify-content-center ">
@@ -120,7 +120,7 @@ $this->params['title'] = $this->title;
     </section>
 <?php } else { ?>
 
-    <div class="container-lg">
+    <div class="container-lg" id="profile_container">
         <div class="row justify-content-center">
             <div class="col-xxl-11 margin_bottomfooter">
                 <div class="card position-relative" style="min-height: 350px;">
@@ -141,3 +141,15 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 <?php } ?>
+
+<?php
+$script = <<< JS
+         var loc= window.location.href;
+       
+            $('html, body').animate({
+                    'scrollTop' : $("#profile_container").position().top - 180
+            });
+           
+ JS;
+$this->registerJs($script);
+?>

@@ -86,7 +86,7 @@ class UserForm extends Model
                 'targetAttribute' => ['user_handle'],
                 'message' => 'This username has already been taken'
             ],
-            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url', 'website_url', 'youtube_url'], 'string'],
+            [['facebook_url', 'whatsapp_url', 'x_url', 'insta_url', 'website_url', 'youtube_url'], 'url', 'defaultScheme' => 'https'],
             [['about'], 'string'],
 
             [
