@@ -669,7 +669,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function () {
+    let profile2 = document.querySelector('.profile2');
+    let menu2 = document.querySelector('.menuprofile2');
 
+    if (profile2 && menu2) {
+        profile2.onclick = function (event) {
+            menu2.classList.toggle('active');
+            event.stopPropagation();
+        }
+
+        document.addEventListener('click', function (event) {
+            if (!profile2.contains(event.target) && !menu2.contains(event.target)) {
+                menu2.classList.remove('active');
+            }
+        });
+    }
+});
 
 // (function($){
 //     $('document').ready(function() {
@@ -697,24 +713,19 @@ function editor(editor_id) {
     CKEDITOR.ClassicEditor.create(document.getElementById(editor_id), {
         // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
         toolbar: {
-            // items: [
-            //     'findAndReplace', '|',
-            //     'heading', '|',
-            //     'bold', 'italic', 'strikethrough', 'underline', '|',
-            //     'bulletedList', 'numberedList', 'todoList', '|',
-            //     'outdent', 'indent', '|',
-            //     'undo', 'redo', '|',
-            //     'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-            //     'alignment', '|',
-            //     'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
-            //     'specialCharacters', 'horizontalLine', '|',
-            //     // 'textPartLanguage', '|',
-            //     // 'sourceEditing'
-            // ],
             items: [
+                'findAndReplace', '|',
                 'heading', '|',
                 'bold', 'italic', 'strikethrough', 'underline', '|',
-                'bulletedList', 'numberedList'
+                'bulletedList', 'numberedList', 'todoList', '|',
+                'outdent', 'indent', '|',
+                'undo', 'redo', '|',
+                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                'alignment', '|',
+                'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                'specialCharacters', 'horizontalLine', '|',
+                // 'textPartLanguage', '|',
+                // 'sourceEditing'
             ],
             shouldNotGroupWhenFull: true
         },

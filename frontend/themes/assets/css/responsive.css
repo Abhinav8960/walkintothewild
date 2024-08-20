@@ -1118,6 +1118,51 @@ text-align: center !important;
   }
 }
 @media only screen and  (max-width: 991px) {
+  .menunotification{
+
+    right: 12px;
+  }
+  .Mobile_navbar{
+
+    background-color: #09422D;
+    padding: 10px 0px;
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    z-index: 100;  }
+    .Mobile_navbar .links-mobile{
+
+      position: relative;
+    }
+    .Mobile_navbar .links-mobile a{
+
+      font-weight: 600;
+    font-size: var(--fs-14);
+    font-family: "Roboto", sans-serif !important;
+    color:#fff;
+    }
+    .links-mobile span{
+
+      padding-top: 4px !important;
+        display: block;
+    }
+    .links-mobile.active{
+
+      border-bottom: 1px solid #09422d;
+    }
+    .links-mobile.active::after {
+      content: "";
+      width: 100%;
+      background-color: #99ff33;
+      /* background-color: var(--background-yellow); */
+      height: 3px;
+      position: absolute;
+      bottom: -11px;
+      left: 0;
+      -webkit-transition: width .3s;
+      -o-transition: width .3s;
+      transition: width .3s;
+  }
   .topSlider_tour .items_slider img{
 
     height: auto;
@@ -1912,6 +1957,14 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .Mobile_navbar .links-mobile a{
+
+    font-size: 12px;
+  }
+  .fa-envelope.fs-5{
+
+    font-size: 15px !important;
+  }
   .initial_headers i{
 
     font-size: 20px;
@@ -2273,6 +2326,30 @@ margin: 0;
 }
 
 @media (max-width: 420px) {
+  .img-box2.mobileee img {
+    width: 16px;
+    height: 16px;
+}
+  .Mobile_navbar .links-mobile a{
+
+    font-size: 10px;
+  }
+  .card-img2 img{
+
+    width: 19px;
+  }
+  .mass img{
+
+    width: 14px;
+  }
+  .fa-envelope.fs-5{
+
+    font-size: 13px !important;
+  }
+  .card-img22 img{
+
+    width: 13px;
+  }
   .legends_bx p{
 
     font-size: 10pxs;

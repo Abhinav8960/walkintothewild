@@ -52,7 +52,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 								<a href="/package" class="nav-link">
 									<div class="card-img">
-										<img src="<?= $this->params['baseurl'] ?>/img/Package.png" alt="" width="20">
+										<img src="<?= $this->params['baseurl'] ?>/img/packageicon.png" alt="" width="20">
 									</div>Safari Packages
 								</a>
 							</li>
@@ -68,17 +68,22 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</div>
 				</div>
 			</div>
-			<div class="d-flex gap-4 align-items-center justify-content-end initial_headers">
+			<div class="d-lg-none d-block initial_headers">
 				<?php if (Yii::$app->user->identity) { ?>
 					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
-
+				<?php } ?>
+			</div>
+			<div class="d-lg-flex d-none gap-4 align-items-center justify-content-end initial_headers">
+				<?php if (Yii::$app->user->identity) { ?>
+					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
+					<div class="menunotification" id="menunotification_menu"></div>
 					<a href="/chat">
 						<div class=" pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
 					</a>
 				<?php } ?>
 
-				<div class="proilewrapper">
+				<div class="proilewrapper remove_mobile">
 					<div class="profile">
 						<div class="img-box2">
 							<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileimage <> '' ?  Yii::$app->user->identity->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="25" height="25">
@@ -172,6 +177,142 @@ $active_url = "/" . Yii::$app->requestedRoute;
 		</div>
 	</nav>
 </header>
+<div class="Mobile_navbar">
+	<div class="container-fluid">
+		<div class="d-flex justify-content-between">
+			<div class="links-mobile <?= in_array($active_url, array(
+											"/",
+											"/park/default/index",
+											"/park/default/parklist",
+											// "/park/default/view",
+										)) ? "active" : "" ?>">
+
+				<a class="nav-link" href="<?= \yii\helpers\Url::toRoute(['/']) ?>">
+					<div class="d">
+						<div class="card-img2 text-center">
+							<img src="<?= $this->params['baseurl'] ?>/img/plansafari-icon.png" alt="" width="32">
+						</div> <span>Plan Safari</span>
+					</div>
+				</a>
+			</div>
+			<div class="links-mobile text-center <?= (in_array($active_url, array("/package/default/index", "/package/default/view")) || str_starts_with($active_url, "/package")) ? "active" : "" ?>">
+				<a href="/package" class="nav-link">
+					<div class="card-img22 text-center">
+						<img src="<?= $this->params['baseurl'] ?>/img/packageicon.png" alt="" width="20">
+					</div><span>Packages</span>
+				</a>
+			</div>
+			<div class="links-mobile text-center <?= (in_array($active_url, array("/sharedsafari/default/index", "/sharesafari/default/view")) || str_starts_with($active_url, "/sharedsafari")) ? "active" : "" ?>">
+				<a href="/sharedsafari" class="nav-link">
+					<div class="card-img2 text-center">
+						<img src="<?= $this->params['baseurl'] ?>/img/safaric.png" alt="" width="32">
+					</div><span>Shared Safari</span>
+				</a>
+			</div>
+			<?php if (Yii::$app->user->identity) { ?>
+			<div class="links-mobile text-center">
+			
+					<a href="/chat" class="nav-link">
+						<div class="card-img2 mass text-center">
+						<img src="<?= $this->params['baseurl'] ?>/img/messsege.png" alt="" width="20">
+					</div><span>Message</span>
+					</a>
+				
+			</div>
+			<?php } ?>
+			<div class="links-mobile ">
+				<div class="proilewrapper">
+					<div class="profile2 justify-content-center">
+						<div class="img-box2 mobileee d-flex flex-column">
+							<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileimage <> '' ?  Yii::$app->user->identity->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class=" rounded-circle" width="25" height="25">
+							<a href=""><span>You</span></a>
+						</div>
+					</div>
+					<div class="menuprofile2">
+						<div class="profileBoxwrap">
+
+							<?php if ($user = Yii::$app->user->identity) { ?>
+								<div class="profile_details d-flex gap-2">
+									<div class="img-box2">
+										<img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="35" height="35">
+										
+									</div>
+									<div class="profile_name">
+										<h6><?= $user->name ?></h6>
+										<p><?= $user->userhandle ?></p>
+									</div>
+								</div>
+							<?php } ?>
+							<ul>
+								<?php if (!Yii::$app->user->identity) { ?>
+									<li>
+										<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+									</li>
+								<?php } else { ?>
+
+
+									<!-- <?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
+											<li>
+												<a class="" target="_blank" href="<?= Yii::$app->params['backend_url'] ?>">
+													<i class="fa-solid fa-cog"></i>
+													Manage</a>
+											</li>
+										<?php } ?> -->
+
+
+									<li>
+										<a class="" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">
+											<i class="fa-solid fa-user"></i>
+											Profile</a>
+									</li>
+									<?php
+									if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
+										<li>
+											<a class="" href="/manage">
+												<i class="fa-solid fa-cog"></i>
+												Manage My page</a>
+										</li>
+									<?php }
+									?>
+
+
+									<li>
+										<a class="" href="/account">
+											<i class="fa-solid fa-cog"></i>
+											Account Setting</a>
+									</li>
+									<!-- <li>
+										<a class="" href="/chat">
+											<i class="fa-solid fa-message"></i>
+											Messages</a>
+									</li> -->
+									<!-- <li>
+											<a class="" href="/profile/search">
+												<i class="fa-solid fa-search"></i>
+												Search Profile</a>
+										</li> -->
+									<li>
+										<a class="" href="/account/wishlist">
+											<i class="fa-solid fa-heart"></i>
+											Whishlist</a>
+									</li>
+									<li class="border-top">
+										<a class="py-3" href="/site/logout" data-method="POST">
+											<i class="fa-solid fa-arrow-right-from-bracket"></i>
+											Log Out</a>
+									</li>
+								<?php } ?>
+							</ul>
+
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <?php if (false && Yii::$app->user->identity) { ?>
 	<script>
