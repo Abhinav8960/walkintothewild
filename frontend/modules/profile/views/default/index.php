@@ -75,7 +75,7 @@ $this->params['title'] = $this->title;
                                             <div class="d-flex justify-content-between flex-wrap align-items-center mb-3">
                                                 <h6 class="fs-6 fw-bold" style="padding-bottom: 0 !important;">Park Visited</h6>
                                                 <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
-                                                    <button class="parkrevieBtn photoBtn text-center mt-sm-0 mt-2 " value="<?= Url::toRoute(['/profile/user-experience']) ?>">+ Add Experience</button>
+                                                    <button class="parkrevieBtn photoBtn text-center mt-sm-0 mt-2 " value="<?= Url::toRoute(['/profile/default/create']) ?>">+ Add Experience</button>
                                                 <?php } ?>
                                             </div>
                                             <div class="tab-content_tour active">
