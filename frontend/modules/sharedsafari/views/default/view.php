@@ -13,7 +13,7 @@ use common\models\sharesafari\ShareSafariIntrested;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Safari Tour Operator Registration';
+$this->title =  'Shared Safari';
 $this->params['title'] = $this->title;
 
 $shortdescription = implode(' ', array_slice(explode(' ', strip_tags($share_safari->safari_plan)), 0, 200));
