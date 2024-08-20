@@ -210,24 +210,36 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				</a>
 			</div>
 			<?php if (Yii::$app->user->identity) { ?>
-			<div class="links-mobile text-center">
-			
+				<div class="links-mobile text-center">
+
 					<a href="/chat" class="nav-link">
 						<div class="card-img2 mass text-center">
-						<img src="<?= $this->params['baseurl'] ?>/img/messsege.png" alt="" width="20">
-					</div><span>Message</span>
+							<img src="<?= $this->params['baseurl'] ?>/img/messsege.png" alt="" width="20">
+						</div><span>Message</span>
 					</a>
-				
-			</div>
+
+				</div>
 			<?php } ?>
 			<div class="links-mobile ">
 				<div class="proilewrapper">
-					<div class="profile2 justify-content-center">
-						<div class="img-box2 mobileee d-flex flex-column">
-							<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileimage <> '' ?  Yii::$app->user->identity->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class=" rounded-circle" width="25" height="25">
-							<a href=""><span>You</span></a>
+					<?php if (Yii::$app->user->identity) { ?>
+						<div class="profile2 justify-content-center">
+							<div class="img-box2 mobileee d-flex flex-column">
+								<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileimage <> '' ?  Yii::$app->user->identity->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class=" rounded-circle" width="25" height="25">
+
+								<a href="javascript:void(0)"><span>You</span></a>
+
+							</div>
 						</div>
-					</div>
+					<?php } else { ?>
+						<div class="justify-content-center">
+							<div class="img-box2 mobileee d-flex flex-column">
+								<img src="<?= $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class=" rounded-circle" width="25" height="25">
+								<a href="/site/login?authclient=google&referrer=/"><span>Login</span></a>
+							</div>
+						</div>
+
+					<?php } ?>
 					<div class="menuprofile2">
 						<div class="profileBoxwrap">
 
@@ -235,7 +247,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								<div class="profile_details d-flex gap-2">
 									<div class="img-box2">
 										<img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="35" height="35">
-										
+
 									</div>
 									<div class="profile_name">
 										<h6><?= $user->name ?></h6>

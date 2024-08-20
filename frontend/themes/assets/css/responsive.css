@@ -2330,6 +2330,7 @@ margin: 0;
   .img-box2.mobileee img {
     width: 16px;
     height: 16px;
+    margin-left: 5px;
 }
   .Mobile_navbar .links-mobile a{
 
@@ -2337,7 +2338,7 @@ margin: 0;
   }
   .card-img2 img{
 
-    width: 19px;
+    width: 23px;
   }
   .mass img{
 
