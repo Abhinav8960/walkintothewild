@@ -2328,20 +2328,20 @@ margin: 0;
 
 @media (max-width: 420px) {
   .img-box2.mobileee img {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
   .Mobile_navbar .links-mobile a{
 
-    font-size: 10px;
+    font-size: 12px;
   }
   .card-img2 img{
 
-    width: 19px;
+    width: 21px;
   }
   .mass img{
 
-    width: 14px;
+    width: 16px;
   }
   .fa-envelope.fs-5{
 
@@ -2367,7 +2367,7 @@ padding-left: 21px;
   }
   .OrBox {
     top: 45px;
-    right: 42px;
+    right: 40%;
     width: 38px;
     height: 38px;
   }

@@ -225,7 +225,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					<div class="profile2 justify-content-center">
 						<div class="img-box2 mobileee d-flex flex-column">
 							<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileimage <> '' ?  Yii::$app->user->identity->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class=" rounded-circle" width="25" height="25">
-							<a href=""><span>You</span></a>
+							<a href="javascript:void(0)"><span>You</span></a>
 						</div>
 					</div>
 					<div class="menuprofile2">
