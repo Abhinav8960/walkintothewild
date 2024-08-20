@@ -1134,6 +1134,9 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
             ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
+        //for show only tiger reserve
+        $query->andWhere(['show_in_filter' => 1]);
+
         // Get all the models
         // $not_parks = $query->joinWith('experiencepark', function ($additional_query) {
         //     $additional_query->where(['<>',  'user_experience.park_id', 'safari_park.id']);
