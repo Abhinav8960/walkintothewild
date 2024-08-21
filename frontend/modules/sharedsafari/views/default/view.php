@@ -111,8 +111,8 @@ $this->site_name = 'WalkIntoTheWild'
                                                 if (Yii::$app->user->identity) { ?>
                                             <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
                                                                                                                                                                                                                                                                 } else { ?>
-                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=/profile/user/<?= $share_safari->getOrganizedbyuserhandel() ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
-                                                                                                                                                                                                                                                                } ?>
+                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=<?= Url::toRoute(['/profile/default/index', 'user_handle' => $share_safari->getOrganizedbyuserhandel()]) ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                                                                                                                                                                                                                                                                                    } ?>
                                     </div>
                                 </div>
                             </div>
@@ -139,7 +139,11 @@ $this->site_name = 'WalkIntoTheWild'
                                             <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST" data-pjax="0">Join Safari</a>
                                         <?php }
                                     } else { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>" data-pjax="0"> Join Safari</a>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
+                                                                                                                                                        '/sharedsafari/default/view',
+                                                                                                                                                        'slug' => $share_safari->slug,
+                                                                                                                                                        'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                                                                                                                                                    ]) ?>" data-pjax="0"> Join Safari</a>
                                 <?php }
                                 } ?>
                             </div>
@@ -267,7 +271,11 @@ $this->site_name = 'WalkIntoTheWild'
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>"> Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
+                                                                                                                                                                    '/sharedsafari/default/view',
+                                                                                                                                                                    'slug' => $share_safari->slug,
+                                                                                                                                                                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                                                                                                                                                                ]) ?>"> Join Safari</a>
                                     <?php }
                                     } ?>
                                 </div>

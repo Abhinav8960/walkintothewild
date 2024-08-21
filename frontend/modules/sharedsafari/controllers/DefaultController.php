@@ -285,7 +285,11 @@ class DefaultController extends FrontendBaseController
                     Yii::$app->session->setFlash('success', 'You can not join this shared safari currently!');
                 }
             } else {
-                return $this->redirect(['/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug]);
+                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute([
+                    '/sharedsafari/default/view',
+                    'slug' => $share_safari->slug,
+                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                ])]);
             }
             return $this->redirect(Yii::$app->request->referrer);
         }
@@ -323,7 +327,11 @@ class DefaultController extends FrontendBaseController
                     }
                 }
             } else {
-                return $this->redirect(['/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug]);
+                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute([
+                    '/sharedsafari/default/view',
+                    'slug' => $share_safari->slug,
+                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                ])]);
             }
             return $this->redirect(Yii::$app->request->referrer);
         }

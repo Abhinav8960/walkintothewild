@@ -153,7 +153,11 @@ use yii\helpers\Url;
                     echo '<p class="px-3 pt-2 text-center">Please Join in for start Comment</p>';
                 }
             } else {
-                echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug . '" class="parkrevieBtn">Sign In</a> to Comment</p>';
+                echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=' . Url::toRoute([
+                    '/sharedsafari/default/view',
+                    'slug' => $share_safari->slug,
+                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                ]) . '" class="parkrevieBtn">Sign In</a> to Comment</p>';
             }
         } ?>
     </div>
