@@ -11,6 +11,7 @@ use common\models\trierror\SitePages;
  */
 class SearchSitePages extends SitePages
 {
+    public $og_tag_type;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class SearchSitePages extends SitePages
     {
         return [
             [['id', 'content_id', 'counter', 'status'], 'integer'],
-            [['sub_category', 'url_type', 'content_type', 'category', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at'], 'safe'],
+            [['sub_category', 'url_type', 'content_type', 'category', 'url', 'slug', 'last_update_at', 'updated_at', 'created_at', 'og_tag_type'], 'safe'],
         ];
     }
 
@@ -81,10 +82,28 @@ class SearchSitePages extends SitePages
             $query->andFilterWhere(['sub_category' => $this->sub_category]);
         }
 
+        if ($this->og_tag_type == 'no_title') {
+            $query->andWhere(['title' => null]);
+        }
+
+        if ($this->og_tag_type == 'no_description') {
+            $query->andWhere(['description' => null]);
+        }
+
+        if ($this->og_tag_type == 'no_keywords') {
+            $query->andWhere(['keywords' => null]);
+        }
+
+        if ($this->og_tag_type == 'no_image') {
+            $query->andWhere(['image' => null]);
+        }
+
         $query->andFilterWhere(['like', 'url', $this->url])
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'url_type', $this->url_type]);
 
+        //$rawSql = $query->createCommand()->getRawSql();
+        //dd($rawSql);
         return $dataProvider;
     }
 }
