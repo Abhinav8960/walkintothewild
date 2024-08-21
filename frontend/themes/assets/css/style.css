@@ -4092,8 +4092,11 @@ figure {
 .footerContent a {
 
     color: var(--colorwhite);
+    font-size: 16px;
 }
-
+.footerContent p{
+    font-size: 16px;
+}
 .footerContent.legal ul li a {
 
     font-weight: 400;
@@ -6985,7 +6988,7 @@ text-align: center;
 
 .content_terms p {
 
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .termsagree {
