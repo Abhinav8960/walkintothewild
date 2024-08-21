@@ -10,15 +10,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $active_url = "/" . Yii::$app->requestedRoute;
 ?>
-
-<script type="application/ld+json">
-	{
-		"@type": "Organization",
-		"image": "<?= Yii::$app->params['frontend_url'] ?>img/default_witw_jeep.png",
-		"url": "<?= Yii::$app->params['frontend_url'] ?>",
-		"name": "<?= $this->title ?>"
-	}
-</script>
 <!-- main-header -->
 <header class="header_wrapper">
 	<nav class="navbar navbar-expand-lg ">
@@ -81,7 +72,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity) { ?>
 					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
-					<a href="/chat" class="d-lg-block d-none ">
+					<a href="/chat" class="d-lg-block d-none">
 						<div class=" pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
 					</a>
 				<?php } ?>
@@ -173,6 +164,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 					</div>
 				</div>
+				<!-- <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+					<i class="fa-solid fa-bars"></i>
+				</button> -->
 			</div>
 		</div>
 	</nav>
