@@ -205,4 +205,15 @@ use yii\helpers\Url;
         overflow: hidden;
         font-size: 0.9rem;
     }
+
+    .character-count {
+        font-style: italic;
+        padding-bottom: 5px;
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 5px;
+    }
+    .character-count.warning {
+        color: red !important;
+    }
 </style>

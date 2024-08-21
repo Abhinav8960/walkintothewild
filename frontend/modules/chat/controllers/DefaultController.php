@@ -97,6 +97,9 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                             return ['status' => true, 'message' => 'Message Sent'];
                         }
+                    } else {
+                        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                        return ['status' => false, 'message' => 'Erros', 'errors' => $chat->errors];
                     }
                 }
             }

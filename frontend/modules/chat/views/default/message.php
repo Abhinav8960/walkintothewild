@@ -132,13 +132,17 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 <form id="chatmessageform" method="post">
                                     <div class="d-flex align-items-center">
                                         <div class="lead emoji-picker-container w-100 submit_on_enter">
-                                            <textarea type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>"></textarea>
+                                            <div class="character-count">
+                                                <span id="char-count">500</span> characters remaining
+                                            </div>
+                                            <textarea type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></textarea>
                                         </div>
                                         <i class="fa fa-paper-plane chat-sendbtn" id="message_sent_btn"></i>
                                     </div>
                                     <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
                                     <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -168,6 +172,7 @@ $(document).ready(function() {
             url: '/chat/default/sendmessage',
             data:$("#chatmessageform").serialize(),
             success:function(data){
+                // console.log(data);
                 $('#chat-message').val('');
                 location.reload();
             },
@@ -195,6 +200,25 @@ $(document).ready(function() {
         container.scrollTop = container.scrollHeight;
     }
     scrollToBottom();
+
+    const maxLength = 500;
+    $('#chat-message').on('input', function() {
+        const currentLength = $(this).val().length;
+        const remaining = maxLength - currentLength;
+        $('#char-count').text(remaining);
+        
+        if (remaining <= 0) {
+            $('.character-count').addClass('warning');
+        } else {
+            $('.character-count').removeClass('warning');
+        }
+        
+        if (currentLength > maxLength) {
+            $(this).val($(this).val().substr(0, maxLength));
+        }
+    });
+
+    $('#char-count').text(maxLength - $('#chat-message').val().length);
 });
 JS;
 $this->registerJs($script);
