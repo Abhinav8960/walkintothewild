@@ -411,7 +411,7 @@ if ($model->corezones) {
             </div>
             </div>
             <div class="col-lg-6 col-xl-5 col-md-7">
-                <div class="legends_wrap d-flex justify-md-content-end gap-md-4 gap-2 ">
+                <div class="legends_wrap d-flex justify-content-md-end gap-md-4 gap-2 ">
                     <div class="legends_bx d-flex align-items-center gap-2">
                         <div class="legends closedbg"></div>
                         <p>Currently Closed</p>
