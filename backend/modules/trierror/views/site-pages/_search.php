@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <?= $form->field($model, 'url')->textInput(["placeholder" => "Search by url"]) ?>
     </div>
 
@@ -54,6 +54,15 @@ use yii\widgets\ActiveForm;
     </div>
 
     <div class="col-md-2">
+        <?= $form->field($model, 'og_tag_type')->dropDownList(
+            ['no_title' => 'No Title', 'no_description' => 'No Description', 'no_keywords' => 'No Keywords', 'no_image' => 'No Image'],
+            [
+                'prompt' => 'Select OG Tags',
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-1">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
 
     </div>

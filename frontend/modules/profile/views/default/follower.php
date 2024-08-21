@@ -68,7 +68,7 @@ $this->params['title'] = $this->title;
                         <div class="logininfo text-center">
                             <h6>Please log in to view the Followers</h6>
                             <div class="viewAllreview">
-                                <a href="/site/login?authclient=google&referrer=/profile/follower/<?= $user->user_handle ?>">Login</a>
+                                <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/default/follower', 'user_handle' => $user->user_handle]) ?>">Login</a>
                             </div>
                         </div>
                     </div>

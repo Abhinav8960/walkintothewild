@@ -67,6 +67,32 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
+                        'label' => 'OG Tags',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $return = "-";
+                            if (!empty($model->title)) {
+                                $return = "<b>Title:</b> " . $model->title . "<br/>";
+                            }
+                            //$return .= "<b>keywords:</b> " . $model->keywords;
+                            return $return;
+                        }
+                    ],
+                    [
+                        'label' => 'OG Image',
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $return = '';
+                            if (!empty($model->image)) {
+                                $return = '<img src="' . Yii::$app->params['frontend_url'] . $model->image . '" width="50" ></img>';
+                            } else {
+                                $return = '<img src="' . $this->params['baseurl'] . '/img/logo.png' . '" width="50" ></img>';
+                            }
+
+                            return $return;
+                        }
+                    ],
+                    [
                         'label' => 'Last Updated',
                         'format' => 'raw',
                         'value' => function ($model) {
@@ -79,27 +105,22 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return $model->counter;
                         }
-                    ],/*
+                    ],
                     [
                         'class' => 'yii\grid\ActionColumn',
-                        'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 15%;'],
-                        'template' => '{delete}',
+                        'header' => "Action",
+                        'template' => '{view}',
                         'buttons' => [
-                            'delete' => function ($url, $model) {
-                                if ($model->content_type == 'category') {
-                                    return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                                        'class' => 'btn p-0 change-menuicon',
-                                        'title' => 'Delete',
-                                        'data' => [
-                                            'confirm' => 'Are you sure you want to delete this record ?',
-                                            'method' => 'post',
-                                        ],
-                                    ]);
-                                }
+                            'view' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                                ', ['/trierror/site-pages/view', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'View',
+                                    'target' => '_blank'
+                                ]);
                             },
                         ]
-                    ],*/
+                    ],
                 ],
             ]); ?>
         </div>

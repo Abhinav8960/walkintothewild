@@ -8,6 +8,8 @@ use common\models\trierror\SearchSitePages;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\trierror\form\SitePagesForm;
+use yii\web\UploadedFile;
 
 /**
  * SitePagesController implements the CRUD actions for SitePages model.
@@ -105,6 +107,29 @@ class SitePagesController extends Controller
 
         \Yii::$app->session->setFlash('success', 'Record delete successfully');
         return $this->redirect(['index']);
+    }
+
+    public function actionView($id)
+    {
+        $base_model = $this->findModel($id);
+        $model = new SitePagesForm($base_model);
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->image = UploadedFile::getInstance($model, 'image');
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->site_pages_seo->save(false)) {
+                        $model->uploadFile();
+                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+                    }
+                }
+            }
+        }
+
+        return $this->render('view', [
+            'model' => $model,
+        ]);
     }
 
     protected function findModel($id)
