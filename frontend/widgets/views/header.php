@@ -68,22 +68,16 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</div>
 				</div>
 			</div>
-			<div class="d-lg-none d-block initial_headers">
+			<div class="d-flex  gap-4 align-items-center justify-content-end initial_headers">
 				<?php if (Yii::$app->user->identity) { ?>
 					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
-				<?php } ?>
-			</div>
-			<div class="d-lg-flex d-none gap-4 align-items-center justify-content-end initial_headers">
-				<?php if (Yii::$app->user->identity) { ?>
-					<div id="notification_header_icon" class="notification pt-2  position-relative"><i class="fa-solid fa-bell"></i></div>
-					<div class="menunotification" id="menunotification_menu"></div>
-					<a href="/chat">
+					<a href="/chat" class="d-lg-block d-none">
 						<div class=" pt-2 " style="cursor:pointer"><i class="fa-solid fa-envelope"></i></div>
 					</a>
 				<?php } ?>
 
-				<div class="proilewrapper remove_mobile">
+				<div class="proilewrapper d-lg-block d-none ">
 					<div class="profile">
 						<div class="img-box2">
 							<img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileimage <> '' ?  Yii::$app->user->identity->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="25" height="25">
@@ -170,9 +164,6 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 					</div>
 				</div>
-				<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-					<i class="fa-solid fa-bars"></i>
-				</button>
 			</div>
 		</div>
 	</nav>

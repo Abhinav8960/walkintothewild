@@ -404,14 +404,14 @@ if ($model->corezones) {
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-lg-7">
-            <div class="legends_bx">
-                <p></p>
+        <div class="row pt-3">
+            <div class="col-lg-6 col-xl-7 col-md-5">
+            <div class="legends_bx text-fo">
+                <p class="mb-md-0 mb-2">* Safari Price depend on operator's and services and may exceed the avarage price shown</p>
             </div>
             </div>
-            <div class="col-lg-5">
-                <div class="legends_wrap d-flex justify-content-end gap-md-4 gap-2 pt-3">
+            <div class="col-lg-6 col-xl-5 col-md-7">
+                <div class="legends_wrap d-flex justify-md-content-end gap-md-4 gap-2 ">
                     <div class="legends_bx d-flex align-items-center gap-2">
                         <div class="legends closedbg"></div>
                         <p>Currently Closed</p>
