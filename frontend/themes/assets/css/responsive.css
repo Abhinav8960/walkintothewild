@@ -2003,8 +2003,19 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .dropdown-toggle.open ~ .OrBox{
 
- 
+display: none !important;
+  }
+
+  .font-color .comment-date{
+
+    font-size: 12px;
+  }
+  .legends_bx.text-fo p{
+
+    font-size: 14px;
+  }
   .Mobile_navbar .links-mobile a{
 
     font-size: 12px;
@@ -2064,7 +2075,15 @@ display: none;
   }
   .commentsOther .objec-flgs{
 
-    right: 10px;
+    right: -6px;
+  }
+  .commentsOther .objec-flgs img{
+
+    width: 12px;
+  }
+  .font-color .comment-author{
+
+    font-size: 14px;
   }
   .flags_reply .flagBtn{
 
@@ -2410,6 +2429,10 @@ margin: 0;
   .legends_bx p{
 
     font-size: 10px;
+  }
+  .legends_bx.text-fo p{
+
+    font-size: 14px;
   }
   .legends {
     width: 10px;
