@@ -1722,7 +1722,7 @@ display: none;
   .articals_wrapper.margin-setposi {
     margin-top: 170px !important;
   }
-  
+
   .fixedbanner .banner_section-inner picture {
     display: none;
   }
@@ -2077,6 +2077,11 @@ display: none !important;
   .commentsOther .objec-flgs{
 
     right: -6px;
+  }
+  .objec-flgs.opratorflag{
+
+    right: 10px;
+    top: 20px;
   }
   .commentsOther .objec-flgs img{
 
