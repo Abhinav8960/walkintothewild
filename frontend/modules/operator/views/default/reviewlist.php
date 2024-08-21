@@ -65,7 +65,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12 ">
                         <div class="tab-content_tour mb-4 active">
                             <div class="row">
-                                <div class="col-xxl-8 col-lg-8">
+                                <div class="col-xxl-8 col-lg-8 mb-4">
                                     <div class="comments_safari operator_comment bg-white safriComments pt-3">
                                         <div class="commentsOther comments_parks  position-relative ">
                                             <div class=" d-flex justify-content-between flex-wrap">
