@@ -94,7 +94,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         <?php }
                     } else { ?>
-                        <a href="<?= $share_safari->organizedbyprofileurl ? $share_safari->organizedbyprofileurl : '' ?>" data-pjax="0"><img src="<?= $share_safari->user && $share_safari->user->profileimage <> '' ? $share_safari->user->profileimage : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
+                        <a href="<?= $share_safari->organizedbyprofileurl ? $share_safari->organizedbyprofileurl : '' ?>" data-pjax="0"><img src="<?= $share_safari->organizedbyimage  ? $share_safari->organizedbyimage : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
                     <?php } ?>
                 </div>
             </div>
