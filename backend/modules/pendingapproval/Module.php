@@ -24,7 +24,7 @@ class Module extends \yii\base\Module
             if (!Yii::$app->user->identity) {
                 \Yii::$app->response->redirect('/site/login')->send();
             } else {
-                if (Yii::$app->user->identity->is_report_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_safari_operator|| Yii::$app->user->identity->is_cms_manager) {
+                if (!(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_adminstrator)) {
                     throw new \yii\web\ForbiddenHttpException('You are not authorized to perform this action. Only Admin can View this page.');
                 }
             }
