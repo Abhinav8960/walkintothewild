@@ -2004,7 +2004,10 @@ display: none;
 }
 @media only screen and (max-width: 576px) {
 
- 
+  .font-color .comment-date{
+
+    font-size: 12px;
+  }
   .Mobile_navbar .links-mobile a{
 
     font-size: 12px;
@@ -2064,7 +2067,15 @@ display: none;
   }
   .commentsOther .objec-flgs{
 
-    right: 10px;
+    right: -6px;
+  }
+  .commentsOther .objec-flgs img{
+
+    width: 12px;
+  }
+  .font-color .comment-author{
+
+    font-size: 14px;
   }
   .flags_reply .flagBtn{
 

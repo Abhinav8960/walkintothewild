@@ -149,7 +149,7 @@ if ($model->corezones) {
                                     <?php if (!empty($model->avg_safari_price_min) && !empty($model->avg_safari_price_max)) { ?>
                                         <?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?> Average Safari Price <?= isset($model->safri_cost_note) && $model->safri_cost_note <> '' ? '(' . $model->safri_cost_note . ')' : '' ?>
 
-                                    <?php } ?> </p>
+                                    <?php } ?>* </p>
                             </div>
                         </div>
                     </div>
@@ -405,7 +405,7 @@ if ($model->corezones) {
 
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-lg-5">
                 <div class="legends_wrap d-flex justify-content-end gap-md-4 gap-2 pt-3">
                     <div class="legends_bx d-flex align-items-center gap-2">
                         <div class="legends closedbg"></div>
