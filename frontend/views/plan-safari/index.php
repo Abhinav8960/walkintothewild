@@ -21,6 +21,15 @@ $park_constant = Constants::HOME;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
 ?>
 
+<script type="application/ld+json">
+    {
+        "@type": "Organization",
+        "image": "<?= Yii::$app->params['frontend_url'] ?>img/default_witw_jeep.png",
+        "url": "<?= Yii::$app->params['frontend_url'] ?>",
+        "name": "<?= $this->title ?>"
+    }
+</script>
+
 
 <section class="banner_section main_homebanner position-relative">
     <picture class="position-relative">
