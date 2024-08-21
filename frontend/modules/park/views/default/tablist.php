@@ -52,7 +52,7 @@ if ($model->meta_title != '') {
     </div>
 </section>
     </div>
-<section class="articals_wrapper pt-3 " style="background-color: #fff; margin-top: 190px !important;">
+<section class="articals_wrapper  pt-3" style="background-color: #fff; margin-top: 190px !important; ">
     <div class="container-fluid">
         <!-- <div class="row py-3">
             <div class="col-12">
@@ -77,7 +77,7 @@ if ($model->meta_title != '') {
                 <div id="flashMessage">
                     Submit correction if found wrong information!
                 </div>
-                <ul class="nav nav-tabs d-none d-lg-flex gap-2 align-items-baseline" id="myTab" role="tablist">
+                <ul class="nav nav-tabs d-block d-md-flex gap-2 align-items-baseline navtabs_design" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">OVERVIEW</button>
                     </li>

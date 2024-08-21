@@ -38,11 +38,8 @@ if ($model->corezones) {
 ?>
 
 
-<h2 class="accordion-header d-lg-none" id="headingOne">
-    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Overview</button>
-</h2>
-<div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
-    <div class="accordion-body p-3">
+<div id="collapseOne" class="accordion-collapse collapse show " aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+    <div class="p-3">
         <div class="row">
             <div class="col-lg-4 col-sm-4 col-md-4 col-xl-3">
                 <div class="slider_safariimg owl-carousel owl-theme position-relative">
