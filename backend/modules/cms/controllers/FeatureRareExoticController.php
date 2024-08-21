@@ -7,7 +7,7 @@ use yii\web\Response;
 use yii\web\Controller;
 use common\models\park\SafariPark;
 use yii\web\BadRequestHttpException;
-use common\models\master\animal\MasterRareAnimal;
+use common\models\master\animal\MasterAnimal;
 
 class FeatureRareExoticController extends Controller
 {
@@ -15,7 +15,7 @@ class FeatureRareExoticController extends Controller
 
     public function actionIndex()
     {
-        $sequences = MasterRareAnimal::find()->select(['is_feature_sequence', 'id'])->indexBy('is_feature_sequence')->column();
+        $sequences = MasterAnimal::find()->select(['is_feature_sequence', 'id'])->indexBy('is_feature_sequence')->column();
 
         return $this->render('index', [
             'sequences' => $sequences,
@@ -28,12 +28,12 @@ class FeatureRareExoticController extends Controller
     public function actionSaveSequence()
     {
         if (Yii::$app->request->isPost) {
-            MasterRareAnimal::updateAll([
+            MasterAnimal::updateAll([
                 'is_feature_sequence' => NULL
             ]);
             if (isset(Yii::$app->request->bodyParams['AnimalSequence'])) {
                 foreach (Yii::$app->request->bodyParams['AnimalSequence'] as $is_feature_sequence => $animal_id) {
-                    MasterRareAnimal::updateAll(['is_feature_sequence' => $is_feature_sequence], ['id' => $animal_id]);
+                    MasterAnimal::updateAll(['is_feature_sequence' => $is_feature_sequence], ['id' => $animal_id]);
                 }
             }
             Yii::$app->response->format = Response::FORMAT_JSON;
