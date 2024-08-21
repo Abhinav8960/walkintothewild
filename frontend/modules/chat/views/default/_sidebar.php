@@ -48,6 +48,7 @@ use yii\helpers\Url;
         overflow-y: auto;
         overflow-x: hidden;
         padding-top: 6px;
+        position: relative;
     }
 
     .chat-message-container::-webkit-scrollbar-thumb {

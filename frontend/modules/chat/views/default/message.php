@@ -79,6 +79,14 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                 </div>
 
                 <div class="col-md-9">
+                    <?php
+                    Pjax::begin([
+                        'id' => 'grid-data-chat',
+                        'enablePushState' => FALSE,
+                        'enableReplaceState' => FALSE,
+                        'timeout' => false,
+                    ]);
+                    ?>
                     <div class="chat_box  card  h-100">
                         <div class="card-body">
                             <div class="d-flex chat-message-header justify-content-between">
@@ -95,7 +103,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 </div> -->
                             </div>
 
-                            <div class="chat-message-container">
+                            <div class="chat-message-container" id="chat-message-container">
                                 <?php
                                 $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->limit(1)->one();
                                 if ($chat && $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby(['created_at' => SORT_ASC])->all()) {
@@ -124,7 +132,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 <form id="chatmessageform" method="post">
                                     <div class="d-flex align-items-center">
                                         <div class="lead emoji-picker-container w-100 submit_on_enter">
-                                            <input type="text" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true">
+                                            <textarea type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>"></textarea>
                                         </div>
                                         <i class="fa fa-paper-plane chat-sendbtn" id="message_sent_btn"></i>
                                     </div>
@@ -134,7 +142,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             </div>
                         </div>
                     </div>
-
+                    <?php Pjax::end(); ?>
 
                 </div>
             </div>
@@ -142,53 +150,52 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
     </div>
 </div>
 
-
 <?php
 $script = <<< JS
+$(document).ready(function() {
+    // $(function() {
+    //     window.emojiPicker = new EmojiPicker({
+    //         emojiable_selector: '[data-emojiable=true]',
+    //         assetsPath: '{$emoji_base_url}/lib/img/',
+    //         popupButtonClasses: 'fa-solid fa-face-smile'
+    //     });
+    //     window.emojiPicker.discover();
+    // });
 
-// $(function() {
-//     window.emojiPicker = new EmojiPicker({
-//         emojiable_selector: '[data-emojiable=true]',
-//         assetsPath: '{$emoji_base_url}/lib/img/',
-//         popupButtonClasses: 'fa-solid fa-face-smile'
-//     });
-//     window.emojiPicker.discover();
-// });
+    function sendmessage(){
+        $.ajax({
+            type: 'POST',
+            url: '/chat/default/sendmessage',
+            data:$("#chatmessageform").serialize(),
+            success:function(data){
+                $('#chat-message').val('');
+                location.reload();
+            },
+            dataType:'html'
+        });   
+    }
 
-function sendmessage(){
-    $.ajax({
-        type: 'POST',
-        url: '/chat/default/sendmessage',
-        data:$("#chatmessageform").serialize(),
-        success:function(data){
-            console.log(data);
-            $('#chat-message').val('');
-            location.reload();
-        },
-        dataType:'html'
-    });   
-}
+    $('#message_sent_btn').click(function(){
+        sendmessage();
+    });
 
-// $('.submit_on_enter').keydown(function(event) {
-//     if (event.keyCode == 13 && !event.shiftKey) {
-//         sendmessage();
-//     }
-//   });
+    $('#chat-message').keydown(function(e) {
+        if (e.keyCode === 13) { 
+            if (e.shiftKey) {
+                return ;
+            } else {
+                e.preventDefault(); 
+                sendmessage();
+            }
+        }
+    });
 
-$('#message_sent_btn').click(function(){
-    sendmessage();
+    function scrollToBottom() {
+        const container = document.getElementById('chat-message-container');
+        container.scrollTop = container.scrollHeight;
+    }
+    scrollToBottom();
 });
-
 JS;
 $this->registerJs($script);
-?>
-
-<?php
-// $script = <<< JS
-// $('html, body').animate({
-//         'scrollTop' : $("#chatmessageform").position().top
-// });
-
-// JS;
-// $this->registerJs($script);
 ?>
