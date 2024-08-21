@@ -811,7 +811,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_birding_operator) : ?>
-					<li class="slide <?= str_starts_with($active_url, '/operatordashboard') ? "is-expanded" : "" ?>">
+					<!-- <li class="slide <?= str_starts_with($active_url, '/operatordashboard') ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= str_starts_with($active_url, '/operatordashboard') ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/iconoir_safari.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Operator</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Operator</a></li>
@@ -848,7 +848,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= str_starts_with($active_url, '/operatordashboard/birding') ? "active" : "" ?>" href="/operatordashboard/birding/index">Biriding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
 						</ul>
-					</li>
+					</li> -->
 				<?php endif; ?>
 
 

@@ -30,7 +30,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->safari_park_id) ? Html::a(
+                            return isset(GeneralModel::safariparkoption()[$model->safari_park_id]) ? Html::a(
                                 GeneralModel::safariparkoption()[$model->safari_park_id],
                                 ['/park/operator-quote/view', 'id' => $model->id],
                                 ['style' => 'color: black !important;', 'title' => 'View Park Details']
@@ -43,7 +43,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->operator_id) ? GeneralModel::safariparkoperatoroption()[$model->operator_id]  : '';
+                            return isset(GeneralModel::safariparkoperatoroption()[$model->operator_id]) ? GeneralModel::safariparkoperatoroption()[$model->operator_id]  : '';
                         }
                     ],
                     'full_name',
@@ -51,43 +51,43 @@ $this->params['title'] = $this->title;
                     'email',
                     'safaris',
                     'travelers',
-                    'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
-                    [
-                        'label' => 'Status',
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return $model->statuslabel;
-                        }
-                    ],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
-                        'template' => '&nbsp;{delete}',
-                        'buttons' => [
-                            // 'view' => function ($url, $model) {
-                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                            //     ', ['/park/operator-quote/view', 'id' => $model->id], [
-                            //         'class' => 'btn p-0 change-menuicon',
-                            //         'title' => 'View',
+                    'created_at:dateTime:Request at',
+                    // 'updated_at:dateTime:Last Updated at',
+                    // [
+                    //     'label' => 'Status',
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return $model->statuslabel;
+                    //     }
+                    // ],
+                    // [
+                    //     'class' => 'yii\grid\ActionColumn',
+                    //     'header' => "Actions",
+                    //     'contentOptions' => ['style' => 'width: 5%; text-align: center;'],
+                    //     'template' => '&nbsp;{delete}',
+                    //     'buttons' => [
+                    //         // 'view' => function ($url, $model) {
+                    //         //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                    //         //     ', ['/park/operator-quote/view', 'id' => $model->id], [
+                    //         //         'class' => 'btn p-0 change-menuicon',
+                    //         //         'title' => 'View',
 
-                            //     ]);
-                            // },
+                    //         //     ]);
+                    //         // },
 
-                            'delete' => function ($url, $model) {
-                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete  ' . $model->full_name . '?',
-                                        'method' => 'post',
-                                    ],
-                                ]);
-                            },
-                        ]
-                    ],
+                    //         'delete' => function ($url, $model) {
+                    //             return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                    //                 'class' => 'btn p-0 change-menuicon',
+                    //                 'title' => 'Delete',
+                    //                 'data' => [
+                    //                     'confirm' => 'Are you sure you want to delete  ' . $model->full_name . '?',
+                    //                     'method' => 'post',
+                    //                 ],
+                    //             ]);
+                    //         },
+                    //     ]
+                    // ],
                 ],
             ]); ?>
         </div>

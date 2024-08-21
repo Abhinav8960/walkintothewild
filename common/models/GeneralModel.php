@@ -16,7 +16,6 @@ use common\models\cms\flagreason\Flagreason;
 use common\models\master\country\MasterCountry;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\airport\MasterAirport;
-use common\models\master\animal\MasterRareAnimal;
 use common\models\master\bird\MasterBird;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\city\MasterCity;
@@ -651,12 +650,12 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
     public static function safariAnimalRareExoticOption($ids = null)
     {
-        $query = MasterRareAnimal::find()->select(['master_rare_animal.id', 'master_rare_animal.animal_name'])->where(['master_rare_animal.status' => MasterRareAnimal::STATUS_ACTIVE])->orderBy(['master_rare_animal.animal_name' => SORT_ASC]);
+        $query = MasterAnimal::find()->select(['master_animal.id', 'master_animal.name'])->where(['master_animal.status' => MasterAnimal::STATUS_ACTIVE, 'animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->orderBy(['master_animal.name' => SORT_ASC]);
         if ($ids) {
-            $query->andWhere("master_rare_animal.id NOT IN ($ids)");
+            $query->andWhere("master_animal.id NOT IN ($ids)");
         }
         $parks = $query->asarray()->all();
-        $result = ArrayHelper::map($parks, 'id', 'animal_name');
+        $result = ArrayHelper::map($parks, 'id', 'name');
         return $result;
     }
 
