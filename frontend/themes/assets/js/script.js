@@ -159,28 +159,28 @@ $(document).ready(function () {
     }
 
 
-//     var owl2 = $(".opratios-slider2");
-//    var itemCount2 = owl2.children().length;
-//     owl2.owlCarousel({
-//     items: itemCount2 >= 6 ? 6 : itemCount2,
-//     loop: false,
-//     margin: 10,
-//     dots: false,
-//     smartSpeed: 900,
-//     autoplay: true,
-//     nav: false,
-//     responsive: {
-//         0: {
-//             items: itemCount2 >= 2 ? 2 : itemCount2
-//         },
-//         1000: {
-//             items: itemCount2 >= 3 ? 3 : itemCount2
-//         },
-//         1400: {
-//             items: itemCount2 >= 6 ? 6 : itemCount2
-//         }
-//     }
-// });
+    //     var owl2 = $(".opratios-slider2");
+    //    var itemCount2 = owl2.children().length;
+    //     owl2.owlCarousel({
+    //     items: itemCount2 >= 6 ? 6 : itemCount2,
+    //     loop: false,
+    //     margin: 10,
+    //     dots: false,
+    //     smartSpeed: 900,
+    //     autoplay: true,
+    //     nav: false,
+    //     responsive: {
+    //         0: {
+    //             items: itemCount2 >= 2 ? 2 : itemCount2
+    //         },
+    //         1000: {
+    //             items: itemCount2 >= 3 ? 3 : itemCount2
+    //         },
+    //         1400: {
+    //             items: itemCount2 >= 6 ? 6 : itemCount2
+    //         }
+    //     }
+    // });
 
 });
 $(document).ready(function () {
@@ -244,12 +244,12 @@ if ($('.slider_resorts').length) {
     });
 }
 
-$(document).ready(function() {
-    $(".photoGallry").on("click", function() {
+$(document).ready(function () {
+    $(".photoGallry").on("click", function () {
         $.fancybox.open($("[data-fancybox='gallery']"), {
-            loop: false, 
-            buttons: ["close"], 
-            infobar: false, 
+            loop: false,
+            buttons: ["close"],
+            infobar: false,
         });
     });
 });
@@ -259,7 +259,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 });
-$(document).ready(function(){
+$(document).ready(function () {
     function initializeOwlCarousel() {
         if ($(window).width() <= 1400) {
             $('.slider_addmobile2').addClass('owl-carousel');
@@ -267,7 +267,7 @@ $(document).ready(function(){
                 loop: false,
                 margin: 10,
                 nav: false,
-                center:false,
+                center: false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
@@ -275,7 +275,7 @@ $(document).ready(function(){
                         items: 2,
                         stagePadding: 10,
                     },
-                    
+
                     300: {
                         items: 2,
                         stagePadding: 10,
@@ -302,11 +302,11 @@ $(document).ready(function(){
 
     initializeOwlCarousel();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         initializeOwlCarousel();
     });
 });
-$(document).ready(function(){
+$(document).ready(function () {
     function initializeOwlCarousel() {
         if ($(window).width() <= 767) {
             $('.slider_accountsetting').addClass('owl-carousel');
@@ -314,18 +314,18 @@ $(document).ready(function(){
                 loop: false,
                 margin: 10,
                 nav: false,
-                center:false,
+                center: false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
                         items: 2,
-                        stagePadding: 20,  
+                        stagePadding: 20,
                     },
                     600: {
                         items: 3,
-                        stagePadding: 30,  
-                    } ,
+                        stagePadding: 30,
+                    },
                     767: {
                         items: 4
                     },
@@ -342,11 +342,11 @@ $(document).ready(function(){
 
     initializeOwlCarousel();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         initializeOwlCarousel();
     });
 });
-$(document).ready(function(){
+$(document).ready(function () {
     function initializeOwlCarousel() {
         if ($(window).width() <= 576) {
             $('.slider_addmobile3').addClass('owl-carousel');
@@ -354,13 +354,13 @@ $(document).ready(function(){
                 loop: false,
                 margin: 10,
                 nav: false,
-                center:false,
+                center: false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2.5,   
-                     
+                        items: 2.5,
+
                     },
                     400: {
                         items: 3,
@@ -380,11 +380,11 @@ $(document).ready(function(){
 
     initializeOwlCarousel();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         initializeOwlCarousel();
     });
 });
-$(document).ready(function(){
+$(document).ready(function () {
     function initializeOwlCarousel() {
         if ($(window).width() <= 768) {
             $('.slider_orprator').addClass('owl-carousel');
@@ -392,14 +392,14 @@ $(document).ready(function(){
                 loop: false,
                 margin: 10,
                 nav: false,
-                center:false,
+                center: false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2, 
-                        stagePadding: 30,  
-                     
+                        items: 2,
+                        stagePadding: 30,
+
                     },
                     400: {
                         items: 3,
@@ -423,11 +423,11 @@ $(document).ready(function(){
 
     initializeOwlCarousel();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         initializeOwlCarousel();
     });
 });
-$(document).ready(function(){
+$(document).ready(function () {
     function initializeOwlCarousel() {
         if ($(window).width() <= 767) {
             $('.slider_packagemobile').addClass('owl-carousel');
@@ -435,14 +435,14 @@ $(document).ready(function(){
                 loop: false,
                 margin: 10,
                 nav: false,
-                center:false,
+                center: false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
                     0: {
-                        items: 2, 
-                        stagePadding: 30,  
-                     
+                        items: 2,
+                        stagePadding: 30,
+
                     },
                     400: {
                         items: 3,
@@ -466,11 +466,11 @@ $(document).ready(function(){
 
     initializeOwlCarousel();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         initializeOwlCarousel();
     });
 });
-$(document).ready(function() {
+$(document).ready(function () {
     function initializeOwlCarousel() {
         if ($(window).width() <= 991) {
             $('.slider_profilemobile').addClass('owl-carousel');
@@ -478,7 +478,7 @@ $(document).ready(function() {
                 loop: false,
                 margin: 10,
                 nav: false,
-                responsiveClass:true,
+                responsiveClass: true,
                 center: false,
                 dots: false,
                 stagePadding: 10,
@@ -486,35 +486,35 @@ $(document).ready(function() {
                     0: {
                         items: 1,
                         stagePadding: 10,
-                       
-                       
+
+
                     },
                     300: {
                         items: 2,
                         stagePadding: 0,
-  
+
                     },
 
                     400: {
                         items: 2,
                         stagePadding: 30,
-                       
+
                     },
                     600: {
                         items: 3,
                         stagePadding: 30,
-                      
-                      
-                    } ,
+
+
+                    },
                     800: {
                         items: 4,
                         stagePadding: 10,
-                      
+
                     },
                     991: {
                         items: 5,
                         stagePadding: 10,
-                        
+
                     }
                 }
             });
@@ -526,11 +526,11 @@ $(document).ready(function() {
 
     initializeOwlCarousel();
 
-    $(window).resize(function() {
+    $(window).resize(function () {
         initializeOwlCarousel();
     });
 });
-$(document).ready(function(){
+$(document).ready(function () {
     function initializeOwlCarousel() {
         if ($(window).width() <= 991) {
             $('.slider_accountsidebar').addClass('owl-carousel');
@@ -538,7 +538,7 @@ $(document).ready(function(){
                 loop: false,
                 margin: 10,
                 nav: false,
-                center:false,
+                center: false,
                 // stagePadding: 50,
                 dots: false,
                 responsive: {
@@ -549,9 +549,9 @@ $(document).ready(function(){
                     600: {
                         items: 3,
                         stagePadding: 30,
-                    } ,
+                    },
                     767: {
-                        items: 4, 
+                        items: 4,
                         stagePadding: 10,
                     },
                     991: {
@@ -566,7 +566,7 @@ $(document).ready(function(){
         }
     }
     initializeOwlCarousel();
-    $(window).resize(function() {
+    $(window).resize(function () {
         initializeOwlCarousel();
     });
     function addClassOnResize() {
@@ -578,10 +578,10 @@ $(document).ready(function(){
         }
     }
     addClassOnResize();
-    $(window).resize(function() {
+    $(window).resize(function () {
         addClassOnResize();
     });
-   
+
 });
 document.addEventListener('DOMContentLoaded', function () {
     let profile = document.querySelector('.profile');
@@ -713,19 +713,24 @@ function editor(editor_id) {
     CKEDITOR.ClassicEditor.create(document.getElementById(editor_id), {
         // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
         toolbar: {
+            // items: [
+            //     'findAndReplace', '|',
+            //     'heading', '|',
+            //     'bold', 'italic', 'strikethrough', 'underline', '|',
+            //     'bulletedList', 'numberedList', 'todoList', '|',
+            //     'outdent', 'indent', '|',
+            //     'undo', 'redo', '|',
+            //     'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+            //     'alignment', '|',
+            //     'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+            //     'specialCharacters', 'horizontalLine', '|',
+            //     // 'textPartLanguage', '|',
+            //     // 'sourceEditing'
+            // ],
             items: [
-                'findAndReplace', '|',
                 'heading', '|',
                 'bold', 'italic', 'strikethrough', 'underline', '|',
-                'bulletedList', 'numberedList', 'todoList', '|',
-                'outdent', 'indent', '|',
-                'undo', 'redo', '|',
-                'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-                'alignment', '|',
-                'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
-                'specialCharacters', 'horizontalLine', '|',
-                // 'textPartLanguage', '|',
-                // 'sourceEditing'
+                'bulletedList', 'numberedList'
             ],
             shouldNotGroupWhenFull: true
         },
