@@ -10,6 +10,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $active_url = "/" . Yii::$app->requestedRoute;
 ?>
+
+<script type="application/ld+json">
+	{
+		"@type": "Organization",
+		"image": "<?= Yii::$app->params['frontend_url'] ?>img/default_witw_jeep.png",
+		"url": "<?= Yii::$app->params['frontend_url'] ?>",
+		"name": "<?= $this->title ?>"
+	}
+</script>
 <!-- main-header -->
 <header class="header_wrapper">
 	<nav class="navbar navbar-expand-lg ">
