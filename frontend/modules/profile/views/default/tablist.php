@@ -7,7 +7,7 @@ use common\models\registration\SafariOperatorRequest;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Profile';
+$this->title = $user->name;
 
 if (isset($user->about)) {
     $shortdescription = implode(' ', array_slice(explode(' ', strip_tags($user->about)), 0, 200));
@@ -95,8 +95,8 @@ $this->site_name = 'WalkIntoTheWild'
                         ?>
                     <?php } ?>
                     <div class="sharerbtn d-md-none ">
-                            <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn py-2  "><i class="fa-solid fa-share"></i> <span class="mobileTexthide">Share Profile</span></button>
-                        </div>
+                        <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn py-2  "><i class="fa-solid fa-share"></i> <span class="mobileTexthide">Share Profile</span></button>
+                    </div>
 
                 </div>
 
