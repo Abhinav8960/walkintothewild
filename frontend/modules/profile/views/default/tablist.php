@@ -194,7 +194,7 @@ $this->site_name = 'WalkIntoTheWild'
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Link</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Profile</h1>
 
             </div>
             <div class="modal-body p-3">

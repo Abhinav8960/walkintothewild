@@ -1123,6 +1123,9 @@ text-align: center !important;
   }
 }
 @media only screen and  (max-width: 991px) {
+  .img-box2.mobileee img{
+    margin-left: 5px;
+  }
   .menunotification{
 
     right: 12px;
