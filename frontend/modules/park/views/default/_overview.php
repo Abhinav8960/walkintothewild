@@ -38,11 +38,8 @@ if ($model->corezones) {
 ?>
 
 
-<h2 class="accordion-header d-lg-none" id="headingOne">
-    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Overview</button>
-</h2>
-<div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
-    <div class="accordion-body p-3">
+<div id="collapseOne" class="accordion-collapse collapse show " aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+    <div class="p-3">
         <div class="row">
             <div class="col-lg-4 col-sm-4 col-md-4 col-xl-3">
                 <div class="slider_safariimg owl-carousel owl-theme position-relative">
@@ -152,7 +149,7 @@ if ($model->corezones) {
                                     <?php if (!empty($model->avg_safari_price_min) && !empty($model->avg_safari_price_max)) { ?>
                                         <?= isset($model->avg_safari_price_min) ? GeneralModel::numberformat($model->avg_safari_price_min) . ' - ' : '' ?><?= GeneralModel::numberformat($model->avg_safari_price_max) ?> Average Safari Price <?= isset($model->safri_cost_note) && $model->safri_cost_note <> '' ? '(' . $model->safri_cost_note . ')' : '' ?>
 
-                                    <?php } ?> </p>
+                                    <?php } ?>* </p>
                             </div>
                         </div>
                     </div>
@@ -407,9 +404,14 @@ if ($model->corezones) {
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="legends_wrap d-flex justify-content-end gap-md-4 gap-2 pt-3">
+        <div class="row pt-3">
+            <div class="col-lg-6 col-xl-7 col-md-5">
+            <div class="legends_bx text-fo">
+                <p class="mb-md-0 mb-2">* Safari Price depend on operator's and services and may exceed the avarage price shown</p>
+            </div>
+            </div>
+            <div class="col-lg-6 col-xl-5 col-md-7">
+                <div class="legends_wrap d-flex justify-md-content-end gap-md-4 gap-2 ">
                     <div class="legends_bx d-flex align-items-center gap-2">
                         <div class="legends closedbg"></div>
                         <p>Currently Closed</p>

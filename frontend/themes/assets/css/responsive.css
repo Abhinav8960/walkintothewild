@@ -579,6 +579,7 @@ font-size: 19px;
   }
 }
 @media only screen and (min-width: 768px) {
+
   .desktop_hideDiv.border_top2 {
     display: none;
   }
@@ -849,6 +850,10 @@ font-size: 19px;
 }
 
 @media only screen and (min-width: 991px) {
+  .Mobile_navbar{
+
+    display: none;
+  }
   .copyright p{
 
     padding-left: 180px;
@@ -1118,6 +1123,9 @@ text-align: center !important;
   }
 }
 @media only screen and  (max-width: 991px) {
+  .img-box2.mobileee img{
+    margin-left: 5px;
+  }
   .menunotification{
 
     right: 12px;
@@ -1392,18 +1400,18 @@ margin-bottom: 0 !important;
   .sahreSafari {
     box-shadow: none;
   }
-  .safartabs .accordion-item {
+  /* .safartabs .accordion-item {
     border-radius: 0 !important;
     border-top: 0;
     border-left: 0;
     border-right: 0;
     border-bottom: 1px solid #0000004d;
-  }
+  } */
 
-  .tab-content > .tab-pane {
+  /* .tab-content > .tab-pane {
     display: block ;
     opacity: 1 ;
-  }
+  } */
 
 #user-form .tab-content > .tab-pane {
   display: none ;
@@ -1561,6 +1569,43 @@ margin-bottom: 0 !important;
 }
 
 @media only screen and (max-width: 767px) {
+  .faqs-wrpper .accordion-body p{
+
+    font-size: 16px;
+  }
+  .safartabs .accordion-item{
+
+    border-radius: 10px !important;
+  }
+  .safartabs .nav-tabs .nav-link {
+    border-bottom: 1px solid #0000004D!important;
+
+  }
+  .navtabs_design {
+
+    padding-bottom: 20px;
+  }
+  .navtabs_design button{
+
+    width: 100%;
+    padding: 8px 10px;
+    text-align: center;
+    border-radius: 5px !important;
+    border:1px solid #0000004D !important;
+ 
+  }
+  .navtabs_design .nav-item{
+
+    margin-bottom: 10px;
+
+  }
+    /* .safartabs .accordion-item {
+    border-radius: 0 !important;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #0000004d;
+  } */
   .planSearch_box .select_searcjBox .select_boxes:nth-child(1) .dropdown-toggle,
   .planSearch_box .select_searcjBox .select_boxes:nth-child(2) .dropdown-toggle,
   .planSearch_box .select_searcjBox .select_boxes:nth-child(3) .dropdown-toggle,
@@ -1958,6 +2003,19 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .dropdown-toggle.open ~ .OrBox{
+
+display: none !important;
+  }
+
+  .font-color .comment-date{
+
+    font-size: 12px;
+  }
+  .legends_bx.text-fo p{
+
+    font-size: 14px;
+  }
   .Mobile_navbar .links-mobile a{
 
     font-size: 12px;
@@ -2017,7 +2075,15 @@ display: none;
   }
   .commentsOther .objec-flgs{
 
-    right: 10px;
+    right: -6px;
+  }
+  .commentsOther .objec-flgs img{
+
+    width: 12px;
+  }
+  .font-color .comment-author{
+
+    font-size: 14px;
   }
   .flags_reply .flagBtn{
 
@@ -2336,6 +2402,14 @@ margin: 0;
 
     font-size: 12px;
   }
+  .menuprofile2 ul li a {
+
+    font-size: 14px !important;
+  }
+  .menuprofile2 ul li a i {
+    font-size: 18px !important;
+
+}
   .card-img2 img{
 
     width: 27px;
@@ -2354,7 +2428,11 @@ margin: 0;
   }
   .legends_bx p{
 
-    font-size: 10pxs;
+    font-size: 10px;
+  }
+  .legends_bx.text-fo p{
+
+    font-size: 14px;
   }
   .legends {
     width: 10px;

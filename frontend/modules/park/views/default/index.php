@@ -19,7 +19,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <?php if ($searchModel->master_rare_animal_id == '') { ?>
 
     <div class="fixedbanner">
-        <section class="banner_section-inner  position-relative">
+        <section class="banner_section-inner   position-relative">
             <picture class="position-relative">
                 <source srcset="<?= isset($banner->imagepath) ? $banner->imagepath : $this->params['baseurl'] . '/img/articlebanner.png' ?>" media="(max-width:576px)" type="image/webp">
                 <img src=" <?= isset($banner->imagepath) ? $banner->imagepath : $this->params['baseurl'] . '/img/banner-share.png' ?>" class="d-block w-100 banner_search" alt="banner">

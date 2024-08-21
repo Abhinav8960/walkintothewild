@@ -7,7 +7,7 @@ use common\models\registration\SafariOperatorRequest;
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
-$this->title = 'Profile';
+$this->title = $user->name;
 
 if (isset($user->about)) {
     $shortdescription = implode(' ', array_slice(explode(' ', strip_tags($user->about)), 0, 200));
@@ -79,8 +79,8 @@ $this->site_name = 'WalkIntoTheWild'
                         <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
                     <?php } else if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
                         <a href="<?= Url::toRoute(['/account']) ?>" class="follow_massge rounded-2"><i class="fa fa-edit"></i> Edit Profile</a>
-                    <?php } else {  ?> <a href="/site/login?authclient=google&referrer=/profile/share-safari/<?= $user->user_handle ?>" class="parkrevieBtn " data-method="POST">Follow</a>
-                        <a href="/site/login?authclient=google&referrer=/profile/share-safari/<?= $user->user_handle ?>" class="parkrevieBtn">Message</a>
+                    <?php } else {  ?> <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn " data-method="POST">Follow</a>
+                        <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
                     <?php } ?>
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                         if ($user->is_safari_operator != 1 && in_array($user->account_type, [2, 3])) {
@@ -95,8 +95,8 @@ $this->site_name = 'WalkIntoTheWild'
                         ?>
                     <?php } ?>
                     <div class="sharerbtn d-md-none ">
-                            <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn py-2  "><i class="fa-solid fa-share"></i> <span class="mobileTexthide">Share Profile</span></button>
-                        </div>
+                        <button value="<?= Url::toRoute(['/profile/default/share-profile']) ?>" class="follow_massge rounded-2 text-capitalize shareBtn py-2  "><i class="fa-solid fa-share"></i> <span class="mobileTexthide">Share Profile</span></button>
+                    </div>
 
                 </div>
 
@@ -194,7 +194,7 @@ $this->site_name = 'WalkIntoTheWild'
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Link</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Share Profile</h1>
 
             </div>
             <div class="modal-body p-3">

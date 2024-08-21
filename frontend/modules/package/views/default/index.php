@@ -39,8 +39,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
   </div>
 </section>
 
-
-
 <section class="articals_wrapper  py-3 ">
   <div class="container-fluid px-slider">
     <div class="custom-row pt-4">
