@@ -83,7 +83,7 @@ $this->params['title'] = $this->title;
                         <div class="logininfo text-center">
                             <h6>Please log in to view the Article <br>information.</h6>
                             <div class="viewAllreview">
-                                <a href="/site/login?authclient=google&referrer=/profile/article/<?= $user->user_handle ?>">Login</a>
+                                <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/article/index', 'user_handle' => $user->user_handle]) ?>">Login</a>
                             </div>
                         </div>
                     </div>
