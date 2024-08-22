@@ -156,6 +156,7 @@ $this->params['title'] = $this->title;
 </style>
 
 <?php
+$base_url = $_SERVER['HTTP_HOST'];
 $script = <<< JS
     $(document).ready(function () {
       function isWebview() {
@@ -169,8 +170,10 @@ $script = <<< JS
       }
 
       if (isWebview()) {
-        var message = 'You are using a webview. Please open this link in a full browser for Login your account ';
-        alert(message);
+        new_link = 'intent://{$base_url}#Intent;scheme=https;package=com.android.chrome;end';
+        $('.auth-link').attr("href",new_link);
+        // var message = 'You are using a webview. Please open this link in a full browser for Login your account ';
+        // alert(message);
         // window.open(window.location.href, '_system');
         // window.location.href = "/site/redirect";
       }
