@@ -74,7 +74,7 @@ class SharedsafariController extends FrontendBaseController
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_departure_model->save(false)) {
+                    if ($model->shared_safari_departure_model->save()) {
                         $parks = $model->park_list;
                         if ($parks) {
                             foreach ($parks as $park) {

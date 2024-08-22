@@ -53,6 +53,10 @@ $this->params['title'] = $this->title;
 
                     <div class="<?= $show_banner ? 'card-body' : '' ?>">
                         <div class="row pt-3">
+                            <div class="col-12 mb-2">
+                                <label for="" class="Modal_label">Title <span class="necessary">*</span></label>
+                                <?= $form->field($model, 'share_safari_title')->textInput(['placeholder' => 'Enter Title'])->label(false) ?>
+                            </div>
 
                             <div class="col-12 mb-2">
                                 <label for="" class="Modal_label">Select a Safari Park <span class="necessary">*</span></label>

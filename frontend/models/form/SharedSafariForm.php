@@ -10,6 +10,7 @@ use common\models\sharesafari\ShareSafari;
 class SharedSafariForm extends \yii\base\Model
 {
     public $shared_safari_model;
+    public $share_safari_title;
     public $host_user_id;
     public $share_safari_request_id;
     public $host_type;
@@ -30,6 +31,7 @@ class SharedSafariForm extends \yii\base\Model
     public $type;
     public $tour_duration;
 
+
     public $action_url;
     public $action_validate_url;
 
@@ -42,6 +44,7 @@ class SharedSafariForm extends \yii\base\Model
         if ($shared_safari_model  != '') {
             $this->shared_safari_model = $shared_safari_model;
 
+            $this->share_safari_title =  $this->shared_safari_model->share_safari_title;
             $this->host_user_id =  $this->shared_safari_model->host_user_id;
             $this->host_type =  $this->shared_safari_model->host_type;
             $this->type =  $this->shared_safari_model->type;
@@ -66,9 +69,11 @@ class SharedSafariForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
+
+            [['share_safari_title', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
             [['host_user_id', 'share_safari_request_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'tour_duration', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'status', 'type'], 'integer'],
             [['start_date', 'end_date'], 'safe'],
+            [['share_safari_title'], 'string', 'max' => 50],
             // [
             //     ['website_url'], 'required', 'when' => function ($model) {
             //         return $model->host_type != 4;
@@ -118,6 +123,7 @@ class SharedSafariForm extends \yii\base\Model
     public function initializeForm()
     {
         $this->shared_safari_model->host_user_id = $this->host_user_id;
+        $this->shared_safari_model->share_safari_title = $this->share_safari_title;
         $this->shared_safari_model->host_type = $this->host_type;
         $this->shared_safari_model->type = $this->type;
         $this->shared_safari_model->share_safari_request_id = $this->share_safari_request_id;
@@ -135,15 +141,15 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->website_url = $this->website_url;
 
 
-        $this->shared_safari_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24)));
+        $this->shared_safari_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24)))+1;
         $this->shared_safari_model->status = $this->status;
 
-        if ($this->shared_safari_model->slug == '') {
-            $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_model->user->name));
-            $string = preg_replace('/[^A-Za-z0-9\-]/', '', $without_space_string);
-            $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_model->host_user_id . time();
-            $this->shared_safari_model->slug = $slug;
-        }
+        // if ($this->shared_safari_model->slug == '') {
+        //     $without_space_string = str_replace(' ', '-', strtolower($this->shared_safari_model->user->name));
+        //     $string = preg_replace('/[^A-Za-z0-9\-]/', '', $without_space_string);
+        //     $slug =  $string . '-' . substr(sha1(mt_rand()), 17, 6) . '-' . $this->shared_safari_model->host_user_id . time();
+        //     $this->shared_safari_model->slug = $slug;
+        // }
     }
 
 
@@ -175,7 +181,7 @@ class SharedSafariForm extends \yii\base\Model
     public function validateContent($attribute, $params)
     {
         $wordCount = str_word_count($this->$attribute);
-        if ($wordCount >= 100) {
+        if ($wordCount >= 1000) {
             $this->addError($attribute, 'Please provide content within 100 words.');
         }
     }

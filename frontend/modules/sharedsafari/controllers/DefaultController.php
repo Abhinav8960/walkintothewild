@@ -101,7 +101,7 @@ class DefaultController extends FrontendBaseController
                 $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_model->save(false)) {
+                    if ($model->shared_safari_model->save()) {
                         $model->UploadFiles($model->shared_safari_model->id);
                         if ($model->shared_safari_model->user) {
                             $user = $model->shared_safari_model->user;
