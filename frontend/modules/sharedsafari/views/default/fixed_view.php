@@ -317,7 +317,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-lg-9 col-xl-9  safartabs position-relative">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab">
-                        <!--                        <div class="card bg-set accordion-collapse  card_bodyPadding mb-3">
+                                               <!-- <div class="card bg-set accordion-collapse  card_bodyPadding mb-3">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
                                     <h6 class="fs-6 fw-bold pb-2">Discussion</h6>
@@ -326,23 +326,23 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <p><?= $share_safari->safari_plan ?></p>
                                 </div>
                             </div>
-                        </div>-->
-                        <!-- <div class="accordion_disscutions">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                    Overview
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
-                                </div>
-                            </div>
-                           
-                        </div>
                         </div> -->
-                        
+                        <div class="accordion_disscutions">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Overview
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body"><?= $share_safari->safari_plan ?></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
                         <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">

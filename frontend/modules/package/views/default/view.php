@@ -274,7 +274,22 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="card bg-set accordion-collapse  card_bodyPadding">
+                    <div class="accordion_disscutions">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Overview
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">  <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- <div class="card bg-set accordion-collapse  card_bodyPadding">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
                                     <h6 class="fs-6 fw-bold mb-4">OVERVIEW</h6>
@@ -283,7 +298,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="itenery-tab-pane" role="tabpanel" aria-labelledby="itenery-tab">
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
