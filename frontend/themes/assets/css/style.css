@@ -7526,3 +7526,13 @@ select.custom_sort_by_input  option.selected{
 
     padding-left: 47px;
 }
+
+.accordion_disscutions .accordion-body{
+
+    word-break: break-word;
+}
+
+.accordion_disscutions .accordion-body ul{
+
+    padding-left: 8px !important;
+}
