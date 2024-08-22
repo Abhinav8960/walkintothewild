@@ -2,15 +2,16 @@
 
 namespace frontend\modules\account\controllers;
 
-use common\interfaces\StatusInterface;
-use common\models\operator\SafariOperator;
-use common\models\User;
 use Yii;
+use yii\helpers\Url;
+use common\models\User;
 use yii\web\UploadedFile;
 use frontend\models\profile\UserForm;
+use common\interfaces\StatusInterface;
+use common\models\operator\SafariOperator;
+use frontend\models\registration\SafariOperatorRequestPark;
 use frontend\models\registration\form\SafaritourRegistrationForm;
 use frontend\models\registration\SafariOperatorRequestActivities;
-use frontend\models\registration\SafariOperatorRequestPark;
 
 /**
  * Default controller for the `account` module
@@ -114,8 +115,8 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
         $registration_model->status = StatusInterface::STATUS_ACTIVE;
         $registration_model->user_id = Yii::$app->user->identity->id;
 
-        $registration_model->action_url = '/safaritour-registration';
-        $registration_model->action_validate_url = '/safaritour-registration/validate';
+        $registration_model->action_url = Url::toRoute(['/account/default/registration-operator']);
+        $registration_model->action_validate_url = Url::toRoute(['/account/default/validate']);
 
         $registration_model->referrer_url = \Yii::$app->request->referrer;
         if ($this->request->isPost) {
@@ -169,5 +170,26 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
         return $this->render('_safari_tour_registration', [
             'model' => $registration_model,
         ]);
+    }
+
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidate($id = null)
+    {
+        $model = new SafaritourRegistrationForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $model = new SafaritourRegistrationForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($model);
+        }
     }
 }
