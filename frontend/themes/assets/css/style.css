@@ -7538,21 +7538,24 @@ select.custom_sort_by_input  option.selected{
 }
 
 
-  .profile-description .text {
- 
+.profile-description .text {
     display: block;
     text-align: left;
     position: relative;
-  }
-  .profile-description .show-more {
-    text-align: center; 
+    overflow: hidden;
+    font-weight: normal !important;
+}
+
+.profile-description .show-more {
+    text-align: center;
     display: inline-block;
     color: var(--background-primary);
     cursor: pointer;
     padding: 7px 0px;
     font-weight: 600;
-  }
-  .profile-description .show-more-height { 
-    height: 48px; 
-    overflow:hidden; 
-  }
+}
+
+.profile-description .show-more-height { 
+    height: 46px;/* Adjust this if your line height is different; 1.5em is typical */
+    overflow: hidden;
+}
