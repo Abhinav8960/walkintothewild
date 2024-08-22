@@ -240,7 +240,7 @@ a {
 
     content: "";
     width: 100%;
-    background-color: #A2D22B;
+    background-color: #99ff33;
     /* background-color: var(--background-yellow); */
     height: 5px;
     position: absolute;
@@ -285,16 +285,16 @@ a {
 
 .sahreSafari:hover {
 
-    background: #A2D22B !important;
+    background: #99ff33 !important;
 }
 
 .sahreSafari.active {
 
-    background: #A2D22B;
+    background: #99ff33;
 }
 
 .sahreSafari.mobile.active {
-    background: #A2D22B !important;
+    background: #99ff33 !important;
 }
 
 .sahreSafari h5 {
@@ -2728,7 +2728,7 @@ figure {
 
     padding: 5px 30px;
     text-align: center;
-    background-color: #A2D22B;
+    background-color: #99ff33;
     color: #09422D;
     border-radius: 20px;
     font-size: var(--fs-14);
@@ -2974,7 +2974,7 @@ figure {
 
 .getquote_box {
 
-    background: #A2D22B;
+    background: #99ff33;
     padding: 20px;
     border-radius: 10px;
 }
@@ -3070,7 +3070,7 @@ figure {
 
     font-size: var(--fs-20);
     text-align: center;
-    background: #A2D22B;
+    background: #99ff33;
     border-radius: 10px 10px 0px 0px;
     padding: 15px 20px;
     display: inline-block;
@@ -3252,7 +3252,7 @@ figure {
 .safri_tour .titlerescent h3 {
 
     margin-bottom: 0;
-    color: #A2D22B;
+    color: #99ff33;
     font-size: var(--fs-18);
 }
 
