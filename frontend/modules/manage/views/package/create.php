@@ -2,7 +2,6 @@
 
 
 use common\models\GeneralModel;
-use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use kartik\datetime\DateTimePicker;
@@ -10,8 +9,6 @@ use kartik\datetime\DateTimePicker;
 $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
 ?>
-
-<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 
 <div class="container-lg mt-5 mb-5 pt-5 ">
     <div class="row margin_bottomfooter">

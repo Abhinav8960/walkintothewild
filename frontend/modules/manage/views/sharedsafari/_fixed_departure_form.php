@@ -100,6 +100,18 @@ use common\models\park\SafariPark;
 </div>
 <?php ActiveForm::end() ?>
 
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('createdepartureform-safari_plan');
+JS;
+$this->registerJs($script);
+?>
+
 <?php
 
 $script = <<< JS

@@ -214,6 +214,18 @@ $this->params['title'] = $this->title;
 
 </section>
 
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('sharedsafariform-safari_plan');
+JS;
+$this->registerJs($script);
+?>
+
 <?php
 $script = <<< JS
 
