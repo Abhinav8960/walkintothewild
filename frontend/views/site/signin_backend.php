@@ -178,14 +178,14 @@ $script = <<< JS
       }
 
       if (isWebview()) {
-        alert('ios from andriod');
         new_link = 'intent://{$base_url}#Intent;scheme=https;package=com.android.chrome;end';
         $('.auth-link').attr("href",new_link);
       }
 
       if (isWebviewOFIOS()) {
-        alert('hello');
-        alert('view in ios device');
+          // alert('view in ios device');
+
+
       }
   });
 JS;

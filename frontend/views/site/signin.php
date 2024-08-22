@@ -164,14 +164,28 @@ $script = <<< JS
 
         // Refined webview detection
         var isAndroidWebview = /Android.*(wv|WebView)/i.test(userAgent);
+
+        return isAndroidWebview;
+      }
+
+      function isWebviewOFIOS(){
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Refined webview detection
         var isIOSWebview = /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream && !window.external;
 
-        return isAndroidWebview || isIOSWebview;
+        return  isIOSWebview;
       }
 
       if (isWebview()) {
         new_link = 'intent://{$base_url}#Intent;scheme=https;package=com.android.chrome;end';
         $('.auth-link').attr("href",new_link);
+      }
+
+      if (isWebviewOFIOS()) {
+          // alert('view in ios device');
+
+
       }
   });
 JS;
