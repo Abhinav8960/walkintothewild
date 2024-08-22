@@ -8,17 +8,9 @@ use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/* @var $this yii\web\View */
-/*
-$shortdescription = implode(' ', array_slice(explode(' ', strip_tags($article->description)), 0, 200));
 $this->title = ucfirst($article->title);
-$this->description = $shortdescription;
-$this->image = Yii::$app->params['frontend_url'] . $article->bannerimagepath;
-$this->url = Yii::$app->params['frontend_url'] . "article/" . $article->slug;
-$this->type = 'Article';    
-$this->site = 'WalkIntoTheWild';
-*/
 
+/* @var $this yii\web\View */
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 

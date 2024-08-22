@@ -14,36 +14,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 
 $this->title =  'Shared Safari';
-$this->params['title'] = $this->title;
-
-$shortdescription = implode(' ', array_slice(explode(' ', strip_tags($share_safari->safari_plan)), 0, 200));
-$this->description = $shortdescription;
-
-if (isset($share_safari->sharedimagepath)) {
-    $this->image = Yii::$app->params['frontend_url'] . ltrim($share_safari->sharedimagepath, "/");
-} else {
-    $this->image = $this->params['baseurl'] . 'img/Bandhavgarhbig.jpg';
-}
-
-$this->url = Yii::$app->params['frontend_url'] . "sharedsafari/" . $share_safari->slug;
-$this->type = 'Website';
-$this->site = 'WalkIntoTheWild';
-$this->site_name = 'WalkIntoTheWild'
-
-/*
-$shortdescription = implode(' ', array_slice(explode(' ', strip_tags($package->package_description)), 0, 200));
-$this->description = $shortdescription;
-if (isset($package->imagebannerpath)) {
-    $this->image = Yii::$app->params['frontend_url'] . $package->imagebannerpath;
-} else {
-    $this->image = $this->params['baseurl'] . '/img/NewBanner_big.png';
-}
-$this->url = Yii::$app->params['frontend_url'] . "package/" . $package->package_slug;
-$this->type = 'Website';
-$this->site = 'WalkIntoTheWild';
-$this->site_name = 'WalkIntoTheWild'
-*/
-?>
+$this->params['title'] = $this->title; ?>
 
 <section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">

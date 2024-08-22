@@ -15,18 +15,6 @@ $this->params['baseurl'] = $webasset->baseUrl;
 $this->title = 'Package : ' . ucwords($package->packagename);
 $this->params['title'] = ucfirst($this->title);
 
-$shortdescription = implode(' ', array_slice(explode(' ', strip_tags($package->package_description)), 0, 200));
-$this->description = $shortdescription;
-if (isset($package->imagebannerpath)) {
-    $this->image = Yii::$app->params['frontend_url'] . ltrim($package->imagebannerpath, "/");
-} else {
-    $this->image = $this->params['baseurl'] . 'img/NewBanner_big.png';
-}
-$this->url = Yii::$app->params['frontend_url'] . "package/" . $package->package_slug;
-$this->type = 'Website';
-$this->site = 'WalkIntoTheWild';
-$this->site_name = 'WalkIntoTheWild';
-
 $page_constant = Constants::PACKAGE_VIEW;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->limit(1)->one();
 ?>
@@ -363,7 +351,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 <?php if ($package->packagegallery) {
                     $galleries = $package->packagegallery;
                 ?>
-                     <div class="request_quote photoGallry mb-4">
+                    <div class="request_quote photoGallry mb-4">
                         <button class="intested_btn interestBtn d-flex justify-content-between" value="#" style="background-color: var(--background-primary) !important;">
                             Photo Gallery <span><?= count($galleries) ?></span>
                         </button>
