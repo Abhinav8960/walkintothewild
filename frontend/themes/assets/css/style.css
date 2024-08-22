@@ -7573,7 +7573,7 @@ select.custom_sort_by_input  option.selected{
 .titler_safari{
 
     font-weight: 500;
-    font-size: 19px !important;
+    font-size: 18px !important;
     font-style: italic;
     
 }
@@ -7581,4 +7581,6 @@ select.custom_sort_by_input  option.selected{
 
     color: var(--background-primary) ;
     font-weight: 500;
+    display: flex;
+    gap: 5px;
 }
