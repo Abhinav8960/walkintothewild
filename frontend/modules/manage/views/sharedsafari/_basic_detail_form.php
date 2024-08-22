@@ -23,7 +23,7 @@ use common\models\park\SafariPark;
     <div class="col-md-6 mb-1">
         <label for="" class="Modal_label">Select Park</label>
         <?= $form->field($model, 'park_list')->widget(Select2::class, [
-            'data' => ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->orderby(['title' => SORT_ASC])->all(), 'id', 'title'),
+            'data' => GeneralModel::safariparklist(),
             'options' => ['placeholder' => 'Select', 'multiple' => true],
             'pluginOptions' => [
                 'allowClear' => true

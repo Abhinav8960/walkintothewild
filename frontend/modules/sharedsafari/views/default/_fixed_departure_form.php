@@ -19,7 +19,7 @@ use yii\helpers\Html;
         <div class="col-md-6 mb-1">
             <label for="" class="Modal_label">Select Park</label>
             <?= $form->field($model, 'park_list')->widget(Select2::class, [
-                'data' => GeneralModel::operatorsafariparkoption(Yii::$app->user->identity),
+                'data' => GeneralModel::safariparklist(),
                 'options' => ['placeholder' => 'Select', 'multiple' => true],
                 'pluginOptions' => [
                     'allowClear' => true
