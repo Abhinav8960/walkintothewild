@@ -388,7 +388,7 @@ a {
     background: url('../img/bg-safriee.png');
     background-repeat: no-repeat;
     background-size: cover;
-    height: 400px;
+    height: 418px;
     width: 100%;
     border-radius: 10px;
     position: relative;
@@ -808,7 +808,7 @@ a {
 
 .titleDate {
 
-    padding: 10px 0px;
+    padding: 6px 0px;
     border-bottom: 2px solid #0000004D;
     margin-left: 10px;
     margin-right: 10px;
@@ -826,6 +826,12 @@ a {
     line-height: 1.2;
     max-height: 2.4em;
     /* Assuming 1.2em per line, 2 lines */
+}
+
+.titleDate h6:last-child a{
+
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .orgnizer {
