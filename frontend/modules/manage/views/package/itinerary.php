@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Package : ' . $package_model->package_name;
 $this->params['title'] = $this->title;
 ?>
-<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
+
 
 <div class="container-lg mt-5 mb-5 pt-5 ">
     <div class="row margin_bottomfooter">

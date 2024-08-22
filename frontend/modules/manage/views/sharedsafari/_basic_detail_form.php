@@ -9,7 +9,6 @@ use common\models\park\SafariPark;
 
 ?>
 
-<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
 <?php $form = ActiveForm::begin([
     'id' => 'create-departure-form',
     'enableAjaxValidation' => true,

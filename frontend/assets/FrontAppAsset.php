@@ -11,7 +11,7 @@ class FrontAppAsset extends AssetBundle
 {
     public $sourcePath = '@frontend/themes/assets/';
     public $publishOptions = [
-        'forceCopy' =>true,
+        'forceCopy' => true,
     ];
     public $css = [
         'css/style.css',
@@ -30,8 +30,8 @@ class FrontAppAsset extends AssetBundle
         'js/script.js',
         // 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js',
         'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js'
-
+        'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
+        'https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js'
 
     ];
 
