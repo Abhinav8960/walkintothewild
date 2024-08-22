@@ -206,6 +206,6 @@ class ShareSafariSearch extends ShareSafari
 
     public function getParkoption()
     {
-        return ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->orderby(['title' => SORT_ASC])->all(), 'id', 'title');
+        return GeneralModel::safariparklist();
     }
 }

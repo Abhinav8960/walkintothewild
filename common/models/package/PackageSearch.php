@@ -2,6 +2,7 @@
 
 namespace common\models\package;
 
+use common\models\GeneralModel;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -183,6 +184,6 @@ class PackageSearch extends Package
 
     public function getParkoption()
     {
-        return ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere("id IN (SELECT distinct park_id FROM package_safari_park WHERE status=1)")->all(), 'id', 'title');
+        return GeneralModel::safariparklist();
     }
 }

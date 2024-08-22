@@ -152,7 +152,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                     <?= $form->field($model, 'package_park', [
                                         'labelOptions' => ['class' => 'Modal_label']
                                     ])->widget(\kartik\select2\Select2::classname(), [
-                                        'data' => GeneralModel::safariparkoption(),
+                                        'data' => GeneralModel::safariparklist(),
                                         // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                                         'options' => ['placeholder' => 'Select', 'multiple' => true],
                                         'pluginOptions' => [

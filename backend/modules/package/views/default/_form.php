@@ -126,7 +126,7 @@ use kartik\datetime\DateTimePicker;
 
             <div class="col-md-3">
                 <?= $form->field($model, 'package_park')->widget(\kartik\select2\Select2::classname(), [
-                    'data' => GeneralModel::safariparkoption(),
+                    'data' => GeneralModel::safariparklist(),
                     // 'theme' => \kartik\select2\Select2::THEME_BOOTSTRAP,
                     'options' => ['placeholder' => 'Select', 'multiple' => true],
                     'pluginOptions' => [

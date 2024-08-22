@@ -1146,4 +1146,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         $result = ArrayHelper::map($parks, 'id', 'title');
         return $result;
     }
+
+
+    public static function safariparklist($column = 'id')
+    {
+
+        $query = SafariPark::find()
+            ->where(['status' => SafariPark::STATUS_ACTIVE, 'show_in_filter' => 1])
+            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+
+        $parks = $query->all();
+        $parkoption = ArrayHelper::map($parks, $column, 'title');
+
+        return $parkoption;
+    }
 }
