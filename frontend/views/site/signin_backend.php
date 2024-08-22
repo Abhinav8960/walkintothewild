@@ -172,7 +172,7 @@ $script = <<< JS
           var message = 'You are using a webview. Please open this link in a full browser: Click ok to redirect ';
           alert(message);
           // window.location.href = window.location.href; // Redirect to the URL
-          window.open(window.location.href, '_blank');
+          window.open(window.location.href, '_system');
       }
   });
 JS;
