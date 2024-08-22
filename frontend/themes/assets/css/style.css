@@ -6158,6 +6158,11 @@ a.desc:after {
 .itenary_text p {
 
     overflow-wrap: anywhere;
+  
+}
+.safartabs .itenary_text p{
+
+    font-size: 15px !important;
 }
 
 .itenary_text ul li {
