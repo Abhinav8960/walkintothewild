@@ -191,9 +191,9 @@ class GenerateSitePagesController extends Controller
 
           $title = $description = $keywords = $image = '';
           if ($data['table'] == 'master_article_tag') {
-            $title = $row->title;
+            $title = "Article Tag:" . $row->title;
           } else if ($data['table'] == 'article') {
-            $title = $row->title;
+            $title = "Article: " . $row->title;
             $description = strip_tags($row->description);
             if (!empty($row['meta_description'])) {
               $description = strip_tags($row->meta_description);
@@ -203,23 +203,23 @@ class GenerateSitePagesController extends Controller
               $image = $row->bannerimagepath;
             }
           } else if ($data['table'] == 'master_article_topic') {
-            $title = $row->title;
+            $title = "Article Topic:" . $row->title;
           } else if ($data['table'] == 'article_author') {
-            $title = $row->author_name;
+            $title = "Article Author:" . $row->author_name;
           } else if ($data['table'] == 'master_animal') {
-            $title = $row->name;
+            $title = "Animal:" . $row->name;
             $description = strip_tags($row->short_description);
             if (!empty($row->feature_image)) {
               $image = $row->imagepath;
             }
           } else if ($data['table'] == 'safari_operator') {
-            $title = $row->businessname;
+            $title = "Operator:" . $row->businessname;
             $description = strip_tags($row->about_business);
             if (!empty($row->logo)) {
               $image = $row->imagepath;
             }
           } else if ($data['table'] == 'safari_park') {
-            $title = $row->title;
+            $title = "Park:" . $row->title;
             $description = strip_tags($row->long_description);
             if (!empty($row->short_description)) {
               $description = strip_tags($row->short_description);
@@ -407,13 +407,14 @@ class GenerateSitePagesController extends Controller
       $temp_insert_data = [];
       foreach ($records as $row) {
         $title = $description = $image = '';
-        $title = $row->businessname;
         $description = strip_tags($row->about_business);
         if (!empty($row->logo)) {
           $image = $row->imagepath;
         }
 
         foreach ($tab_urls as $ind => $tab) {
+          $title = "Operator " . ucwords($ind) . ":" . $row->businessname;
+
           if (!empty($row->slug) && $row->status == 1) {
             //update existing record
             $data_url = "operator/_slug";
@@ -484,7 +485,6 @@ class GenerateSitePagesController extends Controller
       $temp_insert_data = [];
       foreach ($records as $row) {
         $title = $description = $image = '';
-        $title = $row->title;
         $description = strip_tags($row->long_description);
         if (!empty($row->short_description)) {
           $description = strip_tags($row->short_description);
@@ -493,6 +493,7 @@ class GenerateSitePagesController extends Controller
           $image = $row->logoimagepath;
         }
         foreach ($tab_urls as $ind => $tab) {
+          $title = "Park " . ucwords($ind) . ":" . $row->title;
           if (!empty($row->slug) && $row->status == 1) {
             //update existing record
             $data_url = "park/_slug";
@@ -803,7 +804,7 @@ class GenerateSitePagesController extends Controller
         $url = "package/" . $row->safarioperator->slug . "/" . $row->package_slug;
 
         $title = $description = $image = '';
-        $title = $row->package_name;
+        $title = "Package:" . $row->package_name;
         $description = strip_tags($row->package_description);
         if (isset($row->imagebannerpath)) {
           $image = $row->imagebannerpath;

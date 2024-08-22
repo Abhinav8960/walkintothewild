@@ -67,12 +67,12 @@ $this->params['title'] = $this->title;
                         }
                     ],
                     [
-                        'label' => 'OG Tags',
+                        'label' => 'OG Title',
                         'format' => 'raw',
                         'value' => function ($model) {
                             $return = "-";
                             if (!empty($model->title)) {
-                                $return = "<b>Title:</b> " . $model->title . "<br/>";
+                                $return = $model->title . "<br/>";
                             }
                             //$return .= "<b>keywords:</b> " . $model->keywords;
                             return $return;
@@ -86,7 +86,7 @@ $this->params['title'] = $this->title;
                             if (!empty($model->image)) {
                                 $return = '<img src="' . Yii::$app->params['frontend_url'] . $model->image . '" width="50" ></img>';
                             } else {
-                                $return = '<img src="' . $this->params['baseurl'] . '/img/logo.png' . '" width="50" ></img>';
+                                $return = '';
                             }
 
                             return $return;

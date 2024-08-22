@@ -12,7 +12,6 @@ use common\models\sharesafari\ShareSafariIntrested;
 $this->title = 'India’s first wildlife network platform';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-
 $this->params['meta_description'] = "Introducing India’s first wildlife network platform, where you can connect with fellow adventurers, join shared safaris, and access comprehensive park details to choose the perfect tiger reserve. Discover tour packages and operators—all for free.";
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
