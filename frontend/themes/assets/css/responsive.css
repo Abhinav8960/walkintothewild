@@ -1579,6 +1579,10 @@ margin-bottom: 0 !important;
 }
 }
 @media only screen and (max-width: 767px) {
+  .titler_safari{
+
+    font-size: 14px !important;
+  }
 
   .faqs-wrpper .accordion-body p{
 
