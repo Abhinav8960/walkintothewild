@@ -70,6 +70,9 @@ $this->params['title'] = $this->title;
             <?php ActiveForm::end(); */ ?>
             <div class="content_terms">
               <h5 class="text-center">Login your account</h5>
+              <div id="third-party-browser">
+                <p>🚨 It looks like you're opening this page on a third party iOS/Android browser. Please open into a browser for login</p>
+              </div>
               <div class="btnssss-g pt-3" style="border:none;">
                 <?php if (!empty($_REQUEST['referrer'])) {
                   $authAuthChoice = AuthChoice::begin([
@@ -153,4 +156,29 @@ $this->params['title'] = $this->title;
   header {
     display: none;
   }
+
+  #third-party-browser {
+    padding: 15px;
+    margin-left: -5px;
+    margin-right: -5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    background-color: rgba(72, 255, 0, 0.3);
+  }
 </style>
+
+
+<script type="text/javascript">
+  let isThirdPartyBrowser = navigator.userAgent.includes("CriOS") || navigator.userAgent.includes("EdgiOS") || navigator.userAgent.includes("FxiOS") || navigator.userAgent.includes("GSA") || navigator.userAgent.includes("DuckDuckGo") || navigator.brave;
+  // Additionally check for Android third party user agents
+  if (navigator.userAgent.includes("Android") && (navigator.userAgent.includes("Chrome") || navigator.userAgent.includes("Firefox") || navigator.userAgent.includes("EdgA"))) {
+    isThirdPartyBrowser = true
+  }
+
+
+  if (isThirdPartyBrowser) {
+    document.getElementById("third-party-browser").style.display = "block"
+  } else {
+    document.getElementById("third-party-browser").style.display = "none"
+  }
+</script>
