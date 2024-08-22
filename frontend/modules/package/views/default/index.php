@@ -45,8 +45,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
       <div class="custom-col">
         <div class="topSlider_tour owl-carousel owl-theme">
           <div class="items_slider">
-            <a href="/operator/eagle-safaris-by-banzaara/package">
-              <img src="<?= $this->params['baseurl'] ?>/img/Eagle-Safaris.jpg" alt="" class="custom-image">
+            <a href="/operator/eagle-safaris/package">
+              <img src="<?= $this->params['baseurl'] ?>/img/Eagle-Safarisnew.jpg" alt="" class="custom-image">
             </a>
           </div>
 

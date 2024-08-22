@@ -106,7 +106,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="terms">
                         <p class="mb-0  pt-0"><a href="<?= \yii\helpers\Url::toRoute(['/privacy-policy']) ?>">PRIVACY POLICY</a></p>
                     </div>
-                    <span class="pt-md-0 pt-2">|</span>
+                    <span class="pt-lg-0 pt-2">|</span>
                     <div class="terms">
                         <p class="mb-0 pt-0"><a href="<?= \yii\helpers\Url::toRoute(['/terms-of-use']) ?>">TERMS OF USE</a></p>
                     </div>

@@ -8,7 +8,10 @@ use yii\helpers\Url;
 ?>
 
 <div class="<?= isset($colsize) ? $colsize : 'col-lg-9' ?> order-lg-1 order-2 mb-4">
+   
     <div class="formbg">
+    <!-- <button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
+    Discussion</button> -->
         <div class="comments_safari bg-white">
             <div class="top_replysafari px-3">
                 <?php if ($share_safari->host_user_id) { ?>
@@ -76,7 +79,7 @@ use yii\helpers\Url;
                                     } ?>
                                 </div>
                             </div>
-                            <div class="comment-reply">
+                            <div class="comment-reply px-4">
                                 <?php if ($replies) { ?>
                                     <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $comments->id ?>">View <?= count($replies) ?> replies</h6>
                                     <div class="blog-comment-container" id="comment-container-<?= $comments->id ?>" style="display: none;">
@@ -153,7 +156,11 @@ use yii\helpers\Url;
                     echo '<p class="px-3 pt-2 text-center">Please Join in for start Comment</p>';
                 }
             } else {
-                echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=/sharedsafari/' . $share_safari->slug . '" class="parkrevieBtn">Sign In</a> to Comment</p>';
+                echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=' . Url::toRoute([
+                    '/sharedsafari/default/view',
+                    'slug' => $share_safari->slug,
+                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                ]) . '" class="parkrevieBtn">Sign In</a> to Comment</p>';
             }
         } ?>
     </div>

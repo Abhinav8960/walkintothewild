@@ -240,7 +240,7 @@ a {
 
     content: "";
     width: 100%;
-    background-color: #A2D22B;
+    background-color: #99ff33;
     /* background-color: var(--background-yellow); */
     height: 5px;
     position: absolute;
@@ -285,16 +285,16 @@ a {
 
 .sahreSafari:hover {
 
-    background: #A2D22B !important;
+    background: #99ff33 !important;
 }
 
 .sahreSafari.active {
 
-    background: #A2D22B;
+    background: #99ff33;
 }
 
 .sahreSafari.mobile.active {
-    background: #A2D22B !important;
+    background: #99ff33 !important;
 }
 
 .sahreSafari h5 {
@@ -745,7 +745,7 @@ a {
 .btn_newsafari {
 
     background-color: #F5F5F5;
-    padding: 10px 19px;
+    padding: 10px 17px;
     font-size: var(--fs-15);
     font-weight: 600;
     font-family: "Roboto", sans-serif !important;
@@ -2387,6 +2387,20 @@ figure {
     border-radius: 10px 10px 0px 0px !important;
     width: 100%;
     text-align: left;
+    
+}
+
+.discussionTabs{
+
+    border-radius: 10px 10px 0px 0px !important;
+    width: 100%;
+    text-align: left;
+    border: 0;
+    padding: 9px 20px;
+    font-size: var(--fs-15);
+    color: var(--colorwhite);
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
 }
 
 .safartabs .tab-content {
@@ -2728,7 +2742,7 @@ figure {
 
     padding: 5px 30px;
     text-align: center;
-    background-color: #A2D22B;
+    background-color: #99ff33;
     color: #09422D;
     border-radius: 20px;
     font-size: var(--fs-14);
@@ -3252,7 +3266,7 @@ figure {
 .safri_tour .titlerescent h3 {
 
     margin-bottom: 0;
-    color: #A2D22B;
+    color: #99ff33;
     font-size: var(--fs-18);
 }
 
@@ -4092,8 +4106,11 @@ figure {
 .footerContent a {
 
     color: var(--colorwhite);
+    font-size: 16px;
 }
-
+.footerContent p{
+    font-size: 16px;
+}
 .footerContent.legal ul li a {
 
     font-weight: 400;
@@ -6985,7 +7002,7 @@ text-align: center;
 
 .content_terms p {
 
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .termsagree {
@@ -7477,4 +7494,35 @@ select.custom_sort_by_input  option.selected{
 
     color: var(--background-primary ) !important;
 
+}
+
+.accordion_disscutions .accordion-button{
+
+    background-color: var(--background-primary);
+    font-family: "Roboto", sans-serif !important;
+    color: #fff;
+    font-size: var(--fs-15);
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 10px !important;
+}
+.accordion_disscutions .accordion-header{
+
+    color: #fff;
+}
+
+.accordion_disscutions .accordion-button::after{
+
+    --bs-accordion-btn-icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='%23ffffff' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708'/%3E%3C/svg%3E") !important;
+}
+
+.accordion_disscutions .accordion-body{
+
+    background-color: #fff !important;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.padding_ad{
+
+    padding-left: 47px;
 }

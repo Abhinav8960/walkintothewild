@@ -175,7 +175,14 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
             return isset($this->safarioperator) ? $this->safarioperator->businessname : "N/A";
         }
     }
-
+    public function getOrganizedbyimage()
+    {
+        if ($this->type == ShareSafari::TYPE_SAFARI) {
+            return $this->user ? $this->user->profileimage : '';
+        } else if ($this->type == ShareSafari::TYPE_FIXED_DEPARTURE) {
+            return $this->safarioperator &&  $this->safarioperator->logo  ? $this->safarioperator->imagepath : '';
+        }
+    }
     public function getOrganizedbyprofileurl()
     {
         if ($this->type == ShareSafari::TYPE_SAFARI) {

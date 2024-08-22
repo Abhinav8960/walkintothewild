@@ -4,6 +4,7 @@
 /* @var $this yii\web\View */
 
 use common\models\operator\SafariOperator;
+use common\models\sharesafari\ShareSafari;
 use yii\helpers\Url;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\UserWishlist;
@@ -63,7 +64,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
                 <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
                     <p class="text_safari">SEATS</p>
-                    <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
+                    <?php if ($share_safari->type == ShareSafari::TYPE_SAFARI) { ?>
+                        <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
+                    <?php } else { ?>
+                        <h6 class="number-safari"><?= $share_safari->total_seat ?></h6>
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -94,7 +99,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             </div>
                         <?php }
                     } else { ?>
-                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $share_safari->user ? $share_safari->user->user_handle : '']) ?>" data-pjax="0"><img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
+                        <a href="<?= $share_safari->organizedbyprofileurl ? $share_safari->organizedbyprofileurl : '' ?>" data-pjax="0"><img src="<?= $share_safari->organizedbyimage  ? $share_safari->organizedbyimage : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle"></a>
                     <?php } ?>
                 </div>
             </div>

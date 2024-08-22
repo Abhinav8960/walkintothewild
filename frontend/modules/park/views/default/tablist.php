@@ -32,7 +32,7 @@ if ($model->meta_title != '') {
     $this->title = 'Safari ' . $model->title;
 }
 ?>
-<div class="fixedbanner">
+
 <section class="banner_section-inner packagebnner position-relative">
     <picture class="position-relative">
         <source srcset="<?= isset($banner->image) ? $banner->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" media="(max-width:576px)" type="image/webp">
@@ -51,8 +51,9 @@ if ($model->meta_title != '') {
 
     </div>
 </section>
-    </div>
-<section class="articals_wrapper  pt-3" style="background-color: #fff; margin-top: 190px !important; ">
+
+<!-- margin-top: 190px !important; -->
+<section class="articals_wrapper  pt-3" style="background-color: #fff;  ">
     <div class="container-fluid">
         <!-- <div class="row py-3">
             <div class="col-12">

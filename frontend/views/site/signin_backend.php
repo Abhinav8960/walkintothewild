@@ -154,3 +154,26 @@ $this->params['title'] = $this->title;
     display: none;
   }
 </style>
+
+<?php
+$script = <<< JS
+    $(document).ready(function () {
+      function isWebview() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Refined webview detection
+        var isAndroidWebview = /Android.*(wv|WebView)/i.test(userAgent);
+        var isIOSWebview = /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream && !window.external;
+
+        return isAndroidWebview || isIOSWebview;
+      }
+
+      if (isWebview()) {
+        var message = 'You are using a webview. Please open this link in a full browser for Login your account ';
+        alert(message);
+        window.open(window.location.href, '_system');
+      }
+  });
+JS;
+$this->registerJs($script);
+?>

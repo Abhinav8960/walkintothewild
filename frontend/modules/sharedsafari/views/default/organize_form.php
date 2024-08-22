@@ -57,7 +57,7 @@ $this->params['title'] = $this->title;
                             <div class="col-12 mb-2">
                                 <label for="" class="Modal_label">Select a Safari Park <span class="necessary">*</span></label>
                                 <?= $form->field($model, 'park_id')->dropDownList(
-                                    ArrayHelper::map(SafariPark::find()->where(['status' => StatusInterface::STATUS_ACTIVE, 'is_shared_safari' => 1])->orderby(['title' => SORT_ASC])->all(), 'id', 'title'),
+                                    GeneralModel::safariparklist(),
                                     [
                                         'prompt' => 'Select a Safari Park',
                                         'class' => 'form-select form-select-lg mb-3',
@@ -213,6 +213,18 @@ $this->params['title'] = $this->title;
         </div>
 
 </section>
+
+<style>
+    .ck-editor__editable {
+        min-height: 350px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('sharedsafariform-safari_plan');
+JS;
+$this->registerJs($script);
+?>
 
 <?php
 $script = <<< JS

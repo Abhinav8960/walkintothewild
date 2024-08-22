@@ -164,6 +164,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 					</div>
 				</div>
+				<!-- <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+					<i class="fa-solid fa-bars"></i>
+				</button> -->
 			</div>
 		</div>
 	</nav>

@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use common\models\GeneralModel;
-use common\models\master\animal\MasterRareAnimal;
+use common\models\master\animal\MasterAnimal;
 ?>
 <div id="repository-container-header"></div>
 <div class="row">
@@ -23,7 +23,7 @@ use common\models\master\animal\MasterRareAnimal;
                 $form = ActiveForm::begin(['id' => 'park-sequence-form']);
                 $rare_ids = '0';
                 for ($i = 1; $i <= 10; $i++) {
-                    $rare_animal = MasterRareAnimal::find()->where(['is_feature_sequence' => $i])->limit(1)->one();
+                    $rare_animal = MasterAnimal::find()->where(['is_feature_sequence' => $i, 'animal_type' => MasterAnimal::RARE_ANIMAL_TYPE])->limit(1)->one();
                     $selectedParkId = isset($rare_animal) ? $rare_animal->id : null;
 
                 ?>

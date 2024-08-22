@@ -8,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
 /** @var common\models\master\airport\MasterAirport $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
-<script src="https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js"></script>
+
 
 <?php $form = ActiveForm::begin([
     'id' => 'author-form',

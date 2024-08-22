@@ -53,7 +53,7 @@ $this->params['title'] = $this->title; ?>
             <div class="col-12">
                 <div class="wrapper-skybgsafri bg-white pb-0">
                     <div class="row border_bottom2 pb-4">
-                        <div class="col-lg-7 col-md-8 border-right">
+                        <div class="col-lg-8 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-3 col-sm-3 col-md-3 col-lg-2 maxWidth">
                                     <div class="safritimg innerImg">
@@ -82,8 +82,8 @@ $this->params['title'] = $this->title; ?>
                                                 if (Yii::$app->user->identity) { ?>
                                             <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
                                                                                                                                                                                                                                                                 } else { ?>
-                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=/profile/user/<?= $share_safari->getOrganizedbyuserhandel() ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
-                                                                                                                                                                                                                                                                } ?>
+                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=<?= Url::toRoute(['/profile/default/index', 'user_handle' => $share_safari->getOrganizedbyuserhandel()]) ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                                                                                                                                                                                                                                                                                    } ?>
                                     </div>
                                 </div>
                             </div>
@@ -110,13 +110,17 @@ $this->params['title'] = $this->title; ?>
                                             <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST" data-pjax="0">Join Safari</a>
                                         <?php }
                                     } else { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>" data-pjax="0"> Join Safari</a>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
+                                                                                                                                                        '/sharedsafari/default/view',
+                                                                                                                                                        'slug' => $share_safari->slug,
+                                                                                                                                                        'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                                                                                                                                                    ]) ?>" data-pjax="0"> Join Safari</a>
                                 <?php }
                                 } ?>
                             </div>
                         </div>
-                        <div class="col-lg-5 pt-lg-0 pt-4">
-                            <div class="row px-sm-4 px-0">
+                        <div class="col-lg-4 pt-lg-0 pt-4">
+                            <div class="row px-sm-2 px-0">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
@@ -238,7 +242,11 @@ $this->params['title'] = $this->title; ?>
                                                 <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/login?authclient=google&referrer=/sharedsafari/<?= $share_safari->slug ?>"> Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
+                                                                                                                                                                    '/sharedsafari/default/view',
+                                                                                                                                                                    'slug' => $share_safari->slug,
+                                                                                                                                                                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                                                                                                                                                                ]) ?>"> Join Safari</a>
                                     <?php }
                                     } ?>
                                 </div>

@@ -30,7 +30,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->park_id) ? GeneralModel::safariparkoption()[$model->park_id] : '';
+                            return isset(GeneralModel::safariparkoption()[$model->park_id]) ? GeneralModel::safariparkoption()[$model->park_id] : '';
                         }
                     ],
                     [
@@ -38,7 +38,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->master_suggestion_id) ? GeneralModel::suggestioncategory()[$model->master_suggestion_id] : '';
+                            return isset(GeneralModel::suggestioncategory()[$model->master_suggestion_id]) ? GeneralModel::suggestioncategory()[$model->master_suggestion_id] : '';
                         }
                     ],
 
@@ -47,7 +47,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->you_are_id) ? GeneralModel::operatorcategory()[$model->you_are_id] : '';
+                            return isset(GeneralModel::operatorcategory()[$model->you_are_id]) ? GeneralModel::operatorcategory()[$model->you_are_id] : '';
                         }
                     ],
                     [

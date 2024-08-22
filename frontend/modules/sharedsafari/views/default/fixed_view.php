@@ -42,7 +42,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 <section class="safari_wrapper  bg-white pt-4">
-<!--    <div class="container-lg  px-slider2">
+    <!--    <div class="container-lg  px-slider2">
         <div class=" bg-white pb-0 px-slider2">
             <div class="row packageSfari mt-4">
                 <div class="col-12">
@@ -58,7 +58,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-12">
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
-                        <div class="col-lg-7 col-md-8 border-right">
+                        <div class="col-lg-8 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-3 col-sm-3 col-md-3 col-lg-2 maxWidth">
                                     <div class="safritimg innerImg">
@@ -123,8 +123,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
                             </div>
                         </div>
-                        <div class="col-lg-5 pt-lg-0 pt-4">
-                            <div class="row px-lg-4 px-0">
+                        <div class="col-lg-4 pt-lg-0 pt-4">
+                            <div class="row ps-1">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
@@ -198,7 +198,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-8 ">
                             <div class="social-share flex-wrap d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-xl-3">
@@ -217,13 +217,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 mt-lg-0 mt-3">
+                        <!-- <div class="col-lg-2 mt-lg-0 mt-3">
                             <div class="pakageCost text-lg-center d-sm-block  d-lg-block d-md-none">
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-lg-end flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
+                            <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
+                                <div class="pakageCost mb-2 mb-md-2 mb-xl-0">
+                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
+                                </div>
                                 <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
                                         <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
@@ -269,7 +272,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                 </div>
-<!--                <div class="row">
+                <!--                <div class="row">
                     <div class="col-12 pt-4">
                         <div class="text_safaripackage">
                             <p><?= $share_safari->safari_plan ?></p>
@@ -314,7 +317,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-lg-9 col-xl-9  safartabs position-relative">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab">
-<!--                        <div class="card bg-set accordion-collapse  card_bodyPadding mb-3">
+                        <!--                        <div class="card bg-set accordion-collapse  card_bodyPadding mb-3">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
                                     <h6 class="fs-6 fw-bold pb-2">Discussion</h6>
@@ -324,6 +327,22 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>-->
+                        <!-- <div class="accordion_disscutions">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Overview
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        </div> -->
+                        
                         <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
@@ -386,7 +405,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             </div>
             <div class="col-xl-3 col-lg-3 mb-lg-5 pb-lg-4">
                 <div class="request_quote mb-4">
-                    <button class="intested_btn interestBtn " style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
+                    <button class="intested_btn  interestBtn modal_intrest" style="background-color: var(--background-primary) !important;" value="<?= Url::toRoute(['/sharedsafari/default/interestview', 'share_safari_id' => $share_safari->id]) ?>"><i class="fa-solid fa-user-group"></i>
                         Interested - <?= $share_safari->getIntrested()->where(['status' => 1])->count() ?></button>
                     <div class="interst_wrapper bg-white ">
                         <!-- <div class="titlerescent pb-3">
@@ -508,7 +527,7 @@ enquiryfunction();
        
 
 function interestfucntion() {
-	$('.intested_btn').on('click', function () {
+	$('.modal_intrest').on('click', function () {
         $('#interest-modal').modal('show')
 		.find('#modalContent')
 		.load($(this).attr('value'));

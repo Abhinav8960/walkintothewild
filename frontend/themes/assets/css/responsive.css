@@ -170,9 +170,6 @@ font-size: 19px;
     font-size: 14px;
   }
 
-  p {
-    font-size: 12px;
-  }
 
   .googlerating.names h6,
   .title_filter h6,
@@ -1568,6 +1565,13 @@ margin-bottom: 0 !important;
       }
 }
 
+
+@media(max-width:768px){
+
+  .itenary_tabs .safartabs .nav-tabs {
+    gap: 40px !important;
+}
+}
 @media only screen and (max-width: 767px) {
   .faqs-wrpper .accordion-body p{
 
@@ -1722,6 +1726,7 @@ display: none;
   .articals_wrapper.margin-setposi {
     margin-top: 170px !important;
   }
+
   .fixedbanner .banner_section-inner picture {
     display: none;
   }
@@ -2003,6 +2008,10 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .text-box p{
+
+    font-size: 14px;
+  }
   .dropdown-toggle.open ~ .OrBox{
 
 display: none !important;
@@ -2076,6 +2085,11 @@ display: none !important;
   .commentsOther .objec-flgs{
 
     right: -6px;
+  }
+  .objec-flgs.opratorflag{
+
+    right: 10px;
+    top: 20px;
   }
   .commentsOther .objec-flgs img{
 
@@ -2264,7 +2278,7 @@ margin: 0;
   }
 
   .headingBnner h1 {
-    font-size: 22px;
+    /* font-size: 22px; */
     line-height: 32px;
   }
 

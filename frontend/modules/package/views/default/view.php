@@ -49,7 +49,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
-                        <div class="col-lg-7 col-md-8 border-right">
+                        <div class="col-lg-8 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-lg-4 col-md-3">
                                     <div class="images_tour select_safrai ">
@@ -95,8 +95,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 pt-lg-0 pt-4">
-                            <div class="row px-lg-4 px-0">
+                        <div class="col-lg-4 pt-lg-0 pt-4">
+                            <div class="row ps-1">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
@@ -183,7 +183,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
-                        <div class="col-lg-7">
+                        <div class="col-lg-8">
                             <div class="social-share d-flex  flex-wrap gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-xl-3">
@@ -200,7 +200,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 d-lg-block  mobile_didplay_block">
+                        <div class="col-lg-4 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between align-items-center pt-lg-0 pt-sm-3 pt-3">
                                 <div class="pakageCost">
                                     <h6 class="fs-3 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?></h6>
