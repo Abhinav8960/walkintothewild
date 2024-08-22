@@ -62,7 +62,7 @@ $this->params['title'] = $this->title; ?>
                                 </div>
                                 <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
                                     <div class="safrititles 44">
-                                        <h5><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a>
+                                        <h5><?= $share_safari->share_safari_title ?>
                                             <?php
                                             if (Yii::$app->user->identity) { ?>
                                                 <?php
@@ -78,8 +78,10 @@ $this->params['title'] = $this->title; ?>
                                         </h5>
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
-                                        </div><?php
-                                                if (Yii::$app->user->identity) { ?>
+                                        </div>
+                                        <h6><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a></h6>
+                                        <?php
+                                        if (Yii::$app->user->identity) { ?>
                                             <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
                                                                                                                                                                                                                                                                 } else { ?>
                                             <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=<?= Url::toRoute(['/profile/default/index', 'user_handle' => $share_safari->getOrganizedbyuserhandel()]) ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php

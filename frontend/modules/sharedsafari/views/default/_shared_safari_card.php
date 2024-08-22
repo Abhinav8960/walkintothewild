@@ -73,7 +73,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="titleDate">
-            <h6><?= $share_safari->share_safari_title ?></h6>
+            <h6><a href="<?= Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-pjax="0"><?= $share_safari->share_safari_title ?></a></h6>
             <div class="orgnizer">
                 <p>Organized by: <strong><?= $share_safari->organizedbyname ?></strong></p>
             </div>
