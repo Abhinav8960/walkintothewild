@@ -8,10 +8,10 @@ use yii\helpers\Url;
 ?>
 
 <div class="<?= isset($colsize) ? $colsize : 'col-lg-9' ?> order-lg-1 order-2 mb-4">
-   
+
     <div class="formbg">
-    <button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
-    Discussion</button>
+        <button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
+            Discussion</button>
         <div class="comments_safari bg-white">
             <div class="top_replysafari px-3">
                 <?php if ($share_safari->host_user_id) { ?>
@@ -24,7 +24,7 @@ use yii\helpers\Url;
                                 <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>">
                                     <h6 class="nameavatr"><?= isset($share_safari->organizedbyname) ? $share_safari->organizedbyname : 'N/A' ?></h6>
                                 </a>
-                                <?php if ($share_safari->safari_plan) { ?>
+                                <?php if ($share_safari->safari_plan && $share_safari->type == $share_safari::TYPE_SAFARI) { ?>
                                     <p><?= $share_safari->safari_plan; ?></p>
                                 <?php } ?>
                             </div>

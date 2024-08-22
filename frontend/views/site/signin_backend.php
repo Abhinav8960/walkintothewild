@@ -172,7 +172,7 @@ $script = <<< JS
         var message = 'You are using a webview. Please open this link in a full browser for Login your account ';
         alert(message);
         // window.open(window.location.href, '_system');
-        window.location.href = "/site/redirect";
+        // window.location.href = "/site/redirect";
       }
   });
 JS;
