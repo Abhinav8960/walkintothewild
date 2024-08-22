@@ -19,6 +19,10 @@ use common\models\park\SafariPark;
 ]); ?>
 
 <div class="row">
+    <div class="col-12 mb-2">
+        <label for="" class="Modal_label">Title</label>
+        <?= $form->field($model, 'share_safari_title')->textInput(['placeholder' => 'Enter Title'])->label(false) ?>
+    </div>
     <div class="col-md-6 mb-1">
         <label for="" class="Modal_label">Select Park</label>
         <?= $form->field($model, 'park_list')->widget(Select2::class, [
@@ -49,6 +53,10 @@ use common\models\park\SafariPark;
             <div class="start w-100">
                 <label for="" class="Modal_label">End Date</label>
                 <?= $form->field($model, 'end_date')->textInput(['type' => 'date'])->label(false) ?>
+            </div>
+            <div class="start w-100">
+                <label for="" class="Modal_label">Cut off Date <span class="necessary">*</span></label>
+                <?= $form->field($model, 'cut_off_date')->textInput(['type' => 'date'])->label(false) ?>
             </div>
         </div>
     </div>
@@ -120,9 +128,17 @@ $this->registerJs($script);
 <?php
 
 $script = <<< JS
+
+
           $("#createdepartureform-start_date").on("change", function(){
           $("#createdepartureform-end_date").attr("min", $(this).val());
+          $("#createdepartureform-cut_off_date").attr("max", $(this).val());
           });   
+
+          $("#createdepartureform-cut_off_date").on("change", function(){
+          $("#createdepartureform-start_date").attr("min", $(this).val());
+          });   
+
           $("#createdepartureform-tour_duration").on("input",function()
           {
             var selectedValue = $(this).val();

@@ -52,10 +52,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
             </div>
         </div>
         <div class="titleDate">
-            <h6><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></h6>
+            <h6><?= $share_safari->share_safari_title ?></h6>
             <div class="orgnizer">
                 <p>Organized by: <strong><?= $share_safari->organizedbyname ?></strong></p>
             </div>
+            <h6><?= isset($share_safari->park) ? $share_safari->park->title : '' ?></h6>
         </div>
         <div class="footer_card row pb-2 px-2 align-items-center">
             <div class="col-6">

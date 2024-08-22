@@ -18,6 +18,10 @@ use common\models\park\SafariPark;
 ]); ?>
 <div class="modal-body modal_form">
     <div class="row">
+        <div class="col-12 mb-2">
+            <label for="" class="Modal_label">Title <span class="necessary">*</span></label>
+            <?= $form->field($model, 'share_safari_title')->textInput(['placeholder' => 'Enter Title'])->label(false) ?>
+        </div>
         <div class="col-md-6 mb-1">
             <label for="" class="Modal_label">Select Park <span class="necessary">*</span></label>
             <?= $form->field($model, 'park_list')->widget(Select2::class, [
@@ -41,6 +45,7 @@ use common\models\park\SafariPark;
 
         <div class="col-md-12">
             <div class="d-flex  gap-sm-3 align-items-center flex-sm-nowrap flex-wrap  w-100 mb-1">
+
                 <div class="start w-100">
                     <label for="" class="Modal_label">Start Date <span class="necessary">*</span></label>
                     <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'max' => date('Y-m-d', strtotime('+1 year'))])->label(false) ?>
@@ -49,6 +54,10 @@ use common\models\park\SafariPark;
                 <div class="start w-100">
                     <label for="" class="Modal_label">End Date <span class="necessary">*</span></label>
                     <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'max' => date('Y-m-d', strtotime('+1 year'))])->label(false) ?>
+                </div>
+                <div class="start w-100">
+                    <label for="" class="Modal_label">Cut off Date <span class="necessary">*</span></label>
+                    <?= $form->field($model, 'cut_off_date')->textInput(['type' => 'date'])->label(false) ?>
                 </div>
             </div>
         </div>
@@ -117,7 +126,13 @@ $this->registerJs($script);
 $script = <<< JS
           $("#createdepartureform-start_date").on("change", function(){
           $("#createdepartureform-end_date").attr("min", $(this).val());
+          $("#createdepartureform-cut_off_date").attr("max", $(this).val());
           });   
+
+          $("#createdepartureform-cut_off_date").on("change", function(){
+          $("#createdepartureform-start_date").attr("min", $(this).val());
+          });   
+
           $("#createdepartureform-tour_duration").on("input",function()
           {
             var selectedValue = $(this).val();
