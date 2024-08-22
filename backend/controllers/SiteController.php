@@ -29,7 +29,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'auth'],
+                        'actions' => ['login', 'error', 'auth', 'redirect'],
                         'allow' => true,
                     ],
                     [
@@ -126,6 +126,25 @@ class SiteController extends Controller
     public function onAuthSuccess($client)
     {
         (new AuthHandler($client))->handle();
+    }
+
+
+
+    /**
+     * Redirect Url to another link
+     */
+    public function actionRedirect()
+    {
+        $userAgent = $_SERVER['HTTP_USER_AGENT'];
+        if (strpos($userAgent, 'Instagram')) {
+            header('Content-type: application/pdf');
+            header('Content-Disposition: inline; filename=tmp');
+            header('Content-Transfer-Encoding: binary');
+            header('Accept-Ranges: bytes');
+            @readfile('tmp');
+        } else {
+            $this->redirect(Yii::$app->request->referrer);
+        }
     }
 
     /*
