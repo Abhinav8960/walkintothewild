@@ -311,6 +311,15 @@ $this->registerJs($script);
 $script = <<< JS
 $(document).ready(function(){
   $(".registration-form").hide();
+
+  var selectedValue = $('#safaritourregistrationform-account_type input:checked').val()
+    if(selectedValue == 2 || selectedValue == 3)
+    {
+        $(".registration-form").show();
+    }else{
+        $(".registration-form").hide();
+    }
+    
   $("#safaritourregistrationform-account_type").change(function(){
     var selectedValue = $('#safaritourregistrationform-account_type input:checked').val()
     if(selectedValue == 2 || selectedValue == 3)
