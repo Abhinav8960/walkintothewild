@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use frontend\models\AuthTemp;
 use frontend\models\LoginForm;
+use frontend\models\GmailLoginForm;
 use yii\filters\AccessControl;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
@@ -65,9 +66,6 @@ class SiteController extends FrontendBaseController
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function beforeAction($action)
     {
         if ($action->id == 'auth' || $action->id == 'login') {
@@ -440,5 +438,56 @@ class SiteController extends FrontendBaseController
     {
         $notification_list = FrontendNotification::find()->where(['status' => 1, 'user_id' => Yii::$app->user->identity->id])->orderby(['id' => SORT_DESC])->limit(6)->all();
         return $this->renderAjax('_notification_list', ['notification_list' => $notification_list]);
+    }
+
+    public function actionLoginNew()
+    {
+        Yii::$app->mailer->compose()
+            ->setFrom('no-reply@walkintothewild.in')
+            ->setTo('shokeen.triline@gmail.com')
+            ->setSubject('Email sent from Yii2-Swiftmailer')
+            ->setHtmlBody('here is the text')
+            ->send();
+
+        die('mail sent successfull');
+
+        /*
+        if (!Yii::$app->user->isGuest) {
+            return $this->redirect('/park');
+        }
+        */
+        $model = new GmailLoginForm();
+        $model->action_url = '/site/login';
+        $model->action_validate_url = '/site/signinvalidate';
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $post_data = $this->request->post('GmailLoginForm');
+                    if (!empty($post_data['email_id']) && empty($post_data['email_code'])) {
+                        //send mail with passcode
+                    } else if (!empty($post_data['email_id']) && !empty($post_data['email_code'])) {
+                        //match password with email code
+                        //register user if user is new
+
+                        //login user if user is old
+                        if ($model->login()) {
+                            return $this->redirect('/park');
+                        }
+                    }
+                }
+            }
+        } else {
+            $model->email_code = '';
+        }
+
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('login_new', [
+                'model' => $model,
+            ]);
+        } else {
+            return $this->render('login_new', [
+                'model' => $model,
+            ]);
+        }
     }
 }
