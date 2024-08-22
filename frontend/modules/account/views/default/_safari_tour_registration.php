@@ -85,7 +85,7 @@ $this->params['title'] = $this->title;
                                             </div>
 
                                             <?= $form->field($model, 'park_id')->widget(Select2::classname(), [
-                                                'data' => GeneralModel::safariparkoption(),
+                                                'data' => GeneralModel::safariparklist(),
                                                 'options' => ['placeholder' => 'Select Parks',  'multiple' => true],
                                                 'pluginOptions' => [
                                                     'initialize' => true,
