@@ -7584,3 +7584,7 @@ select.custom_sort_by_input  option.selected{
     display: flex;
     gap: 5px;
 }
+.show-more-height p:empty{
+
+    display: none !important;
+}
