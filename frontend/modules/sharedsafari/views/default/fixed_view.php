@@ -327,7 +327,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>-->
-                        <div class="accordion_disscutions">
+                        <!-- <div class="accordion_disscutions">
                         <div class="accordion accordion-flush" id="accordionFlushExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
@@ -341,7 +341,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                            
                         </div>
-                        </div>
+                        </div> -->
                         
                         <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
                     </div>
