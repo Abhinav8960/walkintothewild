@@ -43,7 +43,7 @@ use yii\helpers\Url;
                                     <?php } ?>
                             </div>
                         </div>
-                        <div class="comment-reply">
+                        <div class="comment-reply px-3">
                             <?php if ($replies) { ?>
                                 <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $comments->id ?>">View <?= count($replies) ?> replies</h6>
                                 <div class="blog-comment-container" id="comment-container-<?= $comments->id ?>" style="display: none;">
