@@ -77,14 +77,14 @@ $this->params['title'] = $this->title;
                       'site/auth',
                       'referrer' => $_REQUEST['referrer']
                     ],
-                    'popupMode' => true,
+                    'popupMode' => false,
                   ]);
                 } else {
                   $authAuthChoice = AuthChoice::begin([
                     'baseAuthUrl' => [
                       'site/auth'
                     ],
-                    'popupMode' => true,
+                    'popupMode' => false,
                   ]);
                 } ?>
                 <?php foreach ($authAuthChoice->getClients() as $client): ?>
