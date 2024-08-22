@@ -38,7 +38,8 @@
         "jenssegers/agent": "^2.6",
         "skeeks/yii2-mobile-detect": "^1.0.2",
         "pusher/pusher-php-server": "^7.2",
-        "daxslab/yii2-taggedview": "*"
+        "daxslab/yii2-taggedview": "*",
+        "aws/aws-sdk-php": "^3.281"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
