@@ -154,3 +154,21 @@ $this->params['title'] = $this->title;
     display: none;
   }
 </style>
+
+<?php
+$script = <<< JS
+    $(document).ready(function () {
+      function isWebview() {
+          var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+          // Customize detection based on your specific requirements
+          return /WebView|iPhone|iPad|iPod|Android/i.test(userAgent);
+      }
+
+      if (isWebview()) {
+          var message = 'You are using a webview. Please open this link in a full browser: ';
+          alert(message);
+      }
+  });
+JS;
+$this->registerJs($script);
+?>
