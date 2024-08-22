@@ -317,7 +317,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-lg-9 col-xl-9  safartabs position-relative">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="discussion-tab-pane" role="tabpanel" aria-labelledby="discussion-tab">
-                                               <!-- <div class="card bg-set accordion-collapse  card_bodyPadding mb-3">
+                        <!-- <div class="card bg-set accordion-collapse  card_bodyPadding mb-3">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
                                     <h6 class="fs-6 fw-bold pb-2">Discussion</h6>
@@ -336,7 +336,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </button>
                                     </h2>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body"><?= $share_safari->safari_plan ?></div>
+                                        <div class="accordion-body profile-description">
+                                            <div class="text show-more-height">
+                                                <?= $share_safari->safari_plan ?>
+                                            </div>
+                                            <div class="show-more">See More</div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -534,6 +539,16 @@ function interestfucntion() {
 	});
 }
 interestfucntion();
+
+$(".show-more").click(function () {
+        if($(".text").hasClass("show-more-height")) {
+            $(this).text("See Less");
+        } else {
+            $(this).text("See More");
+        }
+
+        $(".text").toggleClass("show-more-height");
+    });
 JS;
 $this->registerJs($script);
 ?>
