@@ -1120,6 +1120,12 @@ text-align: center !important;
   }
 }
 @media only screen and  (max-width: 991px) {
+  .titler_safari{
+
+    font-size: 16px !important;
+    font-style: italic;
+    padding-top: 7px;
+  }
   .img-box2.mobileee img{
     margin-left: 5px;
   }
@@ -1573,6 +1579,7 @@ margin-bottom: 0 !important;
 }
 }
 @media only screen and (max-width: 767px) {
+
   .faqs-wrpper .accordion-body p{
 
     font-size: 16px;
@@ -2008,6 +2015,7 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+
   .text-box p{
 
     font-size: 14px;
