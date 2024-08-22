@@ -58,7 +58,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-12">
                 <div class="wrapper-skybgsafri pb-0">
                     <div class="row border_bottom2 pb-4">
-                        <div class="col-lg-7 col-md-8 border-right">
+                        <div class="col-lg-8 col-md-8 border-right">
                             <div class="row">
                                 <div class="col-3 col-sm-3 col-md-3 col-lg-2 maxWidth">
                                     <div class="safritimg innerImg">
@@ -123,7 +123,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
                             </div>
                         </div>
-                        <div class="col-lg-5 pt-lg-0 pt-4">
+                        <div class="col-lg-4 pt-lg-0 pt-4">
                             <div class="row px-lg-4 px-0">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
