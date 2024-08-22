@@ -328,21 +328,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>-->
                         <div class="accordion_disscutions">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                    Overview
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Overview
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                    </div>
                                 </div>
+
                             </div>
-                           
                         </div>
-                        </div>
-                        
+
                         <?= $this->render('_comment', ['colsize' => 'col-md-12', 'share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
                     </div>
                     <div class="tab-pane fade accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
