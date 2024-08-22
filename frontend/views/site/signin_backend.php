@@ -165,7 +165,6 @@ $script = <<< JS
         var isAndroidWebview = /Android.*(wv|WebView)/i.test(userAgent);
         var isIOSWebview = /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream && !window.external;
 
-        return true;
         return isAndroidWebview || isIOSWebview;
       }
 
