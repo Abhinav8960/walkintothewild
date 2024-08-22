@@ -20,6 +20,7 @@ NotifyAsset::register($this);
 $page_reqeust = Yii::$app->request;
 
 $this->registerCsrfMetaTags();
+$this->params['baseurl'] = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset')->baseUrl;
 
 $is_sitemap_exist = SitePages::find()->where(['url' => $page_reqeust->pathInfo])->orderBy('id DESC')->one();
 
@@ -81,7 +82,6 @@ if (!empty($is_sitemap_exist->description)) {
     $this->registerMetaTag(['name' => 'twitter:image', $this->params['baseurl'] . '/img/default_witw_jeep.png']);
 } //end of og tags
 
-$this->params['baseurl'] = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset')->baseUrl;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
