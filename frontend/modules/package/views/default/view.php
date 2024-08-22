@@ -271,7 +271,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </button>
                                     </h2>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">  <p><?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?></p></div>
+
+                                    <div class="accordion-body profile-description">
+                                            <div class="text show-more-height">
+                                            <?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?>
+                                            </div>
+                                            <div class="show-more">See More</div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -441,7 +447,15 @@ function enquiryfunction() {
 	});
 }
 enquiryfunction();
-       
+$(".show-more").click(function () {
+        if($(".text").hasClass("show-more-height")) {
+            $(this).text("See Less");
+        } else {
+            $(this).text("See More");
+        }
+
+        $(".text").toggleClass("show-more-height");
+    });
 JS;
 $this->registerJs($script);
 ?>

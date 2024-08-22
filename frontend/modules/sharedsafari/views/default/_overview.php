@@ -11,7 +11,7 @@
                             </button>
                         </h2>
                         <div id="flush-collapse<?= $share_safariday->day ?>" class="accordion-collapse collapse" aria-labelledby="flush-heading<?= $share_safariday->day ?>" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
+                            <div class="accordion-body pt-0">
                                 <div class="wrap_days">
                                     <div class="row">
                                         <div class="col-12">

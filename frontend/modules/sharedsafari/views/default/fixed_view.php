@@ -354,7 +354,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="card bg-set accordion-collapse  card_bodyPadding">
                             <div class="card-body p-3">
                                 <div class="itenary-title">
-                                    <h6 class="fs-6 fw-bold pb-2">About Trip / Overview</h6>
+                                    <h6 class="fs-6 fw-bold " style="padding-bottom: 0 !important;">About Trip / Overview</h6>
                                 </div>
                                 <div class="itenary_text">
                                     <p><?= $share_safari->safari_plan ?></p>
