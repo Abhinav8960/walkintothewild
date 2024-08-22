@@ -79,12 +79,12 @@ $this->params['title'] = $this->title; ?>
                                         <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                         </div>
-                                        <h6><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a></h6>
+                                        <h6 class="titler_safari"><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><?= $share_safari->park->title ?></a></h6>
                                         <?php
                                         if (Yii::$app->user->identity) { ?>
-                                            <p class="mb-0 pt-2">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                            <p class="mb-0 pt-1">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
                                                                                                                                                                                                                                                                 } else { ?>
-                                            <p class="mb-0 pt-2">Organized by <a href="/site/login?referrer=<?= Url::toRoute(['/profile/default/index', 'user_handle' => $share_safari->getOrganizedbyuserhandel()]) ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
+                                            <p class="mb-0 pt-1">Organized by <a href="/site/login?referrer=<?= Url::toRoute(['/profile/default/index', 'user_handle' => $share_safari->getOrganizedbyuserhandel()]) ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p><?php
                                                                                                                                                                                                                                                                                                     } ?>
                                     </div>
                                 </div>
