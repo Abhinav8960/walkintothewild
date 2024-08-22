@@ -688,15 +688,16 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.show-more-height');
-    const paragraphs = container.querySelectorAll('p');
-    
-    paragraphs.forEach(p => {
-        if (p.innerHTML.trim() === '&nbsp;') {
-            p.style.display = 'none';
-        }
-    });
-});
+    if (container) {
+        const paragraphs = container.querySelectorAll('p');
 
+        paragraphs.forEach(p => {
+            if (p.innerHTML.trim() === '&nbsp;') {
+                p.style.display = 'none';
+            }
+        });
+    } 
+});
 // (function($){
 //     $('document').ready(function() {
 //       $('.sidebar,.main').stick_in_parent();
