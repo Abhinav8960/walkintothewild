@@ -2988,7 +2988,7 @@ figure {
 
 .getquote_box {
 
-    background: #99ff33;
+    background: #A2D22B;
     padding: 20px;
     border-radius: 10px;
 }
@@ -3084,7 +3084,7 @@ figure {
 
     font-size: var(--fs-20);
     text-align: center;
-    background: #99ff33;
+    background: #A2D22B;
     border-radius: 10px 10px 0px 0px;
     padding: 15px 20px;
     display: inline-block;
