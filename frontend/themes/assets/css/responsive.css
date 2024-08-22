@@ -1565,6 +1565,13 @@ margin-bottom: 0 !important;
       }
 }
 
+
+@media(max-width:768px){
+
+  .itenary_tabs .safartabs .nav-tabs {
+    gap: 40px !important;
+}
+}
 @media only screen and (max-width: 767px) {
   .faqs-wrpper .accordion-body p{
 
