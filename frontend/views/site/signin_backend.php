@@ -172,10 +172,6 @@ $script = <<< JS
       if (isWebview()) {
         new_link = 'intent://{$base_url}#Intent;scheme=https;package=com.android.chrome;end';
         $('.auth-link').attr("href",new_link);
-        // var message = 'You are using a webview. Please open this link in a full browser for Login your account ';
-        // alert(message);
-        // window.open(window.location.href, '_system');
-        // window.location.href = "/site/redirect";
       }
   });
 JS;

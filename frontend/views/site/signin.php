@@ -154,3 +154,26 @@ $this->params['title'] = $this->title;
     display: none;
   }
 </style>
+
+<?php
+$base_url = $_SERVER['HTTP_HOST'];
+$script = <<< JS
+    $(document).ready(function () {
+      function isWebview() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Refined webview detection
+        var isAndroidWebview = /Android.*(wv|WebView)/i.test(userAgent);
+        var isIOSWebview = /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream && !window.external;
+
+        return isAndroidWebview || isIOSWebview;
+      }
+
+      if (isWebview()) {
+        new_link = 'intent://{$base_url}#Intent;scheme=https;package=com.android.chrome;end';
+        $('.auth-link').attr("href",new_link);
+      }
+  });
+JS;
+$this->registerJs($script);
+?>
