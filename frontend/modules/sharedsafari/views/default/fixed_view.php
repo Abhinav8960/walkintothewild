@@ -124,7 +124,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                         <div class="col-lg-4 pt-lg-0 pt-4">
-                            <div class="row px-lg-4 px-0">
+                            <div class="row ps-1">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
@@ -198,7 +198,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
-                        <div class="col-lg-6">
+                        <div class="col-lg-8 ">
                             <div class="social-share flex-wrap d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
                                 <p>Share this event with your friends:</p>
                                 <div class="sociel_icons ps-xl-3">
@@ -217,13 +217,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-2 mt-lg-0 mt-3">
+                        <!-- <div class="col-lg-2 mt-lg-0 mt-3">
                             <div class="pakageCost text-lg-center d-sm-block  d-lg-block d-md-none">
                                 <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-lg-end flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
+                            <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
+                            <div class="pakageCost mb-2 mb-md-2 mb-xl-0">
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?></h6>
+                            </div>
                                 <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
                                         <?= Html::a('Mark as Completed', ['completed', 'slug' => $share_safari->slug], [
