@@ -63,7 +63,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                             <?= $form->field($model, 'park_id', [
                                 'labelOptions' => ['class' => 'Modal_label']
                             ])->widget(Select2::classname(), [
-                                'data' => GeneralModel::safariparkoption(),
+                                'data' => GeneralModel::safariparklist(),
                                 'options' => ['placeholder' => 'Select Parks', 'data-label' => 'Parks', 'multiple' => true],
                                 'pluginOptions' => [
                                     'allowClear' => true

@@ -75,6 +75,15 @@ $this->params['title'] = $this->title;
                             return $model->url;
                         }
                     ],
+
+                    [
+                        'label' => 'User Agent',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->user_agent;
+                        }
+                    ],
                     [
                         'label' => 'Query Params',
                         'contentOptions' => ['style' => 'width: 10%;'],

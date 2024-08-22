@@ -21,16 +21,7 @@ use yii\helpers\ArrayHelper;
 $locationoption = GeneralModel::getAllLocation();
 $animalfilteroption = GeneralModel::animalfilteroption();
 
-$query = SafariPark::find()
-    ->where(['status' => SafariPark::STATUS_ACTIVE])
-    ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
-    ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
-//$query->andWhere("safari_park.id NOT IN (SELECT distinct safari_park_id from safari_parks_animal WHERE status=1)");
-$query->andWhere(['show_in_filter' => 1]);
-$parks = $query->all();
-
-
-$parkoption = ArrayHelper::map($parks, 'slug', 'title');
+$parkoption = GeneralModel::safariparklist('slug');
 $vehicleoption = GeneralModel::vehicleoption();
 ?>
 

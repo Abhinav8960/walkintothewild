@@ -159,14 +159,20 @@ $this->params['title'] = $this->title;
 $script = <<< JS
     $(document).ready(function () {
       function isWebview() {
-          var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-          // Customize detection based on your specific requirements
-          return /WebView|iPhone|iPad|iPod|Android/i.test(userAgent);
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Refined webview detection
+        var isAndroidWebview = /Android.*(wv|WebView)/i.test(userAgent);
+        var isIOSWebview = /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream && !window.external;
+
+        return isAndroidWebview || isIOSWebview;
       }
 
       if (isWebview()) {
-          var message = 'You are using a webview. Please open this link in a full browser: ';
+          var message = 'You are using a webview. Please open this link in a full browser: Click ok to redirect ';
           alert(message);
+          // window.location.href = window.location.href; // Redirect to the URL
+          window.open(window.location.href, '_blank');
       }
   });
 JS;
