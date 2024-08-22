@@ -165,6 +165,7 @@ $script = <<< JS
         var isAndroidWebview = /Android.*(wv|WebView)/i.test(userAgent);
         var isIOSWebview = /iPhone|iPad|iPod/.test(userAgent) && !window.MSStream && !window.external;
 
+        return true;
         return isAndroidWebview || isIOSWebview;
       }
 
@@ -172,7 +173,7 @@ $script = <<< JS
           var message = 'You are using a webview. Please open this link in a full browser: Click ok to redirect ';
           alert(message);
           // window.location.href = window.location.href; // Redirect to the URL
-          window.open(window.location.href, '_blank');
+          window.open(window.location.href, '_system');
       }
   });
 JS;
