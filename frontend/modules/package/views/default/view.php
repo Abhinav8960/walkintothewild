@@ -113,7 +113,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= $package->mastervehicle ? $package->mastervehicle->vehicle_name : 'N/A' ?></p>
+                                            <p class="mb-0"><?= $package->mastervehicle ? $package->mastervehicle->vehicle_name : 'Not Included' ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($package_includes) ? 'Camera Fee' : 'N/A';
+                                                            echo ($package_includes) ? 'Camera Fee' : 'Not Included';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -158,7 +158,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Stay Category">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= isset(GeneralModel::packageoption()[$package->stay_category_id]) ? GeneralModel::packageoption()[$package->stay_category_id] : 'N/A' ?></p>
+                                            <p class="mb-0"><?= isset(GeneralModel::packageoption()[$package->stay_category_id]) ? GeneralModel::packageoption()[$package->stay_category_id] : 'Not Included' ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             <div class="col-lg-9 col-xl-9 safartabs position-relative">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active accordion-item mb-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="accordion_disscutions">
+                        <div class="accordion_disscutions">
                             <div class="accordion accordion-flush" id="accordionFlushExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
@@ -272,9 +272,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     </h2>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
 
-                                    <div class="accordion-body profile-description">
+                                        <div class="accordion-body profile-description">
                                             <div class="text show-more-height">
-                                            <?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?>
+                                                <?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?>
                                             </div>
                                             <div class="show-more">See More</div>
                                         </div>

@@ -241,19 +241,23 @@ $script = <<<JS
                                     position: "right",
                                 });
                             }
-                            location.reload();
-                            }else{
-                                function success_notify(){
-                                    return notif({
-                                        type: "error",
-                                        msg: 'Error uploading Cover Picture ',
-                                        position: "right",
-                                    });
-                                }
-                        }
-                    
-                        // success_notify(); 
-                        location.reload();
+                            success_notify(); 
+                            setTimeout(function(){ 
+                                location.reload();
+                            }, 100);
+                        }else{
+                            function success_notify(){
+                                return notif({
+                                    type: "error",
+                                    msg: `Error uploading Cover Picture |  `+response.message+` `,
+                                    position: "right",
+                                });
+                            }
+                            success_notify(); 
+                            setTimeout(function(){ 
+                                location.reload();
+                            }, 4000);
+                        }                        
 
                     },
                     error: function(xhr, status, error){
@@ -266,7 +270,9 @@ $script = <<<JS
                         }
                 
                         success_notify(); 
-                        location.reload();
+                        setTimeout(function(){ 
+                            location.reload();
+                        }, 4000);
                     }
                 });
           });
@@ -282,6 +288,7 @@ $script = <<<JS
                     processData: false,
                     contentType: false,
                     success: function(response){
+                        console.log(response);
                         if(response.success==true){                        
                             function success_notify(){
                                 return notif({
@@ -290,18 +297,23 @@ $script = <<<JS
                                     position: "right",
                                 });
                             }
-                            }else{
-                                function success_notify(){
-                                    return notif({
-                                        type: "error",
-                                        msg: 'Error uploading Profile Picture ',
-                                        position: "right",
-                                    });
-                                }
-                        }
-                        location.reload();
-                    
-                        success_notify(); 
+                            success_notify(); 
+                            setTimeout(function(){ 
+                                location.reload();
+                            }, 100);
+                        }else{ 
+                            function success_notify(){
+                                return notif({
+                                    type: "error",
+                                    msg: `Error uploading Profile Picture |  `+response.message+` `,
+                                    position: "right",
+                                });
+                            }
+                            success_notify(); 
+                            setTimeout(function(){ 
+                                location.reload();
+                            }, 4000);
+                        }                    
                     },
                     error: function(xhr, status, error){
                         function success_notify(){
@@ -311,9 +323,10 @@ $script = <<<JS
                                 position: "right",
                             });
                         }
-                        location.reload();
-                
-                        success_notify(); 
+                        success_notify();
+                        setTimeout(function(){ 
+                            location.reload();
+                        }, 4000);
                     }
                 });
           });

@@ -161,7 +161,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 <div class="col-md-6">
                                     <?= $form->field($model, 'stay_category_id', [
                                         'labelOptions' => ['class' => 'Modal_label']
-                                    ])->dropDownList(GeneralModel::packageoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Select Category']) ?>
+                                    ])->dropDownList(GeneralModel::packageoption(), ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Not Included']) ?>
                                 </div>
 
                                 <div class="col-md-6">

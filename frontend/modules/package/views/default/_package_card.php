@@ -45,7 +45,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
                 <div class="icons_restro">
                     <i class="fa-solid fa-car"></i>
-                    <p class="mb-0"><?= isset($model->mastervehicle) ? $model->mastervehicle->vehicle_name : 'N/A' ?></p>
+                    <p class="mb-0"><?= isset($model->mastervehicle) ? $model->mastervehicle->vehicle_name : 'Not Included' ?></p>
                 </div>
                 <div class="icons_restro">
                     <i class="fa-solid fa-utensils"></i>
@@ -54,7 +54,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="icons_restro">
 
                     <i class="fa-solid fa-building"></i>
-                    <p class="mb-0"><?= isset($model->packagerange) ? $model->packagerange->title : "N/A" ?></p>
+                    <p class="mb-0"><?= isset($model->packagerange) ? $model->packagerange->title : "Not Included" ?></p>
                 </div>
             </div>
         </div>
