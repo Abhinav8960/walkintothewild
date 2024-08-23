@@ -3,14 +3,16 @@
 <?php
 $script = <<< JS
 $(document).ready(function() {
+    function copyHandler(e) {
+        var text = $('.copytoclipboard').attr('data-href');
+        e.clipboardData.setData('text', text);
+        e.preventDefault();
+    }
     function copyToClipboard() {
         $('.copytoclipboard').on('click', function () {
-            var temp = $("<input>");
-            $("body").append(temp);
-            temp.val($(this).attr('data-href')).select();
-            temp.focus();
-            document.execCommand("copy");
-            temp.remove();
+            document.addEventListener('copy', copyHandler);
+            document.execCommand('copy');
+            document.removeEventListener('copy', copyHandler);
             return notif({
                 type: 'success',
                 msg: 'Link Copied',
