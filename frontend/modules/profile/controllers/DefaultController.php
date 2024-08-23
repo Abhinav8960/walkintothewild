@@ -124,13 +124,14 @@ class DefaultController extends FrontendBaseController
             $user_model = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
             $user = new UserForm($user_model);
             $user->cover_image = UploadedFile::getInstanceByName('file');
-            if ($user->validate() &&  $user->uploadFile()) {
+            if ($user->validate()) {
+                $user->uploadFile();
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ['success' => true, 'message' => 'Profile Image uploaded successfully'];
             } else {
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return ['success' => false, 'message' => $user->errors];
+                return ['success' => false, 'message' => current($user->errors)];
             }
         }
     }
@@ -141,14 +142,14 @@ class DefaultController extends FrontendBaseController
             $user_model = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
             $user = new UserForm($user_model);
             $user->profile_image = UploadedFile::getInstanceByName('file');
-            if ($user->validate() &&  $user->uploadFile()) {
-
+            if ($user->validate()) {
+                $user->uploadFile();
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ['success' => true, 'message' => 'Profile Image uploaded successfully'];
             } else {
 
                 Yii::$app->response->format = Response::FORMAT_JSON;
-                return ['success' => false, 'message' => $user->errors];
+                return ['success' => false, 'message' => current($user->errors)];
             }
         }
     }
