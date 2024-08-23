@@ -2019,6 +2019,14 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .safrititles .date_bx h6{
+
+    line-height: 22px;
+  }
+  .safrititles h5{
+
+    font-size: 18px;
+  }
 
   .text-box p{
 

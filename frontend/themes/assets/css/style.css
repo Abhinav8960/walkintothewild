@@ -2094,6 +2094,7 @@ figure {
 .safrititles .date_bx h6 {
 
     font-size: var(--fs-20);
+    padding-bottom: 5px;
 }
 
 .about_content h1,
