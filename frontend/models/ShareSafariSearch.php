@@ -181,9 +181,12 @@ class ShareSafariSearch extends ShareSafari
                     'defaultOrder' => ['no_of_safari' => SORT_DESC]
                 ];
             } else if ($this->custom_sort_by == '4') {
-                $dataProvider->sort = [
-                    'defaultOrder' => ['cost_per_person' => SORT_ASC,'estimate_price_min' => SORT_ASC]
-                ];
+
+                // $dataProvider->sort = [
+                //     'defaultOrder' => ['cost_per_person' => SORT_ASC, 'estimate_price_min' => SORT_ASC]
+                // ];
+
+                $query->orderBy((new \yii\db\Expression('CASE WHEN type=1 THEN estimate_price_min WHEN type=2 THEN cost_per_person END ASC')));
             }
         }
 
