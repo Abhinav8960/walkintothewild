@@ -275,7 +275,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     {
         $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-        return ($pick_drop_includes) ? 'Pick & Drop' : 'N/A';
+        return ($pick_drop_includes) ? 'Pick & Drop' : 'Not Included';
     }
 
     public function getMeals()
@@ -297,7 +297,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
             $meals_text .= 'Dinner, ';
         }
 
-        return ($meals_text) ? substr($meals_text, 0, -2) : 'N/A';
+        return ($meals_text) ? substr($meals_text, 0, -2) : 'Not Included';
     }
 
     public function getMealslisting()

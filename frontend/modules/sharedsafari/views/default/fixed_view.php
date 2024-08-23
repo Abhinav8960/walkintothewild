@@ -145,7 +145,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($pick_drop_includes) ? 'Pick & Drop' : 'N/A';
+                                                            echo ($pick_drop_includes) ? 'Pick & Drop' : 'Not Included';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -180,7 +180,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $share_safari_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($share_safari_includes) ? 'Camera Fee' : 'N/A';
+                                                            echo ($share_safari_includes) ? 'Camera Fee' : 'Not Included';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -191,7 +191,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Hotel Category">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= isset(GeneralModel::packageoption()[$share_safari->stay_category_id]) ? GeneralModel::packageoption()[$share_safari->stay_category_id] : 'N/A' ?></p>
+                                            <p class="mb-0"><?= isset(GeneralModel::budgetoption()[$share_safari->stay_category_id]) ? GeneralModel::budgetoption()[$share_safari->stay_category_id] : 'Not Included' ?></p>
                                         </div>
                                     </div>
                                 </div>

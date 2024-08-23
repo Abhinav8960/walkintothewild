@@ -160,7 +160,12 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
      */
     public function getHosttype()
     {
-        $options = [1 => 'Individual', 2 => 'Wildlife Photographer', 3 => 'Wildlife Influencer', 4 => 'Safari Tour Operator'];
+        $options = [
+            1 => 'Individual',
+            2 => 'Wildlife Influencer',
+            3 => 'Wildlife Influencer',
+            4 => 'Safari Tour Operator'
+        ];
         return isset($options[$this->host_type]) ? $options[$this->host_type] : $this->host_type;
     }
 
@@ -243,6 +248,6 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
             $meals_text .= 'Dinner, ';
         }
 
-        return ($meals_text) ? substr($meals_text, 0, -2) : 'N/A';
+        return ($meals_text) ? substr($meals_text, 0, -2) : 'Not Included';
     }
 }
