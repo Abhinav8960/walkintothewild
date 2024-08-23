@@ -1,6 +1,6 @@
 <?php
 
-
+use common\models\operator\SafariOperator;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -15,6 +15,9 @@ $this->params['title'] = $this->title;
         <?= $this->render('@frontend/modules/profile/views/default/tablist', ['profile' => 'active', 'user' => $user]) ?>
     </div>
 </section>
+
+
+
 <?php if (Yii::$app->user->identity) { ?>
     <section class="margin_bottomfooter">
         <div class="container-lg">
@@ -24,9 +27,20 @@ $this->params['title'] = $this->title;
                         <div class="col-md-12">
                             <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                         </div>
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
+                        <div class="card">
+                            <ul class="nav nav-pills m-2" id="pills-tab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Profile Follower</button>
+                                </li>
+                                <?php if ($user->is_safari_operator == 1) { ?>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Page Follower</button>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
                                     <div class="row">
                                         <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
                                             foreach ($userfollowers as $userfollower) { ?>
@@ -44,14 +58,35 @@ $this->params['title'] = $this->title;
                                     </div>
 
                                 </div>
+
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    <?php if ($user->is_safari_operator == 1) { ?>
+                                        <div class="row">
+                                            <?php if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one()) {
+                                                if ($followers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
+                                                    foreach ($followers as $follower) { ?>
+                                                        <div class="col-md-3 col-lg-3 col-sm-6 mb-3">
+                                                            <section class="mx-auto" style="max-width: 23rem;">
+                                                                <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $follower->user, 'profile_user' => $user]);  ?>
+                                                            </section>
+                                                        </div>
+                                            <?php }
+                                                }
+                                            } else {
+                                                echo 'No Follower Found!';
+                                            } ?>
+                                        </div>
+
+                                    <?php } ?>
+                                </div>
                             </div>
+
                         </div>
-
-
                     </div>
                 </div>
-            </div>
 
+
+            </div>
         </div>
     </section>
 <?php } else { ?>
