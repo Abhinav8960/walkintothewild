@@ -71,6 +71,8 @@ return [
     '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
     '/operator/<slug>/sharedsafariseeall' => '/operator/default/sharedsafariseeall',
     '/operator/review/<id>' => '/operator/default/review', //operator view url
+    '/operator/<slug>/follow' => '/operator/default/follow',
+    '/operator/<slug>/unfollow' => '/operator/default/unfollow',
     '/operator/<slug>/reviewlist' => '/operator/default/reviewlist', //operator view url
     '/operator/<slug>/package' => '/operator/default/package', //operator view url
     '/operator/<slug>/packageseeall' => '/operator/default/packageseeall',

@@ -300,12 +300,12 @@ class DefaultController extends FrontendBaseController
     /**
      * Follow Operator
      */
-    public function actionFollow($id)
+    public function actionFollow($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($operator) {
             if (Yii::$app->user->identity) {
-                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $id])->one();
+                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id])->one();
                 if (!$operator_follow) {
                     $operator_follow = new SafariOperatorFollow();
                 }
@@ -318,7 +318,7 @@ class DefaultController extends FrontendBaseController
                 $operator_follow->user_platform_version = $agent->version($operator_follow->user_platform);
                 $operator_follow->user_browser = $agent->browser();
                 $operator_follow->user_browser_version = $agent->version($operator_follow->user_browser);
-                $operator_follow->safari_operator_id = $id;
+                $operator_follow->safari_operator_id = $operator->id;
                 $operator_follow->user_id = Yii::$app->user->identity->id;
                 $operator_follow->status = 1;
                 $operator_follow->follow_datetime = date('Y-m-d h:i:s');
@@ -337,9 +337,9 @@ class DefaultController extends FrontendBaseController
                     Yii::$app->session->setFlash('success', 'You can not follow this operator currently!');
                 }
             } else {
-                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute(['/operator/default/follow', 'id' => $operator->id])]);
+                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute(['/operator/default/follow', 'slug' => $slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
+            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $slug]));
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/index']));
     }
@@ -348,12 +348,12 @@ class DefaultController extends FrontendBaseController
     /**
      * Follow Operator
      */
-    public function actionUnfollow($id)
+    public function actionUnfollow($slug)
     {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($operator) {
             if (Yii::$app->user->identity) {
-                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $id])->one();
+                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id])->one();
                 if ($operator_follow) {
                     $agent = new \Jenssegers\Agent\Agent();
                     $agent->setUserAgent(Yii::$app->request->userAgent);
@@ -364,7 +364,7 @@ class DefaultController extends FrontendBaseController
                     $operator_follow->user_platform_version = $agent->version($operator_follow->user_platform);
                     $operator_follow->user_browser = $agent->browser();
                     $operator_follow->user_browser_version = $agent->version($operator_follow->user_browser);
-                    $operator_follow->safari_operator_id = $id;
+                    $operator_follow->safari_operator_id = $operator->id;
                     $operator_follow->user_id = Yii::$app->user->identity->id;
                     $operator_follow->status = 0; //UNfollow
                     $operator_follow->unfollow_datetime = date('Y-m-d h:i:s');
@@ -382,9 +382,9 @@ class DefaultController extends FrontendBaseController
                     }
                 }
             } else {
-                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute(['/operator/default/unfollow', 'id' => $operator->id])]);
+                return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute(['/operator/default/unfollow', 'slug' => $slug])]);
             }
-            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]));
+            return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/view', 'slug' => $slug]));
         }
         return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/index']));
     }
