@@ -23,12 +23,14 @@ $this->params['title'] = $this->title;
         <div class="container-lg">
             <div class="row justify-content-center mb-5">
                 <div class="col-xxl-11 mb-5">
-                    <div class="row mb-5">
+                    <div class="row mb-5 itenary_tabs">
                         <div class="col-md-12">
                             <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                         </div>
-                        <div class="card">
-                            <ul class="nav nav-pills m-2" id="pills-tab" role="tablist">
+                        <div class="col-12">
+                        <div class="card  safartabs position-relative">
+                            <div class="card-body">
+                            <ul class="nav  nav-tabs border-bottom" id="pills-tab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Profile Follower</button>
                                 </li>
@@ -51,7 +53,7 @@ $this->params['title'] = $this->title;
                                                 </div>
                                         <?php  }
                                         } else {
-                                            echo '<div class="col-md-12">
+                                            echo '<div class="col-md-12 pt-3">
                     There is no follower!
                 </div>';
                                         } ?>
@@ -73,15 +75,19 @@ $this->params['title'] = $this->title;
                                             <?php }
                                                 }
                                             } else {
-                                                echo 'No Follower Found!';
+                                                echo '<div class="col-md-12 pt-3">No Follower Found!</div>';
                                             } ?>
                                         </div>
 
                                     <?php } ?>
                                 </div>
                             </div>
+                            </div>
+                       
 
                         </div>
+                        </div>
+               
                     </div>
                 </div>
 
