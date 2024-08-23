@@ -156,8 +156,10 @@ $this->params['title'] = $this->title;
 </style>
 
 <?php
-$base_url = $_SERVER['HTTP_HOST'];
-// $base_url = Yii::$app->request->absoluteUrl;
+// $base_url = $_SERVER['HTTP_HOST'];
+$base_url = Yii::$app->request->absoluteUrl;
+$base_url = preg_replace('/^https?:\/\//i', '', $base_url);
+$base_url = ltrim($base_url, '/');
 $script = <<< JS
     $(document).ready(function () {
       function isWebview() {
