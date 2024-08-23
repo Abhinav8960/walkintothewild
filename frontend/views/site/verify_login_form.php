@@ -85,7 +85,6 @@ $this->params['title'] = $this->title;
                 <h6 class="fs-5 text-center pb-2 text-muted">Or continue with:</h6>
               </div><!--
               <div class="h6 text-center pb-2 text-muted">Log in to continue</div> -->
-              <?= $form->errorSummary($model) ?>
               <div class="emailfields mb-3">
                 <?= $form->field($model, 'email_id')->textInput(['autofocus' => true, 'form-control' => 'form-control', 'style' => 'padding: 12px 10px;', 'placeholder' => 'Enter your Gmail ID', 'readonly' => true])->label(false) ?>
               </div>
