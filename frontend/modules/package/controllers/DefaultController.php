@@ -59,6 +59,8 @@ class DefaultController extends FrontendBaseController
         $searchModel->status = Package::STATUS_ACTIVE;
         $searchModel->custom_sort_by = 5;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider->query->andWhere("owned_by_id IN (SELECT id from safari_operator WHERE status=1)");
         $models = $dataProvider->getModels();
 
         return $this->render('index', [
