@@ -469,7 +469,7 @@ class SiteController extends FrontendBaseController
                         ->setFrom('no-reply@walkintothewild.in')
                         ->setTo($post_data['email_id'])
                         ->setSubject('your code for login is : ' . $passcode)
-                        ->setHtmlBody('here is the text')
+                        ->setHtmlBody('your code for login is : ' . $passcode)
                         ->send();
 
                     return Yii::$app->response->redirect("/site/verify/" . $code);
