@@ -149,14 +149,7 @@ $this->params['title'] = $this->title; ?>
                                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            if ($share_safari->share_safari_agenda_id == 1) {
-                                                                echo "Photography";
-                                                            } elseif ($share_safari->share_safari_agenda_id == 2) {
-                                                                echo "Vlogging";
-                                                            } elseif ($share_safari->share_safari_agenda_id == 3) {
-                                                                echo "Safari Experience";
-                                                            } ?></p>
+                                            <p class="mb-0"><?= isset(GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id]) ? GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id] : 'Not Included' ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -166,14 +159,7 @@ $this->params['title'] = $this->title; ?>
                                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/resort_11834952.png" alt="">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            if ($share_safari->stay_category_id == 1) {
-                                                                echo "Budget";
-                                                            } elseif ($share_safari->stay_category_id == 2) {
-                                                                echo "Economical";
-                                                            } elseif ($share_safari->stay_category_id == 3) {
-                                                                echo "Premium";
-                                                            } ?></p>
+                                            <p class="mb-0"><?= isset(GeneralModel::budgetoption()[$share_safari->stay_category_id]) ? GeneralModel::budgetoption()[$share_safari->stay_category_id] : 'Not Included' ?></p>
                                         </div>
                                     </div>
                                 </div>
