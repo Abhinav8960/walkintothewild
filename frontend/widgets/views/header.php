@@ -10,11 +10,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 
 $active_url = "/" . Yii::$app->requestedRoute;
 
-$new_notification = FrontendNotification::find()->where([
-	'user_id' => Yii::$app->user->identity->id,
-	'status' => 1,
-	'is_seen' => 0
-])->count();
+
 
 ?>
 <!-- main-header -->
@@ -76,7 +72,13 @@ $new_notification = FrontendNotification::find()->where([
 				</div>
 			</div>
 			<div class="d-flex  gap-4 align-items-center justify-content-end initial_headers">
-				<?php if (Yii::$app->user->identity) { ?>
+				<?php if (Yii::$app->user->identity) {
+					$new_notification = FrontendNotification::find()->where([
+						'user_id' => Yii::$app->user->identity->id,
+						'status' => 1,
+						'is_seen' => 0
+					])->count();
+				?>
 					<div id="notification_header_icon" class="notification pt-2  position-relative <?= $new_notification ? 'dotsnotifications' : '' ?>"><i class="fa-solid fa-bell"></i></div>
 					<div class="menunotification" id="menunotification_menu"></div>
 					<a href="/chat" class="d-lg-block d-none">
