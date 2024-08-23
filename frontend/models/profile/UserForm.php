@@ -93,14 +93,14 @@ class UserForm extends Model
                 ['cover_image'],
                 'image',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'maxSize' => 250 * 1024
+                'maxSize' => 1024 * 1024 * 2
             ],
 
             [
                 ['profile_image'],
                 'image',
                 'extensions' => ['jpeg', 'jpg', 'png'],
-                'maxSize' => 250 * 1024
+                'maxSize' => 1024 * 1024 * 2
             ],
 
             ['gender', 'integer'],
