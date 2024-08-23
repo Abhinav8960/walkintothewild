@@ -153,6 +153,17 @@ $recentposts = ArticleSearch::recentpost();
                                     <?php }
                                     } ?>
 
+                                    <?php if ($searchModel->type) {
+                                        foreach ($searchModel->type as  $type) {
+                                            $selected_type = GeneralModel::sharedsafaritype()[$type];
+                                            if ($selected_type) {
+                                    ?>
+                                                <div class="tag"><?= $selected_type ?> <span class="close-btn remove_checkbox_filter" data-id="<?= $type ?>" data-attribute="type">×</span></div>
+
+                                    <?php }
+                                        }
+                                    } ?>
+
 
                                     <?php if ($searchModel->stay_category_id) {
                                         foreach ($searchModel->stay_category_id as  $stay_category_id) {

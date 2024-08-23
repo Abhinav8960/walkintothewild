@@ -156,7 +156,7 @@ class CreateDepartureForm extends \yii\base\Model
         $this->shared_safari_departure_model->cost_per_person = $this->cost_per_person;
         $this->shared_safari_departure_model->safari_plan = $this->safari_plan;
         $this->shared_safari_departure_model->total_seat = $this->total_seat;
-        $this->shared_safari_departure_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24)));
+        $this->shared_safari_departure_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24)))+1;
         $this->shared_safari_departure_model->status = $this->status;
 
 
@@ -189,7 +189,7 @@ class CreateDepartureForm extends \yii\base\Model
     {
         $wordCount = str_word_count($this->$attribute);
         if ($wordCount >= 1000) {
-            $this->addError($attribute, 'Please provide content within 100 words.');
+            $this->addError($attribute, 'Please provide content within 1000 words.');
         }
     }
 }
