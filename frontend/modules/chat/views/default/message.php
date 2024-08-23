@@ -111,13 +111,13 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         <div class="chat-message pt-3">
                                             <?php if ($chat_message->created_by == $login_user->id) { ?>
                                                 <div class="reciverchta">
-                                                    <div class="text-right  message_body_right position-relative">
+                                                    <div class="text-right text-justify message_body_right position-relative">
                                                         <?= $chat_message->message ?>
                                                     </div>
 
                                                 </div>
                                             <?php  } else { ?>
-                                                <div class="text-left message_body_left position-relative">
+                                                <div class="text-justify message_body_left position-relative">
                                                     <?= $chat_message->message ?>
                                                 </div>
                                             <?php } ?>
