@@ -13,7 +13,7 @@ $this->title = 'Message | ' . $individual_user->name;
 $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')->baseUrl;
 ?>
 
-<div class="container mt-5 margin_bottomfooter pt-5">
+<div class="container-lg mt-5 margin_bottomfooter pt-5">
     <div class="row mb-5">
         <div class="col-md-12">
             <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
@@ -23,7 +23,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
         </div>
         <div class="col-md-12">
             <div class="row">
-                <div class="col-md-3 ">
+                <div class="col-md-3 mb-3">
                     <div class="chat-card-sidebar card">
                         <div class="card-body">
 
@@ -111,7 +111,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         <div class="chat-message pt-3">
                                             <?php if ($chat_message->created_by == $login_user->id) { ?>
                                                 <div class="reciverchta">
-                                                    <div class="text-right text-end message_body_right position-relative">
+                                                    <div class="text-right  message_body_right position-relative">
                                                         <?= $chat_message->message ?>
                                                     </div>
 
