@@ -87,9 +87,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                                 </div>
                                 <div class="col-xxl-9 col-lg-12 col-xl-12">
-                                    <div class="title_safari JoinPadding d-flex justify-content-center justify-content-md-between align-items-center flex-wrap">
+                                    <div class="title_safari JoinPadding phone_padding d-flex justify-content-center justify-content-md-between align-items-center flex-wrap">
                                         <h4 class="text-center ps-lg-4">Discover and Join multiple Shared Safaris</h4>
-                                        <div class="joinshareView mt-md-0 mt-3 pe-lg-4">
+                                        <div class="joinshareView mt-md-0 mt-3 pe-lg-4 d-sm-block d-none">
                                             <a href="/sharedsafari" class="btn_shareView" data-pjax="0">View All</a>
                                         </div>
                                     </div>
@@ -122,8 +122,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="col-lg-4 col-sm-6 col-xxl-3 col-md-6 mb-4 ">
                                         <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                     </div>
+                                   
                                 <?php $safari_printed++;
                                 } ?>
+                                 <div class="joinshareView pb-sm-0 pb-4 text-center pe-lg-4 d-sm-none d-block">
+                                            <a href="/sharedsafari" class="btn_shareView" data-pjax="0">View All</a>
+                                        </div>
                             </div>
                         </div>
                     </div>

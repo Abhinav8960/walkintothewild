@@ -2019,6 +2019,10 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+  .JoinPadding.phone_padding{
+
+padding-bottom: 0 !important;
+  }
   .safrititles .date_bx h6{
 
     line-height: 22px;
