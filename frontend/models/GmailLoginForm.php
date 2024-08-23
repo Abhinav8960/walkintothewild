@@ -13,6 +13,7 @@ class GmailLoginForm extends Model
 {
   public $email_id;
   public $email_code;
+  public $pass_code;
 
   public $action_url;
   public $action_validate_url;
@@ -20,9 +21,27 @@ class GmailLoginForm extends Model
   public function rules()
   {
     return [
-      [['email_id', 'email_id'], 'required'],
-      [['email_code'], 'safe'],
+      ['email_id', 'required'],
+      ['email_id', 'email'],
+      ['email_id', 'trim'],
+      [['email_code', 'pass_code'], 'required'],
+      [['email_code', 'pass_code'], 'trim'],
+      ['email_code', 'compare', 'compareAttribute' => 'pass_code', 'operator' => '==', 'message' => 'Incorrect code'],
     ];
+  }
+
+  public function scenarios()
+  {
+    $scenarios = parent::scenarios();
+    $scenarios['sendmail'] = [
+      'email_id',
+    ];
+    $scenarios['matchcode'] = [
+      'email_id',
+      'email_code',
+      'pass_code'
+    ];
+    return $scenarios;
   }
 
   public function attributeLabels()
@@ -30,6 +49,7 @@ class GmailLoginForm extends Model
     return [
       'email_id' => 'Email ID',
       'email_code' => 'Code',
+      'pass_code' => 'Code'
     ];
   }
 

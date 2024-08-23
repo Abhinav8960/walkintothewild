@@ -71,11 +71,7 @@ $this->params['title'] = $this->title;
               <div class="contenss pt-3">
                 <p class="text-center">By login an account, I accept the <b>Walk Into The Wild</b> <a href="<?= Yii::$app->params['frontend_url'] ?>/terms-of-use" target="_blank">Terms of Use</a> and <a href="<?= Yii::$app->params['frontend_url'] ?>/privacy-policy" target="_blank">Privacy Policy</a>.</p>
               </div>
-            </div><?php
-
-                  echo "<pre>";
-                  print_r($model);
-                  echo "</pre>"; ?>
+            </div>
             <?php $form = ActiveForm::begin([
               'id' => 'login-form',
               'enableAjaxValidation' => false,
@@ -90,39 +86,18 @@ $this->params['title'] = $this->title;
               </div><!--
               <div class="h6 text-center pb-2 text-muted">Log in to continue</div> -->
               <?= $form->errorSummary($model) ?>
-              <?php if (!empty($model->email_id)) { ?>
-                <div class="emailfields mb-3">
-                  <?= $form->field($model, 'email_id')->textInput(['autofocus' => true, 'form-control' => 'form-control', 'style' => 'padding: 12px 10px;', 'placeholder' => 'Enter your Gmail ID', 'readonly' => true])->label(false) ?>
-                </div>
-                <div class="emailfields" id="email_password">
-                  <?= $form->field($model, 'email_code')->passwordInput(['autofocus' => true, 'form-control' => 'form-control', 'style' => 'padding: 12px 10px;', 'placeholder' => 'Enter your Code', 'required' => true])->label(false) ?>
-                </div>
-                <?= $form->field($model, 'pass_code')->hiddenInput()->label(false); ?>
-              <?php } else { ?>
-                <div class="emailfields mb-3">
-                  <?= $form->field($model, 'email_id')->textInput(['autofocus' => true, 'form-control' => 'form-control', 'style' => 'padding: 12px 10px;', 'placeholder' => 'Enter your Gmail ID'])->label(false) ?>
-                </div>
-                <?= $form->field($model, 'email_code')->hiddenInput()->label(false); ?>
-                <?= $form->field($model, 'pass_code')->hiddenInput()->label(false); ?>
-              <?php }
-              /*
-              <div class="emailfields">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-              </div> */ ?>
+              <div class="emailfields mb-3">
+                <?= $form->field($model, 'email_id')->textInput(['autofocus' => true, 'form-control' => 'form-control', 'style' => 'padding: 12px 10px;', 'placeholder' => 'Enter your Gmail ID', 'readonly' => true])->label(false) ?>
+              </div>
+              <div class="emailfields" id="email_password">
+                <?= $form->field($model, 'email_code')->passwordInput(['autofocus' => true, 'form-control' => 'form-control', 'style' => 'padding: 12px 10px;', 'placeholder' => 'Enter your Code'])->label(false)->hint("<span style='color:green;'>Code sent to you " . $model->email_id . "</span>") ?>
+              </div>
+              <?= $form->field($model, 'pass_code')->hiddenInput()->label(false); ?>
               <div class="btns-submit pt-3">
-                <?= Html::submitButton('Continue', ['class' => 'btns_submit rounded-1 w-100 fs-5', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Login', ['class' => 'btns_submit rounded-1 w-100 fs-5', 'name' => 'login-button']) ?>
               </div>
             </div>
             <?php ActiveForm::end(); ?>
-            <!-- 
-            <div class="btnssss-g">
-              <a href="/site/auth?authclient=google">
-                <button class="googlelogin w-100 py-2  mb-3 d-flex align-items-center gap-2"> <img src="<?= $this->params['baseurl'] ?>/img/google-logo.5867462c.svg" width="25" alt="banner"> Google</button>
-              </a>
-              <a href="/site/auth?authclient=google">
-                <button class="googlelogin w-100 py-2  mb-3 d-flex align-items-center gap-2"> <img src="<?= $this->params['baseurl'] ?>/img/apple-logo.54e0d711.svg" width="25" alt="banner"> Apple</button>
-              </a>
-            </div>-->
           </div>
         </div>
       </div>
