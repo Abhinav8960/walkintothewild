@@ -465,15 +465,23 @@ class SiteController extends FrontendBaseController
                     $code = base64_encode($code);
 
                     //code to send mail
+                    /*
                     Yii::$app->mailer->compose()
                         ->setFrom('no-reply@walkintothewild.in')
                         ->setTo($post_data['email_id'])
                         ->setSubject('your code for login is : ' . $passcode)
                         ->setHtmlBody('your code for login is : ' . $passcode)
                         ->send();
+                    */
+
+
+                    Yii::$app->mailer->compose(['html' => 'gmailLoginCode-html', 'text' => 'gmailLoginCode-text'], ['passcode' => $passcode])
+                        ->setFrom('no-reply@walkintothewild.in')
+                        ->setTo($post_data['email_id'])
+                        ->setSubject('Send code for login ' . Yii::$app->name)
+                        ->send();
 
                     return Yii::$app->response->redirect("/site/verify/" . $code);
-                    //'/site/<emailid>/<passcode>
                 }
             }
         }
