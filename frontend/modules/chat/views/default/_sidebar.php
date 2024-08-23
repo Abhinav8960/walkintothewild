@@ -152,6 +152,7 @@ use yii\helpers\Url;
         -webkit-transform: rotate(-37deg);
         -ms-transform: rotate(-37deg);
         transform: rotate(-37deg);
+        text-align: justify;
     }
 
     .chat-message .message_body_right {
@@ -160,7 +161,6 @@ use yii\helpers\Url;
         line-height: 1.5;
         font-weight: 400;
         padding: 15px;
-
         background-color: #f5f5f5;
         max-width: 30rem;
         border-top-left-radius: 10px;
@@ -168,6 +168,7 @@ use yii\helpers\Url;
         border-bottom-left-radius: 10px;
         position: relative;
         display: inline-block;
+        text-align: justify;
     }
 
     .chat-message .message_body_right:before {
