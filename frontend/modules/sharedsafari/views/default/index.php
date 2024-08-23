@@ -6,9 +6,11 @@
 use yii\helpers\Url;
 use common\models\GeneralModel;
 use common\interfaces\Constants;
+use common\interfaces\StatusInterface;
 use common\models\park\SafariPark;
 use frontend\models\ArticleSearch;
 use common\models\cms\banner\Banner;
+use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\UserWishlist;
@@ -67,11 +69,15 @@ $recentposts = ArticleSearch::recentpost();
                     <div class="col-lg-3 col-xl-3 col-xxl-2  ps-lg-0 ">
                         <div class="right_button ">
                             <?php if (Yii::$app->user->identity) { ?>
-                                <?php if (Yii::$app->user->identity->is_safari_operator == 1) { ?>
-                                    <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
-                                    <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
-                                    <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
-                                <?php } else { ?>
+                                <?php
+                                if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => StatusInterface::STATUS_ACTIVE])->limit(1)->one()) {
+                                    if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
+                                ?>
+                                        <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                        <button style="display:none;" class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
+                                        <button style="display:none;" class="btn_newsafari  departureBtn newbg mt-2 " value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-fixed-departure']) ?>">+ Create Fixed Departure</button>
+                                    <?php }
+                                } else { ?>
                                     <button class="btn_newsafari organizeBtn newbg" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>
                                 <?php } ?>
                             <?php } else {  ?>
