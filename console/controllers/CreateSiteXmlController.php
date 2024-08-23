@@ -87,7 +87,30 @@ class CreateSiteXmlController extends Controller
         $row->counter = $row->counter + $total_records;
         $row->save();
 
-        FrontendRequestLog::updateAll(['is_count' => 1], ['request_full_url' => $full_url, 'is_count' => 0]);
+        FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $full_url, 'is_count' => 0]);
+      }
+    }
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
+  }
+
+  public function actionNonSitePagesCounter()
+  {
+    $start = microtime(true);
+
+    $records = SitePages::find()->where(['status' => false])->all();
+    if (count($records) > 0) {
+      $frontend_url = Yii::$app->params['frontend_url'];
+      //$frontend_url = 'http://staging.walkintothewild.in/';
+      foreach ($records as $row) {
+        $full_url =  $row['url'];
+        $total_records = FrontendRequestLog::find()->where(['request_url' => $full_url])->andWhere(['is_count' => 0])->count();
+        $row->counter = $row->counter + $total_records;
+        $row->save();
+
+        FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $full_url, 'is_count' => 0]);
       }
     }
 

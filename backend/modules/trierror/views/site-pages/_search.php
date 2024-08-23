@@ -62,6 +62,15 @@ use yii\widgets\ActiveForm;
         ) ?>
     </div>
 
+    <div class="col-md-2">
+        <?= $form->field($model, 'status')->dropDownList(
+            ['1' => 'Site XML', '0' => 'None Site XML'],
+            [
+                'prompt' => 'Select Type',
+            ]
+        ) ?>
+    </div>
+
     <div class="col-md-1">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
 
