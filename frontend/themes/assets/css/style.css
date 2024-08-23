@@ -7589,3 +7589,7 @@ select.custom_sort_by_input  option.selected{
 
     display: none !important;
 }
+.show-more-height p{
+
+    margin-bottom: 0 !important;
+}
