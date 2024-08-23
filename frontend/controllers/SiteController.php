@@ -442,52 +442,107 @@ class SiteController extends FrontendBaseController
 
     public function actionLoginNew()
     {
-        Yii::$app->mailer->compose()
-            ->setFrom('no-reply@walkintothewild.in')
-            ->setTo('shokeen.triline@gmail.com')
-            ->setSubject('Email sent from Yii2-Swiftmailer')
-            ->setHtmlBody('here is the text')
-            ->send();
-
-        die('mail sent successfull');
-
-        /*
-        if (!Yii::$app->user->isGuest) {
-            return $this->redirect('/park');
-        }
-        */
         $model = new GmailLoginForm();
-        $model->action_url = '/site/login';
-        $model->action_validate_url = '/site/signinvalidate';
+        $model->scenario = 'sendmail';
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $post_data = $this->request->post('GmailLoginForm');
-                    if (!empty($post_data['email_id']) && empty($post_data['email_code'])) {
-                        //send mail with passcode
-                    } else if (!empty($post_data['email_id']) && !empty($post_data['email_code'])) {
-                        //match password with email code
-                        //register user if user is new
+                    $emailid = $post_data['email_id'];
 
-                        //login user if user is old
-                        if ($model->login()) {
-                            return $this->redirect('/park');
+                    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    $randomString = '';
+
+                    $passcode = rand();
+                    $n = 10;
+                    for ($i = 0; $i < $n; $i++) {
+                        $index = rand(0, strlen($characters) - 1);
+                        $randomString .= $characters[$index];
+                    }
+                    $passcode = $randomString;
+                    $code = $emailid . "****" . $passcode;
+                    $code = base64_encode($code);
+
+                    //code to send mail
+                    Yii::$app->mailer->compose()
+                        ->setFrom('no-reply@walkintothewild.in')
+                        ->setTo($post_data['email_id'])
+                        ->setSubject('your code for login is : ' . $passcode)
+                        ->setHtmlBody('here is the text')
+                        ->send();
+
+                    return Yii::$app->response->redirect("/site/verify/" . $code);
+                    //'/site/<emailid>/<passcode>
+                }
+            }
+        }
+
+        return $this->render('new_login_form', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionLoginNewVerify($passcode)
+    {
+        if (empty($passcode)) {
+            return $this->redirect('/park');
+        }
+
+        $temp = base64_decode($passcode);
+        $temp_data = explode("****", $temp);
+        if (empty($temp_data[1])) {
+            return $this->redirect('/');
+        }
+
+        $model = new GmailLoginForm();
+        $model->email_id = $temp_data[0];
+        $model->pass_code = $temp_data[1];
+        $model->scenario = 'matchcode';
+
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $post_data = $this->request->post('GmailLoginForm');
+
+                    $user = User::findOne(['email' => $post_data['email_id']]);
+
+                    if (empty($user)) {
+                        // create new user
+                        $password = Yii::$app->security->generateRandomString(6);
+
+                        $user = new User();
+                        $user->name = $post_data['email_id'];
+                        $user->username = $post_data['email_id'];
+                        $user->email = $post_data['email_id'];
+                        $user->password = $password;
+                        $user->status = User::STATUS_ACTIVE;
+
+                        $user->generateAuthKey();
+                        //$user->generatePasswordResetToken();
+
+                        if ($user->save()) {
+                            $this->loginUser($user);
+                            return $this->redirect('/');
+                        } else {
+                            Yii::$app->getSession()->setFlash('error', [
+                                Yii::t('app', 'Unable to save user: {errors}', [
+                                    'client' => $this->client->getTitle(),
+                                    'errors' => json_encode($user->getErrors()),
+                                ]),
+                            ]);
                         }
+                    } else {
+                        //make user login and redirect to home page
+                        $this->loginUser($user);
+                        return $this->redirect('/');
                     }
                 }
             }
-        } else {
-            $model->email_code = '';
         }
 
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('login_new', [
-                'model' => $model,
-            ]);
-        } else {
-            return $this->render('login_new', [
-                'model' => $model,
-            ]);
-        }
+        return $this->render('verify_login_form', [
+            'model' => $model,
+        ]);
     }
 }

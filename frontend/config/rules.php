@@ -160,6 +160,7 @@ return [
     // Chat Routes
     '/chat/message/<user_handle>' => '/chat/default/message',
     '/site/signinagree/<key>' => '/site/signinagree',
+    '/site/verify/<passcode>' => '/site/login-new-verify',
 
     // '/account/<id>' => '/account/default/index',
 ];
