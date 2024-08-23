@@ -77,11 +77,12 @@ $this->title = 'Account Settings';
                                 <?= $form->field($model, 'insta_url')->textInput(['maxlength' => true, 'placeholder' => 'Instagram Link']) ?>
                             </div>
                             <div class="col-md-12">
-                                <?= $form->field($model, 'website_url')->textInput(['maxlength' => true, 'placeholder' => 'Website Link']) ?>
-                            </div>
-                            <div class="col-md-12">
                                 <?= $form->field($model, 'youtube_url')->textInput(['maxlength' => true, 'placeholder' => 'Youtube Link']) ?>
                             </div>
+                            <div class="col-md-12">
+                                <?= $form->field($model, 'website_url')->textInput(['maxlength' => true, 'placeholder' => 'Website Link']) ?>
+                            </div>
+
 
                             <div class="col-md-12">
                                 <div class="float-end">
