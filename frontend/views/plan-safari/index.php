@@ -125,8 +125,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                    
                                 <?php $safari_printed++;
                                 } ?>
-                                 <div class="joinshareView pb-sm-0 pb-4 text-center pe-lg-4 d-sm-none d-block">
-                                            <a href="/sharedsafari" class="btn_shareView" data-pjax="0">View All</a>
+                                 <div class="joinshareView pb-sm-0 pb-4 text-center pe-lg-4 d-sm-none d-block col-xxl-3">
+                                            <a href="/sharedsafari" class="btn_shareView w-100 d-block" data-pjax="0">View All</a>
                                         </div>
                             </div>
                         </div>
