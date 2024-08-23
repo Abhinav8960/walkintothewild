@@ -42,7 +42,7 @@ class SearchSitePages extends SitePages
     public function search($params)
     {
         $query = SitePages::find();
-        $query->where(['status' => true]);
+        //$query->where(['status' => true]);
         $query->orderBy('id DESC');
         // add conditions that should always apply here
 

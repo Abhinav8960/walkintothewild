@@ -118,9 +118,9 @@ class GenerateSitePagesController extends Controller
 
     $this->get_static_pages('static pages');
 
-    //$this->get_monthly_package_site_pages();
-    //$this->get_monthly_shared_safari_site_pages();
-    //$this->get_operator_tabs_site_pages();
+    $this->get_monthly_package_site_pages();
+    $this->get_monthly_shared_safari_site_pages();
+    $this->get_operator_tabs_site_pages();
 
     $end = microtime(true);
     $executionTime = $end - $start;
@@ -129,6 +129,8 @@ class GenerateSitePagesController extends Controller
 
   public function actionSitePages5()
   {
+    $start = microtime(true);
+
     $group_pages = [];
     $group_pages[] = [
       'table' => 'safari_park',
@@ -142,6 +144,23 @@ class GenerateSitePagesController extends Controller
     $this->get_park_tabs_site_pages();
     $this->get_shar_safari_site_pages();
     $this->get_package_site_pages();
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
+  }
+
+  public function actionSitePages6()
+  {
+    $start = microtime(true);
+
+    $this->get_user_follow();
+    $this->get_operator_follow();
+    $this->get_wishlist();
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
   }
 
   public function process($group_pages)
@@ -866,7 +885,7 @@ class GenerateSitePagesController extends Controller
     }
   }
 
-  public function actionUserFollow()
+  protected function get_user_follow()
   {
     $records = User::find()->asArray()->all();
     if (count($records)) {
@@ -928,21 +947,21 @@ class GenerateSitePagesController extends Controller
     }
   }
 
-  public function actionOperatorFollow()
+  protected function get_operator_follow()
   {
     $records = SafariOperator::find()->asArray()->all();
     if (count($records)) {
       $temp_insert_data = [];
       foreach ($records as $row) {
-        if (!empty($row['user_handle'])) {
+        if (!empty($row['slug'])) {
           $temp_data = [
-            'user_follow' => 'profile/follow/' . $row['user_handle'],
-            'user_unfollow' => 'profile/unfollow/' . $row['user_handle']
+            'operator_follow' => 'operator/' . $row['slug'] . '/follow',
+            'operator_unfollow' => 'operator/' . $row['slug'] . '/unfollow',
           ];
 
           foreach ($temp_data as $key => $user_url) {
             //check record is exist or not
-            $model = SitePages::find()->where(['url' => $user_url])->andWhere(['content_table' => 'user'])->one();
+            $model = SitePages::find()->where(['url' => $user_url])->one();
 
             $s_request = $this->getrequestinfo($user_url);
             $get_parameter = $s_request['get_parameter'];
@@ -985,12 +1004,12 @@ class GenerateSitePagesController extends Controller
 
       //insert records
       if (count($temp_insert_data)) {
-        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
       }
+      Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
     }
   }
 
-  public function actionWishlist()
+  protected function get_wishlist()
   {
     $tables = ['ShareSafari', 'Package'];
     foreach ($tables as $table) {
