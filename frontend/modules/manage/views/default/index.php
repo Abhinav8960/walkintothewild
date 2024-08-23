@@ -35,8 +35,8 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class=" mt-xxl-0 mt-3">
                 <?php if ($safari_operator->status == StatusInterface::STATUS_ACTIVE) { ?>
                     <a href="<?= Url::toRoute(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]) ?>" class="post-comment newbg rounded-2 padding_btn" target="_blank"><i class="fa fa-eye"></i> View as Member</a> &nbsp;
+                    <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update Page</a>
                 <?php } ?>
-                <a href="<?= Url::toRoute(['/manage/default/edit-request']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 "><i class="fa fa-edit"></i> Update Page</a>
             </div>
         </div>
         <div class=" col-xxl-3 col-lg-4 mb-4">
@@ -46,9 +46,9 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">
-                        <?php if ($safari_operator->status == StatusInterface::STATUS_SUSPEND) { ?>
-                            <p class="text-danger">*You are Inactive please contact to admin.</p>
-                        <?php } ?>
+                        <?php if ($safari_operator->status != StatusInterface::STATUS_ACTIVE) {
+                            echo $this->context->module->account_deactivate_message;
+                        } ?>
                         <div class="col-md-12 col-xl-3">
                             <?php if ($safari_operator->imagepath) { ?>
                                 <img src="<?= $safari_operator->imagepath ?>" class="mb-2 w-100 rounded-2" style="height:180px; object-fit:cover;">

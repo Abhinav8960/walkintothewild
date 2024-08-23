@@ -11,6 +11,9 @@ use common\models\operator\SafariOperator;
  */
 class Module extends \yii\base\Module
 {
+
+    public $account_deactivate_message = '<p class="text-danger">*You are Account is Deactivated please <a href="/contact">Contact Us</a>.</p>';
+
     /**
      * {@inheritdoc}
      */

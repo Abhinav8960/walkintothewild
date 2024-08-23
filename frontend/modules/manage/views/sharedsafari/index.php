@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -15,9 +16,11 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
         <div class="col-md-12">
             <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap">
                 <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
-                <div class="d-flex align-items-center mt-xl-0 mt-2">
-                    <button class="btn_newsafari organizeBtn newbg departureBtn py-2 rounded-2 " value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
-                </div>
+                <?php if ($safari_operator->status == StatusInterface::STATUS_ACTIVE) { ?>
+                    <div class="d-flex align-items-center mt-xl-0 mt-2">
+                        <button class="btn_newsafari organizeBtn newbg departureBtn py-2 rounded-2 " value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <div class="col-xxl-3 col-lg-4 mb-4">
@@ -27,6 +30,9 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="card account-settingside ">
                 <div class="card-body p-4">
                     <div class="row">
+                        <?php if ($safari_operator->status != StatusInterface::STATUS_ACTIVE) {
+                            echo $this->context->module->account_deactivate_message;
+                        } ?>
                         <?php if ($models = $fixed_safari_provider->models) {
                             foreach ($models as $share_safari) {
                                 echo '<div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-4">';

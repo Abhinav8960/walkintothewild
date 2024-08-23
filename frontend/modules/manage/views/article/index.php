@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -14,9 +15,11 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
     <div class="row margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center flex-wrap">
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
-            <div class="d-flex justify-content-between mt-xl-0 mt-3">
-                <a href="<?= Url::toRoute(['/manage/article/create']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2"><i class="fa fa-plus"></i> Create Article</a> &nbsp;
-            </div>
+            <?php if ($safari_operator->status == StatusInterface::STATUS_ACTIVE) { ?>
+                <div class="d-flex justify-content-between mt-xl-0 mt-3">
+                    <a href="<?= Url::toRoute(['/manage/article/create']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2"><i class="fa fa-plus"></i> Create Article</a> &nbsp;
+                </div>
+            <?php } ?>
         </div>
         <div class="col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('@frontend/modules/manage/views/default/_sidebar', ['active' => 'article']); ?>
@@ -25,6 +28,9 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="card account-settingside">
                 <div class="card-body p-4">
                     <div class="row">
+                        <?php if ($safari_operator->status != StatusInterface::STATUS_ACTIVE) {
+                            echo $this->context->module->account_deactivate_message;
+                        } ?>
                         <?php if ($models = $dataProvider->models) {
                             foreach ($models as $featured_article) { ?>
                                 <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-6 mb-5">
