@@ -1,5 +1,6 @@
 <?php
 
+use common\interfaces\StatusInterface;
 use common\models\operator\SafariOperator;
 use yii\helpers\Url;
 
@@ -65,7 +66,7 @@ $this->params['title'] = $this->title;
                                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
                                                 <div class="row">
-                                                    <?php if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->limit(1)->one()) {
+                                                    <?php if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => StatusInterface::STATUS_ACTIVE])->limit(1)->one()) {
                                                         if ($followers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
                                                             foreach ($followers as $follower) { ?>
                                                                 <div class="col-md-3 col-lg-3 col-sm-6 mb-3">
