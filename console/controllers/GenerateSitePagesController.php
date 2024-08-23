@@ -866,7 +866,7 @@ class GenerateSitePagesController extends Controller
     }
   }
 
-  public function actionUserFollowUnfollow()
+  public function actionUserFollow()
   {
     $records = User::find()->asArray()->all();
     if (count($records)) {
@@ -924,6 +924,162 @@ class GenerateSitePagesController extends Controller
       //insert records
       if (count($temp_insert_data)) {
         Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
+      }
+    }
+  }
+
+  public function actionOperatorFollow()
+  {
+    $records = SafariOperator::find()->asArray()->all();
+    if (count($records)) {
+      $temp_insert_data = [];
+      foreach ($records as $row) {
+        if (!empty($row['user_handle'])) {
+          $temp_data = [
+            'user_follow' => 'profile/follow/' . $row['user_handle'],
+            'user_unfollow' => 'profile/unfollow/' . $row['user_handle']
+          ];
+
+          foreach ($temp_data as $key => $user_url) {
+            //check record is exist or not
+            $model = SitePages::find()->where(['url' => $user_url])->andWhere(['content_table' => 'user'])->one();
+
+            $s_request = $this->getrequestinfo($user_url);
+            $get_parameter = $s_request['get_parameter'];
+            $post_parameter = $s_request['post_parameter'];
+            $is_get = $s_request['is_get'];
+            $is_post = $s_request['is_post'];
+            $is_ajax = $s_request['is_ajax'];
+
+            $title = $description = $keywords = $image = '';
+
+            if ($model) {
+              $model->get_parameter  = $get_parameter;
+              $model->post_parameter  = $post_parameter;
+              $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
+              $model->status = 0;
+              $model->save(false);
+            } else {
+              //insert new record
+              $temp_insert_data[] = [
+                'content_id' => $row['id'],
+                'content_table' => 'user',
+                'url' => $user_url,
+                'url_type' => 'Secondory',
+                'slug' => null,
+                'category' => 'Action',
+                'sub_category' => ucwords(str_replace("_", " ", $key)),
+                'get_parameter' => $get_parameter,
+                'post_parameter' => $post_parameter,
+                'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+                'counter' => 0,
+                'is_get' => $is_get,
+                'is_post' => $is_post,
+                'is_ajax' => $is_ajax,
+                'status' => 0
+              ];
+            }
+          }
+        }
+      }
+
+      //insert records
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
+      }
+    }
+  }
+
+  public function actionWishlist()
+  {
+    $tables = ['ShareSafari', 'Package'];
+    foreach ($tables as $table) {
+      $records = [];
+
+      if ($table == 'Package') {
+        $records = Package::find()->all();
+      }
+
+      if ($table == 'ShareSafari') {
+        $records = ShareSafari::find()->all();
+      }
+
+      $temp_insert_data = [];
+      if (count($records)) {
+        foreach ($records as $row) {
+          $slug = $temp_slug = '';
+          if (isset($row->slug)) {
+            $slug = $row->slug;
+            if (isset($row->safarioperator->slug)) {
+              $temp_slug = $row->safarioperator->slug;
+            }
+          }
+
+          if (isset($row->package_slug)) {
+            $slug = $row->package_slug;
+            if (isset($row->safarioperator->slug)) {
+              $temp_slug = $row->safarioperator->slug;
+            }
+          }
+
+          $temp_data = [
+            'Package Wishlist Add' => 'package/' . $temp_slug . '/' . $slug . '/wishlist',
+            'Package Wishlist Remove' => 'package/' . $temp_slug . '/' . $slug . '/unwishlist'
+          ];
+
+          if ($table == 'ShareSafari') {
+            $temp_data = [
+              'Shared Safari Wishlist Add' => 'sharedsafari/' . $temp_slug . '/' . $slug . '/wishlist',
+              'Shared Safari Wishlist Remove' => 'sharedsafari/' . $temp_slug . '/' . $slug . '/unwishlist'
+            ];
+          }
+
+          foreach ($temp_data as $key => $user_url) {
+            if (!empty($temp_slug) && !empty($slug)) {
+              //check record is exist or not
+              $model = SitePages::find()->where(['url' => $user_url])->one();
+
+              $s_request = $this->getrequestinfo($user_url);
+              $get_parameter = $s_request['get_parameter'];
+              $post_parameter = $s_request['post_parameter'];
+              $is_get = $s_request['is_get'];
+              $is_post = $s_request['is_post'];
+              $is_ajax = $s_request['is_ajax'];
+
+              $title = $description = $keywords = $image = '';
+
+              if ($model) {
+                $model->get_parameter  = $get_parameter;
+                $model->post_parameter  = $post_parameter;
+                $model->last_update_at = date('Y-m-d H:i:s', $row->updated_at);
+                $model->status = 0;
+                $model->save(false);
+              } else {
+                //insert new record
+                $temp_insert_data[] = [
+                  'url' => $user_url,
+                  'url_type' => 'Secondory',
+                  'slug' => $slug,
+                  'category' => 'Action',
+                  'sub_category' => ucwords(str_replace("_", " ", $key)),
+                  'get_parameter' => $get_parameter,
+                  'post_parameter' => $post_parameter,
+                  'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+                  'counter' => 0,
+                  'is_get' => $is_get,
+                  'is_post' => $is_post,
+                  'is_ajax' => $is_ajax,
+                  'status' => 0
+                ];
+              }
+            }
+          }
+        }
+      }
+
+      //insert records
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
       }
     }
   }
