@@ -179,7 +179,7 @@ $script = <<< JS
       }
 
       if (isWebview()) {
-        new_link = 'intent://{$base_url}#Intent;package=com.android.chrome;end';
+        new_link = 'intent://{$base_url}#Intent;scheme=https;package=com.android.chrome;end';
         $('.auth-link').attr("href",new_link);
       }
 
