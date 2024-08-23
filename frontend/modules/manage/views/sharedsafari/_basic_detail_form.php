@@ -46,18 +46,19 @@ use common\models\park\SafariPark;
     <div class="col-md-12">
         <div class="d-flex  gap-sm-3 align-items-center flex-sm-nowrap flex-wrap  w-100 mb-1">
             <div class="start w-100">
+                <label for="" class="Modal_label">Cut off Date <span class="necessary">*</span></label>
+                <?= $form->field($model, 'cut_off_date')->textInput(['type' => 'date', 'min' => date('Y-m-d')])->label(false) ?>
+            </div>
+            <div class="start w-100">
                 <label for="" class="Modal_label">Start Date</label>
-                <?= $form->field($model, 'start_date')->textInput(['type' => 'date'])->label(false) ?>
+                <?= $form->field($model, 'start_date')->textInput(['type' => 'date', 'min' => date('Y-m-d'), 'max' => date('Y-m-d', strtotime('+1 year'))])->label(false) ?>
             </div>
             <span class="pt-sm-4 text-center">-</span>
             <div class="start w-100">
                 <label for="" class="Modal_label">End Date</label>
-                <?= $form->field($model, 'end_date')->textInput(['type' => 'date'])->label(false) ?>
+                <?= $form->field($model, 'end_date')->textInput(['type' => 'date', 'max' => date('Y-m-d', strtotime('+1 year'))])->label(false) ?>
             </div>
-            <div class="start w-100">
-                <label for="" class="Modal_label">Cut off Date <span class="necessary">*</span></label>
-                <?= $form->field($model, 'cut_off_date')->textInput(['type' => 'date'])->label(false) ?>
-            </div>
+
         </div>
     </div>
     <div class="col-md-6 mb-2">
@@ -130,14 +131,19 @@ $this->registerJs($script);
 $script = <<< JS
 
 
-          $("#createdepartureform-start_date").on("change", function(){
-          $("#createdepartureform-end_date").attr("min", $(this).val());
-          $("#createdepartureform-cut_off_date").attr("max", $(this).val());
-          });   
-
           $("#createdepartureform-cut_off_date").on("change", function(){
-          $("#createdepartureform-start_date").attr("min", $(this).val());
-          });   
+            $("#createdepartureform-start_date").attr("min", $(this).val());
+          });  
+
+          $("#createdepartureform-start_date").on("change", function(){
+            $("#createdepartureform-end_date").attr("min", $(this).val());
+          });  
+
+          $("#createdepartureform-start_date").on("change", function(){
+            var date = (new Date()).toISOString().split('T')[0];
+            $("#createdepartureform-cut_off_date").attr("min", date);
+            $("#createdepartureform-cut_off_date").attr("max", $(this).val());
+          });  
 
           $("#createdepartureform-tour_duration").on("input",function()
           {

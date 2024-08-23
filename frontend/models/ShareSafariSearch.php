@@ -182,7 +182,7 @@ class ShareSafariSearch extends ShareSafari
                 ];
             } else if ($this->custom_sort_by == '4') {
                 $dataProvider->sort = [
-                    'defaultOrder' => ['estimate_price_min' => SORT_ASC]
+                    'defaultOrder' => ['cost_per_person' => SORT_ASC,'estimate_price_min' => SORT_ASC]
                 ];
             }
         }

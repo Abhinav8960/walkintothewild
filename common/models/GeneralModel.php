@@ -1161,4 +1161,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
 
         return $parkoption;
     }
+
+    public static function sharedsafaritype()
+    {
+        $return = [1 => 'Shared Safari', 2 => 'Fixed Departure'];
+        return $return;
+    }
 }
