@@ -61,7 +61,7 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-md-6">
                     <?= $form->field($model, 'banner_image', [
                         'labelOptions' => ['class' => 'Modal_label']
-                    ])->fileInput()->label('Article Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    ])->fileInput()->label('Article Image (JPEG / JPG / PNG / 250kb)') ?>
                 </div>
                 <?php
                 if ($model->article_model->banner_image) { ?>
