@@ -121,17 +121,13 @@ class PackageForm extends \yii\base\Model
     public function rules()
     {
         return [
-            // [
-            //     ['package_image', 'package_banner_image'],
-            //     'image',
-            //     'extensions' => ['jpeg', 'jpg', 'png'],
-            //     'minWidth' => 940,
-            //     'maxWidth' => 940,
-            //     'maxHeight' => 430,
-            //     'minHeight' => 430,
-            //     'maxSize' => 250 * 1024,
-            //     'skipOnEmpty' => true,
-            // ],
+            [
+                ['package_image', 'package_banner_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
+                'maxSize' => 250 * 1024,
+                'skipOnEmpty' => true,
+            ],
             [['package_name', 'no_of_day', 'master_vehicle_id', 'cost_per_person'], 'required', 'on' => ['create', 'update']],
             // [['package_inclusion'], 'required', 'on' => 'inclusion'],
             [['package_exclusion'], 'required', 'on' => 'exclusion'],
@@ -318,7 +314,7 @@ class PackageForm extends \yii\base\Model
         // $this->package_model->package_slug = $this->package_slug;
         $this->package_model->master_vehicle_id = $this->master_vehicle_id;
         $this->package_model->popular_package = $this->popular_package;
-        
+
         // if ($this->package_model->package_slug == '') {
         //     $without_space_string = str_replace(' ', '-', strtolower($this->package_model->safarioperator->business_name));
         //     $package_name = str_replace(' ', '-', strtolower($this->package_model->package_name));

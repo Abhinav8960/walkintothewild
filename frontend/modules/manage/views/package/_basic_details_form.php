@@ -99,7 +99,7 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'package_image', [
                         'labelOptions' => ['class' => 'Modal_label']
-                    ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 250kb)') ?>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?php echo '<img src="' . $model->package_model->imagepath . '" width="75" height="75"></img>'; ?>
@@ -108,7 +108,7 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'package_image', [
                         'labelOptions' => ['class' => 'Modal_label']
-                    ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    ])->fileInput()->label('Package Image (JPEG / JPG / PNG / 250kb)') ?>
                 </div>
             <?php  } ?>
 
@@ -117,7 +117,7 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-md-6">
                     <?= $form->field($model, 'package_banner_image', [
                         'labelOptions' => ['class' => 'Modal_label']
-                    ])->fileInput()->label('Package Banner Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    ])->fileInput()->label('Package Banner Image (JPEG / JPG / PNG /  250kb)') ?>
                 </div>
                 <div class="col-md-1">
                     <?php echo '<img src="' . $model->package_model->imagebannerpath . '" width="75" height="75"></img>'; ?>
@@ -126,7 +126,7 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-md-6">
                     <?= $form->field($model, 'package_banner_image', [
                         'labelOptions' => ['class' => 'Modal_label']
-                    ])->fileInput()->label('Package Banner Image (JPEG / JPG / PNG / 940px * 430px / 250kb)') ?>
+                    ])->fileInput()->label('Package Banner Image (JPEG / JPG / PNG /  250kb)') ?>
                 </div>
             <?php  } ?>
 

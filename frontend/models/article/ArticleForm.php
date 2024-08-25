@@ -83,15 +83,55 @@ class ArticleForm extends Model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'user_type', 'user_id', 'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'feature_image', 'banner_image', 'status', 'slug',
-            'article_date', 'long_description', 'meta_title', 'meta_description', 'comment_allowed',
-            'is_approved', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'user_type',
+            'user_id',
+            'title',
+            'sub_title',
+            'description',
+            'article_tags',
+            'tag_name',
+            'feature_image',
+            'banner_image',
+            'status',
+            'slug',
+            'article_date',
+            'long_description',
+            'meta_title',
+            'meta_description',
+            'comment_allowed',
+            'is_approved',
+            'is_schedule',
+            'publish_date_time',
+            'sequence',
+            'view',
+            'post_body',
+            'meta_keywords',
+            'article_topics'
         ];
         $scenarios['update'] = [
-            'user_type', 'user_id',
-            'title', 'sub_title', 'description', 'article_tags', 'tag_name', 'status', 'slug', 'banner_image',
-            'article_date', 'long_description', 'meta_title', 'meta_description', 'comment_allowed',
-            'is_approved', 'is_schedule', 'publish_date_time', 'sequence', 'view', 'post_body', 'meta_keywords', 'article_topics'
+            'user_type',
+            'user_id',
+            'title',
+            'sub_title',
+            'description',
+            'article_tags',
+            'tag_name',
+            'status',
+            'slug',
+            'banner_image',
+            'article_date',
+            'long_description',
+            'meta_title',
+            'meta_description',
+            'comment_allowed',
+            'is_approved',
+            'is_schedule',
+            'publish_date_time',
+            'sequence',
+            'view',
+            'post_body',
+            'meta_keywords',
+            'article_topics'
         ];
         return $scenarios;
     }
@@ -106,11 +146,9 @@ class ArticleForm extends Model
             [['description', 'meta_description'], 'string'],
             [['article_topics'], 'safe'],
             [
-                ['banner_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
-                'minWidth' => 940,
-                'maxWidth' => 940,
-                'maxHeight' => 430,
-                'minHeight' => 430,
+                ['banner_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'maxSize' => 250 * 1024,
                 'skipOnEmpty' => true,
             ],
@@ -127,10 +165,13 @@ class ArticleForm extends Model
             [['title'], 'string', 'max' => 255],
             [['slug', 'meta_title'], 'string', 'max' => 255],
             [
-                'title', 'unique', 'when' => function ($model, $attribute) {
+                'title',
+                'unique',
+                'when' => function ($model, $attribute) {
                     return strtolower($this->article_model->$attribute) != strtolower($model->$attribute);
                 },
-                'targetClass' => Article::className(), 'targetAttribute' => ['title'],
+                'targetClass' => Article::className(),
+                'targetAttribute' => ['title'],
                 'message' => 'This Title has already been taken'
             ],
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
