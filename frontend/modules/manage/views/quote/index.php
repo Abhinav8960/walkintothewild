@@ -25,7 +25,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                     continue;
                                 }
                         ?>
-                                <div class="col-md-3 col-sm-6 col-lg-3 gap-2 mt-2 mb-2">
+                                <div class="col-md-4 col-sm-12 col-lg-4 gap-2 mt-2 mb-2">
                                     <div class="parksImgireview h-100 position-relative">
                                         <img src="<?= isset($park_detail->logoimagepath) ? $park_detail->logoimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100 h-100">
                                         <div class="footer_safariname">
@@ -34,9 +34,9 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                                 <div class="col-6 mt-2">
                                                     <?= $model->full_name ?>
                                                 </div>
-                                                <div class="col-6 mt-2">
+                                                <!-- <div class="col-6 mt-2">
                                                     <?= $model->email ?>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-6 mt-2">
                                                     Safaris : <?= $model->safaris ?>
                                                 </div>
