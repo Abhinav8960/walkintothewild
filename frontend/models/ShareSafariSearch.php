@@ -187,6 +187,14 @@ class ShareSafariSearch extends ShareSafari
                 // ];
 
                 $query->orderBy((new \yii\db\Expression('CASE WHEN type=1 THEN estimate_price_min WHEN type=2 THEN cost_per_person END ASC')));
+            } else if ($this->custom_sort_by == '5') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['start_date' => SORT_ASC]
+                ];
+            } else if ($this->custom_sort_by == '6') {
+                $dataProvider->sort = [
+                    'defaultOrder' => ['start_date' => SORT_DESC]
+                ];
             }
         }
 
