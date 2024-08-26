@@ -65,11 +65,11 @@ $vehicleoption = GeneralModel::vehicleoption();
             <div class="select_boxes position-relative">
                 <div class="dropdown-container">
                     <div class="dropdown-toggle">
-                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Any \ All' ?>
+                        <?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Any / All' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
                         <?php if ($model->master_location_id) { ?>
-                            <div class="dropdown-item" data-value="">Any \ All</div>
+                            <div class="dropdown-item" data-value="">Any / All</div>
                         <?php } ?>
                         <?php foreach ($locationoption as $value => $label) : ?>
                             <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>

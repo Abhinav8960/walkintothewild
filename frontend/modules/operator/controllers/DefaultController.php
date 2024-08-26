@@ -94,7 +94,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/view',  'slug' => $slug]);
             }
         }
@@ -129,7 +129,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -179,7 +179,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/reviewlist',  'slug' => $slug]);
             }
         }
@@ -259,7 +259,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -559,7 +559,7 @@ class DefaultController extends FrontendBaseController
             if ($model->validate()) {
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
-                    Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                    Yii::$app->session->setFlash('success', 'Quote request sent!');
                     return $this->redirect(['/operator/default/article',  'slug' => $slug]);
                 }
             }
@@ -612,7 +612,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -692,7 +692,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -741,7 +741,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/sharedsafari',  'slug' => $slug]);
             }
         }
@@ -793,7 +793,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/view',  'slug' => $slug]);
             }
         }
@@ -829,7 +829,7 @@ class DefaultController extends FrontendBaseController
                 if ($operator_quote = $model->request($operator)) {
                     FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
                 }
-                Yii::$app->session->setFlash('success', 'Quote requested successfully submitted');
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
                 return $this->redirect(['/operator/default/article',  'slug' => $slug]);
             }
         }
