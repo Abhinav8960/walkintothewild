@@ -148,7 +148,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($package_includes) ? 'Camera Fee' : 'Not Included';
+                                                            echo ($package_includes) ? 'Camera Fee' : 'No';
                                                             ?></p>
                                         </div>
                                     </div>

@@ -180,7 +180,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $share_safari_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($share_safari_includes) ? 'Camera Fee' : 'Not Included';
+                                                            echo ($share_safari_includes) ? 'Camera Fee' : 'No';
                                                             ?></p>
                                         </div>
                                     </div>
