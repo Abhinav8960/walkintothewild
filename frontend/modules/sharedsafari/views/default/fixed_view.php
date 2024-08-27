@@ -94,7 +94,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <div class="col-md-4 d-lg-none mobile_didplay_none">
                             <div class="pakageCost text-center mb-3">
-                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> Per Person</h6>
+                                <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6>
                             </div>
                             <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
 
@@ -225,8 +225,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div> -->
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
-                                <div class="pakageCost mb-2 mb-md-2 mb-xl-0">
-                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> Per Person</h6> 
+                                <div class="pakageCost mb-2 mb-md-2 mb-xxl-0">
+                                    <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6> 
                                 </div>
                                 <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
