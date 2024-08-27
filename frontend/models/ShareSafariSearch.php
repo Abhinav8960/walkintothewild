@@ -60,18 +60,18 @@ class ShareSafariSearch extends ShareSafari
      */
     public function search($params, $pagination = true)
     {
-        //$query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'start_date', date("Y-m-d")]);
-        $query = ShareSafari::find()
-            ->where(['share_safari.status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])
-            ->andWhere(new Expression(
-                "CASE 
-            WHEN share_safari.host_type = " . ShareSafari::TYPE_SAFARI . " THEN user.status = " . User::STATUS_ACTIVE . " 
-            WHEN share_safari.host_type = " . ShareSafari::TYPE_FIXED_DEPARTURE . " THEN safari_operator.status = 1 
-        END"
-            ))
-            ->leftJoin('user', 'share_safari.host_type = ' . ShareSafari::TYPE_SAFARI . ' AND share_safari.host_user_id = user.id')
-            ->leftJoin('safari_operator', 'share_safari.host_type = ' . ShareSafari::TYPE_FIXED_DEPARTURE . ' AND share_safari.host_user_id = safari_operator.id')
-            ->andWhere(['>=', 'start_date', date("Y-m-d")]);
+        $query = ShareSafari::find()->where(['share_safari.status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])->andWhere(['>=', 'start_date', date("Y-m-d")]);
+        // $query = ShareSafari::find()
+        //     ->where(['share_safari.status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT]])
+        //     ->andWhere(new Expression(
+        //         "CASE 
+        //     WHEN share_safari.host_type = " . ShareSafari::TYPE_SAFARI . " THEN user.status = " . User::STATUS_ACTIVE . " 
+        //     WHEN share_safari.host_type = " . ShareSafari::TYPE_FIXED_DEPARTURE . " THEN safari_operator.status = 1 
+        // END"
+        //     ))
+        //     ->leftJoin('user', 'share_safari.host_type = ' . ShareSafari::TYPE_SAFARI . ' AND share_safari.host_user_id = user.id')
+        //     ->leftJoin('safari_operator', 'share_safari.host_type = ' . ShareSafari::TYPE_FIXED_DEPARTURE . ' AND share_safari.host_user_id = safari_operator.id')
+        //     ->andWhere(['>=', 'start_date', date("Y-m-d")]);
 
 
         // add conditions that should always apply here
