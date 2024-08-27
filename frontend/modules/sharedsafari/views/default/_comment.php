@@ -89,7 +89,7 @@ use yii\helpers\Url;
                                                 <div class="d-flex gap-2">
                                                     <div class="avatar">
                                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>">
-                                                            <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                                            <img src="<?= $reply->user && $reply->user->profileImage <> '' ? $reply->user->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="font-color">
