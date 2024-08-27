@@ -36,7 +36,7 @@ $this->title = 'Message';
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
                             </div>
-                            <div class="chat-cardlist">
+                            <div class="chat-cardlist mt-4">
                                 <?php if ($searchModel->name == '' && $active_chat_list) {
                                     foreach ($active_chat_list as $active_chat) {
                                         if ($active_chat->user_id == $login_user->id) {
@@ -45,7 +45,7 @@ $this->title = 'Message';
                                             $user = $active_chat->user;
                                         }
                                 ?>
-                                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
+                                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link d-block mb-3" data-pjax="0">
                                             <div class="chat-sidebar-user-card">
                                                 <div class="d-flex chat-user_message">
                                                     <img src="<?= $user->avatar <> '' ? $user->avatar : $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
