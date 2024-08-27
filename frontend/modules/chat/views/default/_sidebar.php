@@ -103,7 +103,7 @@ use yii\helpers\Url;
     .chat-message-header .user-icon {
         height: 45px;
         width: 45px;
-        border: 1px solid;
+        /* border: 1px solid; */
     }
 
     .chat-message-input {
