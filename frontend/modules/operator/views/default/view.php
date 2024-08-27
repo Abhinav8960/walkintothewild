@@ -71,7 +71,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         <div class="tab-content_tour active">
                                             <div class="d-flex justify-content-between flex-wrap mb-4">
                                                 <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Operates in <span class="numberFont"><?= count($operator_parks) ?></span> Parks</h6>
-                                                <?php if (count($operator_parks) >= 2) { ?>
+                                                <?php if (count($operator_parks) > 4) { ?>
                                                     <a class="SeeAll mt-md-0 mt-3" href="<?= Url::toRoute(['/operator/default/parkseeall', 'slug' => $operator->slug]) ?>" data-pjax="0">See All</a>
                                                 <?php } ?>
                                                 <!-- <div class="whiteReview ">

@@ -5,8 +5,8 @@ use yii\bootstrap5\ActiveForm;
 use yii\helpers\Url;
 
 ?>
-   <button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
-   Discussion</button>
+<button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
+    Discussion</button>
 <div class="bg-white pb-3 px-3 rounded-3 mb-4">
     <div class="comments_safari border-0 ">
         <div class="commentsOther  position-relative ps-3 ">
@@ -29,7 +29,7 @@ use yii\helpers\Url;
                         <div class="postcomment d-flex gap-2 pt-3 w-100">
                             <div class="avatar">
                                 <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
+                                    <img src="<?= $comments->user->profileimage ?>" alt="">
                                 </a>
                             </div>
                             <div class="text_com">
@@ -53,7 +53,7 @@ use yii\helpers\Url;
                                             <div class="d-flex gap-2">
                                                 <div class="avatar">
                                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>">
-                                                        <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                                        <img src="<?= $reply->user && $reply->user->profileImage <> '' ? $reply->user->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                                                     </a>
                                                 </div>
                                                 <div class="font-color">
