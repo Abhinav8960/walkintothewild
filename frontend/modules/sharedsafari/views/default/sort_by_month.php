@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 <div class="right-select">
     <div class="input_check pb-0 mb-3">
         <?php
-        $sort_option = [1 => 'Created Recently', 2 => 'Less Safaris', 3 => 'More Safaris', 4 => 'Cheapest', 5 => 'Date of occurrence:  Earlier to later', 6 => 'Date of occurrence: Later to earlier'];
+        $sort_option = [1 => 'Created Recently', 2 => 'Less Safaris', 3 => 'More Safaris', 4 => 'Cheapest', 5 => 'Occurrence: Newest First', 6 => 'Occurrence: Oldest First'];
         ?>
         <div class="form-group field-sharesafarisearch-custom_sort_by">
             <select id="sharesafarisearch-custom_sort_by" class="form-control custom_sort_by_input" name="ShareSafariSearch[custom_sort_by]">
