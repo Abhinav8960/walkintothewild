@@ -26,6 +26,7 @@ use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorRatingCommentForm;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\form\SafariOperatorReportProfileForm;
+use common\models\User;
 
 /**
  * DefaultController.
@@ -856,6 +857,47 @@ class DefaultController extends FrontendBaseController
                 'operator' => $operator,
                 'model' => $model,
                 'dataProvider' => $dataProvider,
+            ]
+        );
+    }
+
+    /**
+     * Operator Follower
+     */
+    public function actionFollower($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+
+        $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
+                return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+            }
+        }
+
+        $user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
+
+        return $this->render(
+            'follower',
+            [
+                'operator' => $operator,
+                'model' => $model,
+                'user' => $user,
             ]
         );
     }
