@@ -142,7 +142,7 @@ class FrontendBaseController extends Controller
      */
     public function findUserbyHandle($user_handle)
     {
-        if ($user = User::find()->where(['user_handle' => $user_handle])->andWhere(['blocked_at' => null])->limit(1)->one()) {
+        if ($user = User::find()->where(['user_handle' => $user_handle])->andWhere(['blocked_at' => null, 'status' => User::STATUS_ACTIVE])->limit(1)->one()) {
             return $user;
         }
 

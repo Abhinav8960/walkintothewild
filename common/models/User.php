@@ -286,7 +286,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function block()
     {
-        return (bool) $this->updateAttributes(['blocked_at' => time()]);
+        return (bool) $this->updateAttributes(['blocked_at' => time(), 'status' => User::STATUS_INACTIVE]);
     }
 
     /**
@@ -294,7 +294,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function unblock()
     {
-        return (bool) $this->updateAttributes(['blocked_at' => null]);
+        return (bool) $this->updateAttributes(['blocked_at' => null, 'status' => User::STATUS_ACTIVE]);
     }
 
     /**

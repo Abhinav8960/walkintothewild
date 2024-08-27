@@ -126,6 +126,7 @@ class DefaultController extends Controller
         $user->username = $user->username . rand();
         $user->email = $user->email . rand();
         $user->google_source_id = 0;
+        $user->status = User::STATUS_DELETED;
         if ($user->save()) {
             $isexist = Auth::find()->where(['user_id' => $id])->one();
             if (!empty($isexist)) {
