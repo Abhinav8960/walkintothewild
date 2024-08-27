@@ -68,12 +68,12 @@ $this->params['title'] = $this->title;
 
                                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-                                                <div class="row">
+                                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3">
                                                     <?php
                                                     if ($followers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
                                                         foreach ($followers as $follower) { ?>
-                                                            <div class="col-md-3 col-lg-3 col-sm-6 mb-3">
-                                                                <section class="mx-auto" style="max-width: 23rem;">
+                                                            <div class="col mb-3">
+                                                                <section class="mx-auto" >
                                                                     <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $follower->user, 'profile_user' => $user]);  ?>
                                                                 </section>
                                                             </div>

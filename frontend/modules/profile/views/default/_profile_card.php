@@ -28,7 +28,7 @@ use yii\helpers\Url;
 
             </div>
             <div class="card-body text-center  pt-2">
-                <h6 class="fs-6 fw-bold usename"><?= $user->name ?></h6>
+                <h6 class="fs-7 fw-bold usename"><?= $user->name ?></h6>
                 <h6 class="fs-6 joint-text">Joined <?= date('M Y', $user->created_at) ?></h6>
                 <div class="followres-count pt-3">
                     <h6 class="folloerwstext"><?= $user->getUserfollowers()->where(['status' => 1])->count(); ?> Followers</h6>
