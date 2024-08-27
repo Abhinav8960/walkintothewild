@@ -4468,11 +4468,9 @@ figure {
 }
 
 .input_check .form-group>div label {
-
     display: -webkit-box;
 
     display: -ms-flexbox;
-
     display: flex;
     -webkit-box-align: center;
         -ms-flex-align: center;
@@ -4480,6 +4478,15 @@ figure {
     gap: 10px;
     margin-bottom: 9px;
 
+}
+.title_filter  .checkbox-item{
+
+    margin-bottom: 9px;
+}
+
+.title_filter  .checkbox-item label{
+
+    margin-bottom: 0px !important;
 }
 
 .single-image {

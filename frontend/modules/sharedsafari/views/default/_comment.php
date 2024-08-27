@@ -25,7 +25,13 @@ use yii\helpers\Url;
                                     <h6 class="nameavatr"><?= isset($share_safari->organizedbyname) ? $share_safari->organizedbyname : 'N/A' ?></h6>
                                 </a>
                                 <?php if ($share_safari->safari_plan && $share_safari->type == $share_safari::TYPE_SAFARI) { ?>
-                                    <p><?= $share_safari->safari_plan; ?></p>
+                                    <div class="profile-description">
+                                            <div class="text show-more-height">
+                                            <?= $share_safari->safari_plan; ?>
+                                            </div>
+                                            <div class="show-more">See More</div>
+                                        </div>
+                                
                                 <?php } ?>
                             </div>
                         </div>

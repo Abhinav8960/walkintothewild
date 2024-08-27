@@ -40,7 +40,10 @@ use common\models\park\SafariPark;
             <div class="input_check ">
                 <?= $form->field($searchModel, 'type')->checkboxList(
                     [1 => 'Shared Safari', 2 => 'Fixed Departure'],
-                    ['prompt' => 'Select Type']
+                    ['prompt' => 'Select Type',
+                    'itemOptions' => ['class' => 'checkbox_design'],],
+                    
+                    
 
                 )->label(false); ?>
             </div>
