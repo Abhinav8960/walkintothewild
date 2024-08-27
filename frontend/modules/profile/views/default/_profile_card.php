@@ -11,9 +11,9 @@ use yii\helpers\Url;
         <i class="fa-solid fa-ellipsis"></i>
         <div class="box_dropdown">
 
-            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="">View Profile</a>
+            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="d-block pb-1">View Profile</a>
             <?php if (Yii::$app->user->id != $user->id) { ?>
-                <a href="<?= Url::toRoute(['/profile/search/blocked', 'user_handle' => $user->user_handle]) ?>" class="">Block</a>
+                <a href="<?= Url::toRoute(['/profile/search/blocked', 'user_handle' => $user->user_handle]) ?>" class="d-block">Block</a>
             <?php } ?>
         </div>
     </div>
