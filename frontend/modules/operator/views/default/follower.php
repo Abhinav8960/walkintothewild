@@ -73,11 +73,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                             <div class="col-md-12">
                                                 <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                                             </div>
-                                            <div class="row">
+                                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3">
                                                 <?php if ($operatorfollowers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
                                                     foreach ($operatorfollowers as $operatorfollower) { ?>
-                                                        <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
-                                                            <section class="mx-auto" style="max-width: 23rem;">
+                                                        <div class="col">
+                                                            <section class="mx-auto" >
                                                                 <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollower->user, 'profile_user' => $user]);  ?>
                                                             </section>
                                                         </div>
