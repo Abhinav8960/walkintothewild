@@ -12,8 +12,8 @@ use yii\helpers\Url;
 <style>
     .chat-card-sidebar {
 
-        max-height: 80vh;
-        height: 80vh;
+        max-height: 92vh;
+        height: 88vh;
         width: 100%;
     }
 
@@ -68,8 +68,7 @@ use yii\helpers\Url;
     }
 
     .chat-sidebar-user-card {
-        padding: 10px;
-        border-bottom: 1px solid #aaaa;
+
         justify-content: center;
         overflow: hidden;
 
@@ -81,23 +80,23 @@ use yii\helpers\Url;
     }
 
     .chat-sidebar-user-card .user-icon {
-        height: 45px;
-        width: 45px;
-        border: 1px solid;
+        height: 35px;
+        width: 35px;
     }
 
     .chat-sidebar-user-card .chat-user_name {
         padding-left: 10px;
     }
 
-    .selected_chat {
+
+    /* .selected_chat {
         background-color: #b4e0fe;
         color: #000;
         border-radius: 5px;
-    }
+    } */
 
     .chat-message-header {
-        border-bottom: 2px solid #107751;
+        border-bottom: 1px solid #88888861;
         padding-bottom: 10px;
     }
 
@@ -111,12 +110,7 @@ use yii\helpers\Url;
         border: 1px solid #107751;
     }
 
-    .chat-sendbtn {
-        font-size: 30px;
-        color: #107751;
-        padding-left: 10px;
-    }
-
+   
     .user-icon-message {
         height: 25px;
     }
@@ -200,11 +194,12 @@ use yii\helpers\Url;
     }
 
     .chat-user_name .lastmassge {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        overflow: hidden;
         font-size: 0.9rem;
+        overflow: hidden;
+        -o-text-overflow: ellipsis !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap;
+ 
     }
 
     .character-count {
@@ -214,6 +209,7 @@ use yii\helpers\Url;
         color: #888;
         margin-top: 5px;
     }
+
     .character-count.warning {
         color: red !important;
     }

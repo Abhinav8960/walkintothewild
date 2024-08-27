@@ -64,14 +64,16 @@ use common\models\operator\SafariOperatorFollow;
                             <p class="pb-sm-0 pt-2"> <?= $operator->category_id == 1 ? "Safari Tour Operator" : ($operator->category_id == 3 ?  "Wildelife Influencer" :  "Safari Tour Operator") ?></p>
                         </div>
                         <div class="providerNamerating tours d-flex flex-wrap gap-4 align-items-center pb-3 pt-1">
+                            <div class="d-flex gap-2">
                             <div class="ratings">
                                 <p class="mb-0"><?= round($operator->google_rating, 1) ?> <?= GeneralModel::ratiing_views($operator->google_rating); ?></p>
                             </div>
                             <div class="googlerating">
                                 <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"> <?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?></a></p>
                             </div>
+                            </div>
                             <div class="googlerating">
-                                <p class="mb-0"><?= $operator->getFollowerlist()->where(['status' => 1])->count() ?> Follower</p>
+                                <p class="mb-0"><?= $operator->getFollowerlist()->where(['status' => 1])->count() ?> Followers</p>
                             </div>
                         </div>
                         <div class="detailsText pb-3">
