@@ -10,7 +10,7 @@ use common\models\sharesafari\ShareSafariIntrested;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Safari Operator  | ' . $operator->register_comapany_name . ' | Shared Safari';
+$this->title = 'Safari Operator  | ' . $operator->register_comapany_name . ' | Followes';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -34,8 +34,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div class="col-12">
                     <div class="headingBnner_inner">
                         <h1>Safari Tour Operator</h1>
-                        <!-- <p class="text-center text-white">Create Your Custom Safari Experience or Join Others on
-                                Their Adventures</p> -->
                     </div>
                 </div>
             </div>
@@ -57,7 +55,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         <?php } ?>
     </div>
     <div class="container-fluid">
-        <?= $this->render('_view_navbar', ['active' => 'sharedsafari', 'operator' => $operator]) ?>
+        <?= $this->render('_view_navbar', ['active' => 'follower', 'operator' => $operator]) ?>
     </div>
 
 </section>
@@ -72,23 +70,22 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
-                                            <div class="d-flex justify-content-between flex-wrap mb-4">
-                                                <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"><?= $operator->businessname ?> Organized <span class="numberFont"><?= count($shared_safaries) ?></span> Shared Safari</h6>
-                                                <?php if (count($shared_safaries) > 4) { ?>
-                                                    <a class="SeeAll mt-sm-0 mt-3" href="<?= Url::toRoute(['/operator/default/sharedsafariseeall', 'slug' => $operator->slug]) ?>" data-pjax="0">See All</a>
-                                                <?php } ?>
+                                            <div class="col-md-12">
+                                                <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                                             </div>
-
-                                            <div class="row gx-md-5 ">
-                                                <?php
-                                                if ($shared_safaries) {
-                                                    foreach ($shared_safaries as $share_safari) { ?>
-                                                        <div class="col-md-5 col-sm-6 col-lg-6 col-xxl-5 mb-4 ">
-                                                            <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
+                                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3">
+                                                <?php if ($operatorfollowers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
+                                                    foreach ($operatorfollowers as $operatorfollower) { ?>
+                                                        <div class="col">
+                                                            <section class="mx-auto" >
+                                                                <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollower->user, 'profile_user' => $user]);  ?>
+                                                            </section>
                                                         </div>
-                                                <?php }
+                                                <?php  }
                                                 } else {
-                                                    echo '<p class="noData">No Shared Safari Found!</p>';
+                                                    echo '<div class="col-md-12 pt-3">
+                                                            There is no follower!
+                                                          </div>';
                                                 } ?>
                                             </div>
 
@@ -107,3 +104,33 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dots = document.querySelectorAll('.dots-blockbox');
+
+        dots.forEach(dot => {
+            const icon = dot.querySelector('.fa-ellipsis');
+            const box = dot.querySelector('.box_dropdown');
+
+            icon.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const currentlyOpen = document.querySelector('.box_dropdown.show');
+                if (currentlyOpen && currentlyOpen !== box) {
+                    currentlyOpen.classList.remove('show');
+                    currentlyOpen.style.display = 'none';
+                }
+                box.style.display = box.style.display === 'none' || !box.style.display ? 'block' : 'none';
+                box.classList.toggle('show');
+            });
+        });
+
+        document.addEventListener('click', function() {
+            const openBox = document.querySelector('.box_dropdown.show');
+            if (openBox) {
+                openBox.style.display = 'none';
+                openBox.classList.remove('show');
+            }
+        });
+    });
+</script>

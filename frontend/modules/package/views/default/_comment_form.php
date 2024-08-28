@@ -11,7 +11,7 @@ use yii\helpers\Url;
     <div class="postcomment d-flex gap-3">
         <div class="avatar">
             <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity && Yii::$app->user->identity->user_handle <> '' ? Yii::$app->user->identity->user_handle : '']) ?>">
-                <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileImage <> '' ? Yii::$app->user->identity->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
             </a>
         </div>
         <div class="text-area">
@@ -23,14 +23,14 @@ use yii\helpers\Url;
     <div class="row justify-content-center">
         <div class="col-lg-12 col-xl-8">
             <div class="post_text padding_ad">
-            <p>Commenting on this thread will notify all event attendees and will also be visible to
-            everyone viewing the event.</p>
+                <p>Commenting on this thread will notify all event attendees and will also be visible to
+                    everyone viewing the event.</p>
             </div>
         </div>
         <div class="col-lg-12 col-xl-4 ">
-        <div class="comment_button float-end mb-lg-0 mb-3">
-            <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
-        </div>
+            <div class="comment_button float-end mb-lg-0 mb-3">
+                <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
+            </div>
         </div>
     </div>
 </div>

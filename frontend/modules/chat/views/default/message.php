@@ -22,7 +22,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
             <?= $this->render('@frontend/modules/chat/views/default/_sidebar', ['active' => 'message']); ?>
         </div>
         <div class="col-md-12">
-            <div class="row">
+            <div class="row  itenary_tabs">
                 <div class="col-md-3 mb-3">
                     <div class="chat-card-sidebar card">
                         <div class="card-body">
@@ -36,40 +36,59 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 'timeout' => false,
                             ]);
                             ?>
-                            <div class="chat-search-user mb-2 position-relative">
-                                <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false]) ?>
-                                <div class="secrchIcons">
-                                    <i class="fa-solid fa-magnifying-glass"></i>
+                            <div class="tablmassage safartabs">
+                                <ul class="nav  nav-tabs " id="pills-tab" role="tablist" style="justify-content:between">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active chatFonts" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Direct Messages</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link chatFonts" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quote Request</button>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="tab-content" id="pills-tabContent">
+                                <div class="tab-pane fade show active mt-4" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    <div class="chat-search-user mb-3 position-relative">
+                                        <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false]) ?>
+                                        <div class="secrchIcons">
+                                            <i class="fa-solid fa-magnifying-glass"></i>
+                                        </div>
+                                    </div>
+                                    <div class="chat-cardlist pt-3">
+                                        <?php if ($searchModel->name == '' && $active_chat_list) {
+                                            foreach ($active_chat_list as $active_chat) {
+                                                if ($active_chat->user_id == $login_user->id) {
+                                                    $user = $active_chat->recipient;
+                                                } else {
+                                                    $user = $active_chat->user;
+                                                }
+                                        ?>
+                                                <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
+                                                    <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                        <div class="d-flex chat-user_message">
+                                                            <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                                            <div class="chat-user_name">
+                                                                <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->name ?></h6>
+                                                                <p class="mb-0 lastmassge" style="color:#4c4c4c;"><?= $active_chat->last_message ?></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                        <?php }
+                                        } ?>
+                                        <?php
+                                        if ($searchModel->name) {
+                                            echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    knflkdslg
                                 </div>
                             </div>
-                            <div class="chat-cardlist">
-                                <?php if ($searchModel->name == '' && $active_chat_list) {
-                                    foreach ($active_chat_list as $active_chat) {
-                                        if ($active_chat->user_id == $login_user->id) {
-                                            $user = $active_chat->recipient;
-                                        } else {
-                                            $user = $active_chat->user;
-                                        }
-                                ?>
-                                        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link" data-pjax="0">
-                                            <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
-                                                <div class="d-flex chat-user_message">
-                                                    <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
-                                                    <div class="chat-user_name">
-                                                        <h6><?= $user->name ?></h6>
-                                                        <p class="mb-0 lastmassge"><?= $active_chat->last_message ?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                <?php }
-                                } ?>
-                                <?php
-                                if ($searchModel->name) {
-                                    echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
-                                }
-                                ?>
-                            </div>
+
 
 
 
@@ -87,9 +106,9 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                         'timeout' => false,
                     ]);
                     ?>
-                    <div class="chat_box  card  h-100">
+                    <div class="chat_box  card  h-100 p-3">
                         <div class="card-body">
-                            <div class="d-flex chat-message-header justify-content-between">
+                            <div class="d-flex chat-message-header pb-4 justify-content-between">
                                 <div class="chat-profile">
                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
                                         <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
@@ -130,14 +149,21 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
 
                             <div class="chat-send-message-form pt-3">
                                 <form id="chatmessageform" method="post">
-                                    <div class="d-flex align-items-center">
-                                        <div class="lead emoji-picker-container w-100 submit_on_enter">
-                                            <div class="character-count">
-                                                <span id="char-count">500</span> characters remaining
-                                            </div>
-                                            <textarea type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></textarea>
+                                    <div class="lead emoji-picker-container w-100 submit_on_enter">
+                                        <div class="character-count">
+                                            <span id="char-count">500</span> characters remaining
                                         </div>
-                                        <i class="fa fa-paper-plane chat-sendbtn" id="message_sent_btn"></i>
+                                        <textarea type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></textarea>
+                                        <div class="sendMassege">
+                                            <div class="chat-sendbtn">
+                                            <i class="fa fa-paper-plane " id="message_sent_btn"></i>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+
+
                                     </div>
                                     <input type="hidden" name="Chat[user_handle]" value="<?= $individual_user->user_handle ?>">
                                     <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />

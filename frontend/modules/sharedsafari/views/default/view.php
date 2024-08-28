@@ -395,6 +395,26 @@ function interestfucntion() {
 	});
 }
 interestfucntion();
+const textContainer = $(".profile-description .text");
+    const showMoreButton = $(".profile-description .show-more");
+    const lineHeight = parseInt(textContainer.css('line-height')); 
+
+    const threeLinesHeight = lineHeight * 3;
+
+    if (textContainer[0].scrollHeight <= threeLinesHeight) {
+        showMoreButton.hide();
+    } else {
+        showMoreButton.show();
+    }
+
+    $(".show-more").click(function () {
+        textContainer.toggleClass("show-more-height");
+        if (textContainer.hasClass("show-more-height")) {
+            $(this).text("See More");
+        } else {
+            $(this).text("See Less");
+        }
+    });
              
 JS;
 $this->registerJs($script);

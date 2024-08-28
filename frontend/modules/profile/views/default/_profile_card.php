@@ -11,9 +11,9 @@ use yii\helpers\Url;
         <i class="fa-solid fa-ellipsis"></i>
         <div class="box_dropdown">
 
-            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="">View Profile</a>
+            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="d-block pb-1">View Profile</a>
             <?php if (Yii::$app->user->id != $user->id) { ?>
-                <a href="<?= Url::toRoute(['/profile/search/blocked', 'user_handle' => $user->user_handle]) ?>" class="">Block</a>
+                <a href="<?= Url::toRoute(['/profile/search/blocked', 'user_handle' => $user->user_handle]) ?>" class="d-block">Block</a>
             <?php } ?>
         </div>
     </div>
@@ -23,12 +23,12 @@ use yii\helpers\Url;
         </div> -->
     <div class="profileDetails  text-center">
         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>">
-            <div class=" mx-auto white" style="width: 90px; height:90px">
+            <div class=" mx-auto white" style="width: 70px; height:70px">
                 <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" class="rounded-circle img-fluid" alt="profile-image">
 
             </div>
             <div class="card-body text-center  pt-2">
-                <h6 class="fs-4 fw-bold usename"><?= $user->name ?></h6>
+                <h6 class="fs-7 fw-bold usename"><?= $user->name ?></h6>
                 <h6 class="fs-6 joint-text">Joined <?= date('M Y', $user->created_at) ?></h6>
                 <div class="followres-count pt-3">
                     <h6 class="folloerwstext"><?= $user->getUserfollowers()->where(['status' => 1])->count(); ?> Followers</h6>
@@ -59,7 +59,7 @@ use yii\helpers\Url;
                     </div>
                 <?php } else { ?>
                     <div class="row">
-                        <div class="col-12 divider">
+                        <div class="col-12 ">
                             <div class="massegses">
                                 <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>">Message</a>
                             </div>

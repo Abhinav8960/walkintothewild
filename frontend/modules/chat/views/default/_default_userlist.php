@@ -5,7 +5,7 @@ use common\models\chat\Chat;
 
 if ($dataProvider) {
     foreach ($dataProvider->models as $model) { ?>
-        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $model->user_handle]) ?>" class="chat-link" data-pjax="0">
+        <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $model->user_handle]) ?>" class="chat-link  mb-3 d-block" data-pjax="0">
             <div class="chat-sidebar-user-card ">
                 <div class="d-flex chat-user_message">
                     <img src="<?= $model->profileimage ? $model->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">

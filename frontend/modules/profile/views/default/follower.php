@@ -46,13 +46,13 @@ $this->params['title'] = $this->title;
 
                                         </ul>
                                         <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                            <div class="tab-pane fade show active mt-3" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
-                                                <div class="row">
+                                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                                                     <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
                                                         foreach ($userfollowers as $userfollower) { ?>
-                                                            <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
-                                                                <section class="mx-auto" style="max-width: 23rem;">
+                                                            <div class="col mb-3">
+                                                                <section class="mx-auto" >
                                                                     <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user, 'profile_user' => $user]);  ?>
                                                                 </section>
                                                             </div>
@@ -68,12 +68,12 @@ $this->params['title'] = $this->title;
 
                                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-                                                <div class="row">
+                                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3">
                                                     <?php
                                                     if ($followers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
                                                         foreach ($followers as $follower) { ?>
-                                                            <div class="col-md-3 col-lg-3 col-sm-6 mb-3">
-                                                                <section class="mx-auto" style="max-width: 23rem;">
+                                                            <div class="col mb-3">
+                                                                <section class="mx-auto" >
                                                                     <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $follower->user, 'profile_user' => $user]);  ?>
                                                                 </section>
                                                             </div>

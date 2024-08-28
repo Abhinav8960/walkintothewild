@@ -130,7 +130,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         </div>
                                                         <div class="postcomment  pt-3">
                                                             <div class="text_com">
-                                                                <h6 class="nameavatr"><?= isset($review->park) ? $review->park->title : '' ?></h6>
+                                                                <h6 class="nameavatr"><a href="<?= Url::toRoute(['/park/default/view', 'slug' => isset($review->park) ? $review->park->slug : '']) ?>"><?= isset($review->park) ? $review->park->title : '' ?></a></h6>
                                                                 <div class="providerNamerating d-flex gap-4 align-items-center pb-2">
                                                                     <div class="ratings">
                                                                         <p class="mb-0">

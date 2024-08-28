@@ -24,6 +24,9 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
             <li class="nav-item"><a class="nav-link <?= $active == 'reviewlist' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/reviewlist', 'slug' => $operator->slug]) ?>" data-pjax="0">
                     Review</i>
                 </a></li>
+            <li class="nav-item"><a class="nav-link <?= $active == 'follower' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/follower', 'slug' => $operator->slug]) ?>" data-pjax="0">
+                    Followers</i>
+                </a></li>
             <li class="nav-item"><a class="nav-link <?= $active == 'article' ? 'active' : '' ?>" href="<?= Url::toRoute(['/operator/default/article', 'slug' => $operator->slug]) ?>" data-pjax="0">
                     Article</i>
                 </a></li>
@@ -133,7 +136,7 @@ $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::ST
 // Except shared safari
 $script = <<< JS
          var loc= window.location.href;
-         if (loc.includes("package") || loc.includes("reviewlist") || loc.includes("article") || loc.includes("contact") || loc.includes("park")){
+         if (loc.includes("package") || loc.includes("reviewlist") || loc.includes("article") || loc.includes("contact") || loc.includes("park") || loc.includes("follower")){
             $('html, body').animate({
                     'scrollTop' : $("#safari_tour_container").position().top - 180
             });
