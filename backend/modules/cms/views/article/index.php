@@ -9,7 +9,7 @@ use yii\grid\GridView;
 $this->title = 'Article';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
+// $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
 ?>
 <?php Pjax::begin([
     'id' => 'grid-data',
