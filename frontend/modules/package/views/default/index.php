@@ -40,36 +40,27 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 </section>
 
 <section class="articals_wrapper  py-3 ">
-  <div class="container-fluid px-slider">
-    <div class="custom-row pt-4">
-      <div class="custom-col">
-        <div class="topSlider_tour owl-carousel owl-theme">
-          <div class="items_slider">
-            <a href="/operator/eagle-safaris/package">
-              <img src="<?= $this->params['baseurl'] ?>/img/Eagle-Safarisnew.jpg" alt="" class="custom-image">
-            </a>
-          </div>
+  <?php if ($package_banner_model) { ?>
+    <div class="container-fluid px-slider">
+      <div class="custom-row pt-4">
+        <div class="custom-col">
+          <div class="topSlider_tour owl-carousel owl-theme">
+            <?php
+            foreach ($package_banner_model as $package_banner) { ?>
+              <div class="items_slider">
 
-          <div class="items_slider">
-            <a href="/operator/travellersco/package">
-              <img src="<?= $this->params['baseurl'] ?>/img/TravelersCo.jpg" alt="" class="custom-image">
-            </a>
-          </div>
-          <div class="items_slider">
-            <a href="/operator/ankit-kankane-safaris/package">
-              <img src="<?= $this->params['baseurl'] ?>/img/Package-Banner.jpg" alt="" class="custom-image">
-            </a>
-          </div>
-          <div class="items_slider">
-            <a href="/operator/trees-n-tigers/package">
-              <img src="<?= $this->params['baseurl'] ?>/img/OrangendWhiteHotelBooking.jpg" alt="" class="custom-image">
-            </a>
-          </div>
+                <a href="<?= $package_banner->url ?>">
+                  <img src="<?= isset($package_banner->imagepath) ? $package_banner->imagepath : $this->params['baseurl'] . '/img/Eagle-Safarisnew.jpg' ?>" alt="" class="custom-image">
+                </a>
 
+              </div>
+            <?php } ?>
+
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <?php } ?>
   <div class="container-fluid ">
     <?php
     Pjax::begin([

@@ -53,7 +53,7 @@ class FrontendBannerForm extends model
         return [
             [['type', 'url'], 'required'],
             [['type'], 'integer'],
-            ['url', 'string'],
+            [['url'], 'url', 'defaultScheme' => 'https'],
             ['file', 'file', 'when' => function ($model) {
                 return $model->frontend_banner_model->frontend_banner != '';
             }],
