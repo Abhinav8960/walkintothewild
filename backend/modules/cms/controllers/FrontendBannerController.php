@@ -8,6 +8,7 @@ use common\interfaces\StatusInterface;
 use common\models\cms\frontendbanner\form\FrontendBannerForm;
 use common\models\cms\frontendbanner\FrontendBanner;
 use common\models\cms\frontendbanner\FrontendBannerSearch;
+use Yii;
 use yii\web\NotFoundHttpException;
 
 class FrontendBannerController extends Controller
@@ -76,6 +77,39 @@ class FrontendBannerController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    public function actionSetsequence()
+    {
+
+        $types = FrontendBanner::find()->select('type')->distinct()->all();
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('setsequence', [
+                'types' => $types,
+            ]);
+        } else {
+            return $this->render('setsequence', [
+                'types' => $types,
+            ]);
+        }
+    }
+    /**
+     * Save Sequence
+     *
+     * @return void
+     */
+    public function actionSavesequence()
+    {
+
+        $id_array = explode(",", Yii::$app->request->post('ids'));
+        $count = 1;
+        foreach ($id_array as $id) {
+            FrontendBanner::updateAll([
+                'sequence' => $count
+            ], ['id' => $id]);
+            $count++;
+        }
+        return true;
     }
 
     public function actionDelete($id)

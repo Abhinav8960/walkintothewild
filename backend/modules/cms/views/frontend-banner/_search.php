@@ -19,6 +19,14 @@ use yii\widgets\ActiveForm;
 <div class="row">
 
     <div class="col-md-3">
+        <?= $form->field($model, 'type')->dropDownList(
+            GeneralModel::frontendbannertype(),
+            [
+                'prompt' => 'Select Type',
+            ]
+        ) ?>
+    </div>
+    <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel::statusoption(),
             [
@@ -26,6 +34,8 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
+
+
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>

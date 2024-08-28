@@ -44,7 +44,7 @@ class FrontendBannerSearch extends FrontendBanner
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-
+            'sort' => ['defaultOrder' => ['sequence' => SORT_ASC]],
         ]);
 
         $this->load($params);

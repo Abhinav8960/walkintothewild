@@ -10,8 +10,8 @@ $this->params['breadcrumbs_home_url'] = '/cms/frontend-banner';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
-
+$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create', 'style' => 'margin-right:2px !important;']);
+$this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/frontend-banner/setsequence", 'class' => 'btn popupButton btn-primary', 'title' => 'Set Sequence']);
 
 ?>
 <div class="card">
@@ -33,7 +33,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return ($model->type == 1) ? 'Package Banner' : 'Shared Safari Banner';
+                            return isset($model->name) ? $model->name : '';
                         }
                     ],
 

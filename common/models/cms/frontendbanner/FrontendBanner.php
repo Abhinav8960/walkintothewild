@@ -56,4 +56,13 @@ class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\
             return '/storage/frontend_banner/' . $this->id . '/' . $this->frontend_banner;
         }
     }
+
+    public function getName()
+    {
+        if ($this->type == 1) {
+            return 'Package Banner';
+        } else if ($this->type == 2) {
+            return 'Shared Safari Banner';
+        }
+    }
 }
