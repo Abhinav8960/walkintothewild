@@ -86,7 +86,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             <div class="text-left">
                                 <div class="pakageCost ">
                                     <h6 class="fs-4 mb-0 fw-bold "><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> /<span class="perpersonText">Per Person</span></h6>
-                                
+
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <div class="message">
@@ -114,7 +114,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= $package->mastervehicle ? $package->mastervehicle->vehicle_name : 'Not Included' ?></p>
+                                            <p class="mb-0"><?= isset($package->pickdrop) ? $package->pickdrop : '' ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -205,8 +205,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
                                 <div class="pakageCost mb-xxl-0 mb-2">
                                     <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> / <span class="perpersonText">Per Person</span></h6>
-                                    
-                                    
+
+
                                 </div>
                                 <div class="btn_wrap float-lg-end pt-sm-3 pt-lg-0">
                                     <!-- <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button> -->

@@ -45,7 +45,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
                 <div class="icons_restro">
                     <i class="fa-solid fa-car"></i>
-                    <p class="mb-0"><?= isset($model->mastervehicle) ? $model->mastervehicle->vehicle_name : 'Not Included' ?></p>
+                    <p class="mb-0"><?= isset($model->pickdrop) ? $model->pickdrop : '' ?></p>
                 </div>
                 <div class="icons_restro">
                     <i class="fa-solid fa-utensils"></i>
