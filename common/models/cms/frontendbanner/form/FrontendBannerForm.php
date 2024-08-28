@@ -1,12 +1,12 @@
 <?php
 
-namespace common\models\cms\packagebanner\form;
+namespace common\models\cms\frontendbanner\form;
 
+use common\models\cms\frontendbanner\FrontendBanner;
 use Yii;
 use yii\base\Model;
 use common\models\GeneralModel;
-use yii\web\UploadedFile;
-use common\models\cms\packagebanner\PackageBanner;
+
 
 
 
@@ -14,29 +14,31 @@ use common\models\cms\packagebanner\PackageBanner;
  * @author Aayush Kuamr <aayushsaini9999@gmial.com>
  * 
  */
-class PackageBannerForm extends model
+class FrontendBannerForm extends model
 {
 
     public $file;
     public $status;
     public $url;
+    public $type;
     public $status_option = [];
-    public $package_banner_model;
+    public $frontend_banner_model;
 
 
-    public function __construct(PackageBanner $package_banner_model = null)
+    public function __construct(FrontendBanner $frontend_banner_model = null)
     {
 
-        $this->package_banner_model = Yii::createObject([
-            'class' => PackageBanner::className()
+        $this->frontend_banner_model = Yii::createObject([
+            'class' => FrontendBanner::className()
         ]);
 
 
 
-        if ($package_banner_model  != '') {
-            $this->package_banner_model = $package_banner_model;
-            $this->url = $this->package_banner_model->url;
-            $this->status = $this->package_banner_model->status;
+        if ($frontend_banner_model  != '') {
+            $this->frontend_banner_model = $frontend_banner_model;
+            $this->url = $this->frontend_banner_model->url;
+            $this->type = $this->frontend_banner_model->type;
+            $this->status = $this->frontend_banner_model->status;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -49,9 +51,11 @@ class PackageBannerForm extends model
     public function rules()
     {
         return [
+            [['type', 'url'], 'required'],
+            [['type'], 'integer'],
             ['url', 'string'],
             ['file', 'file', 'when' => function ($model) {
-                return $model->package_banner_model->package_banner != '';
+                return $model->frontend_banner_model->frontend_banner != '';
             }],
             ['file', 'required', 'on' => 'create'],
             [
@@ -68,8 +72,8 @@ class PackageBannerForm extends model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['create'] = ['url', 'status', 'file'];
-        $scenarios['update'] = ['url', 'status', 'file'];
+        $scenarios['create'] = ['type', 'url', 'status', 'file'];
+        $scenarios['update'] = ['type', 'url', 'status', 'file'];
 
         return $scenarios;
     }
@@ -82,6 +86,7 @@ class PackageBannerForm extends model
         return [
             'file' => 'Package Banner',
             'url' => 'Link',
+            'type' => 'Type',
             'status' => 'Status',
         ];
     }
@@ -92,31 +97,32 @@ class PackageBannerForm extends model
      */
     public function initializeForm()
     {
-        $this->package_banner_model->url = $this->url;
-        $this->package_banner_model->status = $this->status;
+        $this->frontend_banner_model->url = $this->url;
+        $this->frontend_banner_model->type = $this->type;
+        $this->frontend_banner_model->status = $this->status;
     }
 
     public function uploadFile()
     {
         if ($this->file) {
-            $storagePath = Yii::$app->params['datapath'] . '/package_banner';
+            $storagePath = Yii::$app->params['datapath'] . '/frontend_banner';
 
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
-            $storagePath = $storagePath . '/' . $this->package_banner_model->id;
+            $storagePath = $storagePath . '/' . $this->frontend_banner_model->id;
             if (!file_exists($storagePath)) {
                 mkdir($storagePath);
                 chmod($storagePath, 0777);
             }
 
-            $fileName = 'package_banner_' . time() . '.' . $this->file->extension;
+            $fileName = 'frontend_banner_' . time() . '.' . $this->file->extension;
             $filePath = $storagePath . '/' . $fileName;
 
             if ($this->file->saveAs($filePath)) {
-                $this->package_banner_model->package_banner = $fileName;
-                $this->package_banner_model->save(false);
+                $this->frontend_banner_model->frontend_banner = $fileName;
+                $this->frontend_banner_model->save(false);
             }
         }
     }

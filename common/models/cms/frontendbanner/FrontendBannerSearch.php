@@ -1,12 +1,13 @@
 <?php
 
-namespace common\models\cms\sharedsafaribanner;
+namespace  common\models\cms\frontendbanner;
 
+use common\models\cms\frontendbanner\FrontendBanner;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 
-class SharedSafariBannerSearch extends SharedSafariBanner
+class FrontendBannerSearch extends FrontendBanner
 {
     /**
      * {@inheritdoc}
@@ -14,8 +15,8 @@ class SharedSafariBannerSearch extends SharedSafariBanner
     public function rules()
     {
         return [
-            [['status'], 'integer'],
-            [['shared_safari_banner'], 'string'],
+            [['status', 'type'], 'integer'],
+            [['frontend_banner'], 'string'],
         ];
     }
 
@@ -37,7 +38,7 @@ class SharedSafariBannerSearch extends SharedSafariBanner
      */
     public function search($params)
     {
-        $query = SharedSafariBanner::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND]]);
+        $query = FrontendBanner::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
@@ -57,6 +58,7 @@ class SharedSafariBannerSearch extends SharedSafariBanner
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'type' => $this->type,
             'status' => $this->status,
         ]);
 

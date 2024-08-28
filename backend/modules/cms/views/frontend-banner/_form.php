@@ -10,13 +10,13 @@ use yii\bootstrap5\ActiveForm;
 <div class="row">
 
     <?php
-    if ($model->package_banner_model->package_banner) { ?>
+    if ($model->frontend_banner_model->frontend_banner) { ?>
         <div class="col-md-5">
             <?= $form->field($model, 'file')->fileInput()->label('Image (JPEG / JPG / PNG / 250kb)') ?>
         </div>
 
         <div class="col-md-1">
-            <?php echo '<img src="' . $model->package_banner_model->imagepath . '" width="75" height="75"></img>'; ?>
+            <?php echo '<img src="' . $model->frontend_banner_model->imagepath . '" width="75" height="75"></img>'; ?>
         </div>
     <?php } else { ?>
         <div class="col-md-6">
@@ -26,7 +26,10 @@ use yii\bootstrap5\ActiveForm;
     <div class="col-md-6">
         <?= $form->field($model, 'url')->textInput(['placeholder' => 'Enter Url']) ?>
     </div>
-    <?php if ($model->package_banner_model->id) { ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'type')->dropDownList(GeneralModel::frontendbannertype(), ['prompt' => 'Select Type']) ?>
+    </div>
+    <?php if ($model->frontend_banner_model->id) { ?>
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
         </div>

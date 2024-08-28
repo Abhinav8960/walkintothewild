@@ -5,16 +5,16 @@ namespace backend\modules\cms\controllers;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 use common\interfaces\StatusInterface;
-use common\models\cms\sharedsafaribanner\form\SharedSafariBannerForm;
-use common\models\cms\sharedsafaribanner\SharedSafariBanner;
-use common\models\cms\sharedsafaribanner\SharedSafariBannerSearch;
+use common\models\cms\frontendbanner\form\FrontendBannerForm;
+use common\models\cms\frontendbanner\FrontendBanner;
+use common\models\cms\frontendbanner\FrontendBannerSearch;
 use yii\web\NotFoundHttpException;
 
-class SharedSafariBannerController extends Controller
+class FrontendBannerController extends Controller
 {
     public function actionIndex()
     {
-        $searchModel = new SharedSafariBannerSearch();
+        $searchModel = new FrontendBannerSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -25,7 +25,7 @@ class SharedSafariBannerController extends Controller
 
     public function actionCreate()
     {
-        $model = new SharedSafariBannerForm();
+        $model = new FrontendBannerForm();
         $model->scenario = 'create';
         $model->status = StatusInterface::STATUS_ACTIVE;
 
@@ -34,7 +34,7 @@ class SharedSafariBannerController extends Controller
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_banner_model->save(false)) {
+                    if ($model->frontend_banner_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
                         return $this->redirect(['index']);
@@ -42,7 +42,7 @@ class SharedSafariBannerController extends Controller
                 }
             }
         } else {
-            $model->shared_safari_banner_model->loadDefaultValues();
+            $model->frontend_banner_model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -52,8 +52,8 @@ class SharedSafariBannerController extends Controller
 
     public function actionUpdate($id)
     {
-        $package_banner_model = $this->findModel($id);
-        $model = new SharedSafariBannerForm($package_banner_model);
+        $frontend_banner_model = $this->findModel($id);
+        $model = new FrontendBannerForm($frontend_banner_model);
         $model->scenario = 'update';
 
         if ($this->request->isPost) {
@@ -61,16 +61,16 @@ class SharedSafariBannerController extends Controller
                 $model->file = UploadedFile::getInstance($model, 'file');
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->shared_safari_banner_model->save()) {
+                    if ($model->frontend_banner_model->save()) {
                         $model->uploadFile();
-                        $model->shared_safari_banner_model->save();
+                        $model->frontend_banner_model->save();
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->shared_safari_banner_model->loadDefaultValues();
+            $model->frontend_banner_model->loadDefaultValues();
         }
 
         return $this->render('update', [
@@ -90,7 +90,7 @@ class SharedSafariBannerController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SharedSafariBanner::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = FrontendBanner::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

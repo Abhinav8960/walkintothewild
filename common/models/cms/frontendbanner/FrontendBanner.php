@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\cms\packagebanner;
+namespace common\models\cms\frontendbanner;
 
 use Yii;
 use common\models\GeneralModel;
@@ -9,24 +9,19 @@ use common\traits\CommanRelationship;
 /**
  * This is the model class for table "master_package_banner".
  */
-class PackageBanner extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
 {
     use CommanRelationship;
+    const TYPE_PACKAGE = 1;
+    const TYPE_SHARED_SAFARI = 2;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'master_package_banner';
+        return 'master_frontend_banner';
     }
 
-    // public function behaviors()
-    // {
-    //     return [
-    //         \yii\behaviors\TimestampBehavior::className(),
-    //         \yii\behaviors\BlameableBehavior::className(),
-    //     ];
-    // }
 
     /**
      * {@inheritdoc}
@@ -34,8 +29,9 @@ class PackageBanner extends \yii\db\ActiveRecord implements \common\interfaces\S
     public function rules()
     {
         return [
-            [['package_banner', 'url'], 'string'],
-            [['package_banner', 'url'], 'safe'],
+            [['type'], 'integer'],
+            [['frontend_banner', 'url'], 'string'],
+            [['frontend_banner', 'url'], 'safe'],
         ];
     }
 
@@ -46,6 +42,7 @@ class PackageBanner extends \yii\db\ActiveRecord implements \common\interfaces\S
     {
         return [
             'id' => 'ID',
+            'type' => 'Type',
             'status' => 'Status',
             'url' => 'Link',
             'statuslabel' => 'Status',
@@ -55,8 +52,8 @@ class PackageBanner extends \yii\db\ActiveRecord implements \common\interfaces\S
 
     public function getImagepath()
     {
-        if ($this->package_banner != '') {
-            return '/storage/package_banner/' . $this->id . '/' . $this->package_banner;
+        if ($this->frontend_banner != '') {
+            return '/storage/frontend_banner/' . $this->id . '/' . $this->frontend_banner;
         }
     }
 }

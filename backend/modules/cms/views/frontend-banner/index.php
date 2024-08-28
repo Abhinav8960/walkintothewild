@@ -5,8 +5,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 
-$this->title = 'Shared Safari Banner';
-$this->params['breadcrumbs_home_url'] = '/cms/shared-safari-banner';
+$this->title = 'Frontend Banner';
+$this->params['breadcrumbs_home_url'] = '/cms/frontend-banner';
 $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
@@ -28,6 +28,14 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'class' => 'yii\grid\SerialColumn',
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
+                    [
+                        'label' => 'Type',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return ($model->type == 1) ? 'Package Banner' : 'Shared Safari Banner';
+                        }
+                    ],
 
                     [
                         'label' => 'Image',
@@ -37,6 +45,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                             return Html::img($model->imagepath, ['alt' => 'Banner Photograph', 'style' => 'max-width:60px;']);
                         }
                     ],
+
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
