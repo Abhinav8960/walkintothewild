@@ -24,6 +24,7 @@ use common\models\package\PackageSafariPark;
 use frontend\models\form\PackageEnquiryForm;
 use frontend\models\PackageCommentReportForm;
 use common\Helper\FrontendNotificationHelper;
+use common\models\cms\frontendbanner\FrontendBanner;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -63,9 +64,12 @@ class DefaultController extends FrontendBaseController
         $dataProvider->query->andWhere("owned_by_id IN (SELECT id from safari_operator WHERE status=1)");
         $models = $dataProvider->getModels();
 
+        $package_banner_model = FrontendBanner::find()->where(['type' => FrontendBanner::TYPE_PACKAGE, 'status' => StatusInterface::STATUS_ACTIVE])->orderBy(['sequence' => SORT_ASC])->all();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'package_banner_model' => $package_banner_model,
             'models' => $models,
             'device' => $this->device(),
         ]);

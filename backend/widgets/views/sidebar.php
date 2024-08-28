@@ -425,6 +425,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/banner/index",
 											"/cms/banner/create",
 											"/cms/banner/update",
+											"/cms/frontend-banner",
+											"/cms/frontend-banner/index",
+											"/cms/frontend-banner/create",
+											"/cms/frontend-banner/update",
+
 											"/cms/feature-article/index",
 											"/cms/feature-rare-exotic/index",
 											"/cms/feature-tag/index",
@@ -456,6 +461,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/banner/index",
 														"/cms/banner/create",
 														"/cms/banner/update",
+														"/cms/frontend-banner/index",
+														"/cms/frontend-banner/create",
+														"/cms/frontend-banner/update",
+
 														"/cms/feature-park/index",
 														"/cms/feature-article/index",
 														"/cms/feature-rare-exotic/index",
@@ -482,6 +491,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/article-by-user/create",
 													"/cms/article-by-user/comment",
 													"/cms/banner",
+													"/cms/frontend-banner",
+
 													"/cms/about",
 													"/cms/disclaimer",
 													"/cms/privacypolicy",
@@ -513,6 +524,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/article-by-user/create",
 																				"/cms/article-by-user/comment",
 																				"/cms/banner",
+																				"/cms/frontend-banner",
+
 																				"/cms/about",
 																				"/cms/disclaimer",
 																				"/cms/privacypolicy",
@@ -523,6 +536,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/banner/index",
 																				"/cms/banner/create",
 																				"/cms/banner/update",
+																				"/cms/frontend-banner/index",
+																				"/cms/frontend-banner/create",
+																				"/cms/frontend-banner/update",
+
 																				"/cms/feature-article/index",
 																				"/cms/feature-rare-exotic/index",
 																				"/cms/feature-tag/index",
@@ -667,6 +684,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								</ul>
 							</li>
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/banner/index", "/cms/banner/create", "/cms/banner/update")) ? "active" : "" ?>" href="/cms/banner/index">Banners</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/cms/frontend-banner/index", "/cms/frontend-banner/create", "/cms/frontend-banner/update")) ? "active" : "" ?>" href="/cms/frontend-banner/index">Frontend Banner</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/about")) ? "active" : "" ?>" href="/cms/about">About</a></li> -->
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/disclaimer")) ? "active" : "" ?>" href="/cms/disclaimer">Disclaimer</a></li> -->
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li> -->
