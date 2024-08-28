@@ -6,7 +6,7 @@ use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
 use common\models\operator\SafariOperatorRating;
 use common\models\sharesafari\ShareSafariIntrested;
-
+use common\models\User;
 
 /* @var $this yii\web\View */
 
@@ -74,10 +74,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                                             </div>
                                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3">
-                                                <?php if ($operatorfollowers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
+                                                <?php if ($operatorfollowers = $operator->getFollowerlist()->joinWith('user')->where(['safari_operator_follow.status' => 1, 'user.status' => User::STATUS_ACTIVE])->all()) {
                                                     foreach ($operatorfollowers as $operatorfollower) { ?>
                                                         <div class="col">
-                                                            <section class="mx-auto" >
+                                                            <section class="mx-auto">
                                                                 <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollower->user, 'profile_user' => $user]);  ?>
                                                             </section>
                                                         </div>
