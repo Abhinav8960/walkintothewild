@@ -65,7 +65,15 @@ class SharedsafariController extends FrontendBaseController
         $model = new CreateDepartureForm();
         $model->host_user_id =  $safari_operator->id;
         $model->type = 2;
-        $model->host_type = Yii::$app->user->identity->account_type;
+
+        if ($safari_operator->category_id == 1) {
+            $model->host_type = 3;
+        } elseif ($safari_operator->category_id == 2) {
+            $model->host_type = 2;
+        } else {
+            $model->host_type = Yii::$app->user->identity->account_type;
+        }
+
         $model->status = ShareSafari::STATUS_SUSPEND;
         $model->action_url = '/manage/sharedsafari/create-fixed-departure';
         $model->action_validate_url = '/manage/sharedsafari/departure-validate';
