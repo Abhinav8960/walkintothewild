@@ -13,31 +13,34 @@ use yii\helpers\Url;
         <button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
             Discussion</button>
         <div class="comments_safari bg-white">
-            <!-- <div class="top_replysafari px-3">
-                <?php if ($share_safari->host_user_id) { ?>
-                    <div class="comments-persons">
-                        <div class="postcomment d-flex gap-2">
-                            <div class="avatar">
-                                <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt=""></a>
-                            </div>
-                            <div class="text_com">
-                                <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>">
-                                    <h6 class="nameavatr"><?= isset($share_safari->organizedbyname) ? $share_safari->organizedbyname : 'N/A' ?></h6>
-                                </a>
-                                <?php if ($share_safari->safari_plan && $share_safari->type == $share_safari::TYPE_SAFARI) { ?>
+
+            <?php if ($share_safari->host_user_id) { ?>
+                <?php if ($share_safari->safari_plan && $share_safari->type == $share_safari::TYPE_SAFARI) { ?>
+                    <div class="top_replysafari px-3">
+                        <div class="comments-persons">
+                            <div class="postcomment d-flex gap-2">
+                                <div class="avatar">
+                                    <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>"><img src="<?= $share_safari->user && $share_safari->user->avatar <> '' ? $share_safari->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt=""></a>
+                                </div>
+                                <div class="text_com">
+                                    <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>">
+                                        <h6 class="nameavatr"><?= isset($share_safari->organizedbyname) ? $share_safari->organizedbyname : 'N/A' ?></h6>
+                                    </a>
+
                                     <div class="profile-description">
-                                            <div class="text show-more-height">
+                                        <div class="text show-more-height">
                                             <?= $share_safari->safari_plan; ?>
-                                            </div>
-                                            <div class="show-more">See More</div>
                                         </div>
-                                
-                                <?php } ?>
+                                        <div class="show-more">See More</div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
                 <?php } ?>
-            </div> -->
+            <?php } ?>
+
             <div class="commentsOther  position-relative">
                 <?php if ($parent_comments = $share_safari->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
                     foreach ($parent_comments as $comments) {
