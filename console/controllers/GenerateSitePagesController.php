@@ -109,6 +109,8 @@ class GenerateSitePagesController extends Controller
     ];
 
     $this->get_join_safari_site_pages();
+    $this->get_unjoin_safari_site_pages();
+
     $this->process($group_pages);
   }
 
@@ -660,6 +662,64 @@ class GenerateSitePagesController extends Controller
               'slug' => '',
               'category' => 'Shared Safari',
               'sub_category' => 'Join Safari',
+              'get_parameter' => $get_parameter,
+              'post_parameter' => $post_parameter,
+              'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
+              'counter' => 0,
+              'is_get' => $is_get,
+              'is_post' => $is_post,
+              'is_ajax' => $is_ajax,
+              'status' => 1
+            ];
+          }
+        } else {
+          //mark as disabled
+          SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['category' => 'Shared Safari', 'sub_category' => 'Join Safari', 'url' => $url]);
+        }
+      }
+
+      if (count($temp_insert_data)) {
+        Yii::$app->db->createCommand()->batchInsert('site_pages', ['content_id', 'content_table', 'url', 'url_type', 'slug', 'category', 'sub_category', 'get_parameter', 'post_parameter', 'last_update_at', 'counter', 'is_get', 'is_post', 'is_ajax', 'status'], $temp_insert_data)->execute();
+      }
+    }
+  }
+
+  protected function get_unjoin_safari_site_pages()
+  {
+    $records = ShareSafari::find()->all();
+    if (count($records)) {
+      $temp_insert_data = [];
+      foreach ($records as $row) {
+        $url = "sharedsafari/" . $row->organizedslug . "/" . $row->slug . "/unjoin";
+        if ($row['status'] == 1) {
+          //update existing record
+          $title = $description = $keywords = $image = '';
+
+          $s_request = $this->getrequestinfo($url);
+          $get_parameter = $s_request['get_parameter'];
+          $post_parameter = $s_request['post_parameter'];
+          $is_get = $s_request['is_get'];
+          $is_post = $s_request['is_post'];
+          $is_ajax = $s_request['is_ajax'];
+
+          $model = SitePages::find()->andWhere(['category' => 'Shared Safari'])->andWhere(['sub_category' => 'Join Safari'])->andWhere(['url' => $url])->one();
+          if ($model) {
+            $model->url = $url;
+            $model->get_parameter  = $get_parameter;
+            $model->post_parameter  = $post_parameter;
+            $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
+            $model->status = 1;
+            $model->save(false);
+          } else {
+            //insert new record
+            $temp_insert_data[] = [
+              'content_id' => 0,
+              'content_table' => '',
+              'url' => $url,
+              'url_type' => 'Primary',
+              'slug' => '',
+              'category' => 'Shared Safari',
+              'sub_category' => 'Unjoin Safari',
               'get_parameter' => $get_parameter,
               'post_parameter' => $post_parameter,
               'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
