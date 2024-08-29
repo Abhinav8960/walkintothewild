@@ -126,7 +126,7 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/safari_4391688.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $share_safari->no_of_safari ?> Safaris</p>
@@ -156,7 +156,7 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/resort_11834952.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset(GeneralModel::budgetoption()[$share_safari->stay_category_id]) ? GeneralModel::budgetoption()[$share_safari->stay_category_id] : 'Not Included' ?></p>
