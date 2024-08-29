@@ -569,6 +569,7 @@ class DefaultController extends FrontendBaseController
         $query = Article::find()->where([
             'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
             'status' => Article::STATUS_ACTIVE,
+            'is_approved' => 1,
             'user_id' => $operator->id
         ]);
         $articledataProvider = new \yii\data\ActiveDataProvider([
@@ -838,6 +839,7 @@ class DefaultController extends FrontendBaseController
         $query = Article::find()->where([
             'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
             'status' => Article::STATUS_ACTIVE,
+            'is_approved' => 1,
             'user_id' => $operator->id
         ]);
         $dataProvider = new \yii\data\ActiveDataProvider([
