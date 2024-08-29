@@ -222,8 +222,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                     <div class="row">
                         <div class="col-12 pt-4">
-                            <div class="text_safaripackage">
-                                <p><?= $package->package_description ?></p>
+                            <div class="text_safaripackage package_description profile-description">
+                                <div class="text show-more-height">
+                                    <p>
+                                        <?= $package->package_description  ?>
+                                    </p>
+                                </div>
+                                <div class="package-show-more show-more">See More</div>
                             </div>
                         </div>
                     </div>
@@ -275,11 +280,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     </h2>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
 
-                                        <div class="accordion-body profile-description">
-                                            <div class="text show-more-height">
-                                                <?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?>
-                                            </div>
-                                            <div class="show-more">See More</div>
+                                        <div class="accordion-body profile-description package_itinerary_overview">
+                                            <?php if ($package->package_itinerary_overview <> '') { ?>
+                                                <div class="text show-more-height">
+                                                    <?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?>
+                                                </div>
+                                                <div class="description-show-more show-more">See More</div>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -450,11 +457,13 @@ function enquiryfunction() {
 	});
 }
 enquiryfunction();
-const textContainer = $(".profile-description .text");
-    const showMoreButton = $(".profile-description .show-more");
-    const lineHeight = parseInt(textContainer.css('line-height')); 
 
-    const threeLinesHeight = lineHeight * 3;
+
+    var textContainer = $(".package_description .text");
+    var showMoreButton = $(".package_description .package-show-more");
+    var lineHeight = parseInt(textContainer.css('line-height')); 
+
+    var threeLinesHeight = lineHeight * 3;
 
     if (textContainer[0].scrollHeight <= threeLinesHeight) {
         showMoreButton.hide();
@@ -462,9 +471,31 @@ const textContainer = $(".profile-description .text");
         showMoreButton.show();
     }
 
-    $(".show-more").click(function () {
+    $(".package-show-more").click(function () {
         textContainer.toggleClass("show-more-height");
         if (textContainer.hasClass("show-more-height")) {
+            $(this).text("See More");
+        } else {
+            $(this).text("See Less");
+        }
+    });
+
+
+    var textContainer_itineary = $(".package_itinerary_overview .text");
+    var showMoreButton_itinerary = $(".package_itinerary_overview .description-show-more");
+    var lineHeight_iteneary = parseInt(textContainer_itineary.css('line-height')); 
+
+    var threeLinesHeight_itenary = lineHeight_iteneary * 3;
+
+    if (textContainer_itineary[0].scrollHeight <= threeLinesHeight_itenary) {
+        showMoreButton_itinerary.hide();
+    } else {
+        showMoreButton_itinerary.show();
+    }
+
+    $(".description-show-more").click(function () {
+        textContainer_itineary.toggleClass("show-more-height");
+        if (textContainer_itineary.hasClass("show-more-height")) {
             $(this).text("See More");
         } else {
             $(this).text("See Less");
