@@ -40,17 +40,15 @@ $this->params['title'] = $this->title;
                                                                 <a class="join_btn updateBtn_artical text-center px-3 py-1" href="<?= Url::toRoute(['update', 'slug' => $article->slug]) ?>">Update</a>
                                                             <?php } ?>
 
-                                                            <figure class="image"><a href="/article/<?= $article->slug ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                                            <figure class="image"><a href="<?= Url::toRoute(['view', 'slug' => $article->slug, 'user_handle' => $user->user_handle]) ?>"><img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                                                             </figure>
                                                         </div>
                                                         <div class="lower-content">
-                                                            <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><?= $article->title ?> </a></h3>
-                                                            <div class="artical-info justify-content-center">
-                                                                <a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a>
-                                                            </div>
+                                                            <h3><a href="<?= Url::toRoute(['view', 'slug' => $article->slug, 'user_handle' => $user->user_handle]) ?>"><?= $article->title ?> </a></h3>
+
 
                                                         </div>
-                                                        <div class="link"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $article->slug]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
+                                                        <div class="link"><a href="<?= Url::toRoute(['view', 'slug' => $article->slug, 'user_handle' => $user->user_handle]) ?>"><i class="fa-solid fa-arrow-right"></i></a></div>
                                                     </div>
                                                 </div>
                                         <?php }

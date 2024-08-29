@@ -54,7 +54,11 @@ class DefaultController extends FrontendBaseController
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])
+            ->andWhere(ArticleSearch::addtionalQuery())
+            ->limit(1)->one();
+
+
         if (empty($article)) {
             return $this->redirect(['/article']);
             throw new NotFoundHttpException('The requested page does not exist.');

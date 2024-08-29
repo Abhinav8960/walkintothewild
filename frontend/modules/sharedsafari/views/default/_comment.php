@@ -13,7 +13,7 @@ use yii\helpers\Url;
         <button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
             Discussion</button>
         <div class="comments_safari bg-white">
-            <div class="top_replysafari px-3">
+            <!-- <div class="top_replysafari px-3">
                 <?php if ($share_safari->host_user_id) { ?>
                     <div class="comments-persons">
                         <div class="postcomment d-flex gap-2">
@@ -37,7 +37,7 @@ use yii\helpers\Url;
                         </div>
                     </div>
                 <?php } ?>
-            </div>
+            </div> -->
             <div class="commentsOther  position-relative">
                 <?php if ($parent_comments = $share_safari->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
                     foreach ($parent_comments as $comments) {
