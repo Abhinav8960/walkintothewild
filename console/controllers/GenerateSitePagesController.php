@@ -702,7 +702,7 @@ class GenerateSitePagesController extends Controller
           $is_post = $s_request['is_post'];
           $is_ajax = $s_request['is_ajax'];
 
-          $model = SitePages::find()->andWhere(['category' => 'Shared Safari'])->andWhere(['sub_category' => 'Join Safari'])->andWhere(['url' => $url])->one();
+          $model = SitePages::find()->andWhere(['category' => 'Shared Safari'])->andWhere(['sub_category' => 'Unjoin Safari'])->andWhere(['url' => $url])->one();
           if ($model) {
             $model->url = $url;
             $model->get_parameter  = $get_parameter;
@@ -732,7 +732,7 @@ class GenerateSitePagesController extends Controller
           }
         } else {
           //mark as disabled
-          SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['category' => 'Shared Safari', 'sub_category' => 'Join Safari', 'url' => $url]);
+          SitePages::updateAll(['status' => 0, 'updated_at' => date('Y-m-d H:i:s')], ['category' => 'Shared Safari', 'sub_category' => 'Unjoin Safari', 'url' => $url]);
         }
       }
 
