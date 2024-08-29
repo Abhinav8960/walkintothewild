@@ -226,7 +226,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <div class="col-lg-4 d-lg-block  mobile_didplay_block">
                             <div class="d-flex justify-content-between flex-wrap gap-2 align-items-center mt-lg-0 mt-3">
                                 <div class="pakageCost mb-2 mb-md-2 mb-xxl-0">
-                                    <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6> 
+                                    <h6 class="fs-5 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= number_format($share_safari->cost_per_person) ?> / <span class="perpersonText">Per Person</span></h6>
                                 </div>
                                 <!-- <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
                                     <?php if ($share_safari->host_user_id == Yii::$app->user->id && $share_safari->status != 2) { ?>
@@ -312,7 +312,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 
-<section class="safari_wrapper mb-5 margin_bottomfooter">
+<section class="safari_wrapper mb-5 ">
     <div class="container-lg">
         <div class="row mb-lg-5  mt-5  itenary_tabs">
             <div class="col-lg-9 col-xl-9  safartabs position-relative">
@@ -470,6 +470,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
             </div>
         </div>
+        <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park]) ?>
+
+</section>
+
+
+<section class="safariduring_sesons paddiinTop_add margin_bottomfooter">
+    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 
 
