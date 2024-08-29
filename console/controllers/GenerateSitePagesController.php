@@ -155,7 +155,26 @@ class GenerateSitePagesController extends Controller
     $start = microtime(true);
 
     $this->get_user_follow();
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
+  }
+
+  public function actionSitePage7()
+  {
+    $start = microtime(true);
+
     $this->get_operator_follow();
+
+    $end = microtime(true);
+    $executionTime = $end - $start;
+    echo "Script execution time: " . $executionTime . " seconds";
+  }
+
+  public function actionSitePage8()
+  {
+    $start = microtime(true);
     $this->get_wishlist();
 
     $end = microtime(true);
