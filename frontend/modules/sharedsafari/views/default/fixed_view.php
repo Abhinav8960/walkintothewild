@@ -153,7 +153,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shared Safari">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shared Safari">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $share_safari->no_of_safari ?> Shared Safari
