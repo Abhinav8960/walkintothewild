@@ -12,7 +12,7 @@ use yii\helpers\Url;
         <div class="box_dropdown">
 
             <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="d-block pb-1">View Profile</a>
-            <?php if (Yii::$app->user->id != $user->id) { ?>
+            <?php if (Yii::$app->user->identity && Yii::$app->user->id != $user->id) { ?>
                 <a href="<?= Url::toRoute(['/profile/search/blocked', 'user_handle' => $user->user_handle]) ?>" class="d-block">Block</a>
             <?php } ?>
         </div>
@@ -37,13 +37,13 @@ use yii\helpers\Url;
         </a>
         <div class="followunfollowbtn border-top ">
             <?php
-            if (Yii::$app->user->identity) {
-                if (Yii::$app->user->identity->id == $profile_user->id) { ?>
+            if ($login_user = Yii::$app->user->identity) {
+                if ($login_user->id <> $user->id) { ?>
                     <div class="row">
                         <div class="col-6 divider">
                             <div class="folollowBtns ">
                                 <?php
-                                $follower = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => $profile_user->id, 'status' => 1])->one();
+                                $follower = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => $login_user->id, 'status' => 1])->one();
                                 if ($follower) { ?>
                                     <a href="<?= Url::toRoute(['/profile/default/unfollow', 'user_handle' => $user->user_handle]) ?>" data-method="POST">Unfollow</a>
                                 <?php  } else { ?>
@@ -65,8 +65,21 @@ use yii\helpers\Url;
                             </div>
                         </div>
                     </div>
-            <?php }
-            } ?>
+                <?php }
+            } else { ?>
+                <div class="row">
+                    <div class="col-6 divider">
+                        <div class="folollowBtns">
+                            <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/default/follow', 'user_handle' => $user->user_handle]) ?>">Follow</a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="massegses">
+                            <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>">Message</a>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 

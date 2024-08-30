@@ -61,8 +61,8 @@ $this->title = $user->name;
                         <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
                     <?php } else if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) { ?>
                         <a href="<?= Url::toRoute(['/account']) ?>" class="follow_massge rounded-2"><i class="fa fa-edit"></i> Edit Profile</a>
-                    <?php } else {  ?> <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn " data-method="POST">Follow</a>
-                        <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
+                    <?php } else {  ?> <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/profile/default/follow', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Follow</a>
+                        <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="parkrevieBtn">Message</a>
                     <?php } ?>
                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
                         if ($user->is_safari_operator != 1 && in_array($user->account_type, [2, 3])) {
