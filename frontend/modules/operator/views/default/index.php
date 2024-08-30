@@ -102,7 +102,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                         </div>
                     </div>
-                    <div class="gridview mt-4">
+                    <div class="gridview mt-4 pb-5">
                         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-4 gx-xxl-2 g-xl-4 gx-lg-4">
                             <?php if ($operators) {
                                 foreach ($operators as $operator) {
@@ -121,18 +121,19 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         <!-- <img src="<?= $this->params['baseurl'] ?>/img/Pugdundee.jpg" alt="" class="w-100" loading="lazy"> -->
                                                     </div>
                                                     <div class="provider_details  px-2">
-                                                        <h6 class="pname py-3 border-top"><?= $operator->businessname ?></h6>
+                                                        <h6 class="pname py-3 border-top"><?= $operator->businessname ?> </h6>
+                                                        <p class="text-dark"><?= $operator->categorytitle ?></p>
                                                         <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
 
                                                             <div class="ratings">
 
-                                                                <p class="mb-0"> 0 
+                                                                <p class="mb-0"> 0
                                                                     <?= GeneralModel::ratiing_views(0); ?>
                                                                 </p>
                                                             </div>
                                                             <div class="googlerating">
                                                                 <!--                                                    <p class="mb-0"><?= isset($operator->google_review_count) ? $operator->google_review_count . ' Reviews' : '0 Reviews' ?> </p>-->
-                                                    <p class="mb-0">0 Reviews </p>
+                                                                <p class="mb-0">0 Reviews </p>
                                                             </div>
                                                         </div>
 
