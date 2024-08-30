@@ -83,8 +83,8 @@ $this->params['baseurl'] = $webasset->baseUrl;
             <div class="col-6">
                 <div class="users">
                     <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
-                        $count = $share_safari->getIntrested()->where(['status' => 1])->count();
-                        $avatar_count = 3;
+                        // $count = $share_safari->getIntrested()->where(['status' => 1])->count();
+                        // $avatar_count = 3;
                         foreach ($interests as $interest) {
                             if ($user_interested = $interest->user) {
                     ?>
@@ -94,7 +94,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         $count = $share_safari->getIntrested()->where(['status' => 1])->count();
                         $avatar_count = 3;
                         $data = $count - $avatar_count;
-                        if ($data >= 3) { ?>
+                        if ($count >= 3) { ?>
                             <div class="roundes_countuser">
                                 <?= $data ?>+
                             </div>
