@@ -246,7 +246,7 @@ $this->params['title'] = $this->title; ?>
         </div>
     </div>
 </section>
-<section class="safari_wrapper  pt-3">
+<section class="safari_wrapper margin_bottomfooter pt-3">
     <div class="container-lg">
         <div class="row mb-5 pb-lg-5 pb-0">
             <?= $this->render('_comment', ['share_safari' => $share_safari, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
@@ -300,15 +300,11 @@ $this->params['title'] = $this->title; ?>
                 </div>
             </div>
         </div> -->
-        <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park]) ?>
+        <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park, 'active_safari' => $share_safari]) ?>
 
     </div>
 </section>
 
-
-<section class="safariduring_sesons paddiinTop_add margin_bottomfooter">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
-</section>
 
 <!-- Modal -->
 

@@ -312,7 +312,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
 </section>
 
-<section class="safari_wrapper mb-5 ">
+<section class="safari_wrapper mb-5 margin_bottomfooter">
     <div class="container-lg">
         <div class="row mb-lg-5  mt-5  itenary_tabs">
             <div class="col-lg-9 col-xl-9  safartabs position-relative">
@@ -470,13 +470,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
             </div>
         </div>
-        <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park]) ?>
+        <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park, 'active_safari' => $share_safari]) ?>
 
-</section>
-
-
-<section class="safariduring_sesons paddiinTop_add margin_bottomfooter">
-    <?= \frontend\widgets\FeatureParkWidget::widget() ?>
 </section>
 
 

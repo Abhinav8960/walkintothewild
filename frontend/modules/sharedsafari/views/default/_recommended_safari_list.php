@@ -3,7 +3,7 @@
 use yii\helpers\Url;
 use common\models\sharesafari\ShareSafari;
 
-$shared_safaries = ShareSafari::find()->select("*,(SELECT count(1) FROM `share_safari_intrested` WHERE share_safari_id=share_safari.id and share_safari_intrested.status=1) AS `instreted_user_count`")->where(['status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(10)->orderby(['instreted_user_count' => SORT_DESC])->all();
+$shared_safaries = ShareSafari::find()->select("*,(SELECT count(1) FROM `share_safari_intrested` WHERE share_safari_id=share_safari.id and share_safari_intrested.status=1) AS `instreted_user_count`")->where(['status' => ShareSafari::STATUS_ACTIVE])->andWhere("id <>$active_safari->id")->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(10)->orderby(['instreted_user_count' => SORT_DESC])->all();
 
 ?>
 
