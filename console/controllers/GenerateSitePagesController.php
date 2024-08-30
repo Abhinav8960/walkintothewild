@@ -102,7 +102,7 @@ class GenerateSitePagesController extends Controller
 
     $group_pages[] = [
       'table' => 'safari_operator',
-      'url' => 'operator/_slug',
+      'url' => 'operator/_slug/sharedsafari',
       'url_type' => 'Primary',
       'category' => 'Operator',
       'sub_category' => 'Operator'
@@ -276,6 +276,8 @@ class GenerateSitePagesController extends Controller
             $model->description = $description;
             $model->keywords = $keywords;
             $model->image = $image;
+            $model->category = $data['category'];
+            $model->sub_category = $data['sub_category'];
             $model->get_parameter  = $get_parameter;
             $model->post_parameter  = $post_parameter;
             $model->last_update_at = date('Y-m-d H:i:s', $row->updated_at);
@@ -647,6 +649,8 @@ class GenerateSitePagesController extends Controller
           $model = SitePages::find()->andWhere(['category' => 'Shared Safari'])->andWhere(['sub_category' => 'Join Safari'])->andWhere(['url' => $url])->one();
           if ($model) {
             $model->url = $url;
+            $model->category = 'Action';
+            $model->sub_category = 'Shared Safari Join';
             $model->get_parameter  = $get_parameter;
             $model->post_parameter  = $post_parameter;
             $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
@@ -660,8 +664,8 @@ class GenerateSitePagesController extends Controller
               'url' => $url,
               'url_type' => 'Primary',
               'slug' => '',
-              'category' => 'Shared Safari',
-              'sub_category' => 'Join Safari',
+              'category' => 'Action',
+              'sub_category' => 'Shared Safari Join',
               'get_parameter' => $get_parameter,
               'post_parameter' => $post_parameter,
               'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
@@ -705,6 +709,8 @@ class GenerateSitePagesController extends Controller
           $model = SitePages::find()->andWhere(['category' => 'Shared Safari'])->andWhere(['sub_category' => 'Unjoin Safari'])->andWhere(['url' => $url])->one();
           if ($model) {
             $model->url = $url;
+            $model->category = 'Action';
+            $model->sub_category = 'Shared Safari Unjoin';
             $model->get_parameter  = $get_parameter;
             $model->post_parameter  = $post_parameter;
             $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
@@ -718,8 +724,8 @@ class GenerateSitePagesController extends Controller
               'url' => $url,
               'url_type' => 'Primary',
               'slug' => '',
-              'category' => 'Shared Safari',
-              'sub_category' => 'Unjoin Safari',
+              'category' => 'Action',
+              'sub_category' => 'Shared Safari Unjoin',
               'get_parameter' => $get_parameter,
               'post_parameter' => $post_parameter,
               'last_update_at' => date('Y-m-d H:i:s', $row['updated_at']),
