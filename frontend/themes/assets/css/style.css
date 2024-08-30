@@ -745,8 +745,8 @@ a {
 .btn_newsafari {
 
     background-color: #F5F5F5;
-    padding: 10px 17px;
-    font-size: var(--fs-15);
+    padding: 10px 16px;
+    font-size: var(--fs-14);
     font-weight: 600;
     font-family: "Roboto", sans-serif !important;
     color: #152F1B;

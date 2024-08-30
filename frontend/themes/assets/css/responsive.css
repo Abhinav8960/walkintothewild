@@ -305,6 +305,14 @@ font-size: 19px;
   .inner_animals > img {
     height: 210px;
   }
+  .icons_restro p{
+
+    font-size: 12px;
+  }
+  .artical_cards .lower-content h3{
+
+    font-size: 22px;
+  }
 
   /* .sharesafribg {
     height: 440px;
