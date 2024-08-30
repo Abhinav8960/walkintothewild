@@ -745,8 +745,8 @@ a {
 .btn_newsafari {
 
     background-color: #F5F5F5;
-    padding: 10px 17px;
-    font-size: var(--fs-15);
+    padding: 10px 16px;
+    font-size: var(--fs-14);
     font-weight: 600;
     font-family: "Roboto", sans-serif !important;
     color: #152F1B;
@@ -7631,7 +7631,17 @@ select.custom_sort_by_input  option.selected{
 
     margin-bottom: 0 !important;
 }
-
+.profile-description .show-more {
+    display: none;
+    text-align: left;
+}
+.package_description .package-show-more {
+    display: none;
+    text-align: left;
+}
+.package_itinerary_overview .description-show-more {
+    display: none;
+}
 .perpersonText{
 
     font-size: 14px;
