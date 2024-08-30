@@ -110,7 +110,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<ul>
 								<?php if (!Yii::$app->user->identity) { ?>
 									<li>
-										<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+										<a href="/site/login?authclient=google&referrer=<?= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/' ?>"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 									</li>
 								<?php } else { ?>
 
@@ -238,7 +238,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<div class="justify-content-center">
 							<div class="img-box2 mobileee d-flex flex-column">
 								<img src="<?= $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class=" rounded-circle" width="25" height="25">
-								<a href="/site/login?authclient=google&referrer=/"><span>Login</span></a>
+								<a href="/site/login?authclient=google&referrer=<?= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/' ?>"><span>Login</span></a>
 							</div>
 						</div>
 
@@ -261,7 +261,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<ul>
 								<?php if (!Yii::$app->user->identity) { ?>
 									<li>
-										<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+										<a href="/site/login?authclient=google&referrer=<?= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/' ?>"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 									</li>
 								<?php } else { ?>
 

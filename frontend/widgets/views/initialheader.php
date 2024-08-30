@@ -29,7 +29,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
 							<ul>
 								<?php if (!Yii::$app->user->identity) { ?>
 									<li>
-										<a href="/site/login?authclient=google&referrer=/"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
+										<a href="/site/login?authclient=google&referrer=<?= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/' ?>"> <i class="fa-solid fa-right-to-bracket"></i> Sign In</a>
 									</li>
 								<?php } else { ?>
 									<!-- <?php if (isset(Yii::$app->params['backend_url']) && (Yii::$app->user->identity->is_safari_operator || Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_birding_operator || Yii::$app->user->identity->is_cms_manager || Yii::$app->user->identity->is_resort_manager || Yii::$app->user->identity->is_report_manager)) { ?>
