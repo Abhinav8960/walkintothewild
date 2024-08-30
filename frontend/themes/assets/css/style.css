@@ -7635,7 +7635,13 @@ select.custom_sort_by_input  option.selected{
     display: none;
     text-align: left;
 }
-
+.package_description .package-show-more {
+    display: none;
+    text-align: left;
+}
+.package_itinerary_overview .description-show-more {
+    display: none;
+}
 .perpersonText{
 
     font-size: 14px;
