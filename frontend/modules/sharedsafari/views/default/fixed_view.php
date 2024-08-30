@@ -545,17 +545,15 @@ interestfucntion();
 
 const textContainer = $(".profile-description .text");
     const showMoreButton = $(".profile-description .show-more");
-    const lineHeight = parseInt(textContainer.css('line-height')); 
+    const lineHeight = parseInt(textContainer.css('line-height'));
 
     const threeLinesHeight = lineHeight * 3;
 
-    if (textContainer[0].scrollHeight <= threeLinesHeight) {
-        showMoreButton.hide();
-    } else {
+    if (textContainer[0].scrollHeight > threeLinesHeight) {
         showMoreButton.show();
     }
 
-    $(".show-more").click(function () {
+    showMoreButton.click(function () {
         textContainer.toggleClass("show-more-height");
         if (textContainer.hasClass("show-more-height")) {
             $(this).text("See More");

@@ -7631,6 +7631,10 @@ select.custom_sort_by_input  option.selected{
 
     margin-bottom: 0 !important;
 }
+.profile-description .show-more {
+    display: none;
+    text-align: left;
+}
 
 .perpersonText{
 
