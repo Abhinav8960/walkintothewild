@@ -60,12 +60,12 @@ return [
     '/sharedsafari/default/flag' => '/sharedsafari/default/flag',
     '/sharedsafari/default/validateflag' => '/sharedsafari/default/validateflag',
     '/sharedsafari/default/interestview' => '/sharedsafari/default/interestview',
+    '/sharedsafari/month/<month>' => '/sharedsafari/default/month', //url for site xml
     '/sharedsafari/<organized_slug>/<slug>/join' => '/sharedsafari/default/join',
     '/sharedsafari/<organized_slug>/<slug>/unjoin' => '/sharedsafari/default/unjoin',
     '/sharedsafari/<organized_slug>/<slug>/wishlist' => '/sharedsafari/default/wishlist', //sharedsafari page url
     '/sharedsafari/<organized_slug>/<slug>/unwishlist' => '/sharedsafari/default/unwishlist', //sharedsafari page url
     '/sharedsafari/<organized_slug>/<slug>' => '/sharedsafari/default/view',
-    '/sharedsafari/month/<month>' => '/sharedsafari/default/month', //url for site xml
 
     '/operator/resort/<id>' => '/operator/default/resort', //operator view url
     '/operator/shared-safari/<id>' => '/operator/default/shared-safari', //operator view url
@@ -89,10 +89,10 @@ return [
     '/package' => '/package/default/index', //package page url
     '/package/default/flag' => '/package/default/flag',
     '/package/default/validateflag' => '/package/default/validateflag',
+    '/package/month/<month>' => '/package/default/month', //url for site xml
     '/package/<operator_slug>/<slug>/wishlist' => '/package/default/wishlist', //package page url
     '/package/<operator_slug>/<slug>/unwishlist' => '/package/default/unwishlist', //package page url
     '/package/<operator_slug>/<slug>' => '/package/default/view', //package page url
-    '/package/month/<month>' => '/package/default/month', //url for site xml
 
     '/profile/user-experience' => '/profile/default/create',
     '/profile/user/<user_handle>' => '/profile/default/index',

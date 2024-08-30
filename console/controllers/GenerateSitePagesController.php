@@ -654,7 +654,7 @@ class GenerateSitePagesController extends Controller
             $model->get_parameter  = $get_parameter;
             $model->post_parameter  = $post_parameter;
             $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
-            $model->status = 1;
+            $model->status = 0;
             $model->save(false);
           } else {
             //insert new record
@@ -673,7 +673,7 @@ class GenerateSitePagesController extends Controller
               'is_get' => $is_get,
               'is_post' => $is_post,
               'is_ajax' => $is_ajax,
-              'status' => 1
+              'status' => 0
             ];
           }
         } else {
@@ -714,7 +714,7 @@ class GenerateSitePagesController extends Controller
             $model->get_parameter  = $get_parameter;
             $model->post_parameter  = $post_parameter;
             $model->last_update_at = date('Y-m-d H:i:s', $row['updated_at']);
-            $model->status = 1;
+            $model->status = 0;
             $model->save(false);
           } else {
             //insert new record
@@ -733,7 +733,7 @@ class GenerateSitePagesController extends Controller
               'is_get' => $is_get,
               'is_post' => $is_post,
               'is_ajax' => $is_ajax,
-              'status' => 1
+              'status' => 0
             ];
           }
         } else {
