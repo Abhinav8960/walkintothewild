@@ -465,7 +465,6 @@ var textContainer = $(".package_description .text");
 
     var threeLinesHeight = lineHeight * 3;
 
-    // Check if the content height is more than three lines
     if (textContainer[0].scrollHeight > threeLinesHeight) {
         showMoreButton.show();
     }
@@ -481,12 +480,14 @@ var textContainer = $(".package_description .text");
 
     var textContainer_itineary = $(".package_itinerary_overview .text");
     var showMoreButton_itinerary = $(".package_itinerary_overview .description-show-more");
-    var lineHeight_iteneary = parseInt(textContainer_itineary.css('line-height')); 
+    var lineHeight_iteneary = parseInt(textContainer_itineary.css('line-height'));
 
-    var threeLinesHeight_itenary = lineHeight_iteneary * 3;
+    if (textContainer_itineary.length) { 
+        var threeLinesHeight_itenary = lineHeight_iteneary * 3;
 
-    if (textContainer_itineary[0].scrollHeight > threeLinesHeight_itenary) {
-        showMoreButton_itinerary.show();
+        if (textContainer_itineary[0].scrollHeight > threeLinesHeight_itenary) {
+            showMoreButton_itinerary.show();
+        }
     }
 
     $(".description-show-more").click(function () {
