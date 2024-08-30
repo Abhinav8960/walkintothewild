@@ -459,19 +459,17 @@ function enquiryfunction() {
 enquiryfunction();
 
 
-    var textContainer = $(".package_description .text");
+var textContainer = $(".package_description .text");
     var showMoreButton = $(".package_description .package-show-more");
-    var lineHeight = parseInt(textContainer.css('line-height')); 
+    var lineHeight = parseInt(textContainer.css('line-height'));
 
     var threeLinesHeight = lineHeight * 3;
 
-    if (textContainer[0].scrollHeight <= threeLinesHeight) {
-        showMoreButton.hide();
-    } else {
+    if (textContainer[0].scrollHeight > threeLinesHeight) {
         showMoreButton.show();
     }
 
-    $(".package-show-more").click(function () {
+    showMoreButton.click(function () {
         textContainer.toggleClass("show-more-height");
         if (textContainer.hasClass("show-more-height")) {
             $(this).text("See More");
@@ -480,17 +478,16 @@ enquiryfunction();
         }
     });
 
-
     var textContainer_itineary = $(".package_itinerary_overview .text");
     var showMoreButton_itinerary = $(".package_itinerary_overview .description-show-more");
-    var lineHeight_iteneary = parseInt(textContainer_itineary.css('line-height')); 
+    var lineHeight_iteneary = parseInt(textContainer_itineary.css('line-height'));
 
-    var threeLinesHeight_itenary = lineHeight_iteneary * 3;
+    if (textContainer_itineary.length) { 
+        var threeLinesHeight_itenary = lineHeight_iteneary * 3;
 
-    if (textContainer_itineary[0].scrollHeight <= threeLinesHeight_itenary) {
-        showMoreButton_itinerary.hide();
-    } else {
-        showMoreButton_itinerary.show();
+        if (textContainer_itineary[0].scrollHeight > threeLinesHeight_itenary) {
+            showMoreButton_itinerary.show();
+        }
     }
 
     $(".description-show-more").click(function () {
