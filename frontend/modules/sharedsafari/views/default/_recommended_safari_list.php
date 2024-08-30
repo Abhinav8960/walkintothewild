@@ -38,7 +38,7 @@ $shared_safaries = ShareSafari::find()->select("*,(SELECT count(1) FROM `share_s
                 //     }
                 // }
             ?>
-                <div class="col-lg-3 col-sm-6 col-xxl-3 col-md-3 mb-4">
+                <div class="col-lg-4 col-sm-6 col-xxl-3 col-md-6 mb-4">
                     <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                 </div>
 
