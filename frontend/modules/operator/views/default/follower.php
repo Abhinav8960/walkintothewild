@@ -77,8 +77,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <?php if ($operatorfollowers = $operator->getFollowerlist()->joinWith('user')->where(['safari_operator_follow.status' => 1, 'user.status' => User::STATUS_ACTIVE])->all()) {
                                                     foreach ($operatorfollowers as $operatorfollower) { ?>
                                                         <div class="col">
-                                                            <section class="mx-auto">
-                                                                <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollower->user, 'profile_user' => $user]);  ?>
+                                                            <section class="mx-auto pb-3">
+                                                                <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollower->user]);  ?>
                                                             </section>
                                                         </div>
                                                 <?php  }
