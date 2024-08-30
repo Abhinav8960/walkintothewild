@@ -206,4 +206,15 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
 
         return $name . $category;
     }
+
+    public function getCategorytitle()
+    {
+        $category_list = [
+            1 => 'Safari Tour Operator',
+            // 2 => 'Wildlife Photographer',
+            3 => 'Wildelife Influencer'
+        ];
+
+        return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : $this->category_id;
+    }
 }
