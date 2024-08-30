@@ -270,7 +270,7 @@ class GenerateSitePagesController extends Controller
             }
           }
 
-          $model = SitePages::find()->where(['content_id' => $row->id])->andWhere(['content_table' => $data['table']])->one();
+          $model = SitePages::find()->where(['url' => $url])->one();
           if ($model) {
             $model->title = $title;
             $model->description = $description;
