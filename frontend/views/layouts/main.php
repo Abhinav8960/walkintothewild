@@ -55,10 +55,10 @@ if (!empty($is_sitemap_exist->description)) {
     if (!empty($is_sitemap_exist->image)) {
         $imgurl = Yii::$app->params['frontend_url'] . $is_sitemap_exist->image;
         $this->registerMetaTag(['name' => 'og:image', 'content' => str_replace("//storage", "/storage", $imgurl)]);
-        $this->registerMetaTag(['name' => 'twitter:image', str_replace("//storage", "/storage", $imgurl)]);
+        $this->registerMetaTag(['name' => 'twitter:image', 'content' => str_replace("//storage", "/storage", $imgurl)]);
     } else {
         $this->registerMetaTag(['name' => 'og:image', 'content' => $this->params['baseurl'] . '/img/default_witw_jeep.png']);
-        $this->registerMetaTag(['name' => 'twitter:image', $this->params['baseurl'] . '/img/default_witw_jeep.png']);
+        $this->registerMetaTag(['name' => 'twitter:image', 'content' => $this->params['baseurl'] . '/img/default_witw_jeep.png']);
     }
 
     $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
@@ -72,14 +72,14 @@ if (!empty($is_sitemap_exist->description)) {
     $this->registerMetaTag(['name' => 'og:description', 'content' => $default_desc]);
     $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
     $this->registerMetaTag(['name' => 'og:site_name', 'content' => 'WalkIntoTheWild']);
-    $this->registerMetaTag(['name' => 'og:image', 'content' => $this->params['baseurl'] . '/img/default_witw_jeep.png']);
+    $this->registerMetaTag(['name' => 'og:image', 'content' => 'https://walkintothewild.in/img/default_witw_jeep.png']);
     $this->registerMetaTag(['name' => 'og:url', 'content' => Yii::$app->params['frontend_url'] . $page_reqeust->pathInfo]);
 
     $this->registerMetaTag(['name' => 'twitter:title', 'content' => 'WalkIntoTheWild']);
     $this->registerMetaTag(['name' => 'twitter:description', 'content' => $default_desc]);
     $this->registerMetaTag(['name' => 'twitter:site', 'content' => 'WalkIntoTheWild']);
     $this->registerMetaTag(['name' => 'twitter:card', 'content' => 'summary_large_image']);
-    $this->registerMetaTag(['name' => 'twitter:image', $this->params['baseurl'] . '/img/default_witw_jeep.png']);
+    $this->registerMetaTag(['name' => 'twitter:image', 'content' => 'https://walkintothewild.in/img/default_witw_jeep.png']);
 } //end of og tags
 
 ?>
