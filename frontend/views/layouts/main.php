@@ -55,10 +55,10 @@ if (!empty($is_sitemap_exist->description)) {
     if (!empty($is_sitemap_exist->image)) {
         $imgurl = Yii::$app->params['frontend_url'] . $is_sitemap_exist->image;
         $this->registerMetaTag(['name' => 'og:image', 'content' => str_replace("//storage", "/storage", $imgurl)]);
-        $this->registerMetaTag(['name' => 'twitter:image', str_replace("//storage", "/storage", $imgurl)]);
+        $this->registerMetaTag(['name' => 'twitter:image', 'content' => str_replace("//storage", "/storage", $imgurl)]);
     } else {
         $this->registerMetaTag(['name' => 'og:image', 'content' => $this->params['baseurl'] . '/img/default_witw_jeep.png']);
-        $this->registerMetaTag(['name' => 'twitter:image', $this->params['baseurl'] . '/img/default_witw_jeep.png']);
+        $this->registerMetaTag(['name' => 'twitter:image', 'content' => $this->params['baseurl'] . '/img/default_witw_jeep.png']);
     }
 
     $this->registerMetaTag(['name' => 'og:type', 'content' => 'website']);
