@@ -44,7 +44,7 @@ use yii\helpers\Url;
             <div class="commentsOther comment_hightfixed position-relative">
                 <?php if ($parent_comments = $share_safari->getComments()->where("parent_id IS NULL")->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_comment.status' => 1])->all()) {
                     foreach ($parent_comments as $comments) {
-                        $replies = $comments->getReplies()->where(['status' => 1])->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_comment.status' => 1])->all();
+                        $replies = $comments->getReplies()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_comment.status' => 1])->all();
 
                 ?>
                         <div class="one_box position-relative">
