@@ -6,6 +6,7 @@
 use common\models\operator\SafariOperator;
 use yii\helpers\Url;
 use common\models\sharesafari\ShareSafariIntrested;
+use common\models\User;
 use common\models\UserWishlist;
 
 $this->title = 'Share Safari';
@@ -61,7 +62,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="footer_card row pb-2 px-2 align-items-center">
             <div class="col-6">
                 <div class="users">
-                    <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                    <?php if ($interests = $share_safari->getIntrested()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'share_safari_intrested.status' => 1])->limit(3)->all()) {
                         $count = $share_safari->getIntrested()->count();
                         $avatar_count = 3;
                         foreach ($interests as $interest) {
