@@ -7654,6 +7654,7 @@ select.custom_sort_by_input  option.selected{
 
     max-height: 600px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .comment_hightfixed::-webkit-scrollbar-track {
