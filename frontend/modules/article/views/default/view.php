@@ -120,7 +120,7 @@ if ($article->meta_title != '') {
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="comment-wrapper" id="comment-wrapper-section">
+                                <div class="comment-wrapper padding-artical" id="comment-wrapper-section">
                                     <?= $this->render('_comment', [
                                         'model' => $model,
                                         'article' => $article,
