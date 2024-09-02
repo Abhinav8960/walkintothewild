@@ -17,14 +17,11 @@ use yii\helpers\Url;
                         <div class="objec-flgs">
 
                             <?php if ($comments->user) {
-                                if ($login_safarioperator) {
-                                    if ($comments->user->id != $login_safarioperator->user_id) { ?>
-                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
-                                    <?php }
-                                } elseif ($comments->user->id != Yii::$app->user->id) { ?>
+                                if (Yii::$app->user->identity && $comments->user->id != Yii::$app->user->id) { ?>
                                     <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
                             <?php }
-                            } ?>
+                            }
+                            ?>
                         </div>
                         <div class="postcomment d-flex gap-2 pt-3 w-100">
                             <div class="avatar">
@@ -34,13 +31,16 @@ use yii\helpers\Url;
                             </div>
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                    <span class="comment-author"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                            <?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
+                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
+                                        <span class="comment-author"><?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
+                                    </a>
                                 </div>
                                 <p><?= $comments->comment ?>
-                                    <?php if (Yii::$app->user->id) {  ?>
-                                        <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
-                                    <?php } ?>
+                                    <?php if ($login_safarioperator) {
+                                        if (Yii::$app->user->id == $login_safarioperator->user_id) { ?>
+                                            <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                    <?php }
+                                    } ?>
                             </div>
                         </div>
                         <div class="comment-reply px-3">
@@ -57,20 +57,18 @@ use yii\helpers\Url;
                                                     </a>
                                                 </div>
                                                 <div class="font-color">
-                                                    <span class="comment-author"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>"><?= isset($reply->user) ? $reply->user->name : '' ?></a></span>
+                                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>"> <span class="comment-author"><?= isset($reply->user) ? $reply->user->name : '' ?></span></a>
                                                     <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>
                                                     </div>
-                                                    <?php if ($login_safarioperator) {
-                                                        if ($login_safarioperator && Yii::$app->user->id != $login_safarioperator->user_id) { ?>
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
-                                                        <?php }
-                                                    } else {
-                                                        if (Yii::$app->user->identity && Yii::$app->user->id !=  $package->owned_by_id) { ?>
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
+
+                                                    <?php if ($reply->user) {
+                                                        if (Yii::$app->user->identity && $reply->user->id != Yii::$app->user->id) { ?>
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
                                                     <?php }
-                                                    } ?>
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
