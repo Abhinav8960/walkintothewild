@@ -17,7 +17,7 @@ use yii\helpers\Url;
                         <div class="objec-flgs">
 
                             <?php if ($comments->user) {
-                                if (Yii::$app->user->identity && $comments->user->id != Yii::$app->user->id) { ?>
+                                if (Yii::$app->user->identity && $comments->user_id != Yii::$app->user->id) { ?>
                                     <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
                             <?php }
                             }
@@ -64,7 +64,7 @@ use yii\helpers\Url;
                                                     </div>
 
                                                     <?php if ($reply->user) {
-                                                        if (Yii::$app->user->identity && $reply->user->id != Yii::$app->user->id) { ?>
+                                                        if (Yii::$app->user->identity && $reply->user_id != Yii::$app->user->id) { ?>
                                                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
                                                     <?php }
                                                     }
