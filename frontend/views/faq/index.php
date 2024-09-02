@@ -40,31 +40,40 @@ $this->params['title'] = $this->title;
                 <div class="accordion accordion-flush" id="accordionFlushExample">
 
                     <?php
-                    if ($faq_categories) {
-                        foreach ($faq_categories as $faq_category) {
+                    // if ($faq_categories) {
+                    //     foreach ($faq_categories as $faq_category) {
 
-                            $faq_list = Faqs::find()->where(['status' => 1, 'category_id' => $faq_category->id])->all();
+                    $faq_list = Faqs::find()->where([
+                        'status' => 1,
+                        // 'category_id' => $faq_category->id
+                    ])->orderby(['sequence' => SORT_ASC, 'question' => SORT_ASC])->all();
+                    if ($faq_list) {
                     ?>
-                            <h5><?= $faq_category->name ?></h5>
-                            <hr>
-                            <?php foreach ($faq_list as $faq) { ?>
-                                <div class="accordion-item mb-3">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?= $faq->id ?>" aria-expanded="false" aria-controls="flush-<?= $faq->id ?>">
-                                            <?= $faq->question ?>
-                                        </button>
-                                    </h2>
-                                    <div id="flush-<?= $faq->id ?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                        <div class="accordion-body">
-                                            <?= $faq->answer ?>
-                                        </div>
+                        <!-- <h5><?php  //$faq_category->name 
+                                    ?></h5>
+                        <hr> -->
+                        <?php foreach ($faq_list as $faq) { ?>
+                            <div class="accordion-item mb-3">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?= $faq->id ?>" aria-expanded="false" aria-controls="flush-<?= $faq->id ?>">
+                                        <?= $faq->question ?>
+                                    </button>
+                                </h2>
+                                <div id="flush-<?= $faq->id ?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <?= $faq->answer ?>
                                     </div>
                                 </div>
-                            <?php } ?>
-                    <?php  }
+                            </div>
+                        <?php } ?>
+                    <?php
                     } else {
                         echo 'Nothing to show!';
                     }
+                    //   }
+                    // } else {
+                    //     echo 'Nothing to show!';
+                    // }
                     ?>
                 </div>
             </div>

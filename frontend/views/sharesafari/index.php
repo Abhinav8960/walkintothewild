@@ -276,7 +276,7 @@ $this->params['title'] = $this->title;
                     <div class="titlerescent pb-3">
                         <h3>Intrested</h3>
                     </div>
-                    <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
+                    <div class="users_profile d-flex gap-2 align-items-center flex-wrap">
                         <div class="profileavtar">
                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpinterested.png" alt="">
                         </div>

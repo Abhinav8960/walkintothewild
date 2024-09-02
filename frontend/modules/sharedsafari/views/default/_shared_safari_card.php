@@ -94,7 +94,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         $count = $share_safari->getIntrested()->where(['status' => 1])->count();
                         $avatar_count = 3;
                         $data = $count - $avatar_count;
-                        if ($count >= 3) { ?>
+                        if ($count > 3) { ?>
                             <div class="roundes_countuser">
                                 <?= $data ?>+
                             </div>
