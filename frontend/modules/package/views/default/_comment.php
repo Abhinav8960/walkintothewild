@@ -32,8 +32,9 @@ use yii\helpers\Url;
                             <div class="text_com">
                                 <div class="requestContact d-flex gap-2 align-items-center font-color">
                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                        <span class="comment-author"><?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
+                                        <span class="comment-author"><?= isset($comments->user) ? $comments->user->name : '' ?></a></span>
                                     </a>
+                                    <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
                                 </div>
                                 <p><?= $comments->comment ?>
                                     <?php if ($login_safarioperator) {
@@ -58,7 +59,7 @@ use yii\helpers\Url;
                                                 </div>
                                                 <div class="font-color">
                                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>"> <span class="comment-author"><?= isset($reply->user) ? $reply->user->name : '' ?></span></a>
-                                                    <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
+                                                    <span class="comment-date"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?></span>
                                                     <div class="comment-text">
                                                         <p><?= $reply->comment ?></p>
                                                     </div>

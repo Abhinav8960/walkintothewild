@@ -70,8 +70,9 @@ use yii\helpers\Url;
                                     <div class="requestContact d-flex gap-2 align-items-center font-color">
 
                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                            <span class="comment-author"><?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
+                                            <span class="comment-author"><?= isset($comments->user) ? $comments->user->name : '' ?></span>
                                         </a>
+                                        <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
                                         <!-- <?php if (Yii::$app->user->identity) {
                                                     if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
                                                 <a class="request_btn" href="/sharedsafari/default/request-contact?slug=<?= $share_safari->slug ?>&park_id=<?= $share_safari->park_id ?>&share_safari_comment_id=<?= $comments->id ?>">Request Contact</a>
@@ -104,7 +105,7 @@ use yii\helpers\Url;
                                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>">
                                                             <span class="comment-author"><?= isset($reply->user) ? $reply->user->name : '' ?></span>
                                                         </a>
-                                                        <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
+                                                        <span class="comment-date"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?></span>
                                                         <div class="comment-text">
                                                             <p><?= $reply->comment ?></p>
                                                         </div>

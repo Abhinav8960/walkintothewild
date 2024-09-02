@@ -101,4 +101,10 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return $this->hasMany(ArticleCommentReport::className(), ['article_comment_id' => 'id']);
     }
+
+
+    public function getReplies()
+    {
+        return $this->hasMany(self::class, ['parent_id' => 'id']);
+    }
 }

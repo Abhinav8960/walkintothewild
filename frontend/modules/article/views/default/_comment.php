@@ -9,29 +9,91 @@ use yii\helpers\Url;
     <h6> Comments</h6>
 </div>
 <?php
-if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1])->all()) {
+if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1])->andWhere(['parent_id' => null])->all()) {
     foreach ($article_comments as $article_comment) {
+        $replies = $article_comment->getReplies()->where(['status' => 1])->all();
 ?>
         <div class="comments-persons">
             <div class="postcomment d-flex gap-3">
-
                 <div class="avatar">
                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $article_comment->user && $article_comment->user->user_handle <> '' ? $article_comment->user->user_handle : '']) ?>">
-                        <img src="<?= $article_comment->user && $article_comment->user->avatar <> '' ? $article_comment->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                        <img src="<?= $article_comment->user->profileimage ?>" alt="">
                     </a>
                 </div>
                 <div class="text_com">
-                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $article_comment->user && $article_comment->user->user_handle <> '' ? $article_comment->user->user_handle : '']) ?>">
-                        <h6 class="nameavatr"><?= isset($article_comment->user) ? $article_comment->user->name : "" ?></h6>
-                    </a>
+                    <div class="requestContact d-flex gap-2 align-items-center font-color">
+                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $article_comment->user && $article_comment->user->user_handle <> '' ? $article_comment->user->user_handle : '']) ?>">
+                            <h6 class="nameavatr"><?= isset($article_comment->user) ? $article_comment->user->name : "" ?></h6>
+                        </a>
+                        <span class="comment-date"><?= date("F j, Y", $article_comment->created_at) . ' at ' . date("h:i A", $article_comment->created_at) ?></span>
+                    </div>
                     <p><?= $article_comment->comment ?></p>
+                    <?php
+                    if (Yii::$app->user->identity && Yii::$app->user->id == $article_comment->user_id) { ?>
+                        <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $article_comment->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                    <?php }
+                    ?>
                 </div>
                 <div class="objec-flgs">
-                    <?php if (Yii::$app->user->id) {  ?>
-                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/article/default/flag', 'slug' => $article->slug, 'article_comment_id' => $article_comment->id]) ?>">
-                    <?php } ?>
+                    <?php if ($article_comment->user) {
+                        if (Yii::$app->user->identity && $article_comment->user_id != Yii::$app->user->id) { ?>
+                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/article/default/flag', 'slug' => $article->slug, 'article_comment_id' => $article_comment->id]) ?>">
+                    <?php }
+                    } ?>
                 </div>
             </div>
+            <div class="comment-reply px-3">
+                <?php if ($replies) { ?>
+                    <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $article_comment->id ?>">View <?= count($replies) ?> replies</h6>
+                    <div class="blog-comment-container" id="comment-container-<?= $article_comment->id ?>" style="display: none;">
+                        <!-- <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6> -->
+                        <?php foreach ($replies as $reply) { ?>
+                            <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
+                                <div class="d-flex gap-2">
+                                    <div class="avatar">
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>">
+                                            <img src="<?= $reply->user && $reply->user->profileImage <> '' ? $reply->user->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="font-color">
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>"> <span class="comment-author"><?= isset($reply->user) ? $reply->user->name : '' ?></span></a>
+                                        <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("h:i A", $reply->created_at) ?> </a></span>
+                                        <div class="comment-text">
+                                            <p><?= $reply->comment ?></p>
+                                        </div>
+
+                                        <?php if ($reply->user) {
+                                            if (Yii::$app->user->identity && $reply->user_id != Yii::$app->user->id) { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/article/default/flag', 'slug' => $article->slug, 'article_comment_id' => $reply->id]) ?>">
+                                        <?php }
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        <?php } ?>
+                    </div>
+                <?php } ?>
+                <?php if (Yii::$app->user->id) {  ?>
+                    <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $article_comment->id ?>">
+                        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+                        <div class="mb-3">
+                            <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $article_comment->id])->label(false) ?>
+                        </div>
+                        <div class="mb-3">
+                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
+                        </div>
+                        <div class="btn-wrapper">
+                            <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
+                    </div>
+
+                <?php } ?>
+            </div>
+
         </div>
 <?php }
 } ?>
@@ -42,7 +104,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
             <div class="postcomment d-flex gap-3">
                 <div class="avatar">
                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity && Yii::$app->user->identity->user_handle <> '' ? Yii::$app->user->identity->user_handle : '']) ?>">
-                        <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->avatar <> '' ? Yii::$app->user->identity->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                        <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileImage <> '' ? Yii::$app->user->identity->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                     </a>
                 </div>
                 <div class="text-area">
@@ -84,6 +146,19 @@ $this->registerJs($script);
 </style>
 
 
+
+<script>
+    function toggleReplyForm(link) {
+        var target = link.getAttribute('data-target');
+        var replyForm = document.querySelector('#' + target);
+        if (replyForm.style.display === "none" || replyForm.style.display === "") {
+            replyForm.style.display = "block";
+        } else {
+            replyForm.style.display = "none";
+        }
+    }
+</script>
+
 <?php
 $script = <<< JS
 
@@ -94,7 +169,15 @@ function writeareviewfunction() {
 		.load($(this).attr('value'));
 	});
 }
-writeareviewfunction();     
+writeareviewfunction();
+
+$('.toggle-replies').click(function() {
+        var target = $(this).data('target');
+        var container = $('#' + target);
+        var isVisible = container.is(':visible');
+        container.slideToggle();
+        $(this).text(isVisible ? 'View replies' : 'Hide replies');
+    });        
 JS;
 $this->registerJs($script);
 ?>
