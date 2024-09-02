@@ -51,14 +51,12 @@ use yii\helpers\Url;
                             <div class="objec-flgs">
 
                                 <?php if ($comments->user) {
-                                    if ($login_safarioperator) {
-                                        if ($comments->user->id != $login_safarioperator->user_id) { ?>
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
-                                        <?php }
-                                    } elseif ($comments->user->id != Yii::$app->user->id) { ?>
+                                    $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                    if ($share_safari_intrested  && $share_safari_intrested->user_id != $comments->user->id) { ?>
                                         <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $comments->id]) ?>">
                                 <?php }
-                                } ?>
+                                }
+                                ?>
 
                             </div>
                             <div class="postcomment d-flex gap-2 pt-3 w-100">
@@ -70,8 +68,9 @@ use yii\helpers\Url;
                                 </div>
                                 <div class="text_com">
                                     <div class="requestContact d-flex gap-2 align-items-center font-color">
-                                        <span class="comment-author"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                                <?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
+
+                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
+                                            <span class="comment-author"><?= isset($comments->user) ? $comments->user->name : '' ?></a></span> <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
                                         </a>
                                         <!-- <?php if (Yii::$app->user->identity) {
                                                     if (Yii::$app->user->identity->id == $share_safari->host_user_id) { ?>
@@ -110,15 +109,14 @@ use yii\helpers\Url;
                                                             <p><?= $reply->comment ?></p>
                                                         </div>
 
-                                                        <?php if ($login_safarioperator) {
-                                                            if ($login_safarioperator && Yii::$app->user->id != $login_safarioperator->user_id) { ?>
-                                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
-                                                            <?php }
-                                                        } else {
-                                                            if (Yii::$app->user->identity && Yii::$app->user->id !=  $share_safari->host_user_id) { ?>
+                                                        <?php if ($reply->user) {
+                                                            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+                                                            if ($share_safari_intrested && $share_safari_intrested->user_id != $reply->user->id) {
+                                                        ?>
                                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/sharedsafari/default/flag', 'slug' => $share_safari->slug, 'park_id' => $share_safari->park_id, 'share_safari_comment_id' => $reply->id]) ?>">
                                                         <?php }
-                                                        } ?>
+                                                        }
+                                                        ?>
 
                                                     </div>
                                                 </div>

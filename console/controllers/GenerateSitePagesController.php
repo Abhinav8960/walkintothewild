@@ -118,7 +118,7 @@ class GenerateSitePagesController extends Controller
   {
     $start = microtime(true);
 
-    $this->get_static_pages('static pages');
+    $this->get_static_pages();
 
     $this->get_monthly_package_site_pages();
     $this->get_monthly_shared_safari_site_pages();
@@ -892,17 +892,17 @@ class GenerateSitePagesController extends Controller
     $pages = [
       'article',
       'park',
-      // 'shared-safari',
       'package',
       'sharedsafari',
       'operator',
       'plan-safari',
-      'safaritour-registration',
-      'birdingtour-registration',
-      'termsandcondition',
+      //'safaritour-registration',
+      //'birdingtour-registration',
+      //'termsandcondition',
+      'terms-of-use',
       'privacy-policy',
       'about-us',
-      'contact',
+      'contact-us',
       'faq',
       '/',
       'account',

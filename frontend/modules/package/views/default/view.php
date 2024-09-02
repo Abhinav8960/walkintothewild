@@ -75,6 +75,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
+                                        <?php
+                                        $package_parks = $package->getPackagepark()->where(['status' => 1])->all();
+                                        if ($package_parks) {
+                                            echo '<h6 class="titler_safari">';
+                                            foreach ($package_parks as $package_park) {
+                                                if (!$package_park->park) {
+                                                    continue;
+                                                }
+                                        ?>
+                                                <a href="<?= Url::toRoute(['/park/default/view', 'slug' => $package_park->park->slug]) ?>" data-pjax="0"><i class="fa-solid fa-location-dot me-1"></i> <?= $package_park->park->title ?></a>
+                                        <?php }
+                                            echo '</h6>';
+                                        }
+                                        ?>
+
                                         <p class="mb-0 ">Organized by <a href="<?= Url::toRoute(['/operator/default/sharedsafari',  'slug' => $package->safarioperator ? $package->safarioperator->slug : '']) ?>" data-pjax="0"><strong><?= isset($package->safarioperator) ? $package->safarioperator->businessname : '' ?></strong></a></p>
 
                                     </div>
