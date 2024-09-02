@@ -182,6 +182,41 @@ class PackageSearch extends Package
         return $dataProvider;
     }
 
+    public function managesearch($params, $safari_operator_id)
+    {
+        $query =  Package::find()->where([
+            'owned_by_id' => $safari_operator_id
+        ]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            //'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filteringcost_per_person conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'package.status' => $this->status,
+        ]);
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
+        return $dataProvider;
+    }
+
     public function getParkoption()
     {
         return GeneralModel::safariparklist();

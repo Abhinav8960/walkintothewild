@@ -23,6 +23,7 @@ use common\models\sharesafari\ShareSafariIncluded;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariParklist;
 use frontend\models\form\CreateDepartureForm;
+use frontend\models\ShareSafariSearch;
 use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 
@@ -39,21 +40,29 @@ class SharedsafariController extends FrontendBaseController
     public function actionIndex()
     {
         $safari_operator = $this->module->operatormodel();
-        $fixed_safari = ShareSafari::find()->where(['host_user_id' => $safari_operator->id, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
-        $fixed_safari_provider = new ActiveDataProvider([
-            'query' => $fixed_safari,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-            'sort' => [
-                'defaultOrder' => ['updated_at' => SORT_DESC]
-            ]
+        //$fixed_safari = ShareSafari::find()->where(['host_user_id' => $safari_operator->id, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
+
+        $searchModel = new ShareSafariSearch();
+        $dataProvider = $searchModel->managesearch($this->request->queryParams, [
+            'safari_operator_id' => $safari_operator->id
         ]);
+        // $dataProvider->query->andWhere(['share_safari.host_user_id' => $safari_operator->id, 'share_safari.status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'share_safari.type' => 2]);
+        // $models = $dataProvider->getModels();
+        // $fixed_safari_provider = new ActiveDataProvider([
+        //     'query' => $fixed_safari,
+        //     'pagination' => [
+        //         'pageSize' => 10,
+        //     ],
+        //     'sort' => [
+        //         'defaultOrder' => ['updated_at' => SORT_DESC]
+        //     ]
+        // ]);
         return $this->render(
             'index',
             [
                 'safari_operator' => $safari_operator,
-                'fixed_safari_provider' => $fixed_safari_provider,
+                'searchModel' => $searchModel,
+                'fixed_safari_provider' => $dataProvider,
             ]
         );
     }
