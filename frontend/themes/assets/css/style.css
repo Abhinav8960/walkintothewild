@@ -7671,3 +7671,7 @@ select.custom_sort_by_input  option.selected{
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #F5F5F5;
 }
+.comment-wrapper.padding-artical{
+
+    padding: 20px 0px 20px 20px !important;
+}

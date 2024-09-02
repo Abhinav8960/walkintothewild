@@ -9,7 +9,7 @@ use yii\helpers\Url;
     Discussion</button>
 <div class="bg-white pb-3 px-3 rounded-3 mb-4">
     <div class="comments_safari border-0 ">
-        <div class="commentsOther  position-relative ps-3 ">
+        <div class="commentsOther comment_hightfixed position-relative ps-3 ">
             <?php if ($parent_comments = $package->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
                 foreach ($parent_comments as $comments) {
                     $replies = $comments->getReplies()->where(['status' => 1])->all(); ?>

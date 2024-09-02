@@ -8,11 +8,12 @@ use yii\helpers\Url;
 <div class="commentCount mb-4">
     <h6> Comments</h6>
 </div>
+<div class="comment_hightfixed">
 <?php
 if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1])->all()) {
     foreach ($article_comments as $article_comment) {
 ?>
-        <div class="comments-persons">
+        <div class="comments-persons eee">
             <div class="postcomment d-flex gap-3">
 
                 <div class="avatar">
@@ -26,7 +27,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
                     </a>
                     <p><?= $article_comment->comment ?></p>
                 </div>
-                <div class="objec-flgs">
+                <div class="objec-flgs pe-md-3 pe-2">
                     <?php if (Yii::$app->user->id) {  ?>
                         <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/article/default/flag', 'slug' => $article->slug, 'article_comment_id' => $article_comment->id]) ?>">
                     <?php } ?>
@@ -35,10 +36,12 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
         </div>
 <?php }
 } ?>
+</div>
+
 <?php if (Yii::$app->user->id) {
     if ($article->comment_allowed == 1) {  ?>
         <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-        <div class="comments-persons">
+        <div class="comments-persons pe-md-3 pe-2">
             <div class="postcomment d-flex gap-3">
                 <div class="avatar">
                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity && Yii::$app->user->identity->user_handle <> '' ? Yii::$app->user->identity->user_handle : '']) ?>">
@@ -51,7 +54,7 @@ if ($article_comments = $article->getArticlecomments()->andWhere(['status' => 1]
             </div>
         </div>
 
-        <div class="row justify-content-end comments-persons">
+        <div class="row justify-content-end comments-persons pe-md-3 pe-2">
             <div class="col-12 col-sm-8 col-md-6">
                 <div class="comment_button float-end ">
                     <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
