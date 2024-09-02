@@ -41,7 +41,7 @@ use yii\helpers\Url;
                 <?php } ?>
             <?php } ?>
 
-            <div class="commentsOther  position-relative">
+            <div class="commentsOther comment_hightfixed position-relative">
                 <?php if ($parent_comments = $share_safari->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
                     foreach ($parent_comments as $comments) {
                         $replies = $comments->getReplies()->where(['status' => 1])->all();
@@ -162,7 +162,7 @@ use yii\helpers\Url;
                 if ($share_safari_intrested || Yii::$app->user->id == $share_safari->host_user_id || ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id)) { ?>
                     <?= $this->render('_comment_form', ['model' => $model]) ?>
         <?php } else {
-                    echo '<p class="px-3 pt-2 text-center">Please Join in for start Comment</p>';
+                    echo '<p class="px-3 pt-3 text-center">Please Join in for start Comment</p>';
                 }
             } else {
                 echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=' . Url::toRoute([
