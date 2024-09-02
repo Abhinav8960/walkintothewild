@@ -11,7 +11,8 @@ return [
     //    '/walkintothewild_pages.xml' => '/sitemap/walkintothewild_pages',
     //    '/article_tag.xml' => '/sitemap/article_tag',
     // '/animal/<slug>' => '/animal/index', //home Page url
-    '/home' => '/plan-safari', //home Page url
+    //'/home' => '/plan-safari', //home Page url
+    '/contact-us' => '/contact',
     '/park/<slug>' => '/park/default/view', //park view url
     '/park/<slug>/operator' => '/park/default/operator',
     '/park/<slug>/sharedsafari' => '/park/default/sharedsafari',

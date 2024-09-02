@@ -21,6 +21,9 @@ class CreateSiteXmlController extends Controller
   {
     $start = microtime(true);
 
+    //update home page url (basically remove double slash at the last of string)
+    SitePages::updateAll(['url' => 'https://walkintothewild.in/'], ['url' => 'https://walkintothewild.in//']);
+
     $additional_sitemap = [];
     $records = SitePages::find()->select('category')->distinct('category')->where(['status' => true])->asArray()->all();
     if (count($records) > 0) {
