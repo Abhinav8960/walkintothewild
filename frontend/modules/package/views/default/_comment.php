@@ -65,7 +65,7 @@ use yii\helpers\Url;
 
                                                     <?php if ($reply->user) {
                                                         if (Yii::$app->user->identity && $reply->user_id != Yii::$app->user->id) { ?>
-                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $comments->id]) ?>">
+                                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/package/default/flag', 'slug' => $package->package_slug, 'package_comment_id' => $reply->id]) ?>">
                                                     <?php }
                                                     }
                                                     ?>
