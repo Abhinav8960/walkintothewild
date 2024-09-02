@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 ?>
 
-<div class="<?= isset($colsize) ? $colsize : 'col-lg-9' ?> order-lg-1 order-2 mb-4">
+<div class="<?= isset($colsize) ? $colsize : 'col-lg-9' ?>  mb-4">
 
     <div class="formbg">
         <button class="discussionTabs " style="background-color: var(--background-primary) !important;cursor:default;" value="">
