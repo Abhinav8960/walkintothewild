@@ -82,7 +82,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
         <div class="footer_card row pb-2 px-2 align-items-center">
             <div class="col-6">
                 <div class="users">
-                    <?php if ($interests = $share_safari->getIntrested()->where(['status' => 1])->limit(3)->all()) {
+                    <?php if ($interests = $share_safari->getIntrested()->joinWith('user')->where(['user.status' => 10, 'share_safari_intrested.status' => 1])->limit(3)->all()) {
                         // $count = $share_safari->getIntrested()->where(['status' => 1])->count();
                         // $avatar_count = 3;
                         foreach ($interests as $interest) {

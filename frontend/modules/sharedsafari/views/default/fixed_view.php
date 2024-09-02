@@ -418,7 +418,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         <h3>Intrested</h3>
                     </div> -->
                         <div class="users_profile d-flex gap-2 align-items-center flex-wrap">
-                            <?php if ($intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all()) {
+                            <?php if ($intrested_users = $share_safari->getIntrested()->joinWith('user')->andWhere(['user.status' => 10, 'share_safari_intrested.status' => 1])->all()) {
                                 foreach ($intrested_users as $intrested_user) {
                             ?>
                                     <?php if ($user_intersted = $intrested_user->user) { ?>
