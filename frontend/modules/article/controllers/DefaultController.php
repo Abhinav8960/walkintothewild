@@ -16,6 +16,7 @@ use common\models\cms\article\MasterArticleTag;
 use frontend\controllers\FrontendBaseController;
 use common\models\cms\article\MasterArticleTopic;
 use frontend\models\ArticleCommentReportForm;
+use frontend\models\ArticleReplyForm;
 
 /**
  * DefaultController.
@@ -69,13 +70,18 @@ class DefaultController extends FrontendBaseController
             Yii::$app->session->setFlash('success', 'Comment submitted Successfully');
             return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
         }
-
+        $replymodel = new ArticleReplyForm();
+        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($article)) {
+            Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+            return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+        }
         return $this->render(
             'view',
             [
                 'article' => $article,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'replymodel' => $replymodel,
                 'model' => $model,
             ]
         );
