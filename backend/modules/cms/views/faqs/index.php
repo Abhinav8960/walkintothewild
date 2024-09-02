@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] =  ['label' => 'CMS', 'url' => '#'];
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+$this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs/setsequence", 'class' => 'btn popupButton btn-primary', 'title' => 'Set Sequence']);
 ?>
 <div class="card">
 
