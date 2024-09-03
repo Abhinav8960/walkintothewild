@@ -4,7 +4,7 @@ use common\interfaces\StatusInterface;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
+use yii\widgets\Pjax;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -33,12 +33,27 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                         <?php if ($safari_operator->status != StatusInterface::STATUS_ACTIVE) {
                             echo $this->context->module->account_deactivate_message;
                         } ?>
-                        <?php if ($models = $fixed_safari_provider->models) {
+                        <?php
+                        Pjax::begin([
+                            'id' => 'grid-data',
+                            'enablePushState' => FALSE,
+                            'enableReplaceState' => FALSE,
+                            'timeout' => FALSE,
+                        ]);
+                        ?>
+                        <?php
+
+                        echo $this->render('_search', ['searchModel' => $searchModel]);
+
+                        if ($models = $fixed_safari_provider->getModels()) {
+                            echo '<div class="row">';
                             foreach ($models as $share_safari) {
+
                                 echo '<div class="col-xxl-4 col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-4">';
                                 echo $this->render('_shared_safari_card', ['share_safari' => $share_safari]);
                                 echo '</div>';
                             }
+                            echo '</div>';
                         } else {
                             echo 'No Share Safari Created';
                         } ?>
@@ -50,6 +65,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 ]); ?>
                             </div>
                         </div>
+                        <?php Pjax::end(); ?>
                     </div>
                 </div>
             </div>

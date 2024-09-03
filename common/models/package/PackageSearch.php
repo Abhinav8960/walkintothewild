@@ -26,6 +26,7 @@ class PackageSearch extends Package
     public $package_feature;
     public $package_include;
     public $custom_sort_by;
+    public $package_name;
 
     /**
      * {@inheritdoc}
@@ -35,7 +36,7 @@ class PackageSearch extends Package
         return [
             [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
             [['package_image'], 'safe'],
@@ -179,6 +180,43 @@ class PackageSearch extends Package
             }
         }
 
+        return $dataProvider;
+    }
+
+    public function managesearch($params, $safari_operator_id)
+    {
+        $query =  Package::find()->where([
+            'owned_by_id' => $safari_operator_id
+        ]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            //'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filteringcost_per_person conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'package.status' => $this->status,
+        ]);
+
+        $query->andFilterWhere(['like', 'package.package_name', $this->package_name]);
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
         return $dataProvider;
     }
 

@@ -25,6 +25,7 @@ class ShareSafariSearch extends ShareSafari
     public $no_of_safari_max = 10;
     public $estimate_price_min = 500;
     public $estimate_price_max = 50000;
+    public $share_safari_title;
 
 
 
@@ -37,7 +38,7 @@ class ShareSafariSearch extends ShareSafari
     {
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
-            [['start_date', 'end_date', 'estimated_price_filter', 'title'], 'safe'],
+            [['start_date', 'end_date', 'estimated_price_filter', 'title','share_safari_title'], 'safe'],
             [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter', 'no_of_safari_min', 'no_of_safari_max', 'type'], 'safe'],
         ];
     }
@@ -224,6 +225,52 @@ class ShareSafariSearch extends ShareSafari
                 $title_query->andWhere(['like', 'title', $this->title]);
             }]);
         }
+
+        return $dataProvider;
+    }
+
+
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function managesearch($params,  $safari_operator_id)
+    {
+        $query = ShareSafari::find()->where(['host_user_id' => $safari_operator_id, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
+
+
+        // add conditions that should always apply here
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            //'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.park_id' => $this->park_id,
+            'share_safari.host_type' => $this->host_type,
+            'share_safari.status' => $this->status,
+        ]);
+
+        $query->andFilterWhere(['like', 'share_safari.share_safari_title', $this->share_safari_title]);
 
         return $dataProvider;
     }
