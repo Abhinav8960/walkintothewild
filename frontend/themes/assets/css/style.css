@@ -41,7 +41,8 @@
 body {
     font-family: "Roboto", sans-serif !important;
     overflow-x: hidden !important;
-
+    min-width: 420px !important;
+    padding-right: 0 !important;
     /* WebKit browsers (Chrome, Safari) */
     /* ::-webkit-scrollbar {
         display: none !important;
@@ -7675,4 +7676,48 @@ select.custom_sort_by_input  option.selected{
 .comment-wrapper.padding-artical{
 
     padding: 20px 0px 20px 20px !important;
+}
+
+
+.google-ad-box {
+
+    width: 100%; /* Full width rakhega */
+    height: 90px;
+    max-width: 728px; /* Maximum width 728px */
+    min-width: 290px; /* Minimum width 320px */
+    margin: 0 auto; /* Center align ke liye */
+    border: 1px solid #ccc; /* Optional: Border daalne ke liye */
+    box-sizing: border-box; /* Border ko width mein include kare */
+
+}
+.google-ad970 {
+
+    width: 100%; 
+    height: 250px;
+    max-width: 970px; 
+    min-width: 290px;
+    margin: 0 auto; 
+    border: 1px solid #ccc;
+    box-sizing: border-box; 
+
+}
+
+.google-ad300 {
+
+    width: 100%;
+    height: 250px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; 
+}
+
+.google-add600hight{
+
+    width: 100%;
+    height: 600px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; 
+}
+.margin-topset{
+
+    margin-top: 75px;
 }
