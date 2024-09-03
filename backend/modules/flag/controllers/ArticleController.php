@@ -55,15 +55,20 @@ class ArticleController extends Controller
 
     public function actionView($id)
     {
-
+        $review = ArticleComment::find()->where(['id' => $id])->one();
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
         $dataProvider = new ActiveDataProvider([
             'query' =>  ArticleCommentReport::find()->where(['article_comment_id' => $id]),
             'pagination' => [
                 'pageSize' => 20,
             ],
         ]);
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'dataProvider' => $dataProvider,
+            'review' => $review,
         ]);
     }
 

@@ -95,7 +95,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
 
 
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['flagview', 'id' => $model->id], [
+                                ', ['view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'name' => 'View',
                                 ]);

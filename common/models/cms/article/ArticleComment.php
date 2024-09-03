@@ -46,7 +46,7 @@ class ArticleComment extends \yii\db\ActiveRecord implements \common\interfaces\
     public function rules()
     {
         return [
-            [['article_id', 'user_id', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_id', 'user_id',  'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['comment'], 'string'],
             [['comment_datetime'], 'safe'],
         ];

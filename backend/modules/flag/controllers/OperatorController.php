@@ -59,6 +59,11 @@ class OperatorController extends Controller
 
     public function actionView($id)
     {
+        $review = SafariOperatorRating::find()->where(['id' => $id])->one();
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' =>  SafariOperatorRatingReport::find()->where(['safari_operator_rating_id' => $id, 'status' => [1, 20]]),
@@ -66,8 +71,10 @@ class OperatorController extends Controller
                 'pageSize' => 20,
             ],
         ]);
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'dataProvider' => $dataProvider,
+            'review' => $review
+
         ]);
     }
 

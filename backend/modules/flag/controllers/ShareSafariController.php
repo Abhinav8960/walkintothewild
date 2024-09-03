@@ -59,6 +59,11 @@ class ShareSafariController extends Controller
 
     public function actionView($id)
     {
+        $review = ShareSafariComment::find()->where(['id' => $id])->one();
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id]),
@@ -66,8 +71,9 @@ class ShareSafariController extends Controller
                 'pageSize' => 20,
             ],
         ]);
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'dataProvider' => $dataProvider,
+            'review' => $review,
         ]);
     }
 

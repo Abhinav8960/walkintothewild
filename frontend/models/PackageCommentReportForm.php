@@ -66,19 +66,19 @@ class PackageCommentReportForm extends Model
 
     public function initializeForm()
     {
-        $agent = new \Jenssegers\Agent\Agent();
-        $agent->setUserAgent(Yii::$app->request->userAgent);
+        // $agent = new \Jenssegers\Agent\Agent();
+        // $agent->setUserAgent(Yii::$app->request->userAgent);
 
         $this->flag_model->user_id = Yii::$app->user->identity->id;
         $this->flag_model->package_id = $this->package_id;
         $this->flag_model->package_comment_id = $this->package_comment_id;
         $this->flag_model->report_reason_id = $this->report_reason_id;
         $this->flag_model->report_detail = $this->report_detail;
-        $this->flag_model->user_device  = $agent->device();
-        $this->flag_model->user_ip_address = Yii::$app->getRequest()->getUserIp();
-        $this->flag_model->user_agent =  Yii::$app->request->userAgent;
-        $this->flag_model->user_platform = $agent->platform();
-        $this->flag_model->user_browser = $agent->browser();
+        // $this->flag_model->user_device  = $agent->device();
+        // $this->flag_model->user_ip_address = Yii::$app->getRequest()->getUserIp();
+        // $this->flag_model->user_agent =  Yii::$app->request->userAgent;
+        // $this->flag_model->user_platform = $agent->platform();
+        // $this->flag_model->user_browser = $agent->browser();
         $this->flag_model->status = 1;
     }
 }
