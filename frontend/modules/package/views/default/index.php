@@ -62,6 +62,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     </div>
   <?php } ?>
   <div class="container-fluid ">
+
+    <div class="advertisment mt-5">
+      <div class="google-ad970">
+
+      </div>
+    </div>
     <?php
     Pjax::begin([
       'id' => 'grid-data',

@@ -280,6 +280,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                 </div>-->
+                <div class="advertisment  mt-5">
+                    <div class="google-ad-box  ">
+
+                    </div>
+                </div>
                 <div class="row  mt-5 itenary_tabs">
                     <div class="col-lg-12 col-xl-11 safartabs position-relative">
                         <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">

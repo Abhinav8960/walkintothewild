@@ -75,3 +75,14 @@ $reviews = $ratingdataProvider->getModels();
         </div>
     </div>
 <?php } ?>
+
+<div class="advertisment mt-5">
+    <div class="google-ad300  mb-5">
+
+    </div>
+</div>
+<div class="advertisment">
+    <div class="google-add600hight  mb-5">
+
+    </div>
+</div>

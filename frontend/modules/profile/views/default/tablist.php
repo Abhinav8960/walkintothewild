@@ -128,6 +128,11 @@ $this->title = $user->name;
                 </div>
             </div>
         </div>
+        <div class="advertisment mt-5 ">
+                        <div class="google-ad-box ">
+
+                        </div>
+                    </div>
         <div class="row pt-5 itenary_tabs justify-content-center position-relative">
             <div class="col-xxl-11 safartabs position-relative">
                 <div class="row">

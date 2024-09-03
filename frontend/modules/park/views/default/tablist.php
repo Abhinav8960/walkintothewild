@@ -133,14 +133,9 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-lg-7 mb-4">
-                <div class="advertisment ">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box">
+        <div class="advertisment py-3">
+            <div class="google-ad970 ">
 
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row pt-5 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">

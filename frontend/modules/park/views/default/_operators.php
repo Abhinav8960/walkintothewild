@@ -52,9 +52,13 @@ Pjax::begin([
             ]) ?>
         </div>
 
-        <div class="advertisment pt-5 d-lg-block d-none">
-            <p class="text-center">ADVERTISMENT</p>
-            <div class="advertisment_box-2">
+        <div class="advertisment d-lg-block d-none mt-5">
+            <div class="google-ad300  mb-5">
+
+            </div>
+        </div>
+        <div class="advertisment d-lg-block d-none ">
+            <div class="google-add600hight  mb-5">
 
             </div>
         </div>

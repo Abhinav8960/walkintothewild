@@ -74,9 +74,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
     </div>
 </section>
-<?php if ($shared_safaries) { ?>
 
-    <section class="sharesafri">
+<section class="px-md-0 px-3">
+<div class="google-ad-box margin-topset" >
+
+</div>
+</section>
+
+<?php if ($shared_safaries) { ?>
+  <section class="sharesafri">
         <div class="container-lg padditg_mobile">
             <div class="row justify-content-center ">
                 <div class="col-xl-11  px-md-1 px-0 ">
@@ -174,12 +180,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </section>
 <?php } ?>
+<section class="px-md-0 px-3">
+<div class="google-ad-box margin-topset" >
 
+</div>
+</section>
 <section class="safariduring_sesons paddiinTop_add">
     <?= \frontend\widgets\FeatureParkWidget::widget(['section_title' => $banner ? $banner->feature_park_title : '']) ?>
 </section>
 <section class="animal-wrapper  paddiinTop_add">
     <?= \frontend\widgets\RareExoticWidget::widget() ?>
+</section>
+<section class="px-md-0 px-3">
+<div class="google-ad-box margin-topset" >
+
+</div>
 </section>
 <section class="articals_wrapper  margin_bottomfooter mb-5 paddiinTop_add">
     <?= $this->render('_featured_article', [
