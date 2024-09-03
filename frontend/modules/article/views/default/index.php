@@ -48,14 +48,9 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
 
 <section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-7 mb-4">
-                <div class="advertisment ">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box">
+    <div class="advertisment mt-5">
+            <div class="google-ad-box  mb-5">
 
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row mb-4  justify-content-center">
@@ -109,9 +104,13 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                             <?= $this->render('_topic_search') ?>
                         </div>
 
-                        <div class="advertisment pt-5">
-                            <p class="text-center">ADVERTISMENT</p>
-                            <div class="advertisment_box">
+                        <div class="advertisment d-lg-block d-none mt-5">
+                            <div class="google-ad300  mb-5">
+
+                            </div>
+                        </div>
+                        <div class="advertisment d-lg-block d-none ">
+                            <div class="google-add600hight  mb-5">
 
                             </div>
                         </div>

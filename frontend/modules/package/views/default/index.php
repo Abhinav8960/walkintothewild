@@ -98,15 +98,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             </div>
 
             <div class="advertisment d-lg-block d-none mt-5">
-            <div class="google-ad300  mb-5">
+              <div class="google-ad300  mb-5">
 
+              </div>
             </div>
-        </div>
-        <div class="advertisment d-lg-block d-none ">
-            <div class="google-add600hight  mb-5">
+            <div class="advertisment d-lg-block d-none ">
+              <div class="google-add600hight  mb-5">
 
+              </div>
             </div>
-        </div>
 
           </div>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
