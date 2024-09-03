@@ -27,6 +27,12 @@ class ReplyForm extends Model
     {
         return [
             [['comment', 'parent_id'], 'required'],
+            ['comment','validateContent' ],
+            ['comment', function () {
+                if (!preg_match('/^[a-zA-Z0-9 ]*$/', $this->comment)) {
+                    $this->addError('comment', 'Invalid Characters!!!');
+                }
+            }],
         ];
     }
 
@@ -34,25 +40,33 @@ class ReplyForm extends Model
     public function reply(ShareSafari $share_safari)
     {
 
-        $agent = new \Jenssegers\Agent\Agent();
-        $agent->setUserAgent(Yii::$app->request->userAgent);
+        // $agent = new \Jenssegers\Agent\Agent();
+        // $agent->setUserAgent(Yii::$app->request->userAgent);
         $reply = new ShareSafariComment();
         $reply->share_safari_id = $share_safari->id;
         $reply->park_id = $share_safari->park->id;
         $reply->user_id = Yii::$app->user->id;
         $reply->parent_id = $this->parent_id;
         $reply->comment = $this->comment;
-        $reply->user_device = $agent->device();
-        $reply->user_agent = Yii::$app->request->userAgent;
-        $reply->user_platform =  $agent->platform();
-        $reply->user_browser = $agent->browser();
-        $reply->user_ip_address = Yii::$app->getRequest()->getUserIp();
+        // $reply->user_device = $agent->device();
+        // $reply->user_agent = Yii::$app->request->userAgent;
+        // $reply->user_platform =  $agent->platform();
+        // $reply->user_browser = $agent->browser();
+        // $reply->user_ip_address = Yii::$app->getRequest()->getUserIp();
         $reply->status = StatusInterface::STATUS_ACTIVE;
 
 
 
         if ($reply->save(false)) {
             return $reply;
+        }
+    }
+
+    public function validateContent($attribute, $params)
+    {
+        $wordCount = str_word_count($this->$attribute);
+        if ($wordCount >= 100) {
+            $this->addError($attribute, 'Please provide content within 100 words.');
         }
     }
 }

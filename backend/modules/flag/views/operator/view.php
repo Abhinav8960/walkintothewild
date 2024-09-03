@@ -8,13 +8,52 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-$this->title = 'Share Safari Comment';
+$this->title = 'Share Operator Flags';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
 
 ?>
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <td class="px-3"><b>Comment:</b></td>
+                    <td class="px-3"><?= ucfirst($review->review) . " (Rating: " . round($review->rating) . ")" ?></td>
+                </tr>
+                <tr>
+                    <td class="px-3"><b>Operator:</b></td>
+                    <td class="px-3"><?= isset($review->operator) ? ucfirst($review->operator->business_name) : '' ?></td>
+                </tr>
+
+                <tr>
+                    <td class="px-3"><b>Park:</b></td>
+                    <td class="px-3"><?= isset($review->park) ? ucfirst($review->park->title) : '' ?></td>
+                </tr>
+                <tr>
+                    <td class="px-3"><b>Comment By:</b></td>
+                    <td class="px-3"><?= isset($review->user) ? $review->user->name : '' ?></td>
+                </tr>
+                <tr>
+                    <td class="px-3"><b>Date:</b></td>
+                    <td class="px-3"><?= date('d-m-Y', $review->created_at) ?></td>
+                </tr>
+                <tr>
+                    <td class="px-3"><b>Status:</b></td>
+                    <td class="px-3">
+                        <?php
+                        $c_status = "Active";
+                        if ($review->status == '2') {
+                            $c_status = "Delete";
+                        }
+                        echo $c_status; ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
 
 
 <div class="card">
@@ -45,7 +84,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return  $model->reportreason->reason;
+                            return  isset($model->reportreason) ? $model->reportreason->reason : '';
                         }
 
                     ],
@@ -58,13 +97,40 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             return  $model->report_detail;
                         }
                     ],
+                    [
+                        'label' => 'Action',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $return = 'N/A';
+                            if ($model->status == -1) {
+                                $return = 'Delete';
+                            } else if ($model->status == 2) {
+                                $return = 'Ignore';
+                            }
+                            return $return;
+                        }
+                    ],
+
+                    [
+                        'label' => 'Admin Reason',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            $return = 'N/A';
+                            if (!empty($model->reason)) {
+                                $return = $model->reason;
+                            }
+                            return $return;
+                        }
+                    ],
 
                     [
                         'label' => 'Action',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::button('<img src="/img/update.png" alt="" width="25" height="25">', [
+                            return Html::button('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">', [
                                 'value' => Url::toRoute(['edit', 'id' => $model->id]),
                                 'class' => 'btn btn-warning flag-action mb-2',
                                 'title' => 'Edit'

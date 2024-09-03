@@ -59,6 +59,11 @@ class PackageController extends Controller
 
     public function actionView($id)
     {
+        $review = PackageComment::find()->where(['id' => $id])->one();
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => [1, 20]]),
@@ -66,8 +71,9 @@ class PackageController extends Controller
                 'pageSize' => 20,
             ],
         ]);
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'dataProvider' => $dataProvider,
+            'review' => $review,
         ]);
     }
 
