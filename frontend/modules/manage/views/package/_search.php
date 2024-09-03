@@ -16,14 +16,28 @@ use common\models\operator\SafariOperatorPark;
         'template' => '{input}{error}',
     ],
 ]); ?>
+<div class="row">
+    <div class="col-md-4 mb-2">
+        <?= $form->field($searchModel, 'package_name')->textInput(['placeholder' => 'Search by Title']) ?>
+    </div>
 
-<div class="col-md-4 mb-2">
-    <?= $form->field($searchModel, 'park_id')->dropDownList(
-        \yii\helpers\ArrayHelper::map(SafariOperatorPark::find()->joinwith(['park'])->where(['safari_operator_park.status' => 1])->orderby(['safari_park.title' => SORT_ASC])->all(), 'park_id', 'park.title'),
-        [
-            'prompt' => 'Select Park',
-        ]
-    ) ?>
+    <div class="col-md-4 mb-2">
+        <?= $form->field($searchModel, 'park_id')->dropDownList(
+            \yii\helpers\ArrayHelper::map(SafariOperatorPark::find()->joinwith(['park'])->where(['safari_operator_park.status' => 1])->orderby(['safari_park.title' => SORT_ASC])->all(), 'park_id', 'park.title'),
+            [
+                'prompt' => 'Select Park',
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-4 mb-2">
+        <?= $form->field($searchModel, 'status')->dropDownList(
+            GeneralModel::statusoption(),
+            [
+                'prompt' => 'Select Status',
+            ]
+        ) ?>
+    </div>
 </div>
 
 <?php ActiveForm::end(); ?>
