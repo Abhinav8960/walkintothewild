@@ -109,7 +109,7 @@ if ($article->meta_title != '') {
                                     <div class="author_wrapper pt-2">
                                         <ul class="artical-info flex-wrap">
                                             <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => isset($article->articleAuthor) ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
-                                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="#comment-wrapper-section"><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
+                                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="#comment-wrapper-section"><?= $article->getArticlecomments()->where(['status' => 1, 'is_deleted' => 0])->count() ?> Comments</a></li>
                                             <li><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($article->article_date)) ?></li>
 
                                         </ul>

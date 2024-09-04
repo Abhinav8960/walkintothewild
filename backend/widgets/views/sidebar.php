@@ -909,7 +909,22 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
-					<li class="slide">
+					<li class="slide <?= in_array($active_url, array(
+											"/package/default/index",
+											"/package/default/create",
+											"/package/profile",
+											"/package/profile/itinerary",
+											"/package/profile/inclusion",
+											"/package/profile/exclusion",
+											"/package/profile/term-condition",
+											"/package/profile/create-term-condition",
+											"/package/profile/update-term-condition",
+											"/package/profile/faq",
+											"/package/profile/create-faq",
+											"/package/profile/faq-update",
+											"/package/quote/index",
+											"/package/quote"
+										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/package/default/index",
 														"/package/default/create",
@@ -923,8 +938,32 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/package/profile/faq",
 														"/package/profile/create-faq",
 														"/package/profile/faq-update",
-													)) ? "active" : "" ?>" href="/package/default/index"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span></a>
+														"/package/quote/index",
+														"/package/quote"
+													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span><i class="angle fe fe-chevron-right"></i></a>
+						<ul class="slide-menu">
+							<li class="side-menu__label1"><a href="javascript:void(0);">Package</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/package/default/index",
+															"/package/default/create",
+															"/package/profile",
+															"/package/profile/itinerary",
+															"/package/profile/inclusion",
+															"/package/profile/exclusion",
+															"/package/profile/term-condition",
+															"/package/profile/create-term-condition",
+															"/package/profile/update-term-condition",
+															"/package/profile/faq",
+															"/package/profile/create-faq",
+															"/package/profile/faq-update",
+														)) ? "active" : "" ?>" href="/package/default/index">Package List</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/package/quote/index",
+															"/package/quote"
+														)) ? "active" : "" ?>" href="/package/quote/index">Package Quote</a></li>
+						</ul>
 					</li>
+
 				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>

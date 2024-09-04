@@ -65,7 +65,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $counter = $model->getReports()->count();
+                            $counter = $model->getReports()->where(['status' => 1])->count();
                             return $counter;
                         }
                     ],

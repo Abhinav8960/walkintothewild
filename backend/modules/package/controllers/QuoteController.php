@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\modules\park\controllers;
+namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
-use common\models\operator\OperatorQuote;
-use common\models\operator\OperatorQuoteSearch;
+use common\models\package\PackageQuote;
+use common\models\package\PackageQuoteSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * OperatorQuoteController.
+ * QuoteController.
  */
-class OperatorQuoteController extends Controller
+class QuoteController extends Controller
 {
 
     /**
@@ -21,7 +21,7 @@ class OperatorQuoteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new OperatorQuoteSearch();
+        $searchModel = new PackageQuoteSearch();
         $searchModel->report_days = 'today';
         $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
@@ -32,20 +32,10 @@ class OperatorQuoteController extends Controller
         ]);
     }
 
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-
-        return $this->render('view', [
-            'model' => $model,
-        ]);
-    }
-
 
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->full_name = $model->id . '_' . $model->full_name;
         $model->status = StatusInterface::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
@@ -55,7 +45,7 @@ class OperatorQuoteController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = OperatorQuote::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = PackageQuote::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

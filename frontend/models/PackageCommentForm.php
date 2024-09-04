@@ -25,7 +25,7 @@ class PackageCommentForm extends Model
             [['comment'], 'required'],
             ['comment','validateContent' ],
             ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9 ]*$/', $this->comment)) {
+                if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->comment)) {
                     $this->addError('comment', 'Invalid Characters!!!');
                 }
             }],

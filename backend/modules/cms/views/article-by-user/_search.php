@@ -19,7 +19,9 @@ use common\models\GeneralModel;
     ],
 ]); ?>
 <div class="row">
-
+    <div class="col-md-2">
+        <?php echo $form->field($model, 'report_days')->dropDownList($model->report_days_option, ['prompt' => 'Select Duration'])->label(false) ?>
+    </div>
     <div class="col-md-2">
         <?= $form->field($model, 'title')->textInput(['placeholder' => 'Search by Article Title'])->label(false) ?>
     </div>
@@ -59,8 +61,13 @@ use common\models\GeneralModel;
             ]
         )->label(false) ?>
     </div>
-    <div class="col-md-2">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
-    </div>
 </div>
 <?php ActiveForm::end(); ?>
+<?php
+$js = <<<JS
+    $('form') . on('change', function() {
+        $(this) . closest('form') . submit();
+    });  
+JS;
+$this->registerJs($js);
+?>

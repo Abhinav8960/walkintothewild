@@ -53,9 +53,9 @@ class ShareSafariCommentReport extends \yii\db\ActiveRecord
     {
         return [
             [['share_safari_id', 'park_id', '	share_safari_comment_id', 'report_reason_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['report_detail', 'user_agent'], 'string', 'max' => 512],
-            [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
-            [['user_ip_address'], 'string', 'max' => 20],
+            [['report_detail'], 'string', 'max' => 512],
+            // [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
+            // [['user_ip_address'], 'string', 'max' => 20],
         ];
     }
 

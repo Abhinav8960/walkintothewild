@@ -43,7 +43,7 @@ class ShareSafariCommentSearch extends ShareSafariComment
      */
     public function search($params, $pagination = true)
     {
-        $query = ShareSafariComment::find();
+        $query = ShareSafariComment::find()->where(['flaged' => 1, 'is_deleted' => 0]);
 
         // add conditions that should always apply here
 

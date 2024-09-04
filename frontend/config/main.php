@@ -15,6 +15,7 @@ $rules = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'timezone' => 'Asia/Kolkata',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'audit', '\frontend\components\AppBootstrap'],
     'defaultRoute' => '/plan-safari',
