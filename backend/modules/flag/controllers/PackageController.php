@@ -43,8 +43,15 @@ class PackageController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
-                        return $this->redirect(['index']);
+                        if ($model->comment_action_model->status == -1) {
+                            if ($package_comment = $comment_action_model->comment) {
+                                $package_comment->is_deleted = 1;
+                                if ($package_comment->save()) {
+                                    \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                    return $this->redirect(['index']);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -59,15 +66,21 @@ class PackageController extends Controller
 
     public function actionView($id)
     {
+        $review = PackageComment::find()->where(['id' => $id])->one();
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => [1, 20]]),
+            'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => 1]),
             'pagination' => [
                 'pageSize' => 20,
             ],
         ]);
-        return $this->renderAjax('view', [
+        return $this->render('view', [
             'dataProvider' => $dataProvider,
+            'review' => $review,
         ]);
     }
 

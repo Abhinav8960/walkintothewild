@@ -33,14 +33,14 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
         <?= $form->field($model, 'flaged')->dropDownList(
             ['0' => 'Not Flaged', '1' => 'Flaged'],
             [
                 'prompt' => 'Select Status of Flaged',
             ]
         ) ?>
-    </div>
+    </div> -->
     <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>

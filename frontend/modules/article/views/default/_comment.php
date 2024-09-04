@@ -10,9 +10,9 @@ use yii\helpers\Url;
 </div>
 <div class="comment_hightfixed">
     <?php
-    if ($article_comments = $article->getArticlecomments()->andWhere(['parent_id' => null])->joinWith('user')->andWhere(['user.status' => 10, 'article_comment.status' => 1])->all()) {
+    if ($article_comments = $article->getArticlecomments()->andWhere(['parent_id' => null, 'is_deleted' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'article_comment.status' => 1])->all()) {
         foreach ($article_comments as $article_comment) {
-            $replies = $article_comment->getReplies()->joinWith('user')->andWhere(['user.status' => 10, 'article_comment.status' => 1])->all();
+            $replies = $article_comment->getReplies()->andWhere(['is_deleted' => 0])->joinWith('user')->andWhere(['user.status' => 10, 'article_comment.status' => 1])->all();
     ?>
             <div class="comments-persons eee">
                 <div class="postcomment d-flex gap-3">
