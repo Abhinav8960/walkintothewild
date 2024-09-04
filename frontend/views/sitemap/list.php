@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 
     h1 {
-        border-bottom: 2px solid #007bff;
+        border-bottom: 2px solid #09422D;
         padding-bottom: 10px;
         margin-bottom: 20px;
     }
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
         border-bottom: 1px solid #ccc;
         padding-bottom: 5px;
         margin-bottom: 15px;
-        color: #007bff;
+        color: #09422D;
     }
 
     .category-card {
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     a {
         text-decoration: none;
-        color: #007bff;
+        color: #09422D;
     }
 
     a:hover {

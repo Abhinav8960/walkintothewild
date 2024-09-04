@@ -98,7 +98,7 @@ class SitemapController extends FrontendBaseController
     $otracker = Yii::$app->request->get('otracker', '');
 
     // Fetch distinct categories and pages from the database
-    $categories = SitePages::find()->select('category')->distinct()->column();
+    $categories = SitePages::find()->select('category')->where(['!=', 'category', 'action'])->distinct()->column();
 
     $categoryPages = [];
     foreach ($categories as $category) {
