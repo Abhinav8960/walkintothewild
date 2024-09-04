@@ -146,7 +146,7 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
     public function getArticlecomments()
     {
-        return $this->hasMany(ArticleComment::className(), ['article_id' => 'id']);
+        return $this->hasMany(ArticleComment::className(), ['article_id' => 'id'])->andWhere(['is_deleted' => 0, 'article_comment.status' => 1]);
     }
     public function getFeatureimagepath()
     {
