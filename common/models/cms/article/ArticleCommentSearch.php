@@ -41,7 +41,7 @@ class ArticleCommentSearch extends ArticleComment
      */
     public function search($params, $pagination = true)
     {
-        $query =  ArticleComment::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND, 3]]);
+        $query =  ArticleComment::find()->where(['flaged' => 1])->andWhere(['is_deleted' => 0]);
 
 
         // add conditions that should always apply here

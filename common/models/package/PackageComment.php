@@ -43,9 +43,8 @@ class PackageComment extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return [
             [['package_id', 'parent_id', 'user_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
-            [['comment', 'user_agent'], 'string', 'max' => 512],
-            [['user_device', 'user_platform', 'user_browser'], 'string', 'max' => 50],
-            [['user_ip_address'], 'string', 'max' => 20],
+            [['comment'], 'string'],
+
         ];
     }
 
@@ -94,5 +93,4 @@ class PackageComment extends \yii\db\ActiveRecord implements \common\interfaces\
     {
         return $this->hasMany(PackageCommentReport::className(), ['package_comment_id' => 'id']);
     }
-
 }

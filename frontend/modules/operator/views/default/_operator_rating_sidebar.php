@@ -7,6 +7,7 @@ use yii\helpers\Url;
 $ratingsearchModel = new SafariOperatorRatingSearch();
 $ratingsearchModel->safari_operator_id = $operator->id;
 $ratingsearchModel->status = 1;
+$ratingsearchModel->is_deleted = 0;
 $ratingdataProvider = $ratingsearchModel->search(Yii::$app->request->queryParams);
 $reviews = $ratingdataProvider->getModels();
 ?>

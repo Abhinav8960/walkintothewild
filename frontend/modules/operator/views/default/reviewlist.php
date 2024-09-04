@@ -74,7 +74,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                         <h6 class="nameRating">Average User Rating</h6>
                                                         <div class="providerNamerating d-flex gap-4 align-items-center pb-3">
                                                             <div class="ratings">
-                                                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->andWhere(['parent_id' => 0])->average('rating');
+                                                                <?php $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->average('rating');
                                                                 if ($avg) { ?>
                                                                     <p class="mb-0">
                                                                         <?= round($avg, 1) ?>
@@ -82,7 +82,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                     </p>
                                                                 <?php } ?>
                                                             </div>
-                                                            <?php $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->andWhere(['parent_id' => 0])->count(); {
+                                                            <?php $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->andWhere(['parent_id' => 0])->count(); {
                                                                 if ($count) { ?>
                                                                     <div class="googlerating">
                                                                         <p class="mb-0"><?= $count . " " ?>Reviews</p>

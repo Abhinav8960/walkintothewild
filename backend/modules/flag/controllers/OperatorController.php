@@ -25,6 +25,8 @@ class OperatorController extends Controller
     public function actionIndex()
     {
         $searchModel = new SafariOperatorRatingSearch();
+        $searchModel->flaged = 1;
+        $searchModel->is_deleted = 0;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -43,8 +45,22 @@ class OperatorController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
-                        return $this->redirect(['index']);
+                        if ($model->comment_action_model->status == -1) {
+                            if ($safari_operator_rating = $comment_action_model->rating) {
+                                $safari_operator_rating->is_deleted = 1;
+                                if ($safari_operator_rating->save()) {
+                                    if ($operator = $safari_operator_rating->operator) {
+                                        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->average('rating');
+                                        $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->count();
+                                        $operator->google_rating = $avg;
+                                        $operator->google_review_count = $count;
+                                        $operator->save(false);
+                                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                        return $this->redirect(['index']);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -66,7 +82,7 @@ class OperatorController extends Controller
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  SafariOperatorRatingReport::find()->where(['safari_operator_rating_id' => $id, 'status' => [1, 20]]),
+            'query' =>  SafariOperatorRatingReport::find()->where(['safari_operator_rating_id' => $id, 'status' => 1]),
             'pagination' => [
                 'pageSize' => 20,
             ],

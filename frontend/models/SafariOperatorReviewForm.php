@@ -91,8 +91,8 @@ class SafariOperatorReviewForm extends \yii\base\Model
      */
     public function updateRatingintoTable($operator)
     {
-        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->average('rating');
-        $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id])->count();
+        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->average('rating');
+        $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->count();
         $operator->google_rating = $avg;
         $operator->google_review_count = $count;
         $operator->save(false);

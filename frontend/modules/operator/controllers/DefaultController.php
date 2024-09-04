@@ -163,6 +163,7 @@ class DefaultController extends FrontendBaseController
         $ratingsearchModel = new SafariOperatorRatingSearch();
         $ratingsearchModel->custom_sort_by = $sort_by;
         $ratingsearchModel->safari_operator_id = $operator->id;
+        $ratingsearchModel->is_deleted = 0;
         $ratingsearchModel->status = 1;
         $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
         $reviews = $ratingdataProvider->getModels();
