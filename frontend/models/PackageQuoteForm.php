@@ -71,17 +71,21 @@ class PackageQuoteForm extends Model
         $package_quote->os = $agent->platform();
         $package_quote->status = 1;
 
-        if ($package_quote->save(false)) {
-            return $package_quote;
-        }
-        // if ($package_quote->save()) {
-        //     $to_mail = $package_quote->email;
-        //     $subject = 'Request Free Quote';
-        //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
-        //     $req = ['username' => $package_quote->full_name];
-
-        //     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-        //     return $package_quote->save();
+        // if ($package_quote->save(false)) {
+        //     return $package_quote;
         // }
+        if ($package_quote->save()) {
+            $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
+            if ($package) {
+                $operator = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
+                $to_mail = $operator->email;
+                $subject = 'New Quote Request for ' . $package->packagename . '';
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
+                $req = ['username' => $operator->business_name, 'parkname' => $package->packagename];
+
+                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            }
+            return $package_quote->save();
+        }
     }
 }

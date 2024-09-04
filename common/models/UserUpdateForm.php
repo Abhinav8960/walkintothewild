@@ -22,6 +22,7 @@ class UserUpdateForm extends Model
     public $is_birding_operator;
     public $is_cms_manager;
     public $is_resort_manager;
+    public $is_community_manager;
     public $role_id;
 
     // 1 => 'Administrator',
@@ -68,6 +69,9 @@ class UserUpdateForm extends Model
             if ($this->user_model->is_report_manager == 1) {
                 $this->role_id[] = 7;
             }
+            if ($this->user_model->is_community_manager == 1) {
+                $this->role_id[] = 8;
+            }
         }
     }
 
@@ -86,21 +90,26 @@ class UserUpdateForm extends Model
             ['name', 'trim'],
             //last_name rules
             [
-                'username', 'unique', 'when' => function ($model, $attribute) {
+                'username',
+                'unique',
+                'when' => function ($model, $attribute) {
                     return $this->user_model->$attribute != $model->$attribute;
-                },  'targetClass' => \common\models\User::className(),
+                },
+                'targetClass' => \common\models\User::className(),
                 'message' => 'This username has already been taken'
             ],
             ['username', 'string', 'min' => 3, 'max' => 50],
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager'], 'safe'],
+            [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'is_community_manager'], 'safe'],
             [
-                'email', 'unique',
+                'email',
+                'unique',
                 'when' => function ($model, $attribute) {
                     return $this->user_model->$attribute != $model->$attribute;
-                },  'targetClass' => \common\models\User::className(),
+                },
+                'targetClass' => \common\models\User::className(),
                 'message' => 'This email address has already been taken'
             ],
             ['password', 'string', 'min' => 4],
@@ -141,6 +150,7 @@ class UserUpdateForm extends Model
         $this->user_model->is_cms_manager = 0;
         $this->user_model->is_resort_manager = 0;
         $this->user_model->is_report_manager = 0;
+        $this->user_model->is_community_manager = 0;
         $this->user_model->save(false);
 
         if ($this->role_id) {
@@ -167,6 +177,9 @@ class UserUpdateForm extends Model
                 }
                 if ($role == 7) {
                     $this->user_model->is_report_manager = 1;
+                }
+                if ($role == 7) {
+                    $this->user_model->is_community_manager = 1;
                 }
             }
         }

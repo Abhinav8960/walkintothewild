@@ -22,7 +22,10 @@ use common\models\registration\SafariOperatorRequestPark;
     ],
 ]); ?>
 <div class="row">
+    <div class="col-md-2">
 
+        <?php echo $form->field($model, 'report_days')->dropDownList($model->report_days_option, ['prompt' => 'Select Duration'])->label(false) ?>
+    </div>
     <div class="col-md-2">
         <?= $form->field($model, 'business_name')->textInput(['placeholder' => 'Search by Business Name'])->label(false) ?>
     </div>

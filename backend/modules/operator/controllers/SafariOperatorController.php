@@ -32,6 +32,7 @@ class SafariOperatorController extends Controller
     public function actionIndex()
     {
         $searchModel = new SafariOperatorSearch();
+        $searchModel->report_days = 'today';
         $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
