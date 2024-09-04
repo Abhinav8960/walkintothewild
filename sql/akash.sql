@@ -55,3 +55,4 @@ ALTER TABLE `package_comment`
   ALTER TABLE `article_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
   ALTER TABLE `package_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
   ALTER TABLE `share_safari_comment` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
+  ALTER TABLE `safari_operator_rating` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
