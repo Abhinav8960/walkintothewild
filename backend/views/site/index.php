@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 ?>
 <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="club">
+    <div class="response">
         <div class="col-xl-12">
             <!-- BEGIN row new operator -->
             <strong>
@@ -731,3 +731,13 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+<style>
+    .response a {
+        color: black !important;
+    }
+
+    .response .card {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px !important;
+        border: 1px solid #09422D !important;
+    }
+</style>
