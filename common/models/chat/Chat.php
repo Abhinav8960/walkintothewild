@@ -4,6 +4,7 @@ namespace common\models\chat;
 
 use Yii;
 use common\models\User;
+use common\models\operator\SafariOperator;
 
 /**
  * This is the model class for table "chat".
@@ -12,6 +13,7 @@ use common\models\User;
  * @property int $user_id
  * @property int $recipient_user_id
  * @property int|null $status
+ * @property int|null $chat_type
  * @property int|null $created_at
  * @property int|null $created_by
  * @property int|null $updated_at
@@ -42,7 +44,7 @@ class Chat extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'recipient_user_id'], 'required'],
-            [['user_id', 'recipient_user_id', 'status', 'last_message_at', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['user_id', 'recipient_user_id', 'status', 'chat_type', 'last_message_at', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             ['last_message', 'string', 'max' => 500],
         ];
     }
@@ -57,6 +59,7 @@ class Chat extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'recipient_user_id' => 'Recipient User ID',
             'status' => 'Status',
+            'chat_type' => 'Chat Type',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
@@ -83,5 +86,15 @@ class Chat extends \yii\db\ActiveRecord
     public function getRecipient()
     {
         return $this->hasOne(User::className(), ['id' => 'recipient_user_id']);
+    }
+
+    public function getParkoperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'recipient_user_id']);
+    }
+
+    public function getPackageoperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'recipient_user_id']);
     }
 }

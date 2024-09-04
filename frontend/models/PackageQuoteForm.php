@@ -2,6 +2,9 @@
 
 namespace frontend\models;
 
+use common\models\User;
+use common\models\chat\Chat;
+use common\models\chat\ChatMessage;
 use common\models\MailLog;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
@@ -72,6 +75,38 @@ class PackageQuoteForm extends Model
         $package_quote->status = 1;
 
         if ($package_quote->save(false)) {
+            //save quote chat 
+            $login_user = Yii::$app->user->identity;
+
+            $package_data = Package::find()->where(['id' => $package_quote->package_id])->asArray()->one();
+            $individual_user = User::find()->where(['id' => $package_data['owned_by_id']])->limit(1)->one();
+
+            $chat = new Chat();
+            $short_msg = $message = "<b>Package: </b>" . $package_quote->package->package_name . "<br/>";
+            $message .= "<b>Travelers: </b>" . $package_quote->travelers . "<br/>";
+            $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($package_quote->start_date)) . "<br/>";
+
+            $chat->generateChatHash();
+            $chat->user_id = $login_user->id;
+            $chat->recipient_user_id = $individual_user->id;
+            $chat->last_message = $short_msg;
+            $chat->last_message_at = time();
+            $chat->status = 1;
+            $chat->chat_type = 2;
+            $chat->package_id = $package_quote->package_id;
+
+            if ($chat->save()) {
+                $chat_message = new ChatMessage();
+                $chat_message->chat_id = $chat->id;
+                $chat_message->message = $message;
+                $chat_message->data = json_encode($package_data);
+                $chat_message->status = 1;
+                if ($chat_message->save()) {
+                    //create mail log
+                }
+            }
+            //save done quote chat
+
             return $package_quote;
         }
         // if ($package_quote->save()) {

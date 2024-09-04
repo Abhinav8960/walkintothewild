@@ -2,6 +2,9 @@
 
 namespace frontend\models;
 
+use common\models\User;
+use common\models\chat\Chat;
+use common\models\chat\ChatMessage;
 use common\models\MailLog;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
@@ -98,8 +101,39 @@ class OperatorQuoteForm extends Model
         $operator_quote->os = $agent->platform();
         $operator_quote->status = 1;
 
-
         if ($operator_quote->save(false)) {
+            //save quote chat 
+            $login_user = Yii::$app->user->identity;
+            $individual_user = User::find()->where(['id' => $operator->user_id])->limit(1)->one();
+
+            $chat = new Chat();
+            $short_msg = $message = "<b>Park: </b>" . $operator_quote->park->title . "<br/>";
+            $message .= "<b>Safaries: </b>" . $operator_quote->safaris . "<br/>";
+            $message .= "<b>Travelers: </b>" . $operator_quote->travelers . "<br/>";
+            $message .= "<b>Stay Category: </b>" . $operator_quote->staycatgory->title . "<br/>";
+            $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($operator_quote->start_date)) . "<br/>";
+            $message .= "<b>End Date: </b>" . date('M j, Y', strtotime($operator_quote->end_date)) . "<br/>";
+
+            $chat->generateChatHash();
+            $chat->user_id = $login_user->id;
+            $chat->recipient_user_id = $individual_user->id;
+            $chat->last_message = $short_msg;
+            $chat->last_message_at = time();
+            $chat->status = 1;
+            $chat->chat_type = 2;
+            $chat->park_id = $operator_quote->safari_park_id;
+
+            if ($chat->save()) {
+                $chat_message = new ChatMessage();
+                $chat_message->chat_id = $chat->id;
+                $chat_message->message = $message;
+                $chat_message->status = 1;
+                if ($chat_message->save()) {
+                    //create mail log
+                }
+            }
+            //save done quote chat
+
             $to_mail = $operator_quote->email;
             $subject = 'Request Free Quote';
             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
