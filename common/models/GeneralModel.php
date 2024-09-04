@@ -45,6 +45,7 @@ use common\models\operator\SafariOperator;
 use common\models\operator\SafariOperatorActivities;
 use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRating;
+use common\models\package\Package;
 use common\models\package\PackageFaq;
 use common\models\park\BirdingPark;
 use common\models\park\Park;
@@ -199,6 +200,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
                 5 => 'Cms Manager',
                 6 => 'Resort Manager',
                 7 => 'Report Manager',
+                8 => 'Community Manager',
             ];
         } else
         if (Yii::$app->user->identity && Yii::$app->user->identity->is_admin) {
@@ -953,6 +955,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
+    public static function packagelist()
+    {
+        return ArrayHelper::map(Package::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['package_name' => SORT_ASC])->all(), 'id', 'package_name');
+    }
 
 
     public static function masterfaqoption($packageId)

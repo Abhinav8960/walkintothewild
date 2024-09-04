@@ -68,6 +68,9 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             if ($model->is_report_manager == 1) {
                                 $roles[] = "Report Manager";
                             }
+                            if ($model->is_community_manager == 1) {
+                                $roles[] = "Community Manager";
+                            }
                             return implode(', ', $roles);
                         }
                     ],

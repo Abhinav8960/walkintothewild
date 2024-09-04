@@ -20,15 +20,27 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
+    <div class="col-md-2">
 
+        <?php echo $form->field($model, 'report_days')->dropDownList($model->report_days_option, ['prompt' => 'Select Duration'])->label(false) ?>
+    </div>
     <div class="col-md-2">
         <?= $form->field($model, 'safari_plan')->textInput(['placeholder' => 'Search by Safari Plan'])->label(false) ?>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => 'Select Status'])->label(false) ?>
+        <?= $form->field($model, 'type')->dropDownList(GeneralModel::sharedsafaritype(), ['prompt' => 'Select Type'])->label(false) ?>
     </div>
     <div class="col-md-2">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
+        <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => 'Select Status'])->label(false) ?>
     </div>
+
 </div>
 <?php ActiveForm::end(); ?>
+<?php
+$js = <<<JS
+    $('form') . on('change', function() {
+        $(this) . closest('form') . submit();
+    });  
+JS;
+$this->registerJs($js);
+?>

@@ -31,6 +31,7 @@ class ArticleByUserController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
+        $searchModel->report_days = 'today';
         $searchModel->status = StatusInterface::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->query->andWhere(['not', ['user_id' => null]]);
