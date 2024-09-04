@@ -43,7 +43,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->package->package_name;
+                            return isset($model->package) ? $model->package->package_name : '';
                         }
                     ],
 
@@ -60,7 +60,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->user->name;
+                            return isset($model->user) ? $model->user->name : '';
                         }
                     ],
                     [
