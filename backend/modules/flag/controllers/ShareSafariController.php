@@ -43,6 +43,11 @@ class ShareSafariController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
+                        if ($model->comment_action_model->status == -1) {
+                            $package = ShareSafariComment::find()->where(['id' => $comment_action_model->share_safari_comment_id])->limit(1)->one();
+                            $package->is_deleted = 1;
+                            $package->save();
+                        }
                         \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
                         return $this->redirect(['index']);
                     }
@@ -66,7 +71,7 @@ class ShareSafariController extends Controller
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id]),
+            'query' =>  ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id, 'status' => 1]),
             'pagination' => [
                 'pageSize' => 20,
             ],

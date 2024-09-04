@@ -43,6 +43,11 @@ class PackageController extends Controller
                 if ($model->validate()) {
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
+                        if ($model->comment_action_model->status == -1) {
+                            $package = PackageComment::find()->where(['id' => $comment_action_model->package_comment_id])->limit(1)->one();
+                            $package->is_deleted = 1;
+                            $package->save();
+                        }
                         \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
                         return $this->redirect(['index']);
                     }
@@ -66,7 +71,7 @@ class PackageController extends Controller
         }
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => [1, 20]]),
+            'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => 1]),
             'pagination' => [
                 'pageSize' => 20,
             ],
