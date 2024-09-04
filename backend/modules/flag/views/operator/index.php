@@ -48,7 +48,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         //'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return  isset($model->safari_operator_id) ? $model->operator->register_comapany_name : '';
+                            return  isset($model->operator) ? $model->operator->business_name : '';
                         }
                     ],
                     [
@@ -56,7 +56,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return  isset($model->park_id) ? $model->park->title : '';
+                            return  isset($model->park) ? $model->park->title : '';
                         }
                     ],
                     [
