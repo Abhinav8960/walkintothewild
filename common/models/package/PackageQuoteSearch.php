@@ -3,6 +3,7 @@
 namespace common\models\package;
 
 use common\models\package\PackageQuote;
+use DateTime;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -11,6 +12,19 @@ use yii\data\ActiveDataProvider;
  */
 class PackageQuoteSearch extends PackageQuote
 {
+    public $report_days;
+
+
+
+    public $report_days_option = [
+        'all' => 'All',
+        'today' => 'Today',
+        'yesterday' => 'Yesterday',
+        'tw' => 'This Week',
+        'tm' => 'This Month',
+        'lm' => 'Last Month',
+        'tfy' => 'This Financial Year',
+    ];
     /**
      * {@inheritdoc}
      */
@@ -20,6 +34,7 @@ class PackageQuoteSearch extends PackageQuote
             [['package_id', 'travelers', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['start_date', 'user_agent', 'os', 'browser', 'device_type'], 'string', 'max' => 255],
             [['ip_address'], 'string', 'max' => 45],
+            [['report_days'], 'safe']
         ];
     }
 
@@ -47,6 +62,7 @@ class PackageQuoteSearch extends PackageQuote
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -70,6 +86,56 @@ class PackageQuoteSearch extends PackageQuote
         ]);
         $query->andFilterWhere(['like', 'travelers', $this->travelers]);
 
+        if ($this->report_days) {
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
+
         return $dataProvider;
+    }
+
+
+    /**
+     * Raw Query
+     */
+    public function getRawdatequery()
+    {
+        $query = "1=1";
+
+        // Create DateTime objects for current date and time
+        $now = new DateTime();
+
+        if ($this->report_days == 'today') { // Today
+            $start = $now->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'yesterday') { // Yesterday
+            $yesterday = (new DateTime('yesterday'));
+            $start = $yesterday->setTime(0, 0, 0)->getTimestamp();
+            $end = $yesterday->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tw') { // This Week
+            $start = (new DateTime('monday this week'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('sunday this week'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tm') { // This Month
+            $start = (new DateTime('first day of this month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of this month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'lm') { // Last Month
+            $start = (new DateTime('first day of last month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of last month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tfy') { // This Financial Year
+            $financialYearStart = new DateTime('April ' . $now->format('Y'));
+            if ($now < $financialYearStart) {
+                $financialYearStart = new DateTime('April ' . $now->format('Y', strtotime('-1 year')));
+            }
+            $start = $financialYearStart->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        }
+
+        return $query;
     }
 }

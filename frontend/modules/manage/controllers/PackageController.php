@@ -26,6 +26,7 @@ use common\models\package\PackageGallerySearch;
 use common\models\package\PackageIncluded;
 use common\models\package\PackageQuoteSearch;
 use common\models\package\PackageSafariPark;
+use common\models\package\PackageSearch;
 use common\models\sharesafari\ShareSafariComment;
 use frontend\controllers\FrontendBaseController;
 use yii\data\ActiveDataProvider;
@@ -44,18 +45,23 @@ class PackageController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $query = Package::find()->where([
-            'owned_by_id' => $safari_operator->id,
-            'status' => 1
+        $searchModel = new PackageSearch();
+        $dataProvider = $searchModel->managesearch($this->request->queryParams, [
+            'owned_by_id' => $safari_operator->id
         ]);
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
+        // $query = Package::find()->where([
+        //     'owned_by_id' => $safari_operator->id,
+        //     'status' => 1
+        // ]);
+        // $dataProvider = new \yii\data\ActiveDataProvider([
+        //     'query' => $query,
+        //     'pagination' => [
+        //         'pageSize' => 20,
+        //     ],
+        // ]);
         return $this->render('index', [
             'safari_operator' => $safari_operator,
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider
         ]);
     }

@@ -68,12 +68,10 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         //'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            $reasons = [];
-                            $all_flags_count = $model->getReports()->where(['status' => 1])->count();
-                            return $all_flags_count;
+                            $counter = $model->getReports()->where(['status' => 1])->count();
+                            return $counter;
                         }
                     ],
-
                     [
                         'label' => 'Action',
                         //'contentOptions' => ['style' => 'width: 10%;'],
@@ -81,7 +79,7 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                         'value' => function ($model) {
                             if ($model->flaged == 1) {
                                 return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                                ', ['flagview', 'id' => $model->id], [
+                                ', ['view', 'id' => $model->id], [
                                     'class' => 'btn p-0 change-menuicon',
                                     'name' => 'View',
                                 ]);

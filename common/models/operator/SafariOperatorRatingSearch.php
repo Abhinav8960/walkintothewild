@@ -12,16 +12,18 @@ use yii\helpers\ArrayHelper;
 class SafariOperatorRatingSearch extends SafariOperatorRating
 {
     public $custom_sort_by;
+    public $flaged;
+    public $is_deleted;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['safari_operator_id', 'user_id', 'park_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'integer'],
+            [['safari_operator_id', 'user_id', 'park_id', 'flaged', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'flaged', 'is_deleted'], 'integer'],
             [['rating'], 'number'],
-            [['review', 'user_agent'], 'string', 'max' => 512],
-            [['user_device', 'user_platform', 'user_platform_version', 'user_browser'], 'string', 'max' => 50],
+            [['review'], 'string', 'max' => 512],
+            // [['user_device', 'user_platform', 'user_platform_version', 'user_browser'], 'string', 'max' => 50],
             [['custom_sort_by'], 'safe']
         ];
     }
@@ -53,6 +55,7 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -90,6 +93,8 @@ class SafariOperatorRatingSearch extends SafariOperatorRating
             'id' => $this->id,
             'safari_operator_id' => $this->safari_operator_id,
             'park_id' => $this->park_id,
+            'flaged' => $this->flaged,
+            'is_deleted' => $this->is_deleted,
             'rating' => $this->rating,
             'review' => $this->review,
             'created_at' => $this->created_at,

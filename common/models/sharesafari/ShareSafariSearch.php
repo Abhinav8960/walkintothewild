@@ -2,7 +2,7 @@
 
 namespace common\models\sharesafari;
 
-
+use DateTime;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -16,7 +16,18 @@ class ShareSafariSearch extends ShareSafari
     public $estimated_price_filter;
     public $date_filter;
     public $title;
+    public $report_days;
 
+
+    public $report_days_option = [
+        'all' => 'All',
+        'today' => 'Today',
+        'yesterday' => 'Yesterday',
+        'tw' => 'This Week',
+        'tm' => 'This Month',
+        'lm' => 'Last Month',
+        'tfy' => 'This Financial Year',
+    ];
 
     /**
      * {@inheritdoc}
@@ -25,7 +36,7 @@ class ShareSafariSearch extends ShareSafari
     {
         return [
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'estimate_price_min', 'estimate_price_max', 'total_seat', 'share_seat', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
-            [['start_date', 'end_date', 'estimated_price_filter', 'title'], 'safe'],
+            [['start_date', 'end_date', 'estimated_price_filter', 'title', 'report_days', 'type'], 'safe'],
             [['safari_plan', 'month_id', 'custom_sort_by', 'no_of_safari', 'date_filter'], 'safe'],
         ];
     }
@@ -71,6 +82,7 @@ class ShareSafariSearch extends ShareSafari
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'share_safari.type' => $this->type,
             'share_safari.host_user_id' => $this->host_user_id,
             'share_safari.host_type' => $this->host_type,
             'share_safari.park_id' => $this->park_id,
@@ -162,6 +174,56 @@ class ShareSafariSearch extends ShareSafari
             }]);
         }
 
+        if ($this->report_days) {
+
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
         return $dataProvider;
+    }
+
+
+    /**
+     * Raw Query
+     */
+    public function getRawdatequery()
+    {
+        $query = "1=1";
+
+        // Create DateTime objects for current date and time
+        $now = new DateTime();
+
+        if ($this->report_days == 'today') { // Today
+            $start = $now->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'yesterday') { // Yesterday
+            $yesterday = (new DateTime('yesterday'));
+            $start = $yesterday->setTime(0, 0, 0)->getTimestamp();
+            $end = $yesterday->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tw') { // This Week
+            $start = (new DateTime('monday this week'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('sunday this week'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tm') { // This Month
+            $start = (new DateTime('first day of this month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of this month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'lm') { // Last Month
+            $start = (new DateTime('first day of last month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of last month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tfy') { // This Financial Year
+            $financialYearStart = new DateTime('April ' . $now->format('Y'));
+            if ($now < $financialYearStart) {
+                $financialYearStart = new DateTime('April ' . $now->format('Y', strtotime('-1 year')));
+            }
+            $start = $financialYearStart->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        }
+
+        return $query;
     }
 }

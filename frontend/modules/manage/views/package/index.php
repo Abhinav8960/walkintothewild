@@ -4,6 +4,7 @@ use common\interfaces\StatusInterface;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 $this->title = $safari_operator->businessname . ' | Manage Operator Business';
 
@@ -30,14 +31,26 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                         <?php if ($safari_operator->status != StatusInterface::STATUS_ACTIVE) {
                             echo $this->context->module->account_deactivate_message;
                         } ?>
+                        <?php
+                        Pjax::begin([
+                            'id' => 'grid-data',
+                            'enablePushState' => FALSE,
+                            'enableReplaceState' => FALSE,
+                            'timeout' => FALSE,
+                        ]);
+                        ?>
 
-                        <?php if ($models = $dataProvider->models) {
+                        <?php
+                        echo $this->render('_search', ['searchModel' => $searchModel]);
+                        if ($models = $dataProvider->models) {
+                            echo '<div class="row">';
                             foreach ($models as $package) {
 
                                 echo '<div class="col-md-6">';
                                 echo $this->render('_package_card', ['model' => $package]);
                                 echo '</div>';
                             }
+                            echo '</div>';
                         } else {
                             echo 'No Package Created';
                         } ?>
@@ -49,6 +62,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 ]); ?>
                             </div>
                         </div>
+                        <?php Pjax::end(); ?>
                     </div>
                 </div>
             </div>

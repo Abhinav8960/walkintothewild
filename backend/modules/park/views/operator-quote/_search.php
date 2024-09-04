@@ -20,7 +20,9 @@ use yii\widgets\ActiveForm;
     ],
 ]); ?>
 <div class="row">
-
+    <div class="col-md-2">
+        <?php echo $form->field($model, 'report_days')->dropDownList($model->report_days_option, ['prompt' => 'Select Duration'])->label(false) ?>
+    </div>
     <div class="col-md-3">
         <?= $form->field($model, 'full_name')->textInput(['placeholder' => 'Search by Full Name'])->label(false) ?>
     </div>
@@ -38,8 +40,13 @@ use yii\widgets\ActiveForm;
             ]
         ) ?>
     </div>
-    <div class="col-md-3">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
-    </div>
 </div>
 <?php ActiveForm::end(); ?>
+<?php
+$js = <<<JS
+    $('form') . on('change', function() {
+        $(this) . closest('form') . submit();
+    });  
+JS;
+$this->registerJs($js);
+?>

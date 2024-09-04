@@ -241,11 +241,17 @@ $this->params['title'] = $this->title; ?>
                             </div>
                         </div>
                     </div>
+                    <div class="advertisment my-4">
+                        <div class="google-ad-box  ">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 <section class="safari_wrapper margin_bottomfooter pt-3">
     <div class="container-lg">
         <div class="row mb-5 pb-lg-5 pb-0">
@@ -272,6 +278,17 @@ $this->params['title'] = $this->title; ?>
                         } ?>
                     </div>
                 </div>
+
+                <div class="advertisment d-lg-block d-none mt-5">
+            <div class="google-ad300  mb-5">
+
+            </div>
+        </div>
+        <div class="advertisment d-lg-block d-none ">
+            <div class="google-add600hight  mb-5">
+
+            </div>
+        </div>
 
             </div>
         </div>

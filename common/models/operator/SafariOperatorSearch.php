@@ -2,6 +2,8 @@
 
 namespace common\models\operator;
 
+use DateTime;
+use InvalidArgumentException;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -15,7 +17,19 @@ class SafariOperatorSearch extends SafariOperator
     public $park_id;
     public $business_name;
     public $register_comapany_name;
+    public $report_days;
 
+
+
+    public $report_days_option = [
+        'all' => 'All',
+        'today' => 'Today',
+        'yesterday' => 'Yesterday',
+        'tw' => 'This Week',
+        'tm' => 'This Month',
+        'lm' => 'Last Month',
+        'tfy' => 'This Financial Year',
+    ];
     /**
      * {@inheritdoc}
      */
@@ -25,7 +39,7 @@ class SafariOperatorSearch extends SafariOperator
             [['safari_operator_request_id', 'category_id', 'is_highlighted', 'google_review_count', 'phone_no', 'is_register_company', 'has_a_website', 'has_cancellation_policy', 'wildlife_photographer', 'wildlife_influencer', 'is_offer_premium_budget', 'is_offer_standard_budget', 'is_offer_economical_budget', 'is_wildlife_trekking', 'is_wildlife_non_safari_drive', 'is_bird_watching', 'is_camping', 'is_approved', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['google_rating', 'starting_price'], 'number'],
             [['about_business'], 'string'],
-            [['budget_segment', 'credibility', 'park_id'], 'safe'],
+            [['budget_segment', 'credibility', 'park_id', 'report_days'], 'safe'],
             [['business_name', 'register_comapany_name', 'address', 'gst', 'logo', 'google_business_url', 'google_business_name', 'facebook_url', 'instagram_url', 'youtube_link', 'email', 'website', 'operator_name', 'operator_phone_no', 'operator_email'], 'string', 'max' => 255],
         ];
     }
@@ -57,6 +71,7 @@ class SafariOperatorSearch extends SafariOperator
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -149,6 +164,58 @@ class SafariOperatorSearch extends SafariOperator
             }
         }
 
+
+        if ($this->report_days) {
+
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
         return $dataProvider;
+    }
+
+
+
+    /**
+     * Raw Query
+     */
+    public function getRawdatequery()
+    {
+        $query = "1=1";
+
+        // Create DateTime objects for current date and time
+        $now = new DateTime();
+
+        if ($this->report_days == 'today') { // Today
+            $start = $now->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'yesterday') { // Yesterday
+            $yesterday = (new DateTime('yesterday'));
+            $start = $yesterday->setTime(0, 0, 0)->getTimestamp();
+            $end = $yesterday->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tw') { // This Week
+            $start = (new DateTime('monday this week'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('sunday this week'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tm') { // This Month
+            $start = (new DateTime('first day of this month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of this month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'lm') { // Last Month
+            $start = (new DateTime('first day of last month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of last month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tfy') { // This Financial Year
+            $financialYearStart = new DateTime('April ' . $now->format('Y'));
+            if ($now < $financialYearStart) {
+                $financialYearStart = new DateTime('April ' . $now->format('Y', strtotime('-1 year')));
+            }
+            $start = $financialYearStart->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        }
+
+        return $query;
     }
 }

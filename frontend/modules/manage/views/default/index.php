@@ -93,7 +93,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 </div>
                                 <div class="col-md-6  col-xxl-6 col-lg-6 ">
                                     <div class="text-box">
-                                        <p><strong>Registered Name : </strong><?= $safari_operator->operator_phone_no ?></p>
+                                        <p><strong>Registered Name : </strong><?= $safari_operator->register_comapany_name ?></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6  col-xxl-6 col-lg-6 ">
@@ -130,7 +130,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                     <div class="row">
                         <div class="col-md-12 ">
                             <div class="text-box">
-                                <p><strong>Address : </strong><?= $safari_operator->register_comapany_name ?></p>
+                                <p><strong>Address : </strong><?= $safari_operator->address ?></p>
                             </div>
                         </div>
                         <div class="col-md-12 ">

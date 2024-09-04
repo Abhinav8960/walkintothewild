@@ -25,6 +25,12 @@ class PackageReplyForm extends Model
     {
         return [
             [['comment', 'parent_id'], 'required'],
+            ['comment', 'validateContent'],
+            ['comment', function () {
+                if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->comment)) {
+                    $this->addError('comment', 'Invalid Characters!!!');
+                }
+            }],
         ];
     }
 
@@ -32,18 +38,18 @@ class PackageReplyForm extends Model
     public function reply(Package $package)
     {
 
-        $agent = new \Jenssegers\Agent\Agent();
-        $agent->setUserAgent(Yii::$app->request->userAgent);
+        // $agent = new \Jenssegers\Agent\Agent();
+        // $agent->setUserAgent(Yii::$app->request->userAgent);
         $reply = new PackageComment();
         $reply->package_id = $package->id;
         $reply->user_id = Yii::$app->user->id;
         $reply->parent_id = $this->parent_id;
         $reply->comment = $this->comment;
-        $reply->user_device = $agent->device();
-        $reply->user_agent = Yii::$app->request->userAgent;
-        $reply->user_platform =  $agent->platform();
-        $reply->user_browser = $agent->browser();
-        $reply->user_ip_address = Yii::$app->getRequest()->getUserIp();
+        // $reply->user_device = $agent->device();
+        // $reply->user_agent = Yii::$app->request->userAgent;
+        // $reply->user_platform =  $agent->platform();
+        // $reply->user_browser = $agent->browser();
+        // $reply->user_ip_address = Yii::$app->getRequest()->getUserIp();
         $reply->status = StatusInterface::STATUS_ACTIVE;
 
 
@@ -57,5 +63,14 @@ class PackageReplyForm extends Model
     public function commentbyParent()
     {
         return PackageComment::findone($this->parent_id);
+    }
+
+
+    public function validateContent($attribute, $params)
+    {
+        $wordCount = str_word_count($this->$attribute);
+        if ($wordCount >= 100) {
+            $this->addError($attribute, 'Please provide content within 100 words.');
+        }
     }
 }

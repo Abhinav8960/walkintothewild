@@ -60,7 +60,6 @@ class PackageQuoteForm extends Model
 
     public function request($package_id)
     {
-
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
         $package_quote = new PackageQuote();
@@ -77,9 +76,10 @@ class PackageQuoteForm extends Model
         if ($package_quote->save(false)) {
             //save quote chat 
             $login_user = Yii::$app->user->identity;
+            $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
 
             $package_data = Package::find()->where(['id' => $package_quote->package_id])->asArray()->one();
-            $individual_user = User::find()->where(['id' => $package_data['owned_by_id']])->limit(1)->one();
+            $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
 
             $chat = new Chat();
             $short_msg = $message = "<b>Package: </b>" . $package_quote->package->package_name . "<br/>";
@@ -95,28 +95,27 @@ class PackageQuoteForm extends Model
             $chat->chat_type = 2;
             $chat->package_id = $package_quote->package_id;
 
-            if ($chat->save()) {
+            if ($chat->save(false)) {
                 $chat_message = new ChatMessage();
                 $chat_message->chat_id = $chat->id;
                 $chat_message->message = $message;
                 $chat_message->data = json_encode($package_data);
                 $chat_message->status = 1;
-                if ($chat_message->save()) {
-                    //create mail log
-                }
+                $chat_message->save();
             }
-            //save done quote chat
+            //end save done quote chat
 
-            return $package_quote;
+            if ($package) {
+                $operator = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
+                $to_mail = $operator->email;
+                $subject = 'New Quote Request for ' . $package->packagename . '';
+                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
+                $req = ['username' => $operator->business_name, 'parkname' => $package->packagename];
+
+                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            }
+            //return $package_quote->save();
         }
-        // if ($package_quote->save()) {
-        //     $to_mail = $package_quote->email;
-        //     $subject = 'Request Free Quote';
-        //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
-        //     $req = ['username' => $package_quote->full_name];
-
-        //     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-        //     return $package_quote->save();
-        // }
+        return true;
     }
 }

@@ -49,8 +49,9 @@ class MailLogSearch extends MailLog
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 10 : $pagination],
-
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
+
 
         $this->load($params);
 

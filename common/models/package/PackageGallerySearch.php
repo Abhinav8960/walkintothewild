@@ -44,9 +44,9 @@ class PackageGallerySearch extends PackageGallery
         $query = PackageGallery::find()->where(['status' => [1, 2]]);
 
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);

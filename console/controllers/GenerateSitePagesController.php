@@ -200,20 +200,21 @@ class GenerateSitePagesController extends Controller
   protected function update_site_pages($data)
   {
     $records = [];
+    $timestamp24HoursAgo = time() - (24 * 60 * 60);
     if ($data['table'] == 'master_article_tag') {
-      $records = MasterArticleTag::find()->all();
+      $records = MasterArticleTag::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     } else if ($data['table'] == 'safari_operator') {
-      $records = SafariOperator::find()->all();
+      $records = SafariOperator::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     } else if ($data['table'] == 'safari_park') {
-      $records = SafariPark::find()->all();
+      $records = SafariPark::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     } else if ($data['table'] == 'article') {
-      $records = Article::find()->all();
+      $records = Article::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     } else if ($data['table'] == 'master_article_topic') {
-      $records = MasterArticleTopic::find()->all();
+      $records = MasterArticleTopic::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     } else if ($data['table'] == 'article_author') {
-      $records = ArticleAuthor::find()->all();
+      $records = ArticleAuthor::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     } else if ($data['table'] == 'master_animal') {
-      $records = MasterAnimal::find()->all();
+      $records = MasterAnimal::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     }
 
     if (count($records)) {
@@ -401,10 +402,11 @@ class GenerateSitePagesController extends Controller
   protected function get_animal_search_site_pages()
   {
     $is_exist = SitePages::find()->where(['category' => 'Animal'])->andWhere(['sub_category' => 'Usual'])->one();
+    $timestamp24HoursAgo = time() - (24 * 60 * 60);
     if ($is_exist) {
       //already exist, do nothing
     } else {
-      $animals = MasterAnimal::find()->select(['id', 'slug', 'name', 'updated_at'])->where(['status' => true])->asArray()->all();
+      $animals = MasterAnimal::find()->select(['id', 'slug', 'name', 'updated_at'])->where(['status' => true])->andWhere(['>=', 'updated_at', $timestamp24HoursAgo])->asArray()->all();
       if (count($animals) > 0) {
         $insert_package_site_pages = [];
         foreach ($animals as $ind => $month) {
@@ -444,7 +446,8 @@ class GenerateSitePagesController extends Controller
 
   protected function get_operator_tabs_site_pages()
   {
-    $records = SafariOperator::find()->all();
+    $timestamp24HoursAgo = time() - (24 * 60 * 60);
+    $records = SafariOperator::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     $tab_urls = ['package' => '/package', 'park' => '/park', 'review' => '/reviewlist', 'article' => '/article', 'contact' => '/contact'];
     if (count($records)) {
       $temp_insert_data = [];
@@ -522,7 +525,8 @@ class GenerateSitePagesController extends Controller
 
   protected function get_park_tabs_site_pages()
   {
-    $records = SafariPark::find()->all();
+    $timestamp24HoursAgo = time() - (24 * 60 * 60);
+    $records = SafariPark::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     $tab_urls = ['package' => '/package', 'share safari' => '/sharedsafari', 'review' => '/reviewlist'];
     if (count($records)) {
       $temp_insert_data = [];
@@ -750,14 +754,15 @@ class GenerateSitePagesController extends Controller
 
   protected function get_shar_safari_site_pages()
   {
-    $records = ShareSafari::find()->all();
+    $timestamp24HoursAgo = time() - (24 * 60 * 60);
+    $records = ShareSafari::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     if (count($records)) {
       $temp_insert_data = [];
       foreach ($records as $row) {
         $url = "sharedsafari/" . $row->organizedslug . "/" . $row->slug;
         if ($row['status'] == 1) {
           $title = $description = $image = '';
-          $title = 'Shared Safari';
+          $title = $row->share_safari_title;
           $description = strip_tags($row->safari_plan);
           if (isset($row->sharedimagepath)) {
             $image = $row->sharedimagepath;
@@ -819,7 +824,8 @@ class GenerateSitePagesController extends Controller
 
   protected function get_package_site_pages()
   {
-    $records = Package::find()->all();
+    $timestamp24HoursAgo = time() - (24 * 60 * 60);
+    $records = Package::find()->where(['>=', 'updated_at', $timestamp24HoursAgo])->all();
     if (count($records) > 0) {
       $temp_insert_data = [];
       foreach ($records as $row) {
@@ -894,7 +900,7 @@ class GenerateSitePagesController extends Controller
       'park',
       'package',
       'sharedsafari',
-      'operator',
+      // 'operator',
       'plan-safari',
       //'safaritour-registration',
       //'birdingtour-registration',

@@ -1587,6 +1587,7 @@ margin-bottom: 0 !important;
 }
 }
 @media only screen and (max-width: 767px) {
+
   .titler_safari{
 
     font-size: 14px !important;
@@ -2611,6 +2612,10 @@ padding-left: 18px !important;
 
 
 @media (max-width: 340px) {
+  .imag_width {
+    width: 75%;
+}
+
   .placeholder_select {
     left: 22%;
   }

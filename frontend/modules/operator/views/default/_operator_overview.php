@@ -3,6 +3,7 @@
 use yii\helpers\Url;
 use common\models\GeneralModel;
 use common\models\operator\SafariOperatorFollow;
+use common\models\User;
 
 ?>
 
@@ -73,7 +74,7 @@ use common\models\operator\SafariOperatorFollow;
                                 </div>
                             </div>
                             <div class="googlerating">
-                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/follower', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"><?= $operator->getFollowerlist()->where(['status' => 1])->count() ?> Followers</a></p>
+                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/follower', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"><?= $operator->getFollowerlist()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'safari_operator_follow.status' => 1])->count() ?> Followers</a></p>
                             </div>
                         </div>
                         <div class="detailsText pb-3">

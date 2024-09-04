@@ -23,7 +23,12 @@ class ShareSafariCommentForm extends Model
     {
         return [
             [['comment'], 'required'],
-            ['comment', \common\validators\Word120Validator::className()],
+            ['comment', 'validateContent'],
+            ['comment', function () {
+                if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->comment)) {
+                    $this->addError('comment', 'Invalid Characters!!!');
+                }
+            }],
         ];
     }
 
@@ -31,24 +36,32 @@ class ShareSafariCommentForm extends Model
     public function comment(ShareSafari $share_safari)
     {
 
-        $agent = new \Jenssegers\Agent\Agent();
-        $agent->setUserAgent(Yii::$app->request->userAgent);
+        // $agent = new \Jenssegers\Agent\Agent();
+        // $agent->setUserAgent(Yii::$app->request->userAgent);
         $comment = new ShareSafariComment();
 
         $comment->share_safari_id = $share_safari->id;
         $comment->park_id = $share_safari->park->id;
         $comment->user_id = Yii::$app->user->id;
         $comment->comment = $this->comment;
-        $comment->user_device = $agent->device();
-        $comment->user_agent = Yii::$app->request->userAgent;
-        $comment->user_platform =  $agent->platform();
-        $comment->user_browser = $agent->browser();
-        $comment->user_ip_address = Yii::$app->getRequest()->getUserIp();
+        // $comment->user_device = $agent->device();
+        // $comment->user_agent = Yii::$app->request->userAgent;
+        // $comment->user_platform =  $agent->platform();
+        // $comment->user_browser = $agent->browser();
+        // $comment->user_ip_address = Yii::$app->getRequest()->getUserIp();
         $comment->status = StatusInterface::STATUS_ACTIVE;
 
 
         if ($comment->save(false)) {
             return $comment;
+        }
+    }
+
+    public function validateContent($attribute, $params)
+    {
+        $wordCount = str_word_count($this->$attribute);
+        if ($wordCount >= 100) {
+            $this->addError($attribute, 'Please provide content within 100 words.');
         }
     }
 }

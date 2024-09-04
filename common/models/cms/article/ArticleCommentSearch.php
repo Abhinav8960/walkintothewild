@@ -17,7 +17,7 @@ class ArticleCommentSearch extends ArticleComment
     public function rules()
     {
         return [
-            [['article_id', 'user_id', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_id', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['comment'], 'string'],
             [['comment_datetime', 'flaged'], 'safe'],
         ];
@@ -41,7 +41,7 @@ class ArticleCommentSearch extends ArticleComment
      */
     public function search($params, $pagination = true)
     {
-        $query =  ArticleComment::find()->where(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND, 3]]);
+        $query =  ArticleComment::find()->where(['flaged' => 1])->andWhere(['is_deleted' => 0]);
 
 
         // add conditions that should always apply here
@@ -73,7 +73,6 @@ class ArticleCommentSearch extends ArticleComment
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'is_approved', $this->is_approved]);
         $query->andFilterWhere(['like', 'comment', $this->comment]);
         return $dataProvider;
     }

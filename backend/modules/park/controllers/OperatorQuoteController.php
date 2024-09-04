@@ -22,6 +22,8 @@ class OperatorQuoteController extends Controller
     public function actionIndex()
     {
         $searchModel = new OperatorQuoteSearch();
+        $searchModel->report_days = 'today';
+        $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [

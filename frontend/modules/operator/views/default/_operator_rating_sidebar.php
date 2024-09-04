@@ -7,6 +7,7 @@ use yii\helpers\Url;
 $ratingsearchModel = new SafariOperatorRatingSearch();
 $ratingsearchModel->safari_operator_id = $operator->id;
 $ratingsearchModel->status = 1;
+$ratingsearchModel->is_deleted = 0;
 $ratingdataProvider = $ratingsearchModel->search(Yii::$app->request->queryParams);
 $reviews = $ratingdataProvider->getModels();
 ?>
@@ -75,3 +76,14 @@ $reviews = $ratingdataProvider->getModels();
         </div>
     </div>
 <?php } ?>
+
+<div class="advertisment mt-5">
+    <div class="google-ad300  mb-5">
+
+    </div>
+</div>
+<div class="advertisment">
+    <div class="google-add600hight  mb-5">
+
+    </div>
+</div>

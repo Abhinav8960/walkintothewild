@@ -124,8 +124,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                             <div class="chat-user_name">
                                                                 <?php if ($active_chat->recipient_user_id == $user->id) { ?>
                                                                     <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
-                                                                        <?php
-                                                                        if (isset($user->operator)) {
+                                                                        <?php if (isset($user->operator)) {
                                                                             echo $user->operator->business_name;
                                                                         } else {
                                                                             echo $user->name;

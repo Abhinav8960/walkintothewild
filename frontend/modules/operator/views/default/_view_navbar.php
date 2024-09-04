@@ -8,7 +8,11 @@ $review_count = SafariOperatorRating::find()->where(['safari_operator_id' => $op
 $shared_safaries_count = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'host_user_id' => $operator->user_id])->count();
 
 ?>
+<div class="advertisment  ">
+            <div class="google-ad-box my-3">
 
+            </div>
+        </div>
 <div class="row  mt-4 pt-4 itenary_tabs justify-content-center" id="safari_tour_container">
     <div class="col-lg-12 col-xl-10 col-xxl-9 safartabs position-relative">
         <ul class="nav nav-tabs slider_orprator gap-2" role="tablist">

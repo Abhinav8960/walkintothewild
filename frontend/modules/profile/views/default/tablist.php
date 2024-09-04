@@ -3,6 +3,7 @@
 use yii\helpers\Url;
 use common\models\UserFollow;
 use common\models\registration\SafariOperatorRequest;
+use common\models\User;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -89,8 +90,8 @@ $this->title = $user->name;
                 <div class="row justify-content-between align-items-center border-bottom pb-3">
                     <div class="col-md-6">
                         <div class="d-flex align-items-center flowers-content">
-                            <p class="mb-0"><a href="<?= Url::toRoute(['/profile/default/follower', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowers()->where(['status' => 1])->count(); ?> Followers</a></p>
-                            <p class="mb-0"><a href="<?= Url::toRoute(['/profile/default/following', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowings()->where(['status' => 1])->count(); ?> Following</a></p>
+                            <p class="mb-0"><a href="<?= Url::toRoute(['/profile/default/follower', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count(); ?> Followers</a></p>
+                            <p class="mb-0"><a href="<?= Url::toRoute(['/profile/default/following', 'user_handle' => $user->user_handle]) ?>"> <?= $user->getUserfollowings()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count(); ?> Following</a></p>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -127,6 +128,11 @@ $this->title = $user->name;
                 </div>
             </div>
         </div>
+        <div class="advertisment mt-5 ">
+                        <div class="google-ad-box ">
+
+                        </div>
+                    </div>
         <div class="row pt-5 itenary_tabs justify-content-center position-relative">
             <div class="col-xxl-11 safartabs position-relative">
                 <div class="row">

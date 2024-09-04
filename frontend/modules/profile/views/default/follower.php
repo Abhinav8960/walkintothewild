@@ -2,6 +2,7 @@
 
 use common\interfaces\StatusInterface;
 use common\models\operator\SafariOperator;
+use common\models\User;
 use yii\helpers\Url;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -49,7 +50,7 @@ $this->params['title'] = $this->title;
                                             <div class="tab-pane fade show active mt-3" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
 
                                                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
-                                                    <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
+                                                    <?php if ($userfollowers = $user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all()) {
                                                         foreach ($userfollowers as $userfollower) { ?>
                                                             <div class="col mb-3">
                                                                 <section class="mx-auto">
@@ -70,7 +71,7 @@ $this->params['title'] = $this->title;
 
                                                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                                                     <?php
-                                                    if ($followers = $operator->getFollowerlist()->where(['status' => 1])->all()) {
+                                                    if ($followers = $operator->getFollowerlist()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'safari_operator_follow.status' => 1])->all()) {
                                                         foreach ($followers as $follower) { ?>
                                                             <div class="col mb-3">
                                                                 <section class="mx-auto">
@@ -95,7 +96,7 @@ $this->params['title'] = $this->title;
                                 <div class="card position-relative">
                                     <div class="card-body">
                                         <div class="row">
-                                            <?php if ($userfollowers = $user->getUserfollowers()->where(['status' => 1])->all()) {
+                                            <?php if ($userfollowers = $user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all()) {
                                                 foreach ($userfollowers as $userfollower) { ?>
                                                     <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
                                                         <section class="mx-auto" style="max-width: 23rem;">

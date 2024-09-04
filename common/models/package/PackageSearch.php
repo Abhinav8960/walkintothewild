@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 use yii\data\ActiveDataProvider;
 use common\models\package\Package;
 use common\models\park\SafariPark;
+use DateTime;
 
 /**
  * PackageSearch represents the model behind the search form of `common\models\package\Package`.
@@ -26,7 +27,19 @@ class PackageSearch extends Package
     public $package_feature;
     public $package_include;
     public $custom_sort_by;
+    public $package_name;
+    public $report_days;
 
+
+    public $report_days_option = [
+        'all' => 'All',
+        'today' => 'Today',
+        'yesterday' => 'Yesterday',
+        'tw' => 'This Week',
+        'tm' => 'This Month',
+        'lm' => 'Last Month',
+        'tfy' => 'This Financial Year',
+    ];
     /**
      * {@inheritdoc}
      */
@@ -35,10 +48,10 @@ class PackageSearch extends Package
         return [
             [['no_of_day', 'no_of_night', 'no_of_safari', 'start_location', 'end_location', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status'], 'safe'],
             [['cost_per_person'], 'safe'],
-            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition'], 'safe'],
+            [['package_description', 'package_inclusion', 'package_exclusion', 'package_terms_condtition', 'package_name'], 'safe'],
             [['package_name'], 'safe'],
             [['package_slug'], 'safe'],
-            [['package_image'], 'safe'],
+            [['package_image', 'report_days'], 'safe'],
             [['park_id', 'month_id', 'estimated_price_filter_min', 'estimated_price_filter_max', 'no_of_safari_min', 'no_of_safari_max', 'no_of_night_min', 'no_of_night_max', 'package_feature', 'package_include', 'custom_sort_by'], 'safe']
         ];
     }
@@ -179,11 +192,101 @@ class PackageSearch extends Package
             }
         }
 
+        if ($this->report_days) {
+
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
+
+        return $dataProvider;
+    }
+
+    public function managesearch($params, $safari_operator_id)
+    {
+        $query =  Package::find()->where([
+            'owned_by_id' => $safari_operator_id
+        ]);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            //'sort' => ['defaultOrder' => ['popular_package' => SORT_DESC, 'created_at' => SORT_DESC]],
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filteringcost_per_person conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'package.status' => $this->status,
+        ]);
+
+        $query->andFilterWhere(['like', 'package.package_name', $this->package_name]);
+
+        if ($this->park_id) {
+            $query->joinwith(['packagepark' => function ($park_query) {
+                $park_query->andFilterWhere(['park_id' => $this->park_id]);
+            }]);
+        }
+
         return $dataProvider;
     }
 
     public function getParkoption()
     {
         return GeneralModel::safariparklist();
+    }
+
+
+
+    /**
+     * Raw Query
+     */
+    public function getRawdatequery()
+    {
+        $query = "1=1";
+
+        // Create DateTime objects for current date and time
+        $now = new DateTime();
+
+        if ($this->report_days == 'today') { // Today
+            $start = $now->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'yesterday') { // Yesterday
+            $yesterday = (new DateTime('yesterday'));
+            $start = $yesterday->setTime(0, 0, 0)->getTimestamp();
+            $end = $yesterday->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tw') { // This Week
+            $start = (new DateTime('monday this week'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('sunday this week'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tm') { // This Month
+            $start = (new DateTime('first day of this month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of this month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'lm') { // Last Month
+            $start = (new DateTime('first day of last month'))->setTime(0, 0, 0)->getTimestamp();
+            $end = (new DateTime('last day of last month'))->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        } else if ($this->report_days == 'tfy') { // This Financial Year
+            $financialYearStart = new DateTime('April ' . $now->format('Y'));
+            if ($now < $financialYearStart) {
+                $financialYearStart = new DateTime('April ' . $now->format('Y', strtotime('-1 year')));
+            }
+            $start = $financialYearStart->setTime(0, 0, 0)->getTimestamp();
+            $end = $now->setTime(23, 59, 59)->getTimestamp();
+            $query .= " AND created_at BETWEEN $start AND $end";
+        }
+
+        return $query;
     }
 }
