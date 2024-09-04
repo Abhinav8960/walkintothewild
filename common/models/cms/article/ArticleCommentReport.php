@@ -36,6 +36,14 @@ class ArticleCommentReport extends \yii\db\ActiveRecord
         return 'article_comment_report';
     }
 
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -67,8 +67,8 @@ class SafariOperatorReviewForm extends \yii\base\Model
      */
     public function initializeForm()
     {
-        $agent = new \Jenssegers\Agent\Agent();
-        $agent->setUserAgent(Yii::$app->request->userAgent);
+        // $agent = new \Jenssegers\Agent\Agent();
+        // $agent->setUserAgent(Yii::$app->request->userAgent);
 
         $this->rating_model->user_id = Yii::$app->user->identity->id;
         $this->rating_model->safari_operator_id = $this->safari_operator_id;
@@ -77,12 +77,12 @@ class SafariOperatorReviewForm extends \yii\base\Model
         $this->rating_model->review = $this->review;
 
         $this->rating_model->user_ip_address = Yii::$app->getRequest()->getUserIp();
-        $this->rating_model->user_agent =  Yii::$app->request->userAgent;
-        $this->rating_model->user_device  = $agent->device();
-        $this->rating_model->user_platform = $agent->platform();
-        $this->rating_model->user_platform_version = $agent->version($this->rating_model->user_platform);
-        $this->rating_model->user_browser = $agent->browser();
-        $this->rating_model->user_browser_version = $agent->version($this->rating_model->user_browser);
+        // $this->rating_model->user_agent =  Yii::$app->request->userAgent;
+        // $this->rating_model->user_device  = $agent->device();
+        // $this->rating_model->user_platform = $agent->platform();
+        // $this->rating_model->user_platform_version = $agent->version($this->rating_model->user_platform);
+        // $this->rating_model->user_browser = $agent->browser();
+        // $this->rating_model->user_browser_version = $agent->version($this->rating_model->user_browser);
         $this->rating_model->status = 1;
     }
 

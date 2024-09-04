@@ -17,7 +17,7 @@ class ArticleCommentSearch extends ArticleComment
     public function rules()
     {
         return [
-            [['article_id', 'user_id', 'is_approved', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_id', 'user_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['comment'], 'string'],
             [['comment_datetime', 'flaged'], 'safe'],
         ];
@@ -73,7 +73,6 @@ class ArticleCommentSearch extends ArticleComment
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'is_approved', $this->is_approved]);
         $query->andFilterWhere(['like', 'comment', $this->comment]);
         return $dataProvider;
     }
