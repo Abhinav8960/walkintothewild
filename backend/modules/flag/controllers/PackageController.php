@@ -44,12 +44,14 @@ class PackageController extends Controller
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
                         if ($model->comment_action_model->status == -1) {
-                            $package = PackageComment::find()->where(['id' => $comment_action_model->package_comment_id])->limit(1)->one();
-                            $package->is_deleted = 1;
-                            $package->save();
+                            if ($package_comment = $comment_action_model->comment) {
+                                $package_comment->is_deleted = 1;
+                                if ($package_comment->save()) {
+                                    \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                    return $this->redirect(['index']);
+                                }
+                            }
                         }
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
-                        return $this->redirect(['index']);
                     }
                 }
             }

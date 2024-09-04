@@ -89,6 +89,11 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
+    public function getRating()
+    {
+        return $this->hasOne(SafariOperatorRating::className(), ['id' => 'safari_operator_rating_id']);
+    }
+
     public function getOperator()
     {
         return $this->hasOne(SafariOperator::className(), ['id' => 'safari_operator_id']);

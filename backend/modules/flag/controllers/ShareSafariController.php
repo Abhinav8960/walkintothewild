@@ -44,12 +44,14 @@ class ShareSafariController extends Controller
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
                         if ($model->comment_action_model->status == -1) {
-                            $package = ShareSafariComment::find()->where(['id' => $comment_action_model->share_safari_comment_id])->limit(1)->one();
-                            $package->is_deleted = 1;
-                            $package->save();
+                            if ($share_safari_comment = $comment_action_model->comment) {
+                                $share_safari_comment->is_deleted = 1;
+                                if ($share_safari_comment->save()) {
+                                    \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                    return $this->redirect(['index']);
+                                }
+                            }
                         }
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
-                        return $this->redirect(['index']);
                     }
                 }
             }

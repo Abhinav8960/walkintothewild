@@ -46,20 +46,21 @@ class OperatorController extends Controller
                     $model->initializeForm();
                     if ($model->comment_action_model->save(false)) {
                         if ($model->comment_action_model->status == -1) {
-                            $safari_operator_rating = SafariOperatorRating::find()->where(['id' => $comment_action_model->safari_operator_rating_id])->limit(1)->one();
-                            $safari_operator_rating->is_deleted = 1;
-                            if ($safari_operator_rating->save()) {
-                                if ($operator = $safari_operator_rating->operator) {
-                                    $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->average('rating');
-                                    $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->count();
-                                    $operator->google_rating = $avg;
-                                    $operator->google_review_count = $count;
-                                    $operator->save(false);
+                            if ($safari_operator_rating = $comment_action_model->rating) {
+                                $safari_operator_rating->is_deleted = 1;
+                                if ($safari_operator_rating->save()) {
+                                    if ($operator = $safari_operator_rating->operator) {
+                                        $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->average('rating');
+                                        $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->count();
+                                        $operator->google_rating = $avg;
+                                        $operator->google_review_count = $count;
+                                        $operator->save(false);
+                                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
+                                        return $this->redirect(['index']);
+                                    }
                                 }
                             }
                         }
-                        \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
-                        return $this->redirect(['index']);
                     }
                 }
             }
