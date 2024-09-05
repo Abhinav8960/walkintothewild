@@ -39,6 +39,7 @@ class ArticleForm extends Model
     public $article_model;
     public $action_url;
     public $action_validate_url;
+    // public $user_status;
 
     /**
      * @param [type] $article_model
@@ -74,6 +75,7 @@ class ArticleForm extends Model
 
             $this->article_topics = ArticleTopic::find()->select('master_article_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
             $this->article_tags = ArticleTag::find()->select('master_article_tag_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
+            // $this->user_status = $this->article_model->user_status;
         }
     }
 
@@ -106,7 +108,8 @@ class ArticleForm extends Model
             'view',
             'post_body',
             'meta_keywords',
-            'article_topics'
+            'article_topics',
+            // 'user_status'
         ];
         $scenarios['update'] = [
             'user_type',
@@ -131,7 +134,8 @@ class ArticleForm extends Model
             'view',
             'post_body',
             'meta_keywords',
-            'article_topics'
+            'article_topics',
+            // 'user_status'
         ];
         return $scenarios;
     }
@@ -179,6 +183,7 @@ class ArticleForm extends Model
             [['publish_date_time', 'article_date'], 'safe'],
             [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
             [['sub_title'], 'string', 'max' => 75],
+            // [['user_status'], 'integer'],
         ];
     }
 
@@ -191,6 +196,7 @@ class ArticleForm extends Model
         return [
             'id' => 'ID',
             'user_id' => 'User ID',
+            // 'user_status' => 'User Status',
             'title' => 'Title',
             'slug' => 'Slug',
             'sub_title' => 'Sub Title',
@@ -240,6 +246,7 @@ class ArticleForm extends Model
         $this->article_model->is_schedule = $this->is_schedule;
         $this->article_model->publish_date_time = $this->publish_date_time;
         $this->article_model->status = $this->status;
+        // $this->article_model->user_status = $this->user_status;
     }
 
     /**

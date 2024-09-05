@@ -17,6 +17,8 @@ class UserArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
+        $searchModel->status = Article::STATUS_ACTIVE;
+        $searchModel->is_approved = 0;
         $dataProvider = $searchModel->usersearch($this->request->queryParams);
 
         return $this->render('index', [
@@ -56,10 +58,21 @@ class UserArticleController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Article::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = Article::findOne(['id' => $id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+        $model->title = $model->id . '_' . $model->title;
+        $model->slug = $model->id . '_' . $model->slug;
+        $model->status = Article::STATUS_DELETE;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Deleted Successfully');
+        return $this->redirect(Yii::$app->request->referrer);
     }
 }

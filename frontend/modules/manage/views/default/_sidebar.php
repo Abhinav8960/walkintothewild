@@ -9,7 +9,7 @@ use yii\helpers\Url;
         <a href="<?= Url::toRoute(['/manage']) ?>" class="nav-link mb-2 <?= $active == 'profile' ? 'active' : '' ?>">Overview</a>
         <a href="<?= Url::toRoute(['/manage/sharedsafari']) ?>" class="nav-link mb-2 <?= $active == 'sharedsafari' ? 'active' : '' ?>">Shared Safaris</a>
         <a href="<?= Url::toRoute(['/manage/package']) ?>" class="nav-link mb-2 <?= $active == 'package' ? 'active' : '' ?>">Packages</a>
-        <a href="<?= Url::toRoute(['/manage/article']) ?>" class="nav-link mb-2 <?= $active == 'article' ? 'active' : '' ?>">Articles</a>
+        <!-- <a href="<?= Url::toRoute(['/manage/article']) ?>" class="nav-link mb-2 <?= $active == 'article' ? 'active' : '' ?>">Articles</a> -->
         <!-- <a href="<?= Url::toRoute(['/manage/follower']) ?>" class="nav-link mb-2 <?= $active == 'follower' ? 'active' : '' ?>">Followers</a> -->
         <!-- <a href="<?= Url::toRoute(['/manage/review']) ?>" class="nav-link mb-2 <?= $active == 'review' ? 'active' : '' ?>">Reviews</a> -->
         <!-- <a href="<?= Url::toRoute(['/manage/quote']) ?>" class="nav-link mb-2 <?= $active == 'quote' ? 'active' : '' ?>">Get a Free Quote</a>

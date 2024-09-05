@@ -42,3 +42,21 @@ use yii\bootstrap5\ActiveForm;
 
 </div>
 <?php ActiveForm::end(); ?>
+<?php
+$directoryPath = Yii::$app->params['datapath'];
+$partToRemove = '-data';
+
+// Remove the part from the directory path
+$result = str_replace($partToRemove, '', $directoryPath);
+
+// Remove any trailing slashes that might be left
+$result = rtrim($result, '/');
+$filePath = '' . $result . '/common/mail/' . $model->path . '.php';
+
+if (file_exists($filePath)) {
+    header('Content-Type: text/html; charset=UTF-8');
+    readfile($filePath);
+} else {
+    http_response_code(404);
+    echo 'File not found.';
+} ?>

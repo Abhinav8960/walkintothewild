@@ -175,8 +175,19 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
             $template = MasterMailTemplate::find()->where(['id' => $log->mail_template_id, 'status' => 1])->limit(1)->one();
             if ($template) {
                 $mailer =  \Yii::$app->mailer;
-                $message = $mailer->compose($template->path, json_decode($log->params, true))
-                    // ->setFrom($log->mail_from)
+                // $message = $mailer->compose($template->path, json_decode($log->params, true))
+                //     // ->setFrom($log->mail_from)
+                //     ->setFrom('no-reply@walkintothewild.in')
+                //     ->setTo($log->torecipient->recipient)
+                //     ->setBcc($bcc)
+                //     ->setCc($cc)
+                //     ->setSubject($log->subject)
+                //     ->send();
+
+                $params = json_decode($log->params, true);
+                $params['is_email_sending'] = true; // Add this flag
+
+                $message = $mailer->compose($template->path, $params)
                     ->setFrom('no-reply@walkintothewild.in')
                     ->setTo($log->torecipient->recipient)
                     ->setBcc($bcc)

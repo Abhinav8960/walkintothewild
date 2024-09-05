@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $recentposts = ArticleSearch::recentpost();
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
-$this->params['baseurl'] = $webasset->baseUrl;
+// $this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 

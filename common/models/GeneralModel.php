@@ -1181,4 +1181,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '2' => 'Shared Safari Banner'
         ];
     }
+    public static function userstatusoption()
+    {
+        return [
+            '1' => 'Published',
+            '2' => 'UnPublished',
+        ];
+    }
 }
