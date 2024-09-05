@@ -19,6 +19,7 @@ $this->params['title'] = $this->title;
 
 <div class="card">
     <div class="card-body">
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
         <div id="w1-button" class="mb-3"></div>
 
         <div class="table-responsive">
@@ -94,16 +95,18 @@ $this->params['title'] = $this->title;
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'template' => '',
-                        // 'template' => '{view}&nbsp',
+                        'template' => '{delete}&nbsp',
                         'buttons' => [
-                            // 'view' => function ($url, $model) {
-                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                            //     ', ['view', 'id' => $model->id], [
-                            //         'class' => 'btn p-0 change-menuicon',
-                            //         'title' => 'view',
-
-                            //     ]);
-                            // },
+                            'delete' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'Delete',
+                                    'data' => [
+                                        'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
+                                        'method' => 'post',
+                                    ],
+                                ]);
+                            },
                         ]
                     ],
                 ],
