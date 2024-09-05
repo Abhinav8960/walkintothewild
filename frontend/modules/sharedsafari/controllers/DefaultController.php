@@ -209,7 +209,10 @@ class DefaultController extends FrontendBaseController
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $model = new ShareSafariCommentForm();
-        $replymodel = new ReplyForm();
+        $model->action_validate_url = '/sharedsafari/default/validate-comment';
+
+
+        // $replymodel = new ReplyForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
             Yii::$app->session->setFlash('success', 'Comment successfully submitted');
@@ -218,10 +221,10 @@ class DefaultController extends FrontendBaseController
         }
 
 
-        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($share_safari)) {
-            Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-            return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-        }
+        // if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($share_safari)) {
+        //     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+        //     return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+        // }
 
         if (!$share_safari) {
             return $this->redirect(['index']);
@@ -231,7 +234,7 @@ class DefaultController extends FrontendBaseController
             return $this->render('view', [
                 'share_safari' => $share_safari,
                 'model' => $model,
-                'replymodel' => $replymodel,
+                // 'replymodel' => $replymodel,
                 'login_safarioperator' => $login_safarioperator,
             ]);
         } else {
@@ -243,11 +246,35 @@ class DefaultController extends FrontendBaseController
             return $this->render('fixed_view', [
                 'share_safari' => $share_safari,
                 'model' => $model,
-                'replymodel' => $replymodel,
+                // 'replymodel' => $replymodel,
                 'faqs' => $faqs,
                 'login_safarioperator' => $login_safarioperator,
             ]);
         }
+    }
+
+    public function actionReply($slug, $parent_id)
+    {
+
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        // $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
+
+        $replymodel = new ReplyForm();
+        $replymodel->parent_id = $parent_id;
+        // $replymodel->action_url = '/package/default/view';
+        $replymodel->action_validate_url = '/sharedsafari/default/validate-reply';
+
+
+        if ($replymodel->load(Yii::$app->request->post())) {
+            if ($replymodel->validate()) {
+                if ($replymodel->reply($share_safari)) {
+                    Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+                    return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
+                }
+            }
+        }
+
+        return $this->renderAjax('_reply_form', ['replymodel' => $replymodel]);
     }
 
 
@@ -678,5 +705,54 @@ class DefaultController extends FrontendBaseController
         } else {
             return $this->redirect(['/']);
         }
+    }
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidateComment($id = null)
+    {
+        $commentmodel = new ShareSafariCommentForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $commentmodel = new ShareSafariCommentForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $commentmodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($commentmodel);
+        }
+    }
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidateReply($id = null)
+    {
+        $replymodel = new ReplyForm();
+        if ($id != null) {
+            $formmodel = $this->findReplyModel($id);
+            $replymodel = new ReplyForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $replymodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($replymodel);
+        }
+    }
+
+    protected function findReplyModel($id)
+    {
+        if (($model = ShareSafariComment::findOne(['id' => $id, 'status' => 1])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

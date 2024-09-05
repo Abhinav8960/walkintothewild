@@ -1194,10 +1194,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function sendmailfromlog($mail_log_id)
     {
         $log = MailLog::find()->where(['status' => 2])->andWhere(['id' => $mail_log_id])->one();
-        echo "<pre>";
-        print_r($log);
-        echo  "</pre>";
-        die();
         if ($log) {
             $cc = [];
             $bcc = [];
@@ -1213,14 +1209,19 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
                 $template = MasterMailTemplate::find()->where(['id' => $log->mail_template_id, 'status' => 1])->limit(1)->one();
                 if ($template) {
                     $mailer =  \Yii::$app->mailer;
-                    $message = $mailer->compose($template->path, json_decode($log->params, true))
-                        // ->setFrom($log->mail_from)
-                        ->setFrom('no-reply@walkintothewild.in')
-                        ->setTo($log->torecipient->recipient)
-                        ->setBcc($bcc)
-                        ->setCc($cc)
-                        ->setSubject($log->subject)
-                        ->send();
+                    try {
+                        $message = $mailer->compose($template->path, json_decode($log->params, true))
+                            // ->setFrom($log->mail_from)
+                            ->setFrom('no-reply@walkintothewild.in')
+                            ->setTo($log->torecipient->recipient)
+                            ->setBcc($bcc)
+                            ->setCc($cc)
+                            ->setSubject($log->subject)
+                            ->send();
+                    } catch (Exception $e) {
+                        echo 'Message: ' . $e->getMessage();
+                        die('here is some errors');
+                    }
 
                     if ($message) {
                         $m = MailLog::find()->where(['id' => $log->id])->one();

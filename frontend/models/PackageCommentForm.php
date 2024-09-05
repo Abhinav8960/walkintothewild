@@ -14,6 +14,8 @@ use yii\base\Model;
 class PackageCommentForm extends Model
 {
     public $comment;
+    public $action_url;
+    public $action_validate_url;
 
 
     /**
@@ -23,7 +25,7 @@ class PackageCommentForm extends Model
     {
         return [
             [['comment'], 'required'],
-            ['comment','validateContent' ],
+            ['comment', 'validateContent'],
             ['comment', function () {
                 if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->comment)) {
                     $this->addError('comment', 'Invalid Characters!!!');

@@ -119,7 +119,7 @@ if ($article->meta_title != '') {
                                     <?= $this->render('_comment', [
                                         'model' => $model,
                                         'article' => $article,
-                                        'replymodel' => $replymodel,
+                                        // 'replymodel' => $replymodel,
                                     ]) ?>
                                 </div>
                             </div>

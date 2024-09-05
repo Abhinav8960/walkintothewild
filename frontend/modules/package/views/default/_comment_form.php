@@ -6,7 +6,14 @@ use yii\helpers\Url;
 
 ?>
 
-<?php $form = ActiveForm::begin(['id' => 'comment-form']); ?>
+<?php $form = ActiveForm::begin([
+    'id' => 'comment-form',
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
+    'enableClientScript' => true,
+    // 'action' => $model->action_url,
+    'validationUrl' => $model->action_validate_url,
+]); ?>
 <div class="comments-persons px-3 pt-4">
     <div class="postcomment d-flex gap-3">
         <div class="avatar">

@@ -18,6 +18,7 @@ class ReplyForm extends Model
 {
     public $comment;
     public $parent_id;
+    public $action_validate_url;
 
 
     /**
@@ -27,7 +28,7 @@ class ReplyForm extends Model
     {
         return [
             [['comment', 'parent_id'], 'required'],
-            ['comment','validateContent' ],
+            ['comment', 'validateContent'],
             ['comment', function () {
                 if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->comment)) {
                     $this->addError('comment', 'Invalid Characters!!!');
