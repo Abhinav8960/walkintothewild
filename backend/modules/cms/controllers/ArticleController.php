@@ -31,9 +31,9 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $searchModel->status = StatusInterface::STATUS_ACTIVE;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere("user_type=3");
+        $searchModel->status = Article::STATUS_ACTIVE;
+        $dataProvider = $searchModel->approvedsearch($this->request->queryParams);
+        // $dataProvider->query->andWhere("user_type=3");
 
         return $this->render('index', [
             'searchModel' => $searchModel,
