@@ -14,6 +14,7 @@ class ArticleSearch extends Article
     public $article_tags;
     public $article_topics;
     public $report_days;
+    public $is_approved;
 
 
     public $report_days_option = [
@@ -33,7 +34,7 @@ class ArticleSearch extends Article
     {
         return [
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
-            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_approved'], 'integer'],
             [['publish_date_time', 'article_date', 'article_tags', 'article_topics', 'report_days'], 'safe'],
             [['title', 'banner_image', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
@@ -59,7 +60,7 @@ class ArticleSearch extends Article
      */
     public function search($params, $pagination = true)
     {
-        $query =  Article::find()->where(['article.status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND]]);
+        $query =  Article::find()->where(['article.status' => [Article::USER_PUBLISHED, Article::USER_UNPUBLISHED]]);
 
 
         // add conditions that should always apply here
@@ -126,7 +127,7 @@ class ArticleSearch extends Article
      */
     public function usersearch($params, $pagination = true)
     {
-        $query =  Article::find()->where(['article.status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND], 'article.is_approved' => 0])->andWhere(['IS NOT', 'article.user_id', null]);
+        $query =  Article::find()->where(['article.status' => [Article::USER_PUBLISHED, Article::USER_UNPUBLISHED], 'article.is_approved' => [0, 1]])->andWhere(['IS NOT', 'article.user_id', null]);
 
 
         // add conditions that should always apply here
@@ -155,6 +156,7 @@ class ArticleSearch extends Article
             'updated_by' => $this->updated_by,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'article.is_approved' => $this->is_approved,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title]);

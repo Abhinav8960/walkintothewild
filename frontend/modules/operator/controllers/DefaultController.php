@@ -541,58 +541,59 @@ class DefaultController extends FrontendBaseController
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionArticle($slug)
-    {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
-            return $this->redirect(['/operator']);
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+    // public function actionArticle($slug)
+    // {
+    //     $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+    //     if (empty($operator)) {
+    //         return $this->redirect(['/operator']);
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
 
 
-        $model = new OperatorQuoteForm();
-        if (Yii::$app->user->identity) {
-            $model->email = Yii::$app->user->identity->email;
-            $model->full_name = Yii::$app->user->identity->name;
-            $model->phone_no = Yii::$app->user->identity->mobile_no;
-        }
-        $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
-                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
-                    Yii::$app->session->setFlash('success', 'Quote request sent!');
-                    return $this->redirect(['/operator/default/article',  'slug' => $slug]);
-                }
-            }
-        }
+    //     $model = new OperatorQuoteForm();
+    //     if (Yii::$app->user->identity) {
+    //         $model->email = Yii::$app->user->identity->email;
+    //         $model->full_name = Yii::$app->user->identity->name;
+    //         $model->phone_no = Yii::$app->user->identity->mobile_no;
+    //     }
+    //     $model->action_validate_url = '/operator/default/validate';
+    //     if ($model->load(Yii::$app->request->post())) {
+    //         if ($model->validate()) {
+    //             if ($operator_quote = $model->request($operator)) {
+    //                 FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+    //                 Yii::$app->session->setFlash('success', 'Quote request sent!');
+    //                 return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+    //             }
+    //         }
+    //     }
 
-        $query = Article::find()->where([
-            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
-            'status' => Article::STATUS_ACTIVE,
-            'is_approved' => 1,
-            'user_id' => $operator->id
-        ]);
-        $articledataProvider = new \yii\data\ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-            'sort' => ['defaultOrder' => [
-                'id' => SORT_DESC
-            ]]
-        ]);
-        $articles = $articledataProvider->getModels();
+    //     $query = Article::find()->where([
+    //         'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
+    //         'status' => Article::STATUS_ACTIVE,
+    //         // 'is_approved' => 1,
+    //         'user_status' => 1,
+    //         'user_id' => $operator->id
+    //     ]);
+    //     $articledataProvider = new \yii\data\ActiveDataProvider([
+    //         'query' => $query,
+    //         'pagination' => [
+    //             'pageSize' => 20,
+    //         ],
+    //         'sort' => ['defaultOrder' => [
+    //             'id' => SORT_DESC
+    //         ]]
+    //     ]);
+    //     $articles = $articledataProvider->getModels();
 
-        return $this->render(
-            'article',
-            [
-                'operator' => $operator,
-                'model' => $model,
-                'articles' => $articles,
-            ]
-        );
-    }
+    //     return $this->render(
+    //         'article',
+    //         [
+    //             'operator' => $operator,
+    //             'model' => $model,
+    //             'articles' => $articles,
+    //         ]
+    //     );
+    // }
 
     public function actionContact($slug)
     {
@@ -811,58 +812,59 @@ class DefaultController extends FrontendBaseController
         );
     }
 
-    public function actionArticleall($slug)
-    {
-        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
-        if (empty($operator)) {
-            return $this->redirect(['/operator']);
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
+    // public function actionArticleall($slug)
+    // {
+    //     $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+    //     if (empty($operator)) {
+    //         return $this->redirect(['/operator']);
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
 
 
-        $model = new OperatorQuoteForm();
-        if (Yii::$app->user->identity) {
-            $model->email = Yii::$app->user->identity->email;
-            $model->full_name = Yii::$app->user->identity->name;
-            $model->phone_no = Yii::$app->user->identity->mobile_no;
-        }
-        $model->action_validate_url = '/operator/default/validate';
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate()) {
-                if ($operator_quote = $model->request($operator)) {
-                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
-                }
-                Yii::$app->session->setFlash('success', 'Quote request sent!');
-                return $this->redirect(['/operator/default/article',  'slug' => $slug]);
-            }
-        }
+    //     $model = new OperatorQuoteForm();
+    //     if (Yii::$app->user->identity) {
+    //         $model->email = Yii::$app->user->identity->email;
+    //         $model->full_name = Yii::$app->user->identity->name;
+    //         $model->phone_no = Yii::$app->user->identity->mobile_no;
+    //     }
+    //     $model->action_validate_url = '/operator/default/validate';
+    //     if ($model->load(Yii::$app->request->post())) {
+    //         if ($model->validate()) {
+    //             if ($operator_quote = $model->request($operator)) {
+    //                 FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+    //             }
+    //             Yii::$app->session->setFlash('success', 'Quote request sent!');
+    //             return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+    //         }
+    //     }
 
-        $query = Article::find()->where([
-            'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
-            'status' => Article::STATUS_ACTIVE,
-            'is_approved' => 1,
-            'user_id' => $operator->id
-        ]);
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 6,
-            ],
-            'sort' => ['defaultOrder' => [
-                'id' => SORT_DESC
-            ]]
-        ]);
+    //     $query = Article::find()->where([
+    //         'user_type' => Article::USER_TYPE_SAFARI_OPERATOR,
+    //         'status' => Article::STATUS_ACTIVE,
+    //         //'is_approved' => 1,
+    //         'user_status' => 1,
+    //         'user_id' => $operator->id
+    //     ]);
+    //     $dataProvider = new \yii\data\ActiveDataProvider([
+    //         'query' => $query,
+    //         'pagination' => [
+    //             'pageSize' => 6,
+    //         ],
+    //         'sort' => ['defaultOrder' => [
+    //             'id' => SORT_DESC
+    //         ]]
+    //     ]);
 
 
-        return $this->render(
-            'article',
-            [
-                'operator' => $operator,
-                'model' => $model,
-                'dataProvider' => $dataProvider,
-            ]
-        );
-    }
+    //     return $this->render(
+    //         'article',
+    //         [
+    //             'operator' => $operator,
+    //             'model' => $model,
+    //             'dataProvider' => $dataProvider,
+    //         ]
+    //     );
+    // }
 
     /**
      * Operator Follower
@@ -904,4 +906,42 @@ class DefaultController extends FrontendBaseController
             ]
         );
     }
+
+
+    // public function actionArticleview($article_slug, $slug)
+    // {
+    //     $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+    //     if (empty($operator)) {
+    //         return $this->redirect(['/operator']);
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
+
+
+    //     $model = new OperatorQuoteForm();
+    //     if (Yii::$app->user->identity) {
+    //         $model->email = Yii::$app->user->identity->email;
+    //         $model->full_name = Yii::$app->user->identity->name;
+    //         $model->phone_no = Yii::$app->user->identity->mobile_no;
+    //     }
+    //     $model->action_validate_url = '/operator/default/validate';
+    //     if ($model->load(Yii::$app->request->post())) {
+    //         if ($model->validate()) {
+    //             if ($operator_quote = $model->request($operator)) {
+    //                 FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+    //             }
+    //             Yii::$app->session->setFlash('success', 'Quote request sent!');
+    //             return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+    //         }
+    //     }
+    //     $article = Article::findOne(['slug' => $article_slug, 'user_type' => Article::USER_TYPE_SAFARI_OPERATOR]);
+
+    //     return $this->render(
+    //         'articleview',
+    //         [
+    //             'article' => $article,
+    //             'operator' => $operator,
+    //             'model' => $model,
+    //         ]
+    //     );
+    // }
 }
