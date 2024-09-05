@@ -10,6 +10,7 @@ use common\models\chat\ChatSearch;
 use common\models\package\Package;
 use common\models\park\SafariPark;
 use common\models\MailLog;
+use common\models\GeneralModel;
 
 /**
  * Default controller for the `chat` module
@@ -161,7 +162,11 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                 $subject = 'New Response to Your Quote Request for “' . $park_package_name . '”';
                                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_USER_RECEIVED_REPLY_FREE_QUOTE;
                                 $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url];
-                                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+
+                                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                                    GeneralModel::sendmailfromlog(900);
+                                }
 
                                 Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                                 return ['status' => true, 'message' => 'Message Sent'];
