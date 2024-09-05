@@ -32,8 +32,8 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                     'name',
                     'code',
                     'path',
-                    'created_at:dateTime:Created at',
-                    'updated_at:dateTime:Last Updated at',
+                    // 'created_at:dateTime:Created at',
+                    // 'updated_at:dateTime:Last Updated at',
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],

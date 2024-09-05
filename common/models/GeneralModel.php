@@ -59,6 +59,8 @@ use common\models\trierror\FrontendRequestLog;
 use Yii;
 use yii\helpers\ArrayHelper;
 use common\models\trierror\SitePages;
+use common\models\MailLog;
+use common\models\MailLogRecipients;
 
 class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusInterface
 {
@@ -1187,5 +1189,56 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '1' => 'Published',
             '2' => 'UnPublished',
         ];
+    }
+
+    public static function sendmailfromlog($mail_log_id)
+    {
+        $log = MailLog::find()->where(['status' => 2])->andWhere(['id' => $mail_log_id])->one();
+        echo "<pre>";
+        print_r($log);
+        echo  "</pre>";
+        die();
+        if ($log) {
+            $cc = [];
+            $bcc = [];
+            foreach ($log->ccrecipients as $c) {
+                $cc[] = $c->recipient;
+            }
+
+            foreach ($log->bccrecipients as $b) {
+                $bcc[] = $b->recipient;
+            }
+
+            if ($log->mail_template_id) {
+                $template = MasterMailTemplate::find()->where(['id' => $log->mail_template_id, 'status' => 1])->limit(1)->one();
+                if ($template) {
+                    $mailer =  \Yii::$app->mailer;
+                    $message = $mailer->compose($template->path, json_decode($log->params, true))
+                        // ->setFrom($log->mail_from)
+                        ->setFrom('no-reply@walkintothewild.in')
+                        ->setTo($log->torecipient->recipient)
+                        ->setBcc($bcc)
+                        ->setCc($cc)
+                        ->setSubject($log->subject)
+                        ->send();
+
+                    if ($message) {
+                        $m = MailLog::find()->where(['id' => $log->id])->one();
+
+                        $id = $mailer->getSentMessage()->getMessageId();
+                        $m->aws_message_id = $id;
+                        $m->try_send_count = $m->try_send_count + 1;
+                        $m->status = true;
+                        $m->mail_send_time = date('Y-m-d H:i:s');
+                        $m->save(false);
+                        MailLogRecipients::updateAll([
+                            'aws_message_id' => $id,
+                        ], ['mail_log_id' => $log->id]);
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }

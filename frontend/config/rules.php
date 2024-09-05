@@ -164,6 +164,8 @@ return [
 
     // Chat Routes
     '/chat/message/<user_handle>' => '/chat/default/message',
+    '/chat/message/<user_handle>/<chat_id>' => '/chat/default/message',
+    '/chat/quote/<user_handle>/<chat_id>' => '/chat/default/message',
     '/site/signinagree/<key>' => '/site/signinagree',
     '/site/verify/<passcode>' => '/site/login-new-verify',
 

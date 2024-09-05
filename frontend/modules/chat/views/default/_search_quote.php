@@ -3,25 +3,27 @@
 use yii\widgets\ActiveForm; ?>
 
 <?php $form = ActiveForm::begin([
-    'options' => [
-        'data-pjax' => true,
-        'id' => 'Searchform'
-    ],
-    'method' => 'get',
+  'options' => [
+    'data-pjax' => true,
+    'id' => 'SearchFormQuote'
+  ],
+  'method' => 'get',
 ]); ?>
     <?= $form->field($searchModel, 'name')->textInput(['class' => 'form-control searchChat position-relative', 'placeholder' => 'Search', 'autocomplete' => 'off', 'autofocus' => $autofocus])->label(false) ?>
+    <?= $chat_type ?>
+    <?= $form->field($searchModel, 'chat_type')->hiddenInput(['value' => $chat_type])->label(false); ?>
     
 <?php ActiveForm::end(); ?>
 
 <?php
 $js = <<<JS
-  $('#Searchform').on('change', function(){
-        $("#Searchform").attr("data-pjax", "true");    
+  $('#SearchFormQuote').on('change', function(){
+        $("#SearchFormQuote").attr("data-pjax", "true");    
         $(this).closest('form').submit();
     }); 
     $('#chatsearch-name').on('keyup', function(){
         setTimeout(() => {
-            $("#Searchform").attr("data-pjax", "true");    
+            $("#SearchFormQuote").attr("data-pjax", "true");    
             $(this).closest('form').submit();
         }, 200);
        

@@ -13,6 +13,8 @@ use Yii;
 class ChatSearch extends \Yii\base\Model
 {
     public $name;
+    public $chat_type;
+
     /**
      * {@inheritdoc}
      */
@@ -20,6 +22,7 @@ class ChatSearch extends \Yii\base\Model
     {
         return [
             ['name', 'safe'],
+            ['chat_type', 'safe'],
         ];
     }
 

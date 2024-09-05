@@ -116,7 +116,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_night ?> Nights , <?= $package->no_of_day ?> Days</p>
@@ -136,10 +136,15 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shared Safari">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= $package->no_of_safari ?> Shared Safari
+                                            <p class="mb-0"><?= $package->no_of_safari ?> <?php
+                                                                                            if ($package->safari_type == 1) {
+                                                                                                echo 'Shared Safari';
+                                                                                            } elseif ($package->safari_type == 2) {
+                                                                                                echo 'Private Safari';
+                                                                                            } ?>
                                             </p>
                                         </div>
                                     </div>
@@ -201,7 +206,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
                         <div class="col-lg-8">
                             <div class="social-share d-flex  flex-wrap gap-2 align-items-center justify-content-lg-start justify-content-between  ">
-                                <p>Share this event with your friends:</p>
+                                <p>Share this package with your friends:</p>
                                 <div class="sociel_icons ps-xl-3">
                                     <?php
                                     $shared_url = urlencode(Url::to('', true));

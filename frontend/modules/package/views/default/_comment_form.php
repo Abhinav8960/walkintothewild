@@ -23,8 +23,7 @@ use yii\helpers\Url;
     <div class="row justify-content-center">
         <div class="col-lg-12 col-xl-8">
             <div class="post_text padding_ad">
-                <p>Commenting on this thread will notify all event attendees and will also be visible to
-                    everyone viewing the event.</p>
+                <p>*Your comment on this package will notify the organizer via email and be visible to all viewers of this package.</p>
             </div>
         </div>
         <div class="col-lg-12 col-xl-4 ">

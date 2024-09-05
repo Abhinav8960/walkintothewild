@@ -85,12 +85,21 @@ class SharedSafariForm extends \yii\base\Model
             ['total_seat', 'compare', 'compareAttribute' => 'share_seat', 'operator' => '>='],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
-            [['estimate_price_min', 'estimate_price_max'], 'integer', 'max' => 1000000]
+            [['estimate_price_min', 'estimate_price_max'], 'integer', 'max' => 1000000],
+            [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
+
         ];
     }
 
 
-
+    public function validateMaxWords($attribute, $params)
+    {
+        $maxWords = $params['max'];
+        $wordCount = str_word_count($this->$attribute);
+        if ($wordCount > $maxWords) {
+            $this->addError($attribute, "The $attribute must not exceed $maxWords words.");
+        }
+    }
     /**
      * {@inheritdoc}
      */

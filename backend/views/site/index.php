@@ -15,9 +15,9 @@ $this->params['title'] = $this->title;
             <strong>
                 <p>New Operator</p>
             </strong>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/operator/safari-operator/index?SafariOperatorSearch%5Breport_days%5D=today">
 
                         <!-- BEGIN card -->
@@ -38,7 +38,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/operator/safari-operator/index?SafariOperatorSearch%5Breport_days%5D=tw">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -56,7 +56,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/operator/safari-operator/index?SafariOperatorSearch%5Breport_days%5D=tm">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -75,7 +75,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/operator/safari-operator/index?SafariOperatorSearch%5Breport_days%5D=lm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -93,7 +93,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/operator/safari-operator/index?SafariOperatorSearch%5Breport_days%5D=all">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -118,9 +118,9 @@ $this->params['title'] = $this->title;
             <strong>
                 <p>Operator Request Quote</p>
             </strong>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/park/operator-quote/index?OperatorQuoteSearch%5Breport_days%5D=today">
                         <!-- BEGIN card -->
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -140,7 +140,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/park/operator-quote/index?OperatorQuoteSearch%5Breport_days%5D=tw">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -158,7 +158,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/park/operator-quote/index?OperatorQuoteSearch%5Breport_days%5D=tm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -176,7 +176,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/park/operator-quote/index?OperatorQuoteSearch%5Breport_days%5D=lm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -194,7 +194,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/park/operator-quote/index?OperatorQuoteSearch%5Breport_days%5D=all">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -219,9 +219,9 @@ $this->params['title'] = $this->title;
             <strong>
                 <p>New Package</p>
             </strong>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=today">
 
                         <!-- BEGIN card -->
@@ -242,7 +242,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=tw">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -261,7 +261,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=tm">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -280,7 +280,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=lm">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -299,7 +299,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/default/index?PackageSearch%5Breport_days%5D=all">
 
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -325,9 +325,9 @@ $this->params['title'] = $this->title;
             <strong>
                 <p>Package Request Quote</p>
             </strong>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
-                <div class="col-sm-3">
+                <div class="col">
 
                     <a style="text-decoration:none;" href="/package/quote?PackageQuoteSearch%5Breport_days%5D=today">
                         <!-- BEGIN card -->
@@ -348,7 +348,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/quote?PackageQuoteSearch%5Breport_days%5D=tw">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -366,7 +366,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/quote?PackageQuoteSearch%5Breport_days%5D=tm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -384,7 +384,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/quote?PackageQuoteSearch%5Breport_days%5D=lm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -402,7 +402,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/package/quote?PackageQuoteSearch%5Breport_days%5D=all">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -429,9 +429,9 @@ $this->params['title'] = $this->title;
             <strong>
                 <p>New Share Safari</p>
             </strong>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=today&ShareSafariSearch%5Btype%5D=1">
                         <!-- BEGIN card -->
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -451,7 +451,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=tw&ShareSafariSearch%5Btype%5D=1">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -469,7 +469,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=tm&ShareSafariSearch%5Btype%5D=1">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -487,7 +487,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=lm&ShareSafariSearch%5Btype%5D=1">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -505,7 +505,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=al&ShareSafariSearch%5Btype%5D=1l">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -531,9 +531,9 @@ $this->params['title'] = $this->title;
             <strong>
                 <p>New Fixed Departure</p>
             </strong>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=today&ShareSafariSearch%5Btype%5D=2">
 
                         <!-- BEGIN card -->
@@ -554,7 +554,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=tw&ShareSafariSearch%5Btype%5D=2">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -572,7 +572,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=tm&ShareSafariSearch%5Btype%5D=2">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -590,7 +590,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=lm&ShareSafariSearch%5Btype%5D=2">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -608,7 +608,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/sharesafari/default/index?ShareSafariSearch%5Breport_days%5D=all&ShareSafariSearch%5Btype%5D=2">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -633,9 +633,9 @@ $this->params['title'] = $this->title;
             <strong>
                 <p>New Article</p>
             </strong>
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/cms/article-by-user/index?ArticleSearch%5Breport_days%5D=today">
                         <!-- BEGIN card -->
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
@@ -655,7 +655,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/cms/article-by-user/index?ArticleSearch%5Breport_days%5D=tw">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -673,7 +673,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/cms/article-by-user/index?ArticleSearch%5Breport_days%5D=tm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -691,7 +691,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/cms/article-by-user/index?ArticleSearch%5Breport_days%5D=lm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -709,7 +709,7 @@ $this->params['title'] = $this->title;
                         </div>
                     </a>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <a style="text-decoration:none;" href="/cms/article-by-user/index?ArticleSearch%5Breport_days%5D=all">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->

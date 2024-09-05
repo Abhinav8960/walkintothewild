@@ -96,10 +96,19 @@ class CreateDepartureForm extends \yii\base\Model
             [['no_of_safari', 'total_seat'], 'integer', 'max' => 100],
             ['cost_per_person', 'integer', 'max' => 1000000],
             ['cut_off_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<'],
+            [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
+
         ];
     }
 
-
+    public function validateMaxWords($attribute, $params)
+    {
+        $maxWords = $params['max'];
+        $wordCount = str_word_count($this->$attribute);
+        if ($wordCount > $maxWords) {
+            $this->addError($attribute, "The $attribute must not exceed $maxWords words.");
+        }
+    }
 
     public function scenarios()
     {

@@ -10,6 +10,7 @@ use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use common\behaviors\UserHandleBehavior;
 use common\models\sharesafari\ShareSafari;
+use common\models\operator\SafariOperator;
 
 /**
  * User model
@@ -403,5 +404,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function getSharesafari()
     {
         return $this->hasMany(ShareSafari::class, ['host_user_id' => 'id']);
+    }
+
+    public function getOperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'id']);
     }
 }

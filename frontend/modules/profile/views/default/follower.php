@@ -30,89 +30,27 @@ $this->params['title'] = $this->title;
                             <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                         </div>
                         <div class="col-12">
-                            <?php
-                            $operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => StatusInterface::STATUS_ACTIVE])->limit(1)->one();
-                            if ($user->is_safari_operator == 1 && $operator) {
-                            ?>
-                                <div class="card  safartabs position-relative">
-                                    <div class="card-body">
-                                        <ul class="nav  nav-tabs border-bottom" id="pills-tab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Profile Follower</button>
-                                            </li>
 
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Page Follower</button>
-                                            </li>
-
-                                        </ul>
-                                        <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active mt-3" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-
-                                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
-                                                    <?php if ($userfollowers = $user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all()) {
-                                                        foreach ($userfollowers as $userfollower) { ?>
-                                                            <div class="col mb-3">
-                                                                <section class="mx-auto">
-                                                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
-                                                                </section>
-                                                            </div>
-                                                    <?php  }
-                                                    } else {
-                                                        echo '<div class="col-md-12 pt-3">
-                                                                There is no follower!
-                                                            </div>';
-                                                    } ?>
+                            <div class="card position-relative">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <?php if ($userfollowers = $user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all()) {
+                                            foreach ($userfollowers as $userfollower) { ?>
+                                                <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
+                                                    <section class="mx-auto" style="max-width: 23rem;">
+                                                        <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
+                                                    </section>
                                                 </div>
-
-                                            </div>
-
-                                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-                                                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
-                                                    <?php
-                                                    if ($followers = $operator->getFollowerlist()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'safari_operator_follow.status' => 1])->all()) {
-                                                        foreach ($followers as $follower) { ?>
-                                                            <div class="col mb-3">
-                                                                <section class="mx-auto">
-                                                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $follower->user]);  ?>
-                                                                </section>
-                                                            </div>
-                                                    <?php }
-                                                    } else {
-                                                        echo '<div class="col-md-12 pt-3">No Follower Found!</div>';
-                                                    } ?>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            <?php
-                            } else {  ?>
-                                <div class="card position-relative">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <?php if ($userfollowers = $user->getUserfollowers()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->all()) {
-                                                foreach ($userfollowers as $userfollower) { ?>
-                                                    <div class="col-md-4 col-lg-3 col-sm-6 mb-3">
-                                                        <section class="mx-auto" style="max-width: 23rem;">
-                                                            <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $userfollower->user]);  ?>
-                                                        </section>
-                                                    </div>
-                                            <?php  }
-                                            } else {
-                                                echo '<div class="col-md-12 pt-3">
+                                        <?php  }
+                                        } else {
+                                            echo '<div class="col-md-12 pt-3">
                     There is no follower!
                 </div>';
-                                            } ?>
-                                        </div>
+                                        } ?>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            </div>
+
                         </div>
 
                     </div>

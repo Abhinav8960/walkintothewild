@@ -3,6 +3,7 @@
 namespace common\models\package;
 
 use common\models\User;
+use common\models\package\Package;
 use Yii;
 
 /**
@@ -93,5 +94,10 @@ class PackageQuote extends \yii\db\ActiveRecord implements \common\interfaces\St
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'created_by']);
+    }
+
+    public function getPackage()
+    {
+        return $this->hasOne(Package::className(), ['id' => 'package_id']);
     }
 }

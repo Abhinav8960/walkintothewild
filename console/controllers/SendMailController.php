@@ -42,17 +42,14 @@ class SendMailController extends Controller
         $logs = MailLog::find()->where(['status' => 2])->limit(100)->orderBy(['id' => SORT_DESC])->all();
 
         if ($logs) {
-
             foreach ($logs as $log) {
                 $cc = [];
                 $bcc = [];
                 foreach ($log->ccrecipients as $c) {
-
                     $cc[] = $c->recipient;
                 }
 
                 foreach ($log->bccrecipients as $b) {
-
                     $bcc[] = $b->recipient;
                 }
 
