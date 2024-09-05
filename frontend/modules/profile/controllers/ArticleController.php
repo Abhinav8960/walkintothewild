@@ -32,9 +32,9 @@ class ArticleController extends FrontendBaseController
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
         if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
-            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
+            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])->orderby(['id' => SORT_DESC])->all();
         } else {
-            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE, 'is_approved' => 1])->orderby(['id' => SORT_DESC])->all();
+            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         }
         $sharesafrimodel = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
         $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
@@ -56,7 +56,7 @@ class ArticleController extends FrontendBaseController
         $model = new ArticleForm();
         $model->action_url = '/profile/article/create';
         $model->action_validate_url = '/profile/article/validate';
-        $model->status = Article::STATUS_ACTIVE;
+        // $model->status = Article::STATUS_ACTIVE;
         $model->user_id = Yii::$app->user->identity->id;
         $model->user_type = Article::USER_TYPE_INDIVIDUAL;
         $model->scenario = 'create';
@@ -226,7 +226,7 @@ class ArticleController extends FrontendBaseController
     public function actionView($slug, $user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        $article = Article::findOne(['slug' => $slug, 'user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]]);
+        $article = Article::findOne(['slug' => $slug, 'user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id]);
 
         return $this->render(
             'view',

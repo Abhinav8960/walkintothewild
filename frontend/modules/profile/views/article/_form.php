@@ -84,14 +84,22 @@ use yii\bootstrap5\ActiveForm;
                     ])->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --'])->label('Comment Allowed <span class="necessary">*</span>') ?>
                 </div>
 
-                <?php if ($model->article_model->id) { ?>
+                <!-- <?php if ($model->article_model->id) { ?>
                     <div class="col-md-3">
                         <?= $form->field($model, 'status', [
-                            'labelOptions' => ['class' => 'Modal_label']
-                        ])->radioList(GeneralModel::statusoption(), ['prompt' => '--Select --'])->label('Article Status <span class="necessary">*</span>') ?>
+                                'labelOptions' => ['class' => 'Modal_label']
+                            ])->radioList(GeneralModel::statusoption(), ['prompt' => '--Select --'])->label('Article Status <span class="necessary">*</span>') ?>
 
                     </div>
-                <?php } ?>
+                <?php } ?> -->
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'status', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->radioList(GeneralModel::userstatusoption(), ['prompt' => '--Select --'])->label('Article Status <span class="necessary">*</span>') ?>
+
+                </div>
+
             </div>
             <div class="row">
                 <div class="col-md-12 pb-3">
