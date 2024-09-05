@@ -39,7 +39,7 @@ use yii\helpers\Url;
                                 <p><?= $comments->comment ?>
                                     <?php if ($login_safarioperator) {
                                         if (Yii::$app->user->id == $login_safarioperator->user_id) { ?>
-                                            <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                            <button class="reply_btn" data-id="<?= $comments->id ?>" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                                     <?php }
                                     } ?>
                             </div>
@@ -80,17 +80,7 @@ use yii\helpers\Url;
                             <?php } ?>
                             <?php if (Yii::$app->user->id) {  ?>
                                 <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $comments->id ?>">
-                                    <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                                    <div class="mb-3">
-                                        <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
-                                    </div>
-                                    <div class="mb-3">
-                                        <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                                    </div>
-                                    <div class="btn-wrapper">
-                                        <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
-                                    </div>
-                                    <?php ActiveForm::end(); ?>
+
                                 </div>
 
                             <?php } ?>
@@ -118,18 +108,39 @@ use yii\helpers\Url;
 </div>
 
 
+<?php
 
-<script>
-    function toggleReplyForm(link) {
-        var target = link.getAttribute('data-target');
-        var replyForm = document.querySelector('#' + target);
-        if (replyForm.style.display === "none" || replyForm.style.display === "") {
-            replyForm.style.display = "block";
+$reply_url = Url::toRoute(['/package/default/reply', 'slug' => $package->package_slug]);
+
+?>
+
+<?php
+$script = <<<JS
+function replyFunction() {
+    $('.reply_btn').on('click', function () {
+        $('.reply-form').html('');
+        var link = $(this); // define link variable
+        var target = link.data('target');
+        var replyForm = $('#' + target);
+        
+        var parentId = link.data('id');
+        var replyUrl = '{$reply_url}&parent_id=' + parentId;
+        $.get(replyUrl, function(data) {
+            if (replyForm.css('display') === 'none' || replyForm.css('display') === '') {
+            replyForm.show();
         } else {
-            replyForm.style.display = "none";
+            replyForm.hide();
         }
-    }
-</script>
+            $("#"+target).html(data);
+        });
+        
+    });
+}
+replyFunction();
+JS;
+$this->registerJs($script);
+?>
+
 
 <?php
 $script = <<< JS

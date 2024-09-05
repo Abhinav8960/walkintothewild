@@ -16,6 +16,8 @@ class ArticleReplyForm extends Model
 {
     public $comment;
     public $parent_id;
+    public $action_url;
+    public $action_validate_url;
 
 
     /**

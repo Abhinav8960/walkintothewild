@@ -95,7 +95,13 @@ class DefaultController extends FrontendBaseController
 
 
         $model = new PackageCommentForm();
-        $replymodel = new PackageReplyForm();
+        // $model->action_url = '/package/default/view';
+        $model->action_validate_url = '/package/default/validate-comment';
+
+
+        // $replymodel = new PackageReplyForm();
+        // $replymodel->action_url = '/package/default/view';
+        // $replymodel->action_validate_url = '/package/default/validate-reply';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($package)) {
             // Notification for New Comment
@@ -106,16 +112,16 @@ class DefaultController extends FrontendBaseController
         }
 
 
-        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($package)) {
+        // if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($package)) {
 
-            // Notification for Reply Comment
-            $reply_comment = $replymodel->commentbyParent();
-            if ($reply_comment) {
-                FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
-            }
-            Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-            return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
-        }
+        //     // Notification for Reply Comment
+        //     $reply_comment = $replymodel->commentbyParent();
+        //     if ($reply_comment) {
+        //         FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
+        //     }
+        //     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+        //     return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+        // }
 
 
 
@@ -137,11 +143,45 @@ class DefaultController extends FrontendBaseController
                 'package' => $package,
                 'faqs' => $faqs,
                 'model' => $model,
-                'replymodel' => $replymodel,
+                // 'replymodel' => $replymodel,
                 'packagemodel' => $packagemodel,
                 'login_safarioperator' => $login_safarioperator,
             ]
         );
+    }
+
+
+
+    public function actionReply($slug, $parent_id)
+    {
+
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (empty($package)) {
+            return $this->redirect(['/package']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $replymodel = new PackageReplyForm();
+        $replymodel->parent_id = $parent_id;
+        // $replymodel->action_url = '/package/default/view';
+        $replymodel->action_validate_url = '/package/default/validate-reply';
+
+
+        if ($replymodel->load(Yii::$app->request->post())) {
+            if ($replymodel->validate()) {
+                if ($replymodel->reply($package)) {
+                    // Notification for Reply Comment
+                    $reply_comment = $replymodel->commentbyParent();
+                    if ($reply_comment) {
+                        FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
+                    }
+                    Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+                    return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
+                }
+            }
+        }
+
+        return $this->renderAjax('_reply_form', ['replymodel' => $replymodel]);
     }
 
 
@@ -351,5 +391,54 @@ class DefaultController extends FrontendBaseController
         } else {
             return $this->redirect(['/']);
         }
+    }
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidateComment($id = null)
+    {
+        $commentmodel = new PackageCommentForm();
+        if ($id != null) {
+            $formmodel = $this->findModel($id);
+            $commentmodel = new PackageCommentForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $commentmodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($commentmodel);
+        }
+    }
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidateReply($id = null)
+    {
+        $replymodel = new PackageReplyForm();
+        if ($id != null) {
+            $formmodel = $this->findReplyModel($id);
+            $replymodel = new PackageReplyForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $replymodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($replymodel);
+        }
+    }
+
+    protected function findReplyModel($id)
+    {
+        if (($model = PackageComment::findOne(['id' => $id, 'status' => 1])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

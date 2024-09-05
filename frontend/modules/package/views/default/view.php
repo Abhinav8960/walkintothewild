@@ -372,7 +372,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                 </div>
 
-                <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'replymodel' => $replymodel, 'login_safarioperator' => $login_safarioperator]) ?>
+                <?= $this->render('_comment', ['package' => $package, 'model' => $model, 'login_safarioperator' => $login_safarioperator]) ?>
                 <div class="desclaimers pb-3">
                     <div class="itenary-title">
                         <h6 class="fs-5 pb-2">Disclaimer</h6>
