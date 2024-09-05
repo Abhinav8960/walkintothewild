@@ -1989,6 +1989,7 @@ figure {
 
     font-size: var(--fs-14);
     word-break: break-word;
+    margin-bottom: 6px;
 }
 .text_com a{
 
@@ -2029,7 +2030,7 @@ figure {
 .text-area textarea.form-control {
 
     width: 100% !important;
-    height: 140px;
+    height: 100px;
     font-family: "Roboto", sans-serif !important;
     border-radius: 10px;
 }
@@ -4465,6 +4466,7 @@ figure {
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
+            margin-bottom: -5px;
 
 }
 
@@ -5343,7 +5345,7 @@ figure {
 
 .font-color .comment-date {
 
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .reply_btn {
@@ -5355,6 +5357,7 @@ figure {
     border: 0;
     color: var(--background-orange);
     font-weight: 400;
+    margin-bottom: 6px;
 }
 
 .toggle-replies {
@@ -5363,7 +5366,7 @@ figure {
 
 .card-brown-heading {
 
-    font-size: var(--fs-18);
+    font-size: var(--fs-16);
 }
 
 .blog-comment-text .avatar {
