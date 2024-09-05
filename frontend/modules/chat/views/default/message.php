@@ -274,7 +274,7 @@ $(document).ready(function() {
             success:function(data){
                 // console.log(data);
                 $('#chat-message').val('');
-                //location.reload();
+                location.reload();
             },
             dataType:'html'
         });   
