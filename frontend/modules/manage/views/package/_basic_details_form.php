@@ -38,6 +38,12 @@ use yii\bootstrap5\ActiveForm;
                     'labelOptions' => ['class' => 'Modal_label']
                 ])->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Day/Night'])->label('Day/Night') ?>
             </div>
+
+            <div class="col-md-6 col-lg-6 col-xxl-4">
+                <?= $form->field($model, 'safari_type', [
+                    'labelOptions' => ['class' => 'Modal_label']
+                ])->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['prompt' => 'Select Safari Type'])->label('Safari Type') ?>
+            </div>
             <div class="col-md-6 col-lg-6 col-xxl-4">
                 <?= $form->field($model, 'no_of_safari', [
                     'labelOptions' => ['class' => 'Modal_label']

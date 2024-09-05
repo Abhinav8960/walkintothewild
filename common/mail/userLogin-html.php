@@ -12,3 +12,11 @@ use yii\helpers\Html;
 
     <p> You are successfully login to Walk into wild </p>
 </div>
+<?php if (!(isset($is_email_sending) && $is_email_sending)) { ?>
+    <div class="card">
+        <div class="card-body">
+            <p>Keyword:</p>
+            <p>1. username</p>
+        </div>
+    </div>
+<?php } ?>

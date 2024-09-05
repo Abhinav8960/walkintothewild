@@ -45,6 +45,10 @@ use kartik\datetime\DateTimePicker;
             </div>
 
             <div class="col-md-3">
+                <?= $form->field($model, 'safari_type')->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['prompt' => 'Select Safrai Type']) ?>
+            </div>
+
+            <div class="col-md-3">
                 <?= $form->field($model, 'no_of_safari')->textInput([
                     'maxlength' => true,
                     'placeholder' => 'Enter Number of Safaries',
@@ -241,6 +245,7 @@ $gst_script = <<< JS
                 $('.field-packageform-gst_percentage').hide();
             }
         });
+
     });
 JS;
 $this->registerJs($gst_script);

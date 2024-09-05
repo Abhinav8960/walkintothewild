@@ -15,6 +15,7 @@ class PackageForm extends \yii\base\Model
     public $package_slug;
     public $no_of_day;
     public $no_of_night;
+    public $safari_type;
     public $no_of_safari;
     public $start_location;
     public $end_location;
@@ -85,6 +86,7 @@ class PackageForm extends \yii\base\Model
             $this->no_of_day = $this->package_model->no_of_day;
             $this->no_of_night = $this->package_model->no_of_night;
             $this->no_of_safari = $this->package_model->no_of_safari;
+            $this->safari_type = $this->package_model->safari_type;
             $this->start_location = $this->package_model->start_location;
             $this->end_location = $this->package_model->end_location;
             $this->start_date = $this->package_model->start_date;
@@ -138,7 +140,7 @@ class PackageForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'safari_type'], 'safe'],
 
 
 
@@ -147,6 +149,7 @@ class PackageForm extends \yii\base\Model
             [['day_title'], 'string', 'max' => 512],
             [['start_location', 'end_location', 'hotel_name', 'day_image'], 'string', 'max' => 255],
             [['package_id', 'day'], 'unique', 'targetAttribute' => ['package_id', 'day']],
+
 
         ];
     }
@@ -161,6 +164,7 @@ class PackageForm extends \yii\base\Model
             'no_of_day',
             'no_of_night',
             'no_of_safari',
+            'safari_type',
             'stay_category_id',
             'status',
             'cost_per_person',
@@ -190,6 +194,7 @@ class PackageForm extends \yii\base\Model
             'no_of_day',
             'no_of_night',
             'no_of_safari',
+            'safari_type',
             'stay_category_id',
             'status',
             'cost_per_person',
@@ -282,6 +287,7 @@ class PackageForm extends \yii\base\Model
             $this->package_model->no_of_night = $this->no_of_day - 1;
         }
         $this->package_model->no_of_safari = $this->no_of_safari;
+        $this->package_model->safari_type = $this->safari_type;
         $this->package_model->start_location = $this->start_location;
         $this->package_model->end_location = $this->end_location;
         $this->package_model->start_date = $this->start_date;
