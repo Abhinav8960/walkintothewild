@@ -6,6 +6,7 @@ use Yii;
 use common\models\package\Package;
 use common\traits\CommanRelationship;
 use common\models\sharesafari\ShareSafari;
+use common\models\User;
 
 /**
  * This is the model class for table "safari_operator".
@@ -216,5 +217,10 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         ];
 
         return isset($category_list[$this->category_id]) ? $category_list[$this->category_id] : $this->category_id;
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }
