@@ -165,7 +165,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                 $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 
                                 if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                                    GeneralModel::sendmailfromlog(900);
+                                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
                                 }
 
                                 Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
