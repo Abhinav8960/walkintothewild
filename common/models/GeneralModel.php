@@ -1194,10 +1194,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     public static function sendmailfromlog($mail_log_id)
     {
         $log = MailLog::find()->where(['status' => 2])->andWhere(['id' => $mail_log_id])->one();
-        echo "<pre>";
-        print_r($log);
-        echo  "</pre>";
-        die();
         if ($log) {
             $cc = [];
             $bcc = [];
