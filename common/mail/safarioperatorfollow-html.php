@@ -18,9 +18,13 @@ use yii\helpers\Html;
 <?php if (!(isset($is_email_sending) && $is_email_sending)) { ?>
     <div class="card">
         <div class="card-body">
-            <p>Keyword:</p>
+            <p>Sample Array :</p>
             <p>1. username</p>
-            <p>1. name (followed by name)</p>
+            <p>2. name (followed by name)</p>
+
+            <p>Expected Key :</p>
+            <p>1. Annu Singh</p>
+            <p>2. Smriti Pal</p>
         </div>
     </div>
 <?php } ?>
