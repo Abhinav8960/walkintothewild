@@ -13,6 +13,8 @@ use yii\base\Model;
 class CommentForm extends Model
 {
     public $comment;
+    public $action_url;
+    public $action_validate_url;
 
 
     /**

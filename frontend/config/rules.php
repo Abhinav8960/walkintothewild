@@ -28,6 +28,8 @@ return [
     '/animal/<slug>' => '/park/default/rareanimal', //park listing url
 
     '/article' => '/article/default/index',
+    '/article/default/validate-comment' => '/article/default/validate-comment',
+    '/article/default/validate-reply' => '/article/default/validate-reply',
     '/article/tag/<slug>' => '/article/default/tag',
     [
         'pattern' => '/article/tag/<slug:\w+>',
@@ -59,7 +61,10 @@ return [
     '/sharedsafari/default/updatevalidate' => '/sharedsafari/default/updatevalidate',
     '/sharedsafari/default/update' => '/sharedsafari/default/update',
     '/sharedsafari/default/flag' => '/sharedsafari/default/flag',
+    '/sharedsafari/default/reply' => '/sharedsafari/default/reply',
     '/sharedsafari/default/validateflag' => '/sharedsafari/default/validateflag',
+    '/sharedsafari/default/validate-comment' => '/sharedsafari/default/validate-comment',
+    '/sharedsafari/default/validate-reply' => '/sharedsafari/default/validate-reply',
     '/sharedsafari/default/interestview' => '/sharedsafari/default/interestview',
     '/sharedsafari/month/<month>' => '/sharedsafari/default/month', //url for site xml
     '/sharedsafari/<organized_slug>/<slug>/join' => '/sharedsafari/default/join',
@@ -89,6 +94,9 @@ return [
 
     '/package' => '/package/default/index', //package page url
     '/package/default/flag' => '/package/default/flag',
+    '/package/default/reply' => '/package/default/reply',
+    '/package/default/validate-reply' => '/package/default/validate-reply',
+    '/package/default/validate-comment' => '/package/default/validate-comment',
     '/package/default/validateflag' => '/package/default/validateflag',
     '/package/month/<month>' => '/package/default/month', //url for site xml
     '/package/<operator_slug>/<slug>/wishlist' => '/package/default/wishlist', //package page url

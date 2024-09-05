@@ -61,14 +61,9 @@ if ($article->meta_title != '') {
 
 <section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-lg">
-        <div class="row justify-content-center">
-            <div class="col-lg-7 mb-5 py-3">
-                <div class="advertisment ">
-                    <p class="text-center">ADVERTISMENT</p>
-                    <div class="advertisment_box">
+    <div class="advertisment mt-5">
+            <div class="google-ad-box  mb-5">
 
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row mb-4 justify-content-center">
@@ -124,7 +119,7 @@ if ($article->meta_title != '') {
                                     <?= $this->render('_comment', [
                                         'model' => $model,
                                         'article' => $article,
-                                        'replymodel' => $replymodel,
+                                        // 'replymodel' => $replymodel,
                                     ]) ?>
                                 </div>
                             </div>
@@ -141,9 +136,13 @@ if ($article->meta_title != '') {
                             </div>
                             <?= $this->render('_topic_search') ?>
                         </div>
-                        <div class="advertisment pt-5">
-                            <p class="text-center">ADVERTISMENT</p>
-                            <div class="advertisment_box">
+                        <div class="advertisment d-lg-block d-none mt-5">
+                            <div class="google-ad300  mb-5">
+
+                            </div>
+                        </div>
+                        <div class="advertisment d-lg-block d-none ">
+                            <div class="google-add600hight  mb-5">
 
                             </div>
                         </div>

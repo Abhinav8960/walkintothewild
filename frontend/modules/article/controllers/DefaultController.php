@@ -66,25 +66,68 @@ class DefaultController extends FrontendBaseController
         }
 
         $model = new CommentForm();
+        // $model->action_url = '/package/default/view';
+        $model->action_validate_url = '/article/default/validate-comment';
+
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($article)) {
             Yii::$app->session->setFlash('success', 'Comment submitted Successfully');
             return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
         }
-        $replymodel = new ArticleReplyForm();
-        if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($article)) {
-            Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-            return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
-        }
+
+
+        // $replymodel = new ArticleReplyForm();
+        // $replymodel->action_validate_url = '/article/default/validate-reply';
+
+        // if ($replymodel->load(Yii::$app->request->post())) {
+        //     if ($replymodel->validate()) {
+        //         if ($replymodel->reply($article)) {
+        //             Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+        //             return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+        //         }
+        //     }
+        // }
         return $this->render(
             'view',
             [
                 'article' => $article,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-                'replymodel' => $replymodel,
+                // 'replymodel' => $replymodel,
                 'model' => $model,
             ]
         );
+    }
+
+
+    public function actionReply($slug, $parent_id)
+    {
+
+        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])
+            ->andWhere(ArticleSearch::addtionalQuery())
+            ->limit(1)->one();
+
+
+        if (empty($article)) {
+            return $this->redirect(['/article']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        $replymodel = new ArticleReplyForm();
+        $replymodel->parent_id = $parent_id;
+
+        $replymodel->action_validate_url = '/article/default/validate-reply';
+
+
+        if ($replymodel->load(Yii::$app->request->post())) {
+            if ($replymodel->validate()) {
+                if ($replymodel->reply($article)) {
+                    Yii::$app->session->setFlash('success', 'Reply successfully submitted');
+                    return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+                }
+            }
+        }
+
+        return $this->renderAjax('_reply_form', ['replymodel' => $replymodel]);
     }
 
 
@@ -208,5 +251,54 @@ class DefaultController extends FrontendBaseController
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidateComment($id = null)
+    {
+        $commentmodel = new CommentForm();
+        if ($id != null) {
+            $formmodel = $this->findReplyModel($id);
+            $commentmodel = new CommentForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $commentmodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($commentmodel);
+        }
+    }
+
+    /**
+     * Validate 
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function actionValidateReply($id = null)
+    {
+        $replymodel = new ArticleReplyForm();
+        if ($id != null) {
+            $formmodel = $this->findReplyModel($id);
+            $replymodel = new ArticleReplyForm($formmodel);
+        }
+
+        if (Yii::$app->request->isAjax && $replymodel->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return \yii\widgets\ActiveForm::validate($replymodel);
+        }
+    }
+
+    protected function findReplyModel($id)
+    {
+        if (($model = ArticleComment::findOne(['id' => $id, 'status' => 1])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

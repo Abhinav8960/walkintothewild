@@ -638,12 +638,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																			"/cms/article/update",
 																			"/cms/article/create"
 																		)) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/article-by-user/comment",
 																			"/cms/article-by-user/index",
 																			"/cms/article-by-user/update",
 																			"/cms/article-by-user/create"
-																		)) ? "active" : "" ?>" href="/cms/article-by-user/index">Article By User</a></li>
+																		)) ? "active" : "" ?>" href="/cms/article-by-user/index">Article By User</a></li> -->
 
 								</ul>
 							</li>

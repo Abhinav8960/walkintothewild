@@ -168,23 +168,23 @@ $vehicleoption = GeneralModel::vehicleoption();
         <div class="mobile_searchBox d-flex justify-content-between align-items-center">
             <div class="select_boxes">
                 <div class="icomns">
-                    <i class="fa-solid fa-magnifying-glass pe-4"></i>
+                    <i class="fa-solid fa-magnifying-glass "></i>
                 </div>
             </div>
+            <div class="select_boxes d-flex gap-2 align-items-center">
+                <h6 class="fs-5"> <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Park' ?></h6>/    <h6 class="fs-5"><?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'or Location' ?></h6>
+            </div>
+            <!-- <i class="fa-solid fa-chevron-right px-2"></i>
             <div class="select_boxes">
-                <h6 class="fs-5"> <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Select Safari Park' ?></h6>
+            
+            </div> -->
+            <i class="fa-solid fa-chevron-right px-2"></i>
+            <div class="select_boxes">
+                <h6 class="fs-5"> <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : ' Animal' ?></h6>
             </div>
             <i class="fa-solid fa-chevron-right px-2"></i>
             <div class="select_boxes">
-                <h6 class="fs-5"><?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'Select Region' ?></h6>
-            </div>
-            <i class="fa-solid fa-chevron-right px-2"></i>
-            <div class="select_boxes">
-                <h6 class="fs-5"> <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?></h6>
-            </div>
-            <i class="fa-solid fa-chevron-right px-2"></i>
-            <div class="select_boxes">
-                <h6 class="fs-5"> <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Select Safari Mode' ?></h6>
+                <h6 class="fs-5"> <?= isset($vehicleoption[$model->master_vehicle_id]) ? $vehicleoption[$model->master_vehicle_id] : 'Vehicle' ?></h6>
             </div>
         </div>
     </div>

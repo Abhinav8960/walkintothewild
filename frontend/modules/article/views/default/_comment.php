@@ -31,7 +31,7 @@ use yii\helpers\Url;
                         <p><?= $article_comment->comment ?></p>
                         <?php
                         if (Yii::$app->user->identity && Yii::$app->user->id == $article_comment->user_id) { ?>
-                            <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $article_comment->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                            <button class="reply_btn" data-id="<?= $article_comment->id ?>" data-target="reply-form-<?= $article_comment->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                         <?php }
                         ?>
                     </div>
@@ -79,17 +79,7 @@ use yii\helpers\Url;
                     <?php } ?>
                     <?php if (Yii::$app->user->id) {  ?>
                         <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $article_comment->id ?>">
-                            <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
-                            <div class="mb-3">
-                                <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $article_comment->id])->label(false) ?>
-                            </div>
-                            <div class="mb-3">
-                                <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                            </div>
-                            <div class="btn-wrapper">
-                                <?= Html::submitButton('Submit', ['class' => 'post-comment']) ?>
-                            </div>
-                            <?php ActiveForm::end(); ?>
+
                         </div>
 
                     <?php } ?>
@@ -102,7 +92,14 @@ use yii\helpers\Url;
 
 <?php if (Yii::$app->user->id) {
     if ($article->comment_allowed == 1) {  ?>
-        <?php $form = ActiveForm::begin(['id' => 'reply-form']); ?>
+        <?php $form = ActiveForm::begin([
+            'id' => 'comment-form',
+            'enableAjaxValidation' => true,
+            'enableClientValidation' => false,
+            'enableClientScript' => true,
+            // 'action' => $model->action_url,
+            'validationUrl' => $model->action_validate_url,
+        ]); ?>
         <div class="comments-persons pe-md-3 pe-2">
             <div class="postcomment d-flex gap-3">
                 <div class="avatar">
@@ -150,17 +147,38 @@ $this->registerJs($script);
 
 
 
-<script>
-    function toggleReplyForm(link) {
-        var target = link.getAttribute('data-target');
-        var replyForm = document.querySelector('#' + target);
-        if (replyForm.style.display === "none" || replyForm.style.display === "") {
-            replyForm.style.display = "block";
+<?php
+
+$reply_url = Url::toRoute(['/article/default/reply', 'slug' => $article->slug]);
+
+?>
+
+<?php
+$script = <<<JS
+function replyFunction() {
+    $('.reply_btn').on('click', function () {
+        $('.reply-form').html('');
+        var link = $(this); // define link variable
+        var target = link.data('target');
+        var replyForm = $('#' + target);
+        
+        var parentId = link.data('id');
+        var replyUrl = '{$reply_url}&parent_id=' + parentId;
+        $.get(replyUrl, function(data) {
+            if (replyForm.css('display') === 'none' || replyForm.css('display') === '') {
+            replyForm.show();
         } else {
-            replyForm.style.display = "none";
+            replyForm.hide();
         }
-    }
-</script>
+            $("#"+target).html(data);
+        });
+        
+    });
+}
+replyFunction();
+JS;
+$this->registerJs($script);
+?>
 
 <?php
 $script = <<< JS

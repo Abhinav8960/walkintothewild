@@ -83,7 +83,7 @@ use yii\helpers\Url;
                                     <?php if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
                                         if ($share_safari_intrested || Yii::$app->user->id ==  $share_safari->host_user_id || ($login_safarioperator && $share_safari->host_user_id == $login_safarioperator->id)) { ?>
-                                            <button class="reply_btn" onclick="toggleReplyForm(this)" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
+                                            <button class="reply_btn" data-id="<?= $comments->id ?>" data-target="reply-form-<?= $comments->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                                     <?php }
                                     } ?>
                                 </div>
@@ -129,17 +129,7 @@ use yii\helpers\Url;
                                 <?php } ?>
                                 <?php if (Yii::$app->user->id) {  ?>
                                     <div class="reply-form ms-lg-4 ms-2" style="display: none;" id="reply-form-<?= $comments->id ?>">
-                                        <?php $form = ActiveForm::begin([]); ?>
-                                        <div class="mb-3">
-                                            <?= $form->field($replymodel, 'parent_id')->hiddenInput(['value' => $comments->id])->label(false) ?>
-                                        </div>
-                                        <div class="mb-3">
-                                            <?= $form->field($replymodel, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a reply...', 'class' => 'form-control w-100'])->label(false) ?>
-                                        </div>
-                                        <div class="btn-wrapper">
-                                            <?= Html::submitButton('Submit', ['class' => 'post-comment  ']) ?>
-                                        </div>
-                                        <?php ActiveForm::end(); ?>
+
                                     </div>
 
                                 <?php } ?>
@@ -177,17 +167,38 @@ use yii\helpers\Url;
 
 
 </div>
-<script>
-    function toggleReplyForm(link) {
-        var target = link.getAttribute('data-target');
-        var replyForm = document.querySelector('#' + target);
-        if (replyForm.style.display === "none" || replyForm.style.display === "") {
-            replyForm.style.display = "block";
+<?php
+
+$reply_url = Url::toRoute(['/sharedsafari/default/reply', 'slug' => $share_safari->slug]);
+
+?>
+
+<?php
+$script = <<<JS
+function replyFunction() {
+    $('.reply_btn').on('click', function () {
+        $('.reply-form').html('');
+        var link = $(this); // define link variable
+        var target = link.data('target');
+        var replyForm = $('#' + target);
+        
+        var parentId = link.data('id');
+        var replyUrl = '{$reply_url}&parent_id=' + parentId;
+        $.get(replyUrl, function(data) {
+            if (replyForm.css('display') === 'none' || replyForm.css('display') === '') {
+            replyForm.show();
         } else {
-            replyForm.style.display = "none";
+            replyForm.hide();
         }
-    }
-</script>
+            $("#"+target).html(data);
+        });
+        
+    });
+}
+replyFunction();
+JS;
+$this->registerJs($script);
+?>
 
 <?php
 $script = <<< JS
