@@ -60,7 +60,7 @@ class ArticleSearch extends Article
      */
     public function search($params, $pagination = true)
     {
-        $query =  Article::find()->where(['article.status' => [Article::USER_PUBLISHED, Article::USER_UNPUBLISHED]]);
+        $query =  Article::find()->where(['article.status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]]);
 
 
         // add conditions that should always apply here
@@ -127,7 +127,7 @@ class ArticleSearch extends Article
      */
     public function usersearch($params, $pagination = true)
     {
-        $query =  Article::find()->where(['article.status' => [Article::USER_PUBLISHED, Article::USER_UNPUBLISHED], 'article.is_approved' => [0, 1]])->andWhere(['IS NOT', 'article.user_id', null]);
+        $query =  Article::find()->where(['article.status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND], 'article.is_approved' => [0, 1]])->andWhere(['IS NOT', 'article.user_id', null]);
 
 
         // add conditions that should always apply here

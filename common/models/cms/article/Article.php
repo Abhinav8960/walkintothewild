@@ -38,8 +38,6 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     const USER_TYPE_INDIVIDUAL = 1;
     const USER_TYPE_SAFARI_OPERATOR = 2;
     const USER_TYPE_ADMIN = 3;
-    const USER_PUBLISHED = 1;
-    const USER_UNPUBLISHED = 2;
 
     /**
      * {@inheritdoc}
