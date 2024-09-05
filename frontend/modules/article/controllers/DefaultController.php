@@ -35,7 +35,7 @@ class DefaultController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $searchModel->status = StatusInterface::STATUS_ACTIVE;
+        $searchModel->status = Article::USER_PUBLISHED;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -55,7 +55,7 @@ class DefaultController extends FrontendBaseController
         $searchModel = new ArticleSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
-        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])
+        $article = Article::find()->where(['status' => Article::USER_PUBLISHED, 'slug' => $slug])
             ->andWhere(ArticleSearch::addtionalQuery())
             ->limit(1)->one();
 
