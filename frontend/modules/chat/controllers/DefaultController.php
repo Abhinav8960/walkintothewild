@@ -176,7 +176,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                             return ['status' => false, 'message' => 'Erros', 'errors' => $chat->errors];
                         }
                     } else {
-                        $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->limit(1)->one();
+                        $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->andWhere(['chat_type' => 1])->limit(1)->one();
                         if (!$chat) {
                             $chat = new Chat();
                         }
