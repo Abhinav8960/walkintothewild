@@ -194,7 +194,9 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             <div class="chat-message-container" id="chat-message-container">
                                 <?php $quote_chat_id = 0;
                                 $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
-
+                                if (empty($chat)) {
+                                    $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->limit(1)->one();
+                                }
                                 if ($chat && $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby(['created_at' => SORT_ASC])->all()) {
                                     foreach ($chat_message_list as $chat_message) { ?>
                                         <div class="chat-message pt-3">
