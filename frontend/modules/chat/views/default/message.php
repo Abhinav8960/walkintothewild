@@ -48,11 +48,11 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             </div>
                             <div class="tab-content" id="pills-tabContent">
                                 <!-- direct msg user lists -->
-                                <div class="tab-pane fade <?php if (empty($chat_id)) {
-                                                                echo 'show active mt-4';
-                                                            } ?>" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade <?php if (empty($chat_id)) {
+                                                                                                                                echo 'show active mt-4';
+                                                                                                                            } ?>">
                                     <div class="chat-search-user mb-3 position-relative">
-                                        <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false, 'chat_type' => 1]) ?>
+                                        <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => false, 'chat_type' => 1]) ?>
                                         <div class="secrchIcons">
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </div>
@@ -134,6 +134,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                                     <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->name ?></h6>
                                                                 <?php } ?>
                                                                 <p class="mb-0 lastmassge" style="color:#4c4c4c;"><?= $active_chat->last_message ?></p>
+                                                                <p class="mb-0 lastmassge" style="color:#4c4c4c;"><b>Last Msg:</b> <?= date('M j, Y H:i', $active_chat->last_message_at) ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -170,7 +171,6 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                 <img src="<?= $individual_user->operator->logo ? $individual_user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                 <?= $individual_user->operator->business_name ?>
                                             <?php } else { ?>
-
                                                 <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
                                                     <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                 </a>
@@ -221,7 +221,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                             <span id="char-count">500</span> characters remaining
                                         </div>
 
-                                        <textarea type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" autofocus id="chat-message" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></textarea>
+                                        <textarea type="text" rows="1" name="Chat[message]" class="form-control chat-message-input submit_on_enter" placeholder="Type a Message" id="chat-message" autocomplete="off" data-emojiable="true" value="<?= Yii::$app->request->post('Chat') !== null && isset(Yii::$app->request->post('Chat')['message']) ? Yii::$app->request->post('Chat')['message'] : '' ?>" maxlength="500"></textarea>
 
                                         <div class="sendMassege">
                                             <div class="chat-sendbtn">

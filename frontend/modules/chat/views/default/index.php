@@ -31,6 +31,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                 'enableReplaceState' => FALSE,
                                 'timeout' => false,
                             ]); ?>
+
                             <div class="tablmassage safartabs">
                                 <ul class="nav  nav-tabs " id="pills-tab" role="tablist" style="justify-content:between">
                                     <li class="nav-item" role="presentation">
@@ -48,9 +49,9 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             </div>
                             <div class="tab-content" id="pills-tabContent">
                                 <!-- direct msg user lists -->
-                                <div class="tab-pane fade <?php if (empty($chat_id)) {
-                                                                echo 'show active mt-4';
-                                                            } ?>" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade <?php if (empty($chat_id)) {
+                                                                                                                                echo 'show active mt-4';
+                                                                                                                            } ?>">
                                     <div class="chat-search-user mb-3 position-relative">
                                         <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => $searchModel->name ? true : false, 'chat_type' => 1]) ?>
                                         <div class="secrchIcons">
@@ -106,15 +107,25 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
 
                                                 <a href="<?= Url::toRoute(['/chat/message/' . $user->user_handle . "/" . base64_encode($active_chat->id)]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
 
-                                                    <div class="chat-sidebar-user-card selected">
+                                                    <div class="chat-sidebar-user-card <?= $user->id == $user->id ? 'selected_chat' : '' ?>">
                                                         <div class="d-flex chat-user_message">
-                                                            <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                            <?php if ($active_chat->recipient_user_id == $user->id) { ?>
+                                                                <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
+                                                                    <?php
+                                                                    if (isset($user->operator)) { ?>
+                                                                        <img src="<?= $user->operator->logo ? $user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                    <?php } else { ?>
+                                                                        <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                    <?php }  ?>
+                                                                </h6>
+                                                            <?php } else { ?>
+                                                                <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                            <?php } ?>
 
                                                             <div class="chat-user_name">
                                                                 <?php if ($active_chat->recipient_user_id == $user->id) { ?>
                                                                     <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
-                                                                        <?php
-                                                                        if (isset($user->operator)) {
+                                                                        <?php if (isset($user->operator)) {
                                                                             echo $user->operator->business_name;
                                                                         } else {
                                                                             echo $user->name;
@@ -124,6 +135,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                                     <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->name ?></h6>
                                                                 <?php } ?>
                                                                 <p class="mb-0 lastmassge" style="color:#4c4c4c;"><?= $active_chat->last_message ?></p>
+                                                                <p class="mb-0 lastmassge" style="color:#4c4c4c;"><b>Last Msg:</b> <?= date('M j, Y H:i', $active_chat->last_message_at) ?></p>
                                                             </div>
                                                         </div>
                                                     </div>
