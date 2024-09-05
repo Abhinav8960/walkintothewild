@@ -84,7 +84,14 @@ use yii\bootstrap5\ActiveForm;
                         'labelOptions' => ['class' => 'Modal_label']
                     ])->radioList(GeneralModel::yesnooption(), ['prompt' => '--Select --'])->label('Comment Allowed <span class="necessary">*</span>') ?>
                 </div>
+
+                <div class="col-md-3">
+                    <?= $form->field($model, 'status', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->radioList(GeneralModel::userstatusoption(), ['prompt' => '--Select --'])->label('Status <span class="necessary">*</span>') ?>
+                </div>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="creat-safri float-end w-auto">
