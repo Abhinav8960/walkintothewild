@@ -17,7 +17,7 @@ class UserArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $searchModel->status = Article::USER_PUBLISHED;
+        $searchModel->status = Article::STATUS_ACTIVE;
         $searchModel->is_approved = 0;
         $dataProvider = $searchModel->usersearch($this->request->queryParams);
 
@@ -32,7 +32,7 @@ class UserArticleController extends Controller
     {
         $user_article_approval_model = $this->findModel($id);
         $model = new UserArticleApprovalForm($user_article_approval_model);
-        $model->status = Article::USER_PUBLISHED;
+        $model->status = Article::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -58,7 +58,7 @@ class UserArticleController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Article::findOne(['id' => $id, 'status' => [Article::USER_PUBLISHED, Article::USER_UNPUBLISHED]])) !== null) {
+        if (($model = Article::findOne(['id' => $id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
