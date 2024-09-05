@@ -152,7 +152,11 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
                 // self::sendmail($log);
             }
 
-            return json_decode($log->params, true);
+            //add log id return parameter 
+            $temp = json_decode($log->params);
+            $temp->log_id = $log->id;
+            $temp = json_encode($temp, true);
+            return json_decode($temp, true);
         }
     }
 
