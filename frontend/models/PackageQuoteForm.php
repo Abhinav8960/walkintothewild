@@ -2,6 +2,9 @@
 
 namespace frontend\models;
 
+use common\models\User;
+use common\models\chat\Chat;
+use common\models\chat\ChatMessage;
 use common\models\MailLog;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
@@ -57,7 +60,6 @@ class PackageQuoteForm extends Model
 
     public function request($package_id)
     {
-
         $agent = new \Jenssegers\Agent\Agent();
         $agent->setUserAgent(Yii::$app->request->userAgent);
         $package_quote = new PackageQuote();
@@ -71,11 +73,38 @@ class PackageQuoteForm extends Model
         $package_quote->os = $agent->platform();
         $package_quote->status = 1;
 
-        // if ($package_quote->save(false)) {
-        //     return $package_quote;
-        // }
-        if ($package_quote->save()) {
+        if ($package_quote->save(false)) {
+            //save quote chat 
+            $login_user = Yii::$app->user->identity;
             $package = Package::find()->where(['id' => $package_id])->limit(1)->one();
+
+            $package_data = Package::find()->where(['id' => $package_quote->package_id])->asArray()->one();
+            $individual_user = User::find()->where(['id' => $package->safarioperator->user_id])->limit(1)->one();
+
+            $chat = new Chat();
+            $short_msg = $message = "<b>Package: </b>" . $package_quote->package->package_name . "<br/>";
+            $message .= "<b>Travelers: </b>" . $package_quote->travelers . "<br/>";
+            $message .= "<b>Start Date: </b>" . date('M j, Y', strtotime($package_quote->start_date)) . "<br/>";
+
+            $chat->generateChatHash();
+            $chat->user_id = $login_user->id;
+            $chat->recipient_user_id = $individual_user->id;
+            $chat->last_message = $short_msg;
+            $chat->last_message_at = time();
+            $chat->status = 1;
+            $chat->chat_type = 2;
+            $chat->package_id = $package_quote->package_id;
+
+            if ($chat->save(false)) {
+                $chat_message = new ChatMessage();
+                $chat_message->chat_id = $chat->id;
+                $chat_message->message = $message;
+                $chat_message->data = json_encode($package_data);
+                $chat_message->status = 1;
+                $chat_message->save();
+            }
+            //end save done quote chat
+
             if ($package) {
                 $operator = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
                 $to_mail = $operator->email;
@@ -85,7 +114,8 @@ class PackageQuoteForm extends Model
 
                 MailLog::createMailLog($to_mail, $subject, $template, $req, []);
             }
-            return $package_quote->save();
+            //return $package_quote->save();
         }
+        return true;
     }
 }
