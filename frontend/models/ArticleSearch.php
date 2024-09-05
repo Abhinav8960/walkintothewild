@@ -45,7 +45,7 @@ class ArticleSearch extends Article
      */
     public function search($params, $pagination = true)
     {
-        $query =  Article::find()->andWhere(['article.status' => [self::STATUS_ACTIVE]])->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'");
+        $query =  Article::find()->andWhere(['article.status' => [Article::STATUS_ACTIVE]])->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'");
 
 
         // add conditions that should always apply here
@@ -118,7 +118,7 @@ class ArticleSearch extends Article
                         $additional_query->andWhere(['like', 'master_article_topic.slug', $slug]);
                     }]);
                 }])
-                ->andWhere(['article.status' => self::STATUS_ACTIVE]) // Filters by active status
+                ->andWhere(['article.status' => Article::STATUS_ACTIVE]) // Filters by active status
                 ->andWhere("is_schedule = 0 OR DATE(publish_date_time) <= '" . date('Y-m-d') . "'") // Filters by publication date
                 // ->andWhere("article.status=1 AND (user_type=3 OR is_approved=1)")
                 ->andWhere(self::addtionalQuery())
@@ -127,7 +127,7 @@ class ArticleSearch extends Article
                 ->all(); // Retrieves all matching records
         } else {
             return Article::find()
-                ->andWhere(['article.status' => [self::STATUS_ACTIVE]])
+                ->andWhere(['article.status' => [Article::STATUS_ACTIVE]])
                 ->andWhere("is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "'")
                 // ->andWhere("status=1 AND (user_type=3 OR is_approved=1)")
                 ->andWhere(self::addtionalQuery())
