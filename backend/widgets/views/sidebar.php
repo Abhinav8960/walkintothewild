@@ -55,6 +55,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/share-safari-reason/index",
 											"/master/share-safari-reason/create",
 											"/master/share-safari-reason/update",
+											"/master/message/index",
+											"/master/message/create",
+											"/master/message/update",
 											"/cms/flag-reason"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
@@ -88,6 +91,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/share-safari-reason/index",
 														"/master/share-safari-reason/create",
 														"/master/share-safari-reason/update",
+														"/master/message/index",
+														"/master/message/create",
+														"/master/message/update",
 														"/cms/flag-reason"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
@@ -162,6 +168,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/master/share-safari-reason/create",
 															"/master/share-safari-reason/update",
 														)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/master/message/index",
+															"/master/message/create",
+															"/master/message/update",
+														)) ? "active" : "" ?>" href="/master/message/index">Message</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/cms/flag-reason",
 														)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
