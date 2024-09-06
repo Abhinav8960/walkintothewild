@@ -1,0 +1,43 @@
+<?php
+
+use common\models\GeneralModel;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+?>
+
+<?php $form = ActiveForm::begin([
+    'options' => [
+        'data-pjax' => true,
+        'id' => 'Searchform'
+    ],
+    'method' => 'get',
+    'fieldConfig' => [
+        'template' => '{input}{error}',
+    ],
+]); ?>
+<div class="row">
+
+    <div class="col-md-3">
+        <?= $form->field($model, 'message')->textInput(['placeholder' => 'Search by Message'])->label(false) ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'code')->textInput(['placeholder' => 'Search by Code'])->label(false) ?>
+    </div>
+    <div class="col-md-3">
+        <?= $form->field($model, 'status')->dropDownList(
+            GeneralModel::statusoption(),
+            [
+                'prompt' => 'Select Status',
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
+        </div>
+    </div>
+
+</div>
+<?php ActiveForm::end(); ?>

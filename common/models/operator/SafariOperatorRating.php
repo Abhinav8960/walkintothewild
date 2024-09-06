@@ -116,4 +116,5 @@ class SafariOperatorRating extends \yii\db\ActiveRecord
     {
         return $this->hasMany(SafariOperatorRatingReport::className(), ['safari_operator_rating_id' => 'id']);
     }
+
 }
