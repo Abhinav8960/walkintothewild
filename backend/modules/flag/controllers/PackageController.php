@@ -47,11 +47,13 @@ class PackageController extends Controller
                             if ($package_comment = $comment_action_model->comment) {
                                 $package_comment->is_deleted = 1;
                                 if ($package_comment->save()) {
+                                    PackageCommentReport::updateAll(['status' => 3], ['package_comment_id' => $package_comment->id, 'status' => 1]);
                                     \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
                                     return $this->redirect(['index']);
                                 }
                             }
                         }
+                        return $this->redirect(Yii::$app->request->referrer);
                     }
                 }
             }

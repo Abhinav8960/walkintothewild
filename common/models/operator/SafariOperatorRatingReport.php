@@ -80,6 +80,7 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
             'status' => 'Status',
+            'parentname' => 'Operator',
         ];
     }
 
@@ -108,5 +109,10 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord
     public function getReportreason()
     {
         return $this->hasOne(Flagreason::className(), ['id' => 'report_reason_id']);
+    }
+
+    public function getParentname()
+    {
+        return isset($this->operator) ? $this->operator->business_name : '';
     }
 }
