@@ -155,7 +155,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-9 d-md-block d-none">
                     <?php Pjax::begin([
                         'id' => 'grid-data-chat',
                         'enablePushState' => FALSE,
