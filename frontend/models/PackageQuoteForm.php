@@ -112,7 +112,8 @@ class PackageQuoteForm extends Model
                         $to_mail = $operator->email;
                         $subject = 'New Quote Request for ' . $package->packagename . '';
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
-                        $req = ['username' => $operator->business_name, 'parkname' => $package->packagename, 'is_email_sending' => true];
+                        $chat_url = "/chat/message/" . Yii::$app->user->identity->user_handle . "/" . base64_encode($chat->id);
+                        $req = ['username' => $operator->business_name, 'parkname' => $package->packagename, 'chat_url' => $chat_url, 'is_email_sending' => true];
 
                         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
