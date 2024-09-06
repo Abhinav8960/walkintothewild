@@ -21,7 +21,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
             <?= $this->render('@frontend/modules/chat/views/default/_sidebar', ['active' => 'message']); ?>
         </div>
         <div class="col-md-12">
-            <div class="row  itenary_tabs">
+            <div class="row  itenary_tabs position-relative">
                 <div class="col-md-3 mb-3">
                     <div class="chat-card-sidebar card">
                         <div class="card-body">
@@ -66,8 +66,8 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                     $user = $active_chat->user;
                                                 } ?>
 
-                                                <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
-                                                    <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link  mb-3 d-block" data-pjax="0">
+                                                    <div class="chat-sidebar-user-card click_mobile <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
                                                         <div class="d-flex chat-user_message">
                                                             <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                             <div class="chat-user_name">
@@ -154,7 +154,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                     </div>
                 </div>
 
-                <div class="col-md-9">
+                <div class="col-md-9 chatbox-wrap">
                     <?php Pjax::begin([
                         'id' => 'grid-data-chat',
                         'enablePushState' => FALSE,
@@ -164,7 +164,10 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                     <div class="chat_box  card  h-100 p-3">
                         <div class="card-body">
                             <div class="d-flex chat-message-header pb-4 justify-content-between">
-                                <div class="chat-profile">
+                                <div class="chat-profile d-flex align-items-center gap-3">
+                                    <div class="icons-show back-btn">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                    </div>
                                     <?php if ($active_chat->recipient_user_id == $individual_user->id) { ?>
                                         <a href="<?= Url::toRoute(["/operator/" . $individual_user->operator->slug . "/sharedsafari"]) ?>">
                                             <?php if (isset($individual_user->operator)) { ?>

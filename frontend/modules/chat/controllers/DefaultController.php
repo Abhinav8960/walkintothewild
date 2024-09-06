@@ -161,7 +161,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                 //send mail to other user
                                 $subject = 'New Response to Your Quote Request for “' . $park_package_name . '”';
                                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_USER_RECEIVED_REPLY_FREE_QUOTE;
-                                $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url];
+                                $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url, 'is_email_sending' => true];
                                 $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 
                                 if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {

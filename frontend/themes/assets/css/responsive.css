@@ -584,6 +584,10 @@ font-size: 19px;
   }
 }
 @media only screen and (min-width: 768px) {
+  .icons-show{
+
+    display: none;
+  }
 
   .desktop_hideDiv.border_top2 {
     display: none;
@@ -1585,8 +1589,27 @@ margin-bottom: 0 !important;
   .itenary_tabs .safartabs .nav-tabs {
     gap: 40px !important;
 }
+
 }
 @media only screen and (max-width: 767px) {
+  .chatbox-wrap {
+    width: 100%;
+    position: absolute;
+    left: 1000px;
+    right: 0;
+    transition: all 0.5s ease;
+    border-left: none;
+}
+.showbox {
+  left: 0 !important;
+  transition: all 0.5s ease;
+}
+.icons-show{
+
+  display: block;
+  cursor: pointer;
+  font-size: 20px;
+}
 
   .titler_safari{
 
