@@ -133,7 +133,7 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div>
-        <div class="advertisment py-3">
+        <div class="advertisment py-3" style="display:none">
             <div class="google-ad970 ">
 
             </div>

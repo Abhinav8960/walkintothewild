@@ -40,7 +40,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 </section>
 
 <section class="articals_wrapper  py-3 ">
-  <?php if ($package_banner_model) { ?>
+  <?php if (FALSE && $package_banner_model) { ?>
     <div class="container-fluid px-slider">
       <div class="custom-row pt-4">
         <div class="custom-col">

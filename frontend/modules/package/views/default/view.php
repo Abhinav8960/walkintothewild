@@ -252,7 +252,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                     </div>
-                    <div class="advertisment mt-4 mb-5">
+                    <div class="advertisment mt-4 mb-5" style="display:none">
                         <div class="google-ad-box ">
 
                         </div>
