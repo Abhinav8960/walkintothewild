@@ -18,7 +18,7 @@ use yii\helpers\Url;
                 <div class="postcomment d-flex gap-3">
                     <div class="avatar">
                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $article_comment->user && $article_comment->user->user_handle <> '' ? $article_comment->user->user_handle : '']) ?>">
-                            <img src="<?= $article_comment->user->profileimage ?>" alt="">
+                            <img src="<?= isset($article_comment->user) ? $article_comment->user->profileimage : '' ?>" alt="">
                         </a>
                     </div>
                     <div class="text_com">
@@ -38,7 +38,7 @@ use yii\helpers\Url;
                     <div class="objec-flgs pe-md-3 pe-2">
                         <?php if ($article_comment->user) {
                             if (Yii::$app->user->identity && $article_comment->user_id != Yii::$app->user->id) { ?>
-                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/article/default/flag', 'slug' => $article->slug, 'article_comment_id' => $article_comment->id]) ?>">
+                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/profile/article/flag', 'slug' => $article->slug, 'article_comment_id' => $article_comment->id, 'user_handle' => $user_handle]) ?>">
                         <?php }
                         } ?>
                     </div>
@@ -65,7 +65,7 @@ use yii\helpers\Url;
 
                                             <?php if ($reply->user) {
                                                 if (Yii::$app->user->identity && $reply->user_id != Yii::$app->user->id) { ?>
-                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/article/default/flag', 'slug' => $article->slug, 'article_comment_id' => $reply->id]) ?>">
+                                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt="" class="flagBtn" value="<?= Url::toRoute(['/profile/article/flag', 'slug' => $article->slug, 'article_comment_id' => $reply->id, 'user_handle' => $user_handle]) ?>">
                                             <?php }
                                             }
                                             ?>
@@ -125,7 +125,7 @@ use yii\helpers\Url;
         echo '<p class="text-center">Comment are not allowed!!!</p>';
     }
 } else {
-    echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=/article/' . $article->slug . '" class="sign_intext parkrevieBtn text-center">Sign in</a> to Comment</p>';
+    echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=' . Url::toRoute(['/profile/article/view', 'slug' => $article->slug, 'user_handle' => $user_handle]) . '" class="sign_intext parkrevieBtn text-center">Sign in</a> to Comment</p>';
 } ?>
 
 <?php
@@ -149,7 +149,7 @@ $this->registerJs($script);
 
 <?php
 
-$reply_url = Url::toRoute(['/article/default/reply', 'slug' => $article->slug]);
+$reply_url = Url::toRoute(['/profile/article/reply', 'slug' => $article->slug, 'user_handle' => $user_handle]);
 
 ?>
 

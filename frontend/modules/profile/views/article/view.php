@@ -59,6 +59,14 @@ $this->params['title'] = $this->title;
                                             </ul>
                                         </div>
                                     </div>
+                                    <div class="comment-wrapper padding-artical" id="comment-wrapper-section">
+                                        <?= $this->render('_comment', [
+                                            'model' => $model,
+                                            'article' => $article,
+                                            'user_handle' => $user->user_handle,
+                                            // 'replymodel' => $replymodel,
+                                        ]) ?>
+                                    </div>
                                 </div>
                             </div>
 
@@ -94,6 +102,27 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 <?php } ?>
+
+
+<div class="modal fade" id="modalFlag" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Report Content
+                    <br>
+                    <p>Please report inappropriate members and/or content to help our Trust & Safety team keep our Community safe for everyone.</p>
+                </h6>
+                <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/flag.png" alt=""></button>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <?php
 $script = <<< JS
