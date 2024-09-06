@@ -112,7 +112,11 @@ return [
 
 
     '/profile/article/validate' => '/profile/article/validate',
+    '/profile/article/validate-comment' => '/profile/article/validate-comment',
+    '/profile/article/validate-reply' => '/profile/article/validate-reply',
     '/profile/article/create' => '/profile/article/create',
+    '/profile/article/reply' => '/profile/article/reply',
+    '/profile/article/flag' => '/profile/article/flag',
     '/profile/article/update/<slug>' => '/profile/article/update',
     '/profile/article/<user_handle>/<slug>' => '/profile/article/view',
     '/profile/article/<user_handle>' => '/profile/article/index',
