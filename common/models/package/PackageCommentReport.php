@@ -127,4 +127,9 @@ class PackageCommentReport extends \yii\db\ActiveRecord implements \common\inter
     {
         return isset($this->package) ? $this->package->package_name : '';
     }
+
+    public function getCommentname()
+    {
+        return isset($this->comment) ? $this->comment->comment : '';
+    }
 }

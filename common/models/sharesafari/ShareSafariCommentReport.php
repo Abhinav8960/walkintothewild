@@ -118,4 +118,9 @@ class ShareSafariCommentReport extends \yii\db\ActiveRecord
     {
         return isset($this->sharesafari) ? $this->sharesafari->share_safari_title : '';
     }
+
+    public function getCommentname()
+    {
+        return isset($this->comment) ? $this->comment->comment : '';
+    }
 }

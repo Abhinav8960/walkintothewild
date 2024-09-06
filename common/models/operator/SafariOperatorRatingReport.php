@@ -81,6 +81,7 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
             'status' => 'Status',
             'parentname' => 'Operator',
+            'commentname' => 'Review',
         ];
     }
 
@@ -114,5 +115,11 @@ class SafariOperatorRatingReport extends \yii\db\ActiveRecord
     public function getParentname()
     {
         return isset($this->operator) ? $this->operator->business_name : '';
+    }
+
+
+    public function getCommentname()
+    {
+        return isset($this->rating) ? $this->rating->review : '';
     }
 }

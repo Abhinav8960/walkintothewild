@@ -50,14 +50,14 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             }
                         ],
 
-                        // [
-                        //     'attribute' => 'commentname',
-                        //     'contentOptions' => ['style' => 'width: 10%;'],
-                        //     'format' => 'raw',
-                        //     'value' => function ($model) {
-                        //         return $model->commentname;
-                        //     }
-                        // ],
+                        [
+                            'attribute' => 'commentname',
+                            'contentOptions' => ['style' => 'width: 10%;'],
+                            'format' => 'raw',
+                            'value' => function ($model) {
+                                return $model->commentname;
+                            }
+                        ],
 
                         [
                             'label' => 'Creator Name',

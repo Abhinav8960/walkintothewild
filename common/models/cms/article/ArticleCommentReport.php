@@ -116,8 +116,8 @@ class ArticleCommentReport extends \yii\db\ActiveRecord
         return isset($this->article) ? $this->article->title : '';
     }
 
-    // public function getCommentname()
-    // {
-    //     return isset($this->comment) ? $this->comment->comment : '';
-    // }
+    public function getCommentname()
+    {
+        return isset($this->comment) ? $this->comment->comment : '';
+    }
 }
