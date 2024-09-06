@@ -75,11 +75,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </div>
 </section>
 
-<section class="px-md-0 px-3">
+<!-- <section class="px-md-0 px-3">
 <div class="google-ad-box margin-topset" >
 
 </div>
-</section>
+</section> -->
 
 <?php if ($shared_safaries) { ?>
   <section class="sharesafri">
