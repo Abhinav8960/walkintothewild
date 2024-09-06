@@ -166,26 +166,29 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             <div class="d-flex chat-message-header pb-4 justify-content-between">
                                 <div class="chat-profile d-flex align-items-center gap-3">
                                     <div class="icons-show back-btn">
-                                    <i class="fa-solid fa-chevron-left"></i>
+                                        <i class="fa-solid fa-chevron-left"></i>
                                     </div>
-                                    <?php if ($active_chat->recipient_user_id == $individual_user->id) { ?>
-                                        <a href="<?= Url::toRoute(["/operator/" . $individual_user->operator->slug . "/sharedsafari"]) ?>">
-                                            <?php if (isset($individual_user->operator)) { ?>
-                                                <img src="<?= $individual_user->operator->logo ? $individual_user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
-                                                <?= $individual_user->operator->business_name ?>
-                                            <?php } else { ?>
-                                                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
-                                                    <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
-                                                </a>
-                                                <?= $individual_user->name ?>
-                                            <?php } ?>
-                                        </a>
-                                    <?php } else { ?>
-                                        <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
-                                            <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
-                                        </a>
-                                        <?= $individual_user->name ?>
-                                    <?php } ?>
+                                    <?php
+                                    if (isset($active_chat)) {
+                                        if ($active_chat->recipient_user_id == $individual_user->id) { ?>
+                                            <a href="<?= Url::toRoute(["/operator/" . $individual_user->operator->slug . "/sharedsafari"]) ?>">
+                                                <?php if (isset($individual_user->operator)) { ?>
+                                                    <img src="<?= $individual_user->operator->logo ? $individual_user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                                    <?= $individual_user->operator->business_name ?>
+                                                <?php } else { ?>
+                                                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
+                                                        <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                                    </a>
+                                                    <?= $individual_user->name ?>
+                                                <?php } ?>
+                                            </a>
+                                        <?php } else { ?>
+                                            <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $individual_user->user_handle]) ?>">
+                                                <img src="<?= $individual_user->profileimage ? $individual_user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
+                                            </a>
+                                            <?= $individual_user->name ?>
+                                    <?php }
+                                    } ?>
                                 </div>
                                 <!-- <div class="chat-action-in-right">
                                     <i class="fa fa-search"></i>
