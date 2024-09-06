@@ -2,6 +2,7 @@
 
 namespace backend\modules\flag\controllers;
 
+use common\models\article\article\Article;
 use common\models\cms\article\ArticleCommentReport;
 use common\models\cms\article\ArticleCommentSearch;
 use common\models\cms\article\form\ArticleCommentActionForm;
@@ -43,11 +44,13 @@ class ArticleController extends Controller
                             if ($article_comment = $comment_action_model->comment) {
                                 $article_comment->is_deleted = 1;
                                 if ($article_comment->save()) {
+                                    ArticleCommentReport::updateAll(['status' => 3], ['article_comment_id' => $article_comment->id, 'status' => 1]);
                                     \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
                                     return $this->redirect(['index']);
                                 }
                             }
                         }
+                        return $this->redirect(Yii::$app->request->referrer);
                     }
                 }
             }

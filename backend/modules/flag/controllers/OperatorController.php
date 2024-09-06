@@ -49,6 +49,7 @@ class OperatorController extends Controller
                             if ($safari_operator_rating = $comment_action_model->rating) {
                                 $safari_operator_rating->is_deleted = 1;
                                 if ($safari_operator_rating->save()) {
+                                    SafariOperatorRatingReport::updateAll(['status' => 3], ['safari_operator_rating_id' => $safari_operator_rating->id, 'status' => 1]);
                                     if ($operator = $safari_operator_rating->operator) {
                                         $avg = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->average('rating');
                                         $count = SafariOperatorRating::find()->select('rating')->where(['status' => 1, 'safari_operator_id' => $operator->id, 'is_deleted' => 0])->count();
@@ -61,6 +62,7 @@ class OperatorController extends Controller
                                 }
                             }
                         }
+                        return $this->redirect(Yii::$app->request->referrer);
                     }
                 }
             }

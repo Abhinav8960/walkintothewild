@@ -92,6 +92,7 @@ class PackageCommentReport extends \yii\db\ActiveRecord implements \common\inter
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
             'status' => 'Status',
+            'parentname' => 'Package Name',
         ];
     }
 
@@ -120,5 +121,15 @@ class PackageCommentReport extends \yii\db\ActiveRecord implements \common\inter
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getParentname()
+    {
+        return isset($this->package) ? $this->package->package_name : '';
+    }
+
+    public function getCommentname()
+    {
+        return isset($this->comment) ? $this->comment->comment : '';
     }
 }

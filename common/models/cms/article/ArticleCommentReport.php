@@ -79,6 +79,8 @@ class ArticleCommentReport extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
             'status' => 'Status',
+            'parentname' => 'Article Name',
+            'commentname' => 'Comment',
         ];
     }
 
@@ -106,5 +108,16 @@ class ArticleCommentReport extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+
+    public function getParentname()
+    {
+        return isset($this->article) ? $this->article->title : '';
+    }
+
+    public function getCommentname()
+    {
+        return isset($this->comment) ? $this->comment->comment : '';
     }
 }
