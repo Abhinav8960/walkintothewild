@@ -11,6 +11,9 @@ use common\models\package\Package;
 use common\models\park\SafariPark;
 use common\models\MailLog;
 use common\models\GeneralModel;
+use common\models\package\PackageQuote;
+use common\models\operator\SafariOperator;
+use common\models\operator\OperatorQuote;
 
 /**
  * Default controller for the `chat` module
@@ -205,7 +208,6 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
             }
         }
     }
-
 
     /**
      * Induvidual User Model
