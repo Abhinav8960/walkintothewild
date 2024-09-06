@@ -139,7 +139,7 @@ class OperatorQuoteForm extends Model
             $to_mail = $operator_quote->email;
             $subject = 'Request Free Quote';
             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
-            $req = ['username' => $operator_quote->full_name, 'is_email_sending' => true];
+            $req = ['username' => $operator_quote->full_name, 'parkname' => $operator_quote->park->title, 'is_email_sending' => true];
 
             $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
             if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
