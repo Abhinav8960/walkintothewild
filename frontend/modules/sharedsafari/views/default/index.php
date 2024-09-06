@@ -53,7 +53,7 @@ $recentposts = ArticleSearch::recentpost();
 
 <section class="articals_wrapper py-3  margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
-        <div class="advertisment mt-5">
+        <div class="advertisment mt-5" style="display:none !important;">
             <div class="google-ad-box  mb-5">
 
             </div>
@@ -217,13 +217,33 @@ $recentposts = ArticleSearch::recentpost();
                                 </div>
                             </div>
                         </div>
+
                         <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-lg-3 gx-lg-4 gx-xxl-4">
 
                             <?php if ($models = $dataProvider->models) {
+                                $count = 0;
+                                $r = -1;
                                 foreach ($models as $share_safari) {
+                                    $count++;
                             ?>
                                     <div class="col mb-xl-2 mb-md-3 mb-4">
-                                        <?= $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
+
+                                        <?php if ($count == 5 or ($count > 5 && $count % 4 == 0)) $r = rand(0, 3);
+                                        if ($count % 4 == $r) {  //echo $count; 
+                                        ?>
+                                            <ins class="adsbygoogle"
+                                                style="display:block"
+                                                data-ad-format="fluid"
+                                                data-ad-layout-key="-6d+ep+q-5u+9i"
+                                                data-ad-client="ca-pub-6116324330184807"
+                                                data-ad-slot="1569517052"></ins>
+                                    </div>
+                                    <div class="col mb-xl-2 mb-md-3 mb-4">
+                                        <script>
+                                            (adsbygoogle = window.adsbygoogle || []).push({});
+                                        </script>
+                                    <?php  } ?>
+                                    <?= $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                     </div>
                             <?php }
                             } ?>
