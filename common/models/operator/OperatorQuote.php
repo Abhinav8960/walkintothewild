@@ -6,6 +6,7 @@ use Yii;
 use common\models\park\SafariPark;
 use common\traits\CommanRelationship;
 use common\models\meta\MetaStayCategory;
+use common\models\operator\SafariOperator;
 
 /**
  * This is the model class for table "operator_quote".
@@ -106,6 +107,10 @@ class OperatorQuote extends \yii\db\ActiveRecord implements \common\interfaces\S
         return $this->hasOne(SafariPark::className(), ['id' => 'safari_park_id']);
     }
 
+    public function getOperator()
+    {
+        return $this->hasOne(SafariOperator::className(), ['id' => 'operator_id']);
+    }
 
     public function getStaycatgory()
     {
