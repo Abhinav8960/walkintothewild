@@ -241,7 +241,7 @@ $this->params['title'] = $this->title; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="advertisment my-4">
+                    <div class="advertisment my-4" style="display:none">
                         <div class="google-ad-box  ">
 
                         </div>
