@@ -2,15 +2,27 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var common\models\User $user */
-
 ?>
-<div class="verify-email" style="text-align:center">
-    <h4 style="text-align:center">THANK YOU</h4>
-    <p style="text-align:center"> We have your request for a FREE quote! Your details will soon be featured on our website, allowing adventurers to walk into the wild with you. </p>
-    <p style="text-align:center">Stay tuned for updates!</p>
-    <p style="text-align:center">Team Walk into the Wild</p>
-    <p style="text-align:center"><a href="https://www.walkintothewild.in" style="text-align:center !important;color:blue !important;">www.walkintothewild.in</a></p>
+<div class="verify-email">
     <p><img src="https://www.walkintothewild.in/img/logo.png"></p>
+    <p>Hi <?= Html::encode($username) ?>,</p>
+    <p> You have received a new quote request for <?= Html::encode($parkname) ?>. Please check your inbox to review the details and respond promptly. </p>
+    <a style="background:#128A00;border:0; padding:8px 20px;color:#fff;text-decoration:none;" href="https://www.walkintothewild.in/">Check Inbox</a>
+    <p style="margin-top:2% !important;">Thank you!</p>
+    <p>Best regards,</p>
+    <p>Team Walk into the Wild</p>
 </div>
+<?php if (!(isset($is_email_sending) && $is_email_sending)) { ?>
+    <div class="card">
+        <div class="card-body">
+            <p>Sample Array :</p>
+            <p>1. username</p>
+            <p>2. parkname</p>
+
+
+            <p>Expected Key :</p>
+            <p>1. Annu Singh</p>
+            <p>2. Bandhavgarh</p>
+        </div>
+    </div>
+<?php } ?>

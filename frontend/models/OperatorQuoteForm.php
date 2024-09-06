@@ -10,6 +10,7 @@ use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
 use Yii;
 use yii\base\Model;
+use common\models\GeneralModel;
 
 /**
  * OperatorQuoteForm is the model behind the contact form.
@@ -138,9 +139,13 @@ class OperatorQuoteForm extends Model
             $to_mail = $operator_quote->email;
             $subject = 'Request Free Quote';
             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
-            $req = ['username' => $operator_quote->full_name];
+            $req = ['username' => $operator_quote->full_name, 'parkname' => $operator_quote->park->title, 'is_email_sending' => true];
 
-            MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                GeneralModel::sendmailfromlog($maillog_data['log_id']);
+            }
+
             return $operator_quote;
         }
     }
