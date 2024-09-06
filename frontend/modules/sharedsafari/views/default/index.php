@@ -17,7 +17,7 @@ use common\models\UserWishlist;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
-$this->title = 'Share Safari';
+$this->title = 'Shared Safari';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 

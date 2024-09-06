@@ -9,7 +9,7 @@ use common\models\sharesafari\ShareSafariIntrested;
 use common\models\User;
 use common\models\UserWishlist;
 
-$this->title = 'Share Safari';
+$this->title = 'Shared Safari';
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
