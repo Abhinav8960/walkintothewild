@@ -47,11 +47,13 @@ class ShareSafariController extends Controller
                             if ($share_safari_comment = $comment_action_model->comment) {
                                 $share_safari_comment->is_deleted = 1;
                                 if ($share_safari_comment->save()) {
+                                    ShareSafariCommentReport::updateAll(['status' => 3], ['share_safari_comment_id' => $share_safari_comment->id, 'status' => 1]);
                                     \Yii::$app->session->setFlash('success', 'Action Taken Successfully');
                                     return $this->redirect(['index']);
                                 }
                             }
                         }
+                        return $this->redirect(Yii::$app->request->referrer);
                     }
                 }
             }

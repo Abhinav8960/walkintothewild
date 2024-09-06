@@ -59,37 +59,6 @@ return [
             'class' => '\bedezign\yii2\audit\components\web\ErrorHandler',
             'errorAction' => 'site/error',
         ],
-
-        'mailer' => [
-            // 'class' => 'yii\swiftmailer\Mailer',
-            // 'class' => 'yii\symfonymailer\Mailer',
-            'class' => 'common\Mailer\Mailer',
-            // 'class' => 'apps\Mailer\AWSCustomMailer',
-            // 'transportFactory' => apps\Mailer\MailerTransportFactory::class,
-            'useFileTransport' => false,
-            'transport' => [
-                // 'class' => 'Swift_SmtpTransport',
-                // 'class' => 'Swift_AWSTransport',
-                // 'scheme' => 'smtps',
-                // 'host' => 'email-smtp.ap-south-1.amazonaws.com', // amazon smtp host 
-                // 'username' => 'AKIAX7HOT7POHICMCIWC', // ses user username
-                // 'password' => 'BK+0TXPP/u/jirG56C7E99hnkHm0liK6cvYYXrhfpadI', // ses user password
-                // 'port' => 465,
-                // 'encryption' => 'tls',
-                // 'dsn' => 'ses+smtp://AKIAX7HOT7POMUCN434G:urlencode(sOplW2xa1TCJ7+BhMMw1a8PwNYe8+oBj3zOqWY38)@email-smtp.ap-south-1.amazonaws.com?region=ap-south-1',
-                'dsn' => 'ses+api://AKIAX7HOT7PONBYCE4L3:kQQEyuej8UzSNMHEMBRGDOB2lzqj17zBRcvuMu4E@default?region=ap-south-1',
-                // 'dsn' => 'ses+api://AKIAX7HOT7POC2MAKZFN:OplW2xa1TCJ7+BhMMw1a8PwNYe8+oBj3zOqWY38@default?region=ap-south-1',
-                // 'dsn' => 'ses+api://AKIAX7HOT7POCAH4YAUW:fX+bZbSoAl2mUvTn5qldDzp+X9l5OyHmL3m1Vv5c@default?region=ap-south-1',
-
-
-
-
-
-
-            ],
-            'viewPath' => '@common/mail',
-
-        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
