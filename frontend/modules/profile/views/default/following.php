@@ -61,7 +61,7 @@ $this->params['title'] = $this->title;
                                         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
 
-                                                <div class="col mb-3">
+                                               
                                                     <?php
                                                     $operatorfollowings = SafariOperatorFollow::find()->where(['user_id' => $user->id, 'status' => StatusInterface::STATUS_ACTIVE])->all();
                                                     if ($operatorfollowings) {
@@ -69,7 +69,7 @@ $this->params['title'] = $this->title;
                                                             if ($operator = $operatorfollowing->operator) {
 
                                                     ?>
-                                                                <div class="card_profile card h-100 position-relative mt-2">
+                                                                <div class="card_profile card position-relative mt-2">
                                                                     <div class="dots-blockbox">
                                                                         <i class="fa-solid fa-ellipsis"></i>
                                                                         <div class="box_dropdown">
@@ -137,7 +137,7 @@ $this->params['title'] = $this->title;
                                                     <?php }
                                                         }
                                                     } ?>
-                                                </div>
+                                                
 
                                             </div>
                                         </div>

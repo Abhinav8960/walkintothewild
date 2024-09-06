@@ -63,7 +63,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
   <?php } ?>
   <div class="container-fluid ">
 
-    <div class="advertisment mt-5">
+    <div class="advertisment mt-5" style="display:none !important;">
       <div class="google-ad970">
 
       </div>
@@ -187,11 +187,30 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 </div>
               </div>
             </div>
+
             <div class="row row-cols-1 row-cols-sm-2  row-cols-md-2 row-cols-lg-2 row-cols-xl-2 row-cols-xxl-3 g-lg-3 gx-lg-4 gx-xxl-5">
               <?php if ($models) {
-                foreach ($models as $model) { ?>
+                $count = 0;
+                $r = -1;
+                foreach ($models as $model) {
+                  $count++; ?>
                   <div class="col mb-xl-4 mb-md-3 mb-4 padding_righ">
-                    <?= $this->render('_package_card', ['model' => $model]) ?>
+                    <?php if ($count == 4 or ($count > 3 && $count % 3 == 0)) $r = rand(0, 2);
+                    if ($count % 3 == $r) { //echo $count; 
+                    ?>
+                      <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-format="fluid"
+                        data-ad-layout-key="-6s+e8+5t-6g-8m"
+                        data-ad-client="ca-pub-6116324330184807"
+                        data-ad-slot="1536893312"></ins>
+                  </div>
+                  <div class="col mb-xl-4 mb-md-3 mb-4 padding_righ">
+                    <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                  <?php  } ?>
+                  <?= $this->render('_package_card', ['model' => $model]) ?>
                   </div>
               <?php }
               } ?>
