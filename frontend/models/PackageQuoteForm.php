@@ -12,6 +12,7 @@ use common\models\package\Package;
 use common\models\package\PackageQuote;
 use Yii;
 use yii\base\Model;
+use common\models\GeneralModel;
 
 /**
  * PackageQuoteForm is the model behind the contact form.
@@ -113,7 +114,10 @@ class PackageQuoteForm extends Model
                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
                 $req = ['username' => $operator->business_name, 'parkname' => $package->packagename];
 
-                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                }
             }
             //return $package_quote->save();
         }
