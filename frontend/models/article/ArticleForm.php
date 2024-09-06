@@ -27,7 +27,7 @@ class ArticleForm extends Model
     public $meta_keywords;
     public $view;
     public $post_body;
-    public $comment_allowed;
+    // public $comment_allowed;
     public $is_approved;
     public $article_date;
     public $is_schedule;
@@ -65,7 +65,7 @@ class ArticleForm extends Model
             $this->view = $this->article_model->view;  // Extra Not in use
             $this->article_date = $this->article_model->article_date;
             $this->post_body = $this->article_model->post_body;
-            $this->comment_allowed = $this->article_model->comment_allowed;
+            // $this->comment_allowed = $this->article_model->comment_allowed;
             $this->is_approved = $this->article_model->is_approved;
             $this->is_schedule = $this->article_model->is_schedule;
             $this->publish_date_time = $this->article_model->publish_date_time;
@@ -100,7 +100,7 @@ class ArticleForm extends Model
             'long_description',
             'meta_title',
             'meta_description',
-            'comment_allowed',
+            // 'comment_allowed',
             'is_approved',
             'is_schedule',
             'publish_date_time',
@@ -126,7 +126,7 @@ class ArticleForm extends Model
             'long_description',
             'meta_title',
             'meta_description',
-            'comment_allowed',
+            // 'comment_allowed',
             'is_approved',
             'is_schedule',
             'publish_date_time',
@@ -143,7 +143,7 @@ class ArticleForm extends Model
     public function rules()
     {
         return [
-            [['title', 'description', 'article_tags', 'comment_allowed', 'article_topics', 'user_type', 'user_id'], 'required'],
+            [['title', 'description', 'article_tags', 'article_topics', 'user_type', 'user_id'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['is_approved'], 'default', 'value' => 0],
             [['status', 'article_author_id'], 'integer'],
@@ -179,7 +179,7 @@ class ArticleForm extends Model
                 'message' => 'This Title has already been taken'
             ],
             [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
-            [['article_author_id', 'view', 'comment_allowed', 'is_approved', 'is_schedule', 'status'], 'integer'],
+            [['article_author_id', 'view',  'is_approved', 'is_schedule', 'status'], 'integer'],
             [['publish_date_time', 'article_date'], 'safe'],
             [['title', 'author_name', 'meta_title', 'tag_name'], 'string', 'max' => 255],
             [['sub_title'], 'string', 'max' => 75],
@@ -214,7 +214,7 @@ class ArticleForm extends Model
             'view' => 'View',
             'article_date' => 'Article Date',
             'post_body' => 'Post Body',
-            'comment_allowed' => 'Comment Allowed',
+            // 'comment_allowed' => 'Comment Allowed',
             'is_approved' => 'Approval Required',
             'is_schedule' => 'Is Schedule',
             'publish_date_time' => 'Publish Date Time',
@@ -241,7 +241,7 @@ class ArticleForm extends Model
         $this->article_model->view = $this->view;
         $this->article_model->article_date = $this->article_date;
         $this->article_model->post_body = $this->post_body;
-        $this->article_model->comment_allowed = $this->comment_allowed;
+        // $this->article_model->comment_allowed = $this->comment_allowed;
         $this->article_model->is_approved = $this->is_approved;
         $this->article_model->is_schedule = $this->is_schedule;
         $this->article_model->publish_date_time = $this->publish_date_time;

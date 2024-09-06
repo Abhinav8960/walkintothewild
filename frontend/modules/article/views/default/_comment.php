@@ -91,40 +91,37 @@ use yii\helpers\Url;
 </div>
 
 <?php if (Yii::$app->user->id) {
-    if ($article->comment_allowed == 1) {  ?>
-        <?php $form = ActiveForm::begin([
-            'id' => 'comment-form',
-            'enableAjaxValidation' => true,
-            'enableClientValidation' => false,
-            'enableClientScript' => true,
-            // 'action' => $model->action_url,
-            'validationUrl' => $model->action_validate_url,
-        ]); ?>
-        <div class="comments-persons pe-md-3 pe-2">
-            <div class="postcomment d-flex gap-3">
-                <div class="avatar">
-                    <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity && Yii::$app->user->identity->user_handle <> '' ? Yii::$app->user->identity->user_handle : '']) ?>">
-                        <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileImage <> '' ? Yii::$app->user->identity->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
-                    </a>
-                </div>
-                <div class="text-area">
-                    <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>
-                </div>
+?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'comment-form',
+        'enableAjaxValidation' => true,
+        'enableClientValidation' => false,
+        'enableClientScript' => true,
+        // 'action' => $model->action_url,
+        'validationUrl' => $model->action_validate_url,
+    ]); ?>
+    <div class="comments-persons pe-md-3 pe-2">
+        <div class="postcomment d-flex gap-3">
+            <div class="avatar">
+                <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity && Yii::$app->user->identity->user_handle <> '' ? Yii::$app->user->identity->user_handle : '']) ?>">
+                    <img src="<?= Yii::$app->user->identity && Yii::$app->user->identity->profileImage <> '' ? Yii::$app->user->identity->profileImage : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
+                </a>
+            </div>
+            <div class="text-area">
+                <?= $form->field($model, 'comment')->textarea(['rows' => '5', 'placeholder' => 'Write a comment...', 'class' => 'form-control w-100'])->label(false) ?>
             </div>
         </div>
+    </div>
 
-        <div class="row justify-content-end comments-persons pe-md-3 pe-2">
-            <div class="col-12 col-sm-8 col-md-6">
-                <div class="comment_button float-end ">
-                    <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
-                </div>
+    <div class="row justify-content-end comments-persons pe-md-3 pe-2">
+        <div class="col-12 col-sm-8 col-md-6">
+            <div class="comment_button float-end ">
+                <?= Html::submitButton('Post Comment', ['class' => 'post-comment']) ?>
             </div>
         </div>
-        <?php ActiveForm::end(); ?>
+    </div>
+    <?php ActiveForm::end(); ?>
 <?php } else {
-        echo '<p class="text-center">Comment are not allowed!!!</p>';
-    }
-} else {
     echo '<p class="px-3 pt-2 text-center">Please <a href="/site/login?authclient=google&referrer=/article/' . $article->slug . '" class="sign_intext parkrevieBtn text-center">Sign in</a> to Comment</p>';
 } ?>
 
