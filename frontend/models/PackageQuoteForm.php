@@ -104,22 +104,24 @@ class PackageQuoteForm extends Model
                 $chat_message->data = json_encode($package_data);
                 $chat_message->status = 1;
                 $chat_message->save();
-            }
-            //end save done quote chat
 
-            if ($package) {
-                $operator = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
-                $to_mail = $operator->email;
-                $subject = 'New Quote Request for ' . $package->packagename . '';
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
-                $req = ['username' => $operator->business_name, 'parkname' => $package->packagename, 'is_email_sending' => true];
+                if ($chat_message->save()) {
+                    //create mail log
+                    if ($package) {
+                        $operator = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
+                        $to_mail = $operator->email;
+                        $subject = 'New Quote Request for ' . $package->packagename . '';
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TOUR_OPERATOR_FREE_QUOTE_REQUEST;
+                        $req = ['username' => $operator->business_name, 'parkname' => $package->packagename, 'is_email_sending' => true];
 
-                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
+                    }
                 }
             }
-            //return $package_quote->save();
+            //end save done quote chat
         }
         return true;
     }
