@@ -116,12 +116,12 @@ class SitemapController extends FrontendBaseController
   {
     // Create a command instance
     $command = Yii::$app->db->createCommand('
-        SELECT * 
-        FROM site_pages 
-        WHERE status = :status 
-        ORDER BY category, sub_category, title
-    ');
-
+    SELECT * 
+    FROM site_pages 
+    WHERE status = :status 
+    AND category != "Action"
+    ORDER BY category, sub_category, title
+');
     // Bind parameters
     $command->bindValue(':status', 1);
 
