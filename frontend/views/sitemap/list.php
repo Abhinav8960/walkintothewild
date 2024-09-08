@@ -3,31 +3,36 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $categories array */
-/* @var $categoryPages array */
-/* @var $otracker string */
+/* @var $sitemapData array */
 
 $this->title = 'Sitemap';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>Here is the complete sitemap for our website:</p>
 
-    <?php foreach ($categories as $category): ?>
-        <div class="category-card">
-            <h2 class="category-title"><?= Html::encode($category) ?></h2>
-            <ul class="page-list">
-                <?php foreach ($categoryPages[$category] as $page): ?>
-                    <?= Html::a(
-                        Html::encode(!empty($page->title) ? $page->title : $page->sub_category),
-                        Html::encode('/' . $page->url)
-                    ) ?> |
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endforeach; ?>
+    <!-- Directly generate the sitemap HTML -->
+    <ul>
+        <?php foreach ($sitemapData as $category => $subCategories): ?>
+            <li>
+                <strong><?= Html::encode($category) ?></strong>
+                <ul class="styled-list">
+                    <?php foreach ($subCategories as $subCategory => $pages): ?>
+                        <li>
+                            <a href="<?= Html::encode($pages['url']) ?>">
+
+                                <strong><?= Html::encode($subCategory) ?></strong>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </li>
+        <?php endforeach; ?>
+    </ul>
 </div>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -54,37 +59,13 @@ $this->params['breadcrumbs'][] = $this->title;
         margin-bottom: 20px;
     }
 
-    h2 {
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 5px;
-        margin-bottom: 15px;
-        color: #09422D;
-    }
-
-    .category-card {
-        margin-bottom: 20px;
-        padding: 15px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .category-title {
-        font-size: 1.5em;
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    .page-list {
+    ul {
         list-style-type: none;
         padding-left: 0;
     }
 
-    .page-list-item {
-        margin-bottom: 8px;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
+    li {
+        margin-bottom: 10px;
     }
 
     a {
@@ -93,13 +74,64 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 
     a:hover {
-        text-decoration: underline !important;
+        text-decoration: underline;
     }
 
-    .breadcrumb {
-        margin-bottom: 20px;
+
+
+    /* Reset default margin and padding for ul */
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        /* Remove default bullet points */
+    }
+
+    /* Style for the ul with class 'styled-list' */
+    .styled-list {
+        background-color: #f8f8f8;
+        /* Light background color */
+        border: 1px solid #ddd;
+        /* Light border */
+        border-radius: 5px;
+        /* Rounded corners */
+        width: 300px;
+        /* Set a specific width */
+        max-width: 100%;
+        /* Responsive width */
         padding: 10px;
-        background-color: #e9ecef;
-        border-radius: 4px;
+        /* Padding inside the list */
+    }
+
+    /* Style for each li element */
+    .styled-list li {
+        padding: 10px;
+        /* Padding inside each list item */
+        margin-bottom: 5px;
+        /* Space between list items */
+        background-color: #fff;
+        /* White background for items */
+        border: 1px solid #ddd;
+        /* Border around each item */
+        border-radius: 3px;
+        /* Slightly rounded corners for items */
+        transition: background-color 0.3s, box-shadow 0.3s;
+        /* Smooth transitions for hover effects */
+    }
+
+    /* Hover effect for list items */
+    .styled-list li:hover {
+        background-color: #e0e0e0;
+        /* Slightly darker background on hover */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Subtle shadow effect */
+    }
+
+    /* Optional: Add a focus effect for accessibility */
+    .styled-list li:focus {
+        outline: 2px solid #007bff;
+        /* Blue outline for focused items */
+        background-color: #f0f8ff;
+        /* Light blue background on focus */
     }
 </style>
