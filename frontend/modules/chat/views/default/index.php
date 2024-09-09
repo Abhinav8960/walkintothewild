@@ -58,7 +58,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                             <i class="fa-solid fa-magnifying-glass"></i>
                                         </div>
                                     </div>
-                                    <div class="chat-cardlist pt-3">
+                                    <div class="chat-cardlist pt-3 ">
                                         <?php if ($searchModel->name == '' && $active_chat_list) {
                                             foreach ($active_chat_list as $active_chat) {
                                                 if ($active_chat->user_id == $login_user->id) {

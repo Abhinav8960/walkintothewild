@@ -106,7 +106,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
 
                                                 <a href="<?= Url::toRoute(['/chat/message/' . $user->user_handle . "/" . base64_encode($active_chat->id)]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
 
-                                                    <div class="chat-sidebar-user-card <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                    <div class="chat-sidebar-user-card  click_mobile<?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
                                                         <div class="d-flex chat-user_message">
                                                             <?php if ($active_chat->recipient_user_id == $user->id) { ?>
                                                                 <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
