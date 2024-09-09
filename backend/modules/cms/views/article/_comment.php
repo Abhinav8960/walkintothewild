@@ -26,15 +26,12 @@ use yii\helpers\Url;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            if ($model->flaged == 1) {
-                                return Html::button('<img src="/img/update.png" alt="" width="25" height="25">', [
-                                    'value' => Url::toRoute(['view', 'id' => $model->id]),
-                                    'class' => 'btn btn-warning choose-option mb-2',
-                                    'title' => 'Edit'
-                                ]);
-                            } else {
-                                return "";
-                            }
+
+                            return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                'value' => Url::toRoute(['replyview', 'id' => $model->id]),
+                                'class' => 'btn btn-warning choose-option mb-2',
+                                'title' => 'Edit'
+                            ]);
                         }
                     ],
                 ]
@@ -48,7 +45,7 @@ use yii\helpers\Url;
         <div class="modal-content">
             <div class="modal-header flageHeader">
                 <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Action
+                    Replies
                 </h6>
             </div>
 
