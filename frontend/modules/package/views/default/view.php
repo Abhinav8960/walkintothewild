@@ -129,7 +129,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= isset($package->pickanddrop) ? $package->pickanddrop : '' ?></p>
+                                            <p class="mb-0"><?= isset($package->pickanddrop) ? 'Included' : 'Not Included' ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= $package->meals; ?></p>
+                                            <p class="mb-0"><?= $package->meals ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +170,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($package_includes) ? 'Camera Fee' : 'No';
+                                                            echo ($package_includes) ? 'Included' : 'Not Included';
                                                             ?></p>
                                         </div>
                                     </div>

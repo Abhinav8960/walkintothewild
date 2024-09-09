@@ -153,7 +153,9 @@ $this->params['title'] = $this->title; ?>
                                             <?php } ?>
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= isset(GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id]) ? GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id] : 'Not Included' ?></p>
+                                            <p class="mb-0">
+                                                <?= isset(GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id]) ? 'Included' : 'Not Included' ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
