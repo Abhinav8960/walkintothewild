@@ -171,7 +171,7 @@ $this->params['title'] = $this->title; ?>
                                     <div class="col-12 ">
                                         <div class="safridetails_form d-flex gap-3 align-items-center">
                                             <div class="iconImg">
-                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="">
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cost">
                                             </div>
                                             <div class="text-form">
                                                 <p class="mb-0"><?= number_format($share_safari->estimate_price_min) ?>- <?= number_format($share_safari->estimate_price_max) ?> Estimate Per Person Cost</p>
