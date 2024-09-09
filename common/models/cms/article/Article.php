@@ -32,13 +32,14 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class Article extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
 
     const USER_TYPE_INDIVIDUAL = 1;
     const USER_TYPE_SAFARI_OPERATOR = 2;
     const USER_TYPE_ADMIN = 3;
+
 
     /**
      * {@inheritdoc}
