@@ -126,10 +126,10 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shared Safari">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= $share_safari->no_of_safari ?> Safaris</p>
+                                            <p class="mb-0"><?= $share_safari->no_of_safari ?> Shared Safari</p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,9 +147,9 @@ $this->params['title'] = $this->title; ?>
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
                                             <?php if ($share_safari->share_safari_agenda_id && $share_safari->share_safari_agenda_id == 1) { ?>
-                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="">
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
                                             <?php } else if ($share_safari->share_safari_agenda_id && $share_safari->share_safari_agenda_id == 3) { ?>
-                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/elephant.png" alt="">
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/elephant.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
                                             <?php } ?>
                                         </div>
                                         <div class="text-form">
@@ -160,7 +160,7 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Accommodation">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset(GeneralModel::budgetoption()[$share_safari->stay_category_id]) ? GeneralModel::budgetoption()[$share_safari->stay_category_id] : 'Not Included' ?></p>

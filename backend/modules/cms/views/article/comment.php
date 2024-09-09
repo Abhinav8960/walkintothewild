@@ -29,50 +29,53 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 ]); ?>
 
 
-<div class="row">
-    <span>
-        <h6>User Status: <?php
-                            if ($article->status == 1) {
-                                echo "Published";
-                            } else {
-                                echo "UnPublished";
-                            } ?></h6>
-    </span>
-    <span>
-        <h6>Main Portal Status: <?php if ($article->is_approved == 1) {
-                                    echo "Published";
-                                } else {
-                                    echo "UnPublished";
-                                } ?></h6>
-    </span>
-    <span>
-        <?php echo Html::a(
-            '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
-            ['approval', 'id' => $article->id],
-            [
-                'class' => 'btn p-0 change-menuicon',
-                'title' => 'update',
-            ]
-        ); ?>
-    </span>
-    <span>
-        <?php echo Html::a(
-            '<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">',
-            ['articledelete', 'id' => $article->id],
-            [
-                'class' => 'btn p-0 change-menuicon',
-                'title' => 'Delete',
-                'data' => [
-                    'confirm' => 'Are you sure you want to delete ' . $article->title . '?',
-                    'method' => 'post',
-                ],
-            ]
-        ); ?>
-    </span>
-</div>
 
 <section class="articals_wrapper py-3">
     <div class="container-lg">
+        <div class="row">
+            <div class="status-container">
+                <div class="status-item <?php echo $article->status == 1 ? 'status-published' : 'status-unpublished'; ?>">
+                    <span class="status-label">User Status:</span>
+                    <?php echo $article->status == 1 ? "Published" : "UnPublished"; ?>
+                </div>
+                <div class="status-item <?php echo $article->is_approved == 1 ? 'status-published' : 'status-unpublished'; ?>">
+                    <span class="status-label">Main Portal Status:</span>
+                    <?php echo $article->is_approved == 1 ? "Published" : "UnPublished"; ?>
+                </div>
+            </div>
+            <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
+                <div class="author_wrapper">
+                    <ul class="artical-info ">
+                        <li>
+                            <?php echo Html::a(
+                                '<i class="fas fa-edit me-1"></i>Update',
+                                ['approval', 'id' => $article->id],
+                                [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'update',
+                                    'style' => 'background:#F7BF39 !important;color:black !important;padding: 10px 16px !important;'
+                                ]
+                            ); ?>
+                        </li>
+                        <li>
+                            <?php echo Html::a(
+                                '<i class="fas fa-trash me-1"></i>Delete',
+                                ['articledelete', 'id' => $article->id],
+                                [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'Delete',
+                                    'style' => 'background:#F48270 !important;color:black !important;padding: 10px 16px !important;',
+                                    'data' => [
+                                        'confirm' => 'Are you sure you want to delete ' . $article->title . '?',
+                                        'method' => 'post',
+                                    ],
+                                ]
+                            ); ?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="row mb-4 justify-content-center">
             <div class="col-lg-12 col-xl-12 col-xxl-12 pe-lg-5">
                 <div class="aritcla-details">
@@ -128,3 +131,32 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
         </div>
     </div>
 </section>
+<style>
+    .status-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .status-item {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .status-published {
+        color: #28a745;
+    }
+
+    .status-unpublished {
+        color: #dc3545;
+    }
+
+    .status-label {
+        margin-right: 5px;
+        font-size: 0.9rem;
+        color: #333;
+    }
+</style>
