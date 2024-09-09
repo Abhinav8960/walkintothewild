@@ -28,32 +28,32 @@ class UserArticleController extends Controller
     }
 
 
-    public function actionView($id)
-    {
-        $user_article_approval_model = $this->findModel($id);
-        $model = new UserArticleApprovalForm($user_article_approval_model);
-        $model->status = Article::STATUS_ACTIVE;
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->user_article_approval_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Successfully Update');
-                        return $this->redirect(['index']);
-                    }
-                } else {
-                    print_r($model->errors);
-                    die();
-                }
-            }
-        } else {
-            $model->user_article_approval_model->loadDefaultValues();
-        }
-        return $this->render('view', [
-            'model' => $user_article_approval_model,
-            'approval_model' => $model,
-        ]);
-    }
+    // public function actionView($id)
+    // {
+    //     $user_article_approval_model = $this->findModel($id);
+    //     $model = new UserArticleApprovalForm($user_article_approval_model);
+    //     $model->status = Article::STATUS_ACTIVE;
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->user_article_approval_model->save(false)) {
+    //                     \Yii::$app->session->setFlash('success', 'Successfully Update');
+    //                     return $this->redirect(['index']);
+    //                 }
+    //             } else {
+    //                 print_r($model->errors);
+    //                 die();
+    //             }
+    //         }
+    //     } else {
+    //         $model->user_article_approval_model->loadDefaultValues();
+    //     }
+    //     return $this->render('view', [
+    //         'model' => $user_article_approval_model,
+    //         'approval_model' => $model,
+    //     ]);
+    // }
 
 
     protected function findModel($id)
