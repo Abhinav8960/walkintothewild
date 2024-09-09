@@ -22,7 +22,7 @@
                                     <h6><a href="/article/<?= $recentpost->slug ?>"><?= $recentpost->title ?></a></h6>
                                 </div>
                                 <ul class="artical-info p-0 justify-content-start gap-1 mb-0">
-                                    <li class="d-flex align-items-center gap-2"><i class="far fa-comments"></i><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $recentpost->slug]) ?>"><?= count($recentpost->articlecomments) ?> Comments</a></li>
+                                    <li class="d-flex align-items-center gap-2"><i class="far fa-comments"></i><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $recentpost->slug]) ?>"><?= $recentpost->getArticlecomments()->where(['parent_id' => null, 'status' => 1, 'is_deleted' => 0])->count() ?> Comments</a></li>
                                 </ul>
                             </div>
                         </div>
