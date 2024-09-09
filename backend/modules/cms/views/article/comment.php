@@ -47,7 +47,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
             </div>
         </div>
         <h2 class="mt-2">
-            <?= $article->title ?>
+            <?= $article->title ?> <a href="<?= Yii::$app->params['frontend_url'] . 'article/' . $article->slug ?>"><img src="<?= $this->params['baseurl'] ?>img/akar-icons_link-out.png"></a>
         </h2>
         <div class="row mb-4 mt-4 justify-content-center">
             <div class="col-lg-8 col-xl-8 col-xxl-8 pe-lg-5">
