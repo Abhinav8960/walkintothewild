@@ -2,7 +2,7 @@
 
 namespace backend\modules\flag\controllers;
 
-use common\models\article\article\Article;
+
 use common\models\cms\article\ArticleCommentReport;
 use common\models\cms\article\ArticleCommentSearch;
 use common\models\cms\article\form\ArticleCommentActionForm;
