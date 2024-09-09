@@ -37,42 +37,32 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
                 <div class="status-item <?php echo $article->status == 1 ? 'status-published' : 'status-unpublished'; ?>">
                     <span class="status-label">User Status:</span>
                     <?php echo $article->status == 1 ? "Published" : "UnPublished"; ?>
+                    <?php echo Html::a(
+                        '<i class="fas fa-trash me-1"></i>Delete',
+                        ['articledelete', 'id' => $article->id],
+                        [
+                            'class' => 'btn p-0 change-menuicon',
+                            'title' => 'Delete',
+                            'style' => 'background:#F48270 !important;color:black !important;padding: 10px 16px !important;',
+                            'data' => [
+                                'confirm' => 'Are you sure you want to delete ' . $article->title . '?',
+                                'method' => 'post',
+                            ],
+                        ]
+                    ); ?>
                 </div>
                 <div class="status-item <?php echo $article->is_approved == 1 ? 'status-published' : 'status-unpublished'; ?>">
                     <span class="status-label">Main Portal Status:</span>
                     <?php echo $article->is_approved == 1 ? "Published" : "UnPublished"; ?>
-                </div>
-            </div>
-            <div class="tags-wrapper  my-5 d-flex justify-content-between flex-wrap align-items-center">
-                <div class="author_wrapper">
-                    <ul class="artical-info ">
-                        <li>
-                            <?php echo Html::a(
-                                '<i class="fas fa-edit me-1"></i>Update',
-                                ['approval', 'id' => $article->id],
-                                [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'update',
-                                    'style' => 'background:#F7BF39 !important;color:black !important;padding: 10px 16px !important;'
-                                ]
-                            ); ?>
-                        </li>
-                        <li>
-                            <?php echo Html::a(
-                                '<i class="fas fa-trash me-1"></i>Delete',
-                                ['articledelete', 'id' => $article->id],
-                                [
-                                    'class' => 'btn p-0 change-menuicon',
-                                    'title' => 'Delete',
-                                    'style' => 'background:#F48270 !important;color:black !important;padding: 10px 16px !important;',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete ' . $article->title . '?',
-                                        'method' => 'post',
-                                    ],
-                                ]
-                            ); ?>
-                        </li>
-                    </ul>
+                    <?php echo Html::a(
+                        '<i class="fas fa-edit me-1"></i>Update',
+                        ['approval', 'id' => $article->id],
+                        [
+                            'class' => 'btn p-0 change-menuicon',
+                            'title' => 'update',
+                            'style' => 'background:#F7BF39 !important;color:black !important;padding: 10px 16px !important;'
+                        ]
+                    ); ?>
                 </div>
             </div>
         </div>
