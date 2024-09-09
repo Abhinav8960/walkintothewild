@@ -2,6 +2,7 @@
 
 namespace common\models\cms\article;
 
+use common\models\User;
 use Yii;
 
 /**
@@ -83,12 +84,11 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
     public function rules()
     {
         return [
-            [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
-            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'user_id', 'user_type', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['publish_date_time', 'article_date'], 'safe'],
-            [['title', 'banner_image', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
+            [['description', 'meta_description', 'meta_keywords',], 'string'],
+            [['status', 'user_id',  'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_date'], 'safe'],
+            [['title', 'banner_image', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
-            [['sub_title'], 'string', 'max' => 75],
         ];
     }
 
@@ -101,21 +101,21 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
             'id' => 'ID',
             'title' => 'Title',
             'slug' => 'Slug',
-            'sub_title' => 'Sub Title',
+            // 'sub_title' => 'Sub Title',
             'description' => 'Description',
             'banner_image' => 'Banner Image',
-            'feature_image' => 'Feature Image',
-            'article_author_id' => 'Article Author ID',
-            'author_name' => 'Author Name',
+            // 'feature_image' => 'Feature Image',
+            // 'article_author_id' => 'Article Author ID',
+            // 'author_name' => 'Author Name',
             'meta_title' => 'Meta Title',
             'meta_description' => 'Meta Description',
             'meta_keywords' => 'Meta Keywords',
-            'view' => 'View',
-            'post_body' => 'Post Body',
-            'comment_allowed' => 'Comment Allowed',
-            'approval_required' => 'Approval Required',
-            'is_schedule' => 'Is Schedule',
-            'publish_date_time' => 'Publish Date Time',
+            // 'view' => 'View',
+            // 'post_body' => 'Post Body',
+            // 'comment_allowed' => 'Comment Allowed',
+            // 'approval_required' => 'Approval Required',
+            // 'is_schedule' => 'Is Schedule',
+            // 'publish_date_time' => 'Publish Date Time',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -124,10 +124,10 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         ];
     }
 
-    public function getArticleAuthor()
-    {
-        return $this->hasOne(ArticleAuthor::className(), ['id' => 'article_author_id']);
-    }
+    // public function getArticleAuthor()
+    // {
+    //     return $this->hasOne(ArticleAuthor::className(), ['id' => 'article_author_id']);
+    // }
 
     public function getArticletag()
     {
@@ -160,5 +160,10 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
         if ($this->banner_image != '') {
             return '/storage/article/' . $this->id . '/' . $this->banner_image;
         }
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

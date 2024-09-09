@@ -32,7 +32,7 @@ class ArticleController extends Controller
     {
         $searchModel = new ArticleSearch();
         $searchModel->status = Article::STATUS_ACTIVE;
-        $dataProvider = $searchModel->approvedsearch($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams);
         // $dataProvider->query->andWhere("user_type=3");
 
         return $this->render('index', [
@@ -257,7 +257,7 @@ class ArticleController extends Controller
         $article = Article::find()->where(['id' => $id])->limit(1)->one();
 
         $searchModel = new ArticleCommentSearch();
-        $searchModel->article_id = $id;
+        $searchModel->article_id = $article->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render(

@@ -35,7 +35,6 @@ class DefaultController extends FrontendBaseController
     public function actionIndex()
     {
         $searchModel = new ArticleSearch();
-        $searchModel->status = Article::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -52,13 +51,8 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $searchModel = new ArticleSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
-
-        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])
-            ->andWhere(ArticleSearch::addtionalQuery())
+        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'is_approved' => 1, 'slug' => $slug])
             ->limit(1)->one();
-
 
         if (empty($article)) {
             return $this->redirect(['/article']);
@@ -66,7 +60,6 @@ class DefaultController extends FrontendBaseController
         }
 
         $model = new CommentForm();
-        // $model->action_url = '/package/default/view';
         $model->action_validate_url = '/article/default/validate-comment';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($article)) {
@@ -74,25 +67,10 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
         }
 
-
-        // $replymodel = new ArticleReplyForm();
-        // $replymodel->action_validate_url = '/article/default/validate-reply';
-
-        // if ($replymodel->load(Yii::$app->request->post())) {
-        //     if ($replymodel->validate()) {
-        //         if ($replymodel->reply($article)) {
-        //             Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-        //             return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
-        //         }
-        //     }
-        // }
         return $this->render(
             'view',
             [
                 'article' => $article,
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                // 'replymodel' => $replymodel,
                 'model' => $model,
             ]
         );
@@ -102,8 +80,7 @@ class DefaultController extends FrontendBaseController
     public function actionReply($slug, $parent_id)
     {
 
-        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'slug' => $slug])
-            ->andWhere(ArticleSearch::addtionalQuery())
+        $article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'is_approved' => 1, 'slug' => $slug])
             ->limit(1)->one();
 
 
@@ -175,26 +152,26 @@ class DefaultController extends FrontendBaseController
     /**
      * Articles by Author
      */
-    public function actionAuthor($slug)
-    {
-        $article_author = ArticleAuthor::find()->where(['slug' => $slug])->limit(1)->one();
-        if (empty($article_author)) {
-            return $this->redirect(['/article']);
-        }
+    // public function actionAuthor($slug)
+    // {
+    //     $article_author = ArticleAuthor::find()->where(['slug' => $slug])->limit(1)->one();
+    //     if (empty($article_author)) {
+    //         return $this->redirect(['/article']);
+    //     }
 
-        $searchModel = new ArticleSearch();
-        $searchModel->article_author_id = $article_author->id;
-        $dataProvider = $searchModel->search($this->request->queryParams);
-        $models = $dataProvider->getModels();
+    //     $searchModel = new ArticleSearch();
+    //     $searchModel->article_author_id = $article_author->id;
+    //     $dataProvider = $searchModel->search($this->request->queryParams);
+    //     $models = $dataProvider->getModels();
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'models' => $models,
-            'slug' => $slug,
-            'sub_title' => '<b>Author :</b> ' . ($article_author ? $article_author->author_name : strtoupper($slug)),
-        ]);
-    }
+    //     return $this->render('index', [
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //         'models' => $models,
+    //         'slug' => $slug,
+    //         'sub_title' => '<b>Author :</b> ' . ($article_author ? $article_author->author_name : strtoupper($slug)),
+    //     ]);
+    // }
 
 
 

@@ -25,7 +25,7 @@ $this->params['title'] = $this->title;
                         <span>Title:</span><?= $model->title ?>
                     </p>
                     <p>
-                        <span>Author: </span><?= $model->author_name ?>
+                        <span>Author: </span><?= isset($model->user) ? $model->user->name : '' ?>
                     </p>
                 </div>
             </div>

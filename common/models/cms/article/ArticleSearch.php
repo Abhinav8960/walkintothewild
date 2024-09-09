@@ -15,6 +15,7 @@ class ArticleSearch extends Article
     public $article_topics;
     public $report_days;
     public $is_approved;
+    public $user_name;
 
 
     public $report_days_option = [
@@ -33,12 +34,11 @@ class ArticleSearch extends Article
     public function rules()
     {
         return [
-            [['description', 'meta_description', 'meta_keywords', 'post_body'], 'string'],
-            [['article_author_id', 'view', 'comment_allowed', 'approval_required', 'is_schedule', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_approved'], 'integer'],
-            [['publish_date_time', 'article_date', 'article_tags', 'article_topics', 'report_days'], 'safe'],
-            [['title', 'banner_image', 'feature_image', 'author_name', 'meta_title'], 'string', 'max' => 255],
+            [['description', 'meta_description', 'meta_keywords', 'user_name'], 'string'],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'is_approved'], 'integer'],
+            [['article_date', 'article_tags', 'article_topics', 'report_days'], 'safe'],
+            [['title', 'banner_image', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
-            [['sub_title'], 'string', 'max' => 75],
         ];
     }
 
@@ -82,8 +82,8 @@ class ArticleSearch extends Article
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'article_author_id' => $this->article_author_id,
             'article_date' => $this->article_date,
+            'article.is_approved' => $this->is_approved,
             'article.status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
@@ -91,9 +91,7 @@ class ArticleSearch extends Article
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
-        $query->andFilterWhere(['like', 'slug', $this->slug]);
-        $query->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'article.title', $this->title]);
 
 
         if ($this->article_tags) {
@@ -105,6 +103,12 @@ class ArticleSearch extends Article
         if ($this->article_topics) {
             $query->joinwith(['articletopics' => function ($topic_query) {
                 $topic_query->andFilterWhere(['master_article_topic_id' => $this->article_topics]);
+            }]);
+        }
+
+        if ($this->user_name) {
+            $query->joinwith(['user' => function ($user_query) {
+                $user_query->andFilterWhere(['like', 'user.name', $this->user_name]);
             }]);
         }
 

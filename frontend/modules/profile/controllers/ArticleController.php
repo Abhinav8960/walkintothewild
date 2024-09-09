@@ -37,9 +37,9 @@ class ArticleController extends FrontendBaseController
         $user = $this->findUserbyHandle($user_handle);
         $model = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
         if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
-            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])->orderby(['id' => SORT_DESC])->all();
+            $articles = Article::find()->where(['user_id' => $user->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])->orderby(['id' => SORT_DESC])->all();
         } else {
-            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+            $articles = Article::find()->where(['user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         }
         $sharesafrimodel = ShareSafari::find()->where(['host_user_id' => $user->id])->orderby(['id' => SORT_DESC])->limit(2)->all();
         $model_count = ShareSafari::find()->where(['host_user_id' => $user->id])->count();
@@ -63,15 +63,15 @@ class ArticleController extends FrontendBaseController
         $model->action_validate_url = '/profile/article/validate';
         // $model->status = Article::STATUS_ACTIVE;
         $model->user_id = Yii::$app->user->identity->id;
-        $model->user_type = Article::USER_TYPE_INDIVIDUAL;
+        // $model->user_type = Article::USER_TYPE_INDIVIDUAL;
         $model->scenario = 'create';
         $model->article_date = date('Y-m-d');
-        $model->publish_date_time = date('Y-m-d h:i:s');
+        // $model->publish_date_time = date('Y-m-d h:i:s');
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
-                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+                // $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
                 if ($model->validate()) {
                     $model->meta_title = $model->title;
                     $model->initializeForm();
@@ -81,18 +81,18 @@ class ArticleController extends FrontendBaseController
                         /**
                          * Here is the concept of generating article_author_id and author_name and first save in Article Author
                          */
-                        $author = ArticleAuthor::find()->where(['user_type' => ArticleAuthor::AUTHOR_TYPE_INDIVIDUAL, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
-                        if (!$author) {
-                            $author = new ArticleAuthor();
-                        }
-                        $author->user_id = Yii::$app->user->identity->id; // check here which id will user $this->module->user()->id
-                        $author->author_name = Yii::$app->user->identity->name;
-                        $author->status = 1;
-                        if ($author->save()) {
-                            $model->article_model->article_author_id = $author->id;
-                            $model->article_model->author_name = $author->author_name;
-                            $model->article_model->save(false);
-                        };
+                        // $author = ArticleAuthor::find()->where(['user_type' => ArticleAuthor::AUTHOR_TYPE_INDIVIDUAL, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
+                        // if (!$author) {
+                        //     $author = new ArticleAuthor();
+                        // }
+                        // $author->user_id = Yii::$app->user->identity->id; // check here which id will user $this->module->user()->id
+                        // $author->author_name = Yii::$app->user->identity->name;
+                        // $author->status = 1;
+                        // if ($author->save()) {
+                        //     $model->article_model->article_author_id = $author->id;
+                        //     $model->article_model->author_name = $author->author_name;
+                        //     $model->article_model->save(false);
+                        // };
 
 
 
@@ -153,7 +153,7 @@ class ArticleController extends FrontendBaseController
      */
     protected function findModel($slug)
     {
-        if (($model = Article::findOne(['slug' => $slug, 'user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => Yii::$app->user->identity->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
+        if (($model = Article::findOne(['slug' => $slug, 'user_id' => Yii::$app->user->identity->id, 'status' => [Article::STATUS_ACTIVE, Article::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -231,7 +231,7 @@ class ArticleController extends FrontendBaseController
     public function actionView($slug, $user_handle)
     {
         $user = $this->findUserbyHandle($user_handle);
-        $article = Article::findOne(['slug' => $slug, 'user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id]);
+        $article = Article::findOne(['slug' => $slug,  'user_id' => $user->id]);
         if (empty($article)) {
             return $this->redirect(['/profile/article/index', 'user_handle' => $user_handle]);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -262,7 +262,7 @@ class ArticleController extends FrontendBaseController
     public function actionReply($slug, $user_handle, $parent_id)
     {
 
-        $article = Article::findOne(['slug' => $slug, 'user_type' => Article::USER_TYPE_INDIVIDUAL, 'status' => Article::STATUS_ACTIVE]);
+        $article = Article::findOne(['slug' => $slug,'status' => Article::STATUS_ACTIVE]);
         if (empty($article)) {
             return $this->redirect(['/profile/article/index', 'user_handle' => $user_handle]);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -336,7 +336,7 @@ class ArticleController extends FrontendBaseController
 
     public function actionFlag($slug, $article_comment_id, $user_handle)
     {
-        $article = Article::findOne(['slug' => $slug, 'user_type' => Article::USER_TYPE_INDIVIDUAL, 'status' => Article::STATUS_ACTIVE]);
+        $article = Article::findOne(['slug' => $slug,'status' => Article::STATUS_ACTIVE]);
         if (empty($article)) {
             return $this->redirect(['/profile/article/index', 'user_handle' => $user_handle]);
             throw new NotFoundHttpException('The requested page does not exist.');
