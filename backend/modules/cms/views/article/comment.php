@@ -111,7 +111,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
                     <div class="author_wrapper">
                         <ul class="artical-info ">
                             <li><i class="fa-solid fa-user"></i><a href="#"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
-                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a></li>
+                            <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['parent_id' => null, 'status' => 1])->count() ?> Comments</a></li>
                             <li><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($article->article_date)) ?></li>
 
                         </ul>

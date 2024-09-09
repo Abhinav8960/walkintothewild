@@ -30,7 +30,7 @@ use yii\helpers\Url;
                         </div>
                         <p><?= $article_comment->comment ?></p>
                         <?php
-                        if (Yii::$app->user->identity && Yii::$app->user->id != $article_comment->user_id) { ?>
+                        if (Yii::$app->user->identity) { ?>
                             <button class="reply_btn" data-id="<?= $article_comment->id ?>" data-target="reply-form-<?= $article_comment->id ?>"> <i class="fa-solid fa-reply me-1"></i>Reply </button>
                         <?php }
                         ?>
