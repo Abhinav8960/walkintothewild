@@ -622,11 +622,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																			"/cms/article-category/create",
 																			"/cms/article-category/update",
 																		)) ? "active" : "" ?>" href="/cms/article-category/index">Article Topics</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/article-author/index",
 																			"/cms/article-author/create",
 																			"/cms/article-author/update",
-																		)) ? "active" : "" ?>" href="/cms/article-author/index">Article Author</a></li>
+																		)) ? "active" : "" ?>" href="/cms/article-author/index">Article Author</a></li> -->
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/article-tag/index",
 																			"/cms/article-tag/create",
