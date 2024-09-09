@@ -23,14 +23,14 @@ use common\models\GeneralModel;
     <div class="col-md-3">
         <?= $form->field($model, 'comment')->textInput(['placeholder' => 'Search by Comment'])->label(false) ?>
     </div>
-    <div class="col-md-3">
+    <!-- <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
             GeneralModel::commentstatusoption(),
             [
                 'prompt' => 'Select Status',
             ]
         ) ?>
-    </div>
+    </div> -->
     <div class="col-md-3">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>
     </div>

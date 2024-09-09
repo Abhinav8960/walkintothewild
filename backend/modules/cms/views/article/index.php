@@ -1,5 +1,6 @@
 <?php
 
+use common\models\article\article\Article;
 use common\models\GeneralModel;
 use yii\helpers\Html;
 
@@ -41,22 +42,23 @@ $this->params['title'] = $this->title;
                             ]);
                         },
                         'contentOptions' => ['style' => 'width: 20%;'],
-                    ],                  [
-                        'label' => 'Author Name',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->articleAuthor) ? $model->articleAuthor->author_name : '';
-                        }
                     ],
                     [
-                        'label' => 'Date',
+                        'label' => 'User',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->article_date) ? date('M d, Y', strtotime($model->article_date)) : '';
+                            return isset($model->user) ? $model->user->name : '';
                         }
                     ],
+                    // [
+                    //     'label' => 'Date',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         return isset($model->article_date) ? date('M d, Y', strtotime($model->article_date)) : '';
+                    //     }
+                    // ],
                     [
                         'label' => 'Topics',
                         'contentOptions' => ['style' => 'width: 10%;'],
@@ -88,24 +90,41 @@ $this->params['title'] = $this->title;
                         }
                     ],
 
+                    // [
+                    //     'label' => 'Comment Count',
+                    //     'contentOptions' => ['style' => 'width: 10%;'],
+                    //     'format' => 'raw',
+                    //     'value' => function ($model) {
+                    //         if ($model->articlecomments) {
+                    //             return count($model->articlecomments);
+                    //         } else {
+                    //             return 0;
+                    //         }
+                    //     }
+                    // ],
                     [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            if ($model->articlecomments) {
-                                return count($model->articlecomments);
-                            } else {
-                                return 0;
-                            }
-                        }
-                    ],
-                    [
-                        'label' => 'Status',
+                        'label' => 'Main Portal Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            if ($model->is_approved == 1 && $model->status = Article::STATUS_ACTIVE) {
+                                return "Published";
+                            } else {
+                                return "UnPublished";
+                            };
+                        }
+                    ],
+
+                    [
+                        'label' => 'User Status',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            if ($model->status == Article::STATUS_ACTIVE) {
+                                return "Published";
+                            } else if ($model->status == Article::STATUS_SUSPEND) {
+                                return "UnPublished";
+                            };
                         }
                     ],
 

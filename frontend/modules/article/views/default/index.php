@@ -48,7 +48,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
 
 <section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-fluid">
-    <div class="advertisment mt-5">
+        <div class="advertisment mt-5">
             <div class="google-ad-box  mb-5">
 
             </div>
@@ -73,7 +73,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                             </div>
                                             <div class="lower-content">
                                                 <ul class="artical-info ">
-                                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => isset($model->articleAuthor) ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->author_name : '' ?></a></li>
+                                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => isset($model->user) ? $model->user->user_handle : '']) ?>"><?= isset($model->user) ? $model->user->name : '' ?></a></li>
 
                                                 </ul>
                                                 <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>

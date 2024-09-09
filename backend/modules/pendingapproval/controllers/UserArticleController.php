@@ -19,7 +19,7 @@ class UserArticleController extends Controller
         $searchModel = new ArticleSearch();
         $searchModel->status = Article::STATUS_ACTIVE;
         $searchModel->is_approved = 0;
-        $dataProvider = $searchModel->usersearch($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

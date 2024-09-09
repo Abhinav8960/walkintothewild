@@ -22,6 +22,7 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         $searchModel = new ArticleCommentSearch();
+        $searchModel->flaged = 1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

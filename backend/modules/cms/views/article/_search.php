@@ -21,20 +21,12 @@ use common\models\GeneralModel;
 <div class="row">
 
     <div class="col-md-2">
-        <?= $form->field($model, 'title')->textInput(['placeholder' => 'Search by Article Title'])->label(false) ?>
+        <?= $form->field($model, 'title')->textInput(['placeholder' => 'Search by Title'])->label(false) ?>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'article_author_id')->dropDownList(
-            GeneralModel::authoroption(),
-            [
-                'prompt' => 'Select Author',
-            ]
-        )->label(false) ?>
+        <?= $form->field($model, 'user_name')->textInput(['placeholder' => 'Search by User'])->label(false) ?>
     </div>
 
-    <div class="col-md-2">
-        <?= $form->field($model, 'article_date')->input('date', ['class' => 'form-control'])->label(false) ?>
-    </div>
     <div class="col-md-2">
         <?= $form->field($model, 'article_tags')->dropDownList(
             GeneralModel::tagoption(),
@@ -51,11 +43,21 @@ use common\models\GeneralModel;
             ]
         )->label(false) ?>
     </div>
+
+    <div class="col-md-2">
+        <?= $form->field($model, 'is_approved')->dropDownList(
+            ['1' => 'Published', '0' => 'UnPublished'],
+            [
+                'prompt' => 'Main Portal Status',
+            ]
+        )->label(false) ?>
+    </div>
+
     <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(
-            GeneralModel::statusoption(),
+            ['1' => 'Published', '2' => 'UnPublished'],
             [
-                'prompt' => 'Select Status',
+                'prompt' => 'User Status',
             ]
         )->label(false) ?>
     </div>
