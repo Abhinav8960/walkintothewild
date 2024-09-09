@@ -790,10 +790,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/pendingapproval/article-comment/index",
 															"/pendingapproval/article-comment/view",
 														)) ? "active" : "" ?>" href="/pendingapproval/article-comment/index">Article Comments</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 															"/pendingapproval/user-article/index",
 															"/pendingapproval/user-article/view",
-														)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li>
+														)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/pendingapproval/park-review-approval/index",
 														)) ? "active" : "" ?>" href="/pendingapproval/park-review-approval/index">Park Review Approvals</a></li>
