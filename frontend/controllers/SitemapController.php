@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\trierror\SitePages;
+use PDO;
 use Yii;
 use yii\web\Response;
 
@@ -89,26 +90,111 @@ class SitemapController extends FrontendBaseController
 
 
 
+
   /**
    * Renders the HTML sitemap.
    */
   public function actionList()
   {
-    // Retrieve query parameters if needed
-    $otracker = Yii::$app->request->get('otracker', '');
+    // Fetch pages from the database
+    $pages = $this->getPages();
 
-    // Fetch distinct categories and pages from the database
-    $categories = SitePages::find()->select('category')->where(['!=', 'category', 'action'])->distinct()->column();
+    // Organize data into categories and sub-categories
+    $sitemapData = $this->organizePages($pages);
 
-    $categoryPages = [];
-    foreach ($categories as $category) {
-      $categoryPages[$category] = SitePages::find()->where(['category' => $category, 'status' => 1])->all();
+    // Render the HTML and return it
+    return $this->render('list', [
+      'sitemapData' => $sitemapData,
+    ]);
+  }
+  /**
+   * Fetches pages from the database.
+   *
+   * @return array
+   */
+  private function getPages()
+  {
+    // Create a command instance
+    $command = Yii::$app->db->createCommand('
+    SELECT * 
+    FROM site_pages 
+    WHERE status = :status 
+    AND category != "Action"
+    ORDER BY category, sub_category, title
+');
+    // Bind parameters
+    $command->bindValue(':status', 1);
+
+    // Execute the command and fetch results
+    $pages = $command->queryAll();
+
+    return $pages;
+  }
+
+  /**
+   * Organizes pages into a hierarchical structure.
+   *
+   * @param array $pages
+   * @return array
+   */
+  private function organizePages($pages)
+  {
+    $sitemapData = [];
+
+    foreach ($pages as $page) {
+      $category = $page['category'];
+      $subCategory = $page['sub_category'];
+      $title = $page['title'];
+      $url = $page['url'];
+
+      // Create categories if they don't exist
+      if (!isset($sitemapData[$category])) {
+        $sitemapData[$category] = [];
+      }
+
+      // Create sub-categories if they don't exist
+      if (!isset($sitemapData[$category][$subCategory])) {
+        // Create a URL for the sub-category page
+        $subCategoryUrl = '/sub-category/' . urlencode($category) . '/' . urlencode($subCategory);
+        $sitemapData[$category][$subCategory] = [
+          'url' => $subCategoryUrl,
+          'pages' => []
+        ];
+      }
+
+      // Add the page to the appropriate sub-category
+      $sitemapData[$category][$subCategory]['pages'][] = ['title' => $title, 'url' => $url];
     }
 
-    return $this->render('list', [
-      'categories' => $categories,
-      'categoryPages' => $categoryPages,
-      'otracker' => $otracker,
-    ]);
+    return $sitemapData;
+  }
+
+
+  /**
+   * Renders the sitemap as HTML.
+   *
+   * @param array $sitemapData
+   * @return string
+   */
+  private function renderSitemap($sitemapData)
+  {
+    $html = '<ul>';
+
+    foreach ($sitemapData as $category => $subCategories) {
+      $html .= '<li><strong>' . htmlspecialchars($category) . '</strong><ul>';
+
+      foreach ($subCategories as $subCategory => $data) {
+        $html .= '<li><a href="' . htmlspecialchars($data['url']) . '"><strong>' . htmlspecialchars($subCategory) . '</strong></a><ul>';
+
+
+        $html .= '</ul></li>';
+      }
+
+      $html .= '</ul></li>';
+    }
+
+    $html .= '</ul>';
+
+    return $html;
   }
 }
