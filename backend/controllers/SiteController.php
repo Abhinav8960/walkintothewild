@@ -209,22 +209,22 @@ class SiteController extends Controller
 
 
         $todaynew_article = Article::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Article::STATUS_ACTIVE, 'user_type' => [Article::USER_TYPE_INDIVIDUAL, Article::USER_TYPE_SAFARI_OPERATOR]])
+            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Article::STATUS_ACTIVE])
             ->count();
 
         $thisweek_new_article = Article::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Article::STATUS_ACTIVE, 'user_type' => [Article::USER_TYPE_INDIVIDUAL, Article::USER_TYPE_SAFARI_OPERATOR]])
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Article::STATUS_ACTIVE])
             ->count();
 
         $thismonth_new_article = Article::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Article::STATUS_ACTIVE, 'user_type' => [Article::USER_TYPE_INDIVIDUAL, Article::USER_TYPE_SAFARI_OPERATOR]])
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Article::STATUS_ACTIVE])
             ->count();
 
         $lastmonth_new_article = Article::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Article::STATUS_ACTIVE, 'user_type' => [Article::USER_TYPE_INDIVIDUAL, Article::USER_TYPE_SAFARI_OPERATOR]])
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Article::STATUS_ACTIVE])
             ->count();
 
-        $total_new_article = Article::find()->where(['status' => Article::STATUS_ACTIVE, 'user_type' => [Article::USER_TYPE_INDIVIDUAL, Article::USER_TYPE_SAFARI_OPERATOR]])->count();
+        $total_new_article = Article::find()->where(['status' => Article::STATUS_ACTIVE])->count();
 
 
 
