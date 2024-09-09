@@ -144,6 +144,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                                                                 echo 'Shared Safari';
                                                                                             } elseif ($package->safari_type == 2) {
                                                                                                 echo 'Private Safari';
+                                                                                            } else {
+                                                                                                echo 'Shares Safari';
                                                                                             } ?>
                                             </p>
                                         </div>

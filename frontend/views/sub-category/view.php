@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
 /* @var $categories array */
@@ -23,6 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
             </li>
         <?php endforeach; ?>
     </ul>
+    <!-- Pagination controls -->
+    <?= LinkPager::widget([
+        'pagination' => $pagination,
+    ]) ?>
 </div>
 <style>
     body {

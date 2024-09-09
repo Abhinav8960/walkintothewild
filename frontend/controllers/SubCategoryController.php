@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use yii\web\NotFoundHttpException;
 use yii\helpers\Html;
+use yii\data\Pagination;
 use yii\db\Query;
 
 /**
@@ -20,48 +21,59 @@ class SubCategoryController extends FrontendBaseController
   public function actionView($category, $subCategory)
   {
     // Validate and sanitize inputs
-    $category = Html::encode($category);
-    $subCategory = Html::encode($subCategory);
+    $category = trim($category);
+    $subCategory = trim($subCategory);
+
+    if (empty($category) || empty($subCategory)) {
+      throw new NotFoundHttpException('Invalid category or sub-category.');
+    }
 
     // Fetch pages for the given category and sub-category
-    $pages = $this->getPagesBySubCategory($category, $subCategory);
+    $query = $this->getPagesBySubCategoryQuery($category, $subCategory);
 
-    // Check if pages were found
-    if (empty($pages)) {
+    // Check if the query returned any results
+    if (!$query) {
       throw new NotFoundHttpException('The requested sub-category does not exist.');
     }
 
-    // Render the view and pass data to it
+    // Set up pagination
+    $count = $query->count();
+    $pagination = new Pagination([
+      'defaultPageSize' => 10,
+      'totalCount' => $count,
+    ]);
+
+    // Get the pages for the current page
+    $pages = $query->offset($pagination->offset)
+      ->limit($pagination->limit)
+      ->all();
+
     return $this->render('view', [
       'category' => $category,
       'subCategory' => $subCategory,
       'pages' => $pages,
+      'pagination' => $pagination,
     ]);
   }
 
   /**
-   * Fetches pages for a specific sub-category from the database.
+   * Fetches a query for pages for a specific sub-category from the database.
    *
    * @param string $category
    * @param string $subCategory
-   * @return array
+   * @return yii\db\Query
    */
-  private function getPagesBySubCategory($category, $subCategory)
+  private function getPagesBySubCategoryQuery($category, $subCategory)
   {
     // Create a new Query instance
-    $query = new Query();
-
-    // Build the query
-    $pages = $query->select('*')
+    return (new Query())
+      ->select('*')
       ->from('site_pages')
       ->where([
         'category' => $category,
         'sub_category' => $subCategory,
         'status' => 1
       ])
-      ->orderBy(['title' => SORT_ASC])
-      ->all();
-
-    return $pages;
+      ->orderBy(['title' => SORT_ASC]);
   }
 }
