@@ -18,7 +18,7 @@ $this->params['title'] = $this->title;
 
         <div class="row">
             <div class="col-md-12">
-                <?= $form->field($approval_model, 'is_approved')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select Approval Option'])->label('Main Portal Status') ?>
+                <?= $form->field($approval_model, 'status')->dropDownList(GeneralModel::articleuserstatusoption(), ['prompt' => 'Select Status Option'])->label('User Status') ?>
             </div>
             <div class="col-md-12">
                 <div class="form-group">

@@ -33,7 +33,7 @@ class UserArticleApprovalForm extends model
         if ($user_article_approval_model  != '') {
             $this->user_article_approval_model = $user_article_approval_model;
             $this->is_approved              =  $this->user_article_approval_model->is_approved;
-            // $this->status              =  $this->user_article_approval_model->status;
+            $this->status              =  $this->user_article_approval_model->status;
         }
 
         $this->status_option = GeneralModel::statusoption();
@@ -70,6 +70,6 @@ class UserArticleApprovalForm extends model
     public function initializeForm()
     {
         $this->user_article_approval_model->is_approved          =  $this->is_approved;
-        // $this->user_article_approval_model->status               =  $this->status;
+        $this->user_article_approval_model->status               =  $this->status;
     }
 }

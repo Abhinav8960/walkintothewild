@@ -158,6 +158,11 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
+
+    public static function articleuserstatusoption()
+    {
+        return [1 => 'Publish', 0 => 'Unpublish', -1 => 'Delete'];
+    }
     /**
      * Day Name
      *

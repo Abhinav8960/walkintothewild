@@ -348,14 +348,37 @@ class ArticleController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
+    // public function actionArticledelete($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     $model->status = Article::STATUS_DELETE;
+    //     $model->save();
+    //     \Yii::$app->session->setFlash('success', 'Deleted Successfully');
+    //     return $this->redirect(['index']);
+    // }
+
     public function actionArticledelete($id)
     {
-        $model = $this->findModel($id);
-        $model->status = Article::STATUS_DELETE;
-        $model->save();
-        \Yii::$app->session->setFlash('success', 'Deleted Successfully');
-        return $this->redirect(['index']);
+        $user_article_approval_model = $this->findModel($id);
+        $model = new UserArticleApprovalForm($user_article_approval_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->user_article_approval_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Update');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->user_article_approval_model->loadDefaultValues();
+        }
+        return $this->renderAjax('delete_form', [
+            'approval_model' => $model,
+        ]);
     }
+
 
     public function actionApproval($id)
     {
@@ -369,15 +392,12 @@ class ArticleController extends Controller
                         \Yii::$app->session->setFlash('success', 'Successfully Update');
                         return $this->redirect(['index']);
                     }
-                } else {
-                    print_r($model->errors);
-                    die();
                 }
             }
         } else {
             $model->user_article_approval_model->loadDefaultValues();
         }
-        return $this->render('approval_form', [
+        return $this->renderAjax('approval_form', [
             'approval_model' => $model,
         ]);
     }
@@ -397,6 +417,24 @@ class ArticleController extends Controller
             ],
         ]);
         return $this->renderAjax('_replyview', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFlagview($id)
+    {
+        $review = ArticleCommentReport::find()->where(['article_comment_id' => $id]);
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  $review,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('_flagview', [
             'dataProvider' => $dataProvider,
         ]);
     }

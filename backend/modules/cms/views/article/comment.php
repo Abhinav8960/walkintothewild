@@ -10,7 +10,7 @@ FrontAppAsset::register($this);
 AppAsset::register($this);
 
 
-$this->title = $article->title;
+$this->title = 'Article';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] =  ['label' => 'Article', 'url' => '/cms/article'];
 $this->params['breadcrumbs'][] = $this->title;
@@ -37,37 +37,20 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
                 <div class="status-item <?php echo $article->status == 1 ? 'status-published' : 'status-unpublished'; ?>">
                     <span class="status-label">User Status:</span>
                     <?php echo $article->status == 1 ? "Published" : "UnPublished"; ?>
-                    <?php echo Html::a(
-                        '<i class="fas fa-trash me-1"></i>Delete',
-                        ['articledelete', 'id' => $article->id],
-                        [
-                            'class' => 'btn p-0 change-menuicon',
-                            'title' => 'Delete',
-                            'style' => 'background:#F48270 !important;color:black !important;padding: 10px 16px !important;',
-                            'data' => [
-                                'confirm' => 'Are you sure you want to delete ' . $article->title . '?',
-                                'method' => 'post',
-                            ],
-                        ]
-                    ); ?>
+                    <button class="btn_userarticle" style="background:#F48270 !important;color:black !important;padding: 10px 16px !important;" value="<?= \yii\helpers\Url::toRoute(['/cms/article/articledelete?id=' . $article->id . '']) ?>"><i class="fas fa-trash me-1"></i>Delete</button>
                 </div>
                 <div class="status-item <?php echo $article->is_approved == 1 ? 'status-published' : 'status-unpublished'; ?>">
                     <span class="status-label">Main Portal Status:</span>
                     <?php echo $article->is_approved == 1 ? "Published" : "UnPublished"; ?>
-                    <?php echo Html::a(
-                        '<i class="fas fa-edit me-1"></i>Update',
-                        ['approval', 'id' => $article->id],
-                        [
-                            'class' => 'btn p-0 change-menuicon',
-                            'title' => 'update',
-                            'style' => 'background:#F7BF39 !important;color:black !important;padding: 10px 16px !important;'
-                        ]
-                    ); ?>
+                    <button class="btn_mainportalarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important;" value="<?= \yii\helpers\Url::toRoute(['/cms/article/approval?id=' . $article->id . '']) ?>"><i class="fas fa-edit me-1"></i>Change Status</button>
                 </div>
             </div>
         </div>
-        <div class="row mb-4 justify-content-center">
-            <div class="col-lg-12 col-xl-12 col-xxl-12 pe-lg-5">
+        <h2 class="mt-2">
+            <?= $article->title ?>
+        </h2>
+        <div class="row mb-4 mt-4 justify-content-center">
+            <div class="col-lg-8 col-xl-8 col-xxl-8 pe-lg-5">
                 <div class="aritcla-details">
                     <div class="aritcal_bigimg pb-4">
                         <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/articalbig.png' ?>" alt="" class="w-100">
@@ -110,17 +93,53 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
                         </ul>
                     </div>
                 </div>
-                <div class="comment-wrapper" id="comment-wrapper-section">
-                    <?= $this->render('_comment', [
-                        'article' => $article,
-                        'dataProvider' => $dataProvider,
-                        'searchModel' => $searchModel,
-                    ]) ?>
+
+            </div>
+            <div class="col-lg-4 col-xl-4 col-xxl-4 pe-lg-5">
+                <div class="recentpost_box mb-5 ">
+                    <div class="titlerescent ">
+                        <h3 class="mb-0">Top Topics</h3>
+                    </div>
+                    <div class="row">
+
+                    </div>
+
+                </div>
+
+                <div class="recentpost_box mb-5 ">
+                    <div class="titlerescent pb-3">
+                        <h3>Similar Articles</h3>
+                    </div>
+                    <div class="row">
+
+                    </div>
+
                 </div>
             </div>
         </div>
+        <div class="comment-wrapper" id="comment-wrapper-section">
+            <?= $this->render('_comment', [
+                'article' => $article,
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]) ?>
+        </div>
     </div>
 </section>
+<div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Change User Status</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='userstatusmodalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .status-container {
         display: flex;
@@ -149,4 +168,46 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
         font-size: 0.9rem;
         color: #333;
     }
+
+    .recentpost_box {
+        border: 1px solid gray;
+        min-height: 200px;
+        background-color: #80808036;
+        padding: 0 !important;
+    }
+
+    .titlerescent {
+
+        background: #fff;
+        padding: 10px;
+        border-radius: 10px 10px 0px 0px;
+    }
 </style>
+<?php
+$script = <<< JS
+function organizefunction() {
+	$('.btn_userarticle').on('click', function () {
+        $('#organize-modal').modal('show')
+		.find('#userstatusmodalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+
+JS;
+$this->registerJs($script);
+?>
+<?php
+$script = <<< JS
+function mainportalfunction() {
+	$('.btn_mainportalarticle').on('click', function () {
+        $('#organize-modal').modal('show')
+		.find('#userstatusmodalContent')
+		.load($(this).attr('value'));
+	});
+}
+mainportalfunction();
+
+JS;
+$this->registerJs($script);
+?>
