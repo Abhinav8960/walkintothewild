@@ -1,6 +1,6 @@
 <?php
 
-use common\models\article\article\Article;
+use common\models\cms\article\Article;
 use common\models\GeneralModel;
 use yii\helpers\Html;
 
