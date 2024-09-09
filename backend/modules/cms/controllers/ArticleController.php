@@ -260,6 +260,7 @@ class ArticleController extends Controller
         $searchModel = new ArticleCommentSearch();
         $searchModel->article_id = $article->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider->query->where(['parent_id' => null]);
 
         return $this->render(
             'comment',
@@ -378,6 +379,25 @@ class ArticleController extends Controller
         }
         return $this->render('approval_form', [
             'approval_model' => $model,
+        ]);
+    }
+
+
+    public function actionReplyview($id)
+    {
+        $review = ArticleComment::find()->where(['parent_id' => $id]);
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  $review,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('_replyview', [
+            'dataProvider' => $dataProvider,
         ]);
     }
 }
