@@ -260,7 +260,7 @@ class ArticleController extends Controller
         $searchModel = new ArticleCommentSearch();
         $searchModel->article_id = $article->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->where(['parent_id' => null]);
+        $dataProvider->query->andWhere(['parent_id' => null]);
 
         return $this->render(
             'comment',
