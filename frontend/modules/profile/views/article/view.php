@@ -54,7 +54,7 @@ $this->params['title'] = $this->title;
                                         <div class="author_wrapper pt-2">
                                             <ul class="artical-info flex-wrap">
                                                 <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>"><?= isset($article->user) ? $article->user->name : '' ?></a></li>
-                                                <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="#comment-wrapper-section"><?= $article->getArticlecomments()->where(['status' => 1, 'is_deleted' => 0])->count() ?> Comments</a></li>
+                                                <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="#comment-wrapper-section"><?= $article->getArticlecomments()->where(['parent_id' => null, 'status' => 1, 'is_deleted' => 0])->count() ?> Comments</a></li>
                                                 <li><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($article->article_date)) ?></li>
 
                                             </ul>

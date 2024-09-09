@@ -50,7 +50,7 @@ $this->params['title'] = $this->title;
                                                             </ul>
                                                             <h3><a href="<?= Url::toRoute(['view', 'slug' => $article->slug, 'user_handle' => $user->user_handle]) ?>"><?= $article->title ?> </a></h3>
                                                             <div class="artical-info justify-content-center">
-                                                                <a href="<?= Url::toRoute(['/profile/article/view', 'slug' => $article->slug, 'user_handle' => $user->user_handle, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $article->getArticlecomments()->where(['status' => 1])->count() ?> Comments</a>
+                                                                <a href="<?= Url::toRoute(['/profile/article/view', 'slug' => $article->slug, 'user_handle' => $user->user_handle, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $article->getArticlecomments()->where(['parent_id' => null, 'status' => 1, 'is_deleted' => 0])->count() ?> Comments</a>
 
                                                                 <span style="color: #9C9C9C;"><i class="fa-solid fa-calendar-days me-1" style="color:#f9d600;"></i><?= date('M d, Y', strtotime($article->article_date)) ?></span>
                                                             </div>
