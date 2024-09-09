@@ -146,7 +146,11 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="">
+                                            <?php if ($share_safari->share_safari_agenda_id && $share_safari->share_safari_agenda_id == 1) { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="">
+                                            <?php } else if ($share_safari->share_safari_agenda_id && $share_safari->share_safari_agenda_id == 3) { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/elephant.png" alt="">
+                                            <?php } ?>
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= isset(GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id]) ? GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id] : 'Not Included' ?></p>
@@ -280,15 +284,15 @@ $this->params['title'] = $this->title; ?>
                 </div>
 
                 <div class="advertisment d-lg-block d-none mt-5">
-            <div class="google-ad300  mb-5">
+                    <div class="google-ad300  mb-5">
 
-            </div>
-        </div>
-        <div class="advertisment d-lg-block d-none ">
-            <div class="google-add600hight  mb-5">
+                    </div>
+                </div>
+                <div class="advertisment d-lg-block d-none ">
+                    <div class="google-add600hight  mb-5">
 
-            </div>
-        </div>
+                    </div>
+                </div>
 
             </div>
         </div>

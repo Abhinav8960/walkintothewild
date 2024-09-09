@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
 
 /* @var $this yii\web\View */
 /* @var $categories array */
@@ -18,11 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <ul>
         <?php foreach ($pages as $page): ?>
             <li>
-                <a href="<?= Html::encode($page['url']) ?>"><?= Html::encode($page['title']) ?></a>
+                <a href="/<?= Html::encode($page['url']) ?>"><?= Html::encode($page['title']) ?></a>
                 <p><?= Html::encode($page['description']) ?></p>
             </li>
         <?php endforeach; ?>
     </ul>
+    <!-- Pagination controls -->
+    <?= LinkPager::widget([
+        'pagination' => $pagination,
+    ]) ?>
 </div>
 <style>
     body {
