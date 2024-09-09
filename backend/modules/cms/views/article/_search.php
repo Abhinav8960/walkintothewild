@@ -55,7 +55,7 @@ use common\models\GeneralModel;
 
     <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(
-            ['1' => 'Published', '2' => 'UnPublished'],
+            ['1' => 'Published', '0' => 'UnPublished'],
             [
                 'prompt' => 'User Status',
             ]

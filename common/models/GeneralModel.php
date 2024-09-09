@@ -1187,7 +1187,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         return [
             '1' => 'Published',
-            '2' => 'UnPublished',
+            '0' => 'UnPublished',
         ];
     }
 
