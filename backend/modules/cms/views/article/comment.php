@@ -29,6 +29,23 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 ]); ?>
 
 
+<div class="row">
+    <span>
+        <h6>User Status: <?php
+                            if ($article->status == 1) {
+                                echo "Published";
+                            } else {
+                                echo "UnPublished";
+                            } ?></h6>
+    </span>
+    <span>
+        <h6>Main Portal Status: <?php if ($article->is_approved == 1) {
+                                    echo "Published";
+                                } else {
+                                    echo "UnPublished";
+                                } ?></h6>
+    </span>
+</div>
 
 <section class="articals_wrapper py-3">
     <div class="container-lg">
