@@ -300,7 +300,7 @@ class SiteController extends Controller
             $to_mail = $user->email;
             $subject = 'User Login';
             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_LOGIN;
-            $req = ['username' => $user->name];
+            $req = ['username' => $user->name, 'is_email_sending' => true];
 
             MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 

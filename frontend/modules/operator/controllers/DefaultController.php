@@ -329,7 +329,7 @@ class DefaultController extends FrontendBaseController
                     $to_mail = $operator->email;
                     $subject = 'Follow Request';
                     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_FOLLOW_REQUEST;
-                    $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name];
+                    $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name, 'is_email_sending' => true];
 
                     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                     FrontendNotificationHelper::operatorNewFollower($operator, Yii::$app->user->identity);
@@ -375,7 +375,7 @@ class DefaultController extends FrontendBaseController
                         $to_mail = $operator->email;
                         $subject = 'UnFollow Request';
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
-                        $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name];
+                        $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name, 'is_email_sending' => true];
 
                         MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
