@@ -31,14 +31,12 @@ class PlanSafariController extends FrontendBaseController
 
 
         $featured_articles = Article::find()
-            // ->where(['status' => Article::STATUS_ACTIVE])
-            ->where(['!=', 'sequence', ''])
-            ->andWhere("status=1 AND (user_type=3 OR is_approved=1)")
-            ->limit(3)->orderBy(['sequence' => SORT_ASC])->all();
+            ->andWhere(['article.status' => Article::STATUS_ACTIVE, 'is_approved' => 1])
+            ->limit(3)->all();
         $shared_safaries = ShareSafari::find()->select("*,(SELECT count(1) FROM `share_safari_intrested` WHERE share_safari_id=share_safari.id and share_safari_intrested.status=1) AS `instreted_user_count`")->where(['status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'start_date', date("Y-m-d")])->limit(6)->orderby(['instreted_user_count' => SORT_DESC])->all();
 
         $packages = Package::find()->where(['status' => Package::STATUS_ACTIVE])->andWhere("owned_by_id IN (SELECT id from safari_operator WHERE status=1)")->limit(3)->orderby("RAND()")->all();
- 
+
         return $this->render(
             'index',
             [

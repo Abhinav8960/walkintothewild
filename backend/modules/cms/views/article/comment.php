@@ -3,7 +3,7 @@
 use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
 use frontend\models\ArticleSearch;
-
+use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 FrontAppAsset::register($this);
@@ -29,6 +29,47 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 ]); ?>
 
 
+<div class="row">
+    <span>
+        <h6>User Status: <?php
+                            if ($article->status == 1) {
+                                echo "Published";
+                            } else {
+                                echo "UnPublished";
+                            } ?></h6>
+    </span>
+    <span>
+        <h6>Main Portal Status: <?php if ($article->is_approved == 1) {
+                                    echo "Published";
+                                } else {
+                                    echo "UnPublished";
+                                } ?></h6>
+    </span>
+    <span>
+        <?php echo Html::a(
+            '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
+            ['approval', 'id' => $article->id],
+            [
+                'class' => 'btn p-0 change-menuicon',
+                'title' => 'update',
+            ]
+        ); ?>
+    </span>
+    <span>
+        <?php echo Html::a(
+            '<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">',
+            ['articledelete', 'id' => $article->id],
+            [
+                'class' => 'btn p-0 change-menuicon',
+                'title' => 'Delete',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete ' . $article->title . '?',
+                    'method' => 'post',
+                ],
+            ]
+        ); ?>
+    </span>
+</div>
 
 <section class="articals_wrapper py-3">
     <div class="container-lg">

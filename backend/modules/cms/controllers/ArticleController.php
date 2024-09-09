@@ -16,6 +16,7 @@ use common\models\cms\article\ArticleTopic;
 use common\models\cms\article\form\ArticleCommentActionForm;
 use common\models\cms\article\form\ArticleForm;
 use common\models\cms\article\MasterArticleTag;
+use common\models\pendingapproval\form\UserArticleApprovalForm;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
@@ -32,7 +33,7 @@ class ArticleController extends Controller
     {
         $searchModel = new ArticleSearch();
         $searchModel->status = Article::STATUS_ACTIVE;
-        $dataProvider = $searchModel->approvedsearch($this->request->queryParams);
+        $dataProvider = $searchModel->search($this->request->queryParams);
         // $dataProvider->query->andWhere("user_type=3");
 
         return $this->render('index', [
@@ -257,7 +258,7 @@ class ArticleController extends Controller
         $article = Article::find()->where(['id' => $id])->limit(1)->one();
 
         $searchModel = new ArticleCommentSearch();
-        $searchModel->article_id = $id;
+        $searchModel->article_id = $article->id;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render(
@@ -344,5 +345,39 @@ class ArticleController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionArticledelete($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Article::STATUS_DELETE;
+        $model->save();
+        \Yii::$app->session->setFlash('success', 'Deleted Successfully');
+        return $this->redirect(['index']);
+    }
+
+    public function actionApproval($id)
+    {
+        $user_article_approval_model = $this->findModel($id);
+        $model = new UserArticleApprovalForm($user_article_approval_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->user_article_approval_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Update');
+                        return $this->redirect(['index']);
+                    }
+                } else {
+                    print_r($model->errors);
+                    die();
+                }
+            }
+        } else {
+            $model->user_article_approval_model->loadDefaultValues();
+        }
+        return $this->render('approval_form', [
+            'approval_model' => $model,
+        ]);
     }
 }

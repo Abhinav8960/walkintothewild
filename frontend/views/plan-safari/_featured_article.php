@@ -24,7 +24,7 @@ use yii\helpers\Url;
                             </div>
                             <div class="lower-content">
                                 <ul class="artical-info ">
-                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => $featured_article->articleAuthor ? $featured_article->articleAuthor->slug : '']) ?>" data-pjax="0"><?= isset($featured_article->articleAuthor) ? $featured_article->articleAuthor->author_name : '' ?></a></li>
+                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => isset($featured_article->user) ? $featured_article->user->user_handle : '']) ?>" data-pjax="0"><?= isset($featured_article->user) ? $featured_article->user->name : '' ?></a></li>
                                 </ul>
                                 <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $featured_article->slug]) ?>" data-pjax="0"><?= $featured_article->title ?> </a></h3>
 

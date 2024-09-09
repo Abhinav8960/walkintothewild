@@ -45,7 +45,7 @@ $this->params['title'] = $this->title;
                                                         </div>
                                                         <div class="lower-content">
                                                             <ul class="artical-info ">
-                                                                <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
+                                                                <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>"><?= isset($article->user) ? $article->user->name : '' ?></a></li>
 
                                                             </ul>
                                                             <h3><a href="<?= Url::toRoute(['view', 'slug' => $article->slug, 'user_handle' => $user->user_handle]) ?>"><?= $article->title ?> </a></h3>

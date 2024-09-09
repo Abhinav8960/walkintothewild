@@ -41,7 +41,14 @@ $this->params['title'] = $this->title;
                         },
                         'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
                     ],
-                    'author_name',
+                    [
+                        'label' => 'User',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->user) ? $model->user->name : '';
+                        }
+                    ],
                     [
                         'label' => 'Date',
                         'contentOptions' => ['style' => 'width: 10%;'],
