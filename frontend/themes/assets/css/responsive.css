@@ -1712,10 +1712,14 @@ display: none;
     background-repeat: no-repeat;
     background-size: cover;
 <<<<<<< HEAD
+<<<<<<< HEAD
     /* height: 100vh; */
 =======
     height: 100vh;
 >>>>>>> 51d0a366 (changes login page mobile view)
+=======
+    /* height: 100vh; */
+>>>>>>> 23470fef (changes css mainphp)
     width: 100%;
 }
   .paddiinTop_add{
