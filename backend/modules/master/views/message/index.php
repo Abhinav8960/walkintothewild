@@ -31,8 +31,31 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
                     'code',
+                    [
+                        'label' => 'Page',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->page_id) ? GeneralModel::pages()[$model->page_id] : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Module',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->module;
+                        }
+                    ],
+                    [
+                        'label' => 'Type',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->type_id) ? GeneralModel::messagetype()[$model->type_id] : '';
+                        }
+                    ],
                     'message',
-
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [

@@ -239,7 +239,14 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         ];
     }
 
-
+    public static function messagetype()
+    {
+        return [
+            1 => 'Flash Message',
+            2 => 'Heading',
+            3 => 'Text',
+        ];
+    }
 
     public static function parktype()
     {

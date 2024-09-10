@@ -56,6 +56,11 @@ class PackageForm extends \yii\base\Model
     public $day_note;
     public $day_status;
 
+    public $breakfast_included;
+    public $lunch_included;
+    public $dinner_included;
+    public $meal_not_included;
+
 
     public $type;
     public $gst_percentage;
@@ -106,6 +111,11 @@ class PackageForm extends \yii\base\Model
             $this->getting_there = $this->package_model->getting_there;
             $this->master_vehicle_id = $this->package_model->master_vehicle_id;
 
+            $this->breakfast_included = $this->package_model->breakfast_included;
+            $this->lunch_included = $this->package_model->lunch_included;
+            $this->dinner_included = $this->package_model->dinner_included;
+            $this->meal_not_included = $this->package_model->meal_not_included;
+
             $this->type = $this->package_model->type;
             $this->gst_percentage = $this->package_model->gst_percentage;
             $this->popular_package = $this->package_model->popular_package;
@@ -140,7 +150,7 @@ class PackageForm extends \yii\base\Model
             [['package_name'], 'string', 'max' => 512],
             [['package_slug'], 'string', 'max' => 720],
             [['start_location', 'end_location'], 'string', 'max' => 255],
-            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'safari_type'], 'safe'],
+            [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
 
 
 
@@ -217,7 +227,7 @@ class PackageForm extends \yii\base\Model
             'master_vehicle_id',
             'popular_package'
         ];
-        $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included'];
+        $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
         $scenarios['getting_there'] = ['getting_there'];
         $scenarios['day'] = [
@@ -305,6 +315,11 @@ class PackageForm extends \yii\base\Model
         $this->package_model->date_change_policy = $this->date_change_policy;
         $this->package_model->refund_policy = $this->refund_policy;
         $this->package_model->getting_there = $this->getting_there;
+
+        $this->package_model->breakfast_included = $this->breakfast_included;
+        $this->package_model->lunch_included = $this->lunch_included;
+        $this->package_model->dinner_included = $this->dinner_included;
+        $this->package_model->meal_not_included = $this->meal_not_included;
 
         $this->package_model->type = $this->type;
         if ($this->type == 1) { // With GST
