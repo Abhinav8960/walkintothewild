@@ -197,7 +197,11 @@ class PackageForm extends \yii\base\Model
             'gst_percentage',
             'total_price',
             'master_vehicle_id',
-            'popular_package'
+            'popular_package',
+            'breakfast_included',
+            'lunch_included',
+            'dinner_included',
+            'meal_not_included'
         ];
         $scenarios['update'] = [
             'package_name',
@@ -226,7 +230,11 @@ class PackageForm extends \yii\base\Model
             'gst_percentage',
             'total_price',
             'master_vehicle_id',
-            'popular_package'
+            'popular_package',
+            'breakfast_included',
+            'lunch_included',
+            'dinner_included',
+            'meal_not_included'
         ];
         $scenarios['inclusion'] = ['package_inclusion', 'package_exclusion', 'package_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         $scenarios['policy_info'] = ['package_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
