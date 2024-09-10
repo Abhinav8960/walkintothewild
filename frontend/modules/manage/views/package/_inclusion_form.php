@@ -116,96 +116,49 @@ $this->registerJs($script);
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get references to the checkboxes
-    var breakfastCheckbox = document.getElementById('breakfast_included');
-    var lunchCheckbox = document.getElementById('lunch_included');
-    var dinnerCheckbox = document.getElementById('dinner_included');
-    var mealNotIncludedCheckbox = document.getElementById('meal_not_included');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to the checkboxes
+        var breakfastCheckbox = document.getElementById('breakfast_included');
+        var lunchCheckbox = document.getElementById('lunch_included');
+        var dinnerCheckbox = document.getElementById('dinner_included');
+        var mealNotIncludedCheckbox = document.getElementById('meal_not_included');
 
-    // Function to handle the state of meal_not_included checkbox
-    function updateMealNotIncludedState() {
-        if (breakfastCheckbox.checked || lunchCheckbox.checked || dinnerCheckbox.checked) {
-            mealNotIncludedCheckbox.checked = false;
-            mealNotIncludedCheckbox.disabled = true;
-        } else {
-            mealNotIncludedCheckbox.disabled = false;
+        // Function to handle the state of meal_not_included checkbox
+        function updateMealNotIncludedState() {
+            if (breakfastCheckbox.checked || lunchCheckbox.checked || dinnerCheckbox.checked) {
+                mealNotIncludedCheckbox.checked = false;
+                mealNotIncludedCheckbox.disabled = true;
+            } else {
+                mealNotIncludedCheckbox.disabled = false;
+            }
         }
-    }
 
-    // Function to handle the state when meal_not_included is clicked
-    function handleMealNotIncludedClick() {
-        if (mealNotIncludedCheckbox.checked) {
-            // Uncheck and disable other checkboxes
-            breakfastCheckbox.checked = false;
-            lunchCheckbox.checked = false;
-            dinnerCheckbox.checked = false;
-            breakfastCheckbox.disabled = true;
-            lunchCheckbox.disabled = true;
-            dinnerCheckbox.disabled = true;
-        } else {
-            // Re-enable other checkboxes if meal_not_included is unchecked
-            breakfastCheckbox.disabled = false;
-            lunchCheckbox.disabled = false;
-            dinnerCheckbox.disabled = false;
-            updateMealNotIncludedState();
+        // Function to handle the state when meal_not_included is clicked
+        function handleMealNotIncludedClick() {
+            if (mealNotIncludedCheckbox.checked) {
+                // Uncheck and disable other checkboxes
+                breakfastCheckbox.checked = false;
+                lunchCheckbox.checked = false;
+                dinnerCheckbox.checked = false;
+                breakfastCheckbox.disabled = true;
+                lunchCheckbox.disabled = true;
+                dinnerCheckbox.disabled = true;
+            } else {
+                // Re-enable other checkboxes if meal_not_included is unchecked
+                breakfastCheckbox.disabled = false;
+                lunchCheckbox.disabled = false;
+                dinnerCheckbox.disabled = false;
+                updateMealNotIncludedState();
+            }
         }
-    }
 
-    // Attach change event listeners to the checkboxes
-    breakfastCheckbox.addEventListener('change', updateMealNotIncludedState);
-    lunchCheckbox.addEventListener('change', updateMealNotIncludedState);
-    dinnerCheckbox.addEventListener('change', updateMealNotIncludedState);
-    mealNotIncludedCheckbox.addEventListener('change', handleMealNotIncludedClick);
+        // Attach change event listeners to the checkboxes
+        breakfastCheckbox.addEventListener('change', updateMealNotIncludedState);
+        lunchCheckbox.addEventListener('change', updateMealNotIncludedState);
+        dinnerCheckbox.addEventListener('change', updateMealNotIncludedState);
+        mealNotIncludedCheckbox.addEventListener('change', handleMealNotIncludedClick);
 
-    // Initial state update
-    updateMealNotIncludedState();
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Get references to the checkboxes
-    var breakfastCheckbox = document.getElementById('breakfast_included');
-    var lunchCheckbox = document.getElementById('lunch_included');
-    var dinnerCheckbox = document.getElementById('dinner_included');
-    var mealNotIncludedCheckbox = document.getElementById('meal_not_included');
-
-    // Function to handle the state of meal_not_included checkbox
-    function updateMealNotIncludedState() {
-        if (breakfastCheckbox.checked || lunchCheckbox.checked || dinnerCheckbox.checked) {
-            mealNotIncludedCheckbox.checked = false;
-            mealNotIncludedCheckbox.disabled = true;
-        } else {
-            mealNotIncludedCheckbox.disabled = false;
-        }
-    }
-
-    // Function to handle the state when meal_not_included is clicked
-    function handleMealNotIncludedClick() {
-        if (mealNotIncludedCheckbox.checked) {
-            // Uncheck and disable other checkboxes
-            breakfastCheckbox.checked = false;
-            lunchCheckbox.checked = false;
-            dinnerCheckbox.checked = false;
-            breakfastCheckbox.disabled = true;
-            lunchCheckbox.disabled = true;
-            dinnerCheckbox.disabled = true;
-        } else {
-            // Re-enable other checkboxes if meal_not_included is unchecked
-            breakfastCheckbox.disabled = false;
-            lunchCheckbox.disabled = false;
-            dinnerCheckbox.disabled = false;
-            updateMealNotIncludedState();
-        }
-    }
-
-    // Attach change event listeners to the checkboxes
-    breakfastCheckbox.addEventListener('change', updateMealNotIncludedState);
-    lunchCheckbox.addEventListener('change', updateMealNotIncludedState);
-    dinnerCheckbox.addEventListener('change', updateMealNotIncludedState);
-    mealNotIncludedCheckbox.addEventListener('change', handleMealNotIncludedClick);
-
-    // Initial state update
-    updateMealNotIncludedState();
-});
+        // Initial state update
+        updateMealNotIncludedState();
+    });
 </script>

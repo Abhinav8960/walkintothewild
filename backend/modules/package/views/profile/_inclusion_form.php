@@ -53,7 +53,20 @@ use yii\bootstrap5\ActiveForm;
                 </div>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-md-3">
+                <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included"])->label('Breakfast Included') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included"])->label('Lunch Included') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included"])->label('Dinner Included') ?>
+            </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'meal_not_included')->checkbox(['value' => "1", 'id' => "meal_not_included"])->label('Meal Not Included') ?>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <?= $form->field($model, 'package_inclusion')->textarea(['rows' => '2', 'placeholder' => 'List everything included'])->label('Package Inclusion') ?>
@@ -86,3 +99,52 @@ bulleteditor('packageform-package_exclusion');
 JS;
 $this->registerJs($script);
 ?>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get references to the checkboxes
+        var breakfastCheckbox = document.getElementById('breakfast_included');
+        var lunchCheckbox = document.getElementById('lunch_included');
+        var dinnerCheckbox = document.getElementById('dinner_included');
+        var mealNotIncludedCheckbox = document.getElementById('meal_not_included');
+
+        // Function to handle the state of meal_not_included checkbox
+        function updateMealNotIncludedState() {
+            if (breakfastCheckbox.checked || lunchCheckbox.checked || dinnerCheckbox.checked) {
+                mealNotIncludedCheckbox.checked = false;
+                mealNotIncludedCheckbox.disabled = true;
+            } else {
+                mealNotIncludedCheckbox.disabled = false;
+            }
+        }
+
+        // Function to handle the state when meal_not_included is clicked
+        function handleMealNotIncludedClick() {
+            if (mealNotIncludedCheckbox.checked) {
+                // Uncheck and disable other checkboxes
+                breakfastCheckbox.checked = false;
+                lunchCheckbox.checked = false;
+                dinnerCheckbox.checked = false;
+                breakfastCheckbox.disabled = true;
+                lunchCheckbox.disabled = true;
+                dinnerCheckbox.disabled = true;
+            } else {
+                // Re-enable other checkboxes if meal_not_included is unchecked
+                breakfastCheckbox.disabled = false;
+                lunchCheckbox.disabled = false;
+                dinnerCheckbox.disabled = false;
+                updateMealNotIncludedState();
+            }
+        }
+
+        // Attach change event listeners to the checkboxes
+        breakfastCheckbox.addEventListener('change', updateMealNotIncludedState);
+        lunchCheckbox.addEventListener('change', updateMealNotIncludedState);
+        dinnerCheckbox.addEventListener('change', updateMealNotIncludedState);
+        mealNotIncludedCheckbox.addEventListener('change', handleMealNotIncludedClick);
+
+        // Initial state update
+        updateMealNotIncludedState();
+    });
+</script>

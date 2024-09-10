@@ -152,6 +152,7 @@ class PackageForm extends \yii\base\Model
             [['start_location', 'end_location'], 'string', 'max' => 255],
             [['start_date', 'end_date', 'date_change_policy', 'refund_policy', 'owned_by_id', 'safari_type', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
 
+            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
 
 
             [['package_id', 'day', 'meal_lunch', 'meal_breakfast', 'meal_dinner', 'status', 'popular_package'], 'integer'],
