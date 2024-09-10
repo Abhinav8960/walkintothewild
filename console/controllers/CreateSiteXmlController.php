@@ -76,51 +76,145 @@ class CreateSiteXmlController extends Controller
     echo "Script execution time: " . $executionTime . " seconds";
   }
 
+  // public function actionSitePagesCounter()
+  // {
+  //   $start = microtime(true);
+
+  //   $records = SitePages::find()->where(['status' => true])->all();
+  //   if (count($records) > 0) {
+  //     $frontend_url = Yii::$app->params['frontend_url'];
+  //     //$frontend_url = 'http://staging.walkintothewild.in/';
+  //     foreach ($records as $row) {
+  //       $full_url =  $row['url'];
+  //       $total_records = FrontendRequestLog::find()->where(['request_url' => $full_url])->andWhere(['is_count' => 0])->count();
+  //       $row->counter = $row->counter + $total_records;
+  //       $row->save();
+
+  //       FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $full_url, 'is_count' => 0]);
+  //     }
+  //   }
+
+  //   $end = microtime(true);
+  //   $executionTime = $end - $start;
+  //   echo "Script execution time: " . $executionTime . " seconds";
+  // }
+
   public function actionSitePagesCounter()
   {
     $start = microtime(true);
 
+    // Fetch all active site pages
     $records = SitePages::find()->where(['status' => true])->all();
+
     if (count($records) > 0) {
       $frontend_url = Yii::$app->params['frontend_url'];
-      //$frontend_url = 'http://staging.walkintothewild.in/';
-      foreach ($records as $row) {
-        $full_url =  $row['url'];
-        $total_records = FrontendRequestLog::find()->where(['request_url' => $full_url])->andWhere(['is_count' => 0])->count();
-        $row->counter = $row->counter + $total_records;
-        $row->save();
 
-        FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $full_url, 'is_count' => 0]);
+      // Collect URLs for batch processing
+      $urls = array_map(fn($row) => $row['url'], $records);
+
+      // Fetch counts for all URLs in a single query
+      $urlCounts = FrontendRequestLog::find()
+        ->select(['request_url', 'COUNT(*) AS count'])
+        ->where(['request_url' => $urls])
+        ->andWhere(['is_count' => 0])
+        ->groupBy('request_url')
+        ->asArray()
+        ->all();
+
+      // Prepare URL counts for quick lookup
+      $urlCountMap = [];
+      foreach ($urlCounts as $urlCount) {
+        $urlCountMap[$urlCount['request_url']] = $urlCount['count'];
       }
+
+      // Bulk update counters
+      $sitePageUpdates = [];
+      foreach ($records as $row) {
+        $full_url = $row['url'];
+        $total_records = $urlCountMap[$full_url] ?? 0;
+        $sitePageUpdates[$row['id']] = $row->counter + $total_records; // Assuming 'id' is the primary key
+      }
+
+      // Update all site pages in a single query
+      foreach ($sitePageUpdates as $id => $newCounter) {
+        SitePages::updateAll(['counter' => $newCounter], ['id' => $id]);
+      }
+
+      // Mark counts as processed in one query
+      FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $urls, 'is_count' => 0]);
     }
 
     $end = microtime(true);
     $executionTime = $end - $start;
     echo "Script execution time: " . $executionTime . " seconds";
   }
+
+
+  // public function actionNonSitePagesCounter()
+  // {
+  //   $start = microtime(true);
+
+  //   $records = SitePages::find()->where(['status' => false])->all();
+  //   if (count($records) > 0) {
+  //     $frontend_url = Yii::$app->params['frontend_url'];
+  //     //$frontend_url = 'http://staging.walkintothewild.in/';
+  //     foreach ($records as $row) {
+  //       $full_url =  $row['url'];
+  //       $total_records = FrontendRequestLog::find()->where(['request_url' => $full_url])->andWhere(['is_count' => 0])->count();
+  //       $row->counter = $row->counter + $total_records;
+  //       $row->save();
+
+  //       FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $full_url, 'is_count' => 0]);
+  //     }
+  //   }
+
+  //   $end = microtime(true);
+  //   $executionTime = $end - $start;
+  //   echo "Script execution time: " . $executionTime . " seconds";
+  // }
 
   public function actionNonSitePagesCounter()
   {
     $start = microtime(true);
 
+    // Fetch all inactive site pages
     $records = SitePages::find()->where(['status' => false])->all();
     if (count($records) > 0) {
       $frontend_url = Yii::$app->params['frontend_url'];
-      //$frontend_url = 'http://staging.walkintothewild.in/';
-      foreach ($records as $row) {
-        $full_url =  $row['url'];
-        $total_records = FrontendRequestLog::find()->where(['request_url' => $full_url])->andWhere(['is_count' => 0])->count();
-        $row->counter = $row->counter + $total_records;
-        $row->save();
 
-        FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $full_url, 'is_count' => 0]);
+      // Collect all URLs to count and update
+      $urls = array_map(fn($row) => $row['url'], $records);
+      $urlCounts = FrontendRequestLog::find()
+        ->select(['request_url', 'COUNT(*) AS count'])
+        ->where(['request_url' => $urls])
+        ->andWhere(['is_count' => 0])
+        ->groupBy('request_url')
+        ->asArray()
+        ->all();
+
+      // Prepare URL counts for quick lookup
+      $urlCountMap = [];
+      foreach ($urlCounts as $urlCount) {
+        $urlCountMap[$urlCount['request_url']] = $urlCount['count'];
       }
+
+      // Update counters for each site page
+      foreach ($records as $row) {
+        $full_url = $row['url'];
+        $total_records = $urlCountMap[$full_url] ?? 0;
+        $row->counter += $total_records;
+        $row->save();
+      }
+
+      // Mark counts as processed
+      FrontendRequestLog::updateAll(['is_count' => 1], ['request_url' => $urls, 'is_count' => 0]);
     }
 
     $end = microtime(true);
     $executionTime = $end - $start;
     echo "Script execution time: " . $executionTime . " seconds";
   }
+
 
   public function actionDump_untraced_request()
   {
