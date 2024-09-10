@@ -51,6 +51,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                             <li><a href="/about-us">About Us</a></li>
                             <li><a href="/contact-us">Contact Us</a></li>
                             <li><a href="/faq">FAQs</a></li>
+                            <li><a href="/sitemap/list">Sitemap</a></li>
                         </ul>
                     </div>
                 </div>
