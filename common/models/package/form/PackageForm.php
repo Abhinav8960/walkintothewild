@@ -275,7 +275,7 @@ class PackageForm extends \yii\base\Model
             'end_location' => 'Tour End',
             'package_image' => 'Package Image',
             'package_banner_image' => 'Package Banner Image',
-            'stay_category_id' => 'Stay Category',
+            'stay_category_id' => 'Accommodation',
             'cost_per_person' => 'Cost Per Person',
             'package_description' => 'Package Description',
             'package_itinerary_overview' => 'Overview',

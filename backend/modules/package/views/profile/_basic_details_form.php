@@ -136,7 +136,7 @@ use yii\bootstrap5\ActiveForm;
                     ])->label('Safari Park') ?>
                 </div>
                 <div class="col-md-3">
-                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Category']) ?>
+                    <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select Accommodation']) ?>
                 </div>
 
                 <div class="col-md-3">
