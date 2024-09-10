@@ -53,14 +53,17 @@ use yii\bootstrap5\ActiveForm;
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included"])->label('Breakfast Included') ?>
+            <div class="col-md-2">
+                Meals :
             </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included"])->label('Lunch Included') ?>
+            <div class="col-md-2">
+                <?= $form->field($model, 'breakfast_included')->checkbox(['value' => "1", 'id' => "breakfast_included"])->label('Breakfast') ?>
             </div>
-            <div class="col-md-3">
-                <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included"])->label('Dinner Included') ?>
+            <div class="col-md-2">
+                <?= $form->field($model, 'lunch_included')->checkbox(['value' => "1", 'id' => "lunch_included"])->label('Lunch') ?>
+            </div>
+            <div class="col-md-2">
+                <?= $form->field($model, 'dinner_included')->checkbox(['value' => "1", 'id' => "dinner_included"])->label('Dinner') ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($model, 'meal_not_included')->checkbox(['value' => "1", 'id' => "meal_not_included"])->label('Meal Not Included') ?>

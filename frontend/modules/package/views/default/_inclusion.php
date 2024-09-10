@@ -44,10 +44,28 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
+
+                <div class="row mb-2">
+                    <div class="col-md-3 col-sm-4">
+                        <ul class="mb-0 px-3">
+                            <li><label class="control-label font_sizes">Meals : </label></li>
+                        </ul>
+
+                    </div>
+                    <div class="col-md-9 col-sm-8">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label d-flex gap-3">
+                                <input type="checkbox" id="breakfast_included" value="1" <?= ($package->breakfast_included == 1) ? 'checked' : '' ?> disabled> Breakfast<br>
+                                <input type="checkbox" id="lunch_included" value="1" <?= ($package->lunch_included == 1) ? 'checked' : '' ?> disabled> Lunch<br>
+                                <input type="checkbox" id="dinner_included" value="1" <?= ($package->dinner_included == 1) ? 'checked' : '' ?> disabled> Dinner<br>
+                                <input type="checkbox" id="meal_not_included" value="1" <?= ($package->meal_not_included == 1) ? 'checked' : '' ?> disabled> Meal Not Included<br>
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     <div class="row inclusions">
         <div class="col-md-12 pt-3">
             <div class="itenary_text font_familydd">
@@ -57,5 +75,5 @@
                 <p class="mb-2"><?= $package->package_exclusion ?></p>
             </div>
         </div>
-       
+
     </div>

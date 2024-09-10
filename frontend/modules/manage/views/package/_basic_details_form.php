@@ -153,7 +153,7 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-md-6 col-lg-6 col-xxl-4">
                     <?= $form->field($model, 'stay_category_id', [
                         'labelOptions' => ['class' => 'Modal_label']
-                    ])->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Not Included']) ?>
+                    ])->dropDownList(GeneralModel::packageoption(), ['prompt' => 'Select']) ?>
                 </div>
 
                 <div class="col-md-6 col-lg-6 col-xxl-4">
