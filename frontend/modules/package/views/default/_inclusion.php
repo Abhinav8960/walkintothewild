@@ -48,7 +48,7 @@
                 <div class="row mb-2">
                     <div class="col-md-3 col-sm-4">
                         <ul class="mb-0 px-3">
-                            <li><label class="control-label font_sizes">Meals : </label></li>
+                            <li><label class="control-label font_sizes">Meals </label></li>
                         </ul>
 
                     </div>
