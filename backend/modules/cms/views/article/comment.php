@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] =  ['label' => 'Article', 'url' => '/cms/article'
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $recentposts = ArticleSearch::recentpost();
-$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
-// $this->params['baseurl'] = $webasset->baseUrl;
+$webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 
@@ -86,7 +86,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
                     </div>
                     <div class="author_wrapper">
                         <ul class="artical-info ">
-                            <li><i class="fa-solid fa-user"></i><a href="#"><?= isset($article->articleAuthor) ? $article->articleAuthor->author_name : '' ?></a></li>
+                            <li><i class="fa-solid fa-user"></i><a href="#"><?= isset($article->user) ? $article->user->name : '' ?></a></li>
                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href=""><?= $article->getArticlecomments()->where(['parent_id' => null, 'status' => 1, 'is_deleted' => 0])->count() ?> Comments</a></li>
                             <li><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($article->article_date)) ?></li>
 
