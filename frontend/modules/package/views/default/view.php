@@ -129,7 +129,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= isset($package->pickanddrop) ? 'Included' : 'Not Included' ?></p>
+                                            <p class="mb-0"><?= $package->pickanddrop ?></p>
                                         </div>
                                     </div>
                                 </div>
