@@ -168,6 +168,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
                                             <?php } else if ($package->package_agenda_id && $package->package_agenda_id == 3) { ?>
                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/elephant.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                            <?php } else { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
                                             <?php } ?>
                                         </div>
                                         <div class="text-form">
