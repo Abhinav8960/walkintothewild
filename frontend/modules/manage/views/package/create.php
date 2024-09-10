@@ -53,7 +53,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                 <div class="col-md-6 col-lg-4">
                                     <?= $form->field($model, 'safari_type', [
                                         'labelOptions' => ['class' => 'Modal_label']
-                                    ])->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Select Day/Night'])->label('Safrai Type <span class="necessary">*</span>') ?>
+                                    ])->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['class' => 'form-select form-select-lg mb-3', 'prompt' => 'Select Safrai Type'])->label('Safrai Type <span class="necessary">*</span>') ?>
                                 </div>
 
                                 <div class="col-md-6 col-lg-4">
