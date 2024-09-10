@@ -126,7 +126,7 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Shared Safari">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $share_safari->no_of_safari ?> Shared Safari</p>
@@ -136,7 +136,7 @@ $this->params['title'] = $this->title; ?>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 align-items-center">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Share Seats">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Seats">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">Available Seats - <?= $share_safari->share_seat ?>/<?= $share_safari->total_seat ?></p>
@@ -176,7 +176,7 @@ $this->params['title'] = $this->title; ?>
                                                 <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cost">
                                             </div>
                                             <div class="text-form">
-                                                <p class="mb-0"><?= number_format($share_safari->estimate_price_min) ?>- <?= number_format($share_safari->estimate_price_max) ?> Estimate Per Person Cost</p>
+                                                <p class="mb-0"><span class="font_span"><?= number_format($share_safari->estimate_price_min) ?>- <?= number_format($share_safari->estimate_price_max) ?></span> Estimate Per Person Cost</p>
                                             </div>
                                         </div>
                                     </div>
