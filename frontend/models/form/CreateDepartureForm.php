@@ -38,6 +38,12 @@ class CreateDepartureForm extends \yii\base\Model
     public $rand_text;
     public $cut_off_date;
 
+    public $breakfast_included;
+    public $lunch_included;
+    public $dinner_included;
+    public $meal_not_included;
+
+
     public $action_url;
     public $action_validate_url;
 
@@ -78,6 +84,11 @@ class CreateDepartureForm extends \yii\base\Model
             $this->refund_policy = $this->shared_safari_departure_model->refund_policy;
             $this->getting_there = $this->shared_safari_departure_model->getting_there;
 
+            $this->breakfast_included = $this->shared_safari_departure_model->breakfast_included;
+            $this->lunch_included = $this->shared_safari_departure_model->lunch_included;
+            $this->dinner_included = $this->shared_safari_departure_model->dinner_included;
+            $this->meal_not_included = $this->shared_safari_departure_model->meal_not_included;
+
 
             $this->park_list =  ShareSafariParklist::find()->select('park_id')->where(['share_safari_id' => $this->shared_safari_departure_model->id])->column(); //abb multiple park ko store karenge
         }
@@ -97,7 +108,8 @@ class CreateDepartureForm extends \yii\base\Model
             ['cost_per_person', 'integer', 'max' => 1000000],
             ['cut_off_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<'],
             [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
-
+            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
+            [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
         ];
     }
 
@@ -113,9 +125,9 @@ class CreateDepartureForm extends \yii\base\Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['inclusion'] = ['share_safari_inclusion', 'share_safari_exclusion', 'share_safari_included'];
-        $scenarios['policy_info'] = ['share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy'];
-        $scenarios['getting_there'] = ['getting_there'];
+        $scenarios['inclusion'] = ['share_safari_inclusion', 'share_safari_exclusion', 'share_safari_included', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
+        $scenarios['policy_info'] = ['share_safari_terms_condtition', 'privacy_policy', 'change_policy', 'what_you_must_carry', 'date_change_policy', 'refund_policy', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
+        $scenarios['getting_there'] = ['getting_there', 'breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'];
         return $scenarios;
     }
 
@@ -134,7 +146,7 @@ class CreateDepartureForm extends \yii\base\Model
             'no_of_safari' => 'No Of Safari',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
-            'stay_category_id' => 'Stay Category ID',
+            'stay_category_id' => 'Accommodation',
             'cost_per_person' => 'Cost Per Person',
             'tour_duration' => 'Total Duration',
             'safari_plan' => 'Safari Plan',
@@ -178,6 +190,12 @@ class CreateDepartureForm extends \yii\base\Model
         $this->shared_safari_departure_model->date_change_policy = $this->date_change_policy;
         $this->shared_safari_departure_model->refund_policy = $this->refund_policy;
         $this->shared_safari_departure_model->getting_there = $this->getting_there;
+
+
+        $this->shared_safari_departure_model->breakfast_included = $this->breakfast_included;
+        $this->shared_safari_departure_model->lunch_included = $this->lunch_included;
+        $this->shared_safari_departure_model->dinner_included = $this->dinner_included;
+        $this->shared_safari_departure_model->meal_not_included = $this->meal_not_included;
 
         if ($this->park_list) {
             $this->shared_safari_departure_model->park_id = $this->park_list[0];

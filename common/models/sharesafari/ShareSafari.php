@@ -231,23 +231,13 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
 
     public function getMeals()
     {
-        $package_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $this->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
         $meals_text = '';
-        if ($package_includes) {
-            $meals_text = 'Breakfast, ';
+        if ($this->breakfast_included == 1 || $this->lunch_included == 1 || $this->dinner_included == 1) {
+            $meals_text = 'Included';
         }
 
-        $package_includes_lunch = ShareSafariIncluded::find()->where(['share_safari_id' => $this->id, 'include_id' => 7, 'selection' => 1, 'status' => 1])->limit(1)->one();
-        if ($package_includes_lunch) {
-            $meals_text .= 'Lunch, ';
-        }
 
-        $package_includes_dinner = ShareSafariIncluded::find()->where(['share_safari_id' => $this->id, 'include_id' => 8, 'selection' => 1, 'status' => 1])->limit(1)->one();
-        if ($package_includes_dinner) {
-            $meals_text .= 'Dinner, ';
-        }
 
-        return ($meals_text) ? substr($meals_text, 0, -2) : 'Not Included';
+        return ($meals_text) ? $meals_text : 'Not Included';
     }
 }

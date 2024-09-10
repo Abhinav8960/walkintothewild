@@ -945,6 +945,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '1' => 'Premium',
             '2' => 'Standard',
             '3' => 'Economical',
+            '4' => 'Not Included',
 
         ];
         return $return;
@@ -956,7 +957,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
             '1' => 'Created Recently',
             '2' => 'Less Safaris',
             '3' => 'More Safaris',
-            '4' => 'cheapest',
+            '4' => 'Cheapest',
 
 
         ];

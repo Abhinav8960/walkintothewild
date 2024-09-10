@@ -137,7 +137,7 @@ $this->params['title'] = $this->title;
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label for="" class="Modal_label">Stay Category</label>
-                                <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::budgetoption(), ['prompt' => 'Not Included', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                                <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::budgetoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
                             </div>
                             <div class="col-lg-6 mb-2">
                                 <label for="" class="Modal_label">Estimate Price Per Person (INR) <span class="necessary">*</span></label>

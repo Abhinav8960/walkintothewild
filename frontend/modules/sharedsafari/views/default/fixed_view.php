@@ -145,7 +145,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <p class="mb-0"><?php
                                                             $pick_drop_includes = ShareSafariIncluded::find()->where(['share_safari_id' => $share_safari->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
 
-                                                            echo ($pick_drop_includes) ? 'Pick & Drop' : 'Not Included';
+                                                            echo ($pick_drop_includes) ? 'Included' : 'Not Included';
                                                             ?></p>
                                         </div>
                                     </div>
@@ -184,7 +184,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0">
-                                                <?= isset(GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id]) ? 'Included' : 'Not Included' ?>
+                                                <?= isset(GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id]) ? GeneralModel::agendaoption()[$share_safari->share_safari_agenda_id] : 'Not Included' ?>
                                             </p>
                                         </div>
                                     </div>

@@ -62,8 +62,8 @@ use common\models\park\SafariPark;
             </div>
         </div>
         <div class="col-md-6 mb-2">
-            <label for="" class="Modal_label">Stay Category</label>
-            <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::budgetoption(), ['prompt' => 'Not Included', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <label for="" class="Modal_label">Accommodation</label>
+            <?= $form->field($model, 'stay_category_id')->dropDownList(GeneralModel::budgetoption(), ['prompt' => 'Select', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
 
 
