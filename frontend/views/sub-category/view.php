@@ -10,6 +10,9 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Pages List';
 $this->params['breadcrumbs'][] = $this->title;
+
+// print_r($pages);
+// die();
 ?>
 <div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -19,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <ul>
         <?php foreach ($pages as $page): ?>
             <li>
-                <a href="/<?= Html::encode($page['url']) ?>"><?= Html::encode($page['title']) ?></a>
+                <a href="/<?= Html::encode($page['url']) ?>"><?= isset($page['title']) ? Html::encode($page['title']) : $page['sub_category'] ?></a>
                 <p><?= Html::encode($page['description']) ?></p>
             </li>
         <?php endforeach; ?>
