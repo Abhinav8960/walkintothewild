@@ -166,6 +166,9 @@ use kartik\datetime\DateTimePicker;
                     ],
                 ]) ?>
             </div>
+            <div class="col-md-3">
+                <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select Theme']) ?>
+            </div>
 
             <div class="col-md-3">
                 <?= $form->field($model, 'gst_percentage')->textInput([

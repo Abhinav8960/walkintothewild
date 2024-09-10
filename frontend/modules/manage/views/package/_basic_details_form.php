@@ -204,6 +204,10 @@ use yii\bootstrap5\ActiveForm;
                         ],
                     ]) ?>
                 </div>
+                <div class="col-md-6 col-lg-6 col-xxl-4">
+                    <label for="" class="Modal_label">Theme</label>
+                    <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select Theme', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                </div>
             </div>
 
             <div class="col-md-12">

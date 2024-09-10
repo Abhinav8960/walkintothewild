@@ -177,6 +177,9 @@ use yii\bootstrap5\ActiveForm;
                         ],
                     ])->label('Select Vehicle') ?>
                 </div>
+                <div class="col-md-3">
+                    <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select Theme']) ?>
+                </div>
             </div>
 
             <div class="col-md-12">

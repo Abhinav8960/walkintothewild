@@ -40,7 +40,7 @@ use common\models\park\SafariPark;
 
     <div class="col-md-6 mb-1">
         <label for="" class="Modal_label">Theme</label>
-        <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select Agenda', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+        <?= $form->field($model, 'share_safari_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select Theme', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
     </div>
 
     <div class="col-md-12">

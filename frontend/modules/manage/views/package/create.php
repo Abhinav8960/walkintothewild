@@ -222,6 +222,10 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
                                         ],
                                     ]) ?>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="" class="Modal_label">Theme</label>
+                                    <?= $form->field($model, 'package_agenda_id')->dropDownList(['1' => 'Photography', '3' => 'Safari Experience'], ['prompt' => 'Select Theme', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+                                </div>
 
                                 <?php
                                 if (!empty($model->package_model->id)) { ?>

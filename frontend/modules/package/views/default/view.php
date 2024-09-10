@@ -164,14 +164,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Camera Fee">
+                                            <?php if ($package->package_agenda_id && $package->package_agenda_id == 1) { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                            <?php } else if ($package->package_agenda_id && $package->package_agenda_id == 3) { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/elephant.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                            <?php } ?>
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 4, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($package_includes) ? 'Included' : 'Not Included';
-                                                            ?></p>
+                                            <p class="mb-0">
+                                                <?= isset(GeneralModel::agendaoption()[$package->package_agenda_id]) ? GeneralModel::agendaoption()[$package->package_agenda_id] : 'Not Included' ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
