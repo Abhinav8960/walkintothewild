@@ -73,6 +73,9 @@ class ProfileController extends Controller
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
                         return $this->redirect(['index', 'package_id' => $package_id]);
                     }
+                } else {
+                    print_r($model->errors);
+                    die();
                 }
             }
         } else {

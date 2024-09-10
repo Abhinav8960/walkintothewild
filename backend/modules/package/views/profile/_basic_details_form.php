@@ -45,6 +45,11 @@ use yii\bootstrap5\ActiveForm;
             <div class="col-md-3">
                 <?= $form->field($model, 'no_of_day')->dropDownList(GeneralModel::packagedayoption(), ['prompt' => 'Select Day/Night'])->label('Day/Night') ?>
             </div>
+
+
+            <div class="col-md-3">
+                <?= $form->field($model, 'safari_type')->dropDownList(['1' => 'Shared Safari', '2' => 'Private Safari'], ['prompt' => 'Select Safrai Type']) ?>
+            </div>
             <div class="col-md-3">
                 <?= $form->field($model, 'no_of_safari')->textInput([
                     'maxlength' => true,
