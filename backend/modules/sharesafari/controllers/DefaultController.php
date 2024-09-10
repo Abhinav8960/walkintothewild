@@ -32,7 +32,7 @@ class DefaultController extends Controller
     {
         $searchModel = new ShareSafariSearch();
 
-        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_administrator)) {
+        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_adminstrator)) {
             $searchModel->host_user_id = Yii::$app->user->identity->id;
         }
         $searchModel->report_days = 'today';
