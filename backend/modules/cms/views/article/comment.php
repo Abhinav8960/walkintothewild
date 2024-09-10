@@ -16,8 +16,8 @@ $this->params['breadcrumbs'][] =  ['label' => 'Article', 'url' => '/cms/article'
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $recentposts = ArticleSearch::recentpost();
-$webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
-// $this->params['baseurl'] = $webasset->baseUrl;
+$webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
+$this->params['baseurl'] = $webasset->baseUrl;
 ?>
 
 
