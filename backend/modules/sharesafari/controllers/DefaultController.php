@@ -5,11 +5,13 @@ namespace backend\modules\sharesafari\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
+use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use common\models\sharesafari\form\ShareSafariApprovalForm;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariSearch;
@@ -37,9 +39,27 @@ class DefaultController extends Controller
         }
         $searchModel->report_days = 'today';
         $searchModel->status = 1;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->sharedsafarisearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    public function actionFixedDeparture()
+    {
+        $searchModel = new ShareSafariSearch();
+
+        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_adminstrator)) {
+            $searchModel->host_user_id = Yii::$app->user->identity->id;
+        }
+        $searchModel->report_days = 'today';
+        $searchModel->status = 1;
+        $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
+
+        return $this->render('fixed_departure_index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -267,5 +287,19 @@ class DefaultController extends Controller
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionFixedView($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $searchModel = new ShareSafariFaqSearch();
+        $searchModel->share_safari_id = $share_safari->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
+        return $this->render('_fixed_view', [
+            'share_safari' => $share_safari,
+            'faqs' => $faqs,
+        ]);
     }
 }

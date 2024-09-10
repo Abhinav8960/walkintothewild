@@ -27,9 +27,9 @@ use yii\widgets\ActiveForm;
     <div class="col-md-2">
         <?= $form->field($model, 'safari_plan')->textInput(['placeholder' => 'Search by Safari Plan'])->label(false) ?>
     </div>
-    <div class="col-md-2">
+    <!-- <div class="col-md-2">
         <?= $form->field($model, 'type')->dropDownList(GeneralModel::sharedsafaritype(), ['prompt' => 'Select Type'])->label(false) ?>
-    </div>
+    </div> -->
     <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => 'Select Status'])->label(false) ?>
     </div>

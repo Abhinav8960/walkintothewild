@@ -226,4 +226,119 @@ class ShareSafariSearch extends ShareSafari
 
         return $query;
     }
+
+
+    public function sharedsafarisearch($params, $pagination = true)
+    {
+        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_SAFARI]);
+
+        // add conditions that should always apply here
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'share_safari.type' => $this->type,
+            'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.host_type' => $this->host_type,
+            'share_safari.park_id' => $this->park_id,
+            'share_safari.share_safari_agenda_id' => $this->share_safari_agenda_id,
+            'share_safari.start_date' => $this->start_date,
+            'share_safari.end_date' => $this->end_date,
+            'share_safari.stay_category_id' => $this->stay_category_id,
+            'share_safari.total_seat' => $this->total_seat,
+            'share_safari.share_seat' => $this->share_seat,
+            'share_safari.created_at' => $this->created_at,
+            'share_safari.created_by' => $this->created_by,
+            'share_safari.updated_at' => $this->updated_at,
+            'share_safari.updated_by' => $this->updated_by,
+            'share_safari.status' => $this->status,
+        ]);
+        $query->andFilterWhere(['like', 'safari_plan', $this->safari_plan]);
+
+        if ($this->title) {
+            $query->joinwith(['park' => function ($title_query) {
+                $title_query->andWhere(['like', 'title', $this->title]);
+            }]);
+        }
+
+        if ($this->report_days) {
+
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
+        return $dataProvider;
+    }
+
+    public function fixeddeparturesearch($params, $pagination = true)
+    {
+        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_FIXED_DEPARTURE]);
+
+        // add conditions that should always apply here
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'share_safari.type' => $this->type,
+            'share_safari.host_user_id' => $this->host_user_id,
+            'share_safari.host_type' => $this->host_type,
+            'share_safari.park_id' => $this->park_id,
+            'share_safari.share_safari_agenda_id' => $this->share_safari_agenda_id,
+            'share_safari.start_date' => $this->start_date,
+            'share_safari.end_date' => $this->end_date,
+            'share_safari.stay_category_id' => $this->stay_category_id,
+            'share_safari.total_seat' => $this->total_seat,
+            'share_safari.share_seat' => $this->share_seat,
+            'share_safari.created_at' => $this->created_at,
+            'share_safari.created_by' => $this->created_by,
+            'share_safari.updated_at' => $this->updated_at,
+            'share_safari.updated_by' => $this->updated_by,
+            'share_safari.status' => $this->status,
+        ]);
+        $query->andFilterWhere(['like', 'safari_plan', $this->safari_plan]);
+
+        if ($this->title) {
+            $query->joinwith(['park' => function ($title_query) {
+                $title_query->andWhere(['like', 'title', $this->title]);
+            }]);
+        }
+
+        if ($this->report_days) {
+
+            // 
+            $query->andWhere($this->rawdatequery);
+        }
+        return $dataProvider;
+    }
 }
