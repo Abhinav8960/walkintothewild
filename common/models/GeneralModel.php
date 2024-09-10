@@ -1120,8 +1120,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
     {
         $return = [
             '1' => 'Active',
-            '2' => 'Inactive',
-            '3' => 'Seat Full',
+            '0' => 'Inactive',
+            '2' => 'Seat Full',
         ];
         return $return;
     }

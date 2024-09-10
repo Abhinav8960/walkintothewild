@@ -484,7 +484,7 @@ class DefaultController extends FrontendBaseController
         if (!$model) {
             return $this->redirect(['/park']);
         }
-        $shared_safaries_query = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->andWhere(['>=', 'start_date', date("Y-m-d")]);
+        $shared_safaries_query = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'park_id' => $model->id])->andWhere(['>=', 'start_date', date("Y-m-d")]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $shared_safaries_query,
