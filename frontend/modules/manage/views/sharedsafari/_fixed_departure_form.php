@@ -92,7 +92,7 @@ use common\models\park\SafariPark;
                     <?= $form->field($model, 'total_seat')->textInput()->label(false) ?>
                 </div>
                 <div class="selects w-100">
-                    <label for="" class="Modal_label">Seats Available <span class="necessary">*</span></label>
+                    <label for="" class="Modal_label">Seats Used <span class="necessary">*</span></label>
                     <?= $form->field($model, 'share_seat')->textInput()->label(false) ?>
                 </div>
 
