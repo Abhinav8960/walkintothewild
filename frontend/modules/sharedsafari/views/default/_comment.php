@@ -1,5 +1,6 @@
 <?php
 
+use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIntrested;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
@@ -141,9 +142,9 @@ use yii\helpers\Url;
                 } ?>
             </div>
         </div>
-        <?php if ($share_safari->status == 2) {
+        <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) {
             echo '<p class="px-3 pt-2">Comment Closed for this Safari...</p>';
-        } elseif ($share_safari->status == 3) {
+        } elseif ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
             echo '<p class="px-3 pt-2">Comment Closed</p>';
         } else {
             if (Yii::$app->user->id) {

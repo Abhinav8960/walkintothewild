@@ -109,9 +109,9 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <div class="joinsafari">
                         <?php
 
-                        if ($share_safari->status == 2) { // Closed
+                        if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { // Closed
                             echo '<a href="#">Closed Safari</a>';
-                        } else if ($share_safari->status == 3) { // No Seat
+                        } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
                             echo '<a href="#">No seats</a>';
                         } else { // Open Safari
                             if (Yii::$app->user->identity) {

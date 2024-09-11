@@ -7,6 +7,7 @@ use common\models\UserWishlist;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
 use common\models\package\PackageIncluded;
+use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariIncluded;
 use common\models\sharesafari\ShareSafariIntrested;
 
@@ -98,9 +99,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                             <div class="d-flex justify-content-end flex-column gap-2 align-items-center w-100">
 
-                                <?php if ($share_safari->status == 2) {
+                                <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) {
                                     echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>';
-                                } else if ($share_safari->status == 3) {
+                                } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
                                     echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>';
                                 } else {
                                     if (Yii::$app->user->identity) {
@@ -247,9 +248,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
                                 <div class="btns-safaries">
 
-                                    <?php if ($share_safari->status == 2) {
+                                    <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) {
                                         echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>';
-                                    } else if ($share_safari->status == 3) {
+                                    } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
                                         echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>';
                                     } else {
                                         if (Yii::$app->user->identity) {

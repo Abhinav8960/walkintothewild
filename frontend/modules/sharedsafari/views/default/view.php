@@ -99,9 +99,9 @@ $this->params['title'] = $this->title; ?>
 
                             </div>
                             <div class="btns-safaries">
-                                <?php if ($share_safari->status == 2) { ?>
+                                <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { ?>
                                     <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="#">Closed Safari</a>
-                                <?php } else if ($share_safari->status == 3) { ?>
+                                <?php } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { ?>
                                     <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="#">No Seat Available</a>
                                     <?php } else {
                                     if (Yii::$app->user->identity) {
@@ -223,9 +223,9 @@ $this->params['title'] = $this->title; ?>
 
                                 </div>
                                 <div class="btns-safaries">
-                                    <?php if ($share_safari->status == 2) { ?>
+                                    <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">Closed Safari</a>
-                                    <?php } else if ($share_safari->status == 3) { ?>
+                                    <?php } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>
                                         <?php } else {
                                         if (Yii::$app->user->identity) {
