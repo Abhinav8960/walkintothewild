@@ -34,11 +34,11 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'Park',
+                        'label' => 'Title',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->park->title) ? Html::a($model->park->title, ['fixed-view', 'id' => $model->id], [
+                            return isset($model->share_safari_title) ? Html::a($model->share_safari_title, ['fixed-view', 'id' => $model->id], [
                                 'style' => 'color: black !important;',
                                 'title' => 'View',
                             ]) : '';
@@ -52,7 +52,7 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d', strtotime($model->start_date));
+                            return isset($model->start_date) ? date('Y-m-d', strtotime($model->start_date)) : '';
                         }
                     ],
                     [
@@ -60,7 +60,7 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d', strtotime($model->end_date));
+                            return isset($model->end_date) ? date('Y-m-d', strtotime($model->end_date)) : '';
                         }
                     ],
                     [
@@ -68,7 +68,7 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d', strtotime($model->cut_off_date));
+                            return isset($model->cut_off_date) ? date('Y-m-d', strtotime($model->cut_off_date)) : '';
                         }
                     ],
                     [
