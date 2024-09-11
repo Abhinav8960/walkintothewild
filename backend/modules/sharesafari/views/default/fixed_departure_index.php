@@ -96,6 +96,14 @@ if (Yii::$app->user->identity) {
                         }
                     ],
                     [
+                        'label' => 'Interested',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->intrested) ? $model->getIntrested()->where(['status' => 1])->count() : '';
+                        }
+                    ],
+                    [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
@@ -103,46 +111,12 @@ if (Yii::$app->user->identity) {
                             return $model->statuslabel;
                         }
                     ],
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'template' => '',
-                    //     // 'template' => '{view}',
-                    //     'buttons' => [
-                    //         // 'view' => function ($url, $model) {
-                    //         //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                    //         // ', ['view', 'id' => $model->id], [
-                    //         //         'class' => 'btn p-0 change-menuicon',
-                    //         //         'title' => 'view',
-
-                    //         //     ]);
-                    //         // },
-
-                    //     ]
-                    // ],
                 ],
             ]); ?>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header flageHeader">
-                <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Organize New Safari
-                </h6>
-            </div>
-
-            <div class="modal-body modal_form">
-                <div id='modalContent'></div>
-            </div>
-
-        </div>
-    </div>
-</div>
 <?php
 $script = <<< JS
 

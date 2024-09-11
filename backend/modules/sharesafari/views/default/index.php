@@ -45,19 +45,19 @@ if (Yii::$app->user->identity) {
                         }
                     ],
                     [
-                        'label' => 'Start Month',
+                        'label' => 'Start Date',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('M', strtotime($model->start_date));
+                            return date('Y-m-d', strtotime($model->start_date));
                         }
                     ],
                     [
-                        'label' => 'Start Day',
+                        'label' => 'End Date',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('d', strtotime($model->start_date));
+                            return date('Y-m-d', strtotime($model->end_date));
                         }
                     ],
                     [
@@ -84,6 +84,15 @@ if (Yii::$app->user->identity) {
                             return isset($model->user->name) ? $model->user->name : '';
                         }
                     ],
+
+                    [
+                        'label' => 'Interested',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->intrested) ? $model->getIntrested()->where(['status' => 1])->count() : '';
+                        }
+                    ],
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
@@ -92,24 +101,7 @@ if (Yii::$app->user->identity) {
                             return $model->statuslabel;
                         }
                     ],
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                    //     'template' => '',
-                    //     // 'template' => '{view}',
-                    //     'buttons' => [
-                    //         // 'view' => function ($url, $model) {
-                    //         //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                    //         // ', ['view', 'id' => $model->id], [
-                    //         //         'class' => 'btn p-0 change-menuicon',
-                    //         //         'title' => 'view',
 
-                    //         //     ]);
-                    //         // },
-
-                    //     ]
-                    // ],
                 ],
             ]); ?>
         </div>
