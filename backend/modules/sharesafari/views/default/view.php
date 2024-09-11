@@ -24,7 +24,7 @@ $this->params['title'] = $this->title;
             <div class="row border_bottom2 pb-4">
                 <div class="col-lg-7 col-md-8 border-right">
                     <div class="row">
-                       
+
 
                         <div class="col-md-3">
                             <div class="safritimg">
@@ -109,9 +109,9 @@ $this->params['title'] = $this->title;
             </div>
             <div class="row ">
                 <div class="col-12">
-                     <div class="btn-delet float-end pt-4">
-                            <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/sharesafari/default/share-safari-delete', 'id' => $share_safari->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
-                        </div>
+                    <div class="btn-delet float-end pt-4">
+                        <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/sharesafari/default/share-safari-delete', 'id' => $share_safari->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -141,6 +141,14 @@ $this->params['title'] = $this->title;
             </div>
         </div>
     </div>
+</div>
+
+<div class="comment-wrapper" id="comment-wrapper-section">
+    <?= $this->render('_comment', [
+        'share_safari' => $share_safari,
+        'dataProvider' => $dataProvider,
+        'searchModel' => $searchModel,
+    ]) ?>
 </div>
 
 <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

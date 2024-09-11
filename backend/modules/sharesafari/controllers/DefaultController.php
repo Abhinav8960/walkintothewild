@@ -12,12 +12,14 @@ use common\models\sharesafari\form\ShareSafariDeleteForm;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\sharesafari\ShareSafariCommentSearch;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariSearch;
 use frontend\models\form\SharedSafariRequestForm;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -72,8 +74,53 @@ class DefaultController extends Controller
             ->where([
                 'id' => $id,
             ])->limit(1)->one();
+
+        $searchModel = new ShareSafariCommentSearch();
+        $searchModel->share_safari_id = $share_safari->id;
+        $dataProvider = $searchModel->listingsearch($this->request->queryParams);
+        $dataProvider->query->andWhere(['parent_id' => null]);
+
+
         return $this->render('view', [
             'share_safari' => $share_safari,
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+        ]);
+    }
+
+    public function actionReplyview($id)
+    {
+        $review = ShareSafariComment::find()->where(['parent_id' => $id]);
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  $review,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('_replyview', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFlagview($id)
+    {
+        $review = ShareSafariCommentReport::find()->where(['share_safari_comment_id' => $id]);
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  $review,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('_flagview', [
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -298,9 +345,16 @@ class DefaultController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
+        $fixedsearchModel = new ShareSafariCommentSearch();
+        $fixedsearchModel->share_safari_id = $share_safari->id;
+        $fixedProvider = $fixedsearchModel->listingsearch($this->request->queryParams);
+        $fixedProvider->query->andWhere(['parent_id' => null]);
+
         return $this->render('_fixed_view', [
             'share_safari' => $share_safari,
             'faqs' => $faqs,
+            'fixedsearchModel' => $fixedsearchModel,
+            'fixedProvider' => $fixedProvider,
         ]);
     }
 

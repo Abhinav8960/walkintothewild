@@ -12,7 +12,6 @@ use yii\helpers\Url;
 </div>
 <div class="card">
     <div class="card-body">
-        <?php echo $this->render('_comment_search', ['model' => $searchModel]); ?>
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
