@@ -54,16 +54,16 @@ class SiteMapController extends Controller
 
 
 
-    $script_start3 = microtime(true);
-    echo "<pre>";
-    echo "Script 3 start time: " . $script_start3 . " seconds";
-    \Yii::$app->runAction('generate-site-pages/site-pages3'); //run the Action to get join/unjoin
-    $script_end3 = microtime(true);
-    $executionTime = $script_end3 - $script_start3;
-    echo "Script 3 end time: " . $script_end3 . " seconds";
-    echo "<pre>";
-    echo "Script 3 execution time: " . $executionTime . " seconds";
-    echo "<pre>";
+    // $script_start3 = microtime(true);
+    // echo "<pre>";
+    // echo "Script 3 start time: " . $script_start3 . " seconds";
+    // \Yii::$app->runAction('generate-site-pages/site-pages3'); //run the Action to get join/unjoin
+    // $script_end3 = microtime(true);
+    // $executionTime = $script_end3 - $script_start3;
+    // echo "Script 3 end time: " . $script_end3 . " seconds";
+    // echo "<pre>";
+    // echo "Script 3 execution time: " . $executionTime . " seconds";
+    // echo "<pre>";
 
 
 
