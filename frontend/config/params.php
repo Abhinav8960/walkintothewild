@@ -3,5 +3,5 @@ return [
     'adminEmail' => 'admin@example.com',
     'bsVersion' => '5.x',
     "isGoogleV3CaptchaValidateNeeded" => false,
-    'user.rememberMeDuration' => 36000,
+    'user.rememberMeDuration' => 3600 * 24 * 30,
 ];
