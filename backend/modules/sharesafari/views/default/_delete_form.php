@@ -18,8 +18,12 @@ $this->params['title'] = $this->title;
             <div class="col-md-12">
                 <?= $form->field($model, 'delete_reason_id')->dropDownList(GeneralModel::getFlagreasons(), ['prompt' => 'Select Reason'])->label('Reason') ?>
             </div>
+
             <div class="col-md-12">
-                <?= $form->field($model, 'status')->dropDownList(['-1' => 'Delete'], ['prompt' => 'Select Status Option'])->label('User Status') ?>
+                <?= $form->field($model, 'delete_reason')->textInput(['placeholder' => 'Enter Reason Details'])->label('Reason') ?>
+            </div>
+            <div class="col-md-12">
+                <?= $form->field($model, 'status')->dropDownList(['-1' => 'Delete'], ['prompt' => 'Select Status Option'])->label('Status') ?>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
