@@ -63,3 +63,7 @@ ALTER TABLE `package_comment`
   -- 11-sep-2024
 
   ALTER TABLE `share_safari` ADD `delete_reason_id` INT NULL AFTER `updated_by`;
+
+-- this query one by one
+  UPDATE share_safari SET status = 0 where status = 2;
+  UPDATE share_safari SET status = 2 where status = 3;
