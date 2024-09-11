@@ -894,6 +894,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											// "/sharesafari/request/index",
 											// "/sharesafari/request/view",
 											"/sharesafari/share-safari-comment/index",
+											"/sharesafari/default/fixed-departure",
+											"/sharesafari/default/fixed-view",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/sharesafari/default/index",
@@ -901,6 +903,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														// "/sharesafari/request/index",
 														// "/sharesafari/request/view",
 														"/sharesafari/share-safari-comment/index",
+														"/sharesafari/default/fixed-departure",
+														"/sharesafari/default/fixed-view",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
