@@ -39,10 +39,11 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->share_safari_title) ? Html::a($model->share_safari_title, ['view', 'id' => $model->id], [
+
+                            return Html::a(($model->share_safari_title <>''? $model->share_safari_title : 'Untitled'), ['view', 'id' => $model->id], [
                                 'style' => 'color: black !important;',
                                 'title' => 'View',
-                            ]) : '';
+                            ]);
                         }
                     ],
                     [
