@@ -348,4 +348,27 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
+
+
+    public function actionIntrested($id)
+    {
+        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => 1])->all();
+        return $this->renderAjax(
+            '_interested_view',
+            [
+                'interest_model' => $interest_model,
+            ]
+        );
+    }
+
+    public function actionLeaved($id)
+    {
+        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $id, 'status' => 0])->all();
+        return $this->renderAjax(
+            '_interested_view',
+            [
+                'interest_model' => $interest_model,
+            ]
+        );
+    }
 }
