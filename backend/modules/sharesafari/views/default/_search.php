@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
         <?php echo $form->field($model, 'report_days')->dropDownList($model->report_days_option, ['prompt' => 'Select Duration'])->label(false) ?>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'safari_plan')->textInput(['placeholder' => 'Search by Safari Plan'])->label(false) ?>
+        <?= $form->field($model, 'share_safari_title')->textInput(['placeholder' => 'Search by Title'])->label(false) ?>
     </div>
     <!-- <div class="col-md-2">
         <?= $form->field($model, 'type')->dropDownList(GeneralModel::sharedsafaritype(), ['prompt' => 'Select Type'])->label(false) ?>

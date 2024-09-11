@@ -28,6 +28,7 @@ use common\models\park\SafariPark;
  */
 class ShareSafariComment extends \yii\db\ActiveRecord
 {
+    use \common\traits\CommanRelationship;
     /**
      * {@inheritdoc}
      */

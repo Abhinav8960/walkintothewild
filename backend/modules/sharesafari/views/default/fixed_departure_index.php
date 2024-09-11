@@ -6,6 +6,7 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 $this->title = 'Fixed Departure';
 $this->params['breadcrumbs'][] = $this->title;
@@ -34,11 +35,11 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 5%;'],
                     ],
                     [
-                        'label' => 'Park',
+                        'label' => 'Title',
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->park->title) ? Html::a($model->park->title, ['fixed-view', 'id' => $model->id], [
+                            return isset($model->share_safari_title) ? Html::a($model->share_safari_title, ['fixed-view', 'id' => $model->id], [
                                 'style' => 'color: black !important;',
                                 'title' => 'View',
                             ]) : '';
@@ -52,7 +53,7 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d', strtotime($model->start_date));
+                            return isset($model->start_date) ? date('Y-m-d', strtotime($model->start_date)) : '';
                         }
                     ],
                     [
@@ -60,7 +61,7 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d', strtotime($model->end_date));
+                            return isset($model->end_date) ? date('Y-m-d', strtotime($model->end_date)) : '';
                         }
                     ],
                     [
@@ -68,7 +69,7 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return date('Y-m-d', strtotime($model->cut_off_date));
+                            return isset($model->cut_off_date) ? date('Y-m-d', strtotime($model->cut_off_date)) : '';
                         }
                     ],
                     [
@@ -96,11 +97,30 @@ if (Yii::$app->user->identity) {
                         }
                     ],
                     [
-                        'label' => 'Interested',
+                        'label' => 'Joined',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->intrested) ? $model->getIntrested()->where(['status' => 1])->count() : '';
+                            return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 1])->count(), [
+                                'value' => Url::toRoute(['intrested', 'id' => $model->id]),
+                                'style' => 'color: black !important;',
+                                'class' => 'intrested btn-danger',
+                                'title' => 'Intrested',
+                            ]) : '';
+                        }
+                    ],
+
+                    [
+                        'label' => 'Leaved',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->intrested) ? Html::button($model->getIntrested()->where(['status' => 0])->count(), [
+                                'value' => Url::toRoute(['leaved', 'id' => $model->id]),
+                                'style' => 'color: black !important;',
+                                'class' => 'leaved btn-info',
+                                'title' => 'Leaved',
+                            ]) : '';
                         }
                     ],
                     [
@@ -117,19 +137,62 @@ if (Yii::$app->user->identity) {
     </div>
 </div>
 
+<div class="modal fade" id="intrested" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Intrested
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='intrestedContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="leaved" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Leaved
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='leavedContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 
 
     
-function writeareviewfunction() {
-     $('.popup').on('click', function () {
-        $('#modalUpdate').modal('show')
-		.find('#modalContent')
+function intrested() {
+     $('.intrested').on('click', function () {
+        $('#intrested').modal('show')
+		.find('#intrestedContent')
 		.load($(this).attr('value'));
 	});
 }
-writeareviewfunction();
+intrested();
+
+function leaved() {
+     $('.leaved').on('click', function () {
+        $('#leaved').modal('show')
+		.find('#leavedContent')
+		.load($(this).attr('value'));
+	});
+}
+leaved();
     
           
              
