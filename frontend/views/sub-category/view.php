@@ -16,21 +16,29 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
-    <p>Here is the complete pages list of <?= $category . ' (' . $subCategory . ' List) ' ?>for our website:</p>
+    <?php if ($pages) { ?>
+        <p>Here is the complete pages list of <?= $category . ' (' . $subCategory . ' List) ' ?>for our website:</p>
 
 
-    <ul>
-        <?php foreach ($pages as $page): ?>
-            <li>
-                <?php if ($page['title']) {
-                ?>
-                    <a href="/<?= Html::encode($page['url']) ?>"><?= isset($page['title']) ? Html::encode($page['title']) : $page['sub_category'] ?></a>
-                <?php } else { ?>
-                    <a href="/<?= Html::encode($page['url']) ?>">Search by <?= isset($page['slug']) ? Html::encode($page['slug']) : $page['slug'] ?> on <?= isset($page['sub_category']) ? Html::encode($page['sub_category']) . ' basis' : $page['sub_category'] ?></a>
-                <?php } ?>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+        <ul>
+            <?php
+            foreach ($pages as $page): ?>
+                <li>
+                    <?php if ($page['title']) {
+                    ?>
+                        <a href="/<?= Html::encode($page['url']) ?>"><?= isset($page['title']) ? Html::encode($page['title']) : $page['sub_category'] ?></a>
+                    <?php } elseif ($page['slug']) { ?>
+                        <a href="/<?= Html::encode($page['url']) ?>">Search by <?= isset($page['slug']) ? Html::encode($page['slug']) : $page['slug'] ?> on <?= isset($page['sub_category']) ? Html::encode($page['sub_category']) . ' basis' : $page['sub_category'] ?></a>
+                    <?php } else { ?>
+                        <a href="/<?= Html::encode($page['url']) ?>">View <?= isset($page['sub_category']) ? Html::encode($page['sub_category']) . ' Page' : $page['sub_category'] ?></a>
+                    <?php } ?>
+                </li>
+            <?php endforeach;
+            ?>
+        </ul>
+    <?php } else {
+        echo '<strong>No Result Available</strong>';
+    }  ?>
     <!-- Pagination controls -->
     <?php
     // LinkPager::widget([
