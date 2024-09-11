@@ -88,15 +88,22 @@ use common\models\park\SafariPark;
 
     <div class="col-lg-6">
         <div class="selects w-100">
-            <label for="" class="Modal_label">Total Seat</label>
-            <?= $form->field($model, 'total_seat')->textInput()->label(false) ?>
+            <label for="" class="Modal_label">Total Seat <span class="necessary">*</span></label>
+            <?= $form->field($model, 'total_seat')->textInput(['id' => 'total-seat'])->label(false) ?>
+        </div>
+    </div>
+    <div class="col-lg-6">
+
+        <div class="selects w-100">
+            <label for="" class="Modal_label">Seats Used <span class="necessary">*</span></label>
+            <?= $form->field($model, 'share_seat')->textInput(['id' => 'share-seat'])->label(false) ?>
         </div>
     </div>
 
     <div class="col-lg-6">
         <div class="selects w-100">
             <label for="" class="Modal_label">Status <span class="necessary">*</span></label>
-            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['prompt' => 'Status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
+            <?= $form->field($model, 'status')->dropDownList(GeneralModel::sharesafarioptions(), ['prompt' => 'Status', 'id' => 'status', 'class' => 'form-select form-select-lg mb-3'])->label(false) ?>
         </div>
     </div>
 
@@ -159,3 +166,43 @@ $script = <<< JS
 JS;
 $this->registerJs($script);
 ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get references to the form fields
+    const totalSeatField = document.getElementById('total-seat');
+    const shareSeatField = document.getElementById('share-seat');
+    const statusField = document.getElementById('status');
+
+    // Store the original value of the share seat field
+    let originalShareSeatValue = shareSeatField.value;
+
+    // Function to handle status change
+    function handleStatusChange() {
+        const selectedStatus = statusField.value;
+        const totalSeats = totalSeatField.value;
+
+        // Log the current values for debugging
+        // console.log('Selected Status:', selectedStatus);
+        // console.log('Original Share Seat Value:', originalShareSeatValue);
+        // console.log('Total Seat Value:', totalSeats);
+
+        // Update share seat if the selected status matches the specific value
+        if (selectedStatus === '2') { // Replace '2' with the actual value that should trigger the update
+            shareSeatField.value = totalSeats;
+        } else {
+            // Revert to the original value if the status is different
+            shareSeatField.value = originalShareSeatValue;
+        }
+
+        // Log the updated share seat value for debugging
+        // console.log('Updated Share Seat Value:', shareSeatField.value);
+    }
+
+    // Add event listener to the status dropdown
+    statusField.addEventListener('change', handleStatusChange);
+
+    // Optional: Update the original value on page load if needed
+    originalShareSeatValue = shareSeatField.value;
+});
+</script>
