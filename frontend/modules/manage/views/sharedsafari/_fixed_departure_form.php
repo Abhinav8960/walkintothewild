@@ -91,6 +91,10 @@ use common\models\park\SafariPark;
                     <label for="" class="Modal_label">Total Seat <span class="necessary">*</span></label>
                     <?= $form->field($model, 'total_seat')->textInput()->label(false) ?>
                 </div>
+                <div class="selects w-100">
+                    <label for="" class="Modal_label">Seats Available <span class="necessary">*</span></label>
+                    <?= $form->field($model, 'share_seat')->textInput()->label(false) ?>
+                </div>
 
             </div>
             <p class="text-danger"><i>Please note: Fixed departures are not published directly. You must fill in all the details and then set the status to "publish."</i></p>

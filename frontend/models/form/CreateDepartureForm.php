@@ -23,6 +23,7 @@ class CreateDepartureForm extends \yii\base\Model
     public $cost_per_person;
     public $safari_plan;
     public $total_seat;
+    public $share_seat;
     public $tour_duration;
     public $status;
     public $share_safari_inclusion;
@@ -71,6 +72,7 @@ class CreateDepartureForm extends \yii\base\Model
             $this->cost_per_person =  $this->shared_safari_departure_model->cost_per_person;
             $this->safari_plan =  $this->shared_safari_departure_model->safari_plan;
             $this->total_seat =  $this->shared_safari_departure_model->total_seat;
+            $this->share_seat =  $this->shared_safari_departure_model->share_seat;
             $this->tour_duration =  $this->shared_safari_departure_model->tour_duration;
             $this->status =  $this->shared_safari_departure_model->status;
 
@@ -97,19 +99,21 @@ class CreateDepartureForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['share_safari_title', 'host_type', 'park_list', 'share_safari_agenda_id', 'no_of_safari', 'cost_per_person', 'total_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
-            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'tour_duration', 'status', 'type'], 'integer'],
+            [['share_safari_title', 'host_type', 'park_list', 'share_safari_agenda_id', 'no_of_safari', 'cost_per_person', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
+            [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'share_seat', 'tour_duration', 'status', 'type'], 'integer'],
             [['start_date', 'end_date', 'park_list', 'rand_text'], 'safe'],
             [['share_safari_title'], 'string', 'max' => 50],
             [['safari_plan'], 'string'],
             ['end_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '>'],
             [['safari_plan'], 'validateContent'],
-            [['no_of_safari', 'total_seat'], 'integer', 'max' => 100],
+            [['no_of_safari', 'total_seat', 'share_seat'], 'integer', 'max' => 100],
             ['cost_per_person', 'integer', 'max' => 1000000],
             ['cut_off_date', 'compare', 'compareAttribute' => 'start_date', 'operator' => '<'],
             [['safari_plan'], 'validateMaxWords', 'params' => ['max' => 200]],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'safe'],
             [['breakfast_included', 'lunch_included', 'dinner_included', 'meal_not_included'], 'default', 'value' => 0],
+            ['share_seat', 'compare', 'compareAttribute' => 'total_seat', 'operator' => '<=', 'message' => "Available Seat must be less than or equal to Total Seat"],
+
         ];
     }
 
@@ -177,6 +181,7 @@ class CreateDepartureForm extends \yii\base\Model
         $this->shared_safari_departure_model->cost_per_person = $this->cost_per_person;
         $this->shared_safari_departure_model->safari_plan = $this->safari_plan;
         $this->shared_safari_departure_model->total_seat = $this->total_seat;
+        $this->shared_safari_departure_model->share_seat = $this->share_seat;
         $this->shared_safari_departure_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24))) + 1;
         $this->shared_safari_departure_model->status = $this->status;
 
