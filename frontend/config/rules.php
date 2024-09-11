@@ -12,6 +12,7 @@ return [
     //    '/article_tag.xml' => '/sitemap/article_tag',
     // '/animal/<slug>' => '/animal/index', //home Page url
     //'/home' => '/plan-safari', //home Page url
+    '/sitemap' => '/sitemap/list',
     '/sub-category/<category>/<subCategory>' => '/sub-category/view',
     '/contact-us' => '/contact',
     '/park/<slug>' => '/park/default/view', //park view url
