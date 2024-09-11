@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
 /* @var $categoryPages array */
 /* @var $otracker string */
 
-$this->title = 'Pages List';
+$this->title = $category . ' (' . $subCategory . ' List)';
 $this->params['breadcrumbs'][] = $this->title;
 
 // print_r($pages);
@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php foreach ($pages as $page): ?>
             <li>
                 <a href="/<?= Html::encode($page['url']) ?>"><?= isset($page['title']) ? Html::encode($page['title']) : $page['sub_category'] ?></a>
-                <p><?= Html::encode($page['description']) ?></p>
             </li>
         <?php endforeach; ?>
     </ul>
