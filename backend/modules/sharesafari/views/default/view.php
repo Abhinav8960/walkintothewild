@@ -1,7 +1,8 @@
 <?php
 
+use backend\assets\AppAsset;
 use common\models\sharesafari\ShareSafariIntrested;
-use frontend\assets\AppAsset;
+
 use frontend\assets\FrontAppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;

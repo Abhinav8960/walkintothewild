@@ -1,9 +1,14 @@
 <?php
 
+use backend\assets\AppAsset;
 use yii\helpers\Url;
 use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafariIncluded;
 use common\models\sharesafari\ShareSafariIntrested;
+use frontend\assets\FrontAppAsset;
+
+FrontAppAsset::register($this);
+AppAsset::register($this);
 
 $webasset = $this->assetManager->getBundle('\backend\assets\NovaAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
@@ -15,7 +20,7 @@ $this->params['title'] = $this->title;
 ?>
 
 <div class="row">
-<div class="col-12">
+    <div class="col-12">
         <div class="wrapper-skybgsafri pb-0">
             <div class="row border_bottom2 pb-4">
                 <div class="col-lg-8 col-md-8 border-right">
@@ -162,7 +167,7 @@ $this->params['title'] = $this->title;
     </div>
 </div>
 
-    
+
 
 
 
