@@ -1,8 +1,7 @@
 <?php
 
-use backend\assets\AppAsset;
 use common\models\sharesafari\ShareSafariIntrested;
-
+use frontend\assets\AppAsset;
 use frontend\assets\FrontAppAsset;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -20,7 +19,7 @@ $this->params['title'] = $this->title;
 <div class="row my-4">
     <div class="col-12">
 
-        <div class="wrapper-skybgsafri pb-0">
+        <div class="wrapper-skybgsafri pb-3">
             <div class="row border_bottom2 pb-4">
                 <div class="col-lg-7 col-md-8 border-right">
                     <div class="row">

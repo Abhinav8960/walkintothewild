@@ -623,10 +623,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																			"/cms/article-category/update",
 																		)) ? "active" : "" ?>" href="/cms/article-category/index">Article Topics</a></li>
 									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																			"/cms/article-author/index",
-																			"/cms/article-author/create",
-																			"/cms/article-author/update",
-																		)) ? "active" : "" ?>" href="/cms/article-author/index">Article Author</a></li> -->
+																				"/cms/article-author/index",
+																				"/cms/article-author/create",
+																				"/cms/article-author/update",
+																			)) ? "active" : "" ?>" href="/cms/article-author/index">Article Author</a></li> -->
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/article-tag/index",
 																			"/cms/article-tag/create",
@@ -787,13 +787,13 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Pending Approvals</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/pendingapproval/article-comment/index",
-															"/pendingapproval/article-comment/view",
-														)) ? "active" : "" ?>" href="/pendingapproval/article-comment/index">Article Comments</a></li> -->
+																"/pendingapproval/article-comment/index",
+																"/pendingapproval/article-comment/view",
+															)) ? "active" : "" ?>" href="/pendingapproval/article-comment/index">Article Comments</a></li> -->
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/pendingapproval/user-article/index",
-															"/pendingapproval/user-article/view",
-														)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li> -->
+																"/pendingapproval/user-article/index",
+																"/pendingapproval/user-article/view",
+															)) ? "active" : "" ?>" href="/pendingapproval/user-article/index">User Article Approvals</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/pendingapproval/park-review-approval/index",
 														)) ? "active" : "" ?>" href="/pendingapproval/park-review-approval/index">Park Review Approvals</a></li>
@@ -894,6 +894,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											// "/sharesafari/request/index",
 											// "/sharesafari/request/view",
 											"/sharesafari/share-safari-comment/index",
+											"/sharesafari/default/fixed-departure",
+											"/sharesafari/default/fixed-view",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/sharesafari/default/index",
@@ -901,6 +903,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														// "/sharesafari/request/index",
 														// "/sharesafari/request/view",
 														"/sharesafari/share-safari-comment/index",
+														"/sharesafari/default/fixed-departure",
+														"/sharesafari/default/fixed-view",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/mingcute_meta-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Share Safari</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Share Safari</a></li>
@@ -916,6 +920,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/sharesafari/default/index",
 															"/sharesafari/default/view",
 														)) ? "active" : "" ?>" href="/sharesafari/default/index">Share Safari</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/sharesafari/default/fixed-departure",
+															"/sharesafari/default/fixed-view",
+														)) ? "active" : "" ?>" href="/sharesafari/default/fixed-departure">Fixed Departure</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/sharesafari/share-safari-comment/index",
 															"/sharesafari/share-safari-comment/view",

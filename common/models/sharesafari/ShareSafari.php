@@ -32,14 +32,14 @@ use yii\behaviors\SluggableBehavior;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
 
 
-    const STATUS_APPROVED = 1;
-    const STATUS_SUSPEND = 2;
-    const STATUS_FULL_SEAT = 3;
+    // const STATUS_APPROVED = 1;
+    // const STATUS_SUSPEND = 2;
+    const STATUS_FULL_SEAT = 2;
 
     const TYPE_SAFARI = 1;
     const TYPE_FIXED_DEPARTURE = 2;
@@ -113,7 +113,7 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\Sta
     public function getStatuslabel()
     {
 
-        $options = [ShareSafari::STATUS_APPROVED => 'Published', ShareSafari::STATUS_SUSPEND => 'Inactive', ShareSafari::STATUS_FULL_SEAT => 'Seat Full'];
+        $options = [ShareSafari::STATUS_ACTIVE => 'Published', ShareSafari::STATUS_SUSPEND => 'Inactive', ShareSafari::STATUS_FULL_SEAT => 'Seat Full'];
         return isset($options[$this->status]) ? $options[$this->status] : '';
     }
 

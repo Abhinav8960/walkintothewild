@@ -517,7 +517,7 @@ class SharedsafariController extends FrontendBaseController
 
     protected function findModelgallery($id)
     {
-        if (($model = ShareSafariGallery::findOne(['id' => $id, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND]])) !== null) {
+        if (($model = ShareSafariGallery::findOne(['id' => $id, 'status' => [ShareSafariGallery::STATUS_ACTIVE, ShareSafariGallery::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -613,7 +613,7 @@ class SharedsafariController extends FrontendBaseController
 
     protected function findModel($slug)
     {
-        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');

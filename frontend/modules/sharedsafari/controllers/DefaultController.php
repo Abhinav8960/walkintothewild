@@ -204,7 +204,7 @@ class DefaultController extends FrontendBaseController
      */
     public function actionView($slug)
     {
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
 
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
@@ -256,7 +256,7 @@ class DefaultController extends FrontendBaseController
     public function actionReply($slug, $parent_id)
     {
 
-        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_APPROVED,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         // $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $replymodel = new ReplyForm();

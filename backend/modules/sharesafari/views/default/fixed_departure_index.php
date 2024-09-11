@@ -7,7 +7,7 @@
 use yii\grid\GridView;
 use yii\helpers\Html;
 
-$this->title = 'Share Safari';
+$this->title = 'Fixed Departure';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -22,7 +22,7 @@ if (Yii::$app->user->identity) {
 <div class="card">
 
     <div class="card-body">
-        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+
         <div id="w1-button" class="mb-3"></div>
 
         <div class="table-responsive">
@@ -38,11 +38,14 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 15%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->park->title) ? Html::a($model->park->title, ['view', 'id' => $model->id], [
+                            return isset($model->park->title) ? Html::a($model->park->title, ['fixed-view', 'id' => $model->id], [
                                 'style' => 'color: black !important;',
                                 'title' => 'View',
                             ]) : '';
                         }
+                        // 'value' => function ($model) {
+                        //     return isset($model->park) ? $model->park->title : "";
+                        // }
                     ],
                     [
                         'label' => 'Start Date',
@@ -61,6 +64,14 @@ if (Yii::$app->user->identity) {
                         }
                     ],
                     [
+                        'label' => 'Cut Off Date',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return date('Y-m-d', strtotime($model->cut_off_date));
+                        }
+                    ],
+                    [
                         'label' => 'Number Of Safari',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
@@ -73,7 +84,7 @@ if (Yii::$app->user->identity) {
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->share_seat;
+                            return $model->total_seat;
                         }
                     ],
                     [
@@ -84,7 +95,6 @@ if (Yii::$app->user->identity) {
                             return isset($model->user->name) ? $model->user->name : '';
                         }
                     ],
-
                     [
                         'label' => 'Interested',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
@@ -101,29 +111,12 @@ if (Yii::$app->user->identity) {
                             return $model->statuslabel;
                         }
                     ],
-
                 ],
             ]); ?>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header flageHeader">
-                <h6 class="modal-title fs-5" id="exampleModalLabel">
-                    Organize New Safari
-                </h6>
-            </div>
-
-            <div class="modal-body modal_form">
-                <div id='modalContent'></div>
-            </div>
-
-        </div>
-    </div>
-</div>
 <?php
 $script = <<< JS
 

@@ -5,11 +5,14 @@ namespace backend\modules\sharesafari\controllers;
 
 use common\interfaces\StatusInterface;
 use common\models\MailLog;
+use common\models\operator\SafariOperator;
 use common\models\park\SafariPark;
 use common\models\sharesafari\form\ShareSafariApprovalForm;
+use common\models\sharesafari\form\ShareSafariDeleteForm;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariCommentReport;
+use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
 use common\models\sharesafari\ShareSafariRequest;
 use common\models\sharesafari\ShareSafariSearch;
@@ -35,11 +38,29 @@ class DefaultController extends Controller
         if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_adminstrator)) {
             $searchModel->host_user_id = Yii::$app->user->identity->id;
         }
-        $searchModel->report_days = 'today';
-        $searchModel->status = 1;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        // $searchModel->report_days = 'today';
+        // $searchModel->status = 1;
+        $dataProvider = $searchModel->sharedsafarisearch(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    public function actionFixedDeparture()
+    {
+        $searchModel = new ShareSafariSearch();
+
+        if ((Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator) && !(Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_adminstrator)) {
+            $searchModel->host_user_id = Yii::$app->user->identity->id;
+        }
+        // $searchModel->report_days = 'today';
+        // $searchModel->status = 1;
+        $dataProvider = $searchModel->fixeddeparturesearch(Yii::$app->request->queryParams);
+
+        return $this->render('fixed_departure_index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -267,5 +288,64 @@ class DefaultController extends Controller
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionFixedView($id)
+    {
+        $share_safari = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $searchModel = new ShareSafariFaqSearch();
+        $searchModel->share_safari_id = $share_safari->id;
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
+        $faqs = $dataProvider->getModels();
+
+        return $this->render('_fixed_view', [
+            'share_safari' => $share_safari,
+            'faqs' => $faqs,
+        ]);
+    }
+
+
+    public function actionFixedDepartureDelete($id)
+    {
+        $share_safari_delete_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $model = new ShareSafariDeleteForm($share_safari_delete_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->share_safari_delete_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['fixed-departure']);
+                    }
+                }
+            }
+        } else {
+            $model->share_safari_delete_model->loadDefaultValues();
+        }
+        return $this->renderAjax('_delete_form', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionShareSafariDelete($id)
+    {
+        $share_safari_delete_model = ShareSafari::find()->where(['id' => $id])->limit(1)->one();
+        $model = new ShareSafariDeleteForm($share_safari_delete_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->share_safari_delete_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->share_safari_delete_model->loadDefaultValues();
+        }
+        return $this->renderAjax('_delete_form', [
+            'model' => $model,
+        ]);
     }
 }

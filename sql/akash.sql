@@ -58,3 +58,8 @@ ALTER TABLE `package_comment`
   ALTER TABLE `safari_operator_rating` ADD `is_deleted` INT NULL DEFAULT '0' AFTER `flaged`;
 
   -- ALTER TABLE `article` ADD `user_status` INT NULL DEFAULT '0' AFTER `sequence`;
+
+
+  -- 11-sep-2024
+
+  ALTER TABLE `share_safari` ADD `delete_reason_id` INT NULL AFTER `updated_by`;
