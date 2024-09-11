@@ -24,7 +24,7 @@ if (Yii::$app->user->identity) {
     <div class="card-body">
 
         <div id="w1-button" class="mb-3"></div>
-
+        <?php echo $this->render('_search', ['model' => $searchModel]); ?>
         <div class="table-responsive">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
