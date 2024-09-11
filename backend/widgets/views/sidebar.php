@@ -707,7 +707,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php endif; ?>
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
-					<li class="slide <?= in_array($active_url, array(
+					<!-- <li class="slide <?= in_array($active_url, array(
 											"/registration/safari-operator-tour",
 											"/registration/safari-operator-tour/index",
 											"/registration/safari-operator-tour/view",
@@ -748,7 +748,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/registration/birding-operator-tour/update",
 														)) ? "active" : "" ?>" href="/registration/birding-operator-tour">Birding Tour Operator</a></li>
 						</ul>
-					</li>
+					</li> -->
 
 					<li class="slide <?= in_array($active_url, array(
 											"/operator/safari-operator/index",
@@ -924,10 +924,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/sharesafari/default/fixed-departure",
 															"/sharesafari/default/fixed-view",
 														)) ? "active" : "" ?>" href="/sharesafari/default/fixed-departure">Fixed Departure</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 															"/sharesafari/share-safari-comment/index",
 															"/sharesafari/share-safari-comment/view",
-														)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li>
+														)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li> -->
 						</ul>
 					</li>
 				<?php endif; ?>
