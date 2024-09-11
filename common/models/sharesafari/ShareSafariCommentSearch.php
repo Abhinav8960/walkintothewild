@@ -21,7 +21,7 @@ class ShareSafariCommentSearch extends ShareSafariComment
     public function rules()
     {
         return [
-            [['share_safari_id', 'flaged'], 'integer'],
+            [['share_safari_id', 'flaged', 'is_deleted'], 'integer'],
         ];
     }
 
@@ -66,12 +66,43 @@ class ShareSafariCommentSearch extends ShareSafariComment
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'park_id' => $this->share_safari_id,
+            'share_safari_id' => $this->share_safari_id,
             'flaged' => $this->flaged,
         ]);
 
         //        $rawSql = $query->createCommand()->getRawSql();
         //        dd($rawSql);
+
+        return $dataProvider;
+    }
+
+    public function listingsearch($params, $pagination = true)
+    {
+        $query = ShareSafariComment::find()->where(['is_deleted' => 0]);
+
+        // add conditions that should always apply here
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'share_safari_id' => $this->share_safari_id,
+        ]);
 
         return $dataProvider;
     }

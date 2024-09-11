@@ -275,6 +275,14 @@ $this->params['title'] = $this->title;
 
 </section>
 
+<div class="comment-wrapper" id="comment-wrapper-section">
+    <?= $this->render('_comment', [
+        'share_safari' => $share_safari,
+        'dataProvider' => $fixedProvider,
+        'searchModel' => $fixedsearchModel,
+    ]) ?>
+</div>
+
 <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
