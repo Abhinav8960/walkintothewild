@@ -22,14 +22,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <ul>
         <?php foreach ($pages as $page): ?>
             <li>
-                <a href="/<?= Html::encode($page['url']) ?>"><?= isset($page['title']) ? Html::encode($page['title']) : $page['sub_category'] ?></a>
+                <?php if ($page['title']) {
+                ?>
+                    <a href="/<?= Html::encode($page['url']) ?>"><?= isset($page['title']) ? Html::encode($page['title']) : $page['sub_category'] ?></a>
+                <?php } else { ?>
+                    <a href="/<?= Html::encode($page['url']) ?>">Search by <?= isset($page['slug']) ? Html::encode($page['slug']) : $page['slug'] ?> on <?= isset($page['sub_category']) ? Html::encode($page['sub_category']) . ' basis' : $page['sub_category'] ?></a>
+                <?php } ?>
             </li>
         <?php endforeach; ?>
     </ul>
     <!-- Pagination controls -->
-    <?= LinkPager::widget([
-        'pagination' => $pagination,
-    ]) ?>
+    <?php
+    // LinkPager::widget([
+    //     'pagination' => $pagination,
+    // ]) 
+    ?>
 </div>
 <style>
     body {

@@ -126,13 +126,34 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                         <div class="col-lg-4 pt-lg-0 pt-4">
                             <div class="row ps-1">
-                                <div class="col-12 col-sm-6  mb-3">
+                                <!-- <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
                                             <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $share_safari->tour_duration - 1 ?> Nights , <?= $share_safari->tour_duration ?> Days</p>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 ">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0"><?= $share_safari->no_of_safari ?> Shared Safari
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6  mb-3">
+                                    <div class="safridetails_form d-flex gap-3 align-items-center">
+                                        <div class="iconImg">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Seats">
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0">Available Seats - <?= $share_safari->share_seat ?>/<?= $share_safari->total_seat ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -150,17 +171,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-6 mb-3">
-                                    <div class="safridetails_form d-flex gap-3 ">
-                                        <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/newicon.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
-                                        </div>
-                                        <div class="text-form">
-                                            <p class="mb-0"><?= $share_safari->no_of_safari ?> Shared Safari
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">

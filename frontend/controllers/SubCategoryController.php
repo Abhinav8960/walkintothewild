@@ -37,22 +37,21 @@ class SubCategoryController extends FrontendBaseController
     }
 
     // Set up pagination
-    $count = $query->count();
-    $pagination = new Pagination([
-      'defaultPageSize' => 10,
-      'totalCount' => $count,
-    ]);
+    // $count = $query->count();
+    // $pagination = new Pagination([
+    //   'defaultPageSize' => 10,
+    //   'totalCount' => $count,
+    // ]);
 
     // Get the pages for the current page
-    $pages = $query->offset($pagination->offset)
-      ->limit($pagination->limit)
-      ->all();
+    $pages = $query->all();
+
 
     return $this->render('view', [
       'category' => $category,
       'subCategory' => $subCategory,
       'pages' => $pages,
-      'pagination' => $pagination,
+      // 'pagination' => $pagination,
     ]);
   }
 
