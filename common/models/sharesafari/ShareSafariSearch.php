@@ -230,7 +230,7 @@ class ShareSafariSearch extends ShareSafari
 
     public function sharedsafarisearch($params, $pagination = true)
     {
-        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_SAFARI]);
+        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_SAFARI])->andWhere("status <>" . ShareSafari::STATUS_DELETE);
 
         // add conditions that should always apply here
 
@@ -287,7 +287,7 @@ class ShareSafariSearch extends ShareSafari
 
     public function fixeddeparturesearch($params, $pagination = true)
     {
-        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_FIXED_DEPARTURE]);
+        $query = ShareSafari::find()->where(['type' => ShareSafari::TYPE_FIXED_DEPARTURE])->andWhere("status <>" . ShareSafari::STATUS_DELETE);
 
         // add conditions that should always apply here
 
