@@ -14,6 +14,7 @@ use common\models\cms\article\ArticleSearch;
 use common\models\cms\article\ArticleTag;
 use common\models\cms\article\ArticleTopic;
 use common\models\cms\article\form\ArticleCommentActionForm;
+use common\models\cms\article\form\ArticleDeleteForm;
 use common\models\cms\article\form\ArticleForm;
 use common\models\cms\article\MasterArticleTag;
 use common\models\pendingapproval\form\UserArticleApprovalForm;
@@ -359,20 +360,20 @@ class ArticleController extends Controller
 
     public function actionArticledelete($id)
     {
-        $user_article_approval_model = $this->findModel($id);
-        $model = new UserArticleApprovalForm($user_article_approval_model);
+        $delete_article_model = $this->findModel($id);
+        $model = new ArticleDeleteForm($delete_article_model);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->user_article_approval_model->save(false)) {
+                    if ($model->delete_article_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Successfully Update');
                         return $this->redirect(['index']);
                     }
                 }
             }
         } else {
-            $model->user_article_approval_model->loadDefaultValues();
+            $model->delete_article_model->loadDefaultValues();
         }
         return $this->renderAjax('delete_form', [
             'approval_model' => $model,
