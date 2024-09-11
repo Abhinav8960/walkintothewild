@@ -14,25 +14,26 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>Here is the complete sitemap for our website:</p>
 
     <!-- Directly generate the sitemap HTML -->
-    <ul>
-        <?php foreach ($sitemapData as $category => $subCategories): ?>
-            <li>
-                <strong><?= Html::encode($category) ?></strong>
-                <ul class="styled-list">
-                    <?php foreach ($subCategories as $subCategory => $pages): ?>
-                        <li>
-                            <a href="<?= Html::encode($pages['url']) ?>">
-
-                                <strong><?= Html::encode($subCategory) ?></strong>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <div class="row">
+            <?php foreach ($sitemapData as $category => $subCategories): ?>
+                <div class="col-md-4 mb-4">
+                    <div class="category h-100">
+                        <strong><?= Html::encode($category) ?></strong>
+                        <div class="subcategories">
+                            <?php foreach ($subCategories as $subCategory => $pages): ?>
+                                <div class="subcategory-item">
+                                    <a href="<?= Html::encode($pages['url']) ?>">
+                                        <strong><?= Html::encode($subCategory) ?></strong>
+                                    </a>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+   
 </div>
-
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -44,13 +45,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     .container {
         width: 80%;
-        margin: 0 auto;
+        margin: 5% auto;
         padding: 20px;
         background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
-        margin-top: 5% !important;
-        margin-bottom: 5% !important;
     }
 
     h1 {
@@ -59,79 +58,51 @@ $this->params['breadcrumbs'][] = $this->title;
         margin-bottom: 20px;
     }
 
-    ul {
-        list-style-type: none;
-        padding-left: 0;
+ 
+
+    .category {
+        flex: 1 1 200px;
+        /* Flexible basis and growth */
+        min-width: 200px;
+        /* Minimum width of each category */
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    li {
-        margin-bottom: 10px;
+    .subcategories {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        /* Gap between subcategory items */
     }
 
-    a {
+    .subcategory-item {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 10px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .subcategory-item a {
         text-decoration: none;
         color: #09422D;
     }
 
-    a:hover {
+    .subcategory-item a:hover {
         text-decoration: underline;
     }
 
-
-
-    /* Reset default margin and padding for ul */
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        /* Remove default bullet points */
-    }
-
-    /* Style for the ul with class 'styled-list' */
-    .styled-list {
-        background-color: #f8f8f8;
-        /* Light background color */
-        border: 1px solid #ddd;
-        /* Light border */
-        border-radius: 5px;
-        /* Rounded corners */
-        width: 300px;
-        /* Set a specific width */
-        max-width: 100%;
-        /* Responsive width */
-        padding: 10px;
-        /* Padding inside the list */
-    }
-
-    /* Style for each li element */
-    .styled-list li {
-        padding: 10px;
-        /* Padding inside each list item */
-        margin-bottom: 5px;
-        /* Space between list items */
-        background-color: #fff;
-        /* White background for items */
-        border: 1px solid #ddd;
-        /* Border around each item */
-        border-radius: 3px;
-        /* Slightly rounded corners for items */
-        transition: background-color 0.3s, box-shadow 0.3s;
-        /* Smooth transitions for hover effects */
-    }
-
-    /* Hover effect for list items */
-    .styled-list li:hover {
+    .subcategory-item:hover {
         background-color: #e0e0e0;
-        /* Slightly darker background on hover */
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        /* Subtle shadow effect */
     }
 
-    /* Optional: Add a focus effect for accessibility */
-    .styled-list li:focus {
+    .subcategory-item:focus {
         outline: 2px solid #007bff;
-        /* Blue outline for focused items */
         background-color: #f0f8ff;
-        /* Light blue background on focus */
     }
 </style>

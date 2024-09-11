@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container">
     <h1><?= Html::encode($this->title) ?></h1>
-    <p>Here is the complete pages list for our website:</p>
+    <p>Here is the complete pages list of <?= $category . ' (' . $subCategory . ' List) ' ?>for our website:</p>
 
 
     <ul>
