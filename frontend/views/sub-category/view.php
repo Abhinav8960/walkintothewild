@@ -1,5 +1,6 @@
 <?php
 
+use common\models\sharesafari\ShareSafari;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
@@ -24,7 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
             foreach ($pages as $page): ?>
                 <li>
-                    <?php if ($page['title']) {
+                    <?php if ($page['sub_category'] == 'Safari') {
+                        $share_safari = ShareSafari::find()->where(['id' => $page['content_id']])->limit(1)->one();
+                    ?>
+                        <a href="/<?= Html::encode($page['url']) ?>">View <?= isset($page['sub_category']) ? Html::encode($page['sub_category']) . ' Page' : $page['sub_category'] ?> - Park ( <?= isset($share_safari->park) ? $share_safari->park->title : '' ?> ) </a>
+                    <?php } elseif ($page['title']) {
                     ?>
                         <a href="/<?= Html::encode($page['url']) ?>"><?= isset($page['title']) ? Html::encode($page['title']) : $page['sub_category'] ?></a>
                     <?php } elseif ($page['slug']) { ?>
