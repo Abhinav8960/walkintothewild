@@ -22,7 +22,7 @@ class QuoteController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageQuoteSearch();
-        // $searchModel->report_days = 'today';
+        $searchModel->report_days = 'all';
         $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
