@@ -95,7 +95,7 @@ class PreviewController extends Controller
 
     public function actionFlagview($id)
     {
-        $review = PackageCommentReport::find()->where(['package_id' => $id]);
+        $review = PackageCommentReport::find()->where(['package_comment_id' => $id]);
         if (empty($review)) {
             \Yii::$app->session->setFlash('error', 'Invalid request');
             return $this->redirect(['index']);
