@@ -5,6 +5,8 @@ namespace backend\modules\package\controllers;
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageForm;
 use common\models\package\Package;
+use common\models\package\PackageComment;
+use common\models\package\PackageCommentReport;
 use common\models\package\PackageCommentSearch;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
@@ -12,6 +14,7 @@ use common\models\package\PackageIncluded;
 use common\models\package\PackageSafariPark;
 use common\models\package\PackageSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -70,5 +73,41 @@ class PreviewController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionReplyview($id)
+    {
+        $review = PackageComment::find()->where(['parent_id' => $id]);
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  $review,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('_replyview', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFlagview($id)
+    {
+        $review = PackageCommentReport::find()->where(['package_id' => $id]);
+        if (empty($review)) {
+            \Yii::$app->session->setFlash('error', 'Invalid request');
+            return $this->redirect(['index']);
+        }
+        $dataProvider = new ActiveDataProvider([
+            'query' =>  $review,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+        ]);
+        return $this->renderAjax('_flagview', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
