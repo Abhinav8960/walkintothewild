@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 <?php $form = ActiveForm::begin(['id' => 'action-form']); ?>
 <div class="row">
     <div class="col-md-12">
-        <?= $form->field($model, 'status')->dropDownList(['1' => 'Ignore', '2' => 'Delete', '20' => 'Blocked User'], ['prompt' => 'Select option']) ?>
+        <?= $form->field($model, 'status')->dropDownList(['1' => 'Ignore', '2' => 'Delete'], ['prompt' => 'Select option']) ?>
     </div>
 
     <div class="col-md-12">
