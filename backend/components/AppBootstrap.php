@@ -17,5 +17,16 @@ class AppBootstrap implements BootstrapInterface
 
         $webasset = Yii::$app->view->assetManager->getBundle('backend\assets\NovaAppAsset');
         Yii::$app->view->params['baseurl'] = $webasset->baseUrl;
+
+        $session = Yii::$app->session;
+        if (!$session->get('user_session_id')) {
+            $session->set('user_session_id', session_create_id('user-session'));
+        }
+
+        if (isset(Yii::$app->user->identity)) {
+            if (Yii::$app->user->identity->status !== \common\models\User::STATUS_ACTIVE) {
+                \Yii::$app->user->logout();
+            }
+        }
     }
 }
