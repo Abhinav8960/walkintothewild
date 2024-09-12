@@ -114,7 +114,7 @@ if (!empty($is_sitemap_exist->description)) {
     <?php } ?>
 </head>
 
-<body class="d-flex flex-column <?= Yii::$app->requestedRoute == 'site/login' ? 'login-class' : '' ?>">
+<body class="d-flex flex-column <?= Yii::$app->requestedRoute == 'site/login' ? 'terms-contionsSplasescreen' : '' ?>">
     <?php $this->beginBody() ?>
 
     <header>
