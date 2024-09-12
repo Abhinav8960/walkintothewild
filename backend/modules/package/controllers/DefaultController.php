@@ -26,7 +26,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $searchModel = new PackageSearch();
-        $searchModel->report_days = 'today';
+        // $searchModel->report_days = 'today';
         $searchModel->status = 1;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

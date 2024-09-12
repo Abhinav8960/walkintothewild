@@ -25,6 +25,7 @@ $this->params['title'] = $this->title;
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
+
                                 <div class="col-lg-4">
                                     <div class="images_tour select_safrai">
                                         <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
@@ -32,7 +33,7 @@ $this->params['title'] = $this->title;
                                 </div>
                                 <div class="col-lg-8 pt-sm-0 pt-3">
                                     <div class="safrititles">
-                                        <h5 class="fs-4"><?= $package->package_name ?></h5>
+                                        <h5 class="fs-4"><a href="<?= Yii::$app->params['frontend_url'] . 'package/' . $package->safarioperator->slug . '/' . $package->package_slug ?>"><?= $package->package_name ?></a></h5>
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
@@ -120,6 +121,19 @@ $this->params['title'] = $this->title;
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-lg-4 d-lg-block  mobile_didplay_block">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
+                            <div class="pakageCost mb-xxl-0 mb-2">
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> / <span class="perpersonText">Per Person</span></h6>
+                            </div>
+                            <div class="btn-delet float-end pt-4">
+                                <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/package/preview/delete', 'id' => $package->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
+                            </div>
+
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-12 pt-4">
@@ -268,10 +282,31 @@ $this->params['title'] = $this->title;
         </div>
 </section>
 
+<div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail for Delete</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='userstatusmodalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $script = <<< JS
 
-       
+function organizefunction() {
+	$('.btn_userarticle').on('click', function () {
+        $('#organize-modal').modal('show')
+		.find('#userstatusmodalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
 JS;
 $this->registerJs($script);
 ?>

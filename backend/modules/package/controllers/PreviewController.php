@@ -3,6 +3,7 @@
 namespace backend\modules\package\controllers;
 
 use common\interfaces\StatusInterface;
+use common\models\package\form\PackageDeleteForm;
 use common\models\package\form\PackageForm;
 use common\models\package\Package;
 use common\models\package\PackageComment;
@@ -108,6 +109,28 @@ class PreviewController extends Controller
         ]);
         return $this->renderAjax('_flagview', [
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionDelete($id)
+    {
+        $package_delete_model = Package::find()->where(['id' => $id])->limit(1)->one();
+        $model = new PackageDeleteForm($package_delete_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->package_delete_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['/package/default/index']);
+                    }
+                }
+            }
+        } else {
+            $model->package_delete_model->loadDefaultValues();
+        }
+        return $this->renderAjax('_delete_form', [
+            'model' => $model,
         ]);
     }
 }

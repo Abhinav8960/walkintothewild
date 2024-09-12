@@ -119,32 +119,32 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             return $model->newstatuslabel;
                         }
                     ],
-                    [
-                        'class' => 'yii\grid\ActionColumn',
-                        'header' => "Actions",
-                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '&nbsp;{delete}&nbsp;&nbsp;{suspend}',
-                        // 'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
-                        'buttons' => [
-                            // 'view' => function ($url, $model) {
-                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                            //     ', ['/package/profile/index', 'package_id' => $model->id], [
-                            //         'class' => 'btn p-0 change-menuicon',
-                            //         'title' => 'View',
+                    // [
+                    //     'class' => 'yii\grid\ActionColumn',
+                    //     'header' => "Actions",
+                    //     'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                    //     'template' => '&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                    //     'template' => '{view}&nbsp;&nbsp;{delete}&nbsp;&nbsp;{suspend}',
+                    //     'buttons' => [
+                    //         'view' => function ($url, $model) {
+                    //             return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                    //             ', ['/package/profile/index', 'package_id' => $model->id], [
+                    //                 'class' => 'btn p-0 change-menuicon',
+                    //                 'title' => 'View',
 
-                            //     ]);
-                            // },
-                            'delete' => function ($url, $model) {
-                                if ($model->status != -1) {
-                                } else {
-                                    return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                                }
-                            },
-                            'suspend' => function ($url, $model) {
-                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
-                            },
-                        ]
-                    ],
+                    //             ]);
+                    //         },
+                    //         'delete' => function ($url, $model) {
+                    //             if ($model->status != -1) {
+                    //             } else {
+                    //                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
+                    //             }
+                    //         },
+                    //         'suspend' => function ($url, $model) {
+                    //             return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
+                    //         },
+                    //     ]
+                    // ],
                 ],
             ]); ?>
         </div>
