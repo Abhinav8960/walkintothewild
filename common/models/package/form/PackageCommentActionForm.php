@@ -74,10 +74,10 @@ class PackageCommentActionForm extends model
         $this->comment_action_model->status =  $this->status;
         $this->comment_action_model->reason =  $this->reason;
 
-        if ($this->status == 20) {
-            $model = User::find()->where(['id' => $this->comment_action_model->user_id])->limit(1)->one();
-            $model->blocked_at = time();
-            $model->save(false);
-        }
+        // if ($this->status == 20) {
+        //     $model = User::find()->where(['id' => $this->comment_action_model->user_id])->limit(1)->one();
+        //     $model->blocked_at = time();
+        //     $model->save(false);
+        // }
     }
 }
