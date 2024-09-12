@@ -6,7 +6,9 @@ use common\models\GeneralModel;
 use common\models\UserWishlist;
 use common\interfaces\Constants;
 use common\models\cms\banner\Banner;
+use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
@@ -214,6 +216,16 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                   </div>
               <?php }
               } ?>
+
+            </div>
+            <div class="mt-3 table-footer d-flex justify-content-between align-items-center mb-3">
+              <div class="col-md-12">
+                <?php echo GridView::widget([
+                  'dataProvider' => $dataProvider,
+                  'layout' => '{pager}',
+                  'columns' => [],
+                ]); ?>
+              </div>
             </div>
           </div>
         </div>
@@ -241,6 +253,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
     }
   }
 </script>
+
+
 <?php Pjax::end(); ?>
 
 
