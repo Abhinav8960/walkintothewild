@@ -2,15 +2,16 @@
 
 namespace frontend\models;
 
-use common\models\User;
-use common\models\chat\Chat;
-use common\models\chat\ChatMessage;
-use common\models\MailLog;
-use common\models\operator\OperatorQuote;
-use common\models\operator\SafariOperator;
 use Yii;
 use yii\base\Model;
+use common\models\User;
+use common\models\MailLog;
+use common\models\chat\Chat;
 use common\models\GeneralModel;
+use common\models\chat\ChatMessage;
+use common\models\operator\OperatorQuote;
+use common\models\operator\SafariOperator;
+use common\Helper\FrontendNotificationHelper;
 
 /**
  * OperatorQuoteForm is the model behind the contact form.
@@ -143,6 +144,8 @@ class OperatorQuoteForm extends Model
                     if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                         GeneralModel::sendmailfromlog($maillog_data['log_id']);
                     }
+
+                    FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity, $chat_url);
                 }
             }
             //save done quote chat

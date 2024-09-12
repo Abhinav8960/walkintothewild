@@ -13,7 +13,6 @@ use yii\helpers\Html;
     <p>Stay tuned for updates!</p>
     <p>Team Walk into the Wild</p>
     <p><a href="https://www.walkintothewild.in" style="text-align:center !important;color:blue !important;">www.walkintothewild.in</a></p>
-    <p><img src="https://www.walkintothewild.in/img/logo.png"></p>
 </div>
 <?php if (!(isset($is_email_sending) && $is_email_sending)) { ?>
     <div class="card">

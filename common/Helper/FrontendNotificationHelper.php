@@ -6,6 +6,7 @@ use Yii;
 use Pusher\Pusher;
 use yii\helpers\Url;
 use common\models\User;
+use common\models\chat\Chat;
 use common\models\package\Package;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
@@ -77,12 +78,13 @@ class FrontendNotificationHelper
      * @param [type] $package
      * @return void
      */
-    public static function packageNewQuote(Package $package, User $user)
+    public static function packageNewQuote(Package $package, User $user, $chat_url)
     {
         if ($package) {
             $model = new FrontendNotification();
             $model->action_id = FrontendNotification::ACTION_PACKAGE_NEW_COMMENT;
-            $model->notification_url = Url::toRoute(['/manage/package/view', 'package_id' => $package->id]);
+            // $model->notification_url = Url::toRoute(['/manage/package/view', 'package_id' => $package->id]);
+            $model->notification_url = $chat_url;
             $model->parent_id = $package->id;
             $model->channel = 'UserNotificationChannel';
             $model->status = 1;
@@ -131,12 +133,13 @@ class FrontendNotificationHelper
      * @param [type] $operator
      * @return void
      */
-    public static function operatorNewQuote(SafariOperator $operator, OperatorQuote $operator_quote, User $user)
+    public static function operatorNewQuote(SafariOperator $operator, OperatorQuote $operator_quote, User $user, $chat_url)
     {
         if ($operator) {
             $model = new FrontendNotification();
             $model->action_id = FrontendNotification::ACTION_OPERATOR_NEW_QUOTE;
-            $model->notification_url = Url::toRoute(['/manage/quote']);
+            // $model->notification_url = Url::toRoute(['/manage/quote']);
+            $model->notification_url = $chat_url; //Chat URL
             $model->parent_id = $operator->id;
             $model->channel = 'UserNotificationChannel';
             $model->status = 1;

@@ -71,6 +71,7 @@ use yii\helpers\Url;
 
         justify-content: center;
         overflow: hidden;
+        padding: 5px;
 
     }
 
@@ -89,11 +90,11 @@ use yii\helpers\Url;
     }
 
 
-    /* .selected_chat {
+    .selected_chat {
         background-color: #b4e0fe;
         color: #000;
         border-radius: 5px;
-    } */
+    }
 
     .chat-message-header {
         border-bottom: 1px solid #88888861;
@@ -110,7 +111,7 @@ use yii\helpers\Url;
         border: 1px solid #107751;
     }
 
-   
+
     .user-icon-message {
         height: 25px;
     }
@@ -199,7 +200,7 @@ use yii\helpers\Url;
         -o-text-overflow: ellipsis !important;
         text-overflow: ellipsis !important;
         white-space: nowrap;
- 
+
     }
 
     .character-count {

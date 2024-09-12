@@ -153,18 +153,19 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                     $reply_to = $user_info['name'];
                                     $to_mail = $user_info['email'];
                                     $chat_url = "/chat/message/" . $user_info['user_handle'] . "/" . base64_encode($chat->id);
-                                    $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url, 'is_email_sending' => true, 'show_planning_text' => false];
+                                    $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url, 'is_email_sending' => true, 'show_planning_text' => true];
+                                    $subject = 'New Response to Your Quote Request for “' . $park_package_name . '”';
                                 } else {
                                     //its end user
                                     $reply_by = $user_info['name'];
                                     $reply_to = $operator_info['name'];
                                     $to_mail = $operator_info['email'];
                                     $chat_url = "/chat/message/" . $operator_info['user_handle'] . "/" . base64_encode($chat->id);
-                                    $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url, 'is_email_sending' => true, 'show_planning_text' => true];
+                                    $req = ['reply_by' => $reply_by, 'reply_to' => $reply_to, 'park_package_name' => $park_package_name, 'chat_url' => $chat_url, 'is_email_sending' => true, 'show_planning_text' => false];
+                                    $subject = 'Quote Request : New Response from ' . $reply_by . ' for “' . $park_package_name . '”';
                                 }
 
                                 //send mail to other user
-                                $subject = 'New Response to Your Quote Request for “' . $park_package_name . '”';
                                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_USER_RECEIVED_REPLY_FREE_QUOTE;
                                 $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
 

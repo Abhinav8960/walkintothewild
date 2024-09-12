@@ -4,15 +4,15 @@ use yii\helpers\Html;
 
 ?>
 <div class="verify-email">
-    <p><img src="https://www.walkintothewild.in/img/logo.png"></p>
     <p>Hi <?= Html::encode($reply_to) ?>,</p>
-    <p>Good news! You’ve received a reply from <?= Html::encode($reply_by) ?> regarding your quote request for <?= Html::encode($park_package_name) ?>. Please check your inbox to view the details
+    <p>
 
-        <?php if (isset($show_planning_text) && $show_planning_text) {
-            echo 'and continue planning your adventure.';
-        } else {
-            echo '.';
-        } ?>
+        <?php if (isset($show_planning_text) && $show_planning_text) { ?>
+            Good news! You’ve received a reply from <?= Html::encode($reply_by) ?> regarding your quote request for <?= Html::encode($park_package_name) ?>. Please check your inbox to view the details and continue planning your adventure.
+
+        <?php  } else { ?>
+            You’ve received a reply from <?= Html::encode($reply_by) ?> regarding his quote request for <?= Html::encode($park_package_name) ?>. Please check your inbox to view the details .
+        <?php  } ?>
 
 
     </p>

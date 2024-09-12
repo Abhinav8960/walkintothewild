@@ -2,17 +2,18 @@
 
 namespace frontend\models;
 
-use common\models\User;
-use common\models\chat\Chat;
-use common\models\chat\ChatMessage;
-use common\models\MailLog;
-use common\models\operator\OperatorQuote;
-use common\models\operator\SafariOperator;
-use common\models\package\Package;
-use common\models\package\PackageQuote;
 use Yii;
 use yii\base\Model;
+use common\models\User;
+use common\models\MailLog;
+use common\models\chat\Chat;
 use common\models\GeneralModel;
+use common\models\package\Package;
+use common\models\chat\ChatMessage;
+use common\models\package\PackageQuote;
+use common\models\operator\OperatorQuote;
+use common\models\operator\SafariOperator;
+use common\Helper\FrontendNotificationHelper;
 
 /**
  * PackageQuoteForm is the model behind the contact form.
@@ -105,7 +106,7 @@ class PackageQuoteForm extends Model
                 $chat_message->status = 1;
                 $chat_message->save();
 
-                if ($chat_message->save()) {
+                if ($chat_message->save(false)) {
                     //create mail log
                     if ($package) {
                         $operator = SafariOperator::find()->where(['id' => $package->owned_by_id])->limit(1)->one();
@@ -118,6 +119,7 @@ class PackageQuoteForm extends Model
                         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                             GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                            FrontendNotificationHelper::packageNewQuote($package, Yii::$app->user->identity, $chat_url);
                         }
                     }
                 }
