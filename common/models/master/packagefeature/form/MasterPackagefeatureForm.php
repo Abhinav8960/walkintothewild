@@ -34,7 +34,7 @@ class MasterPackagefeatureForm extends model
             $this->status = $this->package_feature_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

@@ -40,7 +40,7 @@ class PackageIncludedSearch extends PackageIncluded
      */
     public function search($params)
     {
-        $query = PackageIncluded::find()->where(['status' => [1, 2]]);
+        $query = PackageIncluded::find()->where(['status' => [PackageIncluded::STATUS_ACTIVE, PackageIncluded::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

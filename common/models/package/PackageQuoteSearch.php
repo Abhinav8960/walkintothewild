@@ -56,7 +56,7 @@ class PackageQuoteSearch extends PackageQuote
      */
     public function search($params)
     {
-        $query = PackageQuote::find()->where(['status' => [1, 2]]);
+        $query = PackageQuote::find()->where(['status' => [PackageQuote::STATUS_ACTIVE, PackageQuote::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

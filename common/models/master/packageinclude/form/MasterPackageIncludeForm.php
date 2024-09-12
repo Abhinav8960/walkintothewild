@@ -33,7 +33,7 @@ class MasterPackageIncludeForm extends model
             $this->status = $this->package_include_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

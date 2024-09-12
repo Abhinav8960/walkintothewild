@@ -50,7 +50,7 @@ $this->params['title'] = $this->title;
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/safari_4391688.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0"><?= $share_safari->no_of_safari ?> Safaris</p>
@@ -60,7 +60,7 @@ $this->params['title'] = $this->title;
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/car-seat_5102816.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0">Available Seats - <?= $share_safari->total_seat ?>/<?= $share_safari->share_seat ?></p>
@@ -70,7 +70,7 @@ $this->params['title'] = $this->title;
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/camera.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0"><?php
@@ -87,7 +87,7 @@ $this->params['title'] = $this->title;
                         <div class="col-12 col-sm-6  mb-3">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/resort_11834952.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/resort_11834952.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0">Premium</p>
@@ -97,7 +97,7 @@ $this->params['title'] = $this->title;
                         <div class="col-12 ">
                             <div class="safridetails_form d-flex gap-3 align-items-center">
                                 <div class="iconImg">
-                                    <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/rupee_3104891.png" alt="">
+                                    <img src="<?= $this->params['baseurl'] ?>/img/rupee_3104891.png" alt="">
                                 </div>
                                 <div class="text-form">
                                     <p class="mb-0"><?= $share_safari->estimate_price_min ?>- <?= $share_safari->estimate_price_max ?> Estimate Per Person Cost</p>

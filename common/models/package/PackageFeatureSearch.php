@@ -40,7 +40,7 @@ class PackageFeatureSearch extends PackageFeature
      */
     public function search($params)
     {
-        $query = PackageFeature::find()->where(['status' => [1, 2]]);
+        $query = PackageFeature::find()->where(['status' => [PackageFeature::STATUS_ACTIVE, PackageFeature::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

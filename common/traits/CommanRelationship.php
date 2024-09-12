@@ -81,4 +81,25 @@ trait CommanRelationship
         }
         return $this->status;
     }
+
+    /**
+     * Status Label
+     *
+     * @return void
+     */
+    public function getNewstatuslabel()
+    {
+        $statuses = GeneralModel::newrecentstatusoption();
+
+        if (isset($statuses[$this->status])) {
+            if ($this->status == 1) {
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/active.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+            } else if ($this->status == 0) {
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/suspend.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+            } else if ($this->status == -1) {
+                return '<img src="' . \Yii::$app->view->params['baseurl'] . '/img/deleted.png" alt="" style="width: 35px;height: 35px;object-fit: contain;">';
+            }
+        }
+        return $this->status;
+    }
 }

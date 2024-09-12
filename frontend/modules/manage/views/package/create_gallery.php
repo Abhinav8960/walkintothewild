@@ -44,11 +44,11 @@ $this->params['title'] = $this->title;
     if (!empty($model->package_gallery_model->id)) { ?>
         <div class="col-md-12">
             <?= $form->field($model, 'status')->dropDownList(
-                GeneralModel::statusoption(),
+                GeneralModel::newstatusoption(),
                 [
                     'prompt' => '--Select Status--',
                 ]
-            )->label('Status', ['class' => 'Modal_label']) 
+            )->label('Status', ['class' => 'Modal_label'])
             ?>
         </div>
     <?php } ?>

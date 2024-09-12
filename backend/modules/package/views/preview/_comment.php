@@ -1,100 +1,126 @@
 <?php
 
+
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
+use yii\grid\GridView;
 use yii\helpers\Url;
 
 ?>
+<div class="commentCount mb-4">
+    <h6> Comments</h6>
+</div>
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'comment',
+                    [
+                        'label' => 'Replies',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->replies) ? count($model->replies) : '0';
+                        }
+                    ],
+                    [
+                        'label' => 'Flags',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->reports) ? count($model->reports) : '0';
+                        }
+                    ],
+                    // 'statuslabel:raw',
+                    'created_at:dateTime:Created at',
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'template' => '{replies}&nbsp;&nbsp;{flag}',
+                        'buttons' => [
+                            'replies' => function ($url, $model) {
+                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                    'value' => Url::toRoute(['replyview', 'id' => $model->id]),
+                                    'class' => 'btn btn-warning choose-option mb-2',
+                                    'title' => 'Replies'
+                                ]);
+                            },
 
-<div class="col-lg-9 order-lg-1 order-2">
-    <div class="comments_safari">
-        <div class="top_replysafari px-3">
-            <?php if ($package->created_by) { ?>
-                <div class="comments-persons">
-                    <div class="postcomment d-flex gap-2">
-                        <div class="avatar">
-                            <img src="<?= $package->user && $package->user->avatar <> '' ? $package->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
-                        </div>
-                        <div class="text_com">
-                            <h6 class="nameavatri"><?= isset($package->user) ? $package->user->name : '' ?></h6>
-                            <?php if ($package->package_description) { ?>
-                                <p><?= $package->package_description; ?></p>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-        </div>
-        <div class="commentsOther  position-relative">
-            <?php if ($parent_comments = $package->getComments()->where("parent_id IS NULL")->andWhere(['status' => 1])->all()) {
-                foreach ($parent_comments as $comments) {
-                    $replies = $comments->getReplies()->where(['status' => 1])->all();
-
-            ?>
-                    <div class="one_box">
-                        <div class="postcomment d-flex gap-2 pt-3 w-100">
-                            <div class="avatar">
-                                <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">
-                            </div>
-                            <div class="text_com">
-                                <div class="requestContact d-flex gap-2 align-items-center">
-                                    <h6 class="nameavatr"><?= $comments->user->name ?></h6>
-                                </div>
-                                <p><?= $comments->comment ?></p>
-                            </div>
-                        </div>
-                        <div class="comment-reply">
-                            <?php if ($replies) { ?>
-                                <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2 toggle-replies" data-target="comment-container-<?= $comments->id ?>">View <?= count($replies) ?> replies</h6>
-                                <div class="blog-comment-container" id="comment-container-<?= $comments->id ?>" style="display: none;">
-                                    <!-- <h6 class="card-brown-heading pb-2 ms-lg-4 ms-2 pt-2">Replies</h6> -->
-                                    <?php foreach ($replies as $reply) { ?>
-                                        <div class="blog-comment-text ms-lg-4 ms-2 position-relative w-100 flags_reply" style="border:none;">
-                                            <div class="d-flex gap-2">
-                                                <div class="avatar">
-                                                    <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
-                                                </div>
-                                                <div class="font-color">
-                                                    <span class="comment-author"><a href=""><?= $reply->user->name ?></a></span>
-                                                    <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
-                                                    <div class="comment-text">
-                                                        <p><?= $reply->comment ?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-            <?php
-                }
-            } ?>
+                            'flag' => function ($url, $model) {
+                                return Html::button('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', [
+                                    'value' => Url::toRoute(['flagview', 'id' => $model->id]),
+                                    'class' => 'btn btn-warning flag-option mb-2',
+                                    'title' => 'Flag'
+                                ]);
+                            },
+                        ]
+                    ],
+                ]
+            ]); ?>
         </div>
     </div>
 </div>
-<script>
-    function toggleReplyForm(link) {
-        var target = link.getAttribute('data-target');
-        var replyForm = document.querySelector('#' + target);
-        if (replyForm.style.display === "none" || replyForm.style.display === "") {
-            replyForm.style.display = "block";
-        } else {
-            replyForm.style.display = "none";
-        }
-    }
-</script>
 
+<div class="modal fade" id="modalAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Replies
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalflagAction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header flageHeader">
+                <h6 class="modal-title fs-5" id="exampleModalLabel">
+                    Flags
+                </h6>
+            </div>
+
+            <div class="modal-body modal_form">
+                <div id='modalflagContent'></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <?php
 $script = <<< JS
-$('.toggle-replies').click(function() {
-        var target = $(this).data('target');
-        var container = $('#' + target);
-        var isVisible = container.is(':visible');
-        container.slideToggle();
-        $(this).text(isVisible ? 'View replies' : 'Hide replies');
-    });        
+
+
+    $('.choose-option').on('click', function () {
+        $('#modalAction').modal('show')
+		.find('#modalContent')
+		.load($(this).attr('value'));
+	});
+
+JS;
+$this->registerJs($script);
+?>
+<?php
+$script = <<< JS
+
+
+    $('.flag-option').on('click', function () {
+        $('#modalflagAction').modal('show')
+		.find('#modalflagContent')
+		.load($(this).attr('value'));
+	});
+
 JS;
 $this->registerJs($script);
 ?>

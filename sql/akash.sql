@@ -67,3 +67,22 @@ ALTER TABLE `package_comment`
 -- this query one by one
   UPDATE share_safari SET status = 0 where status = 2;
   UPDATE share_safari SET status = 2 where status = 3;
+
+  -- 12-sep-2024
+
+
+  UPDATE master_package_feature SET status = 0 WHERE status = 2;
+UPDATE master_package_include SET status = 0 WHERE status = 2;
+UPDATE package SET status = 0 WHERE status = 2;
+UPDATE package_comment SET status = 0 WHERE status = 2;
+UPDATE package_comment_report SET status = 0 WHERE status = 2;
+UPDATE package_day SET status = 0 WHERE status = 2;
+UPDATE package_enquiry SET status = 0 WHERE status = 2;
+UPDATE package_faq SET status = 0 WHERE status = 2;
+UPDATE package_feature SET status = 0 WHERE status = 2;
+UPDATE package_gallery SET status = 0 WHERE status = 2;
+UPDATE package_included SET status = 0 WHERE status = 2;
+UPDATE package_quote SET status = 0 WHERE status = 2;
+UPDATE package_safari_park SET status = 0 WHERE status = 2;
+
+ALTER TABLE `package` ADD `delete_reason_id` INT NULL AFTER `popular_package`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;

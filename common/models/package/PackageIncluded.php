@@ -16,7 +16,7 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $updated_at
  */
-class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class PackageIncluded extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
     /**

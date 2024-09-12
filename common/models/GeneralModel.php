@@ -62,7 +62,7 @@ use common\models\trierror\SitePages;
 use common\models\MailLog;
 use common\models\MailLogRecipients;
 
-class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusInterface
+class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStatusInterface
 {
 
     const ORDER_BOOKING_TYPE = 'SR';
@@ -87,7 +87,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
      */
     public static function statusoption()
     {
-        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Deactivate'];
+        return ['1' => 'Active', '2' => 'Deactivate'];
     }
 
     /**
@@ -107,7 +107,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
      */
     public static function recentstatusoption()
     {
-        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Deactivate', self::STATUS_DELETE => 'Deleted'];
+        return ['1' => 'Active', '2' => 'Deactivate', '-1' => 'Deleted'];
     }
 
 
@@ -1254,5 +1254,20 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\StatusI
         }
 
         return true;
+    }
+
+    /**
+     * Get Status Active/Inactive Options List
+     *
+     * @return void
+     */
+    public static function newstatusoption()
+    {
+        return [self::STATUS_ACTIVE => "Active", self::STATUS_SUSPEND => "Inactive"];
+    }
+
+    public static function newrecentstatusoption()
+    {
+        return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Deactivate', self::STATUS_DELETE => 'Deleted'];
     }
 }

@@ -21,10 +21,11 @@ $this->params['title'] = $this->title;
                 <div class="imagesSafari">
                     <img src="<?= isset($package->imagebannerpath) ? $package->imagebannerpath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="" class="w-100">
                 </div>
-                <div class="wrapper-skybgsafri pb-0">
+                <div class="wrapper-skybgsafri pb-0" style="background-color: #F5F5F5 !important;">
                     <div class="row border_bottom2 pb-4">
                         <div class="col-lg-7 col-md-8 border-right">
                             <div class="row">
+
                                 <div class="col-lg-4">
                                     <div class="images_tour select_safrai">
                                         <img src="<?= isset($package->safarioperator->imagepath) ? $package->safarioperator->imagepath : $this->params['baseurl'] . '/img/NewBanner_big.png' ?>" alt="">
@@ -32,7 +33,7 @@ $this->params['title'] = $this->title;
                                 </div>
                                 <div class="col-lg-8 pt-sm-0 pt-3">
                                     <div class="safrititles">
-                                        <h5 class="fs-4"><?= $package->package_name ?></h5>
+                                        <h5 class="fs-4"><a href="<?= Yii::$app->params['frontend_url'] . 'package/' . $package->safarioperator->slug . '/' . $package->package_slug ?>"><?= $package->package_name ?></a></h5>
                                         <!-- <div class="date_bx">
                                             <h6><?= date('d M y', strtotime($package->start_date)) ?> - <?= date('d M y', strtotime($package->end_date)) ?></h6>
                                         </div> -->
@@ -43,12 +44,12 @@ $this->params['title'] = $this->title;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-5 pt-lg-0 pt-4">
-                            <div class="row px-sm-4 px-0">
+                        <div class="col-lg-4 pt-lg-0 pt-4">
+                            <div class="row ps-1">
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safari Seasion">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/night-mode_9554519.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Trip Duration">
                                         </div>
                                         <div class="text-form">
                                             <p class="mb-0"><?= $package->no_of_night ?> Nights , <?= $package->no_of_day ?> Days</p>
@@ -58,24 +59,27 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-taxi.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Pick & Drop">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 6, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($pick_drop_includes) ? 'Pick & Drop' : '';
-                                                            ?></p>
+                                            <p class="mb-0"><?= $package->pickanddrop ?></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vechile">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/gypsycanter.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Safaris">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= $package->no_of_safari ?> Shared Safari
+                                            <p class="mb-0"><?= $package->no_of_safari ?> <?php
+                                                                                            if ($package->safari_type == 1) {
+                                                                                                echo 'Shared Safari';
+                                                                                            } elseif ($package->safari_type == 2) {
+                                                                                                echo 'Private Safari';
+                                                                                            } else {
+                                                                                                echo 'Shared Safari';
+                                                                                            } ?>
                                             </p>
                                         </div>
                                     </div>
@@ -83,80 +87,61 @@ $this->params['title'] = $this->title;
                                 <div class="col-12 col-sm-6 mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/path.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Meals">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?php
-                                                            $package_includes = PackageIncluded::find()->where(['package_id' => $package->id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
-
-                                                            echo ($package_includes) ? 'Meals' : '';
-                                                            ?></p>
+                                            <p class="mb-0"><?= $package->meals ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 mb-3">
+                                    <div class="safridetails_form d-flex gap-3 ">
+                                        <div class="iconImg">
+                                            <?php if ($package->package_agenda_id && $package->package_agenda_id == 1) { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                            <?php } else if ($package->package_agenda_id && $package->package_agenda_id == 3) { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/elephant.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                            <?php } else { ?>
+                                                <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Theme">
+                                            <?php } ?>
+                                        </div>
+                                        <div class="text-form">
+                                            <p class="mb-0">
+                                                <?= isset(GeneralModel::agendaoption()[$package->package_agenda_id]) ? GeneralModel::agendaoption()[$package->package_agenda_id] : 'Not Included' ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6  mb-3">
                                     <div class="safridetails_form d-flex gap-3 ">
                                         <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/camera.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Photography Special">
-                                        </div>
-                                        <?php if ($package->packagefeatures) {
-                                            foreach ($package->packagefeatures as $features) { ?>
-                                                <div class="text-form">
-                                                    <p class="mb-0"><?= $features->featurename->title ?></p>
-                                                </div>
-                                        <?php }
-                                        } ?>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6  mb-3">
-                                    <div class="safridetails_form d-flex gap-3 ">
-                                        <div class="iconImg">
-                                            <img src="<?= $this->params['baseurl'] ?>/img/railway.png" alt="">
+                                            <img src="<?= $this->params['baseurl'] ?>/img/Icon fa-solid-hotel.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Accommodation">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0"><?= isset($package->stay_category_id) ? GeneralModel::packageoption()[$package->stay_category_id] : '' ?></p>
+                                            <p class="mb-0"><?= isset(GeneralModel::packageoption()[$package->stay_category_id]) ? GeneralModel::packageoption()[$package->stay_category_id] : 'Not Included' ?></p>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
-                        <div class="col-lg-7">
-                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
-                                <p>Share this event with your friends:</p>
-                                <div class="sociel_icons ps-3">
-                                    <?php
-                                    $shared_url = urlencode(Url::to('', true));
-                                    ?>
-                                    <ul>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
-                                        </li>
-                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
-                                        </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
-                                        </li>
-
-                                    </ul>
-                                </div>
+                    <div class="row">
+                        <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap pt-lg-0 pt-sm-3 pt-3">
+                            <div class="pakageCost mb-xxl-0 mb-2">
+                                <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px" class="me-1 mb-1"><?= number_format($package->total_price) ?> / <span class="perpersonText">Per Person</span></h6>
                             </div>
-                        </div>
-                        <div class="col-lg-5 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="pakageCost">
-                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $package->total_price ?></h6>
-                                </div>
-                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>
-                                </div>
+                            <div class="btn-delet float-end py-2">
+                                <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/package/preview/delete', 'id' => $package->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
                             </div>
 
                         </div>
-
-
+                        </div>
                     </div>
+                </div>
+
                     <div class="row">
                         <div class="col-12 pt-4">
                             <div class="text_safaripackage">
@@ -270,21 +255,8 @@ $this->params['title'] = $this->title;
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
-                <div class="desclaimers pb-3">
-                    <div class="itenary-title">
-                        <h6 class="fs-5 pb-2">Disclaimer</h6>
-                    </div>
-                    <div class="itenary_text">
-                        <ul>
-                            <li>This tour is operated by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> and not by Walk Into The Wild.</li>
-                            <li><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
-                            <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> will propose a suitable alternative.</li>
-                            <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
-                        </ul>
-                    </div>
-                </div>
-                <?= $this->render('_comment', ['package' => $package]) ?>
+
+
             </div>
             <?php if ($package->packagegallery) {
                 $galleries = $package->packagegallery;
@@ -307,13 +279,41 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
             <?php } ?>
+            <div class="comment-wrapper" id="comment-wrapper-section">
+                <?= $this->render('_comment', [
+                    'package' => $package,
+                    'dataProvider' => $commentProvider,
+                    'searchModel' => $commentsearchModel,
+                ]) ?>
+            </div>
         </div>
 </section>
+
+<div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Detail for Delete</h1>
+                <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+            </div>
+            <div class="modal-body px-2 pt-0">
+                <div id='userstatusmodalContent'></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php
 $script = <<< JS
 
-       
+function organizefunction() {
+	$('.btn_userarticle').on('click', function () {
+        $('#organize-modal').modal('show')
+		.find('#userstatusmodalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
 JS;
 $this->registerJs($script);
 ?>

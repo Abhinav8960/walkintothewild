@@ -33,7 +33,7 @@ use yii\behaviors\SluggableBehavior;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
     /**
@@ -135,13 +135,13 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
     public function getPackageincluded()
     {
-        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => 1]);
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
     }
 
 
     public function getPackagefeatures()
     {
-        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => 1]);
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
     }
 
 
@@ -222,7 +222,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
     public function getPickdrop()
     {
-        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
+        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
         return ($package_includes) ? 'Included' : 'Not Included';
     }
 
@@ -279,7 +279,7 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
 
     public function getPickanddrop()
     {
-        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => 1])->limit(1)->one();
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
 
         return ($pick_drop_includes) ? 'Included' : 'Not Included';
     }

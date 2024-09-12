@@ -72,12 +72,23 @@ class DayItineraryForm  extends \yii\base\Model
             [['meal_breakfast', 'meal_lunch', 'meal_dinner'], 'default', 'value' => 0],
             [['day', 'meal_breakfast', 'meal_lunch', 'meal_dinner'], 'integer'],
             [[
-                'day_description', 'day_activity', 'day_accommodation', 'day_note', 'day_title',
-                'start_location', 'end_location', 'hotel_name', 'day_image', 'latitude', 'longitude'
+                'day_description',
+                'day_activity',
+                'day_accommodation',
+                'day_note',
+                'day_title',
+                'start_location',
+                'end_location',
+                'hotel_name',
+                'day_image',
+                'latitude',
+                'longitude'
             ], 'safe'],
 
             [
-                ['day_image'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['day_image'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 940,
                 'maxWidth' => 940,
                 'maxHeight' => 430,
@@ -99,7 +110,7 @@ class DayItineraryForm  extends \yii\base\Model
         $this->package_day_model->day = $this->day;
         $this->package_day_model->day_title = $this->day_title;
         if ($this->package_id) {
-            $package_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'include_id' => 2, 'selection' => 1, 'status' => 1])->limit(1)->one();
+            $package_includes = PackageIncluded::find()->where(['package_id' => $this->package_id, 'include_id' => 2, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
             if ($package_includes) {
                 $this->package_day_model->meal_breakfast = 1;
                 $this->package_day_model->meal_lunch = 1;

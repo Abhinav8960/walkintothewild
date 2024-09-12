@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'package_name')->textInput(['placeholder' => 'Search by Package Name'])->label(false) ?>
     </div>
     <div class="col-md-2">
-        <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => 'Select Status'])->label(false) ?>
+        <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => 'Select Status'])->label(false) ?>
     </div>
 
 </div>

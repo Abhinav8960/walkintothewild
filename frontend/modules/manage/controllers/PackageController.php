@@ -2,10 +2,10 @@
 
 namespace frontend\modules\manage\controllers;
 
+use common\interfaces\NewStatusInterface;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
-use common\interfaces\StatusInterface;
 use common\models\master\faq\MasterFaq;
 use common\models\package\form\DayItineraryForm;
 use common\models\package\form\PackageCommentActionForm;
@@ -75,7 +75,7 @@ class PackageController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
         $model = new PackageForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = Package::STATUS_ACTIVE;
         $model->owned_by_id = $safari_operator->id;
         $model->scenario = 'create';
 
@@ -264,7 +264,7 @@ class PackageController extends FrontendBaseController
                                 }
 
                                 if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                                    $package_days = PackageDay::find()->where(['package_id' => $package_id, 'status' => 1])->all();
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_id, 'status' => PackageDay::STATUS_ACTIVE])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
                                             $package_day->meal_breakfast = 1;
@@ -366,7 +366,7 @@ class PackageController extends FrontendBaseController
         $package_model = $this->findModel($package_id);
         $model = new PackageFaqForm();
         $model->package_id = $package_id;
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -376,7 +376,7 @@ class PackageController extends FrontendBaseController
                         $faq->question = $model->question;
                         $faq->answer = $model->answer;
                         $faq->position = 0;
-                        $faq->status = StatusInterface::STATUS_ACTIVE;
+                        $faq->status = NewStatusInterface::STATUS_ACTIVE;
                         if ($faq->save(false)) {
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
@@ -412,7 +412,7 @@ class PackageController extends FrontendBaseController
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_id;
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -422,7 +422,7 @@ class PackageController extends FrontendBaseController
                         $faq->question = $model->question;
                         $faq->answer = $model->answer;
                         $faq->position = 0;
-                        $faq->status = StatusInterface::STATUS_ACTIVE;
+                        $faq->status = NewStatusInterface::STATUS_ACTIVE;
                         if ($faq->save(false)) {
                             $model->package_faq_model->faq_id = $faq->id;
                             $model->package_faq_model->save(false);
@@ -455,7 +455,7 @@ class PackageController extends FrontendBaseController
         $package_model = $this->findModel($package_id);
         $model = new PackageFaqSelectForm();
         $model->package_id = $package_id;
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -502,7 +502,7 @@ class PackageController extends FrontendBaseController
         $package_model = $this->findModel($package_id);
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  PackageComment::find()->where(['package_id' => $package_id, 'status' => 1])->andWhere(['parent_id' => null]),
+            'query' =>  PackageComment::find()->where(['package_id' => $package_id, 'status' => PackageComment::STATUS_ACTIVE])->andWhere(['parent_id' => null]),
             'pagination' => [
                 'pageSize' => 20,
             ],
@@ -517,10 +517,10 @@ class PackageController extends FrontendBaseController
 
     public function actionReplies($id)
     {
-        $comment = PackageComment::find()->where(['id' => $id, 'status' => 1])->limit(1)->one();
+        $comment = PackageComment::find()->where(['id' => $id, 'status' => PackageComment::STATUS_ACTIVE])->limit(1)->one();
         $package_model = $this->findModel($comment->package_id);
         $dataProvider = new ActiveDataProvider([
-            'query' =>  $comment->getReplies()->where(['status' => 1]),
+            'query' =>  $comment->getReplies()->where(['status' =>  PackageComment::STATUS_ACTIVE]),
             'pagination' => [
                 'pageSize' => 20,
             ],

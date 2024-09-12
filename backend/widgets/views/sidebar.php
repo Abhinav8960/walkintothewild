@@ -708,17 +708,17 @@ $active_url = "/" . Yii::$app->requestedRoute;
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin) : ?>
 
 					<!-- <li class="slide <?= in_array($active_url, array(
-											"/registration/safari-operator-tour",
-											"/registration/safari-operator-tour/index",
-											"/registration/safari-operator-tour/view",
-											"/registration/safari-operator-tour/create",
-											"/registration/safari-operator-tour/update",
-											"/registration/birding-operator-tour",
-											"/registration/birding-operator-tour/index",
-											"/registration/birding-operator-tour/view",
-											"/registration/birding-operator-tour/create",
-											"/registration/birding-operator-tour/update",
-										)) ? "is-expanded" : "" ?>">
+												"/registration/safari-operator-tour",
+												"/registration/safari-operator-tour/index",
+												"/registration/safari-operator-tour/view",
+												"/registration/safari-operator-tour/create",
+												"/registration/safari-operator-tour/update",
+												"/registration/birding-operator-tour",
+												"/registration/birding-operator-tour/index",
+												"/registration/birding-operator-tour/view",
+												"/registration/birding-operator-tour/create",
+												"/registration/birding-operator-tour/update",
+											)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/registration/safari-operator-tour",
 														"/registration/safari-operator-tour/index",
@@ -925,9 +925,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/sharesafari/default/fixed-view",
 														)) ? "active" : "" ?>" href="/sharesafari/default/fixed-departure">Fixed Departure</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/sharesafari/share-safari-comment/index",
-															"/sharesafari/share-safari-comment/view",
-														)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li> -->
+																"/sharesafari/share-safari-comment/index",
+																"/sharesafari/share-safari-comment/view",
+															)) ? "active" : "" ?>" href="/sharesafari/share-safari-comment/index">Share Safari Comments</a></li> -->
 						</ul>
 					</li>
 				<?php endif; ?>
@@ -947,7 +947,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/package/profile/create-faq",
 											"/package/profile/faq-update",
 											"/package/quote/index",
-											"/package/quote"
+											"/package/quote",
+											"/package/preview/index",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/package/default/index",
@@ -963,7 +964,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/package/profile/create-faq",
 														"/package/profile/faq-update",
 														"/package/quote/index",
-														"/package/quote"
+														"/package/quote",
+														"/package/preview/index",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Package</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Package</a></li>
@@ -983,7 +985,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														)) ? "active" : "" ?>" href="/package/default/index">Package List</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/package/quote/index",
-															"/package/quote"
+															"/package/quote",
 														)) ? "active" : "" ?>" href="/package/quote/index">Package Quote</a></li>
 						</ul>
 					</li>

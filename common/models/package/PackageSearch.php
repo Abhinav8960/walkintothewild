@@ -74,7 +74,7 @@ class PackageSearch extends Package
      */
     public function search($params)
     {
-        $query = Package::find()->where(['package.status' => [1, 2]]);
+        $query = Package::find()->where(['package.status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

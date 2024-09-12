@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\packageinclude\form\MasterPackageIncludeForm;
 use common\models\master\packageinclude\MasterPackageInclude;
 use common\models\master\packageinclude\MasterPackageIncludeSearch;
@@ -40,7 +40,7 @@ class PackageincludeController extends Controller
     public function actionCreate()
     {
         $model = new MasterPackageIncludeForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterPackageInclude::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -104,7 +104,7 @@ class PackageincludeController extends Controller
     {
         $model = $this->findModel($id);
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterPackageInclude::STATUS_DELETE;
         $model->save(false);
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -119,7 +119,7 @@ class PackageincludeController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterPackageInclude::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterPackageInclude::findOne(['id' => $id, 'status' => [MasterPackageInclude::STATUS_ACTIVE, MasterPackageInclude::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
