@@ -25,6 +25,7 @@ use frontend\models\form\PackageEnquiryForm;
 use frontend\models\PackageCommentReportForm;
 use common\Helper\FrontendNotificationHelper;
 use common\models\cms\frontendbanner\FrontendBanner;
+use common\models\package\PackageEnquiry;
 use frontend\controllers\FrontendBaseController;
 
 /**
@@ -64,7 +65,7 @@ class DefaultController extends FrontendBaseController
         $dataProvider->query->andWhere("owned_by_id IN (SELECT id from safari_operator WHERE status=1)");
         $models = $dataProvider->getModels();
 
-        $package_banner_model = FrontendBanner::find()->where(['type' => FrontendBanner::TYPE_PACKAGE, 'status' => StatusInterface::STATUS_ACTIVE])->orderBy(['sequence' => SORT_ASC])->all();
+        $package_banner_model = FrontendBanner::find()->where(['type' => FrontendBanner::TYPE_PACKAGE, 'status' => FrontendBanner::STATUS_ACTIVE])->orderBy(['sequence' => SORT_ASC])->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -273,7 +274,7 @@ class DefaultController extends FrontendBaseController
         $model = new PackageEnquiryForm();
         $model->safari_operator_id =  $package->owned_by_id;
         $model->package_id = $package->id;
-        $model->status = 1;
+        $model->status = PackageEnquiry::STATUS_ACTIVE;
         if (Yii::$app->user->identity) {
             $model->user_id = Yii::$app->user->identity->id;
             $model->name = Yii::$app->user->identity->name;
@@ -435,7 +436,7 @@ class DefaultController extends FrontendBaseController
 
     protected function findReplyModel($id)
     {
-        if (($model = PackageComment::findOne(['id' => $id, 'status' => 1])) !== null) {
+        if (($model = PackageComment::findOne(['id' => $id, 'status' => PackageComment::STATUS_ACTIVE])) !== null) {
             return $model;
         }
 

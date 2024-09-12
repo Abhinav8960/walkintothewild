@@ -40,7 +40,7 @@ class MasterPackageIncludeSearch extends MasterPackageInclude
      */
     public function search($params)
     {
-        $query = MasterPackageInclude::find()->where(['status' => [1, 2]]);
+        $query = MasterPackageInclude::find()->where(['status' => [MasterPackageInclude::STATUS_ACTIVE, MasterPackageInclude::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

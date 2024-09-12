@@ -42,7 +42,7 @@ class PackageEnquirySearch extends PackageEnquiry
      */
     public function search($params)
     {
-        $query = PackageEnquiry::find()->where(['status' => [1, 2]]);
+        $query = PackageEnquiry::find()->where(['status' => [PackageEnquiry::STATUS_ACTIVE, PackageEnquiry::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

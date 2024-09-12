@@ -40,7 +40,7 @@ class PackageSafariParkSearch extends PackageSafariPark
      */
     public function search($params)
     {
-        $query = PackageSafariPark::find()->where(['status' => [1, 2]]);
+        $query = PackageSafariPark::find()->where(['status' => [PackageSafariPark::STATUS_ACTIVE, PackageSafariPark::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

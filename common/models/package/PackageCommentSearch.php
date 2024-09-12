@@ -78,6 +78,6 @@ class PackageCommentSearch extends PackageComment
 
     public static function getPackagelist()
     {
-        return ArrayHelper::map(Package::find()->where(['status' => [1, 2]])->andWhere("id IN (SELECT Distinct package_id FROM package_comment)")->all(), 'id', 'package_name');
+        return ArrayHelper::map(Package::find()->where(['status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])->andWhere("id IN (SELECT Distinct package_id FROM package_comment)")->all(), 'id', 'package_name');
     }
 }

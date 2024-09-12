@@ -28,7 +28,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class PackageDay extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
     /**

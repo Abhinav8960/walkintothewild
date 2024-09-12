@@ -127,9 +127,9 @@ class PackageForm extends \yii\base\Model
 
             $this->status = $this->package_model->status;
 
-            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
-            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
-            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_model->id, 'status' => 1])->column();
+            $this->package_feature = PackageFeature::find()->select('feature_id')->where(['package_id' => $this->package_model->id, 'status' => PackageFeature::STATUS_ACTIVE])->column();
+            $this->package_included = PackageIncluded::find()->select('include_id', 'selection')->where(['package_id' => $this->package_model->id, 'status' => PackageIncluded::STATUS_ACTIVE])->column();
+            $this->package_park = PackageSafariPark::find()->select('park_id')->where(['package_id' => $this->package_model->id, 'status' => PackageSafariPark::STATUS_ACTIVE])->column();
         }
     }
 

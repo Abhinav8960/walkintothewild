@@ -2,7 +2,6 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
 use common\models\master\packagefeature\form\MasterPackagefeatureForm;
 use common\models\master\packagefeature\MasterPackagefeature;
 use common\models\master\packagefeature\MasterPackagefeatureSearch;
@@ -41,7 +40,7 @@ class PackagefeatureController extends Controller
     public function actionCreate()
     {
         $model = new MasterPackagefeatureForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterPackagefeature::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -105,7 +104,7 @@ class PackagefeatureController extends Controller
     {
         $model = $this->findModel($id);
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterPackagefeature::STATUS_DELETE;
         $model->save(false);
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -120,7 +119,7 @@ class PackagefeatureController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterPackagefeature::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterPackagefeature::findOne(['id' => $id, 'status' => [MasterPackagefeature::STATUS_ACTIVE, MasterPackagefeature::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

@@ -41,7 +41,7 @@ class PackageGallerySearch extends PackageGallery
      */
     public function search($params)
     {
-        $query = PackageGallery::find()->where(['status' => [1, 2]]);
+        $query = PackageGallery::find()->where(['status' => [PackageGallery::STATUS_ACTIVE, PackageGallery::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([

@@ -40,7 +40,7 @@ class MasterPackagefeatureSearch extends MasterPackagefeature
      */
     public function search($params)
     {
-        $query = MasterPackagefeature::find()->where(['status' => [1, 2]]);
+        $query = MasterPackagefeature::find()->where(['status' => [MasterPackagefeature::STATUS_ACTIVE, MasterPackagefeature::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
