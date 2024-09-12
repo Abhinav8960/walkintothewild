@@ -33,6 +33,9 @@ $this->params['title'] = $this->title;
                         </div>
                         <div class="col-9 col-sm-9 col-md-9 col-lg-10 pt-sm-0 pt-3 maxWidth">
                             <div class="safrititles">
+                                <a href="<?= Yii::$app->params['frontend_url'] . 'sharedsafari/' . $share_safari->organizedslug . '/' . $share_safari->slug  ?>">
+                                    <h5><?= $share_safari->share_safari_title ?></h5>
+                                </a>
                                 <div class="date_bx">
                                     <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?> <?= isset($share_safari->cut_off_date) ? ' | <span style="color:black;">Cut off Date</span> ' . date('d M y', strtotime($share_safari->cut_off_date)) : '' ?> </h6>
                                 </div>

@@ -30,10 +30,14 @@ $this->params['title'] = $this->title;
                             <div class="safritimg">
                                 <img src="<?= $share_safari->sharedimagepath ? $share_safari->sharedimagepath : $this->params['baseurl'] . '/img/Bandhavgarhbig.jpg' ?>" alt="" class="w-100">
                             </div>
+
                         </div>
                         <div class="col-md-9 pt-sm-0 pt-3">
                             <div class="safrititles">
-                                <h5><?= $share_safari->park->title ?></h5>
+                                <a href="<?= Yii::$app->params['frontend_url'] . 'sharedsafari/' . $share_safari->organizedslug . '/' . $share_safari->slug  ?>">
+                                    <h5><?= $share_safari->share_safari_title ?></h5>
+                                </a>
+                                <h6><?= $share_safari->park->title ?></h6>
                                 <div class="date_bx">
                                     <h6><?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?></h6>
                                 </div>
@@ -52,6 +56,7 @@ $this->params['title'] = $this->title;
                                 <div class="iconImg">
                                     <img src="<?= $this->params['baseurl'] ?>/img/safari_4391688.png" alt="">
                                 </div>
+
                                 <div class="text-form">
                                     <p class="mb-0"><?= $share_safari->no_of_safari ?> Safaris</p>
                                 </div>
