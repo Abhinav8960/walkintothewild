@@ -258,6 +258,13 @@ $this->params['title'] = $this->title;
                     </div>
                 </div>
             <?php } ?>
+            <div class="comment-wrapper" id="comment-wrapper-section">
+                <?= $this->render('_comment', [
+                    'package' => $package,
+                    'dataProvider' => $commentProvider,
+                    'searchModel' => $commentsearchModel,
+                ]) ?>
+            </div>
         </div>
 </section>
 

@@ -5,6 +5,7 @@ namespace backend\modules\package\controllers;
 use common\interfaces\StatusInterface;
 use common\models\package\form\PackageForm;
 use common\models\package\Package;
+use common\models\package\PackageCommentSearch;
 use common\models\package\PackageFaqSearch;
 use common\models\package\PackageFeature;
 use common\models\package\PackageIncluded;
@@ -37,11 +38,18 @@ class PreviewController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams, false);
         $faqs = $dataProvider->getModels();
 
+        $commentsearchModel = new PackageCommentSearch();
+        $commentsearchModel->package_id = $package->id;
+        $commentProvider = $commentsearchModel->listingsearch($this->request->queryParams);
+        $commentProvider->query->andWhere(['parent_id' => null]);
+
         return $this->render(
             'view',
             [
                 'package' => $package,
                 'faqs' => $faqs,
+                'commentsearchModel' => $commentsearchModel,
+                'commentProvider' => $commentProvider,
             ]
         );
     }

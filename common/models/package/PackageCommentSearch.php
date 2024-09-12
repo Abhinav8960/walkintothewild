@@ -80,4 +80,37 @@ class PackageCommentSearch extends PackageComment
     {
         return ArrayHelper::map(Package::find()->where(['status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])->andWhere("id IN (SELECT Distinct package_id FROM package_comment)")->all(), 'id', 'package_name');
     }
+
+    public function listingsearch($params, $pagination = true)
+    {
+        $query = PackageComment::find();
+
+        // add conditions that should always apply here
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => $pagination === false ? false : ['pageSize' => $pagination === true ? 200 : $pagination],
+            'sort' => ['defaultOrder' => ['updated_at' => SORT_ASC]],
+
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'package_id' => $this->package_id,
+            'flaged' => $this->flaged,
+        ]);
+
+
+        return $dataProvider;
+    }
 }
