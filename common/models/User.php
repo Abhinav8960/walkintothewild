@@ -86,6 +86,62 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function afterLogin()
+    {
+        $session = Yii::$app->session;
+        $sessionId = $session->getId();
+        $userId = Yii::$app->user->id;
+        $token = Yii::$app->security->generateRandomString();
+        $agent = new \Jenssegers\Agent\Agent();
+        $agent->setUserAgent(Yii::$app->request->userAgent);
+        Yii::$app->db->createCommand()->insert('user_session', [
+            'id' => $sessionId,
+            'user_id' => $userId,
+            'last_activity' => new \yii\db\Expression('NOW()'),
+            'token' => $token,
+            'ip_address' => Yii::$app->request->userIP,
+            'user_agent' => Yii::$app->request->userAgent,
+            'user_device' => $agent->device(),
+            'user_platform' => $agent->platform(),
+            'user_browser' => $agent->browser(),
+            'created_at' => new \yii\db\Expression('NOW()'),
+            'app_name' => Yii::$app->params['app_name']
+        ])->execute();
+
+        $session->set('session_token', $token);
+        $this->manageUserSessions($userId, $sessionId);
+    }
+
+    /**
+     * Manage USer Sessions
+     */
+    private function manageUserSessions($userId, $sessionId)
+    {
+        $keepSessionIds = UserSession::find()->select(['id'])
+            ->where(['user_id' => $userId, 'app_name' => Yii::$app->params['app_name']])
+            ->orderBy(['last_activity' => SORT_ASC])
+            ->limit(Yii::$app->params['user.maxLoginAccount'])
+            ->asarray()->column();
+
+        UserSession::deleteAll([
+            'AND',
+            ['user_id' => $userId],
+            ['app_name' => Yii::$app->params['app_name']],
+            ['NOT IN', 'id', $keepSessionIds],
+            ['NOT IN', 'id', [$sessionId]]
+        ]);
+    }
+
+    /**
+     * Run After Logout
+     */
+    public function afterLogout()
+    {
+        $session = Yii::$app->session;
+        $sessionId = $session->getId();
+        Yii::$app->db->createCommand()->delete('user_session', ['id' => $sessionId])->execute();
+    }
+
     /**
      * {@inheritdoc}
      */

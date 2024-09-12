@@ -46,7 +46,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                     </li>
                                 </ul>
                             </div>
-                            <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-content pt-3" id="pills-tabContent">
                                 <!-- direct msg user lists -->
                                 <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade <?php if (empty($chat_id) || $searchModel->name <> '') {
                                                                                                                                 echo 'show active mt-4';
@@ -98,7 +98,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                     <div class="chat-cardlist pt-3">
                                         <?php if ($searchModel->name == '' && $active_quote_chat_list) {
                                             foreach ($active_quote_chat_list as $active_chat) {
-                                                if ($active_chat->user_id == $login_user->id) {
+                                                if ($login_user && $active_chat->user_id == $login_user->id) {
                                                     $user = $active_chat->recipient;
                                                 } else {
                                                     $user = $active_chat->user;
@@ -200,13 +200,13 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             <div class="chat-message-container" id="chat-message-container">
                                 <?php $quote_chat_id = 0;
                                 $chat = Chat::find()->where(['id' => $chat_id])->limit(1)->one();
-                                if (empty($chat)) {
+                                if (empty($chat) && $login_user) {
                                     $chat = Chat::find()->where(['user_id' => [$login_user->id, $individual_user->id], 'recipient_user_id' => [$login_user->id, $individual_user->id], 'status' => 1])->andWhere(['chat_type' => 1])->limit(1)->one();
                                 }
                                 if ($chat && $chat_message_list = $chat->getChatmessages()->where(['status' => 1])->orderby(['created_at' => SORT_ASC])->all()) {
                                     foreach ($chat_message_list as $chat_message) { ?>
                                         <div class="chat-message pt-3">
-                                            <?php if ($chat_message->created_by == $login_user->id) { ?>
+                                            <?php if ($login_user && $chat_message->created_by == $login_user->id) { ?>
                                                 <div class="reciverchta">
                                                     <div class="text-right text-justify message_body_right position-relative">
                                                         <?= $chat_message->message ?>

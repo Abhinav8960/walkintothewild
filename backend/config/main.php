@@ -12,7 +12,6 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log', '\backend\components\AppBootstrap'],
     'timeZone' => 'Asia/Calcutta',
-
     'modules' => [
         'webshell' => [
             'class' => 'samdark\webshell\Module',
@@ -86,6 +85,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
+            'class' => 'common\components\WebUser', // For Tracking the Sessions
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
