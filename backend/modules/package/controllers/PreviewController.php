@@ -24,9 +24,9 @@ class PreviewController extends Controller
      * Renders the index view for the module
      * @return string
      */
-    public function actionIndex($slug)
+    public function actionIndex($id)
     {
-        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
             throw new NotFoundHttpException('The requested page does not exist.');

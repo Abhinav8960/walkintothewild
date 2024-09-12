@@ -44,56 +44,56 @@ class DefaultController extends Controller
      * 
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new PackageForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
-        $model->scenario = 'create';
+    // public function actionCreate()
+    // {
+    //     $model = new PackageForm();
+    //     $model->status = StatusInterface::STATUS_ACTIVE;
+    //     $model->scenario = 'create';
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->package_image = UploadedFile::getInstance($model, 'package_image');
-                $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_model->save()) {
-                        $model->uploadFile();
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             $model->package_image = UploadedFile::getInstance($model, 'package_image');
+    //             $model->package_banner_image = UploadedFile::getInstance($model, 'package_banner_image');
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->package_model->save()) {
+    //                     $model->uploadFile();
 
-                        $package_feature = $model->package_feature;
-                        if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_feature as $feature) {
-                                $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
-                                $packagefeature->feature_id = $feature;
-                                $packagefeature->save(false);
-                            }
-                        }
+    //                     $package_feature = $model->package_feature;
+    //                     if ($package_feature) {
+    //                         PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+    //                         foreach ($package_feature as $feature) {
+    //                             $packagefeature = new PackageFeature();
+    //                             $packagefeature->package_id = $model->package_model->id;
+    //                             $packagefeature->feature_id = $feature;
+    //                             $packagefeature->save(false);
+    //                         }
+    //                     }
 
 
-                        $package_park = $model->package_park;
-                        if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_park as $park) {
-                                $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->park_id = $park;
-                                $packagesafaripark->save(false);
-                            }
-                        }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['index']);
-                    }
-                }
-            }
-        } else {
-            $model->package_model->loadDefaultValues();
-        }
+    //                     $package_park = $model->package_park;
+    //                     if ($package_park) {
+    //                         PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+    //                         foreach ($package_park as $park) {
+    //                             $packagesafaripark = new PackageSafariPark();
+    //                             $packagesafaripark->package_id = $model->package_model->id;
+    //                             $packagesafaripark->park_id = $park;
+    //                             $packagesafaripark->save(false);
+    //                         }
+    //                     }
+    //                     \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+    //                     return $this->redirect(['index']);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->package_model->loadDefaultValues();
+    //     }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('create', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
 
     /**
@@ -103,67 +103,67 @@ class DefaultController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $package_model = $this->findModel($id);
-        $model = new PackageForm($package_model);
-        $model->scenario = 'update';
+    // public function actionUpdate($id)
+    // {
+    //     $package_model = $this->findModel($id);
+    //     $model = new PackageForm($package_model);
+    //     $model->scenario = 'update';
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->package_image = UploadedFile::getInstance($model, 'package_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->package_model->save(false)) {
-                        $model->uploadFile();
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             $model->package_image = UploadedFile::getInstance($model, 'package_image');
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->package_model->save(false)) {
+    //                     $model->uploadFile();
 
-                        $package_feature = $model->package_feature;
-                        if ($package_feature) {
-                            PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_feature as $feature) {
-                                $packagefeature = new PackageFeature();
-                                $packagefeature->package_id = $model->package_model->id;
-                                $packagefeature->feature_id = $feature;
-                                $packagefeature->save(false);
-                            }
-                        }
+    //                     $package_feature = $model->package_feature;
+    //                     if ($package_feature) {
+    //                         PackageFeature::deleteAll(['package_id' => $model->package_model->id]);
+    //                         foreach ($package_feature as $feature) {
+    //                             $packagefeature = new PackageFeature();
+    //                             $packagefeature->package_id = $model->package_model->id;
+    //                             $packagefeature->feature_id = $feature;
+    //                             $packagefeature->save(false);
+    //                         }
+    //                     }
 
-                        $package_included = $model->package_included;
-                        if ($package_included) {
-                            PackageIncluded::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_included as $include) {
-                                $packageincluded = new PackageIncluded();
-                                $packageincluded->package_id = $model->package_model->id;
-                                $packageincluded->include_id = $include;
-                                $packageincluded->save(false);
-                            }
-                        }
+    //                     $package_included = $model->package_included;
+    //                     if ($package_included) {
+    //                         PackageIncluded::deleteAll(['package_id' => $model->package_model->id]);
+    //                         foreach ($package_included as $include) {
+    //                             $packageincluded = new PackageIncluded();
+    //                             $packageincluded->package_id = $model->package_model->id;
+    //                             $packageincluded->include_id = $include;
+    //                             $packageincluded->save(false);
+    //                         }
+    //                     }
 
 
-                        $package_park = $model->package_park;
-                        if ($package_park) {
-                            PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
-                            foreach ($package_park as $park) {
-                                $packagesafaripark = new PackageSafariPark();
-                                $packagesafaripark->package_id = $model->package_model->id;
-                                $packagesafaripark->park_id = $park;
-                                $packagesafaripark->save(false);
-                            }
-                        }
+    //                     $package_park = $model->package_park;
+    //                     if ($package_park) {
+    //                         PackageSafariPark::deleteAll(['package_id' => $model->package_model->id]);
+    //                         foreach ($package_park as $park) {
+    //                             $packagesafaripark = new PackageSafariPark();
+    //                             $packagesafaripark->package_id = $model->package_model->id;
+    //                             $packagesafaripark->park_id = $park;
+    //                             $packagesafaripark->save(false);
+    //                         }
+    //                     }
 
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['index']);
-                    }
-                }
-            }
-        } else {
-            $model->package_model->loadDefaultValues();
-        }
+    //                     \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+    //                     return $this->redirect(['index']);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->package_model->loadDefaultValues();
+    //     }
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('update', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
 
     public function actionView($package_id)

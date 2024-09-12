@@ -121,42 +121,6 @@ $this->params['title'] = $this->title;
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-md-4 align-items-center gx-4 border_bottom2 pb-4">
-                        <div class="col-lg-7">
-                            <div class="social-share d-flex gap-2 align-items-center justify-content-lg-start justify-content-between  ">
-                                <p>Share this event with your friends:</p>
-                                <div class="sociel_icons ps-3">
-                                    <?php
-                                    $shared_url = urlencode(Url::to('', true));
-                                    ?>
-                                    <ul>
-                                        <li><a href="https://www.facebook.com/sharer/sharer.php?u=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-facebook-f"></i></a>
-                                        </li>
-                                        <li><a href="https://wa.me/?text=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-whatsapp"></i></a>
-                                        </li>
-                                        <li><a href="https://twitter.com/intent/tweet?url=<?= $shared_url ?>" target="_blank" class="iconSize"><i class="fa-brands fa-x-twitter"></i></a>
-                                        </li>
-                                        <li><a href="https://www.instagram.com/?url=<?= urlencode($shared_url) ?>" target="_blank" class="iconSize"><i class="fa-brands fa-instagram"></i></a>
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-5 d-lg-block  mobile_didplay_block">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="pakageCost">
-                                    <h6 class="fs-4 mb-0 fw-bold"><img src="<?= $this->params['baseurl'] ?>/img/rupees.png" alt="" width="20px"><?= $package->total_price ?></h6>
-                                </div>
-                                <div class="btn_wrap float-lg-end pt-lg-0 pt-3">
-                                    <button class="join_btn  mt-sm-0 mt-2 enquiryBtn" value="<?= Url::toRoute(['/package/default/enquiry', 'slug' => $package->package_slug]) ?>">Book Now</button>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                    </div>
                     <div class="row">
                         <div class="col-12 pt-4">
                             <div class="text_safaripackage">
@@ -270,21 +234,8 @@ $this->params['title'] = $this->title;
                         <!-- Rendered on 2024-07-09 13:16:37 -->
                     </div>
                 </div>
-                <div class="desclaimers pb-3">
-                    <div class="itenary-title">
-                        <h6 class="fs-5 pb-2">Disclaimer</h6>
-                    </div>
-                    <div class="itenary_text">
-                        <ul>
-                            <li>This tour is operated by <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> and not by Walk Into The Wild.</li>
-                            <li><strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> reserves the right to adjust the rates advertised by Walk Into The Wild.</li>
-                            <li>The specific itinerary, inclusions, and pricing of this tour are dependent on availability.</li>
-                            <li>In the event that accommodations are fully booked, <strong><?= isset($package->safarioperator->business_name) ? $package->safarioperator->business_name : '' ?></strong> will propose a suitable alternative.</li>
-                            <li>This tour is governed by the terms and conditions set forth by Walk Into The Wild.</li>
-                        </ul>
-                    </div>
-                </div>
-                <?= $this->render('_comment', ['package' => $package]) ?>
+
+
             </div>
             <?php if ($package->packagegallery) {
                 $galleries = $package->packagegallery;

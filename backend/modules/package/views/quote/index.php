@@ -32,7 +32,7 @@ $this->params['title'] = $this->title;
                         'value' => function ($model) {
                             return isset(GeneralModel::packagelist()[$model->package_id]) ? Html::a(
                                 GeneralModel::packagelist()[$model->package_id],
-                                ['/package/profile/index', 'package_id' => $model->package_id],
+                                ['/package/preview/index', 'id' => $model->package_id],
                                 ['style' => 'color: black !important;', 'title' => 'View Package Details']
                             ) : '';
                         }
@@ -102,7 +102,7 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->newstatuslabel;
                         }
                     ],
                 ],

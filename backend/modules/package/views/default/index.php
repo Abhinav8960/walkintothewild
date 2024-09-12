@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
 $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaAppAsset')->baseUrl;
-$this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
+// $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn btn-orange ', 'title' => 'Create']);
 ?>
 
 
@@ -44,7 +44,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a($model->package_name, ['/package/profile/index', 'package_id' => $model->id], [
+                            return Html::a($model->package_name, ['/package/preview/index', 'id' => $model->id], [
                                 'style' => 'color: black !important;',
                                 'title' => 'View',
                             ]);
@@ -116,7 +116,7 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->newstatuslabel;
                         }
                     ],
                     [
