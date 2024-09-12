@@ -42,13 +42,13 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link <?php if (!empty($chat_id)) {
                                                                     echo 'active';
-                                                                } ?>  chatFonts" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quote Request</button>
+                                                                } ?>  chatFonts" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quote Request (<?= count($active_quote_chat_list) ?>)</button>
                                     </li>
                                 </ul>
                             </div>
                             <div class="tab-content" id="pills-tabContent">
                                 <!-- direct msg user lists -->
-                                <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade <?php if (empty($chat_id)) {
+                                <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade <?php if (empty($chat_id) || $searchModel->name <> '') {
                                                                                                                                 echo 'show active mt-4';
                                                                                                                             } ?>">
                                     <div class="chat-search-user mb-3 position-relative">
@@ -67,7 +67,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                 } ?>
 
                                                 <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link  mb-3 d-block" data-pjax="0">
-                                                    <div class="chat-sidebar-user-card click_mobile <?= $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                    <div class="chat-sidebar-user-card click_mobile <?= empty($chat_id) && $individual_user->id == $user->id ? 'selected_chat' : '' ?>">
                                                         <div class="d-flex chat-user_message">
                                                             <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                             <div class="chat-user_name">
@@ -89,7 +89,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
 
                                 <!-- quote msg user lists -->
                                 <div id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" class="tab-pane fade 
-                                <?php if (!empty($chat_id)) {
+                                <?php if (!empty($chat_id) && $searchModel->name == '') {
                                     echo 'show active mt-4';
                                 } ?>">
 
@@ -142,9 +142,9 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         <?php }
                                         }
 
-                                        if ($searchModel->name) {
-                                            echo $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
-                                        }
+                                        // if ($searchModel->name) {
+                                        //     echo $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
+                                        // }
                                         ?>
                                     </div>
                                 </div>

@@ -43,7 +43,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link <?php if (!empty($chat_id)) {
                                                                     echo 'active';
-                                                                } ?>  chatFonts" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quote Request</button>
+                                                                } ?>  chatFonts" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quote Request (<?= count($active_quote_chat_list) ?>)</button>
                                     </li>
                                 </ul>
                             </div>
@@ -68,7 +68,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                 } ?>
 
                                                 <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
-                                                    <div class="chat-sidebar-user-card <?= $user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                    <div class="chat-sidebar-user-card ">
                                                         <div class="d-flex chat-user_message">
                                                             <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                             <div class="chat-user_name">
@@ -107,7 +107,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
 
                                                 <a href="<?= Url::toRoute(['/chat/message/' . $user->user_handle . "/" . base64_encode($active_chat->id)]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
 
-                                                    <div class="chat-sidebar-user-card <?= $user->id == $user->id ? 'selected_chat' : '' ?>">
+                                                    <div class="chat-sidebar-user-card ">
                                                         <div class="d-flex chat-user_message">
                                                             <?php if ($active_chat->recipient_user_id == $user->id) { ?>
                                                                 <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
