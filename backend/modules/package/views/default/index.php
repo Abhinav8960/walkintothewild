@@ -50,6 +50,15 @@ $this->params['baseurl'] = $this->assetManager->getBundle('\backend\assets\NovaA
                             ]);
                         }
                     ],
+
+                    [
+                        'label' => 'Operator Name',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->safarioperator) ? $model->safarioperator->business_name : '';
+                        }
+                    ],
                     [
                         'label' => 'Info',
                         'contentOptions' => ['style' => 'width: 15%;'],

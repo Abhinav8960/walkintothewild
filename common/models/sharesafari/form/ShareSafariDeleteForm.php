@@ -33,7 +33,7 @@ class ShareSafariDeleteForm extends model
             $this->status              =  $this->share_safari_delete_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
