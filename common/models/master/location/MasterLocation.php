@@ -23,7 +23,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class MasterLocation extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterLocation extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

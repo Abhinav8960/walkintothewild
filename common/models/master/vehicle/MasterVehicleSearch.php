@@ -40,7 +40,7 @@ class MasterVehicleSearch extends MasterVehicle
      */
     public function search($params)
     {
-        $query = MasterVehicle::find()->where(['status' => [1, 2]]);
+        $query = MasterVehicle::find()->where(['status' => [MasterVehicle::STATUS_ACTIVE, MasterVehicle::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

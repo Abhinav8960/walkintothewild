@@ -40,7 +40,7 @@ class MasterLocationSearch extends MasterLocation
      */
     public function search($params)
     {
-        $query = MasterLocation::find()->where(['status' => [1, 2]]);
+        $query = MasterLocation::find()->where(['status' => [MasterLocation::STATUS_ACTIVE, MasterLocation::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

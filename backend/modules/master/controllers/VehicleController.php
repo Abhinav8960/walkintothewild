@@ -42,7 +42,7 @@ class VehicleController extends Controller
     public function actionCreate()
     {
         $model = new MasterVehicleForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterVehicle::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -122,7 +122,7 @@ class VehicleController extends Controller
     {
         $model = $this->findModel($id);
         $model->vehicle_name = $model->id . '_' . $model->vehicle_name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterVehicle::STATUS_DELETE;
         $model->save(false);
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -137,7 +137,7 @@ class VehicleController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterVehicle::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterVehicle::findOne(['id' => $id, 'status' => [MasterVehicle::STATUS_ACTIVE, MasterVehicle::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
