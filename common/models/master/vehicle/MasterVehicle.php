@@ -17,7 +17,7 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterVehicle extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterVehicle extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

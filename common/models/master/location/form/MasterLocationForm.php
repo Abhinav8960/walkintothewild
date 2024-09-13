@@ -31,7 +31,7 @@ class MasterLocationForm extends model
             $this->status = $this->location_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
@@ -46,7 +46,10 @@ class MasterLocationForm extends model
             [['title'], 'string', 'max' => 255],
             [['status'], 'default', 'value' => 1],
             [
-                ['title'], 'unique', 'targetClass' => MasterLocation::className(), 'message' => 'This title has already been taken.',
+                ['title'],
+                'unique',
+                'targetClass' => MasterLocation::className(),
+                'message' => 'This title has already been taken.',
                 'filter' => function ($query) {
                     if (!$this->location_model->isNewRecord) {
                         $query->andWhere(['not', ['id' => $this->location_model->id]]);
