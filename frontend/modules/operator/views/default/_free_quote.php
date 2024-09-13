@@ -48,8 +48,8 @@ use yii\bootstrap5\ActiveForm;
                         <div class="number-input position-relative">
                             <?= $form->field($model, 'safaris')->textInput(['class' => 'form-control', 'id' => "safaris", 'value' => 0])->label(false) ?>
                             <div class="bton_updown">
-                                <button onclick="increment('safaris')"><i class="fa-solid fa-chevron-up"></i></button>
-                                <button onclick="decrement('safaris')"><i class="fa-solid fa-chevron-down"></i></button>
+                                <button type="button" onclick="increment('safaris')"><i class="fa-solid fa-chevron-up"></i></button>
+                                <button type="button" onclick="decrement('safaris')"><i class="fa-solid fa-chevron-down"></i></button>
                             </div>
                         </div>
 
@@ -59,8 +59,8 @@ use yii\bootstrap5\ActiveForm;
                         <div class="number-input position-relative">
                             <?= $form->field($model, 'travelers')->textInput(['class' => 'form-control', 'id' => "travelers", 'value' => 0])->label(false) ?>
                             <div class="bton_updown">
-                                <button onclick="increment('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
-                                <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
+                                <button type="button" onclick="increment('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
+                                <button type="button"  onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
                             </div>
                         </div>
 
