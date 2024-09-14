@@ -67,7 +67,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="articals_wrapper margin_bottomfooter mb-5 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
     <div class="container-fluid">
         <div class="advertisment pt-md-2 pt-5" >
-            <div class="google-ad970  mb-5" style="border:none">
+            <div class="google-ad-box  mb-5" style="border:none">
                 <ins class="adsbygoogle"
                     style="display:inline-block;width:728px;height:90px"
                     data-ad-client="ca-pub-6116324330184807"
