@@ -298,11 +298,7 @@ $this->params['title'] = $this->title; ?>
                         </script>
                     </div>
                 </div>
-                <div class="advertisment d-lg-block d-none " style="display: none">
-                    <div class="google-add600hight  mb-5">
-
-                    </div>
-                </div>
+                
 
             </div>
         </div>

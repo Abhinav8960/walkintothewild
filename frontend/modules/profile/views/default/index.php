@@ -117,16 +117,7 @@ $this->params['title'] = $this->title;
                             <?= $this->render('_instagram', ['user' => $user]) ?>
                             <?= $this->render('_organized_shared_safari', ['user' => $user]) ?>
 
-                            <div class="advertisment d-lg-block d-none mt-5" style="display: none">
-                                <div class="google-ad300  mb-5">
-
-                                </div>
-                            </div>
-                            <div class="advertisment d-lg-block d-none " style="display: none">
-                                <div class="google-add600hight  mb-5">
-
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>

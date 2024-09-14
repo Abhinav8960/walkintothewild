@@ -153,7 +153,7 @@ if ($article->meta_title != '') {
                             </div>
                             <?= $this->render('_topic_search') ?>
                         </div>
-                        <div class="advertisment pt-md-2 pt-5" >
+                        <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important">
                             <div class="google-ad-box  mb-5" style="border:none">
                                 <ins class="adsbygoogle"
                                     style="display:block"
@@ -166,11 +166,7 @@ if ($article->meta_title != '') {
                                 </script>
                             </div>
                         </div>
-                        <div class="advertisment d-lg-block d-none " style="display: none">
-                            <div class="google-add600hight  mb-5">
-
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

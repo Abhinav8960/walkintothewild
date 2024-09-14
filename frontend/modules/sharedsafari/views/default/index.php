@@ -128,11 +128,7 @@ $recentposts = ArticleSearch::recentpost();
                                 </script>
                             </div>
                         </div>
-                        <div class="advertisment d-lg-block d-none " style="display: none">
-                            <div class="google-add600hight  mb-5">
-
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
                         <div class="row ">
