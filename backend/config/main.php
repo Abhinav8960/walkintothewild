@@ -92,6 +92,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
+            'class' => 'yii\web\DbSession',
             'name' => 'advanced-backend',
             'timeout' => 3600 * 24 * 30
         ],
