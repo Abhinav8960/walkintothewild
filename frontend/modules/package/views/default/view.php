@@ -393,6 +393,21 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </ul>
                     </div>
                 </div>
+                
+                <div class="advertisment pt-md-2 pt-5" >
+                    <div class="google-ad-box  mb-5" style="border:none">
+                        <ins class="adsbygoogle"
+                            style="display:block"
+                            data-ad-client="ca-pub-6116324330184807"
+                            data-ad-slot="9287923659"
+                            data-ad-format="auto"
+                            data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+                
             </div>
 
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
@@ -437,12 +452,33 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $package->safarioperator]);
                     } ?>
                 </div>
+                
+                <div class="advertisment mt-5">
+                    <div class="google-ad300  mb-5" style="border:none">
+                        <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-6116324330184807"
+                        data-ad-slot="5518372486"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+                <div class="advertisment" style="display:none !important;">
+                    <div class="google-add600hight  mb-5">
+
+                    </div>
+                </div>
 
             </div>
 
 
         </div>
     </div>
+    
+    
 </section>
 
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -53,10 +53,17 @@ $recentposts = ArticleSearch::recentpost();
 
 <section class="articals_wrapper py-3  margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
-        <div class="advertisment mt-5" style="display:none !important;">
-            <div class="google-ad-box  mb-5">
-
+        <div class="advertisment pt-md-2 pt-5" >
+            <div class="google-ad-box  mb-5" style="border:none">
+                <ins class="adsbygoogle"
+                    style="display:inline-block;width:728px;height:90px"
+                    data-ad-client="ca-pub-6116324330184807"
+                    data-ad-slot="1321270892"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
             </div>
+        </div>
         </div>
         <div class="row my-4 justify-content-center">
             <div class="col-xl-11 col-lg-12">
@@ -108,16 +115,20 @@ $recentposts = ArticleSearch::recentpost();
 
                             ]) ?>
                         </div>
-                        <div class="advertisment d-lg-block d-none mt-5">
-                            <div class="google-ad300  mb-5">
-
+                        <div class="advertisment pt-md-2 pt-5" >
+                            <div class="google-ad-box  mb-5" style="border:none">
+                                <ins class="adsbygoogle"
+                                    style="display:block"
+                                    data-ad-client="ca-pub-6116324330184807"
+                                    data-ad-slot="9287923659"
+                                    data-ad-format="auto"
+                                    data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
                             </div>
                         </div>
-                        <div class="advertisment d-lg-block d-none ">
-                            <div class="google-add600hight  mb-5">
-
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
                         <div class="row ">
