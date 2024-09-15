@@ -63,7 +63,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     </div>
                     <div class="footerContent">
                         <p><strong>Address:</strong> New Delhi , India</p>
-                        <p><strong>Email:</strong> <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
+                        <p><strong>Email:</strong> <a href="mailto:support@walkintothewild.in">support@walkintothewild.in</a></p>
                         <div class="d-flex align-items-center gap-2">
                             <div class="insticon"><i class="fa-brands fa-instagram"></i> </div>
 
