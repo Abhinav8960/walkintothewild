@@ -98,6 +98,7 @@ if (!empty($is_sitemap_exist->description)) {
 
     <?php if (\Yii::$app->params['environment'] == "production") { ?>
         <!-- Google tag (gtag.js) -->
+        <script defer data-domain="walkintothewild.in" src="https://plausible.io/js/script.js"></script>
         <meta name="google-adsense-account" content="ca-pub-6116324330184807">
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6116324330184807" crossorigin="anonymous"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-NPYSHF37NV"></script>
