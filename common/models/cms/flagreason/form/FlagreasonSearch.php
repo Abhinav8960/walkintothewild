@@ -33,7 +33,7 @@ class FlagreasonSearch extends Model
      */
     public function search($params)
     {
-        $query = Flagreason::find()->where(['status' => 1]);
+        $query = Flagreason::find()->where(['status' => [Flagreason::STATUS_ACTIVE, Flagreason::STATUS_SUSPEND]]);
 
         // Add conditions that should always apply here
 

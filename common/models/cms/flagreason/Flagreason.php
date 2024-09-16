@@ -11,7 +11,7 @@ use Yii;
  * @property string $reason
  * @property int $status
  */
-class Flagreason extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class Flagreason extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

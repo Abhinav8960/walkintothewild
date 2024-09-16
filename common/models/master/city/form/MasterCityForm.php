@@ -41,7 +41,7 @@ class MasterCityForm extends model
             $this->status = $this->city_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

@@ -45,7 +45,7 @@ class MasterAnimalForm extends model
             $this->is_filter_sequence = $this->animal_model->is_filter_sequence;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

@@ -28,7 +28,7 @@ class MasterSuggestionCategoryForm extends model
             $this->status = $this->suggestion_category_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
