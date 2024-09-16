@@ -2,7 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\cms\banner\Banner;
 use common\models\cms\banner\BannerSearch;
 use common\models\cms\banner\form\BannerForm;
@@ -27,7 +27,7 @@ class BannerController extends Controller
     public function actionCreate()
     {
         $model = new BannerForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = Banner::STATUS_ACTIVE;
         $model->scenario = 'create';
 
 
@@ -97,7 +97,7 @@ class BannerController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = Banner::STATUS_DELETE;
         $model->save();
         Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(Yii::$app->request->referrer); // corrected Yii::$app->request

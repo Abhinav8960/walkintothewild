@@ -9,7 +9,7 @@ use common\traits\CommanRelationship;
 /**
  * This is the model class for table "master_package_banner".
  */
-class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class FrontendBanner extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     const TYPE_PACKAGE = 1;

@@ -17,7 +17,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class Banner extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class Banner extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**
