@@ -2,7 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\cms\flagreason\form\FlagreasonSearch;
 use common\models\cms\flagreason\Flagreason;
 use common\models\cms\flagreason\form\FlagreasonForm;
@@ -38,7 +38,7 @@ class FlagReasonController extends Controller
     public function actionCreate()
     {
         $model = new FlagreasonForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;;
+        $model->status = Flagreason::STATUS_ACTIVE;;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -100,7 +100,7 @@ class FlagReasonController extends Controller
     {
         $model = $this->findModel($id);
         $model->reason = $model->id . '_' . $model->reason;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = Flagreason::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(['index']);
@@ -115,7 +115,7 @@ class FlagReasonController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Flagreason::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = Flagreason::findOne(['id' => $id, 'status' => [Flagreason::STATUS_ACTIVE, Flagreason::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

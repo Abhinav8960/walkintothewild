@@ -33,7 +33,7 @@ class MasterShareSafariReasonForm extends model
             $this->status = $this->share_safari_reason_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
