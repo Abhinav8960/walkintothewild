@@ -187,4 +187,36 @@ SET status = 0
 WHERE status = 2;
 
 
+UPDATE master_frontend_banner
+SET status = 0
+WHERE status = 2;
+UPDATE banner
+SET status = 0
+WHERE status = 2;
+UPDATE 	content_management
+SET status = 0
+WHERE status = 2;
+UPDATE faqs
+SET status = 0
+WHERE status = 2;
+UPDATE faq_category
+SET status = 0
+WHERE status = 2;
+UPDATE master_faq
+SET status = 0
+WHERE status = 2;
+UPDATE master_article_tag	
+SET status = 0
+WHERE status = 2;
+UPDATE master_article_topic
+SET status = 0
+WHERE status = 2;
+UPDATE 	article_tag
+SET status = 0
+WHERE status = 2;
+UPDATE article_topic	
+SET status = 0
+WHERE status = 2;
+
+
 	

@@ -33,7 +33,7 @@ class FaqCategorySearch extends FaqCategory
      */
     public function search($params)
     {
-        $query = FaqCategory::find()->where(['status' => [1, 2]]);
+        $query = FaqCategory::find()->where(['status' => [FaqCategory::STATUS_ACTIVE, FaqCategory::STATUS_SUSPEND]]);
 
         // Add conditions that should always apply here
 

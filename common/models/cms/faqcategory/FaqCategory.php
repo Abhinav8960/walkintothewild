@@ -11,7 +11,7 @@ use Yii;
  * @property string $name
  * @property int $status
  */
-class FaqCategory extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class FaqCategory extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**
