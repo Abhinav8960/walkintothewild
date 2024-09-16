@@ -32,7 +32,7 @@ class FaqCategoryForm extends Model
             $this->status = $this->faq_model->status;
         }
 
-        $this->status_option = GeneralModel::statusOption();
+        $this->status_option = GeneralModel::newstatusOption();
     }
 
     /**
