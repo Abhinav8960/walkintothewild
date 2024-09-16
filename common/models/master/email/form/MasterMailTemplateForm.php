@@ -41,7 +41,7 @@ class MasterMailTemplateForm extends model
             $this->status = $this->mail_template_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

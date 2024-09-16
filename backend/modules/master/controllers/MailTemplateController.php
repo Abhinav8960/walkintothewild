@@ -41,7 +41,7 @@ class MailTemplateController extends Controller
     public function actionCreate()
     {
         $model = new MasterMailTemplateForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterMailTemplate::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -108,7 +108,7 @@ class MailTemplateController extends Controller
     {
         $model = $this->findModel($id);
         $model->name = $model->id . '_' . $model->name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterMailTemplate::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -123,7 +123,7 @@ class MailTemplateController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterMailTemplate::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterMailTemplate::findOne(['id' => $id, 'status' => [MasterMailTemplate::STATUS_ACTIVE, MasterMailTemplate::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

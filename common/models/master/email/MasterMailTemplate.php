@@ -18,7 +18,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterMailTemplate extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterMailTemplate extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**
