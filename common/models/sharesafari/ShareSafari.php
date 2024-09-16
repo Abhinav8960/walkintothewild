@@ -240,4 +240,25 @@ class ShareSafari extends \yii\db\ActiveRecord implements \common\interfaces\New
 
         return ($meals_text) ? $meals_text : 'Not Included';
     }
+
+    public function getMealslabel()
+    {
+        $mealOptions = [];
+
+
+        if ($this->breakfast_included == 1) {
+            $mealOptions[] = 'Breakfast';
+        }
+        if ($this->lunch_included == 1) {
+            $mealOptions[] = 'Lunch';
+        }
+        if ($this->dinner_included == 1) {
+            $mealOptions[] = 'Dinner';
+        }
+        if ($this->meal_not_included == 1) {
+            $mealOptions[] = 'Meal Not Included';
+        }
+
+        return $mealOptions ? implode(', ', $mealOptions) : 'Meal Not Included';
+    }
 }

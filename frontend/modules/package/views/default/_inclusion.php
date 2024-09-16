@@ -55,10 +55,11 @@
                     <div class="col-md-9 col-sm-8">
                         <div class="form-check form-check-inline">
                             <label class="form-check-label d-flex gap-3">
-                                <input type="checkbox" id="breakfast_included" value="1" <?= ($package->breakfast_included == 1) ? 'checked' : '' ?> disabled> Breakfast<br>
+                            <?php echo $package->mealslabel; ?>
+                                <!-- <input type="checkbox" id="breakfast_included" value="1" <?= ($package->breakfast_included == 1) ? 'checked' : '' ?> disabled> Breakfast<br>
                                 <input type="checkbox" id="lunch_included" value="1" <?= ($package->lunch_included == 1) ? 'checked' : '' ?> disabled> Lunch<br>
                                 <input type="checkbox" id="dinner_included" value="1" <?= ($package->dinner_included == 1) ? 'checked' : '' ?> disabled> Dinner<br>
-                                <input type="checkbox" id="meal_not_included" value="1" <?= ($package->meal_not_included == 1) ? 'checked' : '' ?> disabled> Meal Not Included<br>
+                                <input type="checkbox" id="meal_not_included" value="1" <?= ($package->meal_not_included == 1) ? 'checked' : '' ?> disabled> Meal Not Included<br> -->
                             </label>
                         </div>
                     </div>
