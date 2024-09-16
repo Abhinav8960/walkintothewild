@@ -17,7 +17,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterFaq extends \yii\db\ActiveRecord
+class MasterFaq extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}

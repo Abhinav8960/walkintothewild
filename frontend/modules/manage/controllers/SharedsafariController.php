@@ -2,7 +2,7 @@
 
 namespace frontend\modules\manage\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\faq\MasterFaq;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariCommentActionForm;
@@ -16,6 +16,7 @@ use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariCommentReport;
 use common\models\sharesafari\ShareSafariCommentSearch;
 use common\models\sharesafari\ShareSafariDay;
+use common\models\sharesafari\ShareSafariFaq;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariGallery;
 use common\models\sharesafari\ShareSafariGallerySearch;
@@ -255,7 +256,7 @@ class SharedsafariController extends FrontendBaseController
                                 }
 
                                 if ($sharesafariIncluded->include_id == 2 && $sharesafariIncluded->selection == 1) {
-                                    $share_safari_days = ShareSafariDay::find()->where(['share_safari_id' => $shared_safari_departure_model->id, 'status' => 1])->all();
+                                    $share_safari_days = ShareSafariDay::find()->where(['share_safari_id' => $shared_safari_departure_model->id, 'status' => ShareSafariDay::STATUS_ACTIVE])->all();
                                     if ($share_safari_days) {
                                         foreach ($share_safari_days as $share_safari_day) {
                                             $share_safari_day->meal_breakfast = 1;
@@ -386,7 +387,7 @@ class SharedsafariController extends FrontendBaseController
         $shared_safari_departure_model = $this->findModel($slug);
         $model = new ShareSafariFaqForm();
         $model->share_safari_id = $shared_safari_departure_model->id;
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = ShareSafariFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -396,7 +397,7 @@ class SharedsafariController extends FrontendBaseController
                         $faq->question = $model->question;
                         $faq->answer = $model->answer;
                         $faq->position = 0;
-                        $faq->status = StatusInterface::STATUS_ACTIVE;
+                        $faq->status = MasterFaq::STATUS_ACTIVE;
                         if ($faq->save(false)) {
                             $model->share_safari_faq_model->faq_id = $faq->id;
                             $model->share_safari_faq_model->save(false);
@@ -433,7 +434,7 @@ class SharedsafariController extends FrontendBaseController
         $shared_safari_departure_model = $this->findModel($slug);
         $model = new ShareSafariFaqSelectForm();
         $model->share_safari_id = $shared_safari_departure_model->id;
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = ShareSafariFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -531,7 +532,7 @@ class SharedsafariController extends FrontendBaseController
 
 
 
-        $safari_interested = ShareSafariIntrested::find()->where(['share_safari_id' => $shared_safari_model->id, 'status' => 1]);
+        $safari_interested = ShareSafariIntrested::find()->where(['share_safari_id' => $shared_safari_model->id, 'status' => ShareSafariIntrested::STATUS_ACTIVE]);
         $safari_interested_provider = new ActiveDataProvider([
             'query' => $safari_interested,
             'pagination' => [
@@ -617,5 +618,43 @@ class SharedsafariController extends FrontendBaseController
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUpdateFaq($share_safari_id, $faq_id)
+    {
+        $shared_safari_departure_model = ShareSafari::find()->where(['id' => $share_safari_id])->limit(1)->one();
+        $safari_operator = $this->module->operatormodel();
+        $faq_model = ShareSafariFaq::find()->where(['id' => $faq_id])->one();
+        $model = new ShareSafariFaqForm($faq_model);
+        $model->share_safari_id = $share_safari_id;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->share_safari_faq_model->save(false)) {
+                        $faq = new MasterFaq();
+                        $faq->question = $model->question;
+                        $faq->answer = $model->answer;
+                        $faq->position = 0;
+                        $faq->status = MasterFaq::STATUS_ACTIVE;
+                        if ($faq->save(false)) {
+                            $model->share_safari_faq_model->faq_id = $faq->id;
+                            $model->share_safari_faq_model->save(false);
+                        }
+                        \Yii::$app->session->setFlash('success', 'Faq submitted successfully');
+                        return $this->redirect(['faq', 'slug' => $shared_safari_departure_model->slug]);
+                    }
+                }
+            }
+        } else {
+            $model->share_safari_faq_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_faq', [
+                'model' => $model,
+                'shared_safari_departure_model' => $shared_safari_departure_model,
+                'safari_operator' => $safari_operator,
+            ]);
+        }
     }
 }

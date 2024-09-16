@@ -86,3 +86,65 @@ UPDATE package_quote SET status = 0 WHERE status = 2;
 UPDATE package_safari_park SET status = 0 WHERE status = 2;
 
 ALTER TABLE `package` ADD `delete_reason_id` INT NULL AFTER `popular_package`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
+
+-- 14-sep-2024
+
+
+UPDATE share_safari_included
+SET status = 0
+WHERE status = 2;
+
+UPDATE share_safari_gallery
+SET status = 0
+WHERE status = 2;
+
+UPDATE share_safari_faq
+SET status = 0
+WHERE status = 2;
+
+UPDATE share_safari_day
+SET status = 0
+WHERE status = 2;
+
+
+
+UPDATE safari_park
+SET status = 0
+WHERE status = 2;
+
+
+UPDATE safari_park_accomodation
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_parks_animal
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_flora_fauna
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_gallery
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_month
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_rating
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_session
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_parks_vehicle
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_bonus_experience
+SET status = 0
+WHERE status = 2;

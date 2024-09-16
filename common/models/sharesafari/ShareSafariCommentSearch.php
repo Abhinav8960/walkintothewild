@@ -110,6 +110,6 @@ class ShareSafariCommentSearch extends ShareSafariComment
 
     public static function getSafarilist()
     {
-        return ArrayHelper::map(SafariPark::find()->where(['status' => 1, 'is_shared_safari' => 1])->andWhere("id IN (SELECT Distinct park_id FROM share_safari_comment)")->all(), 'id', 'title');
+        return ArrayHelper::map(SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'is_shared_safari' => 1])->andWhere("id IN (SELECT Distinct park_id FROM share_safari_comment)")->all(), 'id', 'title');
     }
 }

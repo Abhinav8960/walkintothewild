@@ -28,13 +28,13 @@ $this->params['title'] = $this->title;
                     </div>
                     <div class="row">
                         <div class="col-12">
-                        <div class="mb-4 float-end">
+                            <div class="mb-4 float-end">
                                 <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/create-faq', 'slug' => $shared_safari_departure_model->slug]) ?> " style="cursor:pointer">+ Create FAQ</a>
-                                <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq', 'slug' => $shared_safari_departure_model->slug]) ?>" style="cursor:pointer">+ Select FAQ</a>
+                                <!-- <a class="packageBtn btn_newsafari departureBtn btn_newsafari organizeBtn newbg text-center" value="<?= \yii\helpers\Url::toRoute(['/manage/sharedsafari/select-faq', 'slug' => $shared_safari_departure_model->slug]) ?>" style="cursor:pointer">+ Select FAQ</a> -->
                             </div>
                         </div>
                         <div class="col-md-12">
-                           
+
                             <div class="tab-content accordion" id="myTabContent">
                                 <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
@@ -66,16 +66,10 @@ $this->params['title'] = $this->title;
                                                     'class' => 'yii\grid\ActionColumn',
                                                     'header' => "Actions",
                                                     'contentOptions' => ['style' => 'width: 15%;'],
-                                                    'template' => '{delete}&nbsp;&nbsp;{suspend}',
+                                                    'template' => '{update}&nbsp;',
                                                     'buttons' => [
-                                                        'delete' => function ($url, $model) {
-                                                            if ($model->status != -1) {
-                                                            } else {
-                                                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                                                            }
-                                                        },
-                                                        'suspend' => function ($url, $model) {
-                                                            return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
+                                                        'update' => function ($url, $model) {
+                                                            return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toROute(['/manage/sharedsafari/update-faq', 'share_safari_id' => $model->share_safari_id, 'faq_id' => $model->id]), 'class' => 'packageBtn btn btn-info bg-blues py-2 text-white', 'title' => 'Update FAQ']);
                                                         },
                                                     ]
                                                 ],
