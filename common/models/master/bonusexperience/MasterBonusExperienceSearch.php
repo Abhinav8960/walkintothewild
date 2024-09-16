@@ -40,7 +40,7 @@ class MasterBonusExperienceSearch extends MasterBonusExperience
      */
     public function search($params)
     {
-        $query = MasterBonusExperience::find()->where(['status' => [1, 2]]);
+        $query = MasterBonusExperience::find()->where(['status' => [MasterBonusExperience::STATUS_ACTIVE, MasterBonusExperience::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
