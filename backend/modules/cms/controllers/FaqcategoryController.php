@@ -6,7 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-use common\interfaces\StatusInterface;
+
 use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\faqcategory\FaqCategorySearch;
 use common\models\cms\faqcategory\form\FaqCategoryForm;
@@ -27,7 +27,7 @@ class FaqcategoryController extends Controller
     public function actionCreate()
     {
         $model = new FaqCategoryForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = FaqCategory::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -88,7 +88,7 @@ class FaqcategoryController extends Controller
     {
         $model = $this->findModel($id);
         $model->name = $model->id . '_' . $model->name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = FaqCategory::STATUS_DELETE;
         $model->save();
         Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(Yii::$app->request->referrer); // corrected Yii::$app->request
@@ -96,7 +96,7 @@ class FaqcategoryController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = FaqCategory::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = FaqCategory::findOne(['id' => $id, 'status' => [FaqCategory::STATUS_ACTIVE, FaqCategory::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
