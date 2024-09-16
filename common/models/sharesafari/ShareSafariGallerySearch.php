@@ -41,7 +41,7 @@ class ShareSafariGallerySearch extends ShareSafariGallery
      */
     public function search($params)
     {
-        $query = ShareSafariGallery::find()->where(['status' => [1, 2]]);
+        $query = ShareSafariGallery::find()->where(['status' => [ShareSafariGallery::STATUS_ACTIVE, ShareSafariGallery::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

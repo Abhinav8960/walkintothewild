@@ -1,6 +1,7 @@
 <?php
 
 use common\interfaces\StatusInterface;
+use common\models\operator\SafariOperator;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -16,7 +17,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
         <div class="col-md-12">
             <div class="d-flex justify-content-between mb-4 align-items-center flex-wrap">
                 <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
-                <?php if ($safari_operator->status == StatusInterface::STATUS_ACTIVE) { ?>
+                <?php if ($safari_operator->status == SafariOperator::STATUS_ACTIVE) { ?>
                     <div class="d-flex align-items-center mt-xl-0 mt-2">
                         <button class="btn_newsafari organizeBtn newbg departureBtn py-2 rounded-2 " value="<?= \yii\helpers\Url::toRoute(['create-fixed-departure']) ?>">+ Create Fixed Departure </button>
                     </div>
@@ -30,7 +31,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="card account-settingside ">
                 <div class="card-body p-4">
                     <div class="row">
-                        <?php if ($safari_operator->status != StatusInterface::STATUS_ACTIVE) {
+                        <?php if ($safari_operator->status != SafariOperator::STATUS_ACTIVE) {
                             echo $this->context->module->account_deactivate_message;
                         } ?>
                         <?php

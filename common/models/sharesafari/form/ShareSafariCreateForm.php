@@ -3,7 +3,6 @@
 namespace common\models\sharesafari\form;
 
 use Yii;
-use common\interfaces\StatusInterface;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariHistory;
 

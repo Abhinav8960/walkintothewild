@@ -30,7 +30,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class ShareSafariDay extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ShareSafariDay extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
     /**
