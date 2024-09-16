@@ -345,9 +345,9 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
             $mealOptions[] = 'Dinner';
         }
         if ($this->meal_not_included == 1) {
-            $mealOptions[] = 'Meal Not Included';
+            $mealOptions[] = 'Not Included';
         }
 
-        return $mealOptions ? implode(', ', $mealOptions) : 'Meal Not Included';
+        return $mealOptions ? implode(', ', $mealOptions) : 'Not Included';
     }
 }
