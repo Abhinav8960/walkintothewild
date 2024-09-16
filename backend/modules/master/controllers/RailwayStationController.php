@@ -2,7 +2,6 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
 use common\models\master\railwaystation\form\MasterRailwayStationForm;
 use common\models\master\railwaystation\MasterRailwayStation;
 use common\models\master\railwaystation\MasterRailwayStationSearch;
@@ -43,7 +42,7 @@ class RailwayStationController extends Controller
     public function actionCreate()
     {
         $model = new MasterRailwayStationForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterRailwayStation::STATUS_ACTIVE;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
@@ -149,7 +148,7 @@ class RailwayStationController extends Controller
                         $model->railway_station_model->country_id = 1;
                         $model->railway_station_model->state_id = $value[0];
                         $model->railway_station_model->title = $value[1];
-                        $model->railway_station_model->status = 1;
+                        $model->railway_station_model->status = MasterRailwayStation::STATUS_ACTIVE;
                         $model->railway_station_model->save(false);
                     }
                     \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' railway station Successfully Imported');
@@ -187,7 +186,7 @@ class RailwayStationController extends Controller
     {
         $model = $this->findModel($id);
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterRailwayStation::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -202,7 +201,7 @@ class RailwayStationController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterRailwayStation::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterRailwayStation::findOne(['id' => $id, 'status' => [MasterRailwayStation::STATUS_ACTIVE, MasterRailwayStation::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

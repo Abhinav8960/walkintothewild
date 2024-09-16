@@ -142,7 +142,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								</ul>
 							</li>
 
-							<li><a class="slide-item <?= in_array($active_url, array("/master/bird/index")) ? "active" : "" ?>" href="/master/bird/index">Bird</a></li>
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/master/bird/index")) ? "active" : "" ?>" href="/master/bird/index">Bird</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle/index")) ? "active" : "" ?>" href="/master/vehicle/index">Vehicle</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/location/index")) ? "active" : "" ?>" href="/master/location/index">Location</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/state/index")) ? "active" : "" ?>" href="/master/state/index">State</a></li>
