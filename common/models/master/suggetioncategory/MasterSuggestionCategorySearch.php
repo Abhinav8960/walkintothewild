@@ -40,11 +40,11 @@ class MasterSuggestionCategorySearch extends MasterSuggestionCategory
      */
     public function search($params)
     {
-        $query = MasterSuggestionCategory::find()->where(['status' => [1, 2]]);
+        $query = MasterSuggestionCategory::find()->where(['status' => [MasterSuggestionCategory::STATUS_ACTIVE, MasterSuggestionCategory::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
-      
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['sequence' => SORT_ASC]],

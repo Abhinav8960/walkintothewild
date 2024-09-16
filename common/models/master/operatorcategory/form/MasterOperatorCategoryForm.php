@@ -39,7 +39,7 @@ class MasterOperatorCategoryForm extends model
             $this->status = $this->operator_category_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

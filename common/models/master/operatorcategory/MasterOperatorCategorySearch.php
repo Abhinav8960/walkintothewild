@@ -40,7 +40,7 @@ class MasterOperatorCategorySearch extends MasterOperatorCategory
      */
     public function search($params)
     {
-        $query = MasterOperatorCategory::find()->where(['status' => [1, 2]]);
+        $query = MasterOperatorCategory::find()->where(['status' => [MasterOperatorCategory::STATUS_ACTIVE, MasterOperatorCategory::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
