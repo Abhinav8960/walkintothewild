@@ -7,7 +7,7 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
     'user.rememberMeDuration' => 3600 * 24 * 30,
-    'user.maxLoginAccount' => 2,
+    'user.maxLoginAccount' => 3,
     "isGoogleV3CaptchaValidateNeeded" => false,
 
     // params for PUsher
