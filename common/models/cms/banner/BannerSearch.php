@@ -28,7 +28,7 @@ class BannerSearch extends Banner
 
     public function search($params)
     {
-        $query = Banner::find()->where(['status' => [1, 2]]);
+        $query = Banner::find()->where(['status' => [Banner::STATUS_ACTIVE, Banner::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

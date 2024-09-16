@@ -37,7 +37,7 @@ class FaqsForm extends Model
             $this->status = $this->faqs_model->status;
         }
 
-        $this->status_option = GeneralModel::statusOption();
+        $this->status_option = GeneralModel::newstatusOption();
     }
 
     /**

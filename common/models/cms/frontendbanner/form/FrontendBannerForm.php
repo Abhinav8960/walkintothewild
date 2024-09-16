@@ -41,7 +41,7 @@ class FrontendBannerForm extends model
             $this->status = $this->frontend_banner_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

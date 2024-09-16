@@ -30,7 +30,7 @@ use common\traits\CommanRelationship;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class ShareSafariRequest extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ShareSafariRequest extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
 

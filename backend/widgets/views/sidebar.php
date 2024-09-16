@@ -58,7 +58,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/master/message/index",
 											"/master/message/create",
 											"/master/message/update",
-											"/cms/flag-reason"
+
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/master",
@@ -94,7 +94,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/master/message/index",
 														"/master/message/create",
 														"/master/message/update",
-														"/cms/flag-reason"
+
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Masters</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Masters</a></li>
@@ -142,7 +142,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 								</ul>
 							</li>
 
-							<li><a class="slide-item <?= in_array($active_url, array("/master/bird/index")) ? "active" : "" ?>" href="/master/bird/index">Bird</a></li>
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/master/bird/index")) ? "active" : "" ?>" href="/master/bird/index">Bird</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/master/vehicle/index")) ? "active" : "" ?>" href="/master/vehicle/index">Vehicle</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/location/index")) ? "active" : "" ?>" href="/master/location/index">Location</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/master/state/index")) ? "active" : "" ?>" href="/master/state/index">State</a></li>
@@ -168,14 +168,12 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/master/share-safari-reason/create",
 															"/master/share-safari-reason/update",
 														)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 															"/master/message/index",
 															"/master/message/create",
 															"/master/message/update",
-														)) ? "active" : "" ?>" href="/master/message/index">Message</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/cms/flag-reason",
-														)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
+														)) ? "active" : "" ?>" href="/master/message/index">Message</a></li> -->
+
 						</ul>
 					</li>
 
@@ -444,7 +442,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/cms/feature-article/index",
 											"/cms/feature-rare-exotic/index",
 											"/cms/feature-tag/index",
-											"/cms/content-management"
+											"/cms/content-management",
+											"/cms/flag-reason",
+
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
@@ -480,7 +480,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/cms/feature-article/index",
 														"/cms/feature-rare-exotic/index",
 														"/cms/feature-tag/index",
-														"/cms/content-management"
+														"/cms/content-management",
+														"/cms/flag-reason",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">CMS</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu <?= in_array($active_url, array(
 													"/cms",
@@ -514,7 +515,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 													"/cms/feature-article/index",
 													"/cms/feature-rare-exotic/index",
 													"/cms/feature-tag/index",
-													"/cms/content-management"
+													"/cms/content-management",
+													"/cms/flag-reason",
 												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/article-category/index",
@@ -554,7 +556,8 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/feature-article/index",
 																				"/cms/feature-rare-exotic/index",
 																				"/cms/feature-tag/index",
-																				"/cms/content-management"
+																				"/cms/content-management",
+																				"/cms/flag-reason",
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -645,6 +648,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/article-by-user/create"
 																			)) ? "active" : "" ?>" href="/cms/article-by-user/index">Article By User</a></li> -->
 
+
 								</ul>
 							</li>
 							<li class="sub-slide <?= in_array($active_url, array(
@@ -669,7 +673,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																							"/cms/feature-tag/index",
 																						)) ? "display: block;" : "display: none;" ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-park/index")) ? "active" : "" ?>" href="/cms/feature-park/index">Park</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li>
+									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li> -->
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-rare-exotic/index")) ? "active" : "" ?>" href="/cms/feature-rare-exotic/index">RARE AND EXOTIC</a></li>
 									<!-- <li><a class="sub-side-menu__item <?php // in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" 
 																			?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
@@ -701,6 +705,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/privacypolicy")) ? "active" : "" ?>" href="/cms/privacypolicy">Privacy Policy</a></li> -->
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/cms/termscondition")) ? "active" : "" ?>" href="/cms/termscondition">Team & Conditions</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/cms/content-management")) ? "active" : "" ?>" href="/cms/content-management">Content Management</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/cms/flag-reason",
+														)) ? "active" : "" ?>" href="/cms/flag-reason">Flag Reason</a></li>
 
 						</ul>
 					</li>

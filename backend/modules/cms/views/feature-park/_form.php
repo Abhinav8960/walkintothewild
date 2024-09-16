@@ -33,7 +33,7 @@ use yii\web\View;
             <tbody>
                 <?php
 
-                $allSafariParks = SafariPark::findAll(['status' => StatusInterface::STATUS_ACTIVE]);
+                $allSafariParks = SafariPark::findAll(['status' => 1]);
                 $countAllSafariPark = count($allSafariParks);
 
                 $length = '';

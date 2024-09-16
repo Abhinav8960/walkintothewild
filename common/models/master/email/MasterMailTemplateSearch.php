@@ -40,7 +40,7 @@ class MasterMailTemplateSearch extends MasterMailTemplate
      */
     public function search($params)
     {
-        $query = MasterMailTemplate::find()->where(['status' => [1, 2]]);
+        $query = MasterMailTemplate::find()->where(['status' => [MasterMailTemplate::STATUS_ACTIVE, MasterMailTemplate::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

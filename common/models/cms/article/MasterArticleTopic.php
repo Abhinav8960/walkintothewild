@@ -15,7 +15,7 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterArticleTopic extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterArticleTopic extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
 

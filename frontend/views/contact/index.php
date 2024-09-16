@@ -27,7 +27,7 @@ $this->title = 'Contact';
                                 <div class="icon me-3">
                                     <i class="fa fa-envelope-open "></i>
                                 </div>
-                                <span><a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></span>
+                                <span><a href="mailto:support@walkintothewild.in">support@walkintothewild.in</a></span>
                             </div>
                         </div>
                     </div>

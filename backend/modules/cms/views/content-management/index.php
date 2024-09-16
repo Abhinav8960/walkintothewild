@@ -67,7 +67,7 @@ $this->params['title'] = $this->title;
                     //     'label' => 'Status',
                     //     'format' => 'raw',
                     //     'value' => function ($model) {
-                    //         return $model->statuslabel;
+                    //         return $model->newstatuslabel;
                     //     },
                     //     'contentOptions' => ['style' => 'max-width: 700px !important; width: 700px !important; word-wrap: break-word; text-align: left; padding: 0; margin: 0;'],
                     // ],

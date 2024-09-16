@@ -49,7 +49,7 @@ class MasterRareAnimalForm extends model
             $this->assigned_park = SafariParkAnimal::find()->select('safari_park_id')->where(['master_animal_id' => $this->rare_animal_model->id, 'status' => 1])->column();
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

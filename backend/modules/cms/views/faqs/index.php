@@ -63,7 +63,7 @@ $this->params['buttons'][] = Html::Button('Set Sequence', ['value' => "/cms/faqs
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->newstatuslabel;
                         }
                     ],
                     [

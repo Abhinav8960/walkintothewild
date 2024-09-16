@@ -296,7 +296,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                 </div>-->
-                <div class="advertisment  mt-5">
+                <div class="advertisment  mt-5" style="display: none">
                     <div class="google-ad-box  ">
 
                     </div>
@@ -481,7 +481,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 if ($share_safari->safarioperator) {
                     echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $share_safari->safarioperator]);
                 } ?>
-
+                
+                
+                
+                
             </div>
         </div>
         <div class="row pb-5 d-lg-none">
@@ -492,6 +495,20 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             </div>
         </div>
         <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park, 'active_safari' => $share_safari]) ?>
+        
+        <div class="advertisment pt-md-2 pt-5" >
+                    <div class="google-ad-box  mb-5" style="border:none">
+                        <ins class="adsbygoogle"
+                            style="display:block"
+                            data-ad-client="ca-pub-6116324330184807"
+                            data-ad-slot="9287923659"
+                            data-ad-format="auto"
+                            data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
 
 </section>
 

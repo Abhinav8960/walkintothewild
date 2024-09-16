@@ -1,0 +1,1 @@
+ALTER TABLE `user_session` ADD `firebase_token` VARCHAR(255) NULL AFTER `token`;

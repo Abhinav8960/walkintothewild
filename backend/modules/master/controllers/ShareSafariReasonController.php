@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\sharesafarireason\form\MasterShareSafariReasonForm;
 use common\models\master\sharesafarireason\MasterShareSafariReason;
 use common\models\master\sharesafarireason\MasterShareSafariReasonSearch;
@@ -40,7 +40,7 @@ class ShareSafariReasonController extends Controller
     public function actionCreate()
     {
         $model = new MasterShareSafariReasonForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterShareSafariReason::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -104,7 +104,7 @@ class ShareSafariReasonController extends Controller
     {
         $model = $this->findModel($id);
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterShareSafariReason::STATUS_DELETE;
         $model->save(false);
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -119,7 +119,7 @@ class ShareSafariReasonController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterShareSafariReason::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterShareSafariReason::findOne(['id' => $id, 'status' => [MasterShareSafariReason::STATUS_ACTIVE, MasterShareSafariReason::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

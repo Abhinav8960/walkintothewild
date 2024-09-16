@@ -22,7 +22,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
               </div>
               <span class="d-sm-block d-none">|</span>
               <div class="comingsoonpage-footer">
-                <p class="mb-0"><strong>Email:</strong> <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a>
+                <p class="mb-0"><strong>Email:</strong> <a href="mailto:support@walkintothewild.in">support@walkintothewild.in</a>
                 </p>
               </div>
             </div>
@@ -126,7 +126,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <h6>Severability of Agreement</h6>
           <p>If any provision of the Agreement is deemed invalid by a court or other binding authority, you agree that every effort shall be made to uphold the parties' intentions as reflected in that provision. The remaining provisions of the Agreement, which are not affected by such invalidity, shall remain in full force and effect.</p>
           <h6>Complaints regarding content</h6>
-          <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
+          <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:support@walkintothewild.in">support@walkintothewild.in</a></p>
 
 
         </div>
@@ -190,7 +190,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <h6>Severability of Agreement</h6>
           <p>If any provision of the Agreement is deemed invalid by a court or other binding authority, you agree that every effort shall be made to uphold the parties' intentions as reflected in that provision. The remaining provisions of the Agreement, which are not affected by such invalidity, shall remain in full force and effect.</p>
           <h6>Complaints regarding content</h6>
-          <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
+          <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:support@walkintothewild.in">support@walkintothewild.in</a></p>
 
 
         </div>
@@ -253,7 +253,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
           <h6>Severability of Agreement</h6>
           <p>If any provision of the Agreement is deemed invalid by a court or other binding authority, you agree that every effort shall be made to uphold the parties' intentions as reflected in that provision. The remaining provisions of the Agreement, which are not affected by such invalidity, shall remain in full force and effect.</p>
           <h6>Complaints regarding content</h6>
-          <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:contact@walkintothewild.in">contact@walkintothewild.in</a></p>
+          <p>For making complaints regarding copyright infringement of our content or regarding our content in general, please send an email to <a href="mailto:support@walkintothewild.in">support@walkintothewild.in</a></p>
 
 
         </div>

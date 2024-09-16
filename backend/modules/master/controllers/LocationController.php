@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\location\form\MasterLocationForm;
 use common\models\master\location\MasterLocation;
 use common\models\master\location\MasterLocationSearch;
@@ -42,7 +42,7 @@ class LocationController extends Controller
     public function actionCreate()
     {
         $model = new MasterLocationForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterLocation::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -118,7 +118,7 @@ class LocationController extends Controller
     }
 
 
-        /**
+    /**
      * Set Sequence of Privacy Policy
      *
      * @return void
@@ -170,7 +170,7 @@ class LocationController extends Controller
     {
         $model = $this->findModel($id);
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterLocation::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -185,7 +185,7 @@ class LocationController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterLocation::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterLocation::findOne(['id' => $id, 'status' => [MasterLocation::STATUS_ACTIVE, MasterLocation::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

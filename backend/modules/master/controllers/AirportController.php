@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\airport\form\MasterAirportForm;
 use common\models\master\airport\MasterAirport;
 use common\models\master\airport\MasterAirportSearch;
@@ -44,7 +44,7 @@ class AirportController extends Controller
     public function actionCreate()
     {
         $model = new MasterAirportForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterAirport::STATUS_ACTIVE;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
@@ -142,7 +142,7 @@ class AirportController extends Controller
                         $model->airport_model->state_id = $value[0];
                         $model->airport_model->iata_code = $value[2];
                         $model->airport_model->icao_code = $value[3];
-                        $model->airport_model->status = 1;
+                        $model->airport_model->status = MasterAirport::STATUS_ACTIVE;
                         $model->airport_model->save(false);
                     }
                     \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' airport Successfully Imported');
@@ -169,7 +169,7 @@ class AirportController extends Controller
     {
         $model = $this->findModel($id);
         $model->name = $model->id . '_' . $model->name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterAirport::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -184,7 +184,7 @@ class AirportController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterAirport::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterAirport::findOne(['id' => $id, 'status' => [MasterAirport::STATUS_ACTIVE, MasterAirport::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

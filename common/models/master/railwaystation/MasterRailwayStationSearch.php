@@ -17,7 +17,7 @@ class MasterRailwayStationSearch extends MasterRailwayStation
     public function rules()
     {
         return [
-            [['status', 'city_id','state_id','country_id','created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['status', 'city_id', 'state_id', 'country_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
     }
@@ -40,7 +40,7 @@ class MasterRailwayStationSearch extends MasterRailwayStation
      */
     public function search($params)
     {
-        $query = MasterRailwayStation::find()->where(['status' => [1, 2]]);
+        $query = MasterRailwayStation::find()->where(['status' => [MasterRailwayStation::STATUS_ACTIVE, MasterRailwayStation::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

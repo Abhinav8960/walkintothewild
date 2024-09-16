@@ -43,10 +43,10 @@ class CityController extends Controller
     public function actionCreate()
     {
         $model = new MasterCityForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterCity::STATUS_ACTIVE;
         $model->country_id = 1;
         $model->scenario = 'create';
-        
+
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -137,7 +137,7 @@ class CityController extends Controller
                         $model->city_model->country_id = 1;
                         $model->city_model->state_id = $value[0];
                         $model->city_model->city_name = $value[1];
-                        $model->city_model->status = 1;
+                        $model->city_model->status = MasterCity::STATUS_ACTIVE;
                         $model->city_model->save(false);
                     }
                     \Yii::$app->getSession()->setFlash('success', $rowcount . ' out of ' . $countsuccess . ' city Successfully Imported');
@@ -164,7 +164,7 @@ class CityController extends Controller
     {
         $model = $this->findModel($id);
         $model->city_name = $model->id . '_' . $model->city_name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterCity::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -179,7 +179,7 @@ class CityController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterCity::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterCity::findOne(['id' => $id, 'status' => [MasterCity::STATUS_ACTIVE, MasterCity::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

@@ -29,7 +29,7 @@ class BannerForm extends model
             $this->status = $this->banner_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

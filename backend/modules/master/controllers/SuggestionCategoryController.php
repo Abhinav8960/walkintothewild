@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\suggetioncategory\form\MasterSuggestionCategoryForm;
 use common\models\master\suggetioncategory\MasterSuggestionCategory;
 use common\models\master\suggetioncategory\MasterSuggestionCategorySearch;
@@ -42,7 +42,7 @@ class SuggestionCategoryController extends Controller
     public function actionCreate()
     {
         $model = new MasterSuggestionCategoryForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterSuggestionCategory::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -159,7 +159,7 @@ class SuggestionCategoryController extends Controller
     {
         $model = $this->findModel($id);
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterSuggestionCategory::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -174,7 +174,7 @@ class SuggestionCategoryController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterSuggestionCategory::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterSuggestionCategory::findOne(['id' => $id, 'status' => [MasterSuggestionCategory::STATUS_ACTIVE, MasterSuggestionCategory::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

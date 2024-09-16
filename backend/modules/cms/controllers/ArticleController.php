@@ -2,7 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\interfaces\StatusInterface;
+
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -234,7 +234,7 @@ class ArticleController extends Controller
         $articleTopics = ArticleTopic::findAll(['article_id' => $model->id]);
         if (!empty($articleTopics)) {
             foreach ($articleTopics as $articleTopic) {
-                $articleTopic->status = StatusInterface::STATUS_DELETE;
+                $articleTopic->status = ArticleTopic::STATUS_DELETE;
                 $articleTopic->save();
             }
         }
@@ -323,7 +323,7 @@ class ArticleController extends Controller
     {
 
         $dataProvider = new ActiveDataProvider([
-            'query' =>  ArticleCommentReport::find()->where(['article_comment_id' => $id, 'status' => [1, 20]]),
+            'query' =>  ArticleCommentReport::find()->where(['article_comment_id' => $id, 'status' => 1]),
             'pagination' => [
                 'pageSize' => 20,
             ],

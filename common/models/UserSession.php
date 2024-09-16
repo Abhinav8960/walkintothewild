@@ -34,6 +34,7 @@ class UserSession extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'user_id'], 'required'],
+            [['firebase_token'],'safe'],
         ];
     }
 

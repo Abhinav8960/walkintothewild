@@ -41,7 +41,7 @@ class ShareSafariFaqSearch extends ShareSafariFaq
      */
     public function search($params)
     {
-        $query = ShareSafariFaq::find()->where(['status' => [1, 2]]);
+        $query = ShareSafariFaq::find()->where(['status' => [ShareSafariFaq::STATUS_ACTIVE, ShareSafariFaq::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

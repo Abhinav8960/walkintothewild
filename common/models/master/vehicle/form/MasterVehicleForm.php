@@ -36,7 +36,7 @@ class MasterVehicleForm extends model
             $this->status = $this->vehicle_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
@@ -52,7 +52,9 @@ class MasterVehicleForm extends model
             [['status'], 'default', 'value' => 1],
             // [['icon'],'safe'],
             [
-                ['icon'], 'image', 'extensions' => ['jpeg', 'jpg', 'png'],
+                ['icon'],
+                'image',
+                'extensions' => ['jpeg', 'jpg', 'png'],
                 'minWidth' => 75,
                 'maxWidth' => 75,
                 'maxHeight' => 75,
@@ -60,7 +62,10 @@ class MasterVehicleForm extends model
                 'maxSize' => 100 * 1024
             ],
             [
-                ['vehicle_name'], 'unique', 'targetClass' => MasterVehicle::className(), 'message' => 'This vehicle name has already been taken.',
+                ['vehicle_name'],
+                'unique',
+                'targetClass' => MasterVehicle::className(),
+                'message' => 'This vehicle name has already been taken.',
                 'filter' => function ($query) {
                     if (!$this->vehicle_model->isNewRecord) {
                         $query->andWhere(['not', ['id' => $this->vehicle_model->id]]);
