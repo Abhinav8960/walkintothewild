@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'answer')->textInput(['rows' => '2', 'placeholder' => 'Package Answer'])->label('Package Answer')->label(false) ?>
     </div>
     <?php
-    if (!empty($model->package_faq_model->id)) { ?>
+    if (!empty($model->share_safari_faq_model->id)) { ?>
         <div class="col-md-3">
             <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => '--Select Status--'])->label(false) ?>
         </div>

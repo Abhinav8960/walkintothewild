@@ -619,4 +619,42 @@ class SharedsafariController extends FrontendBaseController
         }
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionUpdateFaq($share_safari_id, $faq_id)
+    {
+        $shared_safari_departure_model = ShareSafari::find()->where(['id' => $share_safari_id])->limit(1)->one();
+        $safari_operator = $this->module->operatormodel();
+        $faq_model = ShareSafariFaq::find()->where(['id' => $faq_id])->one();
+        $model = new ShareSafariFaqForm($faq_model);
+        $model->share_safari_id = $share_safari_id;
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->share_safari_faq_model->save(false)) {
+                        $faq = new MasterFaq();
+                        $faq->question = $model->question;
+                        $faq->answer = $model->answer;
+                        $faq->position = 0;
+                        $faq->status = MasterFaq::STATUS_ACTIVE;
+                        if ($faq->save(false)) {
+                            $model->share_safari_faq_model->faq_id = $faq->id;
+                            $model->share_safari_faq_model->save(false);
+                        }
+                        \Yii::$app->session->setFlash('success', 'Faq submitted successfully');
+                        return $this->redirect(['faq', 'slug' => $shared_safari_departure_model->slug]);
+                    }
+                }
+            }
+        } else {
+            $model->share_safari_faq_model->loadDefaultValues();
+        }
+        if (Yii::$app->request->isAjax) {
+            return $this->renderAjax('create_faq', [
+                'model' => $model,
+                'shared_safari_departure_model' => $shared_safari_departure_model,
+                'safari_operator' => $safari_operator,
+            ]);
+        }
+    }
 }
