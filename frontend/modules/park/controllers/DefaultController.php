@@ -357,6 +357,7 @@ class DefaultController extends FrontendBaseController
         $searchModel = new SafariParkSearch();
         if ($rare_animal) {
             $searchModel->master_rare_animal_id = $rare_animal->id;
+            $searchModel->master_animal_id = $rare_animal->id;
         }
 
         $dataProvider = $searchModel->search($this->request->queryParams, false);
