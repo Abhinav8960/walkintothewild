@@ -62,23 +62,23 @@ $this->params['title'] = $this->title;
                                                         return $model->answer;
                                                     }
                                                 ],
-                                                [
-                                                    'class' => 'yii\grid\ActionColumn',
-                                                    'header' => "Actions",
-                                                    'contentOptions' => ['style' => 'width: 15%;'],
-                                                    'template' => '{delete}&nbsp;&nbsp;{suspend}',
-                                                    'buttons' => [
-                                                        'delete' => function ($url, $model) {
-                                                            if ($model->status != -1) {
-                                                            } else {
-                                                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                                                            }
-                                                        },
-                                                        'suspend' => function ($url, $model) {
-                                                            return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
-                                                        },
-                                                    ]
-                                                ],
+                                                // [
+                                                //     'class' => 'yii\grid\ActionColumn',
+                                                //     'header' => "Actions",
+                                                //     'contentOptions' => ['style' => 'width: 15%;'],
+                                                //     'template' => '{delete}&nbsp;&nbsp;{suspend}',
+                                                //     'buttons' => [
+                                                //         'delete' => function ($url, $model) {
+                                                //             if ($model->status != -1) {
+                                                //             } else {
+                                                //                 return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
+                                                //             }
+                                                //         },
+                                                //         'suspend' => function ($url, $model) {
+                                                //             return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
+                                                //         },
+                                                //     ]
+                                                // ],
                                             ],
                                         ]); ?>
                                     </div>

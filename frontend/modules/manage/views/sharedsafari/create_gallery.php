@@ -39,7 +39,7 @@ use yii\bootstrap5\ActiveForm;
             <?php
             if (!empty($model->share_safari_gallery_model->id)) { ?>
                 <div class="col-md-12">
-                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--']) ?>
+                    <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => '--Select Status--']) ?>
                 </div>
             <?php } ?>
         </div>

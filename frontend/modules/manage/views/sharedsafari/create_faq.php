@@ -26,7 +26,7 @@ use yii\bootstrap5\ActiveForm;
     <?php
     if (!empty($model->package_faq_model->id)) { ?>
         <div class="col-md-3">
-            <?= $form->field($model, 'status')->dropDownList(GeneralModel::statusoption(), ['prompt' => '--Select Status--'])->label(false) ?>
+            <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => '--Select Status--'])->label(false) ?>
         </div>
     <?php } ?>
 </div>
