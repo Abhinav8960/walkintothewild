@@ -90,22 +90,6 @@ ALTER TABLE `package` ADD `delete_reason_id` INT NULL AFTER `popular_package`, A
 -- 14-sep-2024
 
 
-UPDATE share_safari_included
-SET status = 0
-WHERE status = 2;
-
-UPDATE share_safari_gallery
-SET status = 0
-WHERE status = 2;
-
-UPDATE share_safari_faq
-SET status = 0
-WHERE status = 2;
-
-UPDATE share_safari_day
-SET status = 0
-WHERE status = 2;
-
 
 
 UPDATE safari_park
@@ -146,5 +130,34 @@ SET status = 0
 WHERE status = 2;
 
 UPDATE safari_park_bonus_experience
+SET status = 0
+WHERE status = 2;
+
+
+-- 13-sep-2024
+
+
+UPDATE share_safari_included
+SET status = 0
+WHERE status = 2;
+
+UPDATE share_safari_gallery
+SET status = 0
+WHERE status = 2;
+
+UPDATE share_safari_faq
+SET status = 0
+WHERE status = 2;
+
+UPDATE share_safari_day
+SET status = 0
+WHERE status = 2;
+
+
+
+UPDATE master_railway_station
+SET status = 0
+WHERE status = 2;
+UPDATE master_airport
 SET status = 0
 WHERE status = 2;

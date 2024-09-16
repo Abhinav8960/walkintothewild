@@ -46,7 +46,7 @@ $this->params['buttons'][] = Html::a('Upload Airport CSV', ['/master/airport/air
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->newstatuslabel;
                         }
                     ],
                     [

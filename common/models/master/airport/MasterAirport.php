@@ -20,7 +20,7 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**
