@@ -1,6 +1,6 @@
 <?php
 
-use common\interfaces\StatusInterface;
+use common\interfaces\NewStatusInterface;
 use common\models\operator\SafariOperatorFollow;
 use common\models\User;
 use yii\helpers\Url;
@@ -61,83 +61,83 @@ $this->params['title'] = $this->title;
                                         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab">
                                             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
 
-                                               
-                                                    <?php
-                                                    $operatorfollowings = SafariOperatorFollow::find()->where(['user_id' => $user->id, 'status' => StatusInterface::STATUS_ACTIVE])->all();
-                                                    if ($operatorfollowings) {
-                                                        foreach ($operatorfollowings as $operatorfollowing) {
-                                                            if ($operator = $operatorfollowing->operator) {
 
-                                                    ?>
-                                                                <div class="card_profile card position-relative mt-2">
-                                                                    <div class="dots-blockbox">
-                                                                        <i class="fa-solid fa-ellipsis"></i>
-                                                                        <div class="box_dropdown">
-                                                                            <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="d-block pb-1">View Page</a>
-                                                                        </div>
+                                                <?php
+                                                $operatorfollowings = SafariOperatorFollow::find()->where(['user_id' => $user->id, 'status' => NewStatusInterface::STATUS_ACTIVE])->all();
+                                                if ($operatorfollowings) {
+                                                    foreach ($operatorfollowings as $operatorfollowing) {
+                                                        if ($operator = $operatorfollowing->operator) {
+
+                                                ?>
+                                                            <div class="card_profile card position-relative mt-2">
+                                                                <div class="dots-blockbox">
+                                                                    <i class="fa-solid fa-ellipsis"></i>
+                                                                    <div class="box_dropdown">
+                                                                        <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>" class="d-block pb-1">View Page</a>
                                                                     </div>
-                                                                    <div class="profileDetails  text-center">
-                                                                        <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>">
-                                                                            <div class=" mx-auto white" style="width: 70px; height:70px">
-                                                                                <img src="<?= isset($operator->logo) ? $operator->imagepath : '/img/witw.png' ?>" class="rounded-circle img-fluid" alt="profile-image">
-                                                                            </div>
-                                                                            <div class="card-body text-center  pt-2">
-                                                                                <h6 class="fs-7 fw-bold usename"><?= $operator->businessname ?></h6>
-                                                                            </div>
-                                                                        </a>
-                                                                        <div class="followunfollowbtn border-top ">
-                                                                            <?php
-                                                                            if ($login_user = Yii::$app->user->identity) {
-                                                                                if ($login_user->id <> $user->id) { ?>
-                                                                                    <div class="row">
-                                                                                        <div class="col-6">
-                                                                                            <div class="folollowBtns ">
-                                                                                                <?php
-                                                                                                $operator_follower = SafariOperatorFollow::find()->where(['user_id' => $login_user->id, 'status' => 1])->limit(1)->one();
-                                                                                                if ($operator_follower) { ?>
-                                                                                                    <a href="<?= Url::toRoute(['/operator/default/unfollow', 'slug' => $operator->slug]) ?>" data-method="POST">Unfollow</a>
-                                                                                                <?php  } else { ?>
-                                                                                                    <a href="<?= Url::toRoute(['/operator/default/follow', 'slug' => $operator->slug]) ?>" data-method="POST">Follow</a>
-                                                                                                <?php } ?>
-                                                                                            </div>
+                                                                </div>
+                                                                <div class="profileDetails  text-center">
+                                                                    <a href="<?= Url::toRoute(['/operator/default/view', 'slug' => $operator->slug]) ?>">
+                                                                        <div class=" mx-auto white" style="width: 70px; height:70px">
+                                                                            <img src="<?= isset($operator->logo) ? $operator->imagepath : '/img/witw.png' ?>" class="rounded-circle img-fluid" alt="profile-image">
+                                                                        </div>
+                                                                        <div class="card-body text-center  pt-2">
+                                                                            <h6 class="fs-7 fw-bold usename"><?= $operator->businessname ?></h6>
+                                                                        </div>
+                                                                    </a>
+                                                                    <div class="followunfollowbtn border-top ">
+                                                                        <?php
+                                                                        if ($login_user = Yii::$app->user->identity) {
+                                                                            if ($login_user->id <> $user->id) { ?>
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <div class="folollowBtns ">
+                                                                                            <?php
+                                                                                            $operator_follower = SafariOperatorFollow::find()->where(['user_id' => $login_user->id, 'status' => 1])->limit(1)->one();
+                                                                                            if ($operator_follower) { ?>
+                                                                                                <a href="<?= Url::toRoute(['/operator/default/unfollow', 'slug' => $operator->slug]) ?>" data-method="POST">Unfollow</a>
+                                                                                            <?php  } else { ?>
+                                                                                                <a href="<?= Url::toRoute(['/operator/default/follow', 'slug' => $operator->slug]) ?>" data-method="POST">Follow</a>
+                                                                                            <?php } ?>
                                                                                         </div>
-                                                                                        <!-- <div class="col-6">
+                                                                                    </div>
+                                                                                    <!-- <div class="col-6">
                                             <div class="massegses">
                                                 <a href="<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>">Message</a>
                                             </div>
                                         </div> -->
-                                                                                    </div>
-                                                                                <?php } else { ?>
-                                                                                    <div class="row">
-                                                                                        <div class="col-12 ">
-                                                                                            <div class="massegses">
-                                                                                                <a href="<?= Url::toRoute(['/operator/default/unfollow', 'slug' => $operator->slug]) ?>" data-method="POST">Unfollow</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                <?php }
-                                                                            } else { ?>
+                                                                                </div>
+                                                                            <?php } else { ?>
                                                                                 <div class="row">
-                                                                                    <div class="col-6 divider">
-                                                                                        <div class="folollowBtns">
-                                                                                            <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/operator/default/follow', 'slug' => $operator->slug]) ?>">Follow</a>
+                                                                                    <div class="col-12 ">
+                                                                                        <div class="massegses">
+                                                                                            <a href="<?= Url::toRoute(['/operator/default/unfollow', 'slug' => $operator->slug]) ?>" data-method="POST">Unfollow</a>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <!-- <div class="col-6">
+                                                                                </div>
+                                                                            <?php }
+                                                                        } else { ?>
+                                                                            <div class="row">
+                                                                                <div class="col-6 divider">
+                                                                                    <div class="folollowBtns">
+                                                                                        <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/operator/default/follow', 'slug' => $operator->slug]) ?>">Follow</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- <div class="col-6">
                                         <div class="massegses">
                                             <a href="/site/login?authclient=google&referrer=<?= Url::toRoute(['/chat/default/message', 'user_handle' => $user->user_handle]) ?>">Message</a>
                                         </div>
                                     </div> -->
-                                                                                </div>
-                                                                            <?php } ?>
-                                                                        </div>
+                                                                            </div>
+                                                                        <?php } ?>
                                                                     </div>
-
                                                                 </div>
-                                                    <?php }
-                                                        }
-                                                    } ?>
-                                                
+
+                                                            </div>
+                                                <?php }
+                                                    }
+                                                } ?>
+
 
                                             </div>
                                         </div>

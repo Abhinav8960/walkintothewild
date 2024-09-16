@@ -775,11 +775,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/operator/safari-operator/index",
 															"/operator/safari-operator/index/view",
 														)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 															"/operator/birding-operator/index",
 															"/operator/birding-operator/index/view",
 														)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
-							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
+							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li> -->
 						</ul>
 					</li>
 
