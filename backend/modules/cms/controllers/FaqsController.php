@@ -2,7 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\faqs\form\FaqsForm;
 use common\models\cms\faqs\Faqs;
@@ -33,7 +33,7 @@ class FaqsController extends Controller
     public function actionCreate()
     {
         $model = new FaqsForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = Faqs::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -136,7 +136,7 @@ class FaqsController extends Controller
     {
         $model = $this->findModel($id);
         $model->category_id = $model->id . '_' . $model->category_id;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = Faqs::STATUS_DELETE;
         $model->save();
         Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(Yii::$app->request->referrer); // corrected Yii::$app->request
@@ -144,7 +144,7 @@ class FaqsController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = Faqs::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = Faqs::findOne(['id' => $id, 'status' => [Faqs::STATUS_ACTIVE, Faqs::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

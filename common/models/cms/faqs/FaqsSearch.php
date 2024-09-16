@@ -20,7 +20,7 @@ class FaqsSearch extends Model
     public function rules()
     {
         return [
-            [['id', 'status','category_id'], 'integer'], // Add 'id' and 'status' to the integer validator
+            [['id', 'status', 'category_id'], 'integer'], // Add 'id' and 'status' to the integer validator
         ];
     }
 
@@ -33,7 +33,7 @@ class FaqsSearch extends Model
      */
     public function search($params)
     {
-        $query = Faqs::find()->where(['status' => [1, 2]]);
+        $query = Faqs::find()->where(['status' => [Faqs::STATUS_ACTIVE, Faqs::STATUS_SUSPEND]]);
 
         // Add conditions that should always apply here
 

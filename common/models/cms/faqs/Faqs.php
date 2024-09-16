@@ -15,7 +15,7 @@ use Yii;
  * @property string $answer
  * @property int $status
  */
-class Faqs extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class Faqs extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**
