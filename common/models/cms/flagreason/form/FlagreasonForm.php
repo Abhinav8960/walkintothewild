@@ -32,7 +32,7 @@ class FlagreasonForm extends Model
             $this->status = $this->reason_model->status;
         }
 
-        $this->status_option = GeneralModel::statusOption();
+        $this->status_option = GeneralModel::newstatusOption();
     }
 
     /**

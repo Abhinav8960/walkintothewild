@@ -45,7 +45,7 @@ class MasterRailwayStationForm extends model
             $this->status = $this->railway_station_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
@@ -77,8 +77,8 @@ class MasterRailwayStationForm extends model
     {
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
-        $scenarios['create'] = ['city_id', 'state_id', 'country_id', 'title', 'station_code'];
-        $scenarios['update'] = ['city_id', 'state_id', 'country_id', 'title', 'station_code'];
+        $scenarios['create'] = ['city_id', 'state_id', 'country_id', 'title', 'station_code','status'];
+        $scenarios['update'] = ['city_id', 'state_id', 'country_id', 'title', 'station_code','status'];
         return $scenarios;
     }
 

@@ -33,7 +33,7 @@ class MasterBonusExperienceForm extends model
             $this->status = $this->bonus_experience_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

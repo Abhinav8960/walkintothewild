@@ -44,7 +44,7 @@ class MasterAirportForm extends model
             $this->status = $this->airport_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
@@ -78,10 +78,10 @@ class MasterAirportForm extends model
         $scenarios = parent::scenarios();
         $scenarios['uploadfile'] = ['uploadfile'];
         $scenarios['create'] = [
-            'city_id', 'state_id', 'country_id', 'name', 'slug', 'icao_code', 'iata_code'
+            'city_id', 'state_id', 'country_id', 'name', 'slug', 'icao_code', 'iata_code','status'
         ];
         $scenarios['update'] = [
-            'city_id', 'state_id', 'country_id', 'name', 'slug', 'icao_code', 'iata_code'
+            'city_id', 'state_id', 'country_id', 'name', 'slug', 'icao_code', 'iata_code','status'
         ];
         return $scenarios;
     }

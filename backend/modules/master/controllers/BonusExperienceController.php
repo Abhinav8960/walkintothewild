@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\bonusexperience\form\MasterBonusExperienceForm;
 use common\models\master\bonusexperience\MasterBonusExperience;
 use common\models\master\bonusexperience\MasterBonusExperienceSearch;
@@ -41,7 +41,7 @@ class BonusExperienceController extends Controller
     public function actionCreate()
     {
         $model = new MasterBonusExperienceForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterBonusExperience::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -117,7 +117,7 @@ class BonusExperienceController extends Controller
     {
         $model = $this->findModel($id);
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterBonusExperience::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -132,7 +132,7 @@ class BonusExperienceController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterBonusExperience::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterBonusExperience::findOne(['id' => $id, 'status' => [MasterBonusExperience::STATUS_ACTIVE, MasterBonusExperience::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

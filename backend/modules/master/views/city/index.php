@@ -47,7 +47,7 @@ $this->params['buttons'][] = Html::a('Upload City CSV', ['cityfromfile'], ['clas
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->newstatuslabel;
                         }
                     ],
                     [

@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\animal\form\MasterAnimalForm;
 use common\models\master\animal\MasterAnimal;
 use common\models\master\animal\MasterAnimalSearch;
@@ -44,7 +44,7 @@ class AnimalController extends Controller
     public function actionCreate()
     {
         $model = new MasterAnimalForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterAnimal::STATUS_ACTIVE;
         $model->scenario = 'create';
         $model->animal_type = MasterAnimal::USUAL_ANIMAL_TYPE;
 
@@ -123,7 +123,7 @@ class AnimalController extends Controller
     {
         $model = $this->findModel($id);
         $model->name = $model->id . '_' . $model->name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterAnimal::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -138,7 +138,7 @@ class AnimalController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [MasterAnimal::STATUS_ACTIVE, MasterAnimal::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

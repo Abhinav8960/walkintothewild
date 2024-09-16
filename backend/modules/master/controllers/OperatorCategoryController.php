@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\operatorcategory\form\MasterOperatorCategoryForm;
 use common\models\master\operatorcategory\MasterOperatorCategory;
 use common\models\master\operatorcategory\MasterOperatorCategorySearch;
@@ -41,7 +41,7 @@ class OperatorCategoryController extends Controller
     public function actionCreate()
     {
         $model = new MasterOperatorCategoryForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterOperatorCategory::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -117,7 +117,7 @@ class OperatorCategoryController extends Controller
     {
         $model = $this->findModel($id);
         $model->vehicle_name = $model->id . '_' . $model->vehicle_name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterOperatorCategory::STATUS_DELETE;
         $model->save(false);
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -132,7 +132,7 @@ class OperatorCategoryController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterOperatorCategory::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterOperatorCategory::findOne(['id' => $id, 'status' => [MasterOperatorCategory::STATUS_ACTIVE, MasterOperatorCategory::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

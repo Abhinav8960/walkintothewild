@@ -17,7 +17,7 @@ class MasterCitySearch extends MasterCity
     public function rules()
     {
         return [
-            [['status', 'state_id','country_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'state_id', 'country_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['city_name'], 'string', 'max' => 125],
         ];
     }
@@ -40,7 +40,7 @@ class MasterCitySearch extends MasterCity
      */
     public function search($params)
     {
-        $query = MasterCity::find()->where(['status' => [1, 2]]);
+        $query = MasterCity::find()->where(['status' => [MasterCity::STATUS_ACTIVE, MasterCity::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

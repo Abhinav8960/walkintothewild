@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\animal\form\MasterAnimalForm;
 use common\models\master\animal\form\MasterRareAnimalForm;
 use common\models\master\animal\MasterAnimal;
@@ -47,7 +47,7 @@ class RareAnimalController extends Controller
     public function actionCreate()
     {
         $model = new MasterRareAnimalForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterAnimal::STATUS_ACTIVE;
         $model->scenario = 'create';
         $model->animal_type = MasterAnimal::RARE_ANIMAL_TYPE;
 
@@ -135,7 +135,7 @@ class RareAnimalController extends Controller
     {
         $model = $this->findModel($id);
         $model->name = $model->id . '_' . $model->name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterAnimal::STATUS_DELETE;
         $model->save();
 
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
@@ -151,7 +151,7 @@ class RareAnimalController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterAnimal::findOne(['id' => $id, 'status' => [MasterAnimal::STATUS_ACTIVE, MasterAnimal::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
