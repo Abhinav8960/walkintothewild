@@ -16,7 +16,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class ArticleTag extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ArticleTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
 
