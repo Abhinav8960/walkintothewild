@@ -56,7 +56,7 @@ class ContentManagementForm extends Model
             $this->created_by = $this->formModel->created_by;
             $this->updated_by = $this->formModel->updated_by;
         }
-        $this->status_option = GeneralModel::statusOption();
+        $this->status_option = GeneralModel::newstatusOption();
     }
 
 

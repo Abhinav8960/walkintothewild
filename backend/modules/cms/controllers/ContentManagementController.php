@@ -2,7 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\cms\contentmanagement\ContentManagement;
 use common\models\cms\contentmanagement\ContentManagementSearch;
 use common\models\cms\contentmanagement\form\ContentManagementForm;
@@ -27,7 +27,7 @@ class ContentManagementController extends Controller
     public function actionCreate()
     {
         $model = new ContentManagementForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = ContentManagement::STATUS_ACTIVE;
 
 
 
@@ -97,7 +97,7 @@ class ContentManagementController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = ContentManagement::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = ContentManagement::findOne(['id' => $id, 'status' => [ContentManagement::STATUS_ACTIVE, ContentManagement::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

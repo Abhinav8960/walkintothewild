@@ -19,7 +19,7 @@ use Yii;
  * @property int $updated_by
  * @property int $created_by
  */
-class ContentManagement extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class ContentManagement extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
 
