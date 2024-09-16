@@ -614,42 +614,42 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(MasterPackageInclude::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
-    public static function articleoption()
-    {
+    // public static function articleoption()
+    // {
 
-        $query = Article::find()
-            // ->where(['status' => self::STATUS_ACTIVE])
-            ->where("status=1 AND (user_type=3)")
-            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
-            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+    //     $query = Article::find()
+    //         // ->where(['status' => self::STATUS_ACTIVE])
+    //         ->where("status=1 AND (user_type=3)")
+    //         ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+    //         ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
-        // Get all the models
-        $parks = $query->all();
+    //     // Get all the models
+    //     $parks = $query->all();
 
-        // Use ArrayHelper::map to create the key-value pairs
-        $result = ArrayHelper::map($parks, 'id', 'title');
-        return $result;
-    }
+    //     // Use ArrayHelper::map to create the key-value pairs
+    //     $result = ArrayHelper::map($parks, 'id', 'title');
+    //     return $result;
+    // }
 
-    public static function articleoptionfeature($ids = null)
-    {
+    // public static function articleoptionfeature($ids = null)
+    // {
 
-        $query = Article::find()
-            // ->where(['status' => self::STATUS_ACTIVE])
-            ->where("article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and user_type=3) OR article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and is_approved=1 and user_type IN (1,2))")
-            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
-            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+    //     $query = Article::find()
+    //         // ->where(['status' => self::STATUS_ACTIVE])
+    //         ->where("article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and user_type=3) OR article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and is_approved=1 and user_type IN (1,2))")
+    //         ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+    //         ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
-        if ($ids) {
-            $query->andWhere("article.id NOT IN ($ids)");
-        }
-        // Get all the models
-        $parks = $query->all();
+    //     if ($ids) {
+    //         $query->andWhere("article.id NOT IN ($ids)");
+    //     }
+    //     // Get all the models
+    //     $parks = $query->all();
 
-        // Use ArrayHelper::map to create the key-value pairs
-        $result = ArrayHelper::map($parks, 'id', 'title');
-        return $result;
-    }
+    //     // Use ArrayHelper::map to create the key-value pairs
+    //     $result = ArrayHelper::map($parks, 'id', 'title');
+    //     return $result;
+    // }
 
     public static function safariParkRareExoticOption()
     {
