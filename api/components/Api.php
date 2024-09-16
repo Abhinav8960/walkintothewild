@@ -149,15 +149,12 @@ class Api extends Component
     public function createAccesstoken($user, $params = NULL)
     {
 
+       
 
         $model = new UserSession();
         $toekn = hash('SHA512', $user->id . '-' . $user->auth_key . '-' . time());
         $model->token =  $toekn;
 
-
-        // $model->expires_at = date('Y-m-d H:i:s', time() + (60 * 60 * 24 * 60)); // 60 days
-
-        // $model->expires_at=time()+(60 * 2);// 2 minutes
 
         $model->id                          = $toekn;
         $model->user_id                     = $user->id;

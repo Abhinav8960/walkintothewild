@@ -107,7 +107,8 @@ class SiteController extends RestController
 
                 if ($auth && $model->apiLogin()) { // login
                     /* @var User $user */
-                    $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user), $auth);
+                   
+                    $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
                     // $model->UserSession($accesstoken);
                     $data = [];
                     // $data['authorization_code'] = $auth_code;
@@ -122,12 +123,13 @@ class SiteController extends RestController
                     if ($model->email !== null && User::find()->where(['email' => $model->email])->exists()) {
 
 
-                        $user = User::find()->where(['email' => $model->email])->one();
-                        $saveuser =  $user->updateAttributes([$model->source . '_source_id' => $model->source_id]);
+                        $user = User::find()->where(['email1' => $model->email])->one();
+                        // $saveuser =  $user->updateAttributes([$model->source . '_source_id' => $model->source_id]);
 
+                       
+                        if ($user) {
 
-                        if ($saveuser) {
-                            $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $user);
+                            $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
                             $data = [];
                             // $data['authorization_code'] = $auth_code;
                             $data['access_token'] = $accesstoken->token;
@@ -149,6 +151,7 @@ class SiteController extends RestController
                         $user->generateAuthKey();
                         $user->generateEmailVerificationToken();
 
+                        $user->name = isset($model->name) ? $model->name : NULL;
                         $user->username = $model->email;
                         $user->email = $model->email;
                         $user->avatar = $model->avatar;
