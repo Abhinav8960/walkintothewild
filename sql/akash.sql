@@ -161,3 +161,30 @@ WHERE status = 2;
 UPDATE master_airport
 SET status = 0
 WHERE status = 2;
+UPDATE master_bonus_experience
+SET status = 0
+WHERE status = 2;
+UPDATE master_animal
+SET status = 0
+WHERE status = 2;
+UPDATE master_city
+SET status = 0
+WHERE status = 2;
+UPDATE master_operator_category
+SET status = 0
+WHERE status = 2;
+UPDATE master_suggestion_category	
+SET status = 0
+WHERE status = 2;
+UPDATE master_review_flag
+SET status = 0
+WHERE status = 2;
+UPDATE master_share_safari_reason
+SET status = 0
+WHERE status = 2;
+UPDATE master_mail_template	
+SET status = 0
+WHERE status = 2;
+
+
+	
