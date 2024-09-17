@@ -219,7 +219,33 @@ SET status = 0
 WHERE status = 2;
 
 
-
+-- 17-Sep-2024
 ALTER TABLE `safari_operator` ADD `delete_reason_id` INT NULL AFTER `status`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
 
-	
+UPDATE safari_operator
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_activities
+SET status = 0
+WHERE status = 2;
+UPDATE 	safari_operator_follow
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_park
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_rating
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_rating_report
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_request	
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_request_activities
+SET status = 0
+WHERE status = 2;
+UPDATE 	safari_operator_request_park
+SET status = 0
+WHERE status = 2;
