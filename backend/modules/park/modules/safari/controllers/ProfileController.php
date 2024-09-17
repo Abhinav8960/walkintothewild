@@ -2,7 +2,7 @@
 
 namespace backend\modules\park\modules\safari\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\GeneralModel;
 use common\models\master\animal\MasterAnimal;
 use common\models\park\form\SafariParkAnimalForm;
@@ -86,7 +86,7 @@ class ProfileController extends Controller
                     if ($model->safari_park_model->save()) {
                         $model->uploadFile();
                         $safariaccomodation = $model->accomodation;
-                        SafariParkAccomodation::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                        SafariParkAccomodation::updateAll(['status' => SafariParkAccomodation::STATUS_SUSPEND], ['safari_park_id' => $safari_park_id]);
                         if ($safariaccomodation) {
                             foreach ($safariaccomodation as $safari_accomodation) {
                                 $safariparkAccomodation = new SafariParkAccomodation();
@@ -97,7 +97,7 @@ class ProfileController extends Controller
                         }
 
                         $sessions = $model->safari_session;
-                        SafariParkSession::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                        SafariParkSession::updateAll(['status' => SafariParkSession::STATUS_SUSPEND], ['safari_park_id' => $safari_park_id]);
                         if ($sessions) {
                             foreach ($sessions as $session) {
                                 $safariparkSession = new SafariParkSession();
@@ -108,7 +108,7 @@ class ProfileController extends Controller
                         }
 
                         $months = $model->month;
-                        SafariParkMonth::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                        SafariParkMonth::updateAll(['status' => SafariParkMonth::STATUS_SUSPEND], ['safari_park_id' => $safari_park_id]);
                         if ($months) {
 
                             foreach ($months as $safari_month) {
@@ -121,7 +121,7 @@ class ProfileController extends Controller
 
 
                         $bonusexperience = $model->master_bonus_experience_id;
-                        SafariParkBonusExperience::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                        SafariParkBonusExperience::updateAll(['status' => SafariParkBonusExperience::STATUS_SUSPEND], ['safari_park_id' => $safari_park_id]);
                         if ($bonusexperience) {
                             foreach ($bonusexperience as $bonus) {
                                 $safariparkBonus = new SafariParkBonusExperience();
@@ -146,7 +146,7 @@ class ProfileController extends Controller
                         }
 
                         $animals = $model->master_animal_id;
-                        SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $safari_park_id]);
+                        SafariParkAnimal::updateAll(['status' => SafariParkAnimal::STATUS_SUSPEND], ['safari_park_id' => $safari_park_id]);
                         if ($animals) {
                             foreach ($animals as $animal) {
                                 $parkAnimal = new SafariParkAnimal();
@@ -363,7 +363,7 @@ class ProfileController extends Controller
     public function actionDeletegallery($id)
     {
         $model = $this->findGalleryModel($id);
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = SafariParkGallery::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -449,7 +449,7 @@ class ProfileController extends Controller
     {
         $model = $this->findZoneModel($id);
         $model->zone_name = $model->id . '_' . $model->zone_name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = SafariParkZone::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -533,7 +533,7 @@ class ProfileController extends Controller
     public function actionDeletevehicle($id)
     {
         $model = $this->findVehicleModel($id);
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = SafariParkVehicle::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -676,7 +676,7 @@ class ProfileController extends Controller
     public function actionDeleteanimal($id)
     {
         $model = $this->findAnimalModel($id);
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = SafariParkAnimal::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -738,7 +738,7 @@ class ProfileController extends Controller
     public function actionApprove($id)
     {
         $model = SafariSuggestions::find()->where(['id' => $id])->limit(1)->one();
-        $model->is_approved = StatusInterface::STATUS_ACTIVE;
+        $model->is_approved = SafariSuggestions::STATUS_ACTIVE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Suggestion approved Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -754,7 +754,7 @@ class ProfileController extends Controller
      */
     protected function findModel($safari_park_id)
     {
-        if (($model = SafariPark::find()->where(['status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND], 'id' => $safari_park_id])->one()) !== null) {
+        if (($model = SafariPark::find()->where(['status' => [SafariPark::STATUS_ACTIVE, SafariPark::STATUS_SUSPEND], 'id' => $safari_park_id])->one()) !== null) {
             return $model;
         }
 
@@ -764,7 +764,7 @@ class ProfileController extends Controller
 
     protected function findGalleryModel($id)
     {
-        if (($model = SafariParkGallery::find()->where(['status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
+        if (($model = SafariParkGallery::find()->where(['status' => [SafariParkGallery::STATUS_ACTIVE, SafariParkGallery::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
             return $model;
         }
 
@@ -774,7 +774,7 @@ class ProfileController extends Controller
 
     protected function findAnimalModel($id)
     {
-        if (($model = SafariParkAnimal::find()->where(['status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
+        if (($model = SafariParkAnimal::find()->where(['status' => [SafariParkAnimal::STATUS_ACTIVE, SafariParkAnimal::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
             return $model;
         }
 
@@ -782,7 +782,7 @@ class ProfileController extends Controller
     }
     protected function findVehicleModel($id)
     {
-        if (($model = SafariParkVehicle::find()->where(['status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
+        if (($model = SafariParkVehicle::find()->where(['status' => [SafariParkVehicle::STATUS_ACTIVE, SafariParkVehicle::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
             return $model;
         }
 
@@ -790,7 +790,7 @@ class ProfileController extends Controller
     }
     protected function findFlorafaunaModel($id)
     {
-        if (($model = SafariParkFloraFauna::find()->where(['status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
+        if (($model = SafariParkFloraFauna::find()->where(['status' => [SafariParkFloraFauna::STATUS_ACTIVE, SafariParkFloraFauna::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
             return $model;
         }
 
@@ -800,7 +800,7 @@ class ProfileController extends Controller
 
     protected function findZoneModel($id)
     {
-        if (($model = SafariParkZone::find()->where(['status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
+        if (($model = SafariParkZone::find()->where(['status' => [SafariParkZone::STATUS_ACTIVE, SafariParkZone::STATUS_SUSPEND], 'id' => $id])->one()) !== null) {
             return $model;
         }
 
