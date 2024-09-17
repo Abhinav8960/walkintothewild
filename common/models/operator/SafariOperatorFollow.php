@@ -24,7 +24,7 @@ use common\models\User;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class SafariOperatorFollow extends \yii\db\ActiveRecord
+class SafariOperatorFollow extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}

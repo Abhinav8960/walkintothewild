@@ -62,7 +62,7 @@ class SafariOperatorSearch extends SafariOperator
      */
     public function search($params)
     {
-        $query = SafariOperator::find()->where(['safari_operator.status' => [1, 2]]);
+        $query = SafariOperator::find()->where(['safari_operator.status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

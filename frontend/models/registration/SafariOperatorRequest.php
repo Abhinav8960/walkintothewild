@@ -214,7 +214,7 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
             $parks = SafariOperatorRequestPark::find()->where(['safari_operator_request_id' => $safarioperator_request_model->id, 'status' => 1])->all();
 
             if ($parks) {
-                SafariOperatorPark::updateAll(['status' => 2], ['safari_operator_id' => $safari_operator->id]);
+                SafariOperatorPark::updateAll(['status' => SafariOperatorPark::STATUS_SUSPEND], ['safari_operator_id' => $safari_operator->id]);
                 foreach ($parks as $park) {
                     $safarioperatorpark = new SafariOperatorPark();
                     $safarioperatorpark->safari_operator_id = $safari_operator->id;
@@ -225,7 +225,7 @@ class SafariOperatorRequest extends \yii\db\ActiveRecord
 
             $activities = SafariOperatorRequestActivities::find()->where(['safari_operator_request_id' => $safarioperator_request_model->id, 'status' => 1])->all();
             if ($activities) {
-                SafariOperatorActivities::updateAll(['status' => 2], ['safari_operator_id' => $safari_operator->id]);
+                SafariOperatorActivities::updateAll(['status' => SafariOperatorActivities::STATUS_SUSPEND], ['safari_operator_id' => $safari_operator->id]);
                 foreach ($activities as $activity) {
                     $safarioperatorrequestactivities = new SafariOperatorActivities();
                     $safarioperatorrequestactivities->safari_operator_id = $safari_operator->id;

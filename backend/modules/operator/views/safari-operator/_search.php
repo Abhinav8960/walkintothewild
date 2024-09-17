@@ -50,7 +50,7 @@ use common\models\registration\SafariOperatorRequestPark;
     </div>
     <div class="col-md-2">
         <?= $form->field($model, 'status')->dropDownList(
-            GeneralModel::statusoption(),
+            GeneralModel::newstatusoption(),
             [
                 'prompt' => 'Select Status',
             ]
