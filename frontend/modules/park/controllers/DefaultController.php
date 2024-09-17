@@ -290,7 +290,7 @@ class DefaultController extends FrontendBaseController
         $safari_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'id' => $park_id])->limit(1)->one();
         if (Yii::$app->user->identity) {
             $model = new SafariSuggestionsForm();
-            $model->status = StatusInterface::STATUS_ACTIVE;
+            $model->status = SafariSuggestions::STATUS_ACTIVE;
             $model->is_approved = 0;
             $model->park_id = $park_id;
             $model->name = Yii::$app->user->identity->name;
@@ -353,9 +353,10 @@ class DefaultController extends FrontendBaseController
      */
     public function actionRareanimal($slug)
     {
-        $rare_animal = MasterAnimal::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        $rare_animal = MasterAnimal::find()->where(['status' => MasterAnimal::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         $searchModel = new SafariParkSearch();
         if ($rare_animal) {
+            $searchModel->master_rare_animal_id = $rare_animal->id;
             $searchModel->master_animal_id = $rare_animal->id;
         }
 
@@ -408,7 +409,7 @@ class DefaultController extends FrontendBaseController
 
         $model = new SafariParkReviewForm();
         $model->safari_park_id = $park_id;
-        $model->status = StatusInterface::STATUS_SUSPEND;
+        $model->status = SafariParkRating::STATUS_SUSPEND;
         $model->action_url = '/park/default';
         $model->action_validate_url = '/park/default/validatereview';
         if ($this->request->isPost) {

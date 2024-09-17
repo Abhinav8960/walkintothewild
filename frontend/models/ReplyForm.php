@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use common\interfaces\StatusInterface;
+use common\interfaces\NewStatusInterface;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleComment;
 use common\models\sharesafari\ShareSafari;
@@ -54,7 +54,7 @@ class ReplyForm extends Model
         // $reply->user_platform =  $agent->platform();
         // $reply->user_browser = $agent->browser();
         // $reply->user_ip_address = Yii::$app->getRequest()->getUserIp();
-        $reply->status = StatusInterface::STATUS_ACTIVE;
+        $reply->status = NewStatusInterface::STATUS_ACTIVE;
 
 
 

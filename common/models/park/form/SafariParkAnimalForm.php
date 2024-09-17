@@ -41,7 +41,7 @@ class SafariParkAnimalForm extends model
             $this->status = $this->safari_park_animal_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

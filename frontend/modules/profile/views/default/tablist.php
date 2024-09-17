@@ -69,9 +69,9 @@ $this->title = $user->name;
                         if ($user->is_safari_operator != 1 && in_array($user->account_type, [2, 3])) {
                             $business_request = SafariOperatorRequest::find()->where(['user_id' => $user->id])->one();
                             if ($business_request) { ?>
-                                <a href="<?= Url::toRoute(['/profile/business']) ?>" class="follow_massge rounded-2 text-capitalize">Pending Business Request</a>
+                                <a href="<?= Url::toRoute(['/account/default/registration-operator']) ?>" class="follow_massge rounded-2 text-capitalize">Pending Business Request</a>
                             <?php } else { ?>
-                                <a href="<?= Url::toRoute(['/safaritour-registration']) ?>" class="follow_massge rounded-2 text-capitalize">Create Your Business Page </a>
+                                <a href="<?= Url::toRoute(['/account/default/registration-operator']) ?>" class="follow_massge rounded-2 text-capitalize">Create Your Business Page </a>
                             <?php }
                             ?>
                         <?php }
@@ -129,16 +129,16 @@ $this->title = $user->name;
             </div>
         </div>
         <div class="advertisment mt-5 ">
-                        <div class="google-ad-box style="border:none">
-                            <ins class="adsbygoogle"
-                            style="display:inline-block;width:728px;height:90px"
-                            data-ad-client="ca-pub-6116324330184807"
-                            data-ad-slot="1321270892"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                        </div>
-                    </div>
+            <div class="google-ad-box style=" border:none">
+                <ins class="adsbygoogle"
+                    style="display:inline-block;width:728px;height:90px"
+                    data-ad-client="ca-pub-6116324330184807"
+                    data-ad-slot="1321270892"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
         <div class="row pt-5 itenary_tabs justify-content-center position-relative">
             <div class="col-xxl-11 safartabs position-relative">
                 <div class="row">

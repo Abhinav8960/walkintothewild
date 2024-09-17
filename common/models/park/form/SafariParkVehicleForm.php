@@ -35,7 +35,7 @@ class SafariParkVehicleForm extends model
             $this->status = $this->safari_park_vehicle_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

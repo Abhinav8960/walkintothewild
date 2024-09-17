@@ -18,7 +18,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class SafariParkFloraFauna extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class SafariParkFloraFauna extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

@@ -366,7 +366,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/safari/profile/map",
 															"/park/safari/profile/suggestions",
 														)) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 															"/park/birding/default/index",
 															"/park/birding/default/create",
 															"/park/birding/profile",
@@ -389,7 +389,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/birding/profile/createhowtoreach",
 															"/park/birding/profile/updatehowtoreach",
 															"/park/birding/profile/map"
-														)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li>
+														)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/park/operator-quote/index",
 															"/park/operator-quote/view",
@@ -775,11 +775,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/operator/safari-operator/index",
 															"/operator/safari-operator/index/view",
 														)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
+							<!-- <li><a class="slide-item <?= in_array($active_url, array(
 															"/operator/birding-operator/index",
 															"/operator/birding-operator/index/view",
 														)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
-							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li>
+							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li> -->
 						</ul>
 					</li>
 

@@ -4,6 +4,9 @@
             <div class="main-content-label mg-b-5">
                 <?= $model->register_comapany_name ?>
             </div>
+            <div class="btn-delet float-end py-2">
+                <button class="btn_userarticle" style="background:#F7BF39 !important;color:black !important;padding: 10px 16px !important; border:0; border-radius:10px" value="<?= \yii\helpers\Url::toRoute(['/operator/safari-operator/delete', 'id' => $model->id]) ?>"><i class="fas fa-edit me-1"></i>Delete</button>
+            </div>
         </div>
 
     </div>
@@ -20,3 +23,32 @@
             </ul>
         </div>
     </div>
+
+    <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Detail for Delete</h1>
+                    <!-- <button type="button" class="btn_close" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button> -->
+                </div>
+                <div class="modal-body px-2 pt-0">
+                    <div id='userstatusmodalContent'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php
+    $script = <<< JS
+
+function organizefunction() {
+	$('.btn_userarticle').on('click', function () {
+        $('#organize-modal').modal('show')
+		.find('#userstatusmodalContent')
+		.load($(this).attr('value'));
+	});
+}
+organizefunction();
+JS;
+    $this->registerJs($script);
+    ?>

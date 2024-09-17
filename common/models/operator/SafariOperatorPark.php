@@ -16,7 +16,7 @@ use Yii;
  * @property int|null $created_at
  * @property int|null $created_by
  */
-class SafariOperatorPark extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class SafariOperatorPark extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

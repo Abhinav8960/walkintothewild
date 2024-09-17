@@ -77,7 +77,7 @@ $this->params['title'] = $this->title;
                                         'contentOptions' => ['style' => 'width: 10%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {
-                                            return $model->statuslabel;
+                                            return $model->newstatuslabel;
                                         }
                                     ],
                                 ],

@@ -1,6 +1,6 @@
 <?php
 
-use common\interfaces\StatusInterface;
+
 use common\models\cms\contentmanagement\ContentManagement;
 use yii\helpers\Html;
 
@@ -20,7 +20,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 $content = ContentManagement::findOne(['id' => ContentManagement::CM_ABOUT]);
 
                 // Check if the content exists and its status is 1
-                $showFooterContent = $content && $content->status == \common\interfaces\StatusInterface::STATUS_ACTIVE;
+                $showFooterContent = $content && $content->status == \common\interfaces\NewStatusInterface::STATUS_ACTIVE;
                 ?>
 
                 <?php if ($showFooterContent) : ?>

@@ -173,7 +173,7 @@ class SafariParkForm extends model
             $this->accomodation = SafariParkAccomodation::find()->select('master_accomodation_id')->where(['safari_park_id' => $this->safari_park_model->id, 'status' => 1])->column();
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

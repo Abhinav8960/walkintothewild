@@ -2,7 +2,7 @@
 
 namespace frontend\models;
 
-use common\interfaces\StatusInterface;
+use common\interfaces\NewStatusInterface;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use Yii;
@@ -51,7 +51,7 @@ class ShareSafariCommentForm extends Model
         // $comment->user_platform =  $agent->platform();
         // $comment->user_browser = $agent->browser();
         // $comment->user_ip_address = Yii::$app->getRequest()->getUserIp();
-        $comment->status = StatusInterface::STATUS_ACTIVE;
+        $comment->status = NewStatusInterface::STATUS_ACTIVE;
 
 
         if ($comment->save(false)) {

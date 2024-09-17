@@ -92,46 +92,7 @@ ALTER TABLE `package` ADD `delete_reason_id` INT NULL AFTER `popular_package`, A
 
 
 
-UPDATE safari_park
-SET status = 0
-WHERE status = 2;
 
-
-UPDATE safari_park_accomodation
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_parks_animal
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_flora_fauna
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_gallery
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_month
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_rating
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_session
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_parks_vehicle
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_bonus_experience
-SET status = 0
-WHERE status = 2;
 
 
 -- 13-sep-2024
@@ -219,4 +180,84 @@ SET status = 0
 WHERE status = 2;
 
 
-	
+-- 17-Sep-2024
+ALTER TABLE `safari_operator` ADD `delete_reason_id` INT NULL AFTER `status`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
+
+UPDATE safari_operator
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_activities
+SET status = 0
+WHERE status = 2;
+UPDATE 	safari_operator_follow
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_park
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_rating
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_rating_report
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_request	
+SET status = 0
+WHERE status = 2;
+UPDATE safari_operator_request_activities
+SET status = 0
+WHERE status = 2;
+UPDATE 	safari_operator_request_park
+SET status = 0
+WHERE status = 2;
+
+
+UPDATE safari_park
+SET status = 0
+WHERE status = 2;
+
+
+UPDATE safari_park_accomodation
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_parks_animal
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_flora_fauna
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_gallery
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_month
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_rating
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_session
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_parks_vehicle
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_bonus_experience
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_operator_report_profile
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_suggestions
+SET status = 0
+WHERE status = 2;
+

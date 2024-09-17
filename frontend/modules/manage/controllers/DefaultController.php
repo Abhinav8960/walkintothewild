@@ -2,11 +2,11 @@
 
 namespace frontend\modules\manage\controllers;
 
+use common\interfaces\NewStatusInterface;
 use Yii;
 use frontend\controllers\FrontendBaseController;
 use yii\web\UploadedFile;
 use common\models\MailLog;
-use common\interfaces\StatusInterface;
 use common\models\operator\SafariOperator;
 use common\models\SafariOperatorRequestSearch;
 use common\models\registration\SafariOperatorRequest;
@@ -50,7 +50,7 @@ class DefaultController extends FrontendBaseController
         $safari_operator_model = SafariOperator::find()->where(['id' => $safari_operator_id])->limit(1)->one();
         $model = new SafariOperatorRequestForm($safari_operator_model);
         $model->user_id = $safari_operator->user_id;
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = SafariOperator::STATUS_ACTIVE;
         $model->action_url = '/manage/default/edit-request';
         $model->action_validate_url = '/manage/default/validate';
         $model->referrer_url = \Yii::$app->request->referrer;
@@ -62,12 +62,12 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
 
                     // Revome All Previouse Request if ANy Pending for Approval
-                    SafariOperatorRequest::updateAll(['status' => StatusInterface::STATUS_DELETE], ['safari_operator_id' => $safari_operator_model->id, 'status' => 1, 'is_approved' => 0]);
+                    SafariOperatorRequest::updateAll(['status' => NewStatusInterface::STATUS_DELETE], ['safari_operator_id' => $safari_operator_model->id, 'status' => 1, 'is_approved' => 0]);
 
                     if ($model->safari_operator_request_model->save(false)) {
                         $model->uploadFile();
                         $parks = $model->park_id;
-                        SafariOperatorRequestPark::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
+                        SafariOperatorRequestPark::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
                         if ($parks) {
                             foreach ($parks as $park) {
                                 $safarioperatorrequestpark = new SafariOperatorRequestPark();
@@ -79,7 +79,7 @@ class DefaultController extends FrontendBaseController
 
 
                         $activities = $model->offers_other_wildlifeactivities;
-                        SafariOperatorRequestActivities::updateAll(['status' => 2], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
+                        SafariOperatorRequestActivities::updateAll(['status' => 0], ['safari_operator_request_id' => $model->safari_operator_request_model->id]);
                         if ($activities) {
                             foreach ($activities as $activity) {
                                 $safarioperatorrequestactivity = new SafariOperatorRequestActivities();

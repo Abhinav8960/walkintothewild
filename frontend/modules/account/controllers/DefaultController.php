@@ -7,10 +7,10 @@ use yii\helpers\Url;
 use common\models\User;
 use yii\web\UploadedFile;
 use frontend\models\profile\UserForm;
-use common\interfaces\StatusInterface;
 use common\models\operator\SafariOperator;
 use frontend\models\registration\SafariOperatorRequestPark;
 use frontend\models\registration\form\SafaritourRegistrationForm;
+use frontend\models\registration\SafariOperatorRequest;
 use frontend\models\registration\SafariOperatorRequestActivities;
 
 /**
@@ -112,7 +112,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
         }
 
         $registration_model = new SafaritourRegistrationForm();
-        $registration_model->status = StatusInterface::STATUS_ACTIVE;
+        $registration_model->status = SafariOperator::STATUS_ACTIVE;
         $registration_model->user_id = Yii::$app->user->identity->id;
 
         $registration_model->action_url = Url::toRoute(['/account/default/registration-operator']);
