@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
         <?= $form->field($model, 'show_in_filter')->dropDownList(
             ['1' => 'Yes', '2' => 'No'],
             [
-                'prompt' => 'Select Status',
+                'prompt' => 'Main Filter Search',
             ]
         ) ?>
     </div>
