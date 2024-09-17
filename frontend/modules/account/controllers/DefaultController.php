@@ -112,7 +112,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
         }
 
         $registration_model = new SafaritourRegistrationForm();
-        $registration_model->status = SafariOperatorRequest::STATUS_ACTIVE;
+        $registration_model->status = SafariOperator::STATUS_ACTIVE;
         $registration_model->user_id = Yii::$app->user->identity->id;
 
         $registration_model->action_url = Url::toRoute(['/account/default/registration-operator']);
