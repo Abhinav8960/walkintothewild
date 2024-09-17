@@ -185,5 +185,12 @@ class AuthHandler
     {
         $this->updateUserInfo($user);
         Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+
+        $googleToken = Yii::$app->session->get('yii\\authclient\\clients\\Google_google_token');
+        if ($googleToken instanceof \yii\authclient\OAuthToken) {
+            $googleToken->setParam('expires_in', Yii::$app->params['user.rememberMeDuration']);
+            $client = Yii::$app->authClientCollection->getClient('google');
+            Yii::$app->session->set('yii\\authclient\\clients\\Google_google_token', $client);
+        }
     }
 }
