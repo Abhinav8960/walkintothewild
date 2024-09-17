@@ -260,6 +260,7 @@ class SafariOperatorController extends Controller
         }
         return $this->renderAjax('_delete_form', [
             'model' => $model,
+            'safari_operator_model' => $safari_operator_delete_model,
         ]);
     }
 }
