@@ -146,7 +146,7 @@ class SafariOperatorRequestForm extends model
             }
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
