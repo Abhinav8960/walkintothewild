@@ -42,7 +42,7 @@ class SafariParkSearch extends SafariPark
      */
     public function search($params, $pagination = true)
     {
-        $query = SafariPark::find()->where(['status' => [1, 2, -1]]);
+        $query = SafariPark::find();
 
         // add conditions that should always apply here
 

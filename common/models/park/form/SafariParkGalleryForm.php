@@ -40,7 +40,7 @@ class SafariParkGalleryForm extends model
             $this->status = $this->safari_park_gallery_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

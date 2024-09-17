@@ -2,7 +2,7 @@
 
 namespace backend\modules\park\modules\safari\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\GeneralModel;
 use common\models\park\form\SafariParkForm;
 use common\models\park\ParkAnimal;
@@ -47,7 +47,7 @@ class DefaultController extends Controller
     public function actionCreate()
     {
         $model = new SafariParkForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = SafariPark::STATUS_ACTIVE;
         $model->scenario = 'create';
 
         if ($this->request->isPost) {
@@ -162,7 +162,7 @@ class DefaultController extends Controller
                         $model->uploadFile();
                         $safariaccomodation = $model->accomodation;
                         if ($safariaccomodation) {
-                            SafariParkAccomodation::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            SafariParkAccomodation::updateAll(['status' => SafariParkAccomodation::STATUS_SUSPEND], ['safari_park_id' => $id]);
                             foreach ($safariaccomodation as $safari_accomodation) {
                                 $safariparkAccomodation = new SafariParkAccomodation();
                                 $safariparkAccomodation->safari_park_id = $model->safari_park_model->id;
@@ -173,7 +173,7 @@ class DefaultController extends Controller
 
                         $sessions = $model->safari_session;
                         if ($sessions) {
-                            SafariParkSession::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            SafariParkSession::updateAll(['status' => SafariParkSession::STATUS_SUSPEND], ['safari_park_id' => $id]);
                             foreach ($sessions as $session) {
                                 $safariparkSession = new SafariParkSession();
                                 $safariparkSession->safari_park_id = $model->safari_park_model->id;
@@ -184,7 +184,7 @@ class DefaultController extends Controller
 
                         $months = $model->month;
                         if ($months) {
-                            SafariParkMonth::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            SafariParkMonth::updateAll(['status' => SafariParkMonth::STATUS_SUSPEND], ['safari_park_id' => $id]);
 
                             foreach ($months as $safari_month) {
                                 $safariparkMonth = new SafariParkMonth();
@@ -208,7 +208,7 @@ class DefaultController extends Controller
 
                         $animals = $model->master_animal_id;
                         if ($animals) {
-                            SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            SafariParkAnimal::updateAll(['status' => SafariParkAnimal::STATUS_SUSPEND], ['safari_park_id' => $id]);
                             foreach ($animals as $animal) {
                                 $safariparkAnimal = new SafariParkAnimal();
                                 $safariparkAnimal->safari_park_id = $model->safari_park_model->id;
@@ -220,7 +220,7 @@ class DefaultController extends Controller
 
                         $rare_animals = $model->master_rare_animal_id;
                         if ($rare_animals) {
-                            SafariParkAnimal::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            SafariParkAnimal::updateAll(['status' => SafariParkAnimal::STATUS_SUSPEND], ['safari_park_id' => $id]);
                             foreach ($rare_animals as $rare_animal) {
                                 $parkrareAnimal = new SafariParkAnimal();
                                 $parkrareAnimal->safari_park_id = $model->safari_park_model->id;
@@ -232,7 +232,7 @@ class DefaultController extends Controller
 
                         $bonusexperience = $model->master_bonus_experience_id;
                         if ($bonusexperience) {
-                            SafariParkBonusExperience::updateAll(['status' => 2], ['safari_park_id' => $id]);
+                            SafariParkBonusExperience::updateAll(['status' => SafariParkBonusExperience::STATUS_SUSPEND], ['safari_park_id' => $id]);
                             foreach ($bonusexperience as $bonus) {
                                 $safariparkBonus = new SafariParkBonusExperience();
                                 $safariparkBonus->safari_park_id = $model->safari_park_model->id;
@@ -329,7 +329,7 @@ class DefaultController extends Controller
         if (!empty($safariparkVehicle)) {
             // ParkVehicle::deleteAll(['safari_park_id' => $model->id]);
             foreach ($safariparkVehicle as $safarivehicle) {
-                $safarivehicle->status = StatusInterface::STATUS_DELETE;
+                $safarivehicle->status = SafariParkVehicle::STATUS_DELETE;
                 $safarivehicle->save();
             }
         }
@@ -337,7 +337,7 @@ class DefaultController extends Controller
         $safariparkAnimal = SafariParkAnimal::findAll(['safari_park_id' => $model->id]);
         if (!empty($safariparkAnimal)) {
             foreach ($safariparkAnimal as $animal) {
-                $animal->status = StatusInterface::STATUS_DELETE;
+                $animal->status = SafariParkAnimal::STATUS_DELETE;
                 $animal->save();
             }
         }
@@ -345,13 +345,13 @@ class DefaultController extends Controller
         $safariparkBonus = SafariParkBonusExperience::findAll(['safari_park_id' => $model->id]);
         if (!empty($safariparkBonus)) {
             foreach ($safariparkBonus as $bonus) {
-                $bonus->status = StatusInterface::STATUS_DELETE;
+                $bonus->status = SafariParkBonusExperience::STATUS_DELETE;
                 $bonus->save();
             }
         }
 
         $model->title = $model->id . '_' . $model->title;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = SafariPark::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(['/park/safari/default/index']);
@@ -407,7 +407,7 @@ class DefaultController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SafariPark::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = SafariPark::findOne(['id' => $id, 'status' => [SafariPark::STATUS_ACTIVE, SafariPark::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

@@ -58,7 +58,7 @@ $this->params['buttons'][] = Html::a('Upload Park CSV', ['/park/safari/default/p
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->newstatuslabel;
                         }
                     ],
                     [

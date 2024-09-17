@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <div class="col-md-3">
         <?= $form->field($model, 'status')->dropDownList(
-            GeneralModel::recentstatusoption(),
+            GeneralModel::newrecentstatusoption(),
             [
                 'prompt' => 'Select Status',
             ]

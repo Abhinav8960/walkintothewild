@@ -41,7 +41,7 @@ class SafariParkGallerySearch extends SafariParkGallery
      */
     public function search($params)
     {
-        $query = SafariParkGallery::find()->where(['status' => [1, 2]]);
+        $query = SafariParkGallery::find()->where(['status' => [SafariParkGallery::STATUS_ACTIVE, SafariParkGallery::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

@@ -39,7 +39,7 @@ class SafariParkFloraFaunaForm extends model
             $this->status = $this->safari_park_florafauna_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 
