@@ -59,8 +59,8 @@ class AppBootstrap implements BootstrapInterface
                 ->queryScalar();
 
             if ($currentToken !== $sessionRecord) {
-                Yii::$app->user->logout();
-                Yii::$app->session->setFlash('Your Session is Expired! Please Login to Continue');
+                // Yii::$app->user->logout(); // stop logout for some time
+                // Yii::$app->session->setFlash('Your Session is Expired! Please Login to Continue');
             }
         }
     }
