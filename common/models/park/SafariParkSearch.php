@@ -18,7 +18,7 @@ class SafariParkSearch extends SafariPark
     {
         return [
             [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
-            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'show_in_filter'], 'integer'],
             [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
             [['latitude', 'longitude'], 'string', 'max' => 50],
         ];
@@ -69,6 +69,14 @@ class SafariParkSearch extends SafariPark
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
+
+        if ($this->show_in_filter) {
+            if ($this->show_in_filter == 1) {
+                $query->andWhere(['show_in_filter' => 1]);
+            } else if ($this->show_in_filter == 2) {
+                $query->andWhere("show_in_filter IS NULL OR show_in_filter NOT IN (1)");
+            }
+        }
         $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;

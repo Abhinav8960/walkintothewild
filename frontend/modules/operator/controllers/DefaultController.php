@@ -83,6 +83,7 @@ class DefaultController extends FrontendBaseController
         }
 
         $operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->limit(6)->all();
+        $count_operator_parks = SafariOperatorPark::find()->where(['safari_operator_id' => $operator->id, 'status' => 1])->count();
         $model = new OperatorQuoteForm();
 
         if (Yii::$app->user->identity) {
@@ -107,6 +108,7 @@ class DefaultController extends FrontendBaseController
                 'operator' => $operator,
                 'model' => $model,
                 'operator_parks' => $operator_parks,
+                'count_operator_parks' => $count_operator_parks,
             ]
         );
     }
