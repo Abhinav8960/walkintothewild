@@ -26,6 +26,7 @@ use frontend\models\SafariOperatorRatingReportForm;
 use frontend\models\SafariOperatorRatingCommentForm;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\form\SafariOperatorReportProfileForm;
+use common\models\operator\SafariOperatorReportProfile;
 use common\models\User;
 
 /**
@@ -650,7 +651,7 @@ class DefaultController extends FrontendBaseController
         $model = new SafariOperatorReportProfileForm();
         $model->user_id = Yii::$app->user->identity->id;
         $model->safari_operator_id = $operator->id;
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = SafariOperatorReportProfile::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
