@@ -4,6 +4,8 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
+use common\models\MailLog;
+use common\models\GeneralModel;
 use common\models\ContactForm as Contact;
 
 /**
@@ -70,6 +72,16 @@ class ContactForm extends Model
         if (Yii::$app->user->identity) {
             $contact->user_id = Yii::$app->user->identity->id;
         }
-        $contact->save(false);
+        if ($contact->save(false)) {
+            // Save Mail Log and Sent to Admin
+            $to_mail = Yii::$app->params['adminEmail'];
+            $subject = 'New Contact Form Submission | ' . $contact->name . ' - ' . date('Y-m-d H:i:s');
+            $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_CONTACT_FORM_SUBMITTED;
+            $req = ['contact' => $contact->attributes];
+            $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+            if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                GeneralModel::sendmailfromlog($maillog_data['log_id']);
+            }
+        }
     }
 }
