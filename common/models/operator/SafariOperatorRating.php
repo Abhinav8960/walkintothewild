@@ -30,7 +30,7 @@ use common\models\operator\SafariOperatorRatingReport;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class SafariOperatorRating extends \yii\db\ActiveRecord
+class SafariOperatorRating extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}

@@ -219,4 +219,7 @@ SET status = 0
 WHERE status = 2;
 
 
+
+ALTER TABLE `safari_operator` ADD `delete_reason_id` INT NULL AFTER `status`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
+
 	

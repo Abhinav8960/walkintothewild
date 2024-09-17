@@ -27,7 +27,7 @@ use common\models\park\SafariPark;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class SafariOperatorRatingReport extends \yii\db\ActiveRecord
+class SafariOperatorRatingReport extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}

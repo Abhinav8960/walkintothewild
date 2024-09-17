@@ -7,8 +7,8 @@ use Yii;
 use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\interfaces\StatusInterface;
 use common\models\MailLog;
+use common\models\operator\form\SafariOperatorDeleteForm;
 use common\models\operator\form\SafariOperatorForm;
 use common\models\operator\OperatorQuoteSearch;
 use common\models\operator\SafariOperator;
@@ -32,7 +32,7 @@ class SafariOperatorController extends Controller
     public function actionIndex()
     {
         $searchModel = new SafariOperatorSearch();
-        $searchModel->report_days = 'today';
+        // $searchModel->report_days = 'today';
         $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -146,7 +146,7 @@ class SafariOperatorController extends Controller
     public function actionSuspend($id)
     {
         $model = $this->findModel($id);
-        $model->status = 2;
+        $model->status = SafariOperator::STATUS_SUSPEND;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
     }
@@ -154,7 +154,7 @@ class SafariOperatorController extends Controller
     public function actionActive($id)
     {
         $model = $this->findModel($id);
-        $model->status = 1;
+        $model->status = SafariOperator::STATUS_ACTIVE;
         $model->save(false);
         return $this->redirect(\Yii::$app->request->referrer);
     }
@@ -162,7 +162,7 @@ class SafariOperatorController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SafariOperator::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = SafariOperator::findOne(['id' => $id, 'status' => [SafariOperator::STATUS_ACTIVE, SafariOperator::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
@@ -173,7 +173,7 @@ class SafariOperatorController extends Controller
     {
         $safarioperator_model = $this->findModel($id);
         $model = new SafariOperatorForm($safarioperator_model);
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = SafariOperator::STATUS_ACTIVE;
         $model->action_url = '/operator/safari-operator/update?id=' . $id . '';
         $model->action_validate_url = '/operator/safari-operator/validate?id=' . $id . '';
 
@@ -188,7 +188,7 @@ class SafariOperatorController extends Controller
                         $model->uploadFile();
                         $parks = $model->park_id;
                         if ($parks) {
-                            SafariOperatorPark::updateAll(['status' => 2], ['safari_operator_id' => $model->safarioperator_model->id]);
+                            SafariOperatorPark::updateAll(['status' => SafariOperatorPark::STATUS_SUSPEND], ['safari_operator_id' => $model->safarioperator_model->id]);
                             foreach ($parks as $park) {
                                 $safarioperatorpark = new SafariOperatorPark();
                                 $safarioperatorpark->safari_operator_id = $model->safarioperator_model->id;
@@ -198,7 +198,7 @@ class SafariOperatorController extends Controller
                         }
                         $activities = $model->offers_other_wildlifeactivities;
                         if ($activities) {
-                            SafariOperatorActivities::updateAll(['status' => 2], ['safari_operator_id' => $model->safarioperator_model->id]);
+                            SafariOperatorActivities::updateAll(['status' => SafariOperatorActivities::STATUS_SUSPEND], ['safari_operator_id' => $model->safarioperator_model->id]);
                             foreach ($activities as $activity) {
                                 $safarioperatoractivity = new SafariOperatorActivities();
                                 $safarioperatoractivity->safari_operator_id = $model->safarioperator_model->id;
@@ -233,11 +233,33 @@ class SafariOperatorController extends Controller
     {
         $formmodel = $this->findModel($id);
         $model = new SafariOperatorForm($formmodel);
-        
+
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
         }
+    }
+
+    public function actionDelete($id)
+    {
+        $safari_operator_delete_model = $this->findModel($id);
+        $model = new SafariOperatorDeleteForm($safari_operator_delete_model);
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    $model->initializeForm();
+                    if ($model->safari_operator_delete_model->save(false)) {
+                        \Yii::$app->session->setFlash('success', 'Successfully Deleted');
+                        return $this->redirect(['index']);
+                    }
+                }
+            }
+        } else {
+            $model->safari_operator_delete_model->loadDefaultValues();
+        }
+        return $this->renderAjax('_delete_form', [
+            'model' => $model,
+        ]);
     }
 }

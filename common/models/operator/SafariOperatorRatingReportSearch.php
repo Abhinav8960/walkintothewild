@@ -42,7 +42,7 @@ class SafariOperatorRatingReportSearch extends SafariOperatorRatingReport
      */
     public function search($params)
     {
-        $query = SafariOperatorRatingReport::find()->where(['safari_operator_rating_report.status' => [1, 2]]);
+        $query = SafariOperatorRatingReport::find()->where(['safari_operator_rating_report.status' => [SafariOperatorRatingReport::STATUS_ACTIVE, SafariOperatorRatingReport::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
