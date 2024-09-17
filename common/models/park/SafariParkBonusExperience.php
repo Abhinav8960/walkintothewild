@@ -16,7 +16,7 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class SafariParkBonusExperience extends \yii\db\ActiveRecord
+class SafariParkBonusExperience extends \yii\db\ActiveRecord  implements \common\interfaces\NewStatusInterface
 {
     /**
      * {@inheritdoc}

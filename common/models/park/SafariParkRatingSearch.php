@@ -47,7 +47,7 @@ class SafariParkRatingSearch extends SafariParkRating
      */
     public function search($params)
     {
-        $query = SafariParkRating::find()->where(['safari_park_rating.status' => [1, 2]]);
+        $query = SafariParkRating::find()->where(['safari_park_rating.status' => [SafariParkRating::STATUS_ACTIVE, SafariParkRating::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

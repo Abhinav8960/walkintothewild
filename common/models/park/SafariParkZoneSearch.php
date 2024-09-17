@@ -41,7 +41,7 @@ class SafariParkZoneSearch extends SafariParkZone
      */
     public function search($params)
     {
-        $query = SafariParkZone::find()->where(['status' => [1, 2]]);
+        $query = SafariParkZone::find()->where(['status' => [SafariParkZone::STATUS_ACTIVE, SafariParkZone::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

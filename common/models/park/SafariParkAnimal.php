@@ -15,7 +15,7 @@ use Yii;
  * @property string|null $animal_name
  * @property int $status
  */
-class SafariParkAnimal extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class SafariParkAnimal extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

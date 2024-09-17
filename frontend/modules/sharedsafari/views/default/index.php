@@ -72,7 +72,7 @@ $recentposts = ArticleSearch::recentpost();
                         <div class="right_button ">
                             <?php if (Yii::$app->user->identity) { ?>
                                 <?php
-                                if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => StatusInterface::STATUS_ACTIVE])->limit(1)->one()) {
+                                if ($operator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null, 'status' => SafariOperator::STATUS_ACTIVE])->limit(1)->one()) {
                                     if (Yii::$app->user->identity->is_safari_operator == 1 && $operator) {
                                 ?>
                                         <button class="btn_newsafari ChoiceOrganizeSafariBtn newbg mt-3" value="<?= \yii\helpers\Url::toRoute(['/sharedsafari/default/organize-safari']) ?>">+ Organize a Shared Safari</button>

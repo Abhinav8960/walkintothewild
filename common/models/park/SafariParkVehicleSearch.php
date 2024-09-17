@@ -39,7 +39,7 @@ class SafariParkVehicleSearch extends SafariParkVehicle
      */
     public function search($params)
     {
-        $query = SafariParkVehicle::find()->where(['status' => [1, 2]]);
+        $query = SafariParkVehicle::find()->where(['status' => [SafariParkVehicle::STATUS_ACTIVE, SafariParkVehicle::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

@@ -40,7 +40,7 @@ class SafariParkAnimalSearch extends SafariParkAnimal
      */
     public function search($params)
     {
-        $query = SafariParkAnimal::find()->where(['status' => [1, 2]]);
+        $query = SafariParkAnimal::find()->where(['status' => [SafariParkAnimal::STATUS_ACTIVE, SafariParkAnimal::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([

@@ -18,7 +18,7 @@ use Yii;
  * @property int $updated_at
  * @property int $updated_by
  */
-class SafariParkMonth extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class SafariParkMonth extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

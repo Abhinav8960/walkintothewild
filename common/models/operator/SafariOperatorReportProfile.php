@@ -18,7 +18,7 @@ use Yii;
  * @property int|null $updated_by
  * @property int|null $status
  */
-class SafariOperatorReportProfile extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class SafariOperatorReportProfile extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

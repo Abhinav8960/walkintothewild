@@ -1,6 +1,6 @@
 <?php
 
-use common\interfaces\StatusInterface;
+use common\models\operator\SafariOperator;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -14,7 +14,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
     <div class="row margin_bottomfooter">
         <div class="col-md-12 d-flex justify-content-between mb-4 align-items-center flex-wrap">
             <h6 class="fs-3 fw-bold mb-0"><?= $this->title ?></h6>
-            <?php if ($safari_operator->status == StatusInterface::STATUS_ACTIVE) { ?>
+            <?php if ($safari_operator->status == SafariOperator::STATUS_ACTIVE) { ?>
                 <div class="right_button float-md-end mt-xl-0 mt-3">
                     <a class="btn_newsafari organizeBtn newbg text-center rounded-2  " href="<?= Url::toRoute(['/manage/package/create']) ?>">+ Create New Package </a>
                 </div>
@@ -28,7 +28,7 @@ $this->title = $safari_operator->businessname . ' | Manage Operator Business';
             <div class="card account-settingside ">
                 <div class="card-body p-4">
                     <div class="row">
-                        <?php if ($safari_operator->status != StatusInterface::STATUS_ACTIVE) {
+                        <?php if ($safari_operator->status != SafariOperator::STATUS_ACTIVE) {
                             echo $this->context->module->account_deactivate_message;
                         } ?>
                         <?php

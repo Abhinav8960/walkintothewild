@@ -555,7 +555,7 @@ class DefaultController extends FrontendBaseController
 
     public function actionInterestview($share_safari_id)
     {
-        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => StatusInterface::STATUS_ACTIVE])->all();
+        $interest_model = ShareSafariIntrested::find()->where(['share_safari_id' => $share_safari_id, 'status' => ShareSafariIntrested::STATUS_ACTIVE])->all();
         if (Yii::$app->request->isAjax) {
             return $this->renderAjax('interest_view', [
                 'interest_model' => $interest_model

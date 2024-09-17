@@ -47,7 +47,7 @@ class SafariParkZoneForm extends model
             $this->status = $this->safari_park_zone_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

@@ -2,7 +2,7 @@
 
 namespace backend\modules\park\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\operator\OperatorQuote;
 use common\models\operator\OperatorQuoteSearch;
 use Yii;
@@ -22,7 +22,7 @@ class OperatorQuoteController extends Controller
     public function actionIndex()
     {
         $searchModel = new OperatorQuoteSearch();
-        $searchModel->report_days = 'today';
+        // $searchModel->report_days = 'today';
         $searchModel->status = 1;
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -46,7 +46,7 @@ class OperatorQuoteController extends Controller
     {
         $model = $this->findModel($id);
         $model->full_name = $model->id . '_' . $model->full_name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = OperatorQuote::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -55,7 +55,7 @@ class OperatorQuoteController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = OperatorQuote::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = OperatorQuote::findOne(['id' => $id, 'status' => [OperatorQuote::STATUS_ACTIVE, OperatorQuote::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

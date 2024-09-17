@@ -41,7 +41,7 @@ class SafariParkFloraFaunaSearch extends SafariParkFloraFauna
      */
     public function search($params)
     {
-        $query = SafariParkFloraFauna::find()->where(['status' => [1, 2]]);
+        $query = SafariParkFloraFauna::find()->where(['status' => [SafariParkFloraFauna::STATUS_ACTIVE, SafariParkFloraFauna::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
