@@ -92,46 +92,7 @@ ALTER TABLE `package` ADD `delete_reason_id` INT NULL AFTER `popular_package`, A
 
 
 
-UPDATE safari_park
-SET status = 0
-WHERE status = 2;
 
-
-UPDATE safari_park_accomodation
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_parks_animal
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_flora_fauna
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_gallery
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_month
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_rating
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_session
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_parks_vehicle
-SET status = 0
-WHERE status = 2;
-
-UPDATE safari_park_bonus_experience
-SET status = 0
-WHERE status = 2;
 
 
 -- 13-sep-2024
@@ -249,3 +210,54 @@ WHERE status = 2;
 UPDATE 	safari_operator_request_park
 SET status = 0
 WHERE status = 2;
+
+
+UPDATE safari_park
+SET status = 0
+WHERE status = 2;
+
+
+UPDATE safari_park_accomodation
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_parks_animal
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_flora_fauna
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_gallery
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_month
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_rating
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_session
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_parks_vehicle
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_park_bonus_experience
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_operator_report_profile
+SET status = 0
+WHERE status = 2;
+
+UPDATE safari_suggestions
+SET status = 0
+WHERE status = 2;
+

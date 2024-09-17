@@ -58,7 +58,7 @@ class OperatorQuoteSearch extends OperatorQuote
      */
     public function search($params)
     {
-        $query = OperatorQuote::find()->where(['status' => [1, 2]]);
+        $query = OperatorQuote::find()->where(['status' => [OperatorQuote::STATUS_ACTIVE,OperatorQuote::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

@@ -38,7 +38,7 @@ class SafariSuggestionController extends Controller
     {
         $model = $this->findModel($id);
         $model->full_name = $model->id . '_' . $model->full_name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = SafariSuggestions::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -47,7 +47,7 @@ class SafariSuggestionController extends Controller
 
     protected function findModel($id)
     {
-        if (($model = SafariSuggestions::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = SafariSuggestions::findOne(['id' => $id, 'status' => [SafariSuggestions::STATUS_ACTIVE, SafariSuggestions::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

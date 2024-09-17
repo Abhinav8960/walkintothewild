@@ -41,7 +41,7 @@ class SafariSuggestionsSearch extends SafariSuggestions
      */
     public function search($params)
     {
-        $query = SafariSuggestions::find()->where(['status' => [1, 2]]);
+        $query = SafariSuggestions::find()->where(['status' => [SafariSuggestions::STATUS_ACTIVE,SafariSuggestions::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
