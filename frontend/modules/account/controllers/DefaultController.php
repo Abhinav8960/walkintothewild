@@ -159,7 +159,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
 
                                 /*Operator Register*/
                                 $to_mail = Yii::$app->params['adminEmail'];
-                                $subject = 'New Operator Register | ' . $safari_operator->business_name . ' - ' . date('Y-m-d H:i:s');
+                                $subject = 'New Operator Register | ' . substr($safari_operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_OPERATOR_CREATED;
                                 $operator_url = Yii::$app->urlManager->createAbsoluteUrl(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
                                 $req = ['safari_operator' => $safari_operator->attributes, 'operator_url' => $operator_url];

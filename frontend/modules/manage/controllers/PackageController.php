@@ -116,7 +116,7 @@ class PackageController extends FrontendBaseController
 
                         // Send Email to Admin
                         $to_mail = Yii::$app->params['adminEmail'];
-                        $subject = 'New Package Created | ' . $model->package_model->package_name . ' - ' . date('Y-m-d H:i:s');
+                        $subject = 'New Package Created | ' . substr($model->package_model->package_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_PACKAGE;
                         $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_model->package_slug, 'operator_slug' => $safari_operator->slug]);
 
