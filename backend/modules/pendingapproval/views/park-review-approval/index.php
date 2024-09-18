@@ -65,25 +65,27 @@ $this->params['title'] = $this->title;
                         'contentOptions' => ['style' => 'width: 7%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            return $model->newstatuslabel;
                         }
                     ],
                     [
                         'header' => 'Action',
                         'value' => function ($model) {
-                            if ($model->status == 2) {
+                            if ($model->status == 0) {
                                 return Html::a('<i class="fa fa-toggle-on"></i>', ['approved', 'id' => $model->id], [
                                     'class' => 'btn btn-xs btn-success',
                                     'data-method' => 'post',
                                     'data-confirm' => 'Are you sure to approved this review?',
-                                    'title' => 'Approved Review', 'data-bs-toggle' => "tooltip"
+                                    'title' => 'Approved Review',
+                                    'data-bs-toggle' => "tooltip"
                                 ]);
                             } else {
                                 return Html::a('<i class="fa fa-toggle-off"></i>', ['approved', 'id' => $model->id], [
                                     'class' => 'btn btn-xs btn-danger',
                                     'data-method' => 'post',
                                     'data-confirm' => 'Are you sure to disapproved this review?',
-                                    'title' => 'Block User', 'data-bs-toggle' => "tooltip"
+                                    'title' => 'Block User',
+                                    'data-bs-toggle' => "tooltip"
                                 ]);
                             }
                         },

@@ -207,7 +207,7 @@ class DefaultController extends FrontendBaseController
                         $to_mail = Yii::$app->params['adminEmail'];
                         $subject = 'Flag Raised | Article : ' . substr($article->title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
-                        $req = ['comments' => $comments->attributes, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
+                        $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
                         $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
                         if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                             GeneralModel::sendmailfromlog($maillog_data['log_id']);

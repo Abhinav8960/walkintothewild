@@ -501,6 +501,15 @@ class DefaultController extends FrontendBaseController
                     if ($model->flag_model->save(false)) {
                         $rating->flaged = 1;
                         $rating->save(false);
+
+                        $to_mail = Yii::$app->params['adminEmail'];
+                        $subject = 'Flag Raised in Operator Review : ' . substr($operator->business_name, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                        $req = ['comment' => $rating->review, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
                         Yii::$app->session->setFlash('success', 'Review reported successfully!');
                         return $this->redirect([
                             '/operator/default/reviewlist',

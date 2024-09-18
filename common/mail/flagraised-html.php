@@ -12,7 +12,7 @@ use yii\helpers\Html;
         <tbody>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Comment</th>
-                <td style="padding: 10px; border: 1px solid #ddd;"><?= $comments && isset($comments['comment']) ? $comments['comment'] : '' ?></td>
+                <td style="padding: 10px; border: 1px solid #ddd;"><?= $comment && isset($comment) ? $comment : '' ?></td>
             </tr>
             <tr>
                 <th style="background-color: #f0f0f0; padding: 10px; border: 1px solid #ddd; text-align: left;">Report Detail</th>
