@@ -2,6 +2,8 @@
 
 namespace frontend\modules\account\controllers;
 
+use common\models\GeneralModel;
+use common\models\MailLog;
 use Yii;
 use yii\helpers\Url;
 use common\models\User;
@@ -154,6 +156,17 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
                                 $user = User::find()->where(['id' => $safari_operator->user_id])->limit(1)->one();
                                 $user->account_type = $registration_model->account_type;
                                 $user->save(false);
+
+                                /*Operator Register*/
+                                $to_mail = Yii::$app->params['adminEmail'];
+                                $subject = 'New Operator Register | ' . $safari_operator->business_name . ' - ' . date('Y-m-d H:i:s');
+                                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_OPERATOR_CREATED;
+                                $operator_url = Yii::$app->urlManager->createAbsoluteUrl(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
+                                $req = ['safari_operator' => $safari_operator->attributes, 'operator_url' => $operator_url];
+                                $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                                if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                                    GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                                }
 
                                 return $this->redirect(['/operator/default/sharedsafari', 'slug' => $safari_operator->slug]);
                             }

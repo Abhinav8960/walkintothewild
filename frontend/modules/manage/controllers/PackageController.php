@@ -2,34 +2,36 @@
 
 namespace frontend\modules\manage\controllers;
 
-use common\interfaces\NewStatusInterface;
 use Yii;
-use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
-use common\models\master\faq\MasterFaq;
-use common\models\package\form\DayItineraryForm;
-use common\models\package\form\PackageCommentActionForm;
-use common\models\package\form\PackageFaqForm;
-use common\models\package\form\PackageFaqSelectForm;
-use common\models\package\form\PackageForm;
-use common\models\package\form\PackageGalleryForm;
+use common\models\MailLog;
+use common\models\GeneralModel;
+use yii\data\ActiveDataProvider;
 use common\models\package\Package;
-use common\models\package\PackageComment;
-use common\models\package\PackageCommentReport;
+use yii\web\NotFoundHttpException;
 use common\models\package\PackageDay;
-use common\models\package\PackageEnquiry;
 use common\models\package\PackageFaq;
-use common\models\package\PackageFaqSearch;
+use common\models\master\faq\MasterFaq;
+use common\models\package\PackageSearch;
+use common\interfaces\NewStatusInterface;
+use common\models\package\PackageComment;
+use common\models\package\PackageEnquiry;
 use common\models\package\PackageFeature;
 use common\models\package\PackageGallery;
-use common\models\package\PackageGallerySearch;
 use common\models\package\PackageIncluded;
-use common\models\package\PackageQuoteSearch;
+use common\models\package\form\PackageForm;
+use common\models\package\PackageFaqSearch;
 use common\models\package\PackageSafariPark;
-use common\models\package\PackageSearch;
-use common\models\sharesafari\ShareSafariComment;
+use common\models\package\PackageQuoteSearch;
+use common\models\package\form\PackageFaqForm;
+use common\models\package\PackageCommentReport;
+use common\models\package\PackageGallerySearch;
+use common\models\package\form\DayItineraryForm;
 use frontend\controllers\FrontendBaseController;
-use yii\data\ActiveDataProvider;
+use common\models\sharesafari\ShareSafariComment;
+use common\models\package\form\PackageGalleryForm;
+use common\models\package\form\PackageFaqSelectForm;
+use common\models\package\form\PackageCommentActionForm;
 
 /**
  * Default controller for the `manage` module
@@ -110,6 +112,18 @@ class PackageController extends FrontendBaseController
                                 $packagesafaripark->park_id = $park;
                                 $packagesafaripark->save(false);
                             }
+                        }
+
+                        // Send Email to Admin
+                        $to_mail = Yii::$app->params['adminEmail'];
+                        $subject = 'New Package Created | ' . $model->package_model->package_name . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_PACKAGE;
+                        $package_url = Yii::$app->urlManager->createAbsoluteUrl(['/package/default/view', 'slug' => $model->package_model->package_slug, 'operator_slug' => $safari_operator->slug]);
+
+                        $req = ['package' => $model->package_model->attributes, 'package_url' => $package_url, 'operator_name' => $safari_operator->business_name];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
                         }
                         \Yii::$app->session->setFlash('success', 'Package create successfully');
                         return $this->redirect(['index']);

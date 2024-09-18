@@ -27,7 +27,7 @@ $this->params['title'] = $this->title;
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <?= Html::a('Cancel', ['view'], ['class' => 'btn btn-danger text-white']) ?>
+                    <?= Html::a('Cancel', ['view', 'id' => $safari_operator_model->id], ['class' => 'btn btn-danger text-white']) ?>
                     <?= Html::submitButton('Save', ['class' => 'btn btn-orange text-white']) ?>
                 </div>
             </div>
