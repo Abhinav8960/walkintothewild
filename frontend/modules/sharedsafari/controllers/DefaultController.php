@@ -116,7 +116,7 @@ class DefaultController extends FrontendBaseController
                             $user = $model->shared_safari_model->user;
                             $username = $user->name;
                             $to_mail = Yii::$app->params['adminEmail'];
-                            $subject = 'New Shared Safari | ' . $model->shared_safari_model->share_safari_title . ' - ' . date('Y-m-d H:i:s');
+                            $subject = 'New Shared Safari | ' . substr($model->shared_safari_model->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_SAFARI_CREATEDBY_USER;
                             $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_model->slug, 'organized_slug' => $model->shared_safari_model->organizedslug ? $model->shared_safari_model->organizedslug : '']);
                             $req = ['shared_safari' => $model->shared_safari_model->attributes, 'shared_safari_url' => $shared_safari_url, 'username' => $username];
@@ -402,6 +402,16 @@ class DefaultController extends FrontendBaseController
                     if ($model->flag_model->save(false)) {
                         $comments->flaged = 1;
                         $comments->save(false);
+
+                        /*Sent Email*/
+                        $to_mail = Yii::$app->params['adminEmail'];
+                        $subject = 'Flag Raised | Shared Safari : ' . substr($share_safari->share_safari_title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                        $req = ['comments' => $comments->attributes, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
                         Yii::$app->session->setFlash('success', 'Review reported successfully!');
                         return $this->redirect([
                             '/sharedsafari/default/view',
