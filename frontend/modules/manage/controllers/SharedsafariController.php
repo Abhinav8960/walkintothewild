@@ -2,7 +2,8 @@
 
 namespace frontend\modules\manage\controllers;
 
-
+use common\models\GeneralModel;
+use common\models\MailLog;
 use common\models\master\faq\MasterFaq;
 use common\models\sharesafari\form\DayItineraryForm;
 use common\models\sharesafari\form\ShareSafariCommentActionForm;
@@ -102,6 +103,18 @@ class SharedsafariController extends FrontendBaseController
                                 $park_model->save(false);
                             }
                         }
+
+
+                        $to_mail = Yii::$app->params['adminEmail'];
+                        $subject = 'New Fixed Departure | ' . $model->shared_safari_departure_model->share_safari_title . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_OPERATOR_CREATED_NEW_FIXEDDEPARTURE;
+                        $shared_safari_url = Yii::$app->urlManager->createAbsoluteUrl(['/sharedsafari/default/view', 'slug' => $model->shared_safari_departure_model->slug, 'organized_slug' => $model->shared_safari_departure_model->organizedslug ? $model->shared_safari_departure_model->organizedslug : '']);
+                        $req = ['shared_safari' => $model->shared_safari_departure_model->attributes, 'operator_name' => $safari_operator->business_name, 'shared_safari_url' => $shared_safari_url];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
+
                         \Yii::$app->session->setFlash('success', 'Fixed departure created successfully');
                         return $this->redirect(['update-fixed-departure', 'slug' => $model->shared_safari_departure_model->slug]);
                     }
