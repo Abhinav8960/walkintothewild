@@ -96,7 +96,7 @@ $this->params['title'] = $this->title;
                 <?php AuthChoice::end(); ?>
               </div>
               <div class="contenss pt-3">
-                <p class="text-center">By login an account, I accept the <b>Walk Into The Wild</b> <a href="<?= Yii::$app->params['frontend_url'] ?>/terms-of-use" target="_blank">Terms of Use</a> and <a href="<?= Yii::$app->params['frontend_url'] ?>/privacy-policy" target="_blank">Privacy Policy</a>.</p>
+                <p class="text-center">By logging in, you agree to our <br> <a href="<?= Yii::$app->params['frontend_url'] ?>/terms-of-use" target="_blank">Terms of Use</a> and <a href="<?= Yii::$app->params['frontend_url'] ?>/privacy-policy" target="_blank">Privacy Policy</a>.</p>
               </div>
             </div>
             <!-- 
