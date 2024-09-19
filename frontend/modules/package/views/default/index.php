@@ -65,15 +65,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
   <?php } ?>
   <div class="container-fluid ">
 
-        <div class="advertisment pt-md-2 pt-5" >
+        <div class="advertisment pt-md-2 pt-5" style ="display: none" >
             <div class="google-ad-box  mb-5" style="border:none">
-                <ins class="adsbygoogle"
-                    style="display:inline-block;width:728px;height:90px"
-                    data-ad-client="ca-pub-6116324330184807"
-                    data-ad-slot="1321270892"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+                
             </div>
         </div>
     <?php

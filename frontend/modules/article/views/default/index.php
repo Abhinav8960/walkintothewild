@@ -48,15 +48,9 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
 
 <section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-fluid">
-        <div class="advertisment pt-md-2 pt-5" >
+        <div class="advertisment pt-md-2 pt-5" style ="display: none" >
             <div class="google-ad-box  mb-5" style="border:none">
-                <ins class="adsbygoogle"
-                    style="display:inline-block;width:728px;height:90px"
-                    data-ad-client="ca-pub-6116324330184807"
-                    data-ad-slot="1321270892"></ins>
-                <script>
-                    (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+                
             </div>
         </div>
         <div class="row mb-4  justify-content-center">
