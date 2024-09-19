@@ -158,7 +158,7 @@ class MasterRareAnimalForm extends model
      */
     public function assignedpark()
     {
-        SafariParkAnimal::updateAll(['status' => 2], ['master_animal_id' => $this->rare_animal_model->id]);
+        SafariParkAnimal::updateAll(['status' => SafariParkAnimal::STATUS_SUSPEND], ['master_animal_id' => $this->rare_animal_model->id]);
         $assigned_park = $this->assigned_park;
         if ($assigned_park) {
             foreach ($assigned_park as $park_id) {

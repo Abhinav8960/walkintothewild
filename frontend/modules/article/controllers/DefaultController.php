@@ -15,6 +15,8 @@ use common\models\cms\article\ArticleComment;
 use common\models\cms\article\MasterArticleTag;
 use frontend\controllers\FrontendBaseController;
 use common\models\cms\article\MasterArticleTopic;
+use common\models\GeneralModel;
+use common\models\MailLog;
 use frontend\models\ArticleCommentReportForm;
 use frontend\models\ArticleReplyForm;
 
@@ -200,6 +202,18 @@ class DefaultController extends FrontendBaseController
                     if ($model->flag_model->save(false)) {
                         $comments->flaged = 1;
                         $comments->save(false);
+
+                        //Flag mail
+                        $to_mail = Yii::$app->params['adminEmail'];
+                        $subject = 'Flag Raised | Article : ' . substr($article->title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                        $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
+
+
                         Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
                         return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
                     }

@@ -25,6 +25,8 @@ use frontend\models\form\PackageEnquiryForm;
 use frontend\models\PackageCommentReportForm;
 use common\Helper\FrontendNotificationHelper;
 use common\models\cms\frontendbanner\FrontendBanner;
+use common\models\GeneralModel;
+use common\models\MailLog;
 use common\models\package\PackageEnquiry;
 use frontend\controllers\FrontendBaseController;
 
@@ -329,6 +331,15 @@ class DefaultController extends FrontendBaseController
                     if ($model->flag_model->save(false)) {
                         $comments->flaged = 1;
                         $comments->save(false);
+
+                        $to_mail = Yii::$app->params['adminEmail'];
+                        $subject = 'Flag Raised | Package : ' . substr($package->package_name, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
+                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
+                        $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
+                        $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                        if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
+                            GeneralModel::sendmailfromlog($maillog_data['log_id']);
+                        }
                         Yii::$app->session->setFlash('success', 'Review reported successfully!');
                         return $this->redirect(['/package/default/view',  'slug' => $slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
                     }
