@@ -59,7 +59,7 @@ class SendMailController extends Controller
                         $mailer =  \Yii::$app->mailer;
                         $message = $mailer->compose($template->path, json_decode($log->params, true))
                             // ->setFrom($log->mail_from)
-                            ->setFrom('no-reply@walkintothewild.in')
+                            ->setFrom(['no-reply@walkintothewild.in' => 'Walk Into The Wild'])
                             ->setTo($log->torecipient->recipient)
                             ->setBcc($bcc)
                             ->setCc($cc)
