@@ -30,7 +30,7 @@ class AppBootstrap implements BootstrapInterface
                 \Yii::$app->user->logout();
                 Yii::$app->session->setFlash('Your Account is deactivated! Please Contact Support');
             }
-            $sessionId = Yii::$app->session->getId();
+            $sessionId = $session->get('user_session_id');
             $userId = Yii::$app->user->id;
             Yii::$app->db->createCommand()
                 ->update('user_session', [
@@ -55,7 +55,7 @@ class AppBootstrap implements BootstrapInterface
 
             $currentToken = $session->get('session_token');
             $sessionRecord = Yii::$app->db->createCommand('SELECT token FROM user_session WHERE app_name="' . Yii::$app->params['app_name'] . '" and  id = :id')
-                ->bindValue(':id', $session->getId())
+                ->bindValue(':id', $sessionId)
                 ->queryScalar();
 
             if ($currentToken !== $sessionRecord) {

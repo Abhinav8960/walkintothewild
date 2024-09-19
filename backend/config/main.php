@@ -94,7 +94,10 @@ return [
             // this is the name of the session cookie used for login on the backend
             'class' => 'yii\web\DbSession',
             'name' => 'advanced-backend',
-            'timeout' => 3600 * 24 * 30
+            'timeout' => 3600 * 24 * 30,
+            'cookieParams' => [
+                'lifetime' => 3600 * 24 * 30, // Cookie lifetime, e.g., 30 days
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
