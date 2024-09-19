@@ -26,8 +26,8 @@ use yii\helpers\Url;
 
     .chat-cardlist {
 
-        max-height: 80vh;
-        height: 80vh;
+        max-height: 73vh;
+        height: 73vh;
         width: 100%;
         overflow-y: auto;
     }
