@@ -29,7 +29,7 @@ class MasterCountryForm extends model
             $this->status = $this->country_model->status;
         }
 
-        $this->status_option = GeneralModel::statusoption();
+        $this->status_option = GeneralModel::newstatusoption();
     }
 
 

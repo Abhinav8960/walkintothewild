@@ -40,7 +40,7 @@ class MasterCountrySearch extends MasterCountry
      */
     public function search($params)
     {
-        $query = MasterCountry::find()->where(['status' => [1, 2]]);
+        $query = MasterCountry::find()->where(['status' => [MasterCountry::STATUS_ACTIVE, MasterCountry::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
