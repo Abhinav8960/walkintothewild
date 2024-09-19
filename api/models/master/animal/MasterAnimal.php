@@ -1,10 +1,10 @@
 <?php
 
-namespace common\models\master\animal;
+namespace api\models\master\animal;
 
-use common\models\meta\MetaAnimalType;
-use common\traits\CommanRelationship;
-use common\models\park\SafariParkAnimal;
+use api\models\meta\MetaAnimalType;
+use api\traits\CommanRelationship;
+use api\models\park\SafariParkAnimal;
 use Yii;
 
 /**
@@ -21,98 +21,31 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterAnimal extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterAnimal extends \common\models\master\animal\MasterAnimal
 {
-    use CommanRelationship;
-
-    const USUAL_ANIMAL_TYPE = 1;
-    const RARE_ANIMAL_TYPE = 2;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_animal';
-    }
+        $fields = parent::fields();
+        $fields[] = 'imagepath';
+        $fields[] = 'bannerimagepath';
+        $fields[] = 'rareparkanimals';
 
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-            'slug' => [
-                'class' => 'skeeks\yii2\slug\SlugBehavior',
-                'slugAttribute' => 'slug', //The attribute to be generated
-                'attribute' => 'name', //The attribute from which will be generated
-                'maxLength' => 255,
-                'ensureUnique' => true,
-                'slugifyOptions' => [
-                    'lowercase' => true,
-                    'separator' => '-',
-                    'trim' => true
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['name'], 'required'],
-            [['status', 'is_filter', 'is_filter_sequence', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug'], 'string', 'max' => 125],
-            [['slug'], 'unique'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'slug' => 'Slug',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
-        ];
+        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 
     public function getImagepath()
     {
         if ($this->feature_image != '') {
-            return '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['frontend_url'] . '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getBannerimagepath()
     {
         if ($this->banner != '') {
-            return '/storage/rareanimal/' . $this->id . '/' . $this->banner;
+            return \Yii::$app->params['frontend_url'] . '/storage/rareanimal/' . $this->id . '/' . $this->banner;
         }
     }
 

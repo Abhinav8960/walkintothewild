@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\master\operatorcategory;
+namespace api\models\master\operatorcategory;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -16,63 +15,14 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterOperatorCategory extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterOperatorCategory extends \common\models\master\operatorcategory\MasterOperatorCategory
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_operator_category';
-    }
+        $fields = parent::fields();
 
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-        ];
-    }
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['status', 'type_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['title'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'type_id' => 'Type',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
-        ];
+        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 }

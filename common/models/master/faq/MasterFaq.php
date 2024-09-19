@@ -1,7 +1,6 @@
 <?php
 
 namespace common\models\master\faq;
-
 use Yii;
 
 /**

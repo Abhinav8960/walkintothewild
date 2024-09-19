@@ -1,10 +1,10 @@
 <?php
 
-namespace common\models\master\state;
+namespace api\models\master\state;
 
-use common\models\master\country\MasterCountry;
-use common\models\master\location\MasterLocation;
-use common\traits\CommanRelationship;
+use api\models\master\country\MasterCountry;
+use api\models\master\location\MasterLocation;
+use api\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -18,68 +18,15 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterState extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterState extends \common\models\master\state\MasterState
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_state';
-    }
-
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['state_name'], 'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['state_name'], 'string', 'max' => 125],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'state_name' => 'State',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
-        ];
+        $fields = parent::fields();
+        
+        $hold_fields = ['status',  'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 
     public function getCountry()

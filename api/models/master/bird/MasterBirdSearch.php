@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\bird;
+namespace api\models\master\bird;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\bird\MasterBird;
+use api\models\master\bird\MasterBird;
 
 /**
- * MasterBirdSearch represents the model behind the search form of `common\models\master\bird\MasterBird`.
+ * MasterBirdSearch represents the model behind the search form of `api\models\master\bird\MasterBird`.
  */
 class MasterBirdSearch extends MasterBird
 {

@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\message;
+namespace api\models\master\message;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\message\MasterMessage;
+use api\models\master\message\MasterMessage;
 
 /**
- * MasterMessageSearch represents the model behind the search form of `common\models\master\message\MasterMessage`.
+ * MasterMessageSearch represents the model behind the search form of `api\models\master\message\MasterMessage`.
  */
 class MasterMessageSearch extends MasterMessage
 {

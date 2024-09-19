@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\master\message;
+namespace api\models\master\message;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -20,72 +19,14 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterMessage extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterMessage extends \common\models\master\message\MasterMessage
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_message';
-    }
+        $fields = parent::fields();
 
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['page_id', 'type_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['message'], 'string'],
-            [['module'], 'string', 'max' => 255],
-            [['code'], 'string', 'max' => 4],
-            [['code'], 'unique'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'module' => 'Module',
-            'page_id' => 'Page ID',
-            'type_id' => 'Type ID',
-            'code' => 'Code',
-            'message' => 'Message',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
-        ];
+        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 }

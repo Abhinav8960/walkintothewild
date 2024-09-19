@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\animal;
+namespace api\models\master\animal;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\animal\MasterAnimal;
+use api\models\master\animal\MasterAnimal;
 
 /**
- * MasterAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
+ * MasterAnimalSearch represents the model behind the search form of `api\models\master\animal\MasterAnimal`.
  */
 class MasterAnimalSearch extends MasterAnimal
 {
@@ -40,7 +40,7 @@ class MasterAnimalSearch extends MasterAnimal
      */
     public function search($params)
     {
-        $query = MasterAnimal::find()->where(['status' => [1, 2]]);
+        $query = MasterAnimal::find()->where(['status' => [MasterAnimal::STATUS_ACTIVE, MasterAnimal::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

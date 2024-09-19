@@ -1,11 +1,11 @@
 <?php
 
-namespace common\models\master\location;
+namespace api\models\master\location;
 
-use common\models\master\city\MasterCity;
-use common\models\master\country\MasterCountry;
-use common\models\master\state\MasterState;
-use common\traits\CommanRelationship;
+use api\models\master\city\MasterCity;
+use api\models\master\country\MasterCountry;
+use api\models\master\state\MasterState;
+use api\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -23,75 +23,14 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class MasterLocation extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class MasterLocation extends \common\models\master\location\MasterLocation
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_location';
-    }
+        $fields = parent::fields();
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-            'slug' => [
-                'class' => 'skeeks\yii2\slug\SlugBehavior',
-                'slugAttribute' => 'slug', //The attribute to be generated
-                'attribute' => 'title', //The attribute from which will be generated
-                'maxLength' => 255,
-                'ensureUnique' => true,
-                'slugifyOptions' => [
-                    'lowercase' => true,
-                    'separator' => '-',
-                    'trim' => true
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['title', 'slug'], 'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title', 'slug'], 'string', 'max' => 255],
-            [['slug'], 'unique'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'title' => 'Title',
-            'slug' => 'Slug',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
-        ];
+        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 }

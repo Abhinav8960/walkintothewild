@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\railwaystation;
+namespace api\models\master\railwaystation;
 
-use common\models\master\railwaystation\MasterRailwayStation;
+use api\models\master\railwaystation\MasterRailwayStation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * MasterAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
+ * MasterAnimalSearch represents the model behind the search form of `api\models\master\animal\MasterAnimal`.
  */
 class MasterRailwayStationSearch extends MasterRailwayStation
 {
@@ -17,7 +17,7 @@ class MasterRailwayStationSearch extends MasterRailwayStation
     public function rules()
     {
         return [
-            [['status', 'city_id','state_id','country_id','created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['status', 'city_id', 'state_id', 'country_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['title'], 'string', 'max' => 255],
         ];
     }
@@ -40,7 +40,7 @@ class MasterRailwayStationSearch extends MasterRailwayStation
      */
     public function search($params)
     {
-        $query = MasterRailwayStation::find()->where(['status' => [1, 2]]);
+        $query = MasterRailwayStation::find()->where(['status' => [MasterRailwayStation::STATUS_ACTIVE, MasterRailwayStation::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

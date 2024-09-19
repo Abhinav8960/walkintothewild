@@ -1,11 +1,11 @@
 <?php
 
-namespace common\models\master\railwaystation;
+namespace api\models\master\railwaystation;
 
-use common\models\master\city\MasterCity;
-use common\models\master\country\MasterCountry;
-use common\models\master\state\MasterState;
-use common\traits\CommanRelationship;
+use api\models\master\city\MasterCity;
+use api\models\master\country\MasterCountry;
+use api\models\master\state\MasterState;
+use api\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -19,70 +19,20 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterRailwayStation extends  \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterRailwayStation extends  \common\models\master\railwaystation\MasterRailwayStation
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+
+    public function fields()
     {
-        return 'master_railway_station';
+        $fields = parent::fields();
+        $fields[] = 'city';
+        $fields[] = 'state';
+        $fields[] = 'country';
+        $hold_fields = ['status', 'city_id', 'state_id', 'country_id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-        ];
-    }
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['state_id','country_id','status'], 'required'],
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['title'], 'string', 'max' => 255],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'city_id' => 'City',
-            'state_id' => 'State',
-            'country_id' => 'Country',
-            'title' => 'Title',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
-        ];
-    }
     public function getCity()
     {
         return $this->hasOne(MasterCity::className(), ['id' => 'city_id']);
