@@ -4,10 +4,10 @@ namespace api\models\meta;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\meta\MetaOtherWildlifeActivities;
+use api\models\meta\MetaOtherWildlifeActivities;
 
 /**
- * MetaOtherWildlifeActivitiesSearch represents the model behind the search form of `common\models\meta\MetaOtherWildlifeActivities`.
+ * MetaOtherWildlifeActivitiesSearch represents the model behind the search form of `api\models\meta\MetaOtherWildlifeActivities`.
  */
 class MetaOtherWildlifeActivitiesSearch extends MetaOtherWildlifeActivities
 {

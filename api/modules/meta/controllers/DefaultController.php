@@ -13,6 +13,12 @@ use api\models\meta\MetaBirdTypeSearch;
 use api\models\meta\MetaLocationSearch;
 use api\models\meta\MetaOperatorCredibilitySearch;
 use api\models\meta\MetaOtherWildlifeActivitiesSearch;
+use api\models\meta\MetaPackageRangeSearch;
+use api\models\meta\MetaParkTripSlotSearch;
+use api\models\meta\MetaSafariSessionSearch;
+use api\models\meta\MetaStayCategorySearch;
+use api\models\meta\MetaTermConditionTypeSearch;
+use api\models\meta\MetaZoneTypeSearch;
 
 /**
  * Site controller
@@ -36,6 +42,14 @@ class DefaultController extends RestController
                     'bird-type' => ['GET'],
                     'location' => ['GET'],
                     'operator-credibility' => ['GET'],
+                    'other-wildlife-activities' => ['GET'],
+                    'package-range' => ['GET'],
+                    'park-trip-slot' => ['GET'],
+                    'safari-session' => ['GET'],
+                    'stay-category' => ['GET'],
+                    'term-condition-type' => ['GET'],
+                    'zone-type' => ['GET'],
+
                 ],
             ],
         ];
@@ -76,5 +90,43 @@ class DefaultController extends RestController
     {
         $searchModel = new MetaOtherWildlifeActivitiesSearch();
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaOtherWildlifeActivities");
+    }
+
+    public function actionPackageRange()
+    {
+        $searchModel = new MetaPackageRangeSearch();
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaPackageRange");
+    }
+
+    public function actionParkTripSlot()
+    {
+        $searchModel = new MetaParkTripSlotSearch();
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaParkTripSlot");
+    }
+
+    public function actionSafariSession()
+    {
+        $searchModel = new MetaSafariSessionSearch();
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaSafariSession");
+    }
+
+
+
+    public function actionStayCategory()
+    {
+        $searchModel = new MetaStayCategorySearch();
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaStayCategory");
+    }
+
+    public function actionTermConditionType()
+    {
+        $searchModel = new MetaTermConditionTypeSearch();
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaTermConditionType");
+    }
+
+    public function actionZoneType()
+    {
+        $searchModel = new MetaZoneTypeSearch();
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MetaZoneType");
     }
 }

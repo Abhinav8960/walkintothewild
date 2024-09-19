@@ -4,10 +4,10 @@ namespace api\models\meta;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\meta\MetaPackageRange;
+use api\models\meta\MetaPackageRange;
 
 /**
- * MetaPackageRangeSearch represents the model behind the search form of `common\models\meta\MetaPackageRange`.
+ * MetaPackageRangeSearch represents the model behind the search form of `api\models\meta\MetaPackageRange`.
  */
 class MetaPackageRangeSearch extends MetaPackageRange
 {

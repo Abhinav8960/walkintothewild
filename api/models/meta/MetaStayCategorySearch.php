@@ -4,10 +4,10 @@ namespace api\models\meta;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\meta\MetaStayCategory;
+use api\models\meta\MetaStayCategory;
 
 /**
- * MetaStayCategorySearch represents the model behind the search form of `common\models\meta\MetaStayCategory`.
+ * MetaStayCategorySearch represents the model behind the search form of `api\models\meta\MetaStayCategory`.
  */
 class MetaStayCategorySearch extends MetaStayCategory
 {
