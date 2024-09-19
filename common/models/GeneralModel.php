@@ -2,10 +2,10 @@
 
 namespace common\models;
 
-use common\models\article\articleSource\ArticleSource;
-use common\models\article\articleTag\ArticleTag as ArticleTagArticleTag;
-use common\models\article\category\Category;
-use common\models\article\frequency\Frequency;
+// use common\models\article\articleSource\ArticleSource;
+// use common\models\article\articleTag\ArticleTag as ArticleTagArticleTag;
+// use common\models\article\category\Category;
+// use common\models\article\frequency\Frequency;
 use common\models\cms\article\Article;
 use common\models\cms\article\ArticleAuthor;
 use common\models\cms\article\ArticleTag;
@@ -457,18 +457,18 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(ArticleAuthor::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['not', ['user_id' => null]])->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
     }
-    public static function sourceoption()
-    {
-        return ArrayHelper::map(ArticleSource::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['article_source' => SORT_ASC])->all(), 'id', 'article_source');
-    }
-    public static function frequencyoption()
-    {
-        return ArrayHelper::map(Frequency::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['frequency' => SORT_ASC])->all(), 'id', 'frequency');
-    }
-    public static function categoryoption()
-    {
-        return ArrayHelper::map(Category::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['category' => SORT_ASC])->all(), 'id', 'category');
-    }
+    // public static function sourceoption()
+    // {
+    //     return ArrayHelper::map(ArticleSource::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['article_source' => SORT_ASC])->all(), 'id', 'article_source');
+    // }
+    // public static function frequencyoption()
+    // {
+    //     return ArrayHelper::map(Frequency::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['frequency' => SORT_ASC])->all(), 'id', 'frequency');
+    // }
+    // public static function categoryoption()
+    // {
+    //     return ArrayHelper::map(Category::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['category' => SORT_ASC])->all(), 'id', 'category');
+    // }
 
     public static function birdingparkoption()
     {
@@ -594,10 +594,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return ArrayHelper::map(MasterArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
-    public static function articletagoption()
-    {
-        return ArrayHelper::map(ArticleTagArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
-    }
+    // public static function articletagoption()
+    // {
+    //     return ArrayHelper::map(ArticleTagArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    // }
 
     public static function packagefeatureoptiontopicoption()
     {
