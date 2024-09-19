@@ -1225,7 +1225,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
                     try {
                         $message = $mailer->compose($template->path, json_decode($log->params, true))
                             // ->setFrom($log->mail_from)
-                            ->setFrom(['no-reply@walkintothewild.in' => 'Walk Into the Wild'])
+                            ->setFrom(['no-reply@walkintothewild.in' => 'Walk Into The Wild'])
                             ->setTo($log->torecipient->recipient)
                             ->setBcc($bcc)
                             ->setCc($cc)
