@@ -144,8 +144,6 @@ use yii\helpers\Url;
         </div>
         <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) {
             echo '<p class="px-3 pt-2">Comment Closed for this Safari...</p>';
-        } elseif ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
-            echo '<p class="px-3 pt-2">Comment Closed</p>';
         } else {
             if (Yii::$app->user->id) {
                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
