@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\park;
+namespace api\models\park;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\park\SafariParkAnimal;
+use api\models\park\SafariParkAnimal;
 
 /**
- * SafariParkAnimalSearch represents the model behind the search form of `common\models\park\SafariParkAnimal`.
+ * SafariParkAnimalSearch represents the model behind the search form of `api\models\park\SafariParkAnimal`.
  */
 class SafariParkAnimalSearch extends SafariParkAnimal
 {

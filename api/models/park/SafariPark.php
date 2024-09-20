@@ -8,45 +8,89 @@ use api\models\park\SafariParkAnimal;
 use api\models\master\state\MasterState;
 use api\models\operator\SafariOperatorPark;
 use api\models\master\airport\MasterAirport;
+use api\models\master\animal\MasterAnimal;
 use api\models\master\country\MasterCountry;
 use api\models\master\location\MasterLocation;
+use api\models\master\month\MasterMonth;
 use api\models\master\railwaystation\MasterRailwayStation;
+use api\models\master\vehicle\MasterVehicle;
+use api\models\meta\MetaAccommodation;
+use api\models\meta\MetaSafariSession;
 use api\models\suggestions\SafariSuggestions;
 use api\models\UserExperience;
-
+use common\models\park\SafariParkMonth;
 
 class SafariPark extends \common\models\park\SafariPark
 {
-    
+
     public function fields()
     {
         $fields = parent::fields();
+        $fields[] = 'featureimagepath';
+
+        $fields[] = 'sessions';
+        $fields[] = 'months';
         $fields[] = 'city';
         $fields[] = 'state';
         $fields[] = 'country';
         $fields[] = 'location';
-        $fields[] = 'airport';
-        // $fields[] = 'airportdata';
-        // $fields[] = 'airportlist';
-        $fields[] = 'railwaystation';
-        $fields[] = 'railwaystationtwo';
-        $fields[] = 'railwaystationlist';
-        $fields[] = 'gallery';
-        $fields[] = 'safarioperatorlist';
-        $fields[] = 'animals';
-        $fields[] = 'rareanimals';
-        $fields[] = 'sessions';
-        $fields[] = 'vehicles';
-        $fields[] = 'bufferzones';
-        $fields[] = 'corezones';
-        $fields[] = 'months';
-        $fields[] = 'accomodations';
-        $fields[] = 'suggestions';
-        $fields[] = 'bonusexperience';
-        $fields[] = 'featureimagepath';
-        
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['park/default/view'])) {
+            $fields[] = 'bufferzones';
+            $fields[] = 'corezones';
+            $fields[] = 'airport';
+            $fields[] = 'vehicles';
+            // $fields[] = 'airportdata';
+            // $fields[] = 'airportlist';
+            $fields[] = 'railwaystation';
+            $fields[] = 'railwaystationtwo';
+            $fields[] = 'railwaystationlist';
+            $fields[] = 'gallery';
+            $fields[] = 'animals';
+        }
 
-        $hold_fields = ['status', 'country_id', 'state_id', 'city_id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        // $fields[] = 'safarioperatorlist';
+        // $fields[] = 'rareanimals';
+        
+        // $fields[] = 'accomodations';
+        // $fields[] = 'suggestions';
+        // $fields[] = 'bonusexperience';
+
+
+        $hold_fields = [
+            'nearest_railway_station',
+            'nearest_railway_station_distance',
+            'nearest_airport',
+            'nearest_airport_distance',
+            'nearest_railway_station_two',
+            'nearest_railway_station_distance_two',
+            'nearest_railway_station_three',
+            'nearest_railway_station_distance_three',
+            'nearest_railway_station_four',
+            'nearest_railway_station_distance_four',
+            'nearest_railway_station_five',
+            'nearest_railway_station_distance_five',
+            'nearest_airport_two',
+            'nearest_airport_distance_two',
+            'nearest_airport_three',
+            'nearest_airport_distance_three',
+            'nearest_airport_four',
+            'nearest_airport_distance_four',
+            'nearest_airport_five',
+            'nearest_airport_distance_five',
+            'is_published',
+            'master_location_id',
+            'country_name',
+            'state_name',
+            'city_name',
+            'status',
+            'country_id',
+            'state_id',
+            'city_id',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at'
+        ];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
@@ -199,9 +243,15 @@ class SafariPark extends \common\models\park\SafariPark
     {
         return $this->hasOne(SafariParkGallery::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_gallery.status' => 1]);
     }
-    public function getAnimals()
+
+    public function getSafariAnimals()
     {
         return $this->hasMany(SafariParkAnimal::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_animal.status' => 1]);
+    }
+
+    public function getAnimals()
+    {
+        return $this->hasMany(MasterAnimal::className(), ['id' => 'master_animal_id'])->andWhere(['status' => 1])->via('safariAnimals');
     }
 
 
@@ -210,15 +260,26 @@ class SafariPark extends \common\models\park\SafariPark
         return $this->hasMany(SafariParkAnimal::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_animal.status' => 1]);
     }
 
-    public function getSessions()
+    public function getSafariSessions()
     {
         return $this->hasMany(SafariParkSession::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_session.status' => 1]);
     }
 
 
-    public function getVehicles()
+    public function getSessions()
+    {
+        return $this->hasMany(MetaSafariSession::className(), ['id' => 'session_id'])->via('safariSessions');
+    }
+
+
+    public function getSafariVehicles()
     {
         return $this->hasMany(SafariParkVehicle::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_vehicle.status' => 1]);
+    }
+
+    public function getVehicles()
+    {
+        return $this->hasMany(MasterVehicle::className(), ['id' => 'vehicle_id'])->via('safariVehicles');
     }
 
 
@@ -234,22 +295,36 @@ class SafariPark extends \common\models\park\SafariPark
     }
 
 
-    public function getMonths()
+    public function getSafariMonths()
     {
         return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_month.status' => 1]);
     }
 
+    public function getMonths()
+    {
+        return $this->hasMany(MasterMonth::className(), ['month' => 'month_id'])->via('safariMonths');
+    }
 
-    public function getAccomodations()
+
+    public function getSafariAccomodations()
     {
         return $this->hasMany(SafariParkAccomodation::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_accomodation.status' => 1]);
     }
 
-    public function getSuggestions()
+    public function getAccomodations()
     {
-        return $this->hasMany(SafariSuggestions::className(), ['park_id' => 'id'])->andWhere(['safari_suggestions.status' => 1]);
+        // return $this->hasMany(SafariParkAccomodation::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_accomodation.status' => 1]);
+
+        return $this->hasMany(MetaAccommodation::className(), ['id' => 'master_accomodation_id'])->via(['safariAccomodations']);
     }
 
+    // public function getSuggestions()
+    // {
+    //     return $this->hasMany(SafariSuggestions::className(), ['park_id' => 'id'])->andWhere(['safari_suggestions.status' => 1]);
+    // }
+
+
+    
 
     public function getBonusexperience()
     {
@@ -259,14 +334,14 @@ class SafariPark extends \common\models\park\SafariPark
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {
-            return \Yii::$app->params['frontend_url'] .'/storage/safaripark/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['frontend_url'] . '/storage/safaripark/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getLogoimagepath()
     {
         if ($this->logo != '') {
-            return '/storage/safaripark/' . $this->id . '/' . $this->logo;
+            return \Yii::$app->params['frontend_url'] . '/storage/safaripark/' . $this->id . '/' . $this->logo;
         }
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\park;
+namespace api\models\park;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\park\SafariParkVehicle;
+use api\models\park\SafariParkVehicle;
 
 /**
- * SafariParkVehicleSearch represents the model behind the search form of `common\models\park\SafariParkVehicle`.
+ * SafariParkVehicleSearch represents the model behind the search form of `api\models\park\SafariParkVehicle`.
  */
 class SafariParkVehicleSearch extends SafariParkVehicle
 {

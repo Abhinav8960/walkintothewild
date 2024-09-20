@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\park;
+namespace api\models\park;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -22,67 +21,24 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class SafariParkZone extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class SafariParkZone extends \common\models\park\SafariParkZone
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'safari_park_zone';
-    }
+        $fields = parent::fields();
+        
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-        ];
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['safari_park_id', 'master_zone_type_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['zone_name', 'entry_gate_name'], 'string', 'max' => 255],
-            [['entry_gate_latitude', 'entry_gate_longitude'], 'string', 'max' => 50],
+        $hold_fields = [
+            'safari_park_id',
+            'master_zone_type_id',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at'
         ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'safari_park_id' => 'Safari Park ID',
-            'master_zone_type_id' => 'Master Zone Type ID',
-            'master_zone_type_name' => 'Master Zone Type Name',
-            'zone_name' => 'Zone Name',
-            'entry_gate_name' => 'Entry Gate Name',
-            'entry_gate_latitude' => 'Entry Gate Latitude',
-            'entry_gate_longitude' => 'Entry Gate Longitude',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
-        ];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 }

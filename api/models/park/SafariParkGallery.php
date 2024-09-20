@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\park;
+namespace api\models\park;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -19,71 +18,36 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class SafariParkGallery extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class SafariParkGallery extends \common\models\park\SafariParkGallery
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'safari_park_gallery';
-    }
 
-    public function behaviors()
+    public function fields()
     {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-        ];
-    }
+        $fields = parent::fields();
+        $fields[] = 'imagepath';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            // [['safari_park_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
-            [['safari_park_id', 'sequence', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['image', 'image_caption'], 'string', 'max' => 255],
-        ];
-    }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'safari_park_id' => 'Safari Park ID',
-            'image' => 'Image',
-            'image_caption' => 'Image Caption',
-            'sequence' => 'Sequence',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
+
+        $hold_fields = [
+
+            'id',
+            'safari_park_id',
+            'image',
+            'sequence',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at'
         ];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/safariparkgallery/' . $this->id . '/' . $this->image;
+            return \Yii::$app->params['frontend_url'] . '/storage/safariparkgallery/' . $this->id . '/' . $this->image;
         }
     }
 }

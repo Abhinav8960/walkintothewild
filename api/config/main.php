@@ -79,6 +79,9 @@ return [
                 'master/<action>' => 'master/default/<action>',
                 'master/<action>/<slug>' => 'master/default/<action>',
 
+                'park' => 'park/default/index',
+                'park/<action>/<slug>' => 'park/default/<action>',
+
 
             ],
 
