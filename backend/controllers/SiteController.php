@@ -321,6 +321,14 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+
+        $session = Yii::$app->session;
+        if ($session->get('user_session_id')) {
+            Yii::$app->db->createCommand()
+                ->delete('user_session', ['id' => $session->get('user_session_id')])
+                ->execute();
+            $session->remove('user_session_id');
+        }
         Yii::$app->user->logout();
 
         return $this->goHome();

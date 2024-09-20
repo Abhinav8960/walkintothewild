@@ -180,15 +180,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </section>
 <?php } ?>
-<section class="px-md-0 px-3">
+<section class="px-md-0 px-3" style ="display: none">
  <div class="google-ad-box margin-topset"  style="border:none">
-    <ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-6116324330184807"
-     data-ad-slot="1321270892"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    
 </div>
 </section>
 <section class="safariduring_sesons paddiinTop_add">
@@ -197,15 +191,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="animal-wrapper  paddiinTop_add">
     <?= \frontend\widgets\RareExoticWidget::widget() ?>
 </section>
-<section class="px-md-0 px-3">
+<section class="px-md-0 px-3" style ="display: none">
     <div class="google-ad-box margin-topset"  style="border:none">
-    <ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-6116324330184807"
-     data-ad-slot="1321270892"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    
 </div>
 </section>
 <section class="articals_wrapper  margin_bottomfooter mb-5 paddiinTop_add">
