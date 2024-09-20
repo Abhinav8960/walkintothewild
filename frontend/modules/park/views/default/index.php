@@ -80,7 +80,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     ]) ?>
                 </div>
 
-                <div class="advertisment d-lg-block d-none mt-5" style="display: none">
+                <div class="advertisment d-lg-block d-none mt-5" style="display:none !important;">
                     <div class="google-ad300  mb-5" style="border:none">
                         
                     </div>
