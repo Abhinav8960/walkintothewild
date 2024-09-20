@@ -13,7 +13,7 @@ class MasterCity extends \common\models\master\city\MasterCity
     {
         $fields = parent::fields();
 
-        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['status', 'country_id', 'state_id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\master\vehicle;
+namespace api\models\master\vehicle;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -23,7 +22,7 @@ class MasterVehicle extends \common\models\master\vehicle\MasterVehicle
     {
         $fields = parent::fields();
         $fields[] = 'imagepath';
-        $hold_fields = ['status',  'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['status', 'icon', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

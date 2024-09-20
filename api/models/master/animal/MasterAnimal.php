@@ -28,7 +28,7 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
         $fields = parent::fields();
         $fields[] = 'imagepath';
         $fields[] = 'bannerimagepath';
-        $fields[] = 'rareparkanimals';
+        // $fields[] = 'rareparkanimals';
 
         $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
@@ -50,8 +50,8 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
     }
 
 
-    public function getRareparkanimals()
-    {
-        return $this->hasMany(SafariParkAnimal::className(), ['master_animal_id' => 'id'])->andWhere(['safari_parks_animal.status' => 1]);
-    }
+    // public function getRareparkanimals()
+    // {
+    //     return $this->hasMany(SafariParkAnimal::className(), ['master_animal_id' => 'id'])->andWhere(['safari_parks_animal.status' => 1]);
+    // }
 }

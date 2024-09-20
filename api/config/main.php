@@ -19,6 +19,9 @@ return [
         'master' => [
             'class' => 'api\modules\master\Module',
         ],
+        'park' => [
+            'class' => 'api\modules\park\Module',
+        ],
 
     ],
     'components' => [

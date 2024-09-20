@@ -1,145 +1,54 @@
 <?php
 
-namespace common\models\park;
+namespace api\models\park;
 
 use Yii;
-use common\traits\CommanRelationship;
-use common\models\master\city\MasterCity;
-use common\models\park\SafariParkAnimal;
-use common\models\master\state\MasterState;
-use common\models\operator\SafariOperatorPark;
-use common\models\master\airport\MasterAirport;
-use common\models\master\country\MasterCountry;
-use common\models\master\location\MasterLocation;
-use common\models\master\railwaystation\MasterRailwayStation;
-use common\models\suggestions\SafariSuggestions;
-use common\models\UserExperience;
+use api\models\master\city\MasterCity;
+use api\models\park\SafariParkAnimal;
+use api\models\master\state\MasterState;
+use api\models\operator\SafariOperatorPark;
+use api\models\master\airport\MasterAirport;
+use api\models\master\country\MasterCountry;
+use api\models\master\location\MasterLocation;
+use api\models\master\railwaystation\MasterRailwayStation;
+use api\models\suggestions\SafariSuggestions;
+use api\models\UserExperience;
 
-/**
- * This is the model class for table "park".
- *
- * @property int $id
- * @property string $title
- * @property string $slug
- * @property string|null $short_description
- * @property string|null $long_description
- * @property string $official_website
- * @property int $master_location_id
- * @property int $country_id
- * @property string $country_name
- * @property int $state_id
- * @property string $state_name
- * @property int $city_id
- * @property string $city_name
- * @property string|null $avg_safari_price
- * @property string|null $nearest_railway_station
- * @property string|null $nearest_airport
- * @property string|null $nearest_bus_station
- * @property string $meta_title
- * @property string|null $meta_description
- * @property string|null $meta_keywords
- * @property string|null $latitude
- * @property string|null $longitude
- * @property int $status
- * @property int $created_at
- * @property int $updated_at
- * @property int $created_by
- * @property int $updated_by
- */
-class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+
+class SafariPark extends \common\models\park\SafariPark
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    
+    public function fields()
     {
-        return 'safari_park';
-    }
+        $fields = parent::fields();
+        $fields[] = 'city';
+        $fields[] = 'state';
+        $fields[] = 'country';
+        $fields[] = 'location';
+        $fields[] = 'airport';
+        // $fields[] = 'airportdata';
+        // $fields[] = 'airportlist';
+        $fields[] = 'railwaystation';
+        $fields[] = 'railwaystationtwo';
+        $fields[] = 'railwaystationlist';
+        $fields[] = 'gallery';
+        $fields[] = 'safarioperatorlist';
+        $fields[] = 'animals';
+        $fields[] = 'rareanimals';
+        $fields[] = 'sessions';
+        $fields[] = 'vehicles';
+        $fields[] = 'bufferzones';
+        $fields[] = 'corezones';
+        $fields[] = 'months';
+        $fields[] = 'accomodations';
+        $fields[] = 'suggestions';
+        $fields[] = 'bonusexperience';
+        $fields[] = 'featureimagepath';
+        
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-            'slug' => [
-                'class' => 'skeeks\yii2\slug\SlugBehavior',
-                'slugAttribute' => 'slug', //The attribute to be generated
-                'attribute' => 'title', //The attribute from which will be generated
-                'maxLength' => 255,
-                'ensureUnique' => true,
-                'slugifyOptions' => [
-                    'lowercase' => true,
-                    'separator' => '-',
-                    'trim' => true
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['short_description', 'long_description', 'meta_description', 'meta_keywords'], 'string'],
-            [['master_location_id', 'country_id', 'state_id', 'city_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by', 'nearest_airport_distance', 'nearest_railway_station_distance'], 'integer'],
-            [['title', 'slug', 'official_website', 'country_name', 'state_name', 'city_name', 'avg_safari_price_min', 'avg_safari_price_max', 'nearest_railway_station', 'nearest_airport', 'nearest_bus_station', 'meta_title'], 'string', 'max' => 255],
-            [['latitude', 'longitude'], 'string', 'max' => 50],
-            [['slug'], 'unique'],
-            ['show_in_filter', 'boolean'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'show_in_filter' => 'Show in Filter',
-            'title' => 'Title',
-            'slug' => 'Slug',
-            'short_description' => 'Sort Description',
-            'long_description' => 'Long Description',
-            'official_website' => 'Official Website',
-            'master_location_id' => 'Master Location ID',
-            'country_id' => 'Country ID',
-            'country_name' => 'Country Name',
-            'state_id' => 'State ID',
-            'state_name' => 'State Name',
-            'city_id' => 'City ID',
-            'city_name' => 'City Name',
-            'avg_safari_price_min' => 'Avg Safari Price',
-            'nearest_railway_station' => 'Nearest Railway Station',
-            'nearest_railway_station_distance' => 'Nearest Railway Station Distance',
-            'nearest_airport' => 'Nearest Airport',
-            'nearest_airport_distance' => 'Nearest Airport Distance',
-            'nearest_bus_station' => 'Nearest Bus Station',
-            'meta_title' => 'Meta Title',
-            'meta_description' => 'Meta Description',
-            'meta_keywords' => 'Meta Keywords',
-            'latitude' => 'Latitude',
-            'longitude' => 'Longitude',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
-        ];
+        $hold_fields = ['status', 'country_id', 'state_id', 'city_id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 
     public function getCity()
@@ -350,7 +259,7 @@ class SafariPark extends \yii\db\ActiveRecord implements \common\interfaces\NewS
     public function getFeatureimagepath()
     {
         if ($this->feature_image != '') {
-            return '/storage/safaripark/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['frontend_url'] .'/storage/safaripark/' . $this->id . '/' . $this->feature_image;
         }
     }
 

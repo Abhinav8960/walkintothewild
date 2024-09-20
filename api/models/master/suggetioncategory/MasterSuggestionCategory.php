@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\master\suggetioncategory;
+namespace api\models\master\suggetioncategory;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -22,7 +21,7 @@ class MasterSuggestionCategory extends \common\models\master\suggetioncategory\M
     {
         $fields = parent::fields();
         
-        $hold_fields = ['status',  'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['status', 'sequence',  'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

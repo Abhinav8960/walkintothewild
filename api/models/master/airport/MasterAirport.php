@@ -18,7 +18,7 @@ class MasterAirport extends \common\models\master\airport\MasterAirport
         $fields[] = 'city';
         $fields[] = 'state';
         $fields[] = 'country';
-        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['status', 'country_id', 'state_id', 'city_id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }

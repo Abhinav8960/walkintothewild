@@ -20,9 +20,14 @@ class MasterOperatorCategory extends \common\models\master\operatorcategory\Mast
     public function fields()
     {
         $fields = parent::fields();
-
-        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $fields[] = 'type';
+        $hold_fields = ['status', 'type_id', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
+    }
+
+    public function getType()
+    {
+       return isset(SELF::OperatorCategoryType()[$this->type_id]) ? SELF::OperatorCategoryType()[$this->type_id] : NULL;
     }
 }

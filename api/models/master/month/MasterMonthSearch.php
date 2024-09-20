@@ -1,15 +1,15 @@
 <?php
 
-namespace api\models\master\message;
+namespace api\models\master\month;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use api\models\master\message\MasterMessage;
+use api\models\master\month\MasterMonth;
 
 /**
- * MasterMessageSearch represents the model behind the search form of `api\models\master\message\MasterMessage`.
+ * MasterMonthSearch represents the model behind the search form of `api\models\master\month\MasterMonth`.
  */
-class MasterMessageSearch extends MasterMessage
+class MasterMonthSearch extends MasterMonth
 {
     /**
      * {@inheritdoc}
@@ -17,10 +17,8 @@ class MasterMessageSearch extends MasterMessage
     public function rules()
     {
         return [
-            [['page_id', 'type_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['message'], 'string'],
-            [['module'], 'string', 'max' => 255],
-            [['code'], 'string', 'max' => 4],
+            [['month'], 'integer'],
+            [['month_name', 'month_short_name'], 'safe'],
         ];
     }
 
@@ -42,12 +40,14 @@ class MasterMessageSearch extends MasterMessage
      */
     public function search($params)
     {
-        $query = MasterMessage::find()->where(['status' => [1, 2]]);
+        $query = MasterMonth::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['month' => SORT_ASC]],
+
         ]);
 
         $this->load($params);
@@ -60,19 +60,11 @@ class MasterMessageSearch extends MasterMessage
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'module' => $this->module,
-            'page_id' => $this->page_id,
-            'type_id' => $this->type_id,
-            'message' => $this->message,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'month' => $this->month,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code]);
+        $query->andFilterWhere(['like', 'month_name', $this->month_name])
+            ->andFilterWhere(['like', 'month_short_name', $this->month_short_name]);
 
         return $dataProvider;
     }
