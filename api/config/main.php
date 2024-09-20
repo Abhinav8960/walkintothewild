@@ -80,7 +80,7 @@ return [
                 'master/<action>/<slug>' => 'master/default/<action>',
 
                 'park' => 'park/default/index',
-                'park/<action>/<slug>' => 'park/default/<action>',
+                'park/<slug>' => 'park/default/view',
 
 
             ],

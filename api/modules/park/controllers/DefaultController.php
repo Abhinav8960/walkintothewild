@@ -61,42 +61,9 @@ class DefaultController extends RestController
         }
         $searchModel = new SafariParkSearch();
 
-        $searchModel->id = $model->slug; // for show Selected Park name in search
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $searchModel->id = $model->id; // for show Selected Park name in search
 
-
-        $operatorsearchModel = new SafariOperatorSearch();
-        $operatorsearchModel->status = 1;
-        $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
-        $operators = $operatordataProvider->getModels();
-
-        // $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
-
-
-
-        $ratingsearchModel = new SafariParkRatingSearch();
-        $ratingsearchModel->safari_park_id = $model->id;
-        $ratingsearchModel->status = 1;
-        $ratingdataProvider = $ratingsearchModel->search($this->request->queryParams);
-        $reviews = $ratingdataProvider->getModels();
-
-        return $this->render(
-            'view',
-            [
-                'model' => $model,
-                // 'first_month' => $first_month,
-                // 'last_month' => $last_month,
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                // 'suggestionmodel' => $suggestionmodel,
-
-                'operatorsearchModel' => $operatorsearchModel,
-                'operatordataProvider' => $operatordataProvider,
-                'operators' => $operators,
-                // 'shared_safaries' => $shared_safaries,
-                'device' => $this->device(),
-                'reviews' => $reviews
-            ]
-        );
+        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
+        
     }
 }
