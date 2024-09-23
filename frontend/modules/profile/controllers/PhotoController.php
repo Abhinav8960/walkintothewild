@@ -2,7 +2,7 @@
 
 namespace frontend\modules\profile\controllers;
 
-use common\models\cms\article\Article;
+use common\models\cms\blog\Article;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
 use common\models\UserPosts;
@@ -27,16 +27,16 @@ class PhotoController extends FrontendBaseController
         // $userposts = UserPosts::find()->where(['user_id' => $user->id, 'status' => UserPosts::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         $shared_safari = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
         if (Yii::$app->user->identity && Yii::$app->user->identity->id == $user->id) {
-            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
+            $blogs = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
         } else {
-            $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+            $blogs = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         }
 
         return $this->render(
             'index',
             [
                 'user' => $user,
-                'articles' => $articles,
+                'blogs' => $blogs,
                 'shared_safari' => $shared_safari,
 
             ]
@@ -107,15 +107,15 @@ class PhotoController extends FrontendBaseController
     //     $user = $this->findUserbyHandle($user_handle);
     //     $shared_safari = ShareSafari::find()->where(['host_user_id' => $user->id])->all();
     //     if (Yii::$app->user->identity->id == $user->id) {
-    //         $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
+    //         $blogs = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id])->orderby(['id' => SORT_DESC])->all();
     //     } else {
-    //         $articles = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
+    //         $blogs = Article::find()->where(['user_type' => Article::USER_TYPE_INDIVIDUAL, 'user_id' => $user->id, 'status' => Article::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
     //     }
     //     return $this->render(
     //         'photoseeall',
     //         [
     //             'user' => $user,
-    //             'articles' => $articles,
+    //             'blogs' => $blogs,
     //             'shared_safari' => $shared_safari,
 
     //         ]

@@ -8,7 +8,7 @@ use common\models\GeneralModel;
 use common\interfaces\Constants;
 use common\interfaces\StatusInterface;
 use common\models\park\SafariPark;
-use frontend\models\ArticleSearch;
+use frontend\models\BlogSearch;
 use common\models\cms\banner\Banner;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
@@ -25,7 +25,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::SHARE_SAFARI;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
-$recentposts = ArticleSearch::recentpost();
+$recentposts = BlogSearch::recentpost();
 
 
 ?>

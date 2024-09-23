@@ -2,7 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\models\cms\article\MasterArticleTag;
+use common\models\cms\blog\MasterBlogTag;
 use yii\web\Response;
 use Yii;
 use yii\web\BadRequestHttpException;
@@ -15,7 +15,7 @@ class FeatureTagController extends Controller
     public function actionIndex()
     {
         // Fetch the current sequences
-        $sequences = MasterArticleTag::find()->select(['sequence', 'id'])->indexBy('sequence')->column();
+        $sequences = MasterBlogTag::find()->select(['sequence', 'id'])->indexBy('sequence')->column();
 
         return $this->render('index', [
             'sequences' => $sequences,
@@ -35,14 +35,14 @@ class FeatureTagController extends Controller
             Yii::info('Received sequenceIndex: ' . $sequenceIndex . ', tagId: ' . $tagId);
 
             // Find the existing record or create a new one
-            $model = MasterArticleTag::findOne(['id' => $tagId]);
+            $model = MasterBlogTag::findOne(['id' => $tagId]);
             if ($model === null) {
                 Yii::error('Tag not found for ID: ' . $tagId);
                 return ['success' => false, 'error' => 'Tag not found'];
             }
 
 
-            MasterArticleTag::updateAll(['sequence' => NULL], ['sequence' => $sequenceIndex]);
+            MasterBlogTag::updateAll(['sequence' => NULL], ['sequence' => $sequenceIndex]);
 
             // Encode the updated sequence array back to JSON and save it
             $model->sequence = $sequenceIndex;

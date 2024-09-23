@@ -130,6 +130,22 @@ return [
     ],
 
 
+    '/profile/blog/validate' => '/profile/blog/validate',
+    '/profile/blog/validate-comment' => '/profile/blog/validate-comment',
+    '/profile/blog/validate-reply' => '/profile/blog/validate-reply',
+    '/profile/blog/create' => '/profile/blog/create',
+    '/profile/blog/reply' => '/profile/blog/reply',
+    '/profile/blog/flag' => '/profile/blog/flag',
+    '/profile/blog/update/<slug>' => '/profile/blog/update',
+    '/profile/blog/<user_handle>/<slug>' => '/profile/blog/view',
+    '/profile/blog/<user_handle>' => '/profile/blog/index',
+
+    [
+        'pattern' => '/profile/blog/validate/<id:\w+>',
+        'route' => '/profile/blog/validate',
+        'defaults' => ['id' => '']
+    ],
+
 
 
     '/profile/share-safari-all/<user_handle>' => '/profile/share-safari/viewall',

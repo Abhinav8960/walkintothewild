@@ -2,15 +2,15 @@
 
 namespace common\models;
 
-// use common\models\article\articleSource\ArticleSource;
-// use common\models\article\articleTag\ArticleTag as ArticleTagArticleTag;
-// use common\models\article\category\Category;
-// use common\models\article\frequency\Frequency;
-use common\models\cms\article\Article;
-use common\models\cms\article\ArticleAuthor;
-use common\models\cms\article\ArticleTag;
-use common\models\cms\article\MasterArticleTag;
-use common\models\cms\article\MasterArticleTopic;
+// use common\models\blog\blogSource\BlogSource;
+// use common\models\blog\blogTag\BlogTag as BlogTagBlogTag;
+// use common\models\blog\category\Category;
+// use common\models\blog\frequency\Frequency;
+use common\models\cms\blog\Blog;
+use common\models\cms\blog\BlogAuthor;
+use common\models\cms\blog\BlogTag;
+use common\models\cms\blog\MasterBlogTag;
+use common\models\cms\blog\MasterBlogTopic;
 use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\flagreason\Flagreason;
 use common\models\master\country\MasterCountry;
@@ -159,7 +159,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     }
 
 
-    public static function articleuserstatusoption()
+    public static function bloguserstatusoption()
     {
         return [1 => 'Publish', 0 => 'Unpublish', -1 => 'Delete'];
     }
@@ -230,8 +230,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
             4 => 'Operator View',
             5 => 'Share Safari',
             6 => 'Join Safari',
-            7 => 'Article Listing',
-            8 => 'Article Detail',
+            7 => 'Blog Listing',
+            8 => 'Blog Detail',
             9 => 'Term & Condition',
             10 => 'Accomodation',
             11 => 'Package List',
@@ -450,16 +450,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function authoroption()
     {
-        return ArrayHelper::map(ArticleAuthor::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['user_id' => null])->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
+        return ArrayHelper::map(BlogAuthor::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['user_id' => null])->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
     }
 
     public static function userauthoroption()
     {
-        return ArrayHelper::map(ArticleAuthor::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['not', ['user_id' => null]])->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
+        return ArrayHelper::map(BlogAuthor::find()->where(['status' => self::STATUS_ACTIVE])->andWhere(['not', ['user_id' => null]])->orderBy(['author_name' => SORT_ASC])->all(), 'id', 'author_name');
     }
     // public static function sourceoption()
     // {
-    //     return ArrayHelper::map(ArticleSource::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['article_source' => SORT_ASC])->all(), 'id', 'article_source');
+    //     return ArrayHelper::map(BlogSource::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['blog_source' => SORT_ASC])->all(), 'id', 'blog_source');
     // }
     // public static function frequencyoption()
     // {
@@ -592,16 +592,16 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function tagoption()
     {
-        return ArrayHelper::map(MasterArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterBlogTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
-    // public static function articletagoption()
+    // public static function blogtagoption()
     // {
-    //     return ArrayHelper::map(ArticleTagArticleTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+    //     return ArrayHelper::map(BlogTagBlogTag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     // }
 
     public static function packagefeatureoptiontopicoption()
     {
-        return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterBlogTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function packagefeatureoption()
@@ -614,10 +614,10 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return ArrayHelper::map(MasterPackageInclude::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
-    // public static function articleoption()
+    // public static function blogoption()
     // {
 
-    //     $query = Article::find()
+    //     $query = Blog::find()
     //         // ->where(['status' => self::STATUS_ACTIVE])
     //         ->where("status=1 AND (user_type=3)")
     //         ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
@@ -631,17 +631,17 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     //     return $result;
     // }
 
-    // public static function articleoptionfeature($ids = null)
+    // public static function blogoptionfeature($ids = null)
     // {
 
-    //     $query = Article::find()
+    //     $query = Blog::find()
     //         // ->where(['status' => self::STATUS_ACTIVE])
-    //         ->where("article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and user_type=3) OR article.id IN (SELECT id FROM `article` WHERE (`article`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`article`.`status`=1) and is_approved=1 and user_type IN (1,2))")
+    //         ->where("blog.id IN (SELECT id FROM `blog` WHERE (`blog`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`blog`.`status`=1) and user_type=3) OR blog.id IN (SELECT id FROM `blog` WHERE (`blog`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`blog`.`status`=1) and is_approved=1 and user_type IN (1,2))")
     //         ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
     //         ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
     //     if ($ids) {
-    //         $query->andWhere("article.id NOT IN ($ids)");
+    //         $query->andWhere("blog.id NOT IN ($ids)");
     //     }
     //     // Get all the models
     //     $parks = $query->all();
@@ -967,7 +967,7 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
 
     public static function topicoption()
     {
-        return ArrayHelper::map(MasterArticleTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
+        return ArrayHelper::map(MasterBlogTopic::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all(), 'id', 'title');
     }
 
     public static function packagelist()
