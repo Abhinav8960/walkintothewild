@@ -101,8 +101,7 @@ $this->params['title'] = $this->title; ?>
                             <div class="btns-safaries">
                                 <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { ?>
                                     <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="#">Closed Safari</a>
-                                <?php } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { ?>
-                                    <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="#">No Seat Available</a>
+
                                     <?php } else {
                                     if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
@@ -225,8 +224,6 @@ $this->params['title'] = $this->title; ?>
                                 <div class="btns-safaries">
                                     <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { ?>
                                         <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">Closed Safari</a>
-                                    <?php } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>
                                         <?php } else {
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
@@ -285,20 +282,12 @@ $this->params['title'] = $this->title; ?>
                     </div>
                 </div>
 
-                <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important" >
+                <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important" >
                     <div class="google-ad-box  mb-5" style="border:none">
-                        <ins class="adsbygoogle"
-                            style="display:block"
-                            data-ad-client="ca-pub-6116324330184807"
-                            data-ad-slot="9287923659"
-                            data-ad-format="auto"
-                            data-full-width-responsive="true"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
+                        
                     </div>
                 </div>
-                
+
 
             </div>
         </div>

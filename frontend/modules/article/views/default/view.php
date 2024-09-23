@@ -119,17 +119,9 @@ if ($article->meta_title != '') {
                                     ]) ?>
                                 </div>
                                 
-                                <div class="advertisment mt-5">
+                                <div class="advertisment mt-5"  style="display: none">
                                     <div class="google-ad300  mb-5" style="border:none">
-                                        <ins class="adsbygoogle"
-                                            style="display:block"
-                                            data-ad-client="ca-pub-6116324330184807"
-                                            data-ad-slot="5518372486"
-                                            data-ad-format="auto"
-                                            data-full-width-responsive="true"></ins>
-                                        <script>
-                                            (adsbygoogle = window.adsbygoogle || []).push({});
-                                        </script>
+                                        
                                     </div>
                                 </div>
                                 
@@ -147,17 +139,9 @@ if ($article->meta_title != '') {
                             </div>
                             <?= $this->render('_topic_search') ?>
                         </div>
-                        <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important">
+                        <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important"">
                             <div class="google-ad-box  mb-5" style="border:none">
-                                <ins class="adsbygoogle"
-                                    style="display:block"
-                                    data-ad-client="ca-pub-6116324330184807"
-                                    data-ad-slot="9287923659"
-                                    data-ad-format="auto"
-                                    data-full-width-responsive="true"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
+                                
                             </div>
                         </div>
                         

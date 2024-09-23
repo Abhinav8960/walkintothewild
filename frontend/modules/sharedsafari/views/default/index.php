@@ -109,17 +109,9 @@ $recentposts = ArticleSearch::recentpost();
 
                             ]) ?>
                         </div>
-                        <div class="advertisment pt-md-2 pt-5" >
+                        <div class="advertisment pt-md-2 pt-5" style="display: none !important" >
                             <div class="google-ad-box  mb-5" style="border:none">
-                                <ins class="adsbygoogle"
-                                    style="display:block"
-                                    data-ad-client="ca-pub-6116324330184807"
-                                    data-ad-slot="9287923659"
-                                    data-ad-format="auto"
-                                    data-full-width-responsive="true"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
+                                
                             </div>
                         </div>
                         

@@ -50,12 +50,15 @@ $this->params['baseurl'] = $webasset->baseUrl;
     <div class="card_body">
         <?php
         $class = '';
-        if (Yii::$app->user->identity) {
-            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
-            if ($share_safari_intrested) {
-                $class = 'background-color: #4B4B4B;';
-            }
-        } ?>
+        // if (Yii::$app->user->identity) {
+        //     $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
+        //     if ($share_safari_intrested) {
+        //         $class = 'background-color: #4B4B4B;';
+        //     }
+        // }
+        if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
+            $class = 'background-color: gray;';
+        }  ?>
         <div class="top_seats" style='<?= $class ?>'>
             <div class="safari d-flex justify-content-between ">
                 <div class="safarinum d-flex gap-2 align-items-center ">
@@ -66,9 +69,13 @@ $this->params['baseurl'] = $webasset->baseUrl;
                     <p class="text_safari">SEATS</p>
                     <?php if ($share_safari->type == ShareSafari::TYPE_SAFARI) { ?>
                         <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
-                    <?php } else { ?>
-                        <h6 class="number-safari"><?= $share_safari->total_seat ?></h6>
-                    <?php } ?>
+                        <?php } else {
+                        if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {  ?>
+                            <h6 class="number-safari">0</h6>
+                        <?php } else { ?>
+                            <h6 class="number-safari"><?= $share_safari->total_seat ?></h6>
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </div>
@@ -112,7 +119,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { // Closed
                             echo '<a href="#">Closed Safari</a>';
                         } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
-                            echo '<a href="#">No seats</a>';
+                            echo '<a style="background-color:gray;" href="#">No seats</a>';
                         } else { // Open Safari
                             if (Yii::$app->user->identity) {
                                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
