@@ -107,7 +107,7 @@ class SiteController extends RestController
 
                 if ($auth && $model->apiLogin()) { // login
                     /* @var User $user */
-                   
+
                     $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($auth->user->username), $model);
                     // $model->UserSession($accesstoken);
                     $data = [];
@@ -122,12 +122,12 @@ class SiteController extends RestController
 
                     if ($model->email !== null && User::find()->where(['email' => $model->email])->exists()) {
 
-
-                        $user = User::find()->where(['email1' => $model->email])->one();
+                        $user = User::find()->where(['email' => $model->email, $model->source . '_source_id' => $model->source_id, 'status' => User::STATUS_ACTIVE])->one();
                         // $saveuser =  $user->updateAttributes([$model->source . '_source_id' => $model->source_id]);
 
-                       
+
                         if ($user) {
+
 
                             $accesstoken = Yii::$app->api->createAccesstoken(User::findByUsernameFrontend($user->username), $model);
                             $data = [];
@@ -137,10 +137,11 @@ class SiteController extends RestController
 
 
 
+
                             \Yii::$app->api->sendResponse($data);
                         } else {
 
-                            Yii::$app->api->sendFailedResponse([], "Source id is already available in records and not matching with given");
+                            Yii::$app->api->sendFailedResponse([], "Source id is already available in records and not matching with given", 422);
                         }
                     } else {
 
@@ -178,7 +179,7 @@ class SiteController extends RestController
                 Yii::$app->api->sendFailedResponse([], "you are not register with us, check source");
             }
         } else {
-            Yii::$app->api->sendFailedResponse($model->errors);
+            Yii::$app->api->sendFailedResponse($model->firstErrors, [], 400);
         }
     }
 
