@@ -3,8 +3,8 @@
 namespace frontend\models;
 
 use common\interfaces\NewStatusInterface;
-use common\models\cms\article\Article;
-use common\models\cms\article\ArticleComment;
+use common\models\cms\blog\Blog;
+use common\models\cms\blog\BlogComment;
 use common\models\sharesafari\ShareSafari;
 use common\models\sharesafari\ShareSafariComment;
 use Yii;

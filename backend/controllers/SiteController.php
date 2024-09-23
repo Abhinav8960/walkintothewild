@@ -9,7 +9,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use backend\components\AuthHandler;
 use common\interfaces\StatusInterface;
-use common\models\cms\article\Article;
+use common\models\cms\blog\Blog;
 use common\models\MailLog;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
@@ -208,23 +208,23 @@ class SiteController extends Controller
 
 
 
-        $todaynew_article = Article::find()
-            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Article::STATUS_ACTIVE])
+        $todaynew_blog = Blog::find()
+            ->where(['between', 'created_at', $today_start, $today_end])->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
-        $thisweek_new_article = Article::find()
-            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Article::STATUS_ACTIVE])
+        $thisweek_new_blog = Blog::find()
+            ->where(['between', 'created_at', $startOfWeek, $endOfWeek])->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
-        $thismonth_new_article = Article::find()
-            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Article::STATUS_ACTIVE])
+        $thismonth_new_blog = Blog::find()
+            ->where(['between', 'created_at', $startOfMonth, $endOfMonth])->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
-        $lastmonth_new_article = Article::find()
-            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Article::STATUS_ACTIVE])
+        $lastmonth_new_blog = Blog::find()
+            ->where(['between', 'created_at', $startOfLastMonth, $endOfLastMonth])->andWhere(['status' => Blog::STATUS_ACTIVE])
             ->count();
 
-        $total_new_article = Article::find()->where(['status' => Article::STATUS_ACTIVE])->count();
+        $total_new_blog = Blog::find()->where(['status' => Blog::STATUS_ACTIVE])->count();
 
 
 
@@ -270,11 +270,11 @@ class SiteController extends Controller
             'lastmonth_new_fixed_departure' => $lastmonth_new_fixed_departure,
             'total_new_fixed_departure' => $total_new_fixed_departure,
 
-            'todaynew_article' => $todaynew_article,
-            'thisweek_new_article' => $thisweek_new_article,
-            'thismonth_new_article' => $thismonth_new_article,
-            'lastmonth_new_article' => $lastmonth_new_article,
-            'total_new_article' => $total_new_article,
+            'todaynew_blog' => $todaynew_blog,
+            'thisweek_new_blog' => $thisweek_new_blog,
+            'thismonth_new_blog' => $thismonth_new_blog,
+            'lastmonth_new_blog' => $lastmonth_new_blog,
+            'total_new_blog' => $total_new_blog,
         ]);
     }
 

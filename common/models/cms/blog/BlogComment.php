@@ -1,0 +1,110 @@
+<?php
+
+namespace common\models\cms\blog;
+
+use common\models\User;
+use Yii;
+
+/**
+ * This is the model class for table "blog_comment".
+ *
+ * @property int $id
+ * @property int $blog_id
+ * @property int $user_id
+ * @property string $comment
+ * @property string $comment_datetime
+ * @property int $is_approved
+ * @property int $status
+ * @property int $created_at
+ * @property int $updated_at
+ * @property int $created_by
+ * @property int $updated_by
+ */
+class BlogComment extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+{
+    use \common\traits\CommanRelationship;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'blog_comment';
+    }
+
+    public function behaviors()
+    {
+        return [
+            \yii\behaviors\TimestampBehavior::className(),
+            \yii\behaviors\BlameableBehavior::className(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['blog_id', 'user_id',  'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['comment'], 'string'],
+            [['comment_datetime'], 'safe'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'blog_id' => 'Blog ID',
+            'user_id' => 'User ID',
+            'comment' => 'Comment',
+            'comment_datetime' => 'Comment Datetime',
+            'is_approved' => 'Is Approved',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'created_by' => 'Created By',
+            'updated_by' => 'Updated By',
+        ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    public function getBlog()
+    {
+        return $this->hasOne(Blog::class, ['id' => 'blog_id']);
+    }
+
+    public function getStatusvalue()
+    {
+        if (isset($this->status)) {
+            if ($this->status == 1) {
+                return "<i class='fa fa-thumbs-up'></i>";
+            } else if ($this->status == 2) {
+                return "<i class='fa fa-thumbs-down'></i>";
+            } else {
+                return "<i class='fe fe-pause'></i>";
+            }
+        }
+        return $this->status;
+    }
+
+
+    public function getReports()
+    {
+        return $this->hasMany(BlogCommentReport::className(), ['blog_comment_id' => 'id']);
+    }
+
+
+    public function getReplies()
+    {
+        return $this->hasMany(self::class, ['parent_id' => 'id']);
+    }
+}
