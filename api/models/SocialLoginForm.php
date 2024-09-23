@@ -40,6 +40,7 @@ class SocialLoginForm extends Model
             [['device', 'platform', 'platform_version', 'browser', 'browser_version', 'firebase_token', 'avatar'], 'safe'],
             [['source', 'source_id', 'email', 'name'], 'required'],
             ['email', 'email'],
+            // ['source_id', 'sourceIdvalidators'],
             // [
             //     'email', 'exist',
             //     'targetClass' => '\common\models\User',
@@ -51,6 +52,9 @@ class SocialLoginForm extends Model
             // password is validated by validatePassword()
         ];
     }
+
+
+   
 
 
     public function apiLogin()

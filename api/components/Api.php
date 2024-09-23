@@ -50,12 +50,12 @@ class Api extends Component
     }
 
 
-    public function sendFailedResponse($errors = [], $additional_info = NULL, $error_code = 200)
+    public function sendFailedResponse($errors = [], $additional_info = NULL, $error_code = 400)
     {
         $this->setHeader($error_code);
         $msg = [];
         // $response = array('status' => false, 'error_code' => $error_code, 'errors' => $errors);
-        $response = array('errors' => $errors);
+        $response = ['errors' => $errors];
         if (!empty($additional_info)) {
             $msg['message'] = $additional_info;
             $response = array_merge($response, $msg);

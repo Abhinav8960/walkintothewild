@@ -67,13 +67,18 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 </div>
                 <div class="safarinum d-flex gap-2 align-items-center justify-content-center">
                     <p class="text_safari">SEATS</p>
-                    <?php if ($share_safari->type == ShareSafari::TYPE_SAFARI) { ?>
-                        <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
-                        <?php } else {
+                    <?php if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                        if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { ?>
+                            <h6 class="number-safari">0</h6>
+                        <?php } else { ?>
+                            <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
+                        <?php }
+                    } else {
+
                         if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {  ?>
                             <h6 class="number-safari">0</h6>
                         <?php } else { ?>
-                            <h6 class="number-safari"><?= $share_safari->total_seat ?></h6>
+                            <h6 class="number-safari"><?= $share_safari->share_seat ?></h6>
                     <?php }
                     } ?>
                 </div>
