@@ -31,7 +31,7 @@ class MasterVehicle extends \common\models\master\vehicle\MasterVehicle
     public function getImagepath()
     {
         if ($this->icon != '') {
-            return \Yii::$app->params['frontend_url'] . '/storage/vehicle/' . $this->id . '/' . $this->icon;
+            return \Yii::$app->params['frontend_url'] . 'storage/vehicle/' . $this->id . '/' . $this->icon;
         }
     }
 }

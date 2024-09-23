@@ -38,14 +38,14 @@ class MasterAnimal extends \common\models\master\animal\MasterAnimal
     public function getImagepath()
     {
         if ($this->feature_image != '') {
-            return \Yii::$app->params['frontend_url'] . '/storage/rareanimal/' . $this->id . '/' . $this->feature_image;
+            return \Yii::$app->params['frontend_url'] . 'storage/rareanimal/' . $this->id . '/' . $this->feature_image;
         }
     }
 
     public function getBannerimagepath()
     {
         if ($this->banner != '') {
-            return \Yii::$app->params['frontend_url'] . '/storage/rareanimal/' . $this->id . '/' . $this->banner;
+            return \Yii::$app->params['frontend_url'] . 'storage/rareanimal/' . $this->id . '/' . $this->banner;
         }
     }
 
