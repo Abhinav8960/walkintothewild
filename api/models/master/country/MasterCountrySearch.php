@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\country;
+namespace api\models\master\country;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\country\MasterCountry;
+use api\models\master\country\MasterCountry;
 
 /**
- * MasterCountrySearch represents the model behind the search form of `common\models\master\country\MasterCountry`.
+ * MasterCountrySearch represents the model behind the search form of `api\models\master\country\MasterCountry`.
  */
 class MasterCountrySearch extends MasterCountry
 {

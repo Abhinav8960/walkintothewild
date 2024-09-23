@@ -4,10 +4,10 @@ namespace api\models\meta;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\meta\MetaSafariSession;
+use api\models\meta\MetaSafariSession;
 
 /**
- * MetaSafariSessionSearch represents the model behind the search form of `common\models\meta\MetaSafariSession`.
+ * MetaSafariSessionSearch represents the model behind the search form of `api\models\meta\MetaSafariSession`.
  */
 class MetaSafariSessionSearch extends MetaSafariSession
 {

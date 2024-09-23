@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\master\email;
+namespace api\models\park;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\email\MasterEmail;
+use api\models\park\SafariParkZone;
 
 /**
- * MasterEmailSearch represents the model behind the search form of `common\models\master\email\MasterEmail`.
+ * SafariParkZoneSearch represents the model behind the search form of `api\models\park\SafariParkZone`.
  */
-class MasterEmailSearch extends MasterEmail
+class SafariParkZoneSearch extends SafariParkZone
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,9 @@ class MasterEmailSearch extends MasterEmail
     public function rules()
     {
         return [
-            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title'], 'string', 'max' => 255],
-            [['status'], 'safe']
+            [['safari_park_id', 'master_zone_type_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['zone_name', 'entry_gate_name'], 'string', 'max' => 255],
+            [['entry_gate_latitude', 'entry_gate_longitude'], 'string', 'max' => 50],
         ];
     }
 
@@ -41,12 +41,13 @@ class MasterEmailSearch extends MasterEmail
      */
     public function search($params)
     {
-        $query = MasterEmail::find()->where(['status' => [1, 2]]);
+        $query = SafariParkZone::find()->where(['status' => [SafariParkZone::STATUS_ACTIVE, SafariParkZone::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -60,13 +61,14 @@ class MasterEmailSearch extends MasterEmail
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'safari_park_id' => $this->safari_park_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'zone_name', $this->zone_name]);
 
         return $dataProvider;
     }

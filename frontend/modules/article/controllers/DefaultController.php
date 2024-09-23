@@ -2,8 +2,7 @@
 
 namespace frontend\modules\article\controllers;
 
-use common\interfaces\StatusInterface;
-use common\models\article\article\form\ArticleForm;
+
 use Yii;
 use frontend\models\CommentForm;
 use common\models\park\SafariPark;

@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\master\sharesafarireason;
+namespace api\models\master\sharesafarireason;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -16,64 +15,14 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class MasterShareSafariReason extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterShareSafariReason extends \common\models\master\sharesafarireason\MasterShareSafariReason
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_share_safari_reason';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['reason'], 'string', 'max' => 512],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'reason' => 'Reason',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'created_by' => 'Created By',
-            'updated_at' => 'Updated At',
-            'updated_by' => 'Updated By',
-        ];
+        $fields = parent::fields();
+        
+        $hold_fields = ['status',  'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 }

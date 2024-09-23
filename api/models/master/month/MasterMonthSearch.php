@@ -1,14 +1,15 @@
 <?php
 
-namespace common\models\master\animal;
+namespace api\models\master\month;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use api\models\master\month\MasterMonth;
 
 /**
- * MasterRareAnimalSearch represents the model behind the search form of `common\models\master\animal\MasterRareAnimal`.
+ * MasterMonthSearch represents the model behind the search form of `api\models\master\month\MasterMonth`.
  */
-class MasterRareAnimalSearch extends MasterRareAnimal
+class MasterMonthSearch extends MasterMonth
 {
     /**
      * {@inheritdoc}
@@ -16,9 +17,8 @@ class MasterRareAnimalSearch extends MasterRareAnimal
     public function rules()
     {
         return [
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['animal_name', 'banner', 'feature_image', 'know_as'], 'string', 'max' => 255],
-            [['short_description'], 'string', 'max' => 512],
+            [['month'], 'integer'],
+            [['month_name', 'month_short_name'], 'safe'],
         ];
     }
 
@@ -40,12 +40,14 @@ class MasterRareAnimalSearch extends MasterRareAnimal
      */
     public function search($params)
     {
-        $query = MasterRareAnimal::find()->where(['status' => [1, 2]]);
+        $query = MasterMonth::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['month' => SORT_ASC]],
+
         ]);
 
         $this->load($params);
@@ -58,18 +60,11 @@ class MasterRareAnimalSearch extends MasterRareAnimal
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'know_as' => $this->know_as,
-            'feature_image' => $this->feature_image,
-            'banner' => $this->banner,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'status' => $this->status,
+            'month' => $this->month,
         ]);
 
-        $query->andFilterWhere(['like', 'animal_name', $this->animal_name]);
+        $query->andFilterWhere(['like', 'month_name', $this->month_name])
+            ->andFilterWhere(['like', 'month_short_name', $this->month_short_name]);
 
         return $dataProvider;
     }

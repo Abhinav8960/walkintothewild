@@ -1,14 +1,14 @@
 <?php
 
-namespace common\models\master\sharesafarireason;
+namespace api\models\master\sharesafarireason;
 
-use common\models\master\sharesafarireason\MasterShareSafariReason;
+use api\models\master\sharesafarireason\MasterShareSafariReason;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 
 /**
- * MasterShareSafariReasonSearch represents the model behind the search form of `common\models\master\vehicle\MasterShareSafariReason`.
+ * MasterShareSafariReasonSearch represents the model behind the search form of `api\models\master\vehicle\MasterShareSafariReason`.
  */
 class MasterShareSafariReasonSearch extends MasterShareSafariReason
 {

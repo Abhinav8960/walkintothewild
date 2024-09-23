@@ -2,7 +2,7 @@
 
 namespace backend\modules\cms\controllers;
 
-use common\interfaces\StatusInterface;
+
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -32,7 +32,7 @@ class ArticleByUserController extends Controller
     {
         $searchModel = new ArticleSearch();
         $searchModel->report_days = 'today';
-        $searchModel->status = StatusInterface::STATUS_ACTIVE;
+        $searchModel->status = Article::STATUS_ACTIVE;
         $dataProvider = $searchModel->search($this->request->queryParams);
         $dataProvider->query->andWhere(['not', ['user_id' => null]]);
         $dataProvider->query->andWhere("user_type=1 OR user_type=2");
@@ -179,7 +179,7 @@ class ArticleByUserController extends Controller
         $articleTopics = ArticleTopic::findAll(['article_id' => $model->id]);
         if (!empty($articleTopics)) {
             foreach ($articleTopics as $articleTopic) {
-                $articleTopic->status = StatusInterface::STATUS_DELETE;
+                $articleTopic->status = ArticleTopic::STATUS_DELETE;
                 $articleTopic->save();
             }
         }

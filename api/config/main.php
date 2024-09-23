@@ -19,6 +19,9 @@ return [
         'master' => [
             'class' => 'api\modules\master\Module',
         ],
+        'park' => [
+            'class' => 'api\modules\park\Module',
+        ],
 
     ],
     'components' => [
@@ -75,6 +78,9 @@ return [
                 'meta/<action>' => 'meta/default/<action>',
                 'master/<action>' => 'master/default/<action>',
                 'master/<action>/<slug>' => 'master/default/<action>',
+
+                'park' => 'park/default/index',
+                'park/<slug>' => 'park/default/view',
 
 
             ],

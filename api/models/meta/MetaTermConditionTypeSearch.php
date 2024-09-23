@@ -4,10 +4,10 @@ namespace api\models\meta;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\meta\MetaTermConditionType;
+use api\models\meta\MetaTermConditionType;
 
 /**
- * MetaTermConditionTypeSearch represents the model behind the search form of `common\models\meta\MetaTermConditionType`.
+ * MetaTermConditionTypeSearch represents the model behind the search form of `api\models\meta\MetaTermConditionType`.
  */
 class MetaTermConditionTypeSearch extends MetaTermConditionType
 {

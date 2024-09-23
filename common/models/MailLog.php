@@ -192,7 +192,7 @@ class MailLog extends \yii\db\ActiveRecord implements \common\interfaces\StatusI
                 $params['is_email_sending'] = true; // Add this flag
 
                 $message = $mailer->compose($template->path, $params)
-                    ->setFrom('no-reply@walkintothewild.in')
+                    ->setFrom(['no-reply@walkintothewild.in' => 'Walk Into The Wild'])
                     ->setTo($log->torecipient->recipient)
                     ->setBcc($bcc)
                     ->setCc($cc)

@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\bonusexperience;
+namespace api\models\master\bonusexperience;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\bonusexperience\MasterBonusExperience;
+use api\models\master\bonusexperience\MasterBonusExperience;
 
 /**
- * MasterBonusExperienceSearch represents the model behind the search form of `common\models\master\bonusexperience\MasterBonusExperience`.
+ * MasterBonusExperienceSearch represents the model behind the search form of `api\models\master\bonusexperience\MasterBonusExperience`.
  */
 class MasterBonusExperienceSearch extends MasterBonusExperience
 {
@@ -40,7 +40,7 @@ class MasterBonusExperienceSearch extends MasterBonusExperience
      */
     public function search($params)
     {
-        $query = MasterBonusExperience::find()->where(['status' => [1, 2]]);
+        $query = MasterBonusExperience::find()->where(['status' => [MasterBonusExperience::STATUS_ACTIVE, MasterBonusExperience::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

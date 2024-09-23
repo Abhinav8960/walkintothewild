@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\master\email;
+namespace api\models\park;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\email\MasterMailTemplate;
+use api\models\park\SafariParkVehicle;
 
 /**
- * MasterMailTemplateSearch represents the model behind the search form of `common\models\master\email\MasterMailTemplate`.
+ * SafariParkVehicleSearch represents the model behind the search form of `api\models\park\SafariParkVehicle`.
  */
-class MasterMailTemplateSearch extends MasterMailTemplate
+class SafariParkVehicleSearch extends SafariParkVehicle
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,7 @@ class MasterMailTemplateSearch extends MasterMailTemplate
     public function rules()
     {
         return [
-            [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'path'], 'string', 'max' => 255],
+            [['safari_park_id', 'vehicle_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
         ];
     }
 
@@ -40,12 +39,13 @@ class MasterMailTemplateSearch extends MasterMailTemplate
      */
     public function search($params)
     {
-        $query = MasterMailTemplate::find()->where(['status' => [1, 2]]);
+        $query = SafariParkVehicle::find()->where(['status' => [SafariParkVehicle::STATUS_ACTIVE, SafariParkVehicle::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -59,14 +59,14 @@ class MasterMailTemplateSearch extends MasterMailTemplate
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'path' => $this->path,
+            'safari_park_id' => $this->safari_park_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
-        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'vehicle_id', $this->vehicle_id]);
 
         return $dataProvider;
     }

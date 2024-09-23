@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\state;
+namespace api\models\master\state;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\state\MasterState;
+use api\models\master\state\MasterState;
 
 /**
- * MasterStateSearch represents the model behind the search form of `common\models\master\state\MasterState`.
+ * MasterStateSearch represents the model behind the search form of `api\models\master\state\MasterState`.
  */
 class MasterStateSearch extends MasterState
 {

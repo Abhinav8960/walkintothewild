@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\suggetioncategory;
+namespace api\models\master\suggetioncategory;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\suggetioncategory\MasterSuggestionCategory;
+use api\models\master\suggetioncategory\MasterSuggestionCategory;
 
 /**
- * MasterSuggestionCategorySearch represents the model behind the search form of `common\models\master\suggetioncategory\MasterSuggestionCategory`.
+ * MasterSuggestionCategorySearch represents the model behind the search form of `api\models\master\suggetioncategory\MasterSuggestionCategory`.
  */
 class MasterSuggestionCategorySearch extends MasterSuggestionCategory
 {
@@ -40,11 +40,11 @@ class MasterSuggestionCategorySearch extends MasterSuggestionCategory
      */
     public function search($params)
     {
-        $query = MasterSuggestionCategory::find()->where(['status' => [1, 2]]);
+        $query = MasterSuggestionCategory::find()->where(['status' => [MasterSuggestionCategory::STATUS_ACTIVE, MasterSuggestionCategory::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 
-      
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['sequence' => SORT_ASC]],

@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\location;
+namespace api\models\master\location;
 
-use common\models\master\location\MasterLocation;
+use api\models\master\location\MasterLocation;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * MasterLocationSearch represents the model behind the search form of `common\models\master\location\MasterLocation`.
+ * MasterLocationSearch represents the model behind the search form of `api\models\master\location\MasterLocation`.
  */
 class MasterLocationSearch extends MasterLocation
 {

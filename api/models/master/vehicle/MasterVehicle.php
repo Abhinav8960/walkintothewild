@@ -1,8 +1,7 @@
 <?php
 
-namespace common\models\master\vehicle;
+namespace api\models\master\vehicle;
 
-use common\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -17,76 +16,22 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterVehicle extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class MasterVehicle extends \common\models\master\vehicle\MasterVehicle
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_vehicle';
-    }
-
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['vehicle_name'], 'required'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['vehicle_name', 'icon'], 'string', 'max' => 125],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'vehicle_name' => 'Vehicle Name',
-            'icon' => 'Icon',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
-        ];
+        $fields = parent::fields();
+        $fields[] = 'imagepath';
+        $hold_fields = ['status', 'icon', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 
 
     public function getImagepath()
     {
         if ($this->icon != '') {
-            return '/storage/vehicle/' . $this->id . '/' . $this->icon;
+            return \Yii::$app->params['frontend_url'] . '/storage/vehicle/' . $this->id . '/' . $this->icon;
         }
     }
 }

@@ -4,10 +4,10 @@ namespace api\models\meta;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\meta\MetaWildLifeType;
+use api\models\meta\MetaWildLifeType;
 
 /**
- * MetaWildLifeTypeSearch represents the model behind the search form of `common\models\meta\MetaWildLifeType`.
+ * MetaWildLifeTypeSearch represents the model behind the search form of `api\models\meta\MetaWildLifeType`.
  */
 class MetaWildLifeTypeSearch extends MetaWildLifeType
 {

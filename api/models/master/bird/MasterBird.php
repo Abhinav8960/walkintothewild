@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models\master\bird;
+namespace api\models\master\bird;
 
-use common\models\meta\MetaBirdType;
-use common\traits\CommanRelationship;
+use api\models\meta\MetaBirdType;
+use api\traits\CommanRelationship;
 use Yii;
 
 /**
@@ -23,94 +23,23 @@ use Yii;
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterBird extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class MasterBird extends \common\models\master\bird\MasterBird
 {
-    use CommanRelationship;
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
+    public function fields()
     {
-        return 'master_bird';
-    }
+        $fields = parent::fields();
+        $fields[] = 'imagepath';
+        $fields[] = 'Birdtype';
 
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => \yii\behaviors\BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            [
-                'class' => \yii\behaviors\TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'value' => function () {
-                    return time();
-                },
-            ],
-            'slug' => [
-                'class' => 'skeeks\yii2\slug\SlugBehavior',
-                'slugAttribute' => 'slug', //The attribute to be generated
-                'attribute' => 'name', //The attribute from which will be generated
-                'maxLength' => 255,
-                'ensureUnique' => true,
-                'slugifyOptions' => [
-                    'lowercase' => true,
-                    'separator' => '-',
-                    'trim' => true
-                ]
-            ]
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['name', 'slug', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'required'],
-            [['long_description'], 'string'],
-            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'slug', 'know_as', 'image'], 'string', 'max' => 255],
-            [['bird_type_id'], 'string', 'max' => 100],
-            [['short_description'], 'string', 'max' => 512],
-            [['slug'], 'unique'],
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'bird_type_id' => 'Bird Type ID',
-            'slug' => 'Slug',
-            'know_as' => 'Know As',
-            'short_description' => 'Short Description',
-            'long_description' => 'Long Description',
-            'image' => 'Image',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'created_by' => 'Created By',
-            'updated_by' => 'Updated By',
-        ];
+        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
     }
 
     public function getImagepath()
     {
         if ($this->image != '') {
-            return '/storage/bird/' . $this->id . '/' . $this->image;
+            return  \Yii::$app->params['frontend_url'] . '/storage/bird/' . $this->id . '/' . $this->image;
         }
     }
 

@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\airport;
+namespace api\models\master\airport;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\airport\MasterAirport;
+use api\models\master\airport\MasterAirport;
 
 /**
- * MasterAirportSearch represents the model behind the search form of `common\models\master\airport\MasterAirport`.
+ * MasterAirportSearch represents the model behind the search form of `api\models\master\airport\MasterAirport`.
  */
 class MasterAirportSearch extends MasterAirport
 {
@@ -17,7 +17,7 @@ class MasterAirportSearch extends MasterAirport
     public function rules()
     {
         return [
-            [['city_id','state_id','country_id','created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['city_id', 'state_id', 'country_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
             [['status'], 'safe']
@@ -42,7 +42,7 @@ class MasterAirportSearch extends MasterAirport
      */
     public function search($params)
     {
-        $query = MasterAirport::find()->where(['status' => [1, 2]]);
+        $query = MasterAirport::find()->where(['status' => [MasterAirport::STATUS_ACTIVE, MasterAirport::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

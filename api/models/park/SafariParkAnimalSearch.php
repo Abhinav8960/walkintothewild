@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\master\message;
+namespace api\models\park;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\message\MasterMessage;
+use api\models\park\SafariParkAnimal;
 
 /**
- * MasterMessageSearch represents the model behind the search form of `common\models\master\message\MasterMessage`.
+ * SafariParkAnimalSearch represents the model behind the search form of `api\models\park\SafariParkAnimal`.
  */
-class MasterMessageSearch extends MasterMessage
+class SafariParkAnimalSearch extends SafariParkAnimal
 {
     /**
      * {@inheritdoc}
@@ -17,10 +17,8 @@ class MasterMessageSearch extends MasterMessage
     public function rules()
     {
         return [
-            [['page_id', 'type_id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['message'], 'string'],
-            [['module'], 'string', 'max' => 255],
-            [['code'], 'string', 'max' => 4],
+            [['safari_park_id', 'master_animal_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['animal_name'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,12 +40,12 @@ class MasterMessageSearch extends MasterMessage
      */
     public function search($params)
     {
-        $query = MasterMessage::find()->where(['status' => [1, 2]]);
+        $query = SafariParkAnimal::find()->where(['status' => [SafariParkAnimal::STATUS_ACTIVE, SafariParkAnimal::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
         ]);
 
         $this->load($params);
@@ -61,18 +59,14 @@ class MasterMessageSearch extends MasterMessage
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'module' => $this->module,
-            'page_id' => $this->page_id,
-            'type_id' => $this->type_id,
-            'message' => $this->message,
+            'safari_park_id' => $this->safari_park_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'status' => $this->status,
         ]);
-
-        $query->andFilterWhere(['like', 'code', $this->code]);
+        $query->andFilterWhere(['like', 'animal_name', $this->animal_name]);
 
         return $dataProvider;
     }

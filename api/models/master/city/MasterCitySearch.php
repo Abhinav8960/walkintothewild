@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\city;
+namespace api\models\master\city;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\master\city\MasterCity;
+use api\models\master\city\MasterCity;
 
 /**
- * MasterCitySearch represents the model behind the search form of `common\models\master\city\MasterCity`.
+ * MasterCitySearch represents the model behind the search form of `api\models\master\city\MasterCity`.
  */
 class MasterCitySearch extends MasterCity
 {
@@ -17,7 +17,7 @@ class MasterCitySearch extends MasterCity
     public function rules()
     {
         return [
-            [['status', 'state_id','country_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['status', 'state_id', 'country_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['city_name'], 'string', 'max' => 125],
         ];
     }
@@ -40,7 +40,7 @@ class MasterCitySearch extends MasterCity
      */
     public function search($params)
     {
-        $query = MasterCity::find()->where(['status' => [1, 2]]);
+        $query = MasterCity::find()->where(['status' => [MasterCity::STATUS_ACTIVE, MasterCity::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

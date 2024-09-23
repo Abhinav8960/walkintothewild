@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\master\operatorcategory;
+namespace api\models\master\operatorcategory;
 
-use common\models\master\operatorcategory\MasterOperatorCategory;
+use api\models\master\operatorcategory\MasterOperatorCategory;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * MasterOperatorCategorySearch represents the model behind the search form of `common\models\master\animal\MasterAnimal`.
+ * MasterOperatorCategorySearch represents the model behind the search form of `api\models\master\animal\MasterAnimal`.
  */
 class MasterOperatorCategorySearch extends MasterOperatorCategory
 {
@@ -40,7 +40,7 @@ class MasterOperatorCategorySearch extends MasterOperatorCategory
      */
     public function search($params)
     {
-        $query = MasterOperatorCategory::find()->where(['status' => [1, 2]]);
+        $query = MasterOperatorCategory::find()->where(['status' => [MasterOperatorCategory::STATUS_ACTIVE, MasterOperatorCategory::STATUS_SUSPEND]]);
 
         // add conditions that should always apply here
 

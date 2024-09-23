@@ -89,7 +89,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function afterLogin()
     {
         $session = Yii::$app->session;
-        $sessionId = $session->getId();
+        $sessionId = $session->get('user_session_id');
         $userId = Yii::$app->user->id;
         $token = Yii::$app->security->generateRandomString();
         $agent = new \Jenssegers\Agent\Agent();

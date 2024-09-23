@@ -101,8 +101,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
                                 <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) {
                                     echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>';
-                                } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
-                                    echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>';
                                 } else {
                                     if (Yii::$app->user->identity) {
                                         $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
@@ -261,8 +259,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
                                     <?php if ($share_safari->status == ShareSafari::STATUS_SUSPEND) {
                                         echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2" href="#">Closed Safari</a>';
-                                    } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
-                                        echo '<a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="#">No Seat Available</a>';
                                     } else {
                                         if (Yii::$app->user->identity) {
                                             $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
@@ -481,10 +477,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 if ($share_safari->safarioperator) {
                     echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $share_safari->safarioperator]);
                 } ?>
-                
-                
-                
-                
+
+
+
+
             </div>
         </div>
         <div class="row pb-5 d-lg-none">
@@ -495,20 +491,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
             </div>
         </div>
         <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park, 'active_safari' => $share_safari]) ?>
-        
-        <div class="advertisment pt-md-2 pt-5" >
-                    <div class="google-ad-box  mb-5" style="border:none">
-                        <ins class="adsbygoogle"
-                            style="display:block"
-                            data-ad-client="ca-pub-6116324330184807"
-                            data-ad-slot="9287923659"
-                            data-ad-format="auto"
-                            data-full-width-responsive="true"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                    </div>
-                </div>
+
+        <div class="advertisment pt-md-2 pt-5" style="display: none !important">
+            <div class="google-ad-box  mb-5" style="border:none">
+                
+            </div>
+        </div>
 
 </section>
 

@@ -18,6 +18,10 @@ use Yii;
  */
 class MasterOperatorCategory extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
+
+    const TYPE_SAFARI = 1;
+    const TYPE_BIRDING = 2;
+
     use CommanRelationship;
     /**
      * {@inheritdoc}
@@ -73,6 +77,14 @@ class MasterOperatorCategory extends \yii\db\ActiveRecord implements \common\int
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
+        ];
+    }
+
+    public static function OperatorCategoryType(){
+
+        return [
+            SELF::TYPE_SAFARI => 'Safari',
+            SELF::TYPE_BIRDING => 'Birding'
         ];
     }
 }

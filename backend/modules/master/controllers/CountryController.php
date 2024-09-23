@@ -2,7 +2,7 @@
 
 namespace backend\modules\master\controllers;
 
-use common\interfaces\StatusInterface;
+
 use common\models\master\country\form\MasterCountryForm;
 use common\models\master\country\MasterCountry;
 use common\models\master\country\MasterCountrySearch;
@@ -41,7 +41,7 @@ class CountryController extends Controller
     public function actionCreate()
     {
         $model = new MasterCountryForm();
-        $model->status = StatusInterface::STATUS_ACTIVE;
+        $model->status = MasterCountry::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -117,7 +117,7 @@ class CountryController extends Controller
     {
         $model = $this->findModel($id);
         $model->country_name = $model->id . '_' . $model->country_name;
-        $model->status = StatusInterface::STATUS_DELETE;
+        $model->status = MasterCountry::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(\Yii::$app->request->referrer);
@@ -132,7 +132,7 @@ class CountryController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = MasterCountry::findOne(['id' => $id, 'status' => [StatusInterface::STATUS_ACTIVE, StatusInterface::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterCountry::findOne(['id' => $id, 'status' => [MasterCountry::STATUS_ACTIVE, MasterCountry::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 
