@@ -152,7 +152,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/car-seat_5102816.png" alt="" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Seats">
                                         </div>
                                         <div class="text-form">
-                                            <p class="mb-0">Available Seats - <?= $share_safari->share_seat ?>/<?= $share_safari->total_seat ?></p>
+                                            <p class="mb-0">Available Seats - <?php if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) {
+                                                                                    echo '0';
+                                                                                } else {
+                                                                                    echo $share_safari->share_seat;
+                                                                                } ?>/<?= $share_safari->total_seat ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -494,7 +498,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
         <div class="advertisment pt-md-2 pt-5" style="display: none !important">
             <div class="google-ad-box  mb-5" style="border:none">
-                
+
             </div>
         </div>
 

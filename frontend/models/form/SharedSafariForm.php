@@ -146,7 +146,13 @@ class SharedSafariForm extends \yii\base\Model
         $this->shared_safari_model->estimate_price_max = $this->estimate_price_max;
         $this->shared_safari_model->safari_plan = $this->safari_plan;
         $this->shared_safari_model->total_seat = $this->total_seat;
-        $this->shared_safari_model->share_seat = $this->share_seat;
+
+        if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
+            $this->shared_safari_departure_model->share_seat = 0;
+        } else {
+            $this->shared_safari_departure_model->share_seat = $this->share_seat;
+        }
+
         $this->shared_safari_model->website_url = $this->website_url;
 
 
