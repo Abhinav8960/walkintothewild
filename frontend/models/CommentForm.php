@@ -2,8 +2,8 @@
 
 namespace frontend\models;
 
-use common\models\cms\article\Article;
-use common\models\cms\article\ArticleComment;
+use common\models\cms\blog\Blog;
+use common\models\cms\blog\BlogComment;
 use Yii;
 use yii\base\Model;
 
@@ -40,16 +40,16 @@ class CommentForm extends Model
      * @param Corporate $corporate
      * @return void
      */
-    public function comment(Article $article)
+    public function comment(Blog $blog)
     {
 
         // $agent = new \Jenssegers\Agent\Agent();
         // $agent->setUserAgent(Yii::$app->request->userAgent);
-        $comment = new ArticleComment();
+        $comment = new BlogComment();
         $comment->comment = $this->comment;
         $comment->comment_datetime = date('Y-m-d H:i:s');
         $comment->user_id = Yii::$app->user->id;
-        $comment->article_id = $article->id;
+        $comment->blog_id = $blog->id;
         // $comment->ip_address = Yii::$app->getRequest()->getUserIp();
         // $comment->device_type = $agent->device();
         // $comment->browser = $agent->browser();
