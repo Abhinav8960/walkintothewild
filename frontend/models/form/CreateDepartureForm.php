@@ -181,7 +181,13 @@ class CreateDepartureForm extends \yii\base\Model
         $this->shared_safari_departure_model->cost_per_person = $this->cost_per_person;
         $this->shared_safari_departure_model->safari_plan = $this->safari_plan;
         $this->shared_safari_departure_model->total_seat = $this->total_seat;
-        $this->shared_safari_departure_model->share_seat = $this->share_seat;
+
+        if ($this->status == ShareSafari::STATUS_FULL_SEAT) {
+            $this->shared_safari_departure_model->share_seat = 0;
+        } else {
+            $this->shared_safari_departure_model->share_seat = $this->share_seat;
+        }
+        
         $this->shared_safari_departure_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24))) + 1;
         $this->shared_safari_departure_model->status = $this->status;
 
