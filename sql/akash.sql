@@ -274,7 +274,6 @@ ALTER TABLE `article`
   DROP `sub_title`,
   DROP `feature_image`,
   DROP `author_name`,
- 
   DROP `view`,
   DROP `post_body`,
   DROP `comment_allowed`,
@@ -285,11 +284,10 @@ ALTER TABLE `article`
   DROP `is_approved`;
 DROP TABLE `article_category`;
 
+
+ALTER TABLE `master_article_tag` RENAME `master_tag`;
+ALTER TABLE `master_article_topic` RENAME `master_topic`;
 ALTER TABLE `article_tag` CHANGE `master_article_tag_id` `master_tag_id` INT NOT NULL;
-ALTER TABLE master_article_tag RENAME master_tag;
-ALTER TABLE master_article_topic RENAME master_topic;
-
-
-DROP TABLE `blog_category`;
+ALTER TABLE `article_topic` CHANGE `master_article_topic_id` `master_topic_id` INT NOT NULL;
 
 ALTER TABLE `article` ADD `delete_reason_id` INT NULL AFTER `updated_by`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
