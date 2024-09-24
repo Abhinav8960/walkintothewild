@@ -12,7 +12,7 @@ use yii\base\Model;
 
 class ArticleForm extends Model
 {
-  
+
     public $title;
     public $slug;
     public $article_tags; //it comes from Backend
@@ -54,21 +54,19 @@ class ArticleForm extends Model
 
             $this->article_topics = ArticleTopic::find()->select('master_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
             $this->article_tags = ArticleTag::find()->select('master_tag_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
-           
-            
         }
     }
 
 
-   
+
 
     public function rules()
     {
         return [
-            [['title', 'description', 'article_tags', 'article_topics','article_author_id'], 'required'],
+            [['title', 'description', 'article_tags', 'article_topics', 'article_author_id'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status'], 'integer'],
-            [['description', 'meta_description','meta_keywords'], 'string'],
+            [['description', 'meta_description', 'meta_keywords'], 'string'],
             [['article_topics'], 'safe'],
             [['article_authors'], 'safe'],
             [
@@ -124,13 +122,18 @@ class ArticleForm extends Model
      */
     public function initializeForm()
     {
-     
+
         $this->article_model->title = $this->title;
         $this->article_model->slug = $this->slug;
         $this->article_model->description = $this->description;
         $this->article_model->article_date = $this->article_date;
         $this->article_model->article_author_id = $this->article_author_id;
-        $this->article_model->meta_title = $this->meta_title;
+        if ($this->meta_title <> '') {
+            $this->article_model->meta_title = $this->meta_title;
+        } else {
+            $this->article_model->meta_title = $this->title;
+        }
+
         $this->article_model->meta_description = $this->meta_description;
         $this->article_model->meta_keywords = $this->meta_keywords;
         $this->article_model->status = $this->status;

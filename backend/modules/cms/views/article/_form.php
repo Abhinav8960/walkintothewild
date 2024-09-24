@@ -59,6 +59,15 @@ use yii\bootstrap5\ActiveForm;
                 <div class="col-md-6">
                     <?= $form->field($model, 'article_author_id')->dropDownList(GeneralModel::authoroption(), ['prompt' => 'Select Author'])->label('Article Author <span class="necessary">*</span>') ?>
                 </div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'meta_title', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->textInput([
+                        'maxlength' => true,
+                        'placeholder' => 'Enter Meta Title',
+                    ])->label('Meta Title <span class="necessary">*</span>') ?>
+                </div>
             </div>
 
             <div class="row">
