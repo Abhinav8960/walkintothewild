@@ -291,4 +291,3 @@ ALTER TABLE `article_tag` CHANGE `master_article_tag_id` `master_tag_id` INT NOT
 ALTER TABLE `article_topic` CHANGE `master_article_topic_id` `master_topic_id` INT NOT NULL;
 
 ALTER TABLE `article` ADD `delete_reason_id` INT NULL AFTER `updated_by`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
-ALTER TABLE `article` ADD `article_author_id` INT NULL AFTER `meta_keywords`;
