@@ -18,6 +18,9 @@ class ArticleForm extends Model
     public $article_tags; //it comes from Backend
     public $description;
     public $article_date;
+    public $meta_title;
+    public $meta_description;
+    public $meta_keywords;
     public $status;
     public $banner_image;
     public $article_author_id;
@@ -45,6 +48,10 @@ class ArticleForm extends Model
             $this->article_author_id = $this->article_model->article_author_id;
             $this->status = $this->article_model->status;
 
+            $this->meta_title = $this->article_model->meta_title;
+            $this->meta_description = $this->article_model->meta_description;
+            $this->meta_keywords = $this->article_model->meta_keywords;
+
             $this->article_topics = ArticleTopic::find()->select('master_topic_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
             $this->article_tags = ArticleTag::find()->select('master_tag_id')->where(['article_id' => $this->article_model->id, 'status' => 1])->column();
            
@@ -61,7 +68,7 @@ class ArticleForm extends Model
             [['title', 'description', 'article_tags', 'article_topics','article_author_id'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status'], 'integer'],
-            [['description'], 'string'],
+            [['description', 'meta_description','meta_keywords'], 'string'],
             [['article_topics'], 'safe'],
             [['article_authors'], 'safe'],
             [
@@ -72,7 +79,7 @@ class ArticleForm extends Model
                 'skipOnEmpty' => true,
             ],
             [['title'], 'string', 'max' => 255],
-            [['slug'], 'string', 'max' => 255],
+            [['slug', 'meta_title'], 'string', 'max' => 255],
             [
                 'title',
                 'unique',
@@ -123,6 +130,9 @@ class ArticleForm extends Model
         $this->article_model->description = $this->description;
         $this->article_model->article_date = $this->article_date;
         $this->article_model->article_author_id = $this->article_author_id;
+        $this->article_model->meta_title = $this->meta_title;
+        $this->article_model->meta_description = $this->meta_description;
+        $this->article_model->meta_keywords = $this->meta_keywords;
         $this->article_model->status = $this->status;
     }
 

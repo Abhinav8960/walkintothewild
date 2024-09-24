@@ -274,9 +274,7 @@ ALTER TABLE `article`
   DROP `sub_title`,
   DROP `feature_image`,
   DROP `author_name`,
-  DROP `meta_title`,
-  DROP `meta_description`,
-  DROP `meta_keywords`,
+ 
   DROP `view`,
   DROP `post_body`,
   DROP `comment_allowed`,

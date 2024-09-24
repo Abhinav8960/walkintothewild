@@ -58,6 +58,7 @@ class ArticleController extends Controller
 
                 $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
                 if ($model->validate()) {
+                    $model->meta_title = $model->title;
                     $model->initializeForm();
                     if ($model->article_model->save(false)) {
                         $model->uploadFile();
@@ -115,6 +116,7 @@ class ArticleController extends Controller
 
                 $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
                 if ($model->validate()) {
+                    $model->meta_title = $model->title;
                     $model->initializeForm();
                     if ($model->article_model->save(false)) {
                         $model->uploadFile();
@@ -247,7 +249,7 @@ class ArticleController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-   
+
 
     // public function actionArticledelete($id)
     // {

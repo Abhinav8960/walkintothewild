@@ -60,10 +60,10 @@ class Article extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function rules()
     {
         return [
-            [['description'], 'string'],
+            [['description','meta_description', 'meta_keywords',], 'string'],
             [['status', 'article_author_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['article_date'], 'safe'],
-            [['title', 'banner_image'], 'string', 'max' => 255],
+            [['title', 'banner_image', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
         ];
     }
