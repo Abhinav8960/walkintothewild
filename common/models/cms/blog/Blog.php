@@ -2,6 +2,7 @@
 
 namespace common\models\cms\blog;
 
+use common\models\cms\mastertag\MasterTag;
 use common\models\User;
 use Yii;
 
@@ -132,7 +133,7 @@ class Blog extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusI
 
     public function getBlogtag()
     {
-        return $this->hasOne(MasterBlogTag::className(), ['id' => 'blog_tag_id']);
+        return $this->hasOne(MasterTag::className(), ['id' => 'blog_tag_id']);
     }
 
     public function getBlogtopics()

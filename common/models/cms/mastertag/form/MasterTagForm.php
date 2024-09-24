@@ -1,12 +1,12 @@
 <?php
 
-namespace common\models\cms\blog\form;
+namespace common\models\cms\mastertag\form;
 
 use Yii;
-use common\models\cms\blog\MasterBlogTag;
+use common\models\cms\mastertag\MasterTag;
 
 /**
- * This is the model class for table "master_blog_category".
+ * This is the model class for table "master_tag".
  *
  * @property int $id
  * @property int|null $title
@@ -14,29 +14,29 @@ use common\models\cms\blog\MasterBlogTag;
  * @property int|null $description
  * @property int|null $status
  */
-class MasterBlogTagForm extends \yii\base\Model
+class MasterTagForm extends \yii\base\Model
 {
     public $title;
     public $status;
     public $slug;
-    public $master_blog_tag_model;
+    public $master_tag_model;
     public $action_url;
     public $action_validate_url;
 
     /**
      *
-     * @param [type] $master_blog_tag_model
+     * @param [type] $master_tag_model
      */
-    public function __construct(MasterBlogTag $master_blog_tag_model = null)
+    public function __construct(MasterTag $master_tag_model = null)
     {
-        $this->master_blog_tag_model = Yii::createObject([
-            'class' => MasterBlogTag::className()
+        $this->master_tag_model = Yii::createObject([
+            'class' => MasterTag::className()
         ]);
-        if ($master_blog_tag_model != null) {
-            $this->master_blog_tag_model = $master_blog_tag_model;
-            $this->title = $this->master_blog_tag_model->title;
-            $this->slug = $this->master_blog_tag_model->slug;
-            $this->status = $this->master_blog_tag_model->status;
+        if ($master_tag_model != null) {
+            $this->master_tag_model = $master_tag_model;
+            $this->title = $this->master_tag_model->title;
+            $this->slug = $this->master_tag_model->slug;
+            $this->status = $this->master_tag_model->status;
         }
     }
 
@@ -54,9 +54,9 @@ class MasterBlogTagForm extends \yii\base\Model
             [['slug'], 'string', 'max' => 300],
             [
                 'title', 'unique', 'when' => function ($model, $attribute) {
-                    return strtolower($this->master_blog_tag_model->$attribute) != strtolower($model->$attribute);
+                    return strtolower($this->master_tag_model->$attribute) != strtolower($model->$attribute);
                 },
-                'targetClass' => MasterBlogTag::className(), 'targetAttribute' => ['title'],
+                'targetClass' => MasterTag::className(), 'targetAttribute' => ['title'],
                 'message' => 'This Topic has already been taken'
             ],
         ];
@@ -82,8 +82,8 @@ class MasterBlogTagForm extends \yii\base\Model
      */
     public function initializeForm()
     {
-        $this->master_blog_tag_model->title = $this->title;
-        $this->master_blog_tag_model->slug = $this->slug;
-        $this->master_blog_tag_model->status = $this->status;
+        $this->master_tag_model->title = $this->title;
+        $this->master_tag_model->slug = $this->slug;
+        $this->master_tag_model->status = $this->status;
     }
 }

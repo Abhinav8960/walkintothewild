@@ -1,9 +1,9 @@
 <?php
 
-use common\models\cms\blog\MasterBlogTopic;
+use common\models\cms\blog\MasterTopic;
 use yii\helpers\Url;
 
-$topics = MasterBlogTopic::find()->where(['status' => MasterBlogTopic::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all();
+$topics = MasterTopic::find()->where(['status' => MasterTopic::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all();
 ?>
 <div class="topics_listing">
     <ul>

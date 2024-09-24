@@ -1,15 +1,15 @@
 <?php
 
-namespace common\models\cms\blog;
+namespace common\models\cms\article;
 
 use common\models\cms\mastertag\MasterTag;
 use Yii;
 
 /**
- * This is the model class for table "blog_tag".
+ * This is the model class for table "article_tag".
  *
  * @property int $id
- * @property int $blog_id
+ * @property int $article_id
  * @property int $master_tag_id
  * @property int $status
  * @property int|null $created_at
@@ -17,7 +17,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class BlogTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class ArticleTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
 
@@ -27,7 +27,7 @@ class BlogTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
      */
     public static function tableName()
     {
-        return 'blog_tag';
+        return 'article_tag';
     }
 
     public function behaviors()
@@ -44,9 +44,9 @@ class BlogTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     public function rules()
     {
         return [
-            [['blog_id', 'master_tag_id'], 'required'],
-            [['blog_id', 'master_tag_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['blog_id', 'master_tag_id'], 'unique', 'targetAttribute' => ['blog_id', 'master_tag_id']],
+            [['article_id', 'master_tag_id'], 'required'],
+            [['article_id', 'master_tag_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_id', 'master_tag_id'], 'unique', 'targetAttribute' => ['article_id', 'master_tag_id']],
         ];
     }
 
@@ -57,8 +57,8 @@ class BlogTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
     {
         return [
             'id' => 'ID',
-            'blog_id' => 'Blog ID',
-            'master_tag_id' => 'Master Blog Tag ID',
+            'article_id' => 'Article ID',
+            'master_tag_id' => 'Master Article Tag ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -67,7 +67,7 @@ class BlogTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
         ];
     }
 
-    public function getBlogtag()
+    public function getArticletag()
     {
         return $this->hasOne(MasterTag::className(), ['id' => 'master_tag_id']);
     }

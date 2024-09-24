@@ -278,10 +278,19 @@ ALTER TABLE `blog_comment` CHANGE `article_id` `blog_id` INT NOT NULL;
 ALTER TABLE `blog_comment_report` CHANGE `article_id` `blog_id` INT NULL DEFAULT NULL, CHANGE `article_comment_id` `blog_comment_id` INT NULL DEFAULT NULL;
 
 ALTER TABLE `blog_topic` CHANGE `article_id` `blog_id` INT NOT NULL, CHANGE `master_article_topic_id` `master_blog_topic_id` INT NOT NULL;
-ALTER TABLE `blog_tag` CHANGE `article_id` `blog_id` INT NOT NULL, CHANGE `master_article_tag_id` `master_blog_tag_id` INT NOT NULL;
+ALTER TABLE `blog_tag` CHANGE `article_id` `blog_id` INT NOT NULL, CHANGE `master_article_tag_id` `master_tag_id` INT NOT NULL;
 
 
 
 
 
 ALTER TABLE `blog` ADD `delete_reason_id` INT NULL AFTER `blog_date`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
+
+
+
+
+ALTER TABLE `article_author`
+  DROP `user_id`,
+  DROP `user_type`,
+  DROP `author_image`,
+  DROP `total_view`;

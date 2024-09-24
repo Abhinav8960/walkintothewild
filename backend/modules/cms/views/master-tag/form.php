@@ -47,7 +47,7 @@ $this->params['title'] = $this->title;
 
                 <div class="row">
                     <?php
-                    if (!empty($model->master_blog_tag_model->id)) { ?>
+                    if (!empty($model->master_tag_model->id)) { ?>
                         <div class="col-md-6">
                             <?= $form->field($model, 'status')->dropDownList(GeneralModel::newstatusoption(), ['prompt' => '--Select Status--']) ?>
                         </div>

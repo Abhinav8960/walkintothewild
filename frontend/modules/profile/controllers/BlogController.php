@@ -101,7 +101,7 @@ class BlogController extends FrontendBaseController
                             foreach ($blogTopics as $blogT) {
                                 $blogTopic = new BlogTopic();
                                 $blogTopic->blog_id = $model->blog_model->id;
-                                $blogTopic->master_blog_topic_id = $blogT;
+                                $blogTopic->master_topic_id = $blogT;
                                 $blogTopic->save(false);
                             }
                         }
@@ -111,7 +111,7 @@ class BlogController extends FrontendBaseController
                             foreach ($blogTags as $blogT) {
                                 $blogTag = new BlogTag();
                                 $blogTag->blog_id = $model->blog_model->id;
-                                $blogTag->master_blog_tag_id = $blogT;
+                                $blogTag->master_tag_id = $blogT;
                                 $blogTag->save(false);
                             }
                         }
@@ -193,7 +193,7 @@ class BlogController extends FrontendBaseController
                             foreach ($blogTopics as $blogT) {
                                 $blogTopic = new BlogTopic();
                                 $blogTopic->blog_id = $model->blog_model->id;
-                                $blogTopic->master_blog_topic_id = $blogT;
+                                $blogTopic->master_topic_id = $blogT;
                                 $blogTopic->save(false);
                             }
                         }
@@ -204,7 +204,7 @@ class BlogController extends FrontendBaseController
                             foreach ($blogTags as $blogT) {
                                 $blogTag = new BlogTag();
                                 $blogTag->blog_id = $model->blog_model->id;
-                                $blogTag->master_blog_tag_id = $blogT;
+                                $blogTag->master_tag_id = $blogT;
                                 $blogTag->save(false);
                             }
                         }

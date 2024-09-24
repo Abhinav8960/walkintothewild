@@ -79,10 +79,10 @@ class BlogForm extends \yii\base\Model
             $this->is_approved = $this->blog_model->is_approved;
             $this->status = $this->blog_model->status;
             $this->user_type = $this->blog_model->user_type;
-            // $this->blog_topics = BlogTopic::find()->select('master_blog_topic_id')->where(['corporate_id' => $this->blog_model->corporate_id, 'master_blog_id' => $this->blog_model->id, 'status' => 1])->column();
+            // $this->blog_topics = BlogTopic::find()->select('master_topic_id')->where(['corporate_id' => $this->blog_model->corporate_id, 'master_blog_id' => $this->blog_model->id, 'status' => 1])->column();
 
-            $this->blog_topics = BlogTopic::find()->select('master_blog_topic_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
-            $this->blog_tags = BlogTag::find()->select('master_blog_tag_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
+            $this->blog_topics = BlogTopic::find()->select('master_topic_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
+            $this->blog_tags = BlogTag::find()->select('master_tag_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
             // dd($this->blog_tags);
         }
     }
@@ -248,26 +248,26 @@ class BlogForm extends \yii\base\Model
             }
         }
 
-        if ($this->feature_image) {
-            $storagePath = Yii::$app->params['datapath'] . '/blog';
+        // if ($this->feature_image) {
+        //     $storagePath = Yii::$app->params['datapath'] . '/blog';
 
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
-            $storagePath = $storagePath . '/' . $this->blog_model->id;
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
-            }
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
+        //     $storagePath = $storagePath . '/' . $this->blog_model->id;
+        //     if (!file_exists($storagePath)) {
+        //         mkdir($storagePath);
+        //         chmod($storagePath, 0777);
+        //     }
 
-            $fileName = 'blog_feature' . time() . '.' . $this->feature_image->extension;
-            $filePath = $storagePath . '/' . $fileName;
+        //     $fileName = 'blog_feature' . time() . '.' . $this->feature_image->extension;
+        //     $filePath = $storagePath . '/' . $fileName;
 
-            if ($this->feature_image->saveAs($filePath)) {
-                $this->blog_model->feature_image = $fileName;
-                $this->blog_model->save(false);
-            }
-        }
+        //     if ($this->feature_image->saveAs($filePath)) {
+        //         $this->blog_model->feature_image = $fileName;
+        //         $this->blog_model->save(false);
+        //     }
+        // }
     }
 }

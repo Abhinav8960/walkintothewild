@@ -1,19 +1,23 @@
 <?php
 
+use common\models\cms\article\Article;
 use common\models\GeneralModel;
 use yii\helpers\Html;
 
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-
-
-$this->title = 'Pending Article Comment';
-$this->params['breadcrumbs_home_url'] = '/';
-$this->params['breadcrumbs'][] =  ['label' => 'Pending Approvals', 'url' => '/pendingapproval/article-comment/index'];
+$this->title = 'Article';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
+$this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
 ?>
+<?php Pjax::begin([
+    'id' => 'grid-data',
+    'enablePushState' => false,
+    'enableReplaceState' => false,
+    'timeout' => false,
+]); ?>
 
 <div class="card">
     <div class="card-body">
@@ -32,27 +36,19 @@ $this->params['title'] = $this->title;
                         'attribute' => 'title',
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return Html::a($model->title, ['/cms/article/comment', 'id' => $model->id], [
-                                'style' => 'color: black !important;',
+                            return Html::a($model->title, ['article-view', 'id' => $model->id], [
                                 'title' => 'View',
+                                'style' => 'color: black !important;'
                             ]);
                         },
-                        'contentOptions' => ['style' => 'width: 20%; text-align: left;'],
+                        'contentOptions' => ['style' => 'width: 20%;'],
                     ],
                     [
-                        'label' => 'Author Name',
+                        'label' => 'Author',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->articleAuthor) ? $model->articleAuthor->author_name : '';
-                        }
-                    ],
-                    [
-                        'label' => 'Date',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            return isset($model->article_date) ? date('M d, Y', strtotime($model->article_date)) : '';
+                            return isset($model->articleAuthor) ? $model->articleAuthor->name : '';
                         }
                     ],
                     [
@@ -85,24 +81,17 @@ $this->params['title'] = $this->title;
                             return $html;
                         }
                     ],
-                    [
-                        'label' => 'Comment Count',
-                        'contentOptions' => ['style' => 'width: 10%;'],
-                        'format' => 'raw',
-                        'value' => function ($model) {
-                            if ($model->articlecomments) {
-                                return count($model->articlecomments);
-                            } else {
-                                return 0;
-                            }
-                        }
-                    ],
+
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return $model->statuslabel;
+                            if ($model->status == Article::STATUS_ACTIVE) {
+                                return "Published";
+                            } else if ($model->status == Article::STATUS_SUSPEND) {
+                                return "UnPublished";
+                            };
                         }
                     ],
 
@@ -110,11 +99,27 @@ $this->params['title'] = $this->title;
                         'class' => 'yii\grid\ActionColumn',
                         'header' => "Actions",
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
-                        'template' => '',
-                        // 'template' => '{comment}',
+                        'template' => '{update}&nbsp;',
+                        'template' => '{update}&nbsp;&nbsp;{comment}',
                         'buttons' => [
-                            // 'comment' => function ($url, $model) {
-                            //     return Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">', ['/cms/article/comment', 'id' => $model->id], ['class' => 'btn p-0 change-menuicon']);
+                            'update' => function ($url, $model) {
+                                return  Html::a('<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">
+                                ', ['update', 'id' => $model->id], [
+                                    'class' => 'btn p-0 change-menuicon',
+                                    'title' => 'Update',
+
+                                ]);
+                            },
+
+                            // 'delete' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/delete.png" alt="" width="25" height="25">', ['delete', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'name' => 'Delete',
+                            //         'data' => [
+                            //             'confirm' => 'Are you sure you want to delete  ' . $model->title . '?',
+                            //             'method' => 'post',
+                            //         ],
+                            //     ]);
                             // },
                         ]
                     ],
@@ -123,3 +128,5 @@ $this->params['title'] = $this->title;
         </div>
     </div>
 </div>
+
+<?php Pjax::end(); ?>
