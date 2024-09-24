@@ -288,9 +288,32 @@ ALTER TABLE `blog` ADD `delete_reason_id` INT NULL AFTER `blog_date`, ADD `delet
 
 
 
-
-ALTER TABLE `article_author`
+-- 24-sep-2024
+DROP TABLE `article_form`, `article_frequency`, `article_source`;
+ALTER TABLE `article`
   DROP `user_id`,
   DROP `user_type`,
-  DROP `author_image`,
-  DROP `total_view`;
+  DROP `sub_title`,
+  DROP `feature_image`,
+  DROP `author_name`,
+  DROP `meta_title`,
+  DROP `meta_description`,
+  DROP `meta_keywords`,
+  DROP `view`,
+  DROP `post_body`,
+  DROP `comment_allowed`,
+  DROP `approval_required`,
+  DROP `is_schedule`,
+  DROP `publish_date_time`,
+  DROP `sequence`,
+  DROP `is_approved`;
+DROP TABLE `article_category`;
+
+ALTER TABLE `article_tag` CHANGE `master_article_tag_id` `master_tag_id` INT NOT NULL;
+ALTER TABLE master_article_tag RENAME master_tag;
+ALTER TABLE master_article_topic RENAME master_topic;
+
+
+DROP TABLE `blog_category`;
+
+ALTER TABLE `article` ADD `delete_reason_id` INT NULL AFTER `updated_by`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
