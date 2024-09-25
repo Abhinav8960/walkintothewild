@@ -66,6 +66,21 @@ class Api extends Component
         exit;
     }
 
+    public function sendFailedStringResponse($errors = [], $error_code = 400)
+    {
+        $this->setHeader($error_code);
+        // $response = array('status' => false, 'error_code' => $error_code, 'errors' => $errors);
+        // $response = ['errors' => $errors];
+        $response['message'] = implode(', ', $errors);
+        // if (!empty($additional_info)) {
+        //     $response = array_merge($response, $msg);
+        // }
+        echo $response = json_encode($response);
+
+
+        exit;
+    }
+
 
 
     public function sendSuccessResponse($data = false, $additional_info = false)
@@ -149,7 +164,7 @@ class Api extends Component
     public function createAccesstoken($user, $params = NULL)
     {
 
-       
+
 
         $model = new UserSession();
         $toekn = hash('SHA512', $user->id . '-' . $user->auth_key . '-' . time());
@@ -183,8 +198,7 @@ class Api extends Component
             $new_access_token = $this->createAccesstoken($access_token->user);
             return ($new_access_token);
         } else {
-
-            return  Yii::$app->api->sendFailedResponse("Invalid Access token");
+            return  Yii::$app->api->sendFailedStringResponse(["Invalid Access token"]);
         }
     }
 }

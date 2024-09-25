@@ -35,28 +35,26 @@ class Apiauth extends AuthMethod
 
     public function beforeAction($action)
     {
-       
+
 
 
         if (
             in_array($action->id, $this->exclude) &&
             !isset($_GET['access-token'])
         ) {
-            //Yii::$app->api->sendFailedResponse("error1");
-            // Yii::$app->api->sendSuccessResponse(["nice1"]);
-            // exit;
+
             return true;
         }
 
         //if (!$this->verifyApp())
-        //    Yii::$app->api->sendFailedResponse('Invalid Request(App not verified)');
+        //    Yii::$app->api->sendFailedStringResponse('Invalid Request(App not verified)');
 
 
         if (
             in_array($action->id, $this->callback) &&
             !isset($_GET['access-token'])
         ) {
-            //Yii::$app->api->sendFailedResponse("error1");
+            //Yii::$app->api->sendFailedStringResponse("error1");
             // Yii::$app->api->sendSuccessResponse(["nice1"]);
             // exit;
             return true;
@@ -78,7 +76,7 @@ class Apiauth extends AuthMethod
             $this->challenge($response);
             $this->handleFailure($response);
 
-            Yii::$app->api->sendFailedResponse([], 'Invalid Request');
+            Yii::$app->api->sendFailedStringResponse(['Invalid Request']);
             //return false;
         }
     }
@@ -112,13 +110,13 @@ class Apiauth extends AuthMethod
             if ($identity !== null) {
                 return $identity;
             } else {
-                Yii::$app->api->sendFailedResponse([], 'Access token is not valid');
+                Yii::$app->api->sendFailedStringResponse(['Access token is not valid']);
             }
         }
 
         if ($accessToken !== null) {
 
-            Yii::$app->api->sendFailedResponse([], 'Access token not found', 400);
+            Yii::$app->api->sendFailedStringResponse(['Access token not found']);
 
             // $this->handleFailure($response);
         }
@@ -132,7 +130,7 @@ class Apiauth extends AuthMethod
      */
     public function handleFailure($response)
     {
-        Yii::$app->api->sendFailedResponse([], 'Access token not found', 400);
+        Yii::$app->api->sendFailedStringResponse(['Access token not found']);
         //throw new UnauthorizedHttpException('You are requesting with an invalid credential.');
     }
 }

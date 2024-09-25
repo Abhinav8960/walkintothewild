@@ -141,7 +141,7 @@ class SiteController extends RestController
                             \Yii::$app->api->sendResponse($data);
                         } else {
 
-                            Yii::$app->api->sendFailedResponse([], "Source id is already available in records and not matching with given", 422);
+                            Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
                         }
                     } else {
 
@@ -176,10 +176,10 @@ class SiteController extends RestController
 
 
 
-                Yii::$app->api->sendFailedResponse([], "you are not register with us, check source");
+                Yii::$app->api->sendFailedStringResponse(['you are not register with us, check source']);
             }
         } else {
-            Yii::$app->api->sendFailedResponse($model->firstErrors, [], 400);
+            Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
     }
 
