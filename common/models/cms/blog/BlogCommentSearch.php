@@ -79,6 +79,6 @@ class BlogCommentSearch extends BlogComment
 
     public static function getBloglist()
     {
-        return ArrayHelper::map(Blog::find()->where(['status' => [1, 2]])->andWhere("id IN (SELECT Distinct blog_id FROM blog_comment)")->all(), 'id', 'title');
+        return ArrayHelper::map(Blog::find()->where(['status' => [Blog::STATUS_ACTIVE, Blog::STATUS_SUSPEND]])->andWhere("id IN (SELECT Distinct blog_id FROM blog_comment)")->all(), 'id', 'title');
     }
 }
