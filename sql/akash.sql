@@ -267,21 +267,10 @@ WHERE status = 2;
 
 
 -- 24-sep-2024
+UPDATE article set status = 0 WHERE is_approved != 1;
 DROP TABLE `article_form`, `article_frequency`, `article_source`;
-ALTER TABLE `article`
-  DROP `user_id`,
-  DROP `user_type`,
-  DROP `sub_title`,
-  DROP `feature_image`,
-  DROP `author_name`,
-  DROP `view`,
-  DROP `post_body`,
-  DROP `comment_allowed`,
-  DROP `approval_required`,
-  DROP `is_schedule`,
-  DROP `publish_date_time`,
-  DROP `sequence`,
-  DROP `is_approved`;
+ALTER TABLE article DROP user_id, DROP is_approved;
+ALTER TABLE `article` ADD `article_author_id` INT NULL AFTER `article_date`;
 DROP TABLE `article_category`;
 
 
@@ -290,4 +279,3 @@ ALTER TABLE `master_article_topic` RENAME `master_topic`;
 ALTER TABLE `article_tag` CHANGE `master_article_tag_id` `master_tag_id` INT NOT NULL;
 ALTER TABLE `article_topic` CHANGE `master_article_topic_id` `master_topic_id` INT NOT NULL;
 
-ALTER TABLE `article` ADD `delete_reason_id` INT NULL AFTER `updated_by`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
