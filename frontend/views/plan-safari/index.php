@@ -197,5 +197,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </div>
 </section>
 <section class="articals_wrapper  margin_bottomfooter mb-5 paddiinTop_add">
-   
+    <?= $this->render('_featured_article', [
+        'featured_articles' => $featured_articles,
+    ]) ?>
 </section>
