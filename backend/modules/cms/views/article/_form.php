@@ -68,6 +68,15 @@ use yii\bootstrap5\ActiveForm;
                         'placeholder' => 'Enter Meta Title',
                     ])->label('Meta Title <span class="necessary">*</span>') ?>
                 </div>
+
+                <div class="col-md-6">
+                    <?= $form->field($model, 'article_date', [
+                        'labelOptions' => ['class' => 'Modal_label']
+                    ])->input('date', [
+                        'max' => date('Y-m-d')
+                    ])->label('Article Date <span class="necessary">*</span>') ?>
+                </div>
+
             </div>
 
             <div class="row">

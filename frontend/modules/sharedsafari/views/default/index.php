@@ -25,7 +25,7 @@ $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
 $park_constant = Constants::SHARE_SAFARI;
 $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->limit(1)->one();
-$recentposts = BlogSearch::recentpost();
+// $recentposts = BlogSearch::recentpost();
 
 
 ?>

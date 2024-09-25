@@ -2,13 +2,13 @@
 
 namespace frontend\models;
 
-use common\models\cms\blog\Blog;
+use common\models\cms\article\Article;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
  */
-class BlogSearch extends Blog
+class ArticleSearch extends Article
 {
     public $topic_slug;
     public $tag_slug;
@@ -20,7 +20,7 @@ class BlogSearch extends Blog
         return [
             [['description', 'meta_description', 'meta_keywords'], 'string'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['blog_date', 'topic_slug', 'tag_slug'], 'safe'],
+            [['article_date', 'topic_slug', 'tag_slug'], 'safe'],
             [['title', 'banner_image', 'meta_title'], 'string', 'max' => 255],
             [['slug'], 'string', 'max' => 300],
         ];
@@ -44,7 +44,7 @@ class BlogSearch extends Blog
      */
     public function search($params, $pagination = true)
     {
-        $query =  Blog::find()->andWhere(['blog.status' => Blog::STATUS_ACTIVE]);
+        $query =  Article::find()->andWhere(['article.status' => Article::STATUS_ACTIVE]);
 
 
         // add conditions that should always apply here
@@ -65,22 +65,22 @@ class BlogSearch extends Blog
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'blog.id' => $this->id,
-            'blog.status' => $this->status,
-            'blog.created_by' => $this->created_by,
-            'blog.updated_by' => $this->updated_by,
-            'blog.created_at' => $this->created_at,
-            'blog.updated_at' => $this->updated_at,
+            'article.id' => $this->id,
+            'article.status' => $this->status,
+            'article.created_by' => $this->created_by,
+            'article.updated_by' => $this->updated_by,
+            'article.created_at' => $this->created_at,
+            'article.updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'blog.title', $this->title]);
-        $query->andFilterWhere(['like', 'blog.slug', $this->slug]);
-        $query->andFilterWhere(['like', 'blog.description', $this->description]);
+        $query->andFilterWhere(['like', 'article.title', $this->title]);
+        $query->andFilterWhere(['like', 'article.slug', $this->slug]);
+        $query->andFilterWhere(['like', 'article.description', $this->description]);
 
 
         if ($this->topic_slug) {
-            $query->joinwith(['blogtopics' => function ($blogtopics_query) {
-                $blogtopics_query->joinwith(['blogname' => function ($additional_query) {
+            $query->joinwith(['articletopics' => function ($articletopics_query) {
+                $articletopics_query->joinwith(['articlename' => function ($additional_query) {
                     $additional_query->andWhere(['like', 'master_topic.slug', $this->topic_slug]);
                 }]);
             }]);
@@ -88,8 +88,8 @@ class BlogSearch extends Blog
 
 
         if ($this->tag_slug) {
-            $query->joinwith(['blogtags' => function ($blogtags_query) {
-                $blogtags_query->joinwith(['blogtag' => function ($additional_query) {
+            $query->joinwith(['articletags' => function ($articletags_query) {
+                $articletags_query->joinwith(['articletag' => function ($additional_query) {
                     $additional_query->andWhere(['like', 'master_tag.slug', $this->tag_slug]);
                 }]);
             }]);
@@ -102,19 +102,19 @@ class BlogSearch extends Blog
     public static function recentpost($slug = null)
     {
         if ($slug) {
-            return Blog::find()
-                ->joinWith(['blogtopics' => function ($blogtopics_query) use ($slug) {
-                    $blogtopics_query->joinWith(['blogname' => function ($additional_query) use ($slug) {
+            return Article::find()
+                ->joinWith(['articletopics' => function ($articletopics_query) use ($slug) {
+                    $articletopics_query->joinWith(['articlename' => function ($additional_query) use ($slug) {
                         $additional_query->andWhere(['like', 'master_topic.slug', $slug]);
                     }]);
                 }])
-                ->andWhere(['blog.status' => Blog::STATUS_ACTIVE, 'is_approved' => 1])
+                ->andWhere(['article.status' => Article::STATUS_ACTIVE])
                 ->orderBy('RAND()')
                 ->limit(3)
                 ->all();
         } else {
-            return Blog::find()
-                ->andWhere(['blog.status' => Blog::STATUS_ACTIVE, 'is_approved' => 1])
+            return Article::find()
+                ->andWhere(['article.status' => Article::STATUS_ACTIVE])
                 ->orderBy('RAND()')
                 ->limit(3)
                 ->all();

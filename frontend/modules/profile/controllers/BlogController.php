@@ -19,7 +19,6 @@ use common\models\cms\blog\BlogCommentReport;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\BlogCommentReportForm;
 use frontend\models\BlogReplyForm;
-use frontend\models\BlogSearch;
 use frontend\models\CommentForm;
 
 /**

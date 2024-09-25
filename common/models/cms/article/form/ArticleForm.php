@@ -63,7 +63,7 @@ class ArticleForm extends Model
     public function rules()
     {
         return [
-            [['title', 'description', 'article_tags', 'article_topics', 'article_author_id'], 'required'],
+            [['title', 'description', 'article_tags', 'article_topics', 'article_author_id','article_date'], 'required'],
             [['status'], 'default', 'value' => 1],
             [['status'], 'integer'],
             [['description', 'meta_description', 'meta_keywords'], 'string'],
