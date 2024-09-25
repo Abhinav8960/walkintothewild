@@ -140,7 +140,7 @@ $this->title = $user->name;
                         <ul class="nav nav-tabs slider_profilemobile ">
                             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link d-inline-block <?= isset($profile) ? $profile : '' ?>">Profile</a></li>
                             <li class="nav-item"><a href="<?= Url::toRoute(['/profile/share-safari/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link d-inline-block <?= isset($share_safari) ? $share_safari : '' ?>">Shared Safaris</a></li>
-                            <li class="nav-item"><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link d-inline-block <?= isset($article) ? $article : '' ?>">Articles</a></li>
+                            <!-- <li class="nav-item"><a href="<?= Url::toRoute(['/profile/blog/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link d-inline-block <?= isset($blog) ? $blog : '' ?>">Blogs</a></li> -->
                             <!-- <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/activity/index', 'user_handle' => $user->user_handle]) ?>" class=" nav-link <?= isset($activity) ? $activity : '' ?>">Activity</a></li>
                     <?php if (Yii::$app->user->identity && $user->contribution_privacy == 2 && $user->id == Yii::$app->user->identity->id) { ?>
                         <li class="nav-item mobile-hidelink"><a href="<?= Url::toRoute(['/profile/contribution/index', 'user_handle' => $user->user_handle]) ?>" class="nav-link <?= isset($contribution) ? $contribution : '' ?>">Contribution</a></li>

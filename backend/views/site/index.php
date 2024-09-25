@@ -629,14 +629,14 @@ $this->params['title'] = $this->title;
             </div>
 
 
-            <!-- BEGIN row new article -->
+            <!-- BEGIN row new blog -->
             <strong>
-                <p>New Article</p>
+                <p>New Blog</p>
             </strong>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5">
                 <!-- BEGIN col-6 -->
                 <div class="col">
-                    <a style="text-decoration:none;" href="/cms/article/index?ArticleSearch%5Breport_days%5D=today">
+                    <a style="text-decoration:none;" href="/cms/blog/index?BlogSearch%5Breport_days%5D=today">
                         <!-- BEGIN card -->
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
@@ -648,7 +648,7 @@ $this->params['title'] = $this->title;
                             <!-- BEGIN card-body -->
                             <div class="card-body position-relative">
                                 <h5 class=" text-opacity-80 mb-3 fs-16px">Today</h5>
-                                <div class="  text-opacity-80 text-end colorammount"> Count: <?= isset($todaynew_article) ? GeneralModel::numberformat(round($todaynew_article, 0)) : '0' ?></div>
+                                <div class="  text-opacity-80 text-end colorammount"> Count: <?= isset($todaynew_blog) ? GeneralModel::numberformat(round($todaynew_blog, 0)) : '0' ?></div>
 
                             </div>
                             <!-- BEGIN card-body -->
@@ -656,7 +656,7 @@ $this->params['title'] = $this->title;
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/cms/article/index?ArticleSearch%5Breport_days%5D=tw">
+                    <a style="text-decoration:none;" href="/cms/blog/index?BlogSearch%5Breport_days%5D=tw">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
                             <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
@@ -667,14 +667,14 @@ $this->params['title'] = $this->title;
                             <!-- BEGIN card-body -->
                             <div class="card-body position-relative">
                                 <h5 class="text-opacity-80 mb-3 fs-16px">This Week</h5>
-                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($thisweek_new_article) ? GeneralModel::numberformat(round($thisweek_new_article, 0)) : '0' ?></div>
+                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($thisweek_new_blog) ? GeneralModel::numberformat(round($thisweek_new_blog, 0)) : '0' ?></div>
                             </div>
                             <!-- BEGIN card-body -->
                         </div>
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/cms/article/index?ArticleSearch%5Breport_days%5D=tm">
+                    <a style="text-decoration:none;" href="/cms/blog/index?BlogSearch%5Breport_days%5D=tm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
                             <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
@@ -685,14 +685,14 @@ $this->params['title'] = $this->title;
                             <!-- BEGIN card-body -->
                             <div class="card-body position-relative">
                                 <h5 class="text-opacity-80 mb-3 fs-16px">This Month</h5>
-                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($thismonth_new_article) ? GeneralModel::numberformat(round($thismonth_new_article, 0)) : '0' ?></div>
+                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($thismonth_new_blog) ? GeneralModel::numberformat(round($thismonth_new_blog, 0)) : '0' ?></div>
                             </div>
                             <!-- BEGIN card-body -->
                         </div>
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/cms/article/index?ArticleSearch%5Breport_days%5D=lm">
+                    <a style="text-decoration:none;" href="/cms/blog/index?BlogSearch%5Breport_days%5D=lm">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
                             <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
@@ -703,14 +703,14 @@ $this->params['title'] = $this->title;
                             <!-- BEGIN card-body -->
                             <div class="card-body position-relative">
                                 <h5 class="text-opacity-80 mb-3 fs-16px"> Last Month</h5>
-                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($lastmonth_new_article) ? GeneralModel::numberformat(round($lastmonth_new_article, 0)) : '0' ?></div>
+                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($lastmonth_new_blog) ? GeneralModel::numberformat(round($lastmonth_new_blog, 0)) : '0' ?></div>
                             </div>
                             <!-- BEGIN card-body -->
                         </div>
                     </a>
                 </div>
                 <div class="col">
-                    <a style="text-decoration:none;" href="/cms/article/index?ArticleSearch%5Breport_days%5D=all">
+                    <a style="text-decoration:none;" href="/cms/blog/index?BlogSearch%5Breport_days%5D=all">
                         <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-blue-new" style="min-height: 120px;">
                             <!-- BEGIN card-img-overlay -->
                             <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
@@ -721,7 +721,7 @@ $this->params['title'] = $this->title;
                             <!-- BEGIN card-body -->
                             <div class="card-body position-relative">
                                 <h5 class="text-opacity-80 mb-3 fs-16px"> Total </h5>
-                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($total_new_article) ? GeneralModel::numberformat(round($total_new_article, 0)) : '0' ?></div>
+                                <div class=" text-opacity-80 text-end colorammount"> Count: <?= isset($total_new_blog) ? GeneralModel::numberformat(round($total_new_blog, 0)) : '0' ?></div>
                             </div>
                             <!-- BEGIN card-body -->
                         </div>

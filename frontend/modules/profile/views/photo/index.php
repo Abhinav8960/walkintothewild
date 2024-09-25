@@ -83,17 +83,17 @@ $this->params['title'] = $this->title;
                                                     <?php } ?>
                                                 </div>
                                                 <div class="d-flex justify-content-between mb-4 mt-4">
-                                                    <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"> Articles Pictures </h6>
+                                                    <h6 class="fs-6 fw-bold mb-0" style="padding-bottom: 0 !important;"> Blogs Pictures </h6>
 
                                                 </div>
                                                 <div class="row">
                                                     <?php
-                                                    if ($articles) {
-                                                        foreach ($articles as $article) {
+                                                    if ($blogs) {
+                                                        foreach ($blogs as $blog) {
                                                     ?>
                                                             <div class="col-md-4 gap-2  mb-2">
                                                                 <div class="parksImgireview rounded h-100 position-relative">
-                                                                    <img src="<?= isset($article->banner_image) ? $article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt="" class="rounded-2">
+                                                                    <img src="<?= isset($blog->banner_image) ? $blog->bannerimagepath : $this->params['baseurl'] . '/img/Blog1.jpg' ?>" alt="" class="rounded-2">
                                                                 </div>
 
                                                             </div>

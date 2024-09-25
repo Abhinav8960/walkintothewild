@@ -2,7 +2,7 @@
 
 namespace common\models;
 
-use common\models\cms\article\ArticleCommentReport;
+use common\models\cms\blog\BlogCommentReport;
 use common\models\operator\SafariOperatorRatingReport;
 use common\models\package\PackageCommentReport;
 use common\models\sharesafari\ShareSafariCommentReport;
@@ -33,7 +33,7 @@ class UntracedFlagSearch extends Model
         $this->load($params);
 
         if ($this->type == 1) {
-            $query =  ArticleCommentReport::find()->where(['status' => 3]);
+            $query =  BlogCommentReport::find()->where(['status' => 3]);
         } else if ($this->type == 2) {
             $query =  SafariOperatorRatingReport::find()->where(['status' => 3]);
         } else if ($this->type == 3) {
