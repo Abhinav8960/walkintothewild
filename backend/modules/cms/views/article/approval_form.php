@@ -4,7 +4,7 @@ use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'Blog';
+$this->title = 'Article';
 $this->params['breadcrumbs_home_url'] = '/';
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => '#'];
 $this->params['breadcrumbs'][] = "User Blog View";

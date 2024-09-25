@@ -32,7 +32,7 @@ use yii\helpers\Url;
                         }
                     ],
                     [
-                        'label' => 'Flagged Reason',
+                        'label' => 'Flagged Detail',
                         'contentOptions' => ['style' => 'width: 10%;'],
                         'format' => 'raw',
                         'value' => function ($model) {
