@@ -57,9 +57,9 @@ if ($article->meta_title != '') {
 
 <section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-lg">
-        <div class="advertisment pt-md-2 pt-5" style ="display: none">
+        <div class="advertisment pt-md-2 pt-5" style="display: none">
             <div class="google-ad-box  mb-5" style="border:none">
-                
+
             </div>
         </div>
         <div class="row mb-4 justify-content-center">
@@ -106,7 +106,7 @@ if ($article->meta_title != '') {
                                         <ul class="artical-info flex-wrap">
                                             <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => isset($article->articleAuthor) ? $article->articleAuthor->slug : '']) ?>"><?= isset($article->articleAuthor) ? $article->articleAuthor->name : '' ?></a></li>
                                             <li><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""><a href="#comment-wrapper-section"><?= $article->getArticlecomments()->where(['parent_id' => null, 'status' => 1, 'is_deleted' => 0])->count() ?> Comments</a></li>
-                                            <li><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($article->article_date)) ?></li>
+                                            <li><i class="fa-solid fa-calendar-days"></i><?= isset($article->article_date) ? date('M d, Y', strtotime($article->article_date)) : '' ?></li>
 
                                         </ul>
                                     </div>
@@ -118,13 +118,13 @@ if ($article->meta_title != '') {
                                         // 'replymodel' => $replymodel,
                                     ]) ?>
                                 </div>
-                                
-                                <div class="advertisment mt-5"  style="display: none">
+
+                                <div class="advertisment mt-5" style="display: none">
                                     <div class="google-ad300  mb-5" style="border:none">
-                                        
+
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
 
@@ -140,17 +140,17 @@ if ($article->meta_title != '') {
                             <?= $this->render('_topic_search') ?>
                         </div>
                         <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important"">
-                            <div class="google-ad-box  mb-5" style="border:none">
-                                
-                            </div>
+                            <div class=" google-ad-box mb-5" style="border:none">
+
                         </div>
-                        
                     </div>
+
                 </div>
             </div>
-
-
         </div>
+
+
+    </div>
     </div>
     </div>
 </section>

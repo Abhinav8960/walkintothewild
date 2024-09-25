@@ -81,7 +81,7 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                                 <div class="artical-info justify-content-center">
                                                     <a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug, '#' => 'comment-wrapper-section']) ?>" style="color: #9C9C9C;"><img src="<?= $this->params['baseurl'] ?>/img/comments.png" alt=""> <?= $model->getArticlecomments()->where(['parent_id' => null, 'status' => 1])->count() ?> Comments</a>
 
-                                                    <span style="color: #9C9C9C;"><i class="fa-solid fa-calendar-days me-1" style="color:#f9d600;"></i><?= date('M d, Y', strtotime($model->article_date)) ?></span>
+                                                    <span style="color: #9C9C9C;"><i class="fa-solid fa-calendar-days me-1" style="color:#f9d600;"></i><?= isset($model->article_date) ? date('M d, Y', strtotime($model->article_date)) : '' ?></span>
                                                 </div>
 
 
