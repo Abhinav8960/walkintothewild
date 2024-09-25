@@ -1,13 +1,13 @@
 <?php
 
-namespace common\models\cms\blog;
+namespace common\models\cms\mastertag;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
  */
-class MasterBlogTagSearch extends MasterBlogTag
+class MasterTagSearch extends MasterTag
 {
 
     /**
@@ -38,7 +38,7 @@ class MasterBlogTagSearch extends MasterBlogTag
      */
     public function search($params, $pagination = true)
     {
-        $query =  MasterBlogTag::find()->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND]]);
+        $query =  MasterTag::find()->andWhere(['status' => [self::STATUS_ACTIVE, self::STATUS_SUSPEND]]);
 
 
         // add conditions that should always apply here

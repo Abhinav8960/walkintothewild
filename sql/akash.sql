@@ -263,25 +263,19 @@ WHERE status = 2;
 
 -- 23-sep-2024
 
-ALTER TABLE `article` RENAME `blog`; ALTER TABLE `article_author` RENAME `blog_author`;
-ALTER TABLE `article_category` RENAME `blog_category`;
-ALTER TABLE `article_comment` RENAME `blog_comment`; 
-ALTER TABLE `article_comment_report` RENAME `blog_comment_report`;
-ALTER TABLE `article_tag` RENAME `blog_tag`;
-ALTER TABLE `article_topic` RENAME `blog_topic`;
-ALTER TABLE `master_article_tag` RENAME `master_blog_tag`;
-ALTER TABLE `master_article_topic` RENAME `master_blog_topic`;
-
-ALTER TABLE `blog` CHANGE `article_date` `blog_date` DATE NULL DEFAULT NULL;
-ALTER TABLE `blog_comment` CHANGE `article_id` `blog_id` INT NOT NULL;
-
-ALTER TABLE `blog_comment_report` CHANGE `article_id` `blog_id` INT NULL DEFAULT NULL, CHANGE `article_comment_id` `blog_comment_id` INT NULL DEFAULT NULL;
-
-ALTER TABLE `blog_topic` CHANGE `article_id` `blog_id` INT NOT NULL, CHANGE `master_article_topic_id` `master_blog_topic_id` INT NOT NULL;
-ALTER TABLE `blog_tag` CHANGE `article_id` `blog_id` INT NOT NULL, CHANGE `master_article_tag_id` `master_blog_tag_id` INT NOT NULL;
 
 
 
+-- 24-sep-2024
+UPDATE article set status = 0 WHERE is_approved != 1;
+DROP TABLE `article_form`, `article_frequency`, `article_source`;
+ALTER TABLE article DROP user_id, DROP is_approved;
+ALTER TABLE `article` ADD `article_author_id` INT NULL AFTER `article_date`;
+DROP TABLE `article_category`;
 
 
-ALTER TABLE `blog` ADD `delete_reason_id` INT NULL AFTER `blog_date`, ADD `delete_reason` TEXT NULL AFTER `delete_reason_id`;
+ALTER TABLE `master_article_tag` RENAME `master_tag`;
+ALTER TABLE `master_article_topic` RENAME `master_topic`;
+ALTER TABLE `article_tag` CHANGE `master_article_tag_id` `master_tag_id` INT NOT NULL;
+ALTER TABLE `article_topic` CHANGE `master_article_topic_id` `master_topic_id` INT NOT NULL;
+

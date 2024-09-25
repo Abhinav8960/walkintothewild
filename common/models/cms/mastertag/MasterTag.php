@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models\cms\blog;
+namespace common\models\cms\mastertag;
 
 use Yii;
 
@@ -16,7 +16,7 @@ use Yii;
  * @property int|null $created_by
  * @property int|null $updated_by
  */
-class MasterBlogTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class MasterTag extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
 
@@ -25,7 +25,7 @@ class MasterBlogTag extends \yii\db\ActiveRecord implements \common\interfaces\N
      */
     public static function tableName()
     {
-        return 'master_blog_tag';
+        return 'master_tag';
     }
 
     public function behaviors()

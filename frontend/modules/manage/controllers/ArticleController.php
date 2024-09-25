@@ -91,7 +91,7 @@ class ArticleController extends FrontendBaseController
     //                         foreach ($articleTopics as $articleT) {
     //                             $articleTopic = new ArticleTopic();
     //                             $articleTopic->article_id = $model->article_model->id;
-    //                             $articleTopic->master_article_topic_id = $articleT;
+    //                             $articleTopic->master_topic_id = $articleT;
     //                             $articleTopic->save(false);
     //                         }
     //                     }
@@ -188,7 +188,7 @@ class ArticleController extends FrontendBaseController
     //                         foreach ($articleTopics as $articleT) {
     //                             $articleTopic = new ArticleTopic();
     //                             $articleTopic->article_id = $model->article_model->id;
-    //                             $articleTopic->master_article_topic_id = $articleT;
+    //                             $articleTopic->master_topic_id = $articleT;
     //                             $articleTopic->save(false);
     //                         }
     //                     }

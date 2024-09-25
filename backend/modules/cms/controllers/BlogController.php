@@ -48,57 +48,57 @@ class BlogController extends Controller
      * 
      * @return mixed
      */
-    public function actionCreate()
-    {
-        $model = new BlogForm();
-        $model->action_url = '/cms/blog/create';
-        $model->action_validate_url = '/cms/blog/validate';
-        $model->user_type = Blog::USER_TYPE_ADMIN;
-        $model->status = Blog::STATUS_ACTIVE;
-        $model->scenario = 'create';
+    // public function actionCreate()
+    // {
+    //     $model = new BlogForm();
+    //     $model->action_url = '/cms/blog/create';
+    //     $model->action_validate_url = '/cms/blog/validate';
+    //     $model->user_type = Blog::USER_TYPE_ADMIN;
+    //     $model->status = Blog::STATUS_ACTIVE;
+    //     $model->scenario = 'create';
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
 
-                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
-                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->blog_model->save(false)) {
-                        $model->uploadFile();
+    //             $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
+    //             $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->blog_model->save(false)) {
+    //                     $model->uploadFile();
 
-                        $blogTopics = $model->blog_topics;
-                        if ($blogTopics) {
-                            foreach ($blogTopics as $blogT) {
-                                $blogTopic = new BlogTopic();
-                                $blogTopic->blog_id = $model->blog_model->id;
-                                $blogTopic->master_blog_topic_id = $blogT;
-                                $blogTopic->save(false);
-                            }
-                        }
+    //                     $blogTopics = $model->blog_topics;
+    //                     if ($blogTopics) {
+    //                         foreach ($blogTopics as $blogT) {
+    //                             $blogTopic = new BlogTopic();
+    //                             $blogTopic->blog_id = $model->blog_model->id;
+    //                             $blogTopic->master_topic_id = $blogT;
+    //                             $blogTopic->save(false);
+    //                         }
+    //                     }
 
-                        $blogTags = $model->blog_tags;
-                        if ($blogTags) {
-                            foreach ($blogTags as $blogT) {
-                                $blogTag = new BlogTag();
-                                $blogTag->blog_id = $model->blog_model->id;
-                                $blogTag->master_blog_tag_id = $blogT;
-                                $blogTag->save(false);
-                            }
-                        }
-                        \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/cms/blog/index']);
-                    }
-                }
-            }
-        } else {
-            $model->blog_model->loadDefaultValues();
-        }
+    //                     $blogTags = $model->blog_tags;
+    //                     if ($blogTags) {
+    //                         foreach ($blogTags as $blogT) {
+    //                             $blogTag = new BlogTag();
+    //                             $blogTag->blog_id = $model->blog_model->id;
+    //                             $blogTag->master_tag_id = $blogT;
+    //                             $blogTag->save(false);
+    //                         }
+    //                     }
+    //                     \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
+    //                     return $this->redirect(['/cms/blog/index']);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->blog_model->loadDefaultValues();
+    //     }
 
-        return $this->render('form', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('form', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
 
     /**
@@ -108,117 +108,117 @@ class BlogController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $blog_model = $this->findModel($id);
-        $model = new BlogForm($blog_model);
-        $model->action_url = '/cms/blog/update?id=' . $id;
-        $model->action_validate_url = '/cms/blog/validate?id=' . $id;
+    // public function actionUpdate($id)
+    // {
+    //     $blog_model = $this->findModel($id);
+    //     $model = new BlogForm($blog_model);
+    //     $model->action_url = '/cms/blog/update?id=' . $id;
+    //     $model->action_validate_url = '/cms/blog/validate?id=' . $id;
 
-        $model->scenario = 'update';
+    //     $model->scenario = 'update';
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
 
-                $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
-                $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->blog_model->save(false)) {
-                        $model->uploadFile();
+    //             $model->banner_image = UploadedFile::getInstance($model, 'banner_image');
+    //             $model->feature_image = UploadedFile::getInstance($model, 'feature_image');
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->blog_model->save(false)) {
+    //                     $model->uploadFile();
 
-                        $blogTopics = $model->blog_topics;
-                        if ($blogTopics) {
-                            BlogTopic::deleteAll(['blog_id' => $id]);
-                            foreach ($blogTopics as $blogT) {
-                                $blogTopic = new BlogTopic();
-                                $blogTopic->blog_id = $model->blog_model->id;
-                                $blogTopic->master_blog_topic_id = $blogT;
-                                $blogTopic->save(false);
-                            }
-                        }
+    //                     $blogTopics = $model->blog_topics;
+    //                     if ($blogTopics) {
+    //                         BlogTopic::deleteAll(['blog_id' => $id]);
+    //                         foreach ($blogTopics as $blogT) {
+    //                             $blogTopic = new BlogTopic();
+    //                             $blogTopic->blog_id = $model->blog_model->id;
+    //                             $blogTopic->master_topic_id = $blogT;
+    //                             $blogTopic->save(false);
+    //                         }
+    //                     }
 
-                        $blogTags = $model->blog_tags;
-                        if ($blogTags) {
-                            BlogTag::deleteAll(['blog_id' => $id]);
-                            foreach ($blogTags as $blogT) {
-                                $blogTag = new BlogTag();
-                                $blogTag->blog_id = $model->blog_model->id;
-                                $blogTag->master_blog_tag_id = $blogT;
-                                $blogTag->save(false);
-                            }
-                        }
+    //                     $blogTags = $model->blog_tags;
+    //                     if ($blogTags) {
+    //                         BlogTag::deleteAll(['blog_id' => $id]);
+    //                         foreach ($blogTags as $blogT) {
+    //                             $blogTag = new BlogTag();
+    //                             $blogTag->blog_id = $model->blog_model->id;
+    //                             $blogTag->master_tag_id = $blogT;
+    //                             $blogTag->save(false);
+    //                         }
+    //                     }
 
-                        \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['/cms/blog/index']);
-                    }
-                }
-            }
-        } else {
-            $model->blog_model->loadDefaultValues();
-        }
+    //                     \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
+    //                     return $this->redirect(['/cms/blog/index']);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->blog_model->loadDefaultValues();
+    //     }
 
-        return $this->render('form', [
-            'model' => $model,
-        ]);
-    }
+    //     return $this->render('form', [
+    //         'model' => $model,
+    //     ]);
+    // }
 
-    public function actionAddTag()
-    {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    // public function actionAddTag()
+    // {
+    //     Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-        $tags = Yii::$app->request->post('tags');
+    //     $tags = Yii::$app->request->post('tags');
 
-        if (is_array($tags)) {
-            // Handle the case where 'tags' is an array (e.g., if multiple tags are submitted)
-            $tagsArray = $tags;
-        } elseif (is_string($tags)) {
-            // Handle the case where 'tags' is a string (e.g., if only one tag is submitted)
-            $tagsArray = explode(',', $tags);
-        } else {
-            // Handle any other unexpected cases
-            return ['success' => false, 'message' => 'Invalid tags format'];
-        }
+    //     if (is_array($tags)) {
+    //         // Handle the case where 'tags' is an array (e.g., if multiple tags are submitted)
+    //         $tagsArray = $tags;
+    //     } elseif (is_string($tags)) {
+    //         // Handle the case where 'tags' is a string (e.g., if only one tag is submitted)
+    //         $tagsArray = explode(',', $tags);
+    //     } else {
+    //         // Handle any other unexpected cases
+    //         return ['success' => false, 'message' => 'Invalid tags format'];
+    //     }
 
-        if (!empty($tagsArray)) {
-            $existingTags = MasterBlogTag::find()->select('title')->column();
+    //     if (!empty($tagsArray)) {
+    //         $existingTags = MasterBlogTag::find()->select('title')->column();
 
-            foreach ($tagsArray as $tag) {
-                $tag = trim($tag);
-                if (!in_array($tag, $existingTags)) {
-                    $newTag = new MasterBlogTag();
-                    $newTag->title = $tag;
-                    $newTag->slug = $tag;
-                    $newTag->status = MasterBlogTag::STATUS_ACTIVE;
-                    if (!$newTag->save(false)) {
-                        return ['success' => false, 'message' => 'Failed to save tag: ' . $newTag->title];
-                    }
-                }
-            }
-            return ['success' => true];
-        }
+    //         foreach ($tagsArray as $tag) {
+    //             $tag = trim($tag);
+    //             if (!in_array($tag, $existingTags)) {
+    //                 $newTag = new MasterBlogTag();
+    //                 $newTag->title = $tag;
+    //                 $newTag->slug = $tag;
+    //                 $newTag->status = MasterBlogTag::STATUS_ACTIVE;
+    //                 if (!$newTag->save(false)) {
+    //                     return ['success' => false, 'message' => 'Failed to save tag: ' . $newTag->title];
+    //                 }
+    //             }
+    //         }
+    //         return ['success' => true];
+    //     }
 
-        return ['success' => false, 'message' => 'No tags provided'];
-    }
+    //     return ['success' => false, 'message' => 'No tags provided'];
+    // }
 
 
 
     /**
      * Validate Form
      */
-    public function actionValidate($id = null)
-    {
-        $model = new BlogForm();
-        if ($id != null) {
-            $formmodel = $this->findModel($id);
-            $model = new BlogForm($formmodel);
-        }
+    // public function actionValidate($id = null)
+    // {
+    //     $model = new BlogForm();
+    //     if ($id != null) {
+    //         $formmodel = $this->findModel($id);
+    //         $model = new BlogForm($formmodel);
+    //     }
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-    }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($model);
+    //     }
+    // }
 
     /**
      * Deletes an existing Blog model.
@@ -274,23 +274,23 @@ class BlogController extends Controller
     }
 
 
-    public function actionApproved($id)
-    {
-        $model = BlogComment::find()->where(['id' => $id])->one();
-        $model->status = 1;
-        $model->save(false);
-        \Yii::$app->session->setFlash('success', 'Approved Successfully');
-        return $this->redirect(\Yii::$app->request->referrer);
-    }
+    // public function actionApproved($id)
+    // {
+    //     $model = BlogComment::find()->where(['id' => $id])->one();
+    //     $model->status = 1;
+    //     $model->save(false);
+    //     \Yii::$app->session->setFlash('success', 'Approved Successfully');
+    //     return $this->redirect(\Yii::$app->request->referrer);
+    // }
 
-    public function actionDisapproved($id)
-    {
-        $model = BlogComment::find()->where(['id' => $id])->one();
-        $model->status = 2;
-        $model->save(false);
-        \Yii::$app->session->setFlash('success', 'Disapproved Successfully');
-        return $this->redirect(\Yii::$app->request->referrer);
-    }
+    // public function actionDisapproved($id)
+    // {
+    //     $model = BlogComment::find()->where(['id' => $id])->one();
+    //     $model->status = 2;
+    //     $model->save(false);
+    //     \Yii::$app->session->setFlash('success', 'Disapproved Successfully');
+    //     return $this->redirect(\Yii::$app->request->referrer);
+    // }
 
 
 

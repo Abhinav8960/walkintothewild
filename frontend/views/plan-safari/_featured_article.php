@@ -19,12 +19,12 @@ use yii\helpers\Url;
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-5">
                         <div class="artical_cards h-100">
                             <div class="image-box">
-                                <figure class="image"><a href="/article/<?= $featured_article->slug ?>" data-pjax="0"><img src="<?= isset($featured_article->banner_image) ? $featured_article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                <figure class="image"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $featured_article->slug]) ?>" data-pjax="0"><img src="<?= isset($featured_article->banner_image) ? $featured_article->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                                 </figure>
                             </div>
                             <div class="lower-content">
                                 <ul class="artical-info ">
-                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => isset($featured_article->user) ? $featured_article->user->user_handle : '']) ?>" data-pjax="0"><?= isset($featured_article->user) ? $featured_article->user->name : '' ?></a></li>
+                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => isset($featured_article->articleAuthor) ? $featured_article->articleAuthor->slug : '']) ?>" data-pjax="0"><?= isset($featured_article->articleAuthor) ? $featured_article->articleAuthor->name : '' ?></a></li>
                                 </ul>
                                 <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $featured_article->slug]) ?>" data-pjax="0"><?= $featured_article->title ?> </a></h3>
 
@@ -44,7 +44,7 @@ use yii\helpers\Url;
         </div>
         <div class="row justify-content-center text-center mt-4">
             <div class="col-md-4">
-                <a href="/article" class="btn_newsafari organizeBtn newbg rounded-5" data-pjax="0">View All Articles <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="<?= Url::toRoute(['/article/default/index']) ?>" class="btn_newsafari organizeBtn newbg rounded-5" data-pjax="0">View All Articles <i class="fa-solid fa-arrow-right"></i></a>
             </div>
         </div>
     </div>

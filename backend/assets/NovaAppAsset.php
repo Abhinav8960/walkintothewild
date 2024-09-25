@@ -62,6 +62,7 @@ class NovaAppAsset extends AssetBundle
         'https://uicdn.toast.com/tui-color-picker/latest/tui-color-picker.min.js',
         'https://uicdn.toast.com/editor-plugin-color-syntax/latest/toastui-editor-plugin-color-syntax.min.js',
         'https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight.min.js',
+        'https://cdn.ckeditor.com/ckeditor5/35.3.2/super-build/ckeditor.js'
     ];
 
     public $depends = [
