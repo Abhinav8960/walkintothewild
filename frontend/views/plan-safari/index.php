@@ -82,7 +82,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 </section> -->
 
 <?php if ($shared_safaries) { ?>
-  <section class="sharesafri">
+    <section class="sharesafri">
         <div class="container-lg padditg_mobile">
             <div class="row justify-content-center ">
                 <div class="col-xl-11  px-md-1 px-0 ">
@@ -128,12 +128,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="col-lg-4 col-sm-6 col-xxl-3 col-md-6 mb-4 ">
                                         <?= $this->render('@frontend/modules/sharedsafari/views/default/_shared_safari_card', ['share_safari' => $share_safari]) ?>
                                     </div>
-                                   
+
                                 <?php $safari_printed++;
                                 } ?>
-                                 <div class="joinshareView pb-sm-0 pb-4 text-center pe-lg-4 d-sm-none d-block col-xxl-3">
-                                            <a href="/sharedsafari" class="btn_shareView w-100 d-block" data-pjax="0">View All</a>
-                                        </div>
+                                <div class="joinshareView pb-sm-0 pb-4 text-center pe-lg-4 d-sm-none d-block col-xxl-3">
+                                    <a href="/sharedsafari" class="btn_shareView w-100 d-block" data-pjax="0">View All</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -180,10 +180,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
         </div>
     </section>
 <?php } ?>
-<section class="px-md-0 px-3" style ="display: none">
- <div class="google-ad-box margin-topset"  style="border:none">
-    
-</div>
+<section class="px-md-0 px-3" style="display: none">
+    <div class="google-ad-box margin-topset" style="border:none">
+
+    </div>
 </section>
 <section class="safariduring_sesons paddiinTop_add">
     <?= \frontend\widgets\FeatureParkWidget::widget(['section_title' => $banner ? $banner->feature_park_title : '']) ?>
@@ -191,11 +191,13 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <section class="animal-wrapper  paddiinTop_add">
     <?= \frontend\widgets\RareExoticWidget::widget() ?>
 </section>
-<section class="px-md-0 px-3" style ="display: none">
-    <div class="google-ad-box margin-topset"  style="border:none">
-    
-</div>
+<section class="px-md-0 px-3" style="display: none">
+    <div class="google-ad-box margin-topset" style="border:none">
+
+    </div>
 </section>
 <section class="articals_wrapper  margin_bottomfooter mb-5 paddiinTop_add">
-    
+    <?= $this->render('_featured_article', [
+        'featured_articles' => $featured_articles,
+    ]) ?>
 </section>

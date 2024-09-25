@@ -44,7 +44,7 @@ class BlogSearch extends Blog
      */
     public function search($params, $pagination = true)
     {
-        $query =  Blog::find()->andWhere(['blog.status' => Blog::STATUS_ACTIVE, 'is_approved' => 1]);
+        $query =  Blog::find()->andWhere(['blog.status' => Blog::STATUS_ACTIVE]);
 
 
         // add conditions that should always apply here
@@ -81,7 +81,7 @@ class BlogSearch extends Blog
         if ($this->topic_slug) {
             $query->joinwith(['blogtopics' => function ($blogtopics_query) {
                 $blogtopics_query->joinwith(['blogname' => function ($additional_query) {
-                    $additional_query->andWhere(['like', 'master_blog_topic.slug', $this->topic_slug]);
+                    $additional_query->andWhere(['like', 'master_topic.slug', $this->topic_slug]);
                 }]);
             }]);
         }
@@ -90,7 +90,7 @@ class BlogSearch extends Blog
         if ($this->tag_slug) {
             $query->joinwith(['blogtags' => function ($blogtags_query) {
                 $blogtags_query->joinwith(['blogtag' => function ($additional_query) {
-                    $additional_query->andWhere(['like', 'master_blog_tag.slug', $this->tag_slug]);
+                    $additional_query->andWhere(['like', 'master_tag.slug', $this->tag_slug]);
                 }]);
             }]);
         }
@@ -105,7 +105,7 @@ class BlogSearch extends Blog
             return Blog::find()
                 ->joinWith(['blogtopics' => function ($blogtopics_query) use ($slug) {
                     $blogtopics_query->joinWith(['blogname' => function ($additional_query) use ($slug) {
-                        $additional_query->andWhere(['like', 'master_blog_topic.slug', $slug]);
+                        $additional_query->andWhere(['like', 'master_topic.slug', $slug]);
                     }]);
                 }])
                 ->andWhere(['blog.status' => Blog::STATUS_ACTIVE, 'is_approved' => 1])

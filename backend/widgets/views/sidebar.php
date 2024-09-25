@@ -169,10 +169,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/master/share-safari-reason/update",
 														)) ? "active" : "" ?>" href="/master/share-safari-reason/index">Share Safari Reject Reason</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/master/message/index",
-															"/master/message/create",
-															"/master/message/update",
-														)) ? "active" : "" ?>" href="/master/message/index">Message</a></li> -->
+																"/master/message/index",
+																"/master/message/create",
+																"/master/message/update",
+															)) ? "active" : "" ?>" href="/master/message/index">Message</a></li> -->
 
 						</ul>
 					</li>
@@ -367,29 +367,29 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/park/safari/profile/suggestions",
 														)) ? "active" : "" ?>" href="/park/safari/default/index">Safari Park</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/park/birding/default/index",
-															"/park/birding/default/create",
-															"/park/birding/profile",
-															"/park/birding/profile/gallery",
-															"/park/birding/profile/creategallery",
-															"/park/birding/profile/updategallery",
-															"/park/birding/profile/animal",
-															"/park/birding/profile/createanimal",
-															"/park/birding/profile/updateanimal",
-															"/park/birding/profile/zone",
-															"/park/birding/profile/createzone",
-															"/park/birding/profile/updatezone",
-															"/park/birding/profile/vehicle",
-															"/park/birding/profile/createvehicle",
-															"/park/birding/profile/updatevehicle",
-															"/park/birding/profile/flora-fauna",
-															"/park/birding/profile/createflorafauna",
-															"/park/birding/profile/updateflorafauna",
-															"/park/birding/profile/how-to-reach",
-															"/park/birding/profile/createhowtoreach",
-															"/park/birding/profile/updatehowtoreach",
-															"/park/birding/profile/map"
-														)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li> -->
+																"/park/birding/default/index",
+																"/park/birding/default/create",
+																"/park/birding/profile",
+																"/park/birding/profile/gallery",
+																"/park/birding/profile/creategallery",
+																"/park/birding/profile/updategallery",
+																"/park/birding/profile/animal",
+																"/park/birding/profile/createanimal",
+																"/park/birding/profile/updateanimal",
+																"/park/birding/profile/zone",
+																"/park/birding/profile/createzone",
+																"/park/birding/profile/updatezone",
+																"/park/birding/profile/vehicle",
+																"/park/birding/profile/createvehicle",
+																"/park/birding/profile/updatevehicle",
+																"/park/birding/profile/flora-fauna",
+																"/park/birding/profile/createflorafauna",
+																"/park/birding/profile/updateflorafauna",
+																"/park/birding/profile/how-to-reach",
+																"/park/birding/profile/createhowtoreach",
+																"/park/birding/profile/updatehowtoreach",
+																"/park/birding/profile/map"
+															)) ? "active" : "" ?>" href="/park/birding/default/index">Birding Park</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/park/operator-quote/index",
 															"/park/operator-quote/view",
@@ -445,18 +445,18 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/cms",
 														"/cms/blog-category/index",
-											"/cms/blog-category/create",
-											"/cms/blog-category/update",
-											"/cms/blog-author/index",
-											"/cms/blog-author/create",
-											"/cms/blog-author/update",
-											"/cms/blog-tag/index",
-											"/cms/blog-tag/create",
-											"/cms/blog-tag/update",
-											"/cms/blog/index",
-											"/cms/blog/update",
-											"/cms/blog/create",
-											"/cms/blog/comment",
+														"/cms/blog-category/create",
+														"/cms/blog-category/update",
+														"/cms/blog-author/index",
+														"/cms/blog-author/create",
+														"/cms/blog-author/update",
+														"/cms/blog-tag/index",
+														"/cms/blog-tag/create",
+														"/cms/blog-tag/update",
+														"/cms/blog/index",
+														"/cms/blog/update",
+														"/cms/blog/create",
+														"/cms/blog/comment",
 														"/cms/faqcategory",
 														"/cms/faqs",
 														"/cms/about/index",
@@ -478,19 +478,19 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<ul class="slide-menu <?= in_array($active_url, array(
 													"/cms",
 													"/cms/blog-category/index",
-											"/cms/blog-category/create",
-											"/cms/blog-category/update",
-											"/cms/blog-author/index",
-											"/cms/blog-author/create",
-											"/cms/blog-author/update",
-											"/cms/blog-tag/index",
-											"/cms/blog-tag/create",
-											"/cms/blog-tag/update",
-											"/cms/blog/index",
-											"/cms/blog/update",
-											"/cms/blog/create",
-											"/cms/blog/comment",
-													
+													"/cms/blog-category/create",
+													"/cms/blog-category/update",
+													"/cms/blog-author/index",
+													"/cms/blog-author/create",
+													"/cms/blog-author/update",
+													"/cms/blog-tag/index",
+													"/cms/blog-tag/create",
+													"/cms/blog-tag/update",
+													"/cms/blog/index",
+													"/cms/blog/update",
+													"/cms/blog/create",
+													"/cms/blog/comment",
+
 													"/cms/banner",
 													"/cms/frontend-banner",
 
@@ -509,19 +509,19 @@ $active_url = "/" . Yii::$app->requestedRoute;
 												)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																				"/cms",
 																				"/cms/blog-category/index",
-											"/cms/blog-category/create",
-											"/cms/blog-category/update",
-											"/cms/blog-author/index",
-											"/cms/blog-author/create",
-											"/cms/blog-author/update",
-											"/cms/blog-tag/index",
-											"/cms/blog-tag/create",
-											"/cms/blog-tag/update",
-											"/cms/blog/index",
-											"/cms/blog/update",
-											"/cms/blog/create",
-											"/cms/blog/comment",
-																				
+																				"/cms/blog-category/create",
+																				"/cms/blog-category/update",
+																				"/cms/blog-author/index",
+																				"/cms/blog-author/create",
+																				"/cms/blog-author/update",
+																				"/cms/blog-tag/index",
+																				"/cms/blog-tag/create",
+																				"/cms/blog-tag/update",
+																				"/cms/blog/index",
+																				"/cms/blog/update",
+																				"/cms/blog/create",
+																				"/cms/blog/comment",
+
 																				"/cms/banner",
 																				"/cms/frontend-banner",
 
@@ -546,77 +546,157 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/flag-reason",
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
+							
+							<li><a class="slide-item <?= in_array($active_url, array(
+																"/cms/master-tag/index",
+																"/cms/master-tag/create",
+																"/cms/master-tag/update",
+															)) ? "active" : "" ?>" href="/cms/master-tag/index">Tags</a></li>
+							
+							<li><a class="slide-item <?= in_array($active_url, array(
+																"/cms/master-category/index",
+																"/cms/master-category/create",
+																"/cms/master-category/update",
+															)) ? "active" : "" ?>" href="/cms/master-category/index">Topics</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
 														"/cms",
 														"/cms/blog-category/index",
-											"/cms/blog-category/create",
-											"/cms/blog-category/update",
-											"/cms/blog-author/index",
-											"/cms/blog-author/create",
-											"/cms/blog-author/update",
-											"/cms/blog-tag/index",
-											"/cms/blog-tag/create",
-											"/cms/blog-tag/update",
-											"/cms/blog/index",
-											"/cms/blog/update",
-											"/cms/blog/create",
-											"/cms/blog/comment",
+														"/cms/blog-category/create",
+														"/cms/blog-category/update",
+														"/cms/blog-author/index",
+														"/cms/blog-author/create",
+														"/cms/blog-author/update",
+														"/cms/blog-tag/index",
+														"/cms/blog-tag/create",
+														"/cms/blog-tag/update",
+														"/cms/blog/index",
+														"/cms/blog/update",
+														"/cms/blog/create",
+														"/cms/blog/comment",
 													)) ? "is-expanded" : "" ?>">
 								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Blog</span><i class="sub-angle fe fe-chevron-right"></i></a>
 								<ul class="sub-slide-menu <?= in_array($active_url, array(
 																"/cms",
 																"/cms/blog-category/index",
-											"/cms/blog-category/create",
-											"/cms/blog-category/update",
-											"/cms/blog-author/index",
-											"/cms/blog-author/create",
-											"/cms/blog-author/update",
-											"/cms/blog-tag/index",
-											"/cms/blog-tag/create",
-											"/cms/blog-tag/update",
-											"/cms/blog/index",
-											"/cms/blog/update",
-											"/cms/blog/create",
-											"/cms/blog/comment",
+																"/cms/blog-category/create",
+																"/cms/blog-category/update",
+																"/cms/blog-author/index",
+																"/cms/blog-author/create",
+																"/cms/blog-author/update",
+																"/cms/blog-tag/index",
+																"/cms/blog-tag/create",
+																"/cms/blog-tag/update",
+																"/cms/blog/index",
+																"/cms/blog/update",
+																"/cms/blog/create",
+																"/cms/blog/comment",
 															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
 																							"/cms",
 																							"/cms/blog-category/index",
-											"/cms/blog-category/create",
-											"/cms/blog-category/update",
-											"/cms/blog-author/index",
-											"/cms/blog-author/create",
-											"/cms/blog-author/update",
-											"/cms/blog-tag/index",
-											"/cms/blog-tag/create",
-											"/cms/blog-tag/update",
-											"/cms/blog/index",
-											"/cms/blog/update",
-											"/cms/blog/create",
-											"/cms/blog/comment",
-																						
+																							"/cms/blog-category/create",
+																							"/cms/blog-category/update",
+																							"/cms/blog-author/index",
+																							"/cms/blog-author/create",
+																							"/cms/blog-author/update",
+																							"/cms/blog-tag/index",
+																							"/cms/blog-tag/create",
+																							"/cms/blog-tag/update",
+																							"/cms/blog/index",
+																							"/cms/blog/update",
+																							"/cms/blog/create",
+																							"/cms/blog/comment",
+
 																						)) ? "display: block;" : "display: none;" ?>">
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/blog-category/index",
 																			"/cms/blog-category/create",
 																			"/cms/blog-category/update",
-																		)) ? "active" : "" ?>" href="/cms/blog-category/index">Blog Topics</a></li>
+																		)) ? "active" : "" ?>" href="/cms/blog-category/index">Blog Topics</a></li> -->
 									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																				"/cms/blog-author/index",
 																				"/cms/blog-author/create",
 																				"/cms/blog-author/update",
 																			)) ? "active" : "" ?>" href="/cms/article-author/index">Blog Author</a></li> -->
+									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/cms/blog-tag/index",
+																			"/cms/blog-tag/create",
+																			"/cms/blog-tag/update",
+																		)) ? "active" : "" ?>" href="/cms/blog-tag/index">Blog Tag</a></li> -->
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																				"/cms/blog-tag/index",
-																				"/cms/blog-tag/create",
-																				"/cms/blog-tag/update",
-																		)) ? "active" : "" ?>" href="/cms/blog-tag/index">Blog Tag</a></li>
-									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																				"/cms/blog/index",
-																				"/cms/blog/update",
-																				"/cms/blog/create",
-																				"/cms/blog/comment",
+																			"/cms/blog/index",
+																			"/cms/blog/update",
+																			"/cms/blog/create",
+																			"/cms/blog/comment",
 																		)) ? "active" : "" ?>" href="/cms/blog/index">Blog</a></li>
-								
+
+
+
+								</ul>
+							</li>
+
+							<li class="sub-slide <?= in_array($active_url, array(
+														"/cms",
+														"/cms/article-category/index",
+														"/cms/article-category/create",
+														"/cms/article-category/update",
+														"/cms/article-author/index",
+														"/cms/article-author/create",
+														"/cms/article-author/update",
+														"/cms/article-tag/index",
+														"/cms/article-tag/create",
+														"/cms/article-tag/update",
+														"/cms/article/index",
+														"/cms/article/update",
+														"/cms/article/create",
+														"/cms/article/comment",
+													)) ? "is-expanded" : "" ?>">
+								<a class="slide-item" data-bs-toggle="sub-slide" href="javascript:void(0);"><span class="sub-side-menu__label">Article</span><i class="sub-angle fe fe-chevron-right"></i></a>
+								<ul class="sub-slide-menu <?= in_array($active_url, array(
+																"/cms",
+																"/cms/article-category/index",
+																"/cms/article-category/create",
+																"/cms/article-category/update",
+																"/cms/article-author/index",
+																"/cms/article-author/create",
+																"/cms/article-author/update",
+																"/cms/article-tag/index",
+																"/cms/article-tag/create",
+																"/cms/article-tag/update",
+																"/cms/article/index",
+																"/cms/article/update",
+																"/cms/article/create",
+																"/cms/article/comment",
+															)) ? "open" : "" ?>" style="<?= in_array($active_url, array(
+																							"/cms",
+																							"/cms/article-category/index",
+																							"/cms/article-category/create",
+																							"/cms/article-category/update",
+																							"/cms/article-author/index",
+																							"/cms/article-author/create",
+																							"/cms/article-author/update",
+																							"/cms/article-tag/index",
+																							"/cms/article-tag/create",
+																							"/cms/article-tag/update",
+																							"/cms/article/index",
+																							"/cms/article/update",
+																							"/cms/article/create",
+																							"/cms/article/comment",
+
+																						)) ? "display: block;" : "display: none;" ?>">
+
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/cms/master-article-author/index",
+																			"/cms/master-article-author/create",
+																			"/cms/master-article-author/update",
+																		)) ? "active" : "" ?>" href="/cms/master-article-author/index">Article Author</a></li>
+
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
+																			"/cms/article/index",
+																			"/cms/article/update",
+																			"/cms/article/create",
+																			"/cms/article/comment",
+																		)) ? "active" : "" ?>" href="/cms/article/index">Article</a></li>
+
 
 
 								</ul>
@@ -746,9 +826,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 															"/operator/safari-operator/index/view",
 														)) ? "active" : "" ?>" href="/operator/safari-operator/index">Safari Tour Operator</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array(
-															"/operator/birding-operator/index",
-															"/operator/birding-operator/index/view",
-														)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
+																"/operator/birding-operator/index",
+																"/operator/birding-operator/index/view",
+															)) ? "active" : "" ?>" href="/operator/birding-operator/index">Biriding Tour Operator</a></li>
 							<li><a class="slide-item" href="#">Resort/Lodge/Homen Stay</a></li> -->
 						</ul>
 					</li>

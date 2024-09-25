@@ -63,8 +63,8 @@ $this->params['title'] = $this->title;
                             $html = '';
                             $topics = $model->articletopics;
                             foreach ($topics as $key => $topic) {
-                                if (isset(GeneralModel::topicoption()[$topic->master_article_topic_id])) {
-                                    $html .= GeneralModel::topicoption()[$topic->master_article_topic_id] . ', ';
+                                if (isset(GeneralModel::topicoption()[$topic->master_topic_id])) {
+                                    $html .= GeneralModel::topicoption()[$topic->master_topic_id] . ', ';
                                 }
                             }
                             return $html;
@@ -78,8 +78,8 @@ $this->params['title'] = $this->title;
                             $html = '';
                             $tags = $model->articletags;
                             foreach ($tags as $key => $tag) {
-                                if (isset(GeneralModel::tagoption()[$tag->master_article_tag_id])) {
-                                    $html .= GeneralModel::tagoption()[$tag->master_article_tag_id] . ', ';
+                                if (isset(GeneralModel::tagoption()[$tag->master_tag_id])) {
+                                    $html .= GeneralModel::tagoption()[$tag->master_tag_id] . ', ';
                                 }
                             }
                             return $html;

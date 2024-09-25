@@ -48,9 +48,9 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
 
 <section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-fluid">
-        <div class="advertisment pt-md-2 pt-5" style ="display: none" >
+        <div class="advertisment pt-md-2 pt-5" style="display: none">
             <div class="google-ad-box  mb-5" style="border:none">
-                
+
             </div>
         </div>
         <div class="row mb-4  justify-content-center">
@@ -68,12 +68,12 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                                     <div class="col mb-5">
                                         <div class="artical_cards h-100">
                                             <div class="image-box">
-                                                <figure class="image"><a href="/article/<?= $model->slug ?>"><img src="<?= isset($model->banner_image) ? $model->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
+                                                <figure class="image"><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><img src="<?= isset($model->banner_image) ? $model->bannerimagepath : $this->params['baseurl'] . '/img/Article1.jpg' ?>" alt=""></a>
                                                 </figure>
                                             </div>
                                             <div class="lower-content">
                                                 <ul class="artical-info ">
-                                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/profile/article/index', 'user_handle' => isset($model->user) ? $model->user->user_handle : '']) ?>"><?= isset($model->user) ? $model->user->name : '' ?></a></li>
+                                                    <li><i class="fa-solid fa-user"></i><a href="<?= Url::toRoute(['/article/default/author', 'slug' => isset($model->articleAuthor) ? $model->articleAuthor->slug : '']) ?>"><?= isset($model->articleAuthor) ? $model->articleAuthor->name : '' ?></a></li>
 
                                                 </ul>
                                                 <h3><a href="<?= Url::toRoute(['/article/default/view', 'slug' => $model->slug]) ?>"><?= $model->title ?> </a></h3>
@@ -105,21 +105,21 @@ if (isset($slug) && $slug != '' && in_array($active_url, array("/article/default
                         </div>
 
                         <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important"">
-                            <div class="google-ad-box  mb-5" style="border:none">
-                                
-                            </div>
-                        </div>
-                        <div class="advertisment d-lg-block d-none " style="display: none !important">
-                            <div class="google-add600hight  mb-5">
+                            <div class=" google-ad-box mb-5" style="border:none">
 
-                            </div>
+                        </div>
+                    </div>
+                    <div class="advertisment d-lg-block d-none " style="display: none !important">
+                        <div class="google-add600hight  mb-5">
+
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
+
+
+    </div>
     </div>
     </div>
 </section>

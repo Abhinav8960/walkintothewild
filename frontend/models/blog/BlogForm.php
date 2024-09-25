@@ -73,8 +73,8 @@ class BlogForm extends Model
             // $this->user_type = $this->blog_model->user_type;
             $this->status = $this->blog_model->status;
 
-            $this->blog_topics = BlogTopic::find()->select('master_blog_topic_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
-            $this->blog_tags = BlogTag::find()->select('master_blog_tag_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
+            $this->blog_topics = BlogTopic::find()->select('master_topic_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
+            $this->blog_tags = BlogTag::find()->select('master_tag_id')->where(['blog_id' => $this->blog_model->id, 'status' => 1])->column();
             // $this->user_status = $this->blog_model->user_status;
         }
     }

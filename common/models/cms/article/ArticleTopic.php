@@ -1,21 +1,23 @@
 <?php
 
-namespace common\models\cms\blog;
+namespace common\models\cms\article;
 
+use common\models\cms\mastercategory\MasterTopic;
 use Yii;
 
 /**
- * This is the model class for table "master_blog_topic".
+ * This is the model class for table "article_topic".
  *
  * @property int $id
- * @property string $title
+ * @property int $article_id
+ * @property int $master_topic_id
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
  * @property int $created_by
  * @property int $updated_by
  */
-class MasterBlogTopic extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
+class ArticleTopic extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use \common\traits\CommanRelationship;
 
@@ -24,7 +26,7 @@ class MasterBlogTopic extends \yii\db\ActiveRecord implements \common\interfaces
      */
     public static function tableName()
     {
-        return 'master_blog_topic';
+        return 'article_topic';
     }
 
     public function behaviors()
@@ -32,13 +34,6 @@ class MasterBlogTopic extends \yii\db\ActiveRecord implements \common\interfaces
         return [
             \yii\behaviors\TimestampBehavior::className(),
             \yii\behaviors\BlameableBehavior::className(),
-            [
-                'class' => \yii\behaviors\SluggableBehavior::class,
-                'attribute' => 'title',
-                'slugAttribute' => 'slug',
-                'immutable' => true,
-                'ensureUnique' => true,
-            ],
         ];
     }
 
@@ -48,10 +43,9 @@ class MasterBlogTopic extends \yii\db\ActiveRecord implements \common\interfaces
     public function rules()
     {
         return [
-            [['title', 'status'], 'required'],
-            [['id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title'], 'string', 'max' => 255],
-            [['title'], 'unique'],
+            [['article_id', 'master_topic_id'], 'required'],
+            [['id', 'article_id', 'master_topic_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['article_id', 'master_topic_id'], 'unique', 'targetAttribute' => ['article_id', 'master_topic_id']],
         ];
     }
 
@@ -62,12 +56,18 @@ class MasterBlogTopic extends \yii\db\ActiveRecord implements \common\interfaces
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'article_id' => 'Article ID',
+            'master_topic_id' => 'Master Article Topic ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    public function getArticlename()
+    {
+        return $this->hasOne(MasterTopic::class, ['id' => 'master_topic_id']);
     }
 }
