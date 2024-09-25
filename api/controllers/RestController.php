@@ -75,7 +75,7 @@ class RestController extends Controller
         // $this->storeRequest();
         // $this->isAuthorizeRequest();
         if ($this->request && !is_array($this->request)) {
-            Yii::$app->api->sendFailedResponse(['Invalid Json']);
+            Yii::$app->api->sendFailedStringResponse(['Invalid Json']);
         }
         $this->getUser();
         if (isset($this->queryRequest['pageSize'])) {
