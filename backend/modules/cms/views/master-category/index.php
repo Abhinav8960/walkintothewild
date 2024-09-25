@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use yii\grid\GridView;
 
-$this->title = 'Blog Tag';
+$this->title = 'Topics';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn-orange', 'title' => 'Create']);
@@ -29,9 +29,27 @@ $this->params['buttons'][] = Html::a('Create',  ['create'], ['class' => 'btn btn
                 'columns' => [
                     [
                         'class' => 'yii\grid\SerialColumn',
-                        'contentOptions' => ['style' => 'width: 5%;'],
+                        'contentOptions' => ['style' => 'width: 1%; text-align: center;'],
+
+
                     ],
-                    'title',
+
+                    [
+                        'label' => 'Title',
+                        'contentOptions' => ['style' => 'width: 50%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->title;
+                        }
+                    ],
+                    [
+                        'label' => 'Slug',
+                        'contentOptions' => ['style' => 'width: 10%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return $model->slug;
+                        }
+                    ],
                     [
                         'label' => 'Status',
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],

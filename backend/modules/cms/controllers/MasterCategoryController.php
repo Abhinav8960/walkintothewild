@@ -5,14 +5,14 @@ namespace backend\modules\cms\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\models\cms\blog\BlogAuthor;
-use common\models\cms\blog\BlogAuthorSearch;
-use common\models\cms\blog\form\BlogAuthorForm;
+use common\models\cms\mastercategory\MasterTopic;
+use common\models\cms\mastercategory\MasterTopicSearch;
+use common\models\cms\mastercategory\form\MasterTopicForm;
 
 /**
- * BlogAuthor Controller for the `blog` module
+ * BlogCategory Controller for the `blog` module
  */
-class BlogAuthorController extends Controller
+class MasterCategoryController extends Controller
 {
     /**
      * Renders the index view for the module
@@ -20,9 +20,9 @@ class BlogAuthorController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BlogAuthorSearch();
+        $searchModel = new MasterTopicSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $dataProvider->query->andWhere("user_id is null");
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -30,29 +30,29 @@ class BlogAuthorController extends Controller
     }
 
     /**
-     * Create Blog Author
+     * Create Blog Category
      * 
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new BlogAuthorForm();
-        $model->action_url = '/cms/blog-author/create';
-        $model->action_validate_url = '/cms/blog-author/validate';
-        $model->status = BlogAuthor::STATUS_ACTIVE;
+        $model = new MasterTopicForm();
+        $model->action_url = '/cms/master-category/create';
+        $model->action_validate_url = '/cms/master-category/validate';
+        $model->status = MasterTopic::STATUS_ACTIVE;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->blog_author_model->save()) {
+                    if ($model->master_topic_model->save()) {
                         \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-                        return $this->redirect(['/cms/blog-author/index']);
+                        return $this->redirect(['/cms/master-category/index']);
                     }
                 }
             }
         } else {
-            $model->blog_author_model->loadDefaultValues();
+            $model->master_topic_model->loadDefaultValues();
         }
 
         return $this->render('form', [
@@ -62,7 +62,7 @@ class BlogAuthorController extends Controller
 
 
     /**
-     * Updates an existing Blog Author model.
+     * Updates an existing MasterTopic model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -70,23 +70,23 @@ class BlogAuthorController extends Controller
      */
     public function actionUpdate($id)
     {
-        $blog_author_model = $this->findModel($id);
-        $model = new BlogAuthorForm($blog_author_model);
-        $model->action_url = '/cms/blog-author/update?id=' . $id;
-        $model->action_validate_url = '/cms/blog-author/validate?id=' . $id;
+        $master_topic_model = $this->findModel($id);
+        $model = new MasterTopicForm($master_topic_model);
+        $model->action_url = '/cms/master-category/update?id=' . $id;
+        $model->action_validate_url = '/cms/master-category/validate?id=' . $id;
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
                     $model->initializeForm();
-                    if ($model->blog_author_model->save()) {
+                    if ($model->master_topic_model->save()) {
                         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
-                        return $this->redirect(['/cms/blog-author/index']);
+                        return $this->redirect(['/cms/master-category/index']);
                     }
                 }
             }
         } else {
-            $model->blog_author_model->loadDefaultValues();
+            $model->master_topic_model->loadDefaultValues();
         }
 
         return $this->render('form', [
@@ -100,10 +100,10 @@ class BlogAuthorController extends Controller
      */
     public function actionValidate($id = null)
     {
-        $model = new BlogAuthorForm();
+        $model = new MasterTopicForm();
         if ($id != null) {
             $formmodel = $this->findModel($id);
-            $model = new BlogAuthorForm($formmodel);
+            $model = new MasterTopicForm($formmodel);
         }
 
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
@@ -113,7 +113,7 @@ class BlogAuthorController extends Controller
     }
 
     /**
-     * Deletes an existing BlogAuthor model.
+     * Deletes an existing MasterTopic model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -122,24 +122,24 @@ class BlogAuthorController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->author_name = $model->id . '_' . $model->author_name;
+        $model->title = $model->id . '_' . $model->title;
         $model->slug = $model->id . '_' . $model->slug;
-        $model->status = BlogAuthor::STATUS_DELETE;
+        $model->status = MasterTopic::STATUS_DELETE;
         $model->save();
         \Yii::$app->session->setFlash('success', 'Data Updated Successfully');
         return $this->redirect(Yii::$app->request->referrer);
     }
 
     /**
-     * Finds the BlogAuthor model based on its primary key value.
+     * Finds the MasterTopic model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return BlogAuthor the loaded model
+     * @return MasterTopic the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = BlogAuthor::findOne(['id' => $id, 'status' => [BlogAuthor::STATUS_ACTIVE, BlogAuthor::STATUS_SUSPEND]])) !== null) {
+        if (($model = MasterTopic::findOne(['id' => $id, 'status' => [MasterTopic::STATUS_ACTIVE, MasterTopic::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

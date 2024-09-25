@@ -1,9 +1,9 @@
 <?php
 
-use common\models\cms\article\MasterArticleTopic;
+use common\models\cms\mastercategory\MasterTopic;
 use yii\helpers\Url;
 
-$topics = MasterArticleTopic::find()->where(['status' => MasterArticleTopic::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all();
+$topics = MasterTopic::find()->where(['status' => MasterTopic::STATUS_ACTIVE])->orderBy(['title' => SORT_ASC])->all();
 ?>
 <div class="topics_listing">
     <ul>

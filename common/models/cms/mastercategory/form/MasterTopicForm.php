@@ -1,9 +1,9 @@
 <?php
 
-namespace common\models\cms\blog\form;
+namespace common\models\cms\mastercategory\form;
 
 use Yii;
-use common\models\cms\blog\MasterBlogTopic;
+use common\models\cms\mastercategory\MasterTopic;
 
 /**
  * This is the model class for table "master_blog_category".
@@ -14,29 +14,29 @@ use common\models\cms\blog\MasterBlogTopic;
  * @property int|null $description
  * @property int|null $status
  */
-class MasterBlogTopicForm extends \yii\base\Model
+class MasterTopicForm extends \yii\base\Model
 {
     public $title;
     public $status;
     public $slug;
-    public $master_blog_topic_model;
+    public $master_topic_model;
     public $action_url;
     public $action_validate_url;
 
     /**
      *
-     * @param [type] $master_blog_topic_model
+     * @param [type] $master_topic_model
      */
-    public function __construct(MasterBlogTopic $master_blog_topic_model = null)
+    public function __construct(MasterTopic $master_topic_model = null)
     {
-        $this->master_blog_topic_model = Yii::createObject([
-            'class' => MasterBlogTopic::className()
+        $this->master_topic_model = Yii::createObject([
+            'class' => MasterTopic::className()
         ]);
-        if ($master_blog_topic_model != null) {
-            $this->master_blog_topic_model = $master_blog_topic_model;
-            $this->title = $this->master_blog_topic_model->title;
-            $this->slug = $this->master_blog_topic_model->slug;
-            $this->status = $this->master_blog_topic_model->status;
+        if ($master_topic_model != null) {
+            $this->master_topic_model = $master_topic_model;
+            $this->title = $this->master_topic_model->title;
+            $this->slug = $this->master_topic_model->slug;
+            $this->status = $this->master_topic_model->status;
         }
     }
 
@@ -54,9 +54,9 @@ class MasterBlogTopicForm extends \yii\base\Model
             [['slug'], 'string', 'max' => 300],
             [
                 'title', 'unique', 'when' => function ($model, $attribute) {
-                    return strtolower($this->master_blog_topic_model->$attribute) != strtolower($model->$attribute);
+                    return strtolower($this->master_topic_model->$attribute) != strtolower($model->$attribute);
                 },
-                'targetClass' => MasterBlogTopic::className(), 'targetAttribute' => ['title'],
+                'targetClass' => MasterTopic::className(), 'targetAttribute' => ['title'],
                 'message' => 'This Topic has already been taken'
             ],
         ];
@@ -82,8 +82,8 @@ class MasterBlogTopicForm extends \yii\base\Model
      */
     public function initializeForm()
     {
-        $this->master_blog_topic_model->title = $this->title;
-        $this->master_blog_topic_model->slug = $this->slug;
-        $this->master_blog_topic_model->status = $this->status;
+        $this->master_topic_model->title = $this->title;
+        $this->master_topic_model->slug = $this->slug;
+        $this->master_topic_model->status = $this->status;
     }
 }

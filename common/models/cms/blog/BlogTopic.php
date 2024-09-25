@@ -2,6 +2,7 @@
 
 namespace common\models\cms\blog;
 
+use common\models\cms\mastercategory\MasterTopic;
 use Yii;
 
 /**
@@ -9,7 +10,7 @@ use Yii;
  *
  * @property int $id
  * @property int $blog_id
- * @property int $master_blog_topic_id
+ * @property int $master_topic_id
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
@@ -42,9 +43,9 @@ class BlogTopic extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     public function rules()
     {
         return [
-            [['blog_id', 'master_blog_topic_id'], 'required'],
-            [['id', 'blog_id', 'master_blog_topic_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['blog_id', 'master_blog_topic_id'], 'unique', 'targetAttribute' => ['blog_id', 'master_blog_topic_id']],
+            [['blog_id', 'master_topic_id'], 'required'],
+            [['id', 'blog_id', 'master_topic_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['blog_id', 'master_topic_id'], 'unique', 'targetAttribute' => ['blog_id', 'master_topic_id']],
         ];
     }
 
@@ -56,7 +57,7 @@ class BlogTopic extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         return [
             'id' => 'ID',
             'blog_id' => 'Blog ID',
-            'master_blog_topic_id' => 'Master Blog Topic ID',
+            'master_topic_id' => 'Master Blog Topic ID',
             'status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -67,6 +68,6 @@ class BlogTopic extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
 
     public function getBlogname()
     {
-        return $this->hasOne(MasterBlogTopic::class, ['id' => 'master_blog_topic_id']);
+        return $this->hasOne(MasterTopic::class, ['id' => 'master_topic_id']);
     }
 }
