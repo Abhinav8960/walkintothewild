@@ -7,6 +7,7 @@ namespace common\models;
 // use common\models\blog\category\Category;
 // use common\models\blog\frequency\Frequency;
 
+use common\models\cms\article\Article;
 use common\models\cms\article\MasterArticleAuthor;
 use common\models\cms\faqcategory\FaqCategory;
 use common\models\cms\flagreason\Flagreason;
@@ -630,25 +631,24 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     //     return $result;
     // }
 
-    // public static function blogoptionfeature($ids = null)
-    // {
+    public static function articleoptionfeature($ids = null)
+    {
 
-    //     $query = Blog::find()
-    //         // ->where(['status' => self::STATUS_ACTIVE])
-    //         ->where("blog.id IN (SELECT id FROM `blog` WHERE (`blog`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`blog`.`status`=1) and user_type=3) OR blog.id IN (SELECT id FROM `blog` WHERE (`blog`.`status`=1) AND (is_schedule=0 OR DATE(publish_date_time)<='" . date('Y-m-d') . "') AND (`blog`.`status`=1) and is_approved=1 and user_type IN (1,2))")
-    //         ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
-    //         ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
+        $query = Article::find()
+            ->where(['status' => Article::STATUS_ACTIVE])
+            ->select(['*', 'space_count' => 'CHAR_LENGTH(title) - CHAR_LENGTH(LTRIM(title))'])
+            ->orderBy(['space_count' => SORT_ASC, 'title' => SORT_ASC]);
 
-    //     if ($ids) {
-    //         $query->andWhere("blog.id NOT IN ($ids)");
-    //     }
-    //     // Get all the models
-    //     $parks = $query->all();
+        if ($ids) {
+            $query->andWhere("article.id NOT IN ($ids)");
+        }
+        // Get all the models
+        $articles = $query->all();
 
-    //     // Use ArrayHelper::map to create the key-value pairs
-    //     $result = ArrayHelper::map($parks, 'id', 'title');
-    //     return $result;
-    // }
+        // Use ArrayHelper::map to create the key-value pairs
+        $result = ArrayHelper::map($articles, 'id', 'title');
+        return $result;
+    }
 
     public static function safariParkRareExoticOption()
     {

@@ -1,5 +1,11 @@
 <?php
 
+use common\models\cms\article\ArticleCommentSearch;
+use common\models\GeneralModel;
+use common\models\park\SafariPark;
+use common\models\sharesafari\ShareSafari;
+use common\models\sharesafari\ShareSafariCommentSearch;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -20,15 +26,20 @@ use yii\widgets\ActiveForm;
 ]); ?>
 <div class="row">
     <div class="col-md-2">
-        <?= $form->field($model, 'type')->dropDownList(
-            ['1' => 'Blog Flag', '2' => 'Operator Flag', '3' => 'Package Flag', '4' => 'Shared Safari Flag', '5' => 'Article Flag'],
+        <?= $form->field($model, 'article_id')->dropDownList(
+            ArticleCommentSearch::getArticlelist(),
             [
-                'prompt' => 'Select Option',
+                'prompt' => 'Select Article',
             ]
         ) ?>
     </div>
     <!-- <div class="col-md-2">
-        <?= $form->field($model, 'comment')->textInput(['placeholder' => 'Search by Comments']) ?>
+        <?= $form->field($model, 'flaged')->dropDownList(
+            ['0' => 'Not Flaged', '1' => 'Flaged'],
+            [
+                'prompt' => 'Select Status of Flaged',
+            ]
+        ) ?>
     </div> -->
     <div class="col-md-2">
         <?= Html::submitButton('Search', ['class' => 'btn btn-orange text-white']) ?>

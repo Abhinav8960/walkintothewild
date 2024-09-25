@@ -546,18 +546,18 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																				"/cms/flag-reason",
 																			)) ? "" : "display: none;" ?>">
 							<li class="side-menu__label1"><a href="javascript:void(0);">CMS</a></li>
-							
+
 							<li><a class="slide-item <?= in_array($active_url, array(
-																"/cms/master-tag/index",
-																"/cms/master-tag/create",
-																"/cms/master-tag/update",
-															)) ? "active" : "" ?>" href="/cms/master-tag/index">Tags</a></li>
-							
+															"/cms/master-tag/index",
+															"/cms/master-tag/create",
+															"/cms/master-tag/update",
+														)) ? "active" : "" ?>" href="/cms/master-tag/index">Tags</a></li>
+
 							<li><a class="slide-item <?= in_array($active_url, array(
-																"/cms/master-category/index",
-																"/cms/master-category/create",
-																"/cms/master-category/update",
-															)) ? "active" : "" ?>" href="/cms/master-category/index">Topics</a></li>
+															"/cms/master-category/index",
+															"/cms/master-category/create",
+															"/cms/master-category/update",
+														)) ? "active" : "" ?>" href="/cms/master-category/index">Topics</a></li>
 							<li class="sub-slide <?= in_array($active_url, array(
 														"/cms",
 														"/cms/blog-category/index",
@@ -608,20 +608,20 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 																						)) ? "display: block;" : "display: none;" ?>">
 									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																			"/cms/blog-category/index",
-																			"/cms/blog-category/create",
-																			"/cms/blog-category/update",
-																		)) ? "active" : "" ?>" href="/cms/blog-category/index">Blog Topics</a></li> -->
+																				"/cms/blog-category/index",
+																				"/cms/blog-category/create",
+																				"/cms/blog-category/update",
+																			)) ? "active" : "" ?>" href="/cms/blog-category/index">Blog Topics</a></li> -->
 									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																				"/cms/blog-author/index",
 																				"/cms/blog-author/create",
 																				"/cms/blog-author/update",
 																			)) ? "active" : "" ?>" href="/cms/article-author/index">Blog Author</a></li> -->
 									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array(
-																			"/cms/blog-tag/index",
-																			"/cms/blog-tag/create",
-																			"/cms/blog-tag/update",
-																		)) ? "active" : "" ?>" href="/cms/blog-tag/index">Blog Tag</a></li> -->
+																				"/cms/blog-tag/index",
+																				"/cms/blog-tag/create",
+																				"/cms/blog-tag/update",
+																			)) ? "active" : "" ?>" href="/cms/blog-tag/index">Blog Tag</a></li> -->
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array(
 																			"/cms/blog/index",
 																			"/cms/blog/update",
@@ -723,7 +723,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 																							"/cms/feature-tag/index",
 																						)) ? "display: block;" : "display: none;" ?>">
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-park/index")) ? "active" : "" ?>" href="/cms/feature-park/index">Park</a></li>
-									<!-- <li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li> -->
+									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-article/index")) ? "active" : "" ?>" href="/cms/feature-article/index">Article</a></li>
 									<li><a class="sub-side-menu__item <?= in_array($active_url, array("/cms/feature-rare-exotic/index")) ? "active" : "" ?>" href="/cms/feature-rare-exotic/index">RARE AND EXOTIC</a></li>
 									<!-- <li><a class="sub-side-menu__item <?php // in_array($active_url, array("/cms/feature-tag/index")) ? "active" : "" 
 																			?>" href="/cms/feature-tag/index">Article Tag</a></li> -->
@@ -892,6 +892,9 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/flag/blog/index",
 														)) ? "active" : "" ?>" href="/flag/blog/index">Blog Comments</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array(
+															"/flag/article/index",
+														)) ? "active" : "" ?>" href="/flag/article/index">Article Comments</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array(
 															"/flag/untraced-flag/index",
 														)) ? "active" : "" ?>" href="/flag/untraced-flag/index">Untraced Flags</a></li>
