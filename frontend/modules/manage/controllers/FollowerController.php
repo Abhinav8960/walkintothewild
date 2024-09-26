@@ -3,7 +3,7 @@
 namespace frontend\modules\manage\controllers;
 
 use frontend\controllers\FrontendBaseController;
-use common\models\operator\SafariOperatorFollow;
+use common\models\UserFollow;
 
 /**
  * Default controller for the `manage` module
@@ -18,8 +18,8 @@ class FollowerController extends FrontendBaseController
     public function actionIndex()
     {
         $safari_operator = $this->module->operatormodel();
-        $follow_query = SafariOperatorFollow::find()->where([
-            'safari_operator_id' => $safari_operator->id,
+        $follow_query = UserFollow::find()->where([
+            'follow_user_id' => $safari_operator->user_id,
             'status' => 1
         ]);
         $follow_dataProvider = new \yii\data\ActiveDataProvider([

@@ -9,7 +9,6 @@ use common\models\MailLog;
 use common\models\operator\form\SafariOperatorRequestForm;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
-use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\registration\SafariOperatorRequest;

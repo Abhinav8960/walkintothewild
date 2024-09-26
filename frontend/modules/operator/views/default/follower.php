@@ -90,7 +90,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                 <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                                             </div>
                                             <div class="row">
-                                                <?php if ($operatorfollowers = $operator->getFollowerlist()->joinWith('user')->where(['safari_operator_follow.status' => 1, 'user.status' => User::STATUS_ACTIVE])->all()) {
+                                                <?php if ($operatorfollowers = $operator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE])->all()) {
                                                     foreach ($operatorfollowers as $operatorfollower) { ?>
                                                         <div class="col-sm-12 col-md-3">
                                                             <section class="mx-auto pb-3">
