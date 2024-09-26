@@ -403,6 +403,7 @@ class DefaultController extends FrontendBaseController
 
         $model = new SafariOperatorReviewForm();
         $model->safari_operator_id = $operator_id;
+        $model->user_id = Yii::$app->user->identity->id;
 
         $model->action_url = '/operator/default';
         $model->action_validate_url = '/operator/default/validatereview';

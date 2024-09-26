@@ -165,7 +165,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                                                                     <?php if ($review->user) { ?>
                                                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>" data-pjax="0">
-                                                                            <p class="mb-0"> <?= $review->user->name ?></p>
+                                                                            <p class="mb-0"> <?= $review->user->getName() ?></p>
                                                                         </a>
                                                                     <?php } ?>
                                                                 </div>
@@ -185,7 +185,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                                                                         <img src="<?= $reply->user && $reply->user->avatar <> '' ? $reply->user->avatar : $this->params['baseurl'] . '/img/dpmain.png' ?>" alt="">
                                                                                     </div>
                                                                                     <div class="font-color">
-                                                                                        <span class="comment-author"><?= isset($reply->user) ? $reply->user->name : '' ?></span>
+                                                                                        <span class="comment-author"><?= isset($reply->user) ? $reply->user->getName() : '' ?></span>
                                                                                         <span class="comment-date"><a href=""><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?> </a></span>
                                                                                         <div class="comment-text">
                                                                                             <p><?= $reply->review ?></p>

@@ -64,7 +64,7 @@ class DefaultController extends FrontendBaseController
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($article)) {
             Yii::$app->session->setFlash('success', 'Comment submitted Successfully');
-            return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+            return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'comment-wrapper-section']);
         }
 
         return $this->render(
@@ -99,7 +99,7 @@ class DefaultController extends FrontendBaseController
             if ($replymodel->validate()) {
                 if ($replymodel->reply($article)) {
                     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-                    return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+                    return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'comment-wrapper-section']);
                 }
             }
         }
@@ -213,7 +213,7 @@ class DefaultController extends FrontendBaseController
 
 
                         Yii::$app->session->setFlash('success', 'Review Reported Successfully!');
-                        return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'commentform-comment']);
+                        return $this->redirect(['/article/default/view',  'slug' => $slug, '#' => 'comment-wrapper-section']);
                     }
                 }
             }
