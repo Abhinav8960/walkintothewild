@@ -66,17 +66,17 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                 <div class="row pt-5 pb-4">
                     <div class="col-lg-12 col-md-12 col-xxl-12 col-xl-12">
                         <div class="row">
-                            <div class=" col-xxl-8 col-lg-8 mb-4">
+                            <div class="col-md-12 mb-4">
                                 <div class="card card_bodyPadding">
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
                                             <div class="col-md-12">
                                                 <h6 class="fs-5 fw-bold pb-3">Followers</h5>
                                             </div>
-                                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-3">
+                                            <div class="row">
                                                 <?php if ($operatorfollowers = $operator->getFollowerlist()->joinWith('user')->where(['safari_operator_follow.status' => 1, 'user.status' => User::STATUS_ACTIVE])->all()) {
                                                     foreach ($operatorfollowers as $operatorfollower) { ?>
-                                                        <div class="col">
+                                                        <div class="col-sm-12 col-md-3">
                                                             <section class="mx-auto pb-3">
                                                                 <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollower->user]);  ?>
                                                             </section>
@@ -92,9 +92,6 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xxl-4 col-lg-4">
-                                <?= $this->render('_operator_rating_sidebar', ['operator' => $operator]) ?>
                             </div>
                         </div>
                     </div>
