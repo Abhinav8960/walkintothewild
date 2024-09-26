@@ -481,6 +481,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getOperator()
     {
-        return $this->hasOne(SafariOperator::className(), ['user_id' => 'id'])->andWhere(['status' => SafariOperator::STATUS_ACTIVE]);
+        return $this->hasOne(SafariOperator::className(), ['user_id' => 'id'])->andWhere(['safari_operator.status' => SafariOperator::STATUS_ACTIVE]);
     }
 }

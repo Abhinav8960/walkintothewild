@@ -65,7 +65,8 @@ class ChatSearch extends \Yii\base\Model
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'user.name', $this->name]);
+        $query->joinwith(['operator'])->andFilterWhere(['like', 'user.name', $this->name])
+        ->orFilterWhere(['like', 'safari_operator.business_name', $this->name]);
         return $dataProvider;
     }
 }
