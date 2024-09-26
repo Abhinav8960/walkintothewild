@@ -37,7 +37,7 @@ if ($model->is_offer_economical_budget == 1) {
                                     ['class' => 'yii\grid\SerialColumn'],
                                     [
                                         'label' => 'User',
-                                        'contentOptions' => ['style' => 'width: 25%;'],
+                                        'contentOptions' => ['style' => 'width: 80%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {
                                             if ($user = $model->user) {
@@ -47,30 +47,30 @@ if ($model->is_offer_economical_budget == 1) {
                                         }
                                     ],
 
-                                    [
-                                        'label' => 'Follow Datetime',
-                                        'contentOptions' => ['style' => 'width: 15%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return  $model->follow_datetime;
-                                        }
-                                    ],
-                                    [
-                                        'label' => 'Unfollow Datetime',
-                                        'contentOptions' => ['style' => 'width: 15%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return  $model->unfollow_datetime;
-                                        }
-                                    ],
-                                    [
-                                        'label' => 'Unfollow Datetime',
-                                        'contentOptions' => ['style' => 'width: 15%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return  $model->unfollow_datetime;
-                                        }
-                                    ],
+                                    // [
+                                    //     'label' => 'Follow Datetime',
+                                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                                    //     'format' => 'raw',
+                                    //     'value' => function ($model) {
+                                    //         return  $model->follow_datetime;
+                                    //     }
+                                    // ],
+                                    // [
+                                    //     'label' => 'Unfollow Datetime',
+                                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                                    //     'format' => 'raw',
+                                    //     'value' => function ($model) {
+                                    //         return  $model->unfollow_datetime;
+                                    //     }
+                                    // ],
+                                    // [
+                                    //     'label' => 'Unfollow Datetime',
+                                    //     'contentOptions' => ['style' => 'width: 15%;'],
+                                    //     'format' => 'raw',
+                                    //     'value' => function ($model) {
+                                    //         return  $model->unfollow_datetime;
+                                    //     }
+                                    // ],
                                     [
                                         'label' => 'Status',
                                         'contentOptions' => ['style' => 'width: 15%;'],

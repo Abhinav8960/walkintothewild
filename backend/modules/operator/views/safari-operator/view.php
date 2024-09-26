@@ -147,10 +147,7 @@ foreach ($park as $key => $role) {
                                         <thead>
                                             <tr>
                                                 <th>User Profile</th>
-                                                <th>Follow Datetime</th>
-                                                <th>IP Address</th>
-                                                <th>Device</th>
-                                                <th>Platform/OS</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -159,10 +156,7 @@ foreach ($park as $key => $role) {
                                             ?>
                                                     <tr>
                                                         <td><img src="<?= $follower->user->avatar != '' ? $follower->user->avatar : '/img/dpmain.png' ?>" class="rounded profile-picture" style="width:28px;"> <?= $user->name ?></td>
-                                                        <td><?= $follower->follow_datetime ?></td>
-                                                        <td><?= $follower->user_ip_address ?></td>
-                                                        <td><?= $follower->user_device ?></td>
-                                                        <td><?= $follower->user_platform ?></td>
+
                                                     </tr>
                                             <?php }
                                             } ?>

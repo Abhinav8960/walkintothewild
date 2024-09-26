@@ -18,6 +18,7 @@ use common\models\operator\SafariOperatorPark;
 use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\SafariOperatorSearch;
+use common\models\User;
 use common\models\UserFollow;
 
 /**
@@ -125,10 +126,7 @@ class SafariOperatorController extends Controller
     public function actionFollower($id)
     {
         $operator = SafariOperator::find()->where(['id' => $id])->limit(1)->one();
-        $follow_query = UserFollow::find()->where([
-            'follow_user_id' => $operator->user_id,
-            'status' => 1
-        ]);
+        $follow_query = $operator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE]);
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $follow_query,
             'pagination' => [
