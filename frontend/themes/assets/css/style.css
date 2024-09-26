@@ -6995,3 +6995,8 @@ select.custom_sort_by_input option.selected {
   
 }
 
+
+
+.joinsafari .disabled{
+  opacity: .7;
+}
