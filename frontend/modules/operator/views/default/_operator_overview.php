@@ -76,6 +76,13 @@ use common\models\User;
                             <div class="googlerating">
                                 <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/follower', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"><?= $operator->getFollowerlist()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'safari_operator_follow.status' => 1])->count() ?> Followers</a></p>
                             </div>
+                            <div class="googlerating">
+                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/following', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"><?php if ($user = $operator->user) {
+                                                                                                                                                                                    if ($user_following = $user->getUserfollowings()) {
+                                                                                                                                                                                        echo $user_following->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
+                                                                                                                                                                                    }
+                                                                                                                                                                                } ?> Following</a></p>
+                            </div>
                         </div>
                         <div class="detailsText pb-3">
                             <p style="font-size: 14px;"><?= $operator->about_business ?>
