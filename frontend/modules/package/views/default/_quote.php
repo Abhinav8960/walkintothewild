@@ -24,7 +24,7 @@ use yii\bootstrap5\ActiveForm;
                     <div class="input-group2 ">
                         <label for="travelers">Travelers</label>
                         <div class="number-input position-relative">
-                            <?= $form->field($packagemodel, 'travelers')->textInput(['class' => 'form-control', 'id' => "travelers", 'value' => 1])->label(false) ?>
+                            <?= $form->field($packagemodel, 'travelers')->textInput(['class' => 'form-control', 'id' => "travelers", 'value' => 1, 'disabled' => $disabled])->label(false) ?>
                             <!-- <div class="bton_updown">
                                 <button onclick="increment('travelers')"><i class="fa-solid fa-chevron-up"></i></button>
                                 <button onclick="decrement('travelers')"><i class="fa-solid fa-chevron-down"></i></button>
@@ -33,12 +33,12 @@ use yii\bootstrap5\ActiveForm;
                     </div>
                     <div class="form-wrapper">
                         <label for="start-date">Start Date</label>
-                        <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control'])->label(false) ?>
+                        <?= $form->field($packagemodel, 'pack_start_date')->input('date', ['class' => 'form-control', 'disabled' => $disabled])->label(false) ?>
                     </div>
                 </div>
             </div>
             <div class="col-lg-12 mt-3">
-                <?= Html::submitButton('Get a free quote', ['class' => 'sent_btn rounded-2']) ?>
+                <?= Html::submitButton('Get a free quote', ['class' => 'sent_btn rounded-2', 'disabled' => $disabled]) ?>
             </div>
             <div class="col-12 pt-2">
                 <div class="text_get">

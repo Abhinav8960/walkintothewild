@@ -96,7 +96,8 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                     <!-- start quote user search here -->
                                     <!-- end quote user search here-->
                                     <div class="chat-cardlist pt-3">
-                                        <?php if ($searchModel->name == '' && $active_quote_chat_list) {
+                                     <div class="chatboxslid">
+                                     <?php if ($searchModel->name == '' && $active_quote_chat_list) {
                                             foreach ($active_quote_chat_list as $active_chat) {
                                                 if ($login_user && $active_chat->user_id == $login_user->id) {
                                                     $user = $active_chat->recipient;
@@ -147,6 +148,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         //     echo $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
                                         // }
                                         ?>
+                                     </div>
                                     </div>
                                 </div>
                             </div>

@@ -15,6 +15,7 @@ use yii\helpers\Url;
         max-height: 92vh;
         height: 88vh;
         width: 100%;
+        overflow: hidden;
     }
 
     /* .chat_box.card{
@@ -26,8 +27,8 @@ use yii\helpers\Url;
 
     .chat-cardlist {
 
-        max-height: 73vh;
-        height: 73vh;
+         max-height: 73vh;
+        height: 73vh; 
         width: 100%;
         overflow-y: auto;
     }

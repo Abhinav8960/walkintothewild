@@ -393,23 +393,39 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </ul>
                     </div>
                 </div>
-                
-                <div class="advertisment pt-md-2 pt-5" style="display: none !important" >
+
+                <div class="advertisment pt-md-2 pt-5" style="display: none !important">
                     <div class="google-ad-box  mb-5" style="border:none">
-                        
+
                     </div>
                 </div>
-                
+
             </div>
 
             <div class="col-xl-3 col-lg-3 mb-5 pb-4">
-                <?php if (Yii::$app->user->identity) { ?>
+                <?php if (Yii::$app->user->identity && isset($package->safarioperator) && Yii::$app->user->identity->id != $package->safarioperator->user_id) { ?>
                     <div class="request_quote mb-4">
                         <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;cursor: default;">
                             Request Quote</button>
                         <div class="interst_wrapper p-0 bg-white">
                             <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
-                                <?= $this->render('_quote', ['packagemodel' => $packagemodel]) ?>
+                                <?= $this->render('_quote', ['packagemodel' => $packagemodel, 'disabled' => false]) ?>
+
+                            </div>
+                        </div>
+
+                    </div>
+                <?php } else {  ?>
+
+                    <div class="request_quote mb-4 position-relative galssset">
+                        <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;cursor: default;">
+                            Request Quote</button>
+                        <div class="interst_wrapper p-0 bg-white">
+                            <svg class="form-lock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path fill="#02690e" d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z" />
+                            </svg>
+                            <div class="users_profile d-flex gap-3 align-items-center flex-wrap">
+                                <?= $this->render('_quote', ['packagemodel' => $packagemodel, 'disabled' => true]) ?>
 
                             </div>
                         </div>
@@ -444,10 +460,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         echo $this->render('@frontend/modules/operator/views/default/_operator_rating_sidebar', ['operator' => $package->safarioperator]);
                     } ?>
                 </div>
-                
-                <div class="advertisment mt-5"  style="display: none">
+
+                <div class="advertisment mt-5" style="display: none">
                     <div class="google-ad300  mb-5" style="border:none">
-                        
+
                     </div>
                 </div>
                 <div class="advertisment" style="display:none !important;">
@@ -461,8 +477,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
         </div>
     </div>
-    
-    
+
+
 </section>
 
 <div class="modal fade modal_enquiry" id="exampleModalenquiry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

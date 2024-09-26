@@ -208,7 +208,7 @@ class BlogController extends FrontendBaseController
                             }
                         }
 
-                        \Yii::$app->session->setFlash('success', 'Artical Updated Successfully');
+                        \Yii::$app->session->setFlash('success', 'Blog Updated Successfully');
                         return $this->redirect(['/profile/blog/index', 'user_handle' => $user->user_handle]);
                     }
                 }

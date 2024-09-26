@@ -64,14 +64,14 @@ use yii\helpers\Url;
                                 <div class="avatar">
                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
                                         <!--                                        <img src="<?= $this->params['baseurl'] ?>/img/Share-Safari/dpmain.png" alt="">-->
-                                        <img src="<?= $comments->user->profileimage ?>" alt="" class="rounded-circle" title="<?= $comments->user ? $comments->user->name : '' ?>">
+                                        <img src="<?= $comments->user->profileimage ?>" alt="" class="rounded-circle" title="<?= $comments->user ? $comments->user->getName() : '' ?>">
                                     </a>
                                 </div>
                                 <div class="text_com">
                                     <div class="requestContact d-flex gap-2 align-items-center font-color">
 
                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($comments->user) ? $comments->user->user_handle : '']) ?>">
-                                            <span class="comment-author"><?= isset($comments->user) ? $comments->user->name : '' ?></span>
+                                            <span class="comment-author"><?= isset($comments->user) ? $comments->user->getName() : '' ?></span>
                                         </a>
                                         <span class="comment-date"><?= date("F j, Y", $comments->created_at) . ' at ' . date("H:i A", $comments->created_at) ?></span>
                                         <!-- <?php if (Yii::$app->user->identity) {
@@ -104,7 +104,7 @@ use yii\helpers\Url;
                                                     </div>
                                                     <div class="font-color">
                                                         <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => isset($reply->user) ? $reply->user->user_handle : '']) ?>">
-                                                            <span class="comment-author"><?= isset($reply->user) ? $reply->user->name : '' ?></span>
+                                                            <span class="comment-author"><?= isset($reply->user) ? $reply->user->getName() : '' ?></span>
                                                         </a>
                                                         <span class="comment-date"><?= date("F j, Y", $reply->created_at) . ' at ' . date("H:i A", $reply->created_at) ?></span>
                                                         <div class="comment-text">

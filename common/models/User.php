@@ -434,9 +434,20 @@ class User extends ActiveRecord implements IdentityInterface
         return "@" . $this->user_handle;
     }
 
+    public function getName()
+    {
+        if ($this->operator && $this->operator->user_id == $this->id) {
+            return $this->operator->businessname;
+        }
+        return $this->name;
+    }
 
     public function getProfileimage()
     {
+        if ($this->operator && $this->operator->user_id == $this->id) {
+            return $this->operator->imagepath;
+        }
+
         if ($this->profile_image != '') {
             return '/storage/user/' . $this->id . '/' . $this->profile_image;
         }

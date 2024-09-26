@@ -47,6 +47,10 @@ class DefaultController extends FrontendBaseController
     {
         $user = $this->findUserbyHandle($user_handle);
 
+        if ($user->operator) {
+            return $this->redirect(['/operator/default/sharedsafari', 'slug' => $user->operator->slug]);
+        }
+
         $user_experiences = UserExperience::find()->where(['user_id' => $user->id, 'status' => UserExperience::STATUS_ACTIVE])->orderby(['id' => SORT_DESC])->all();
         return $this->render(
             'index',

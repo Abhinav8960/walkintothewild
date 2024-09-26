@@ -114,7 +114,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                                             <div class="googlerating">
                                                                 <?php if ($review->user) { ?>
                                                                     <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>">
-                                                                        <p class="mb-0"> <?= $review->user->name ?> <?= date("F j, Y", $review->created_at) . ' at ' . date("H:i A", $review->created_at) ?></p>
+                                                                        <p class="mb-0"> <?= $review->user->getName() ?> <?= date("F j, Y", $review->created_at) . ' at ' . date("H:i A", $review->created_at) ?></p>
                                                                     </a>
                                                                 <?php } ?>
 
