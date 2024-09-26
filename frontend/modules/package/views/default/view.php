@@ -417,7 +417,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                 <?php } else {  ?>
 
-                    <div class="request_quote mb-4 position-relative">
+                    <div class="request_quote mb-4 position-relative galssset">
                         <button class="intested_btn interestBtn " value="#" style="background-color: var(--background-primary) !important;cursor: default;">
                             Request Quote</button>
                         <div class="interst_wrapper p-0 bg-white">

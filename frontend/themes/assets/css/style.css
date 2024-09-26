@@ -6970,5 +6970,28 @@ select.custom_sort_by_input option.selected {
   height: 100px;
   left: 50%;
   top: 50%;
+  z-index: 10;
   transform: translate(-50%, -50%);
 }
+.galssset{
+
+  user-select: none;
+}
+.galssset::after{
+
+  content: '';
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  backdrop-filter: blur(9.5px);
+  -webkit-backdrop-filter: blur(9.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  position: absolute;
+  
+}
+
