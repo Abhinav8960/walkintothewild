@@ -91,37 +91,37 @@ $this->params['title'] = $this->title;
                     //         }
                     //     }
                     // ],
-                    // [
-                    //     'class' => 'yii\grid\ActionColumn',
-                    //     'header' => "Actions",
-                    //     'contentOptions' => ['style' => 'width: 15%;'],
-                    //     'template' => '&nbsp{update} &nbsp{suspend}',
-                    //     'buttons' => [
-                    //         'view' => function ($url, $model) {
-                    //             return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
-                    //             ', ['view', 'id' => $model->id], [
-                    //                 'class' => 'btn p-0 change-menuicon',
-                    //                 'title' => 'View',
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => "Actions",
+                        'contentOptions' => ['style' => 'width: 15%;'],
+                        'template' => '&nbsp{update} &nbsp{suspend}',
+                        'buttons' => [
+                            // 'view' => function ($url, $model) {
+                            //     return  Html::a('<img src="' . $this->params['baseurl'] . '/img/view.png" alt="" width="25" height="25">
+                            //     ', ['view', 'id' => $model->id], [
+                            //         'class' => 'btn p-0 change-menuicon',
+                            //         'title' => 'View',
 
-                    //             ]);
-                    //         },
-                    //         'update' => function ($url, $model) {
+                            //     ]);
+                            // },
+                            // 'update' => function ($url, $model) {
 
-                    //             return Html::a(
-                    //                 '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
-                    //                 ['update', 'id' => $model->id],
-                    //                 [
-                    //                     'class' => 'btn p-0 change-menuicon',
-                    //                     'title' => 'Update',
-                    //                 ]
-                    //             );
-                    //         },
-                    //         'suspend' => function ($url, $model) {
-                    //             return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
-                    //         },
+                            //     return Html::a(
+                            //         '<img src="' . $this->params['baseurl'] . '/img/update.png" alt="" width="25" height="25">',
+                            //         ['update', 'id' => $model->id],
+                            //         [
+                            //             'class' => 'btn p-0 change-menuicon',
+                            //             'title' => 'Update',
+                            //         ]
+                            //     );
+                            // },
+                            'suspend' => function ($url, $model) {
+                                return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Safari Tour Operator', 'suspend_title' => 'Safari Tour Operator']);
+                            },
 
-                    //     ]
-                    // ],
+                        ]
+                    ],
                 ],
             ]); ?>
         </div>
