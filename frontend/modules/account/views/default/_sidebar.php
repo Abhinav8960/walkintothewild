@@ -13,7 +13,7 @@ use yii\helpers\Url;
             <?php  } ?>
 
             <?php if (Yii::$app->user->identity && Yii::$app->user->identity->operator) { ?>
-                <a href="<?= Url::toRoute(['/manage/sharedsafari']) ?>" class="nav-link mb-2 <?= $active == 'sharedsafari' ? 'active' : '' ?>"><i class="fa-solid fa-safari me-2"></i> Shared Safaris</a>
+                <a href="<?= Url::toRoute(['/manage/sharedsafari']) ?>" class="nav-link mb-2 <?= $active == 'sharedsafari' ? 'active' : '' ?>"><i class="fa-solid fa-car me-2"></i> Shared Safaris</a>
                 <a href="<?= Url::toRoute(['/manage/package']) ?>" class="nav-link mb-2 <?= $active == 'package' ? 'active' : '' ?>"> <i class="fa-solid fa-gift me-2"></i> Packages</a>
             <?php } ?>
             <!-- <a href="<?= Url::toRoute(['/account/login-info']) ?>" class="nav-link mb-2 <?= $active == 'login' ? 'active' : '' ?>"><i class="fa-solid fa-gear me-2"></i> Login Information</a> -->
