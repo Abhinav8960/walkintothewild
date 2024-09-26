@@ -920,6 +920,44 @@ class DefaultController extends FrontendBaseController
         );
     }
 
+    /**
+     * Operator Follower
+     */
+    public function actionFollowing($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+
+        $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
+                return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+            }
+        }
+
+        return $this->render(
+            'following',
+            [
+                'operator' => $operator,
+                'model' => $model,
+            ]
+        );
+    }
+
 
     // public function actionArticleview($article_slug, $slug)
     // {
