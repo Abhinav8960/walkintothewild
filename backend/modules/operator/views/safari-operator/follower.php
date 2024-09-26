@@ -21,21 +21,6 @@ if ($model->is_offer_economical_budget == 1) {
     $budget[] = "Economical";
 }
 
-$html = '';
-$activies = GeneralModel::operatorresquestactivties($model->id);
-foreach ($activies as $key => $role) {
-    if (isset(GeneralModel::wildlifeactivities()[$key])) {
-        $html .= GeneralModel::wildlifeactivities()[$key] . ', ';
-    }
-}
-
-$html_park = '';
-$park = GeneralModel::operatorresquestpark($model->id);
-foreach ($park as $key => $role) {
-    if (isset(GeneralModel::safariparkoption()[$key])) {
-        $html_park .= GeneralModel::safariparkoption()[$key] . ', ';
-    }
-}
 ?>
 <div class="panel panel-primary tabs-style-2">
     <?= $this->render('@backend/modules/operator/views/safari-operator/_navbar.php', ['model' => $model, 'active_navbar' => 'follower']) ?>
@@ -52,7 +37,7 @@ foreach ($park as $key => $role) {
                                     ['class' => 'yii\grid\SerialColumn'],
                                     [
                                         'label' => 'User',
-                                        'contentOptions' => ['style' => 'width: 15%;'],
+                                        'contentOptions' => ['style' => 'width: 25%;'],
                                         'format' => 'raw',
                                         'value' => function ($model) {
                                             if ($user = $model->user) {
@@ -62,14 +47,6 @@ foreach ($park as $key => $role) {
                                         }
                                     ],
 
-                                    [
-                                        'label' => 'Safari Operator',
-                                        'contentOptions' => ['style' => 'width: 15%;'],
-                                        'format' => 'raw',
-                                        'value' => function ($model) {
-                                            return  isset($model->safari_operator_id) ? GeneralModel::safariparkoperatoroption()[$model->safari_operator_id] : '';
-                                        }
-                                    ],
                                     [
                                         'label' => 'Follow Datetime',
                                         'contentOptions' => ['style' => 'width: 15%;'],
