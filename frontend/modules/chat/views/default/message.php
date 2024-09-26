@@ -5,6 +5,8 @@ use yii\grid\GridView;
 use common\models\chat\Chat;
 use yii\widgets\Pjax;
 
+
+
 \frontend\assets\EmojiAsset::register($this);
 $webasset = $this->assetManager->getBundle('\frontend\assets\FrontAppAsset');
 $this->params['baseurl'] = $webasset->baseUrl;
