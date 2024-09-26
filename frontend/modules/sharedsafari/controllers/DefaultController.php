@@ -301,7 +301,7 @@ class DefaultController extends FrontendBaseController
         if ($share_safari) {
             if (Yii::$app->user->identity) {
                 if (Yii::$app->user->identity->operator) {
-                    Yii::$app->session->setFlash('error', "You can't join this shared safari as a Operator!");
+                    Yii::$app->session->setFlash('error', "Only individual users are allowed to join a shared safari. Tour operators cannot participate in shared safaris.");
                     return $this->redirect([Url::toRoute([
                         '/sharedsafari/default/view',
                         'slug' => $share_safari->slug,
