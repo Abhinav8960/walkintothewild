@@ -102,7 +102,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 										<img src="<?= $user->profileimage <> '' ?  $user->profileimage : $this->params['baseurl'] . '/img/user.png'  ?>" alt="" class="me-1 d-xl-inline-flex  rounded-circle" width="35" height="35">
 									</div>
 									<div class="profile_name">
-										<h6><?= $user->name ?></h6>
+										<h6><?= $user->getName() ?></h6>
 										<p><?= $user->userhandle ?></p>
 									</div>
 								</div>
@@ -131,11 +131,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									</li>
 									<?php
 									if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
-										<li>
+										<!-- <li>
 											<a class="" href="/manage">
 												<i class="fa-solid fa-cog"></i>
 												Manage My page</a>
-										</li>
+										</li> -->
 									<?php }
 									?>
 
@@ -253,7 +253,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 
 									</div>
 									<div class="profile_name">
-										<h6><?= $user->name ?></h6>
+										<h6><?= $user->getName() ?></h6>
 										<p><?= $user->userhandle ?></p>
 									</div>
 								</div>
@@ -282,11 +282,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 									</li>
 									<?php
 									if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
-										<li>
+										<!-- <li>
 											<a class="" href="/manage">
 												<i class="fa-solid fa-cog"></i>
 												Manage My page</a>
-										</li>
+										</li> -->
 									<?php }
 									?>
 
