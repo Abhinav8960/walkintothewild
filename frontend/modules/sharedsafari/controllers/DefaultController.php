@@ -4,14 +4,12 @@ namespace frontend\modules\sharedsafari\controllers;
 
 use Yii;
 use yii\helpers\Url;
-use yii\helpers\Json;
 use common\models\MailLog;
 use yii\filters\VerbFilter;
 use frontend\models\ReplyForm;
 use common\models\UserWishlist;
 use common\models\park\SafariPark;
 use yii\web\NotFoundHttpException;
-use common\interfaces\StatusInterface;
 use frontend\models\ShareSafariSearch;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
@@ -20,16 +18,12 @@ use common\models\master\month\MasterMonth;
 use frontend\models\ShareSafariCommentForm;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
-use frontend\models\form\CreateDepartureForm;
 use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariComment;
 use common\models\sharesafari\ShareSafariRequest;
-use frontend\models\form\SharedSafariRequestForm;
 use frontend\models\ShareSafariCommentReportForm;
-use common\models\sharesafari\ShareSafariParklist;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
-use common\models\sharesafari\ShareSafariCommentReport;
 use frontend\models\form\ShareSafariRequestContactForm;
 use common\models\sharesafari\ShareSafariRequestContact;
 
@@ -104,14 +98,7 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->shared_safari_model->save()) {
                         $model->UploadFiles($model->shared_safari_model->id);
-                        // if ($model->shared_safari_model->user) {
-                        //     $user = $model->shared_safari_model->user;
-                        //     $to_mail = $user->email;
-                        //     $subject = 'New Safari Request';
-                        //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
-                        //     $req = ['username' => $user->name];
-                        //     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        // }
+                       
                         if ($model->shared_safari_model->user) {
                             $user = $model->shared_safari_model->user;
                             $username = $user->name;
@@ -226,7 +213,6 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/sharedsafari/default/validate-comment';
 
 
-        // $replymodel = new ReplyForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
             Yii::$app->session->setFlash('success', 'Comment successfully submitted');
@@ -235,10 +221,6 @@ class DefaultController extends FrontendBaseController
         }
 
 
-        // if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($share_safari)) {
-        //     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-        //     return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-        // }
 
         if (!$share_safari) {
             return $this->redirect(['index']);
@@ -248,7 +230,6 @@ class DefaultController extends FrontendBaseController
             return $this->render('view', [
                 'share_safari' => $share_safari,
                 'model' => $model,
-                // 'replymodel' => $replymodel,
                 'login_safarioperator' => $login_safarioperator,
             ]);
         } else {
@@ -260,7 +241,6 @@ class DefaultController extends FrontendBaseController
             return $this->render('fixed_view', [
                 'share_safari' => $share_safari,
                 'model' => $model,
-                // 'replymodel' => $replymodel,
                 'faqs' => $faqs,
                 'login_safarioperator' => $login_safarioperator,
             ]);
@@ -271,11 +251,9 @@ class DefaultController extends FrontendBaseController
     {
 
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
-        // $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
-        // $replymodel->action_url = '/package/default/view';
         $replymodel->action_validate_url = '/sharedsafari/default/validate-reply';
 
 
