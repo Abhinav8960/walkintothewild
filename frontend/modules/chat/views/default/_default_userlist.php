@@ -10,7 +10,7 @@ if ($dataProvider) {
                 <div class="d-flex chat-user_message">
                     <img src="<?= $model->profileimage ? $model->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                     <div class="chat-user_name">
-                        <h6><?= $model->name ?></h6>
+                        <h6><?= $model->getName() ?></h6>
 
                         <?php
                         $active_chat = Chat::find()->where(['status' => 1])->andwhere('user_id =' . $model->id . ' OR recipient_user_id=' . $model->id)->orderby(['last_message_at' => SORT_DESC])->one();

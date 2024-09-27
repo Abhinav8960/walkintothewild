@@ -134,14 +134,14 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     if ($share_safari->type == 2) { // Fixed  Safai
                                         if ($safarioperator = $share_safari->safarioperator) {
                                             if ($safarioperator->user_id <> Yii::$app->user->identity->id) {
-                                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0']);
+                                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
                                             } else {
                                                 echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>Update', ['/manage/sharedsafari/update-fixed-departure', 'slug' => $share_safari->slug], ['style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-pjax' => '0']);
                                             }
                                         }
                                     } else {
                                         if ($share_safari->host_user_id != Yii::$app->user->identity->id) {
-                                            echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0']);
+                                            echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
                                         } else {
                                             echo '<a class="updateSafariBtn " value="' . Url::toRoute(['/sharedsafari/default/update', 'slug' => $share_safari->slug]) . '" style="background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;cursor:pointer;" data-pjax="0"><i class="fas fa-edit me-1"></i>Update</a>';
                                             // echo \yii\helpers\Html::a('<i class="fas fa-edit me-1"></i>Update', ['/sharedsafari/default/update', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['class'=>"updateSafariBtn",'style' => "background-color: #F5F5F5; border:1px solid #7070704D; color:#4B4B4B;", 'data-method' => "POST", 'data-pjax' => '0']);
@@ -149,7 +149,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                                     }
                                 }
                             } else {
-                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0']);
+                                echo \yii\helpers\Html::a('Join Safari', ['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''], ['data-method' => "POST", 'data-pjax' => '0', 'class' => (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '')]);
                             }
                         }
 

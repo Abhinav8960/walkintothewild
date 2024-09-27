@@ -10,7 +10,7 @@ use common\models\User;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Safari Operator  | ' . $operator->register_comapany_name . ' | Followes';
+$this->title = 'Safari Operator  | ' . $operator->register_comapany_name . ' | Following';
 $this->params['breadcrumbs'][] = $this->title;
 $this->params['title'] = $this->title;
 
@@ -87,17 +87,19 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="card-body">
                                         <div class="tab-content_tour active">
                                             <div class="col-md-12">
-                                                <h6 class="fs-5 fw-bold pb-3">Followers</h5>
+                                                <h6 class="fs-5 fw-bold pb-3">Following</h5>
                                             </div>
                                             <div class="row">
-                                                <?php if ($operatorfollowers = $operator->getFollowerlist()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE])->all()) {
-                                                    foreach ($operatorfollowers as $operatorfollower) { ?>
-                                                        <div class="col-sm-12 col-md-3">
-                                                            <section class="mx-auto pb-3">
-                                                                <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollower->user]);  ?>
-                                                            </section>
-                                                        </div>
+                                                <?php if ($user = $operator->user) {
+                                                    if ($operator_following = $user->getUserfollowings()->joinWith('user')->where(['user_follower.status' => 1, 'user.status' => User::STATUS_ACTIVE])->all()) {
+                                                        foreach ($operator_following as $operatorfollowing) { ?>
+                                                            <div class="col-sm-12 col-md-3">
+                                                                <section class="mx-auto pb-3">
+                                                                    <?= $this->render('@frontend/modules/profile/views/default/_profile_card', ['user' => $operatorfollowing->follower]);  ?>
+                                                                </section>
+                                                            </div>
                                                 <?php  }
+                                                    }
                                                 } else {
                                                     echo '<div class="col-md-12 pt-3">
                                                             There is no follower!

@@ -19,7 +19,6 @@ use common\models\sharesafari\ShareSafari;
 use common\Helper\FrontendNotificationHelper;
 use frontend\models\SafariOperatorReviewForm;
 use common\models\operator\SafariOperatorPark;
-use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 use frontend\controllers\FrontendBaseController;
 use frontend\models\SafariOperatorRatingReportForm;
@@ -28,6 +27,7 @@ use common\models\operator\SafariOperatorRatingSearch;
 use common\models\operator\form\SafariOperatorReportProfileForm;
 use common\models\operator\SafariOperatorReportProfile;
 use common\models\User;
+use common\models\UserFollow;
 
 /**
  * DefaultController.
@@ -310,24 +310,21 @@ class DefaultController extends FrontendBaseController
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($operator) {
             if (Yii::$app->user->identity) {
-                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id])->one();
-                if (!$operator_follow) {
-                    $operator_follow = new SafariOperatorFollow();
+                if (Yii::$app->user->identity->id == $operator->user_id) {
+                    Yii::$app->session->setFlash('Oops', "You can't follow yourself!");
+                    return $this->redirect(Yii::$app->request->referrer);
                 }
-                $agent = new \Jenssegers\Agent\Agent();
-                $agent->setUserAgent(Yii::$app->request->userAgent);
-                $operator_follow->user_ip_address = Yii::$app->getRequest()->getUserIp();
-                $operator_follow->user_agent =  Yii::$app->request->userAgent;
-                $operator_follow->user_device  = $agent->device();
-                $operator_follow->user_platform = $agent->platform();
-                $operator_follow->user_platform_version = $agent->version($operator_follow->user_platform);
-                $operator_follow->user_browser = $agent->browser();
-                $operator_follow->user_browser_version = $agent->version($operator_follow->user_browser);
-                $operator_follow->safari_operator_id = $operator->id;
-                $operator_follow->user_id = Yii::$app->user->identity->id;
-                $operator_follow->status = 1;
-                $operator_follow->follow_datetime = date('Y-m-d h:i:s');
-                if ($operator_follow->save(false)) {
+
+                $follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $operator->user_id])->one();
+                if (!$follower) {
+                    $follower = new UserFollow();
+                }
+
+                $follower->user_id = Yii::$app->user->identity->id;
+                $follower->follow_user_id = $operator->user_id;
+                $follower->status = 1;
+
+                if ($follower->save(false)) {
 
                     $to_mail = $operator->email;
                     $subject = 'Follow Request';
@@ -338,6 +335,7 @@ class DefaultController extends FrontendBaseController
                     FrontendNotificationHelper::operatorNewFollower($operator, Yii::$app->user->identity);
 
                     Yii::$app->session->setFlash('success', 'You are start following ' . $operator->business_name);
+                    return $this->redirect(\yii\helpers\Url::toRoute(['/operator/default/follower', 'slug' => $slug]));
                 } else {
                     Yii::$app->session->setFlash('success', 'You can not follow this operator currently!');
                 }
@@ -358,33 +356,23 @@ class DefaultController extends FrontendBaseController
         $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($operator) {
             if (Yii::$app->user->identity) {
-                $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id])->one();
-                if ($operator_follow) {
-                    $agent = new \Jenssegers\Agent\Agent();
-                    $agent->setUserAgent(Yii::$app->request->userAgent);
-                    $operator_follow->user_ip_address = Yii::$app->getRequest()->getUserIp();
-                    $operator_follow->user_agent =  Yii::$app->request->userAgent;
-                    $operator_follow->user_device  = $agent->device();
-                    $operator_follow->user_platform = $agent->platform();
-                    $operator_follow->user_platform_version = $agent->version($operator_follow->user_platform);
-                    $operator_follow->user_browser = $agent->browser();
-                    $operator_follow->user_browser_version = $agent->version($operator_follow->user_browser);
-                    $operator_follow->safari_operator_id = $operator->id;
-                    $operator_follow->user_id = Yii::$app->user->identity->id;
-                    $operator_follow->status = 0; //UNfollow
-                    $operator_follow->unfollow_datetime = date('Y-m-d h:i:s');
-                    if ($operator_follow->save(false)) {
+                $my_follower = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $operator->user_id])->one();
 
-                        $to_mail = $operator->email;
-                        $subject = 'UnFollow Request';
-                        $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
-                        $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name, 'is_email_sending' => true];
+                $my_follower->user_id = Yii::$app->user->identity->id;
+                $my_follower->follow_user_id = $operator->user_id;
+                $my_follower->status = 0;
 
-                        MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
-                    } else {
-                        Yii::$app->session->setFlash('success', 'You can not unfollow this operator currently!');
-                    }
+                if ($my_follower->save(false)) {
+
+                    $to_mail = $operator->email;
+                    $subject = 'UnFollow Request';
+                    $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_UNFOLLOW_REQUEST;
+                    $req = ['username' => $operator->business_name, 'name' => Yii::$app->user->identity->name, 'is_email_sending' => true];
+
+                    MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+                    Yii::$app->session->setFlash('success', 'You unfollowed ' . $operator->business_name);
+                } else {
+                    Yii::$app->session->setFlash('success', 'You can not unfollow this operator currently!');
                 }
             } else {
                 return $this->redirect(['/site/login?authclient=google&referrer=' . Url::toRoute(['/operator/default/unfollow', 'slug' => $slug])]);
@@ -916,6 +904,44 @@ class DefaultController extends FrontendBaseController
                 'operator' => $operator,
                 'model' => $model,
                 'user' => $user,
+            ]
+        );
+    }
+
+    /**
+     * Operator Follower
+     */
+    public function actionFollowing($slug)
+    {
+        $operator = SafariOperator::find()->where(['status' => SafariOperator::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
+        if (empty($operator)) {
+            return $this->redirect(['/operator']);
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+
+        $model = new OperatorQuoteForm();
+        if (Yii::$app->user->identity) {
+            $model->email = Yii::$app->user->identity->email;
+            $model->full_name = Yii::$app->user->identity->name;
+            $model->phone_no = Yii::$app->user->identity->mobile_no;
+        }
+        $model->action_validate_url = '/operator/default/validate';
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($operator_quote = $model->request($operator)) {
+                    // FrontendNotificationHelper::operatorNewQuote($operator, $operator_quote, Yii::$app->user->identity);
+                }
+                Yii::$app->session->setFlash('success', 'Quote request sent!');
+                return $this->redirect(['/operator/default/article',  'slug' => $slug]);
+            }
+        }
+
+        return $this->render(
+            'following',
+            [
+                'operator' => $operator,
+                'model' => $model,
             ]
         );
     }

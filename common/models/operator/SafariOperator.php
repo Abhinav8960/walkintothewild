@@ -7,6 +7,7 @@ use common\models\package\Package;
 use common\traits\CommanRelationship;
 use common\models\sharesafari\ShareSafari;
 use common\models\User;
+use common\models\UserFollow;
 
 /**
  * This is the model class for table "safari_operator".
@@ -180,7 +181,7 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
 
     public function getFollowerlist()
     {
-        return $this->hasMany(SafariOperatorFollow::className(), ['safari_operator_id' => 'id']);
+        return $this->hasMany(UserFollow::className(), ['follow_user_id' => 'user_id']);
     }
 
     public function getImagepath()
