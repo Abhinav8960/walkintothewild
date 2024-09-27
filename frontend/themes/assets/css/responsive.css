@@ -1711,7 +1711,15 @@ display: none;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+<<<<<<< HEAD
+<<<<<<< HEAD
     /* height: 100vh; */
+=======
+    height: 100vh;
+>>>>>>> 51d0a366 (changes login page mobile view)
+=======
+    /* height: 100vh; */
+>>>>>>> 23470fef (changes css mainphp)
     width: 100%;
 }
   .paddiinTop_add{
@@ -2223,13 +2231,20 @@ display: none !important;
     height: 100%;
     border-radius: 0;
     border: 0;
-  }
-  .mobile_loginconditions .modal-dialog{
+  } */
+  /* .mobile_loginconditions .modal-dialog{
 
+<<<<<<< HEAD
     padding: 0;
     margin: 0;
   }
   .mobile_loginconditions .modal-dialog-scrollable{
+=======
+padding: 0;
+margin: 0;
+  } */
+  /* .mobile_loginconditions .modal-dialog-scrollable{
+>>>>>>> 51d0a366 (changes login page mobile view)
 
     margin: 0;
     min-height: 100vh !important;

@@ -73,7 +73,7 @@ class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\N
     public function rules()
     {
         return [
-            [['name','city_id', 'state_id','country_id'], 'required'],
+            [['name', 'city_id', 'state_id', 'country_id'], 'required'],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'slug'], 'string', 'max' => 255],
             [['slug'], 'unique'],
@@ -112,6 +112,4 @@ class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\N
     {
         return $this->hasOne(MasterCountry::className(), ['id' => 'country_id']);
     }
-
-
 }
