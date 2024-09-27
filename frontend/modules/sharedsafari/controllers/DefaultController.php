@@ -72,6 +72,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionOrganizeSafari()
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $model = new SharedSafariForm();
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->status = ShareSafari::STATUS_ACTIVE;
@@ -98,7 +101,7 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->shared_safari_model->save()) {
                         $model->UploadFiles($model->shared_safari_model->id);
-                       
+
                         if ($model->shared_safari_model->user) {
                             $user = $model->shared_safari_model->user;
                             $username = $user->name;
@@ -149,7 +152,13 @@ class DefaultController extends FrontendBaseController
      */
     public function actionUpdate($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+        if ($shared_safari_model->host_user_id != Yii::$app->user->identity->id) {
+            return $this->redirect(['index']);
+        }
         $model = new SharedSafariForm($shared_safari_model);
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->action_url = '/sharedsafari/default/update?slug=' . $slug . '';
@@ -249,7 +258,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionReply($slug, $parent_id)
     {
-
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
 
         $replymodel = new ReplyForm();
@@ -275,6 +286,9 @@ class DefaultController extends FrontendBaseController
      */
     public function actionJoin($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
@@ -331,6 +345,9 @@ class DefaultController extends FrontendBaseController
      */
     public function actionUnjoin($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
@@ -369,6 +386,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionFlag($slug, $park_id, $share_safari_comment_id)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->one();
         if (!$share_safari) {
             return $this->redirect(['/sharedsafari']);
@@ -441,6 +461,9 @@ class DefaultController extends FrontendBaseController
      */
     public function actionRequestContact($slug, $park_id, $share_safari_comment_id)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
 
         $share_safari_comment = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->one();
@@ -542,17 +565,17 @@ class DefaultController extends FrontendBaseController
     }
 
 
-    public function actionHistory($share_safari_id)
-    {
-        $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->orderBy([
-            'id' => SORT_DESC
-        ])->all();
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('history_view', [
-                'history_model' => $history_model
-            ]);
-        }
-    }
+    // public function actionHistory($share_safari_id)
+    // {
+    //     $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->orderBy([
+    //         'id' => SORT_DESC
+    //     ])->all();
+    //     if (Yii::$app->request->isAjax) {
+    //         return $this->renderAjax('history_view', [
+    //             'history_model' => $history_model
+    //         ]);
+    //     }
+    // }
 
 
     protected function findModel($slug)
@@ -628,6 +651,9 @@ class DefaultController extends FrontendBaseController
      */
     public function actionWishlist($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);
@@ -659,6 +685,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionUnwishlist($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);
