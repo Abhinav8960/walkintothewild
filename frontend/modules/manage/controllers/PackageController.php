@@ -65,6 +65,7 @@ class PackageController extends FrontendBaseController
      */
     public function actionCreate()
     {
+        
         $safari_operator = $this->module->operatormodel();
         $model = new PackageForm();
         $model->status = Package::STATUS_ACTIVE;

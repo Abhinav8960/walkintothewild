@@ -37,7 +37,7 @@ $this->params['title'] = $this->title;
                                     for ($i = 1; $i <= $no_of_day; $i++) { ?>
                                         <div class="accordion-item">
                                             <h2 class="accordion-header" id="flush-headingOne">
-                                                <a class="accordion-button" href="<?= Url::toRoute(['/manage/package/itinerary', 'package_id' => $package_model->id, 'day' => $i]) ?>">
+                                                <a class="accordion-button" href="<?= Url::toRoute(['/manage/package/itinerary', 'package_id' => $package_model->package_slug, 'day' => $i]) ?>">
                                                     Day <?= $i ?>
                                                 </a>
                                             </h2>
