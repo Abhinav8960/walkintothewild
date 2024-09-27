@@ -5,7 +5,7 @@ namespace backend\modules\user\controllers;
 use Yii;
 use yii\web\Controller;
 use common\models\UserSession;
-use yii\data\ActiveDataProvider;
+use common\models\UserSessionSearch;
 
 /**
  * Login User controller for the `user` module
@@ -18,15 +18,12 @@ class LoginUserController extends Controller
      */
     public function actionIndex()
     {
-        $query = UserSession::find();
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'sort' => ['defaultOrder' => ['last_activity' => SORT_DESC]]
-        ]);
+        $searchModel = new UserSessionSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel
         ]);
     }
 
