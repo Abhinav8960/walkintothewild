@@ -133,10 +133,10 @@ class PackageController extends FrontendBaseController
     }
 
 
-    public function actionUpdate($package_id)
+    public function actionUpdate($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'update';
 
@@ -174,7 +174,7 @@ class PackageController extends FrontendBaseController
                         }
 
                         \Yii::$app->session->setFlash('success', 'Package updated successfully');
-                        return $this->redirect(['update', 'package_id' => $package_id]);
+                        return $this->redirect(['update', 'slug' => $slug]);
                     }
                 }
             }
@@ -188,10 +188,10 @@ class PackageController extends FrontendBaseController
         ]);
     }
 
-    public function actionPolicyInfo($package_id)
+    public function actionPolicyInfo($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'policy_info';
 
@@ -201,7 +201,7 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Policy information updated successfully');
-                        return $this->redirect(['policy-info', 'package_id' => $package_id]);
+                        return $this->redirect(['policy-info', 'slug' => $slug]);
                     }
                 }
             }
@@ -216,10 +216,10 @@ class PackageController extends FrontendBaseController
     }
 
 
-    public function actionGettingThere($package_id)
+    public function actionGettingThere($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'getting_there';
 
@@ -229,7 +229,7 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->package_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Getting there updated successfully');
-                        return $this->redirect(['getting-there', 'package_id' => $package_id]);
+                        return $this->redirect(['getting-there', 'slug' => $slug]);
                     }
                 }
             }
@@ -243,10 +243,10 @@ class PackageController extends FrontendBaseController
         ]);
     }
 
-    public function actionInclusion($package_id)
+    public function actionInclusion($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'inclusion';
 
@@ -258,11 +258,11 @@ class PackageController extends FrontendBaseController
                     try {
                         if ($model->package_model->save(false)) {
                             foreach ($model->package_included as $optionId => $selection) {
-                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_id]);
+                                $packageIncluded = PackageIncluded::findOne(['include_id' => $optionId, 'package_id' => $package_model->id]);
                                 if (!$packageIncluded) {
                                     $packageIncluded = new PackageIncluded();
                                     $packageIncluded->include_id = $optionId;
-                                    $packageIncluded->package_id = $package_id;
+                                    $packageIncluded->package_id = $package_model->id;
                                 }
                                 $packageIncluded->selection = $selection;
                                 if (!$packageIncluded->save()) {
@@ -270,7 +270,7 @@ class PackageController extends FrontendBaseController
                                 }
 
                                 if ($packageIncluded->include_id == 2 && $packageIncluded->selection == 1) {
-                                    $package_days = PackageDay::find()->where(['package_id' => $package_id, 'status' => PackageDay::STATUS_ACTIVE])->all();
+                                    $package_days = PackageDay::find()->where(['package_id' => $package_model->id, 'status' => PackageDay::STATUS_ACTIVE])->all();
                                     if ($package_days) {
                                         foreach ($package_days as $package_day) {
                                             $package_day->meal_breakfast = 1;
@@ -284,7 +284,7 @@ class PackageController extends FrontendBaseController
 
                             $transaction->commit();
                             Yii::$app->session->setFlash('success', 'Inclusion updated successfully');
-                            return $this->redirect(['inclusion', 'package_id' => $package_id]);
+                            return $this->redirect(['inclusion', 'slug' => $slug]);
                         } else {
                             Yii::$app->session->setFlash('success', 'Failed to update package details.');
                         }
@@ -310,16 +310,16 @@ class PackageController extends FrontendBaseController
         ]);
     }
 
-    public function actionItinerary($package_id, $day = 1)
+    public function actionItinerary($slug, $day = 1)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
-        $package_day_model = $this->findModelDay($package_id, $day);
+        $package_model = $this->findModel($slug, $safari_operator->id);
+        $package_day_model = $this->findModelDay($package_model->id, $day);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
             $model = new DayItineraryForm();
-            $model->package_id = $package_id;
+            $model->package_id = $package_model->id;
             $model->no_of_day = $package_model->no_of_day;
             $model->day = $day;
         }
@@ -334,7 +334,7 @@ class PackageController extends FrontendBaseController
                     if ($model->package_day_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Itinerary updated successfully');
-                        return $this->redirect(['itinerary', 'package_id' => $package_id, 'day' => $day]);
+                        return $this->redirect(['itinerary', 'slug' => $slug, 'day' => $day]);
                     }
                 }
             }
@@ -348,12 +348,12 @@ class PackageController extends FrontendBaseController
         ]);
     }
 
-    public function actionFaq($package_id)
+    public function actionFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageFaqSearch();
-        $searchModel->package_id = $package_id;
+        $searchModel->package_id = $package_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
@@ -369,12 +369,12 @@ class PackageController extends FrontendBaseController
      * 
      * @return mixed
      */
-    public function actionCreateFaq($package_id)
+    public function actionCreateFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageFaqForm();
-        $model->package_id = $package_id;
+        $model->package_id =  $package_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -391,7 +391,7 @@ class PackageController extends FrontendBaseController
                             $model->package_faq_model->save(false);
                         }
                         \Yii::$app->session->setFlash('success', 'Faq created successfully');
-                        return $this->redirect(['faq', 'package_id' => $package_id]);
+                        return $this->redirect(['faq', 'slug' => $slug]);
                     }
                 }
             }
@@ -415,13 +415,13 @@ class PackageController extends FrontendBaseController
      * 
      * @return mixed
      */
-    public function actionUpdateFaq($package_id, $faq_id)
+    public function actionUpdateFaq($slug, $faq_id)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
-        $model->package_id = $package_id;
+        $model->package_id = $package_model->id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 if ($model->validate()) {
@@ -437,7 +437,7 @@ class PackageController extends FrontendBaseController
                             $model->package_faq_model->save(false);
                         }
                         \Yii::$app->session->setFlash('success', 'Faq updated successfully');
-                        return $this->redirect(['faq', 'package_id' => $package_id]);
+                        return $this->redirect(['faq', 'slug' => $slug]);
                     }
                 }
             }
@@ -459,12 +459,12 @@ class PackageController extends FrontendBaseController
      * 
      * @return mixed
      */
-    public function actionSelectFaq($package_id)
+    public function actionSelectFaq($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $model = new PackageFaqSelectForm();
-        $model->package_id = $package_id;
+        $model->package_id = $package_model->id;
         $model->status = PackageFaq::STATUS_ACTIVE;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
@@ -472,7 +472,7 @@ class PackageController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->package_faq_select_model->save(false)) {
                         \Yii::$app->session->setFlash('success', 'Data submitted successfully');
-                        return $this->redirect(['faq', 'package_id' => $package_id]);
+                        return $this->redirect(['faq', 'slug' => $slug]);
                     }
                 }
             }
@@ -491,124 +491,124 @@ class PackageController extends FrontendBaseController
 
 
 
-    public function actionView($package_id)
+    // public function actionView($package_id)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+    //     $package_model = $this->findModel($package_id, $safari_operator->id);
+    //     $searchModel = new PackageQuoteSearch();
+    //     $searchModel->package_id = $package_id;
+    //     $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    //     $model = $dataProvider->getModels();
+
+    //     return $this->render('view', [
+    //         'package_model' => $package_model,
+    //         'searchModel' => $searchModel,
+    //         'dataProvider' => $dataProvider,
+    //         'model' => $model,
+    //     ]);
+    // }
+
+    // public function actionComment($package_id)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+    //     $package_model = $this->findModel($package_id, $safari_operator->id);
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' =>  PackageComment::find()->where(['package_id' => $package_id, 'status' => PackageComment::STATUS_ACTIVE])->andWhere(['parent_id' => null]),
+    //         'pagination' => [
+    //             'pageSize' => 20,
+    //         ],
+    //     ]);
+    //     return $this->render('comment', [
+    //         'package_model' => $package_model,
+    //         'dataProvider' => $dataProvider,
+
+    //     ]);
+    // }
+
+
+    // public function actionReplies($id)
+    // {
+    //     $comment = PackageComment::find()->where(['id' => $id, 'status' => PackageComment::STATUS_ACTIVE])->limit(1)->one();
+    //     $safari_operator = $this->module->operatormodel();
+    //     $package_model = $this->findModel($comment->package_id, $safari_operator->id);
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' =>  $comment->getReplies()->where(['status' =>  PackageComment::STATUS_ACTIVE]),
+    //         'pagination' => [
+    //             'pageSize' => 20,
+    //         ],
+    //     ]);
+    //     return $this->renderAjax('replies', [
+    //         'package_model' => $package_model,
+    //         'dataProvider' => $dataProvider,
+
+    //     ]);
+    // }
+
+    // public function actionBookNow($package_id)
+    // {
+    //     $safari_operator = $this->module->operatormodel();
+    //     $package_model = $this->findModel($package_id, $safari_operator->id);
+    //     $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
+    //     $enquire_provider = new ActiveDataProvider([
+    //         'query' => $enquiries,
+    //         'pagination' => [
+    //             'pageSize' => 20,
+    //         ],
+    //     ]);
+    //     return $this->render('book_now', [
+    //         'package_model' => $package_model,
+    //         'enquire_provider' => $enquire_provider,
+
+    //     ]);
+    // }
+
+
+
+    // public function actionFlag($id)
+    // {
+
+    //     $dataProvider = new ActiveDataProvider([
+    //         'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => [1, 20]]),
+    //         'pagination' => [
+    //             'pageSize' => 20,
+    //         ],
+    //     ]);
+    //     return $this->renderAjax('flag', [
+    //         'dataProvider' => $dataProvider,
+    //     ]);
+    // }
+
+    // public function actionEdit($id)
+    // {
+    //     $comment_action_model = PackageCommentReport::find()->where(['id' => $id])->limit(1)->one();
+    //     $model = new PackageCommentActionForm($comment_action_model);
+
+    //     if ($this->request->isPost) {
+    //         if ($model->load($this->request->post())) {
+    //             if ($model->validate()) {
+    //                 $model->initializeForm();
+    //                 if ($model->comment_action_model->save(false)) {
+    //                     \Yii::$app->session->setFlash('success', 'Action taken successfully');
+    //                     return $this->redirect(['/manage/package/comment?package_id=' . $comment_action_model->package_id . '']);
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         $model->comment_action_model->loadDefaultValues();
+    //     }
+    //     return $this->renderAjax('edit', [
+    //         'model' => $model,
+    //     ]);
+    // }
+
+
+
+    public function actionGallery($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
-        $searchModel = new PackageQuoteSearch();
-        $searchModel->package_id = $package_id;
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $model = $dataProvider->getModels();
-
-        return $this->render('view', [
-            'package_model' => $package_model,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'model' => $model,
-        ]);
-    }
-
-    public function actionComment($package_id)
-    {
-        $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
-        $dataProvider = new ActiveDataProvider([
-            'query' =>  PackageComment::find()->where(['package_id' => $package_id, 'status' => PackageComment::STATUS_ACTIVE])->andWhere(['parent_id' => null]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        return $this->render('comment', [
-            'package_model' => $package_model,
-            'dataProvider' => $dataProvider,
-
-        ]);
-    }
-
-
-    public function actionReplies($id)
-    {
-        $comment = PackageComment::find()->where(['id' => $id, 'status' => PackageComment::STATUS_ACTIVE])->limit(1)->one();
-        $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($comment->package_id, $safari_operator->id);
-        $dataProvider = new ActiveDataProvider([
-            'query' =>  $comment->getReplies()->where(['status' =>  PackageComment::STATUS_ACTIVE]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        return $this->renderAjax('replies', [
-            'package_model' => $package_model,
-            'dataProvider' => $dataProvider,
-
-        ]);
-    }
-
-    public function actionBookNow($package_id)
-    {
-        $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
-        $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
-        $enquire_provider = new ActiveDataProvider([
-            'query' => $enquiries,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        return $this->render('book_now', [
-            'package_model' => $package_model,
-            'enquire_provider' => $enquire_provider,
-
-        ]);
-    }
-
-
-
-    public function actionFlag($id)
-    {
-
-        $dataProvider = new ActiveDataProvider([
-            'query' =>  PackageCommentReport::find()->where(['package_comment_id' => $id, 'status' => [1, 20]]),
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-        ]);
-        return $this->renderAjax('flag', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionEdit($id)
-    {
-        $comment_action_model = PackageCommentReport::find()->where(['id' => $id])->limit(1)->one();
-        $model = new PackageCommentActionForm($comment_action_model);
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                if ($model->validate()) {
-                    $model->initializeForm();
-                    if ($model->comment_action_model->save(false)) {
-                        \Yii::$app->session->setFlash('success', 'Action taken successfully');
-                        return $this->redirect(['/manage/package/comment?package_id=' . $comment_action_model->package_id . '']);
-                    }
-                }
-            }
-        } else {
-            $model->comment_action_model->loadDefaultValues();
-        }
-        return $this->renderAjax('edit', [
-            'model' => $model,
-        ]);
-    }
-
-
-
-    public function actionGallery($package_id)
-    {
-        $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new PackageGallerySearch();
-        $searchModel->package_id = $package_id;
+        $searchModel->package_id = $package_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
@@ -619,16 +619,16 @@ class PackageController extends FrontendBaseController
         ]);
     }
 
-    public function actionCreateGallery($package_id, $id = null)
+    public function actionCreateGallery($slug, $id = null)
     {
         $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id, $safari_operator->id);
+        $package_model = $this->findModel($slug, $safari_operator->id);
         if ($id) {
             $package_gallery_model = $this->findModelgallery($id);
             $model = new PackageGalleryForm($package_gallery_model);
         } else {
             $model = new PackageGalleryForm();
-            $model->package_id = $package_id;
+            $model->package_id =  $package_model->id;
         }
 
         if ($this->request->isPost) {
@@ -639,7 +639,7 @@ class PackageController extends FrontendBaseController
                     if ($model->package_gallery_model->save(false)) {
                         $model->uploadFile();
                         \Yii::$app->session->setFlash('success', 'Gallery updated successfully');
-                        return $this->redirect(['gallery', 'package_id' => $package_id]);
+                        return $this->redirect(['gallery', 'slug' => $slug]);
                     }
                 }
             }
@@ -686,9 +686,9 @@ class PackageController extends FrontendBaseController
      * @return Package the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id, $owned_by_id)
+    protected function findModel($slug, $owned_by_id)
     {
-        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'package_slug' => $slug, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
             return $model;
         }
 

@@ -19,8 +19,8 @@ $this->params['title'] = $this->title;
                 <h6 class="fs-3 fw-bold"><?= $this->title ?></h6>
                 <div class=" mt-xxl-0 mt-3">
                     <a href="<?= Url::toRoute(['/package/default/view', 'slug' => $package_model->package_slug, 'operator_slug' => $package_model->safarioperator ? $package_model->safarioperator->slug : '']) ?>" class="btn_newsafari organizeBtn newbg text-center rounded-2  " target="_blank"><i class="fa fa-eye"></i> View </a> &nbsp;
-                    <a href="javascript:void(0)"  class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-faq', 'package_id' => $package_model->id]) ?>" >+ Create FAQ</a>
-                    <!-- <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/select-faq/' . $package_model->id . '']) ?>">+ Select FAQ</button> -->
+                    <a href="javascript:void(0)" class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-faq', 'slug' => $package_model->package_slug]) ?>">+ Create FAQ</a>
+                    <!-- <button class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2 px-3 py-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/select-faq/' . $package_model->package_slug . '']) ?>">+ Select FAQ</button> -->
                 </div>
             </div>
         </div>
@@ -71,18 +71,10 @@ $this->params['title'] = $this->title;
                                                             'contentOptions' => ['style' => 'width: 15%;'],
                                                             'template' => '{update}&nbsp;',
                                                             'buttons' => [
-                                                                'update' => function ($url, $model) {
-                                                                    return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toROute(['/manage/package/update-faq', 'package_id' => $model->package_id, 'faq_id' => $model->id]), 'class' => 'packageBtn btn btn-info bg-blues py-2 text-white', 'title' => 'Update FAQ']);
+                                                                'update' => function ($url, $model) use($package_model) {
+                                                                    return Html::Button('<i class="fa fa-edit"></i>', ['value' => Url::toROute(['/manage/package/update-faq', 'slug' => $package_model->package_slug, 'faq_id' => $model->id]), 'class' => 'packageBtn btn btn-info bg-blues py-2 text-white', 'title' => 'Update FAQ']);
                                                                 },
-                                                                // 'delete' => function ($url, $model) {
-                                                                //     if ($model->status != -1) {
-                                                                //     } else {
-                                                                //         return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Pacakge']);
-                                                                //     }
-                                                                // },
-                                                                // 'suspend' => function ($url, $model) {
-                                                                //     return \backend\widgets\SuspendActiveButton::widget(['model' => $model, 'active_title' => 'Package', 'suspend_title' => 'Package']);
-                                                                // },
+
                                                             ]
                                                         ],
                                                     ],
