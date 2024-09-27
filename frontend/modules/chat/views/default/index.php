@@ -59,7 +59,8 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         </div>
                                     </div>
                                     <div class="chat-cardlist pt-3 ">
-                                        <?php if ($searchModel->name == '' && $active_chat_list) {
+                                    <div class="chatboxslid">
+                                    <?php if ($searchModel->name == '' && $active_chat_list) {
                                             foreach ($active_chat_list as $active_chat) {
                                                 if ($active_chat->user_id == $login_user->id) {
                                                     $user = $active_chat->recipient;
@@ -72,7 +73,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                         <div class="d-flex chat-user_message">
                                                             <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';">
                                                             <div class="chat-user_name">
-                                                                <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->name ?></h6>
+                                                                <h6 class="fs-6 mb-0" style="color: #4c4c4c;"><?= $user->getName() ?></h6>
                                                                 <p class="mb-0 lastmassge" style="color:#4c4c4c;"><?= $active_chat->last_message ?></p>
                                                             </div>
                                                         </div>
@@ -85,6 +86,8 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                             echo  $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
                                         }
                                         ?>
+                                    </div>
+                                      
                                     </div>
                                 </div>
 

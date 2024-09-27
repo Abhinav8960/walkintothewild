@@ -27,6 +27,10 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
     public function actionIndex()
     {
         $user_model = Yii::$app->user->identity;
+
+        if ($user_model->operator) {
+            return $this->redirect(['/manage']);
+        }
         $model = new UserForm($user_model);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {

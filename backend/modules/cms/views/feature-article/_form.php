@@ -1,7 +1,7 @@
 <?php
 
-use common\interfaces\StatusInterface;
-use common\models\cms\blog\Blog;
+
+use common\models\cms\article\Article;
 use common\models\GeneralModel;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -16,31 +16,31 @@ use yii\web\View;
             <thead>
                 <tr>
                     <th style="width: 5%!important;">Sr. No.</th>
-                    <th>Blog</th>
+                    <th>Article</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $form = ActiveForm::begin(['id' => 'blog-sequence-form']);
-                $blog_ids = '0';
+                $form = ActiveForm::begin(['id' => 'article-sequence-form']);
+                $article_ids = '0';
                 for ($i = 1; $i <= 10; $i++) {
-                    $blog = Blog::find()->where(['sequence' => $i])->limit(1)->one();
-                    $selectedBlogId = isset($blog) ? $blog->id : null;
+                    $article = Article::find()->where(['sequence' => $i])->limit(1)->one();
+                    $selectedArticleId = isset($article) ? $article->id : null;
 
                 ?>
                     <tr>
                         <td> <?= $i; ?></td>
                         <td> <?php
-                                echo Html::dropDownList("BlogSequence[$i]", $selectedBlogId, GeneralModel::blogoptionfeature($blog_ids), [
-                                    'class' => 'blog-dropdown',
+                                echo Html::dropDownList("ArticleSequence[$i]", $selectedArticleId, GeneralModel::articleoptionfeature($article_ids), [
+                                    'class' => 'article-dropdown',
                                     'data-index' => $i,
                                     'prompt' => 'Select',
-                                    'onchange' => 'saveBlogSequence(this)',
+                                    'onchange' => 'saveArticleSequence(this)',
                                 ]);
                                 ?></td>
                     </tr>
-                <?php if ($selectedBlogId) {
-                        $blog_ids .= "," . $selectedBlogId;
+                <?php if ($selectedArticleId) {
+                        $article_ids .= "," . $selectedArticleId;
                     }
                 }
                 ActiveForm::end();
@@ -51,13 +51,13 @@ use yii\web\View;
 </div>
 
 <?php
-$url = Url::to(['/cms/feature-blog/save-sequence']);
+$url = Url::to(['/cms/feature-article/save-sequence']);
 $js = <<< JS
-function saveBlogSequence(select) {    
+function saveArticleSequence(select) {    
     $.ajax({
         type: 'POST',
         url: '{$url}',
-        data:$("#blog-sequence-form").serialize(),
+        data:$("#article-sequence-form").serialize(),
         success:function(data){
             location.reload();
         },

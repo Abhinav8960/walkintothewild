@@ -2,8 +2,8 @@
 
 use yii\helpers\Url;
 use common\models\GeneralModel;
-use common\models\operator\SafariOperatorFollow;
 use common\models\User;
+use common\models\UserFollow;
 
 ?>
 
@@ -41,7 +41,7 @@ use common\models\User;
                             <div class="follow_massage d-flex gap-3">
                                 <div class="follow mb-lg-2 mb-xxl-0 mb-2">
                                     <?php if (Yii::$app->user->identity && Yii::$app->user->identity->id != $operator->user_id) {
-                                        $operator_follow = SafariOperatorFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'safari_operator_id' => $operator->id, 'status' => 1])->limit(1)->one();
+                                        $operator_follow = UserFollow::find()->where(['user_id' => Yii::$app->user->identity->id, 'follow_user_id' => $operator->user_id, 'status' => 1])->limit(1)->one();
                                         if ($operator_follow) { ?>
                                             <a class="parkrevieBtn" href="<?= Url::toRoute(['/operator/default/unfollow', 'slug' => $operator->slug]) ?>" data-pjax="0"></i> Unfollow</a>
                                         <?php } else { ?>
@@ -74,7 +74,14 @@ use common\models\User;
                                 </div>
                             </div>
                             <div class="googlerating">
-                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/follower', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"><?= $operator->getFollowerlist()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'safari_operator_follow.status' => 1])->count() ?> Followers</a></p>
+                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/follower', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"><?= $operator->getFollowerlist()->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count() ?> Followers</a></p>
+                            </div>
+                            <div class="googlerating">
+                                <p class="mb-0"><a href="<?= Url::toRoute(['/operator/default/following', 'slug' => $operator->slug]) ?>" data-pjax="0" style="color:inherit;"><?php if ($user = $operator->user) {
+                                                                                                                                                                                    if ($user_following = $user->getUserfollowings()) {
+                                                                                                                                                                                        echo $user_following->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
+                                                                                                                                                                                    }
+                                                                                                                                                                                } ?> Following</a></p>
                             </div>
                         </div>
                         <div class="detailsText pb-3">

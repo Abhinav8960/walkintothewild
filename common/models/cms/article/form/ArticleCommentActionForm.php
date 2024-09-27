@@ -8,11 +8,7 @@ use Yii;
 use yii\base\Model;
 
 
-/**
- * @author Smriti Pal <smritipal2201@gmial.com>
- * 
- * Update and Create Approval
- */
+
 class ArticleCommentActionForm extends model
 {
     public $comment_action_model;
@@ -73,11 +69,5 @@ class ArticleCommentActionForm extends model
     {
         $this->comment_action_model->status =  $this->status;
         $this->comment_action_model->reason =  $this->reason;
-
-        //    if ($this->status == 20) {
-        //         $model = User::find()->where(['id' => $this->comment_action_model->user_id])->limit(1)->one();
-        //         $model->blocked_at = time();
-        //         $model->save(false);
-        //     } 
     }
 }

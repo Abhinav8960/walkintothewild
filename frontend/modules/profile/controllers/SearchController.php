@@ -31,7 +31,7 @@ class SearchController extends FrontendBaseController
     {
         $blocked_model = BlockedModel::find()->where(['blocked_user_id' => $id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
         if ($blocked_model) {
-            $blocked_model->status = 2;
+            $blocked_model->status = 0;
             if ($blocked_model->save(false)) {
                 Yii::$app->session->setFlash('success', "Unblocked Successfully!!");
                 return $this->redirect(Yii::$app->request->referrer);
@@ -52,14 +52,14 @@ class SearchController extends FrontendBaseController
         // Follower
         $follow_user = UserFollow::find()->where(['follow_user_id' => $user->id, 'user_id' => Yii::$app->user->identity->id])->limit(1)->one();
         if ($follow_user) {
-            $follow_user->status = 2;
+            $follow_user->status = 0;
             $follow_user->save(false);
         }
 
         // My Following
         $following_user = UserFollow::find()->where(['user_id' => $user->id, 'follow_user_id' => Yii::$app->user->identity->id])->limit(1)->one();
         if ($following_user) {
-            $following_user->status = 2;
+            $following_user->status = 0;
             $following_user->save(false);
         }
 

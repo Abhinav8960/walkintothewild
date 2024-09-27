@@ -33,7 +33,7 @@ $reviews = $ratingdataProvider->getModels();
                                         <div class="googlerating names">
                                             <?php if ($review->user) { ?>
                                                 <a href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => $review->user->user_handle]) ?>" data-pjax="0">
-                                                    <h6 class="mb-0 fs-6 pb-0"><?= $review->user->name ?></h6>
+                                                    <h6 class="mb-0 fs-6 pb-0"><?= $review->user->getName() ?></h6>
                                                 </a>
                                             <?php } ?>
 

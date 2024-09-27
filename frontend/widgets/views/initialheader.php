@@ -47,11 +47,11 @@ $this->params['baseurl'] = $webasset->baseUrl;
 									</li>
 									<?php
 									if (Yii::$app->user->identity && Yii::$app->user->identity->is_safari_operator == 1) { ?>
-										<li>
+										<!-- <li>
 											<a class="" href="/manage">
 												<i class="fa-solid fa-cog"></i>
 												Manage Safari Tour Business</a>
-										</li>
+										</li> -->
 									<?php }
 									?>
 									<li>

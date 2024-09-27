@@ -279,3 +279,5 @@ ALTER TABLE `master_article_topic` RENAME `master_topic`;
 ALTER TABLE `article_tag` CHANGE `master_article_tag_id` `master_tag_id` INT NOT NULL;
 ALTER TABLE `article_topic` CHANGE `master_article_topic_id` `master_topic_id` INT NOT NULL;
 
+ALTER TABLE `article` ADD `sequence` INT NULL AFTER `article_date`;
+

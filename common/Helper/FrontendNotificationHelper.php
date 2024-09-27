@@ -112,7 +112,8 @@ class FrontendNotificationHelper
         if ($operator) {
             $model = new FrontendNotification();
             $model->action_id = FrontendNotification::ACTION_OPERATOR_NEW_FOLLOWER;
-            $model->notification_url = Url::toRoute(['/manage/follower']);
+            // $model->notification_url = Url::toRoute(['/manage/follower']);
+            $model->notification_url = Url::toRoute(['/profile/default/index', 'user_handle' => $user->user_handle]);
             $model->parent_id = $operator->id;
             $model->channel = 'UserNotificationChannel';
             $model->status = 1;

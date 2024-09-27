@@ -13,6 +13,7 @@ class SafariOperatorReviewForm extends \yii\base\Model
     public $rating_model;
     public $safari_operator_id;
     public $park_id;
+    public $user_id;
     public $rating;
     public $review;
     public $action_url;
@@ -29,6 +30,7 @@ class SafariOperatorReviewForm extends \yii\base\Model
             $this->rating_model = $rating_model;
             $this->safari_operator_id = $this->rating_model->safari_operator_id;
             $this->park_id = $this->rating_model->park_id;
+            $this->user_id = $this->rating_model->user_id;
             $this->rating = $this->rating_model->rating;
             $this->review = $this->rating_model->review;
         }
@@ -38,7 +40,7 @@ class SafariOperatorReviewForm extends \yii\base\Model
     {
         return [
             [['safari_operator_id', 'park_id', 'rating', 'review',], 'required'],
-            [['safari_operator_id', 'park_id', 'rating'], 'integer'],
+            [['safari_operator_id', 'park_id', 'rating', 'user_id'], 'integer'],
             ['review', 'string', 'max' => 255],
         ];
     }
@@ -101,9 +103,9 @@ class SafariOperatorReviewForm extends \yii\base\Model
     public function getParklist()
     {
         if ($this->rating_model->id) {
-            $user_park_id = SafariOperatorRating::find()->select('park_id')->where(['safari_operator_id' => $this->safari_operator_id, 'status' => 1])->andWhere("id <> " . $this->rating_model->id)->column();
+            $user_park_id = SafariOperatorRating::find()->select('park_id')->where(['user_id' => $this->user_id, 'safari_operator_id' => $this->safari_operator_id, 'status' => 1])->andWhere("id <> " . $this->rating_model->id)->column();
         } else {
-            $user_park_id = SafariOperatorRating::find()->select('park_id')->where(['safari_operator_id' => $this->safari_operator_id, 'status' => 1])->column();
+            $user_park_id = SafariOperatorRating::find()->select('park_id')->where(['user_id' => $this->user_id, 'safari_operator_id' => $this->safari_operator_id, 'status' => 1])->column();
         }
         $operator_safari_park = [];
         $operatorsafariparkData = SafariOperatorPark::find()->where(['safari_operator_id' =>  $this->safari_operator_id, 'status' => 1])->andWhere(['not in', 'park_id', $user_park_id])->all();

@@ -9,7 +9,7 @@ use yii\helpers\Html;
 /**
  * @author Smriti Pal <smritipal2201@gmail.com>
  */
-class SuspendActiveButton extends Widget implements \common\interfaces\StatusInterface
+class SuspendActiveButton extends Widget implements \common\interfaces\NewStatusInterface
 {
 
     public $active_title = 'Item';

@@ -10,13 +10,13 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\models\operator\OperatorQuote;
 use common\models\operator\SafariOperator;
-use common\models\operator\SafariOperatorFollow;
 use common\models\operator\SafariOperatorRating;
 use common\models\operator\SafariOperatorRatingReportSearch;
 use common\models\registration\SafariOperatorRequest;
 use common\models\registration\SafariOperatorRequestActivities;
 use common\models\registration\SafariOperatorRequestPark;
 use common\models\SafariOperatorRequestSearch;
+use common\models\UserFollow;
 use yii\web\UploadedFile;
 
 /**
@@ -110,8 +110,8 @@ class SafariController extends Controller
     public function actionFollower()
     {
         $safari_operator = $this->findModel();
-        $query = SafariOperatorFollow::find()->where([
-            'safari_operator_id' => $safari_operator->id,
+        $query = UserFollow::find()->where([
+            'follow_user_id' => $safari_operator->user_id,
             'status' => 1
         ]);
         $dataProvider = new \yii\data\ActiveDataProvider([
