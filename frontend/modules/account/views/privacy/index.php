@@ -42,7 +42,7 @@ use yii\helpers\Url;
                         </div>
                     </div>
 
-                    <div class="row ">
+                    <!-- <div class="row ">
                         <div class="col-md-3 ">
                         <label for="" class="Modal_label">  Photo</label>
                         </div>
@@ -58,7 +58,7 @@ use yii\helpers\Url;
                         <div class="col-md-9 ">
                             <?= $form->field($model, 'contribution_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
