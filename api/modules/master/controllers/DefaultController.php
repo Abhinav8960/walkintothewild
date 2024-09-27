@@ -61,7 +61,7 @@ class DefaultController extends RestController
                     'share-safari-reason' => ['GET'],
                     'state' => ['GET'],
                     'suggestion-category' => ['GET'],
-                    'vehcle' => ['GET'],
+                    'vehicle' => ['GET'],
                 ],
             ],
         ];
@@ -187,7 +187,7 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = "MasterSuggestionCategory");
     }
 
-    public function actionVehcle()
+    public function actionVehicle()
     {
         $searchModel = new MasterVehicleSearch();
         $searchModel->status =  MasterVehicleSearch::STATUS_ACTIVE;
