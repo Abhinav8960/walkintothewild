@@ -88,7 +88,6 @@ class DefaultController extends FrontendBaseController
         $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
         $searchModel = new PackageFaqSearch();
@@ -102,10 +101,6 @@ class DefaultController extends FrontendBaseController
         $model->action_validate_url = '/package/default/validate-comment';
 
 
-        // $replymodel = new PackageReplyForm();
-        // $replymodel->action_url = '/package/default/view';
-        // $replymodel->action_validate_url = '/package/default/validate-reply';
-
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($package)) {
             // Notification for New Comment
             FrontendNotificationHelper::packageNewComment($package, Yii::$app->user->identity);
@@ -113,20 +108,6 @@ class DefaultController extends FrontendBaseController
             Yii::$app->session->setFlash('success', 'Comment successfully submitted');
             return $this->redirect(\yii\helpers\Url::toRoute(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']));
         }
-
-
-        // if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($package)) {
-
-        //     // Notification for Reply Comment
-        //     $reply_comment = $replymodel->commentbyParent();
-        //     if ($reply_comment) {
-        //         FrontendNotificationHelper::packageCommentReply($package, $reply_comment->user);
-        //     }
-        //     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-        //     return $this->redirect(['/package/default/view', 'slug' => $package->package_slug, 'operator_slug' => $package->safarioperator ? $package->safarioperator->slug : '']);
-        // }
-
-
 
 
         $packagemodel = new PackageQuoteForm();
@@ -146,7 +127,6 @@ class DefaultController extends FrontendBaseController
                 'package' => $package,
                 'faqs' => $faqs,
                 'model' => $model,
-                // 'replymodel' => $replymodel,
                 'packagemodel' => $packagemodel,
                 'login_safarioperator' => $login_safarioperator,
             ]
@@ -161,7 +141,6 @@ class DefaultController extends FrontendBaseController
         $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
 
         $replymodel = new PackageReplyForm();
@@ -217,7 +196,6 @@ class DefaultController extends FrontendBaseController
         $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
         if ($package) {
             if (Yii::$app->user->identity) {
@@ -248,7 +226,6 @@ class DefaultController extends FrontendBaseController
         $package = Package::find()->where(['package_slug' => $slug])->limit(1)->one();
         if (empty($package)) {
             return $this->redirect(['/package']);
-            throw new NotFoundHttpException('The requested page does not exist.');
         }
         if ($package) {
             if (Yii::$app->user->identity) {
@@ -273,6 +250,9 @@ class DefaultController extends FrontendBaseController
     public function actionEnquiry($slug)
     {
         $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return $this->redirect(['/package']);
+        }
         $model = new PackageEnquiryForm();
         $model->safari_operator_id =  $package->owned_by_id;
         $model->package_id = $package->id;
