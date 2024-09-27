@@ -35,71 +35,67 @@ class LogController extends Controller
     }
     public function actionIndex()
     {
-        // Path to your log file
-        $logFile = Yii::getAlias('@runtime/logs/app.log');
-
-        // Check if the log file exists
+        $logFile = Yii::getAlias('@backend/runtime/logs/app.log');
         if (!file_exists($logFile)) {
             throw new \yii\web\NotFoundHttpException('Log file does not exist.');
         }
-
-        // Read the log file content
         $logs = file_get_contents($logFile);
-
-        // Set response format to plain text
-        // Yii::$app->response->format = Response::FORMAT_RAW;
         Yii::$app->response->headers->add('Content-Type', 'text/plain');
 
         return $this->render('index', [
-            'logs' => $logs
+            'logs' => $logs,
+            'title' => 'Backend Application Log',
+            'type' => 'backend'
         ]);
     }
 
-    public function actionFrontlog()
+    public function actionFront()
     {
-        return Yii::$app->response->sendFile(Yii::getAlias('@frontend/runtime/logs/app.log'), 'frontend-app.log');
+        $logFile = Yii::getAlias('@frontend/runtime/logs/app.log');
+        if (!file_exists($logFile)) {
+            throw new \yii\web\NotFoundHttpException('Log file does not exist.');
+        }
+        $logs = file_get_contents($logFile);
+        Yii::$app->response->headers->add('Content-Type', 'text/plain');
 
+        return $this->render('index', [
+            'logs' => $logs,
+            'title' => 'Frontend Application Log',
+            'type' => 'frontend'
+        ]);
     }
+
 
     public function actionConsoleLog()
     {
-        $robots_actual_url = \Yii::$app->getBasePath(true);
-        $robots_actual_url = str_replace("backend", "console", $robots_actual_url);
-
-        // Path to your log file
-        $logFile = $robots_actual_url . '/runtime/logs/app.log';
-
-        // Check if the log file exists
+        $logFile = Yii::getAlias('@console/runtime/logs/app.log');
         if (!file_exists($logFile)) {
             throw new \yii\web\NotFoundHttpException('Log file does not exist.');
         }
-
-        // Read the log file content
         $logs = file_get_contents($logFile);
-
-        // Set response format to plain text
-        // Yii::$app->response->format = Response::FORMAT_RAW;
         Yii::$app->response->headers->add('Content-Type', 'text/plain');
 
         return $this->render('index', [
-            'logs' => $logs
+            'logs' => $logs,
+            'title' => 'Console Application Log',
+            'type' => 'console'
         ]);
     }
 
-    public function actionExport()
+    public function actionExport($type = 'backend')
     {
-        $logFile = Yii::getAlias('@runtime/logs/app.log');
+        $logFile = Yii::getAlias("@$type/runtime/logs/app.log");
 
         if (!file_exists($logFile)) {
             throw new NotFoundHttpException('Log file does not exist.');
         }
-
-        return Yii::$app->response->sendFile($logFile, 'app.log');
+        return Yii::$app->response->sendFile($logFile, "$type-app.log");
     }
 
-    public function actionClear()
+
+    public function actionClear($type = 'backend')
     {
-        $logFile = Yii::getAlias('@runtime/logs/app.log');
+        $logFile = Yii::getAlias("@$type/runtime/logs/app.log");
 
         if (!file_exists($logFile)) {
             throw new NotFoundHttpException('Log file does not exist.');

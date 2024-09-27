@@ -1060,8 +1060,10 @@ $active_url = "/" . Yii::$app->requestedRoute;
 											"/trierror/frontend-request-log",
 											"/trierror/site-pages",
 											"/trierror/site-untraced-request",
-											"/trierror/site-robots",
-											"/trierror/default/front-index"
+											"/trierror/default/front-index",
+											"/portalsetting/log/index",
+											"/portalsetting/log/front",
+											"/portalsetting/log/console-log"
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/log/default/index",
@@ -1070,68 +1072,52 @@ $active_url = "/" . Yii::$app->requestedRoute;
 														"/trierror/frontend-request-log",
 														"/trierror/site-pages",
 														"/trierror/site-untraced-request",
-														"/trierror/site-robots",
-														"/trierror/default/front-index"
+														"/trierror/default/front-index",
+														"/portalsetting/log/index",
+														"/portalsetting/log/front",
+														"/portalsetting/log/console-log"
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Log</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
 							<!-- <li><a class="slide-item <?= in_array($active_url, array("/trierror/default/index")) ? "active" : "" ?>" href="/trierror/default/index">Backend Error Log</a></li> -->
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/default/front-index")) ? "active" : "" ?>" href="/trierror/default/front-index">Frontend Error Log</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Request Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Frontend Request Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-pages")) ? "active" : "" ?>" href="/trierror/site-pages">Site Pages</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-untraced-request")) ? "active" : "" ?>" href="/trierror/site-untraced-request">Untraced Request</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-robots")) ? "active" : "" ?>" href="/trierror/site-robots">Robots Txt</a></li>
+
+
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Backend Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/front")) ? "active" : "" ?>" href="/portalsetting/log/front">Frontend Log</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/console-log")) ? "active" : "" ?>" href="/portalsetting/log/console-log">Console Log</a></li>
 						</ul>
 					</li>
 				<?php endif; ?>
 
 
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
 
-					<li class="slide">
-						<a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/ri_progress-2-line.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Progress Tracking</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
-							<li><a class="slide-item" href="#">Report</a></li>
-							<li><a class="slide-item" href="#">Tracking</a></li>
-							<li><a class="slide-item" href="#">Ranking</a></li>
-						</ul>
-					</li>
-				<?php endif; ?>
 
 				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_report_manager) : ?>
 					<li class="slide <?= in_array($active_url, array(
 											"/portalsetting/default/index",
 											"/portalsetting/default/params",
-											"/portalsetting/log/index",
-											"/portalsetting/log/frontlog",
-											"/portalsetting/default/clear-assets",
-											"/portalsetting/default/clear-cache",
 											"/portalsetting/pageview/index",
-											"/portalsetting/log/console-log"
+											"/trierror/site-robots",
 										)) ? "is-expanded" : "" ?>">
 						<a class="side-menu__item <?= in_array($active_url, array(
 														"/portalsetting/default/index",
 														"/portalsetting/default/params",
-														"/portalsetting/log/index",
-														"/portalsetting/log/frontlog",
-														"/portalsetting/default/clear-assets",
-														"/portalsetting/default/clear-cache",
 														"/portalsetting/pageview/index",
-														"/portalsetting/log/console-log"
+														"/trierror/site-robots",
 													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Portal Settings</span><i class="angle fe fe-chevron-right"></i></a>
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Portal Settings</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/index")) ? "active" : "" ?>" href="/portalsetting/default/index">Php Info</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/params")) ? "active" : "" ?>" href="/portalsetting/default/params">Params</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Log</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/export")) ? "active" : "" ?>" href="/portalsetting/log/export">Export Log</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/frontlog")) ? "active" : "" ?>" href="/portalsetting/log/frontlog">Export Front Log</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/clear")) ? "active" : "" ?>" href="/portalsetting/log/clear" data-method="post">Clear Log</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/console-log")) ? "active" : "" ?>" href="/portalsetting/log/console-log">Console Log</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets" data-method="post">Clear Assets</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-robots")) ? "active" : "" ?>" href="/trierror/site-robots">Robots Txt</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets" data-method="post">Clear Backend Assets</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets?type=frontend" data-method="post">Clear Frontend Assets</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-cache")) ? "active" : "" ?>" href="/portalsetting/default/clear-cache" data-method="post">Clear Cache</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/pageview/index")) ? "active" : "" ?>" href="/portalsetting/pageview/index">Page View</a></li>
 						</ul>
@@ -1159,79 +1145,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 					</li>
 				<?php endif; ?>
 
-				<?php if (Yii::$app->user->identity->is_adminstrator || Yii::$app->user->identity->is_admin || Yii::$app->user->identity->is_report_manager) : ?>
 
-					<!-- <li class="slide <?= in_array($active_url, array(
-												"/article/article-source/index",
-												"/article/article-source/create",
-												"/article/article-source/update",
-												"/article/article-source/view",
-												"/article/frequency/index",
-												"/article/frequency/create",
-												"/article/frequency/update",
-												"/article/category/index",
-												"/article/category/create",
-												"/article/category/update",
-												"/article/article-tag/index",
-												"/article/article-tag/create",
-												"/article/article-tag/update",
-												"/article/article/index",
-												"/article/article/create",
-												"/article/article/update",
-												"/article/article/view",
-											)) ? "is-expanded" : "" ?>">
-						<a class="side-menu__item <?= in_array($active_url, array(
-														"/article/article-source/index",
-														"/article/article-source/create",
-														"/article/article-source/update",
-														"/article/article-source/view",
-														"/article/frequency/index",
-														"/article/frequency/create",
-														"/article/frequency/update",
-														"/article/category/index",
-														"/article/category/create",
-														"/article/category/update",
-														"/article/article-tag/index",
-														"/article/article-tag/create",
-														"/article/article-tag/update",
-														"/article/article/index",
-														"/article/article/create",
-														"/article/article/update",
-														"/article/article/view",
-													)) ? "active" : "" ?>" data-bs-toggle="slide" href="javascript:void(0);"><img src="<?= $this->params['baseurl'] ?>/img/carbon_workspace.png" alt="" width="25" height="25" class="navhover_icon"><span class="side-menu__label">Other Source</span><i class="angle fe fe-chevron-right"></i></a>
-						<ul class="slide-menu">
-							<li class="side-menu__label1"><a href="javascript:void(0);">Progress Tracking</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/article/article-source/index",
-															"/article/article-source/create",
-															"/article/article-source/update",
-															"/article/article-source/view"
-														)) ? "active" : "" ?>" href="/article/article-source/index">Article Source</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/article/frequency/index",
-															"/article/frequency/create",
-															"/article/frequency/update",
-														)) ? "active" : "" ?>" href="/article/frequency/index">Frequency</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/article/category/index",
-															"/article/category/create",
-															"/article/category/update",
-														)) ? "active" : "" ?>" href="/article/category/index">Category</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/article/article-tag/index",
-															"/article/article-tag/create",
-															"/article/article-tag/update",
-														)) ? "active" : "" ?>" href="/article/article-tag/index">Article Tag</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array(
-															"/article/article/index",
-															"/article/article/create",
-															"/article/article/update",
-															"/article/article/view"
-														)) ? "active" : "" ?>" href="/article/article/index">Article</a></li>
-
-						</ul>
-					</li> -->
-				<?php endif; ?>
 
 				<li class="slide">
 					<a class="side-menu__item" href="<?= \yii\helpers\Url::to('/site/logout') ?>" data-method="post"> <img src="<?= $this->params['baseurl'] ?>/img/material-symbols_logout-sharp.png" alt="" width="25" height="25" class="navhover_icon">

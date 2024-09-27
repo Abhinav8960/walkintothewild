@@ -36,12 +36,12 @@ class DefaultController extends Controller
             Yii::$app->session->setFlash('error', 'Failed to clear cache.');
         }
 
-        return $this->redirect(['index']);
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 
-    public function actionClearAssets()
+    public function actionClearAssets($type = 'backend')
     {
-        $assetsPath = Yii::getAlias('@backend/web/assets');
+        $assetsPath = Yii::getAlias("@$type/web/assets");
 
         // Check if the directory exists
         if (is_dir($assetsPath)) {
@@ -68,6 +68,6 @@ class DefaultController extends Controller
             Yii::$app->session->setFlash('error', 'Assets directory not found.');
         }
 
-        return $this->redirect(['index']); // Redirect to the desired page
+        return $this->redirect(\Yii::$app->request->referrer);
     }
 }

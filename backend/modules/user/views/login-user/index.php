@@ -23,7 +23,9 @@ $this->params['title'] = $this->title;
                         'format' => 'raw',
                         'value' => function ($model) {
                             $user = $model->user;
-                            return '<img src="' . ($user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png') . '" alt="" style="height:25px;" class="rounded-circle user-icon" onerror="this.src="' . $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' . '";"> ' . $model->user->name;
+                            if($user){
+                                return '<img src="' . ($user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png') . '" alt="" style="height:25px;" class="rounded-circle user-icon" onerror="this.src="' . $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' . '";"> ' . $model->user->name;
+                            }
                         }
                     ],
                     [
