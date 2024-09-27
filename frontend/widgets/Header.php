@@ -18,11 +18,6 @@ class Header extends Widget
      */
     public function run()
     {
-        $active_url = "/" . Yii::$app->requestedRoute;
-        if (in_array($active_url, array("/", "/plan-safari", "/safari-packages", "/shared-safari"))) {
-            return $this->render('header');
-        } else {
-            return $this->render('header');
-        }
+        return $this->render('header');
     }
 }
