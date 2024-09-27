@@ -11,7 +11,6 @@ use common\models\trierror\SitePages;
 use common\models\trierror\SiteRobots;
 use common\models\GeneralModel;
 use common\models\trierror\FrontendRequestLog;
-use common\models\trierror\SiteUntracedRequest;
 
 /**
  * FrontendRequestLogController implements the CRUD actions for FrontendRequestLog model.

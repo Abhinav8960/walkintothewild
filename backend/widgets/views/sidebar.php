@@ -1080,13 +1080,11 @@ $active_url = "/" . Yii::$app->requestedRoute;
 						<ul class="slide-menu">
 							<li class="side-menu__label1"><a href="javascript:void(0);">Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/log/default/index")) ? "active" : "" ?>" href="/log/default/index">Mail Log</a></li>
-							<!-- <li><a class="slide-item <?= in_array($active_url, array("/trierror/default/index")) ? "active" : "" ?>" href="/trierror/default/index">Backend Error Log</a></li> -->
-							<li><a class="slide-item <?= in_array($active_url, array("/trierror/default/front-index")) ? "active" : "" ?>" href="/trierror/default/front-index">Frontend Error Log</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Frontend Request Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-pages")) ? "active" : "" ?>" href="/trierror/site-pages">Site Pages</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-untraced-request")) ? "active" : "" ?>" href="/trierror/site-untraced-request">Untraced Request</a></li>
-
-
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/trierror/default/index")) ? "active" : "" ?>" href="/trierror/default/index">Backend Error Log</a></li> -->
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/frontend-request-log")) ? "active" : "" ?>" href="/trierror/frontend-request-log">Frontend Request</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/site-untraced-request")) ? "active" : "" ?>" href="/trierror/site-untraced-request">Frontend Request Untraced</a></li>
+							<li><a class="slide-item <?= in_array($active_url, array("/trierror/default/front-index")) ? "active" : "" ?>" href="/trierror/default/front-index">Frontend Request Error</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/index")) ? "active" : "" ?>" href="/portalsetting/log/index">Backend Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/front")) ? "active" : "" ?>" href="/portalsetting/log/front">Frontend Log</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/log/console-log")) ? "active" : "" ?>" href="/portalsetting/log/console-log">Console Log</a></li>
@@ -1119,7 +1117,7 @@ $active_url = "/" . Yii::$app->requestedRoute;
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets" data-method="post">Clear Backend Assets</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-assets")) ? "active" : "" ?>" href="/portalsetting/default/clear-assets?type=frontend" data-method="post">Clear Frontend Assets</a></li>
 							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/default/clear-cache")) ? "active" : "" ?>" href="/portalsetting/default/clear-cache" data-method="post">Clear Cache</a></li>
-							<li><a class="slide-item <?= in_array($active_url, array("/portalsetting/pageview/index")) ? "active" : "" ?>" href="/portalsetting/pageview/index">Page View</a></li>
+							<!-- <li><a class="slide-item <?= in_array($active_url, array("/portalsetting/pageview/index")) ? "active" : "" ?>" href="/portalsetting/pageview/index">Page View</a></li> -->
 						</ul>
 					</li>
 				<?php endif; ?>
