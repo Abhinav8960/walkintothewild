@@ -56,6 +56,9 @@ class BlogController extends FrontendBaseController
 
     public function actionCreate()
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['/']);
+        }
         $user = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
         $model = new BlogForm();
         $model->action_url = '/profile/blog/create';
@@ -168,6 +171,9 @@ class BlogController extends FrontendBaseController
      */
     public function actionUpdate($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['/']);
+        }
         $blog_model = $this->findModel($slug);
         $user = $this->findUserbyHandle(Yii::$app->user->identity->user_handle);
         $model = new BlogForm($blog_model);
@@ -260,8 +266,11 @@ class BlogController extends FrontendBaseController
 
     public function actionReply($slug, $user_handle, $parent_id)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['/']);
+        }
 
-        $blog = Blog::findOne(['slug' => $slug,'status' => Blog::STATUS_ACTIVE]);
+        $blog = Blog::findOne(['slug' => $slug, 'status' => Blog::STATUS_ACTIVE]);
         if (empty($blog)) {
             return $this->redirect(['/profile/blog/index', 'user_handle' => $user_handle]);
             throw new NotFoundHttpException('The requested page does not exist.');
@@ -335,7 +344,10 @@ class BlogController extends FrontendBaseController
 
     public function actionFlag($slug, $blog_comment_id, $user_handle)
     {
-        $blog = Blog::findOne(['slug' => $slug,'status' => Blog::STATUS_ACTIVE]);
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['/']);
+        }
+        $blog = Blog::findOne(['slug' => $slug, 'status' => Blog::STATUS_ACTIVE]);
         if (empty($blog)) {
             return $this->redirect(['/profile/blog/index', 'user_handle' => $user_handle]);
             throw new NotFoundHttpException('The requested page does not exist.');
