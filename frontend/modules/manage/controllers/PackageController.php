@@ -51,16 +51,6 @@ class PackageController extends FrontendBaseController
         $dataProvider = $searchModel->managesearch($this->request->queryParams, [
             'owned_by_id' => $safari_operator->id
         ]);
-        // $query = Package::find()->where([
-        //     'owned_by_id' => $safari_operator->id,
-        //     'status' => 1
-        // ]);
-        // $dataProvider = new \yii\data\ActiveDataProvider([
-        //     'query' => $query,
-        //     'pagination' => [
-        //         'pageSize' => 20,
-        //     ],
-        // ]);
         return $this->render('index', [
             'safari_operator' => $safari_operator,
             'searchModel' => $searchModel,
@@ -145,8 +135,8 @@ class PackageController extends FrontendBaseController
 
     public function actionUpdate($package_id)
     {
-        // $safari_operator = $this->module->operatormodel();
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'update';
 
@@ -200,7 +190,8 @@ class PackageController extends FrontendBaseController
 
     public function actionPolicyInfo($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'policy_info';
 
@@ -227,7 +218,8 @@ class PackageController extends FrontendBaseController
 
     public function actionGettingThere($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'getting_there';
 
@@ -253,8 +245,8 @@ class PackageController extends FrontendBaseController
 
     public function actionInclusion($package_id)
     {
-
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $model = new PackageForm($package_model);
         $model->scenario = 'inclusion';
 
@@ -320,8 +312,9 @@ class PackageController extends FrontendBaseController
 
     public function actionItinerary($package_id, $day = 1)
     {
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $package_day_model = $this->findModelDay($package_id, $day);
-        $package_model = Package::findOne(['id' => $package_id]);
         if ($package_day_model) {
             $model = new DayItineraryForm($package_day_model);
         } else {
@@ -357,7 +350,8 @@ class PackageController extends FrontendBaseController
 
     public function actionFaq($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $searchModel = new PackageFaqSearch();
         $searchModel->package_id = $package_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -377,7 +371,8 @@ class PackageController extends FrontendBaseController
      */
     public function actionCreateFaq($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $model = new PackageFaqForm();
         $model->package_id = $package_id;
         $model->status = PackageFaq::STATUS_ACTIVE;
@@ -422,7 +417,8 @@ class PackageController extends FrontendBaseController
      */
     public function actionUpdateFaq($package_id, $faq_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $faq_model = PackageFaq::find()->where(['id' => $faq_id])->one();
         $model = new PackageFaqForm($faq_model);
         $model->package_id = $package_id;
@@ -465,7 +461,8 @@ class PackageController extends FrontendBaseController
      */
     public function actionSelectFaq($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $model = new PackageFaqSelectForm();
         $model->package_id = $package_id;
         $model->status = PackageFaq::STATUS_ACTIVE;
@@ -496,7 +493,8 @@ class PackageController extends FrontendBaseController
 
     public function actionView($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $searchModel = new PackageQuoteSearch();
         $searchModel->package_id = $package_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -512,8 +510,8 @@ class PackageController extends FrontendBaseController
 
     public function actionComment($package_id)
     {
-        $package_model = $this->findModel($package_id);
-
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $dataProvider = new ActiveDataProvider([
             'query' =>  PackageComment::find()->where(['package_id' => $package_id, 'status' => PackageComment::STATUS_ACTIVE])->andWhere(['parent_id' => null]),
             'pagination' => [
@@ -531,7 +529,8 @@ class PackageController extends FrontendBaseController
     public function actionReplies($id)
     {
         $comment = PackageComment::find()->where(['id' => $id, 'status' => PackageComment::STATUS_ACTIVE])->limit(1)->one();
-        $package_model = $this->findModel($comment->package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($comment->package_id, $safari_operator->id);
         $dataProvider = new ActiveDataProvider([
             'query' =>  $comment->getReplies()->where(['status' =>  PackageComment::STATUS_ACTIVE]),
             'pagination' => [
@@ -547,9 +546,9 @@ class PackageController extends FrontendBaseController
 
     public function actionBookNow($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $enquiries = PackageEnquiry::find()->where(['package_id' => $package_id, 'status' => 1]);
-
         $enquire_provider = new ActiveDataProvider([
             'query' => $enquiries,
             'pagination' => [
@@ -563,61 +562,6 @@ class PackageController extends FrontendBaseController
         ]);
     }
 
-    public function actionActive($id)
-    {
-        $model = PackageFaq::find()->where(['id' => $id])->limit(1)->one();
-        $model->status = PackageFaq::STATUS_ACTIVE;
-        $model->save(false);
-        return $this->redirect(\Yii::$app->request->referrer);
-    }
-
-
-    /**
-     * Suspend Model
-     *
-     * @param [type] $id
-     * @return void
-     */
-    public function actionSuspend($id)
-    {
-        $model = PackageFaq::find()->where(['id' => $id])->limit(1)->one();
-        $model->status = PackageFaq::STATUS_SUSPEND;
-        $model->save(false);
-        return $this->redirect(\Yii::$app->request->referrer);
-    }
-
-    /**
-     * Finds the Package model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Package the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Package::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    protected function findModelfaq($id)
-    {
-        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-
-    protected function findModelDay($package_id, $day)
-    {
-        if (($model = PackageDay::findOne(['package_id' => $package_id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
-            return $model;
-        }
-    }
 
 
     public function actionFlag($id)
@@ -661,7 +605,8 @@ class PackageController extends FrontendBaseController
 
     public function actionGallery($package_id)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         $searchModel = new PackageGallerySearch();
         $searchModel->package_id = $package_id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -676,7 +621,8 @@ class PackageController extends FrontendBaseController
 
     public function actionCreateGallery($package_id, $id = null)
     {
-        $package_model = $this->findModel($package_id);
+        $safari_operator = $this->module->operatormodel();
+        $package_model = $this->findModel($package_id, $safari_operator->id);
         if ($id) {
             $package_gallery_model = $this->findModelgallery($id);
             $model = new PackageGalleryForm($package_gallery_model);
@@ -706,6 +652,63 @@ class PackageController extends FrontendBaseController
                 'model' => $model,
                 'package_model' => $package_model,
             ]);
+        }
+    }
+
+
+    // public function actionActive($id)
+    // {
+    //     $model = PackageFaq::find()->where(['id' => $id])->limit(1)->one();
+    //     $model->status = PackageFaq::STATUS_ACTIVE;
+    //     $model->save(false);
+    //     return $this->redirect(\Yii::$app->request->referrer);
+    // }
+
+
+    // /**
+    //  * Suspend Model
+    //  *
+    //  * @param [type] $id
+    //  * @return void
+    //  */
+    // public function actionSuspend($id)
+    // {
+    //     $model = PackageFaq::find()->where(['id' => $id])->limit(1)->one();
+    //     $model->status = PackageFaq::STATUS_SUSPEND;
+    //     $model->save(false);
+    //     return $this->redirect(\Yii::$app->request->referrer);
+    // }
+
+    /**
+     * Finds the Package model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id ID
+     * @return Package the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id, $owned_by_id)
+    {
+        if (($model = Package::findOne(['owned_by_id' => $owned_by_id, 'id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    protected function findModelfaq($id)
+    {
+        if (($model = PackageFaq::findOne(['id' => $id, 'status' => [Package::STATUS_ACTIVE, Package::STATUS_SUSPEND]])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+
+    protected function findModelDay($package_id, $day)
+    {
+        if (($model = PackageDay::findOne(['package_id' => $package_id, 'day' => $day, 'status' => [PackageDay::STATUS_ACTIVE, PackageDay::STATUS_SUSPEND]])) !== null) {
+            return $model;
         }
     }
 
