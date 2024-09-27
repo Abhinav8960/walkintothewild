@@ -169,6 +169,12 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
         return Package::find()->where(['owned_by_id' => $this->id, 'status' => Package::STATUS_ACTIVE])->count();
     }
 
+    public function getQuotescount()
+    {
+        return OperatorQuote::find()->where(['operator_id' => $this->id, 'status' => OperatorQuote::STATUS_ACTIVE])->count();
+    }
+
+
 
     public function getSharedsafaricount()
     {
@@ -176,6 +182,15 @@ class SafariOperator extends \yii\db\ActiveRecord implements \common\interfaces\
             'status' => ShareSafari::STATUS_ACTIVE,
             'host_user_id' => $this->id,
             'type' => ShareSafari::TYPE_FIXED_DEPARTURE
+        ])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
+    }
+
+    public function getsafaricount()
+    {
+        return ShareSafari::find()->where([
+            'status' => ShareSafari::STATUS_ACTIVE,
+            'host_user_id' => $this->user_id,
+            'type' => ShareSafari::TYPE_SAFARI
         ])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
     }
 
