@@ -7,8 +7,6 @@ use common\models\User;
 use Yii;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
-use common\models\PreAuth;
-use frontend\models\AuthTemp;
 
 /**
  * AuthHandler handles successful authentication via Yii auth component
@@ -49,24 +47,10 @@ class AuthHandler
                 /* @var User $user */
                 $this->loginUser($auth->user);
                 return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
-            }
-            // else{
-
-            //     \Yii::$app->getSession()->setFlash('error', [
-            //         Yii::t('app', 'You are not regitered with us', [
-            //             'client' => $this->client->getTitle(),
-            //         ]),
-            //     ]);
-
-            //     return Yii::$app->response->redirect(['/site/login'],403);
-
-            // } 
-            else { // signup
+            } else { // signup
                 if ($email !== null && User::find()->where(['username' => $email])->orWhere(['email' => $email])->exists()) {
                     $user_found = User::find()->where(['username' => $email])->orWhere(['email' => $email])->one();
-                    // Yii::$app->getSession()->setFlash('error', [
-                    //     Yii::t('app', "User with the same email as in {client} account already exists but isn't linked to it. Login using email first to link it.", ['client' => $this->client->getTitle()]),
-                    // ]);
+
                     $auth = new Auth([
                         'user_id' => $user_found->id,
                         'source' => $this->client->getId(),
@@ -77,14 +61,6 @@ class AuthHandler
                     $this->loginUser($auth->user);
                     return Yii::$app->response->redirect($this->redirect_url != '' ? $this->redirect_url : '/park');
                 } else {
-                    // Yii::$app->session->setFlash('error', 'You are not registered with us');
-                    // return Yii::$app->getResponse()->redirect(['site/login']);
-                    //  Yii::$app->getSession()->setFlash('error', [
-                    //     Yii::t('login', "{client} not registered with us", ['client' => $this->client->getTitle()]),
-                    // ]);
-
-
-                    // start comment by sonu shokeen 
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new User([
                         'name' => $nickname,
@@ -95,30 +71,6 @@ class AuthHandler
                         'status' => User::STATUS_ACTIVE // make sure you set status properly
                     ]);
                     $user->generateAuthKey();
-                    //$user->generatePasswordResetToken();
-
-                    // end comment by sonu shokeen
-
-                    /*
-                    $attributes = $this->client->getUserAttributes();
-                    $picture = $attributes['picture'];
-
-                    $temp_key = Yii::$app->security->generateRandomString(20);
-                    $temp_auth = new AuthTemp();
-                    $temp_auth->rand_key = $temp_key;
-                    $temp_auth->name = $nickname;
-                    $temp_auth->username = $email;
-                    $temp_auth->gmail = $nickname;
-                    $temp_auth->email = $email;
-                    $temp_auth->source = $this->client->getId();
-                    $temp_auth->source_id = (string)$id;
-                    $temp_auth->avatar = $picture;
-                    $temp_auth->redirect_to = $this->redirect_url;
-                    $temp_auth->save(false);
-
-                    return Yii::$app->response->redirect(['/site/signinagree/' . $temp_key,]);
-                    exit();
-                    */
                     $transaction = User::getDb()->beginTransaction();
 
                     if ($user->save()) {
