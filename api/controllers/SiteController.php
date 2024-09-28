@@ -7,11 +7,13 @@ use yii\filters\AccessControl;
 
 use api\behaviours\Verbcheck;
 use api\behaviours\Apiauth;
+use api\models\MasterMetaTableInfoSearch;
 use api\models\SocialLoginForm;
 use common\models\AccessTokens;
 use common\models\Auth;
 use common\models\User;
 use common\models\UserSession;
+use yii\httpclient\debug\SearchModel;
 
 /**
  * Site controller
@@ -29,7 +31,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login'],
+                'exclude' => ['social-login', 'master-meta-info'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -61,6 +63,8 @@ class SiteController extends RestController
     }
 
 
+
+
     /**
      * @inheritdoc
      */
@@ -84,6 +88,12 @@ class SiteController extends RestController
         if ($exception !== null) {
             return $this->render('error', ['exception' => $exception]);
         }
+    }
+
+    public function actionMasterMetaInfo()
+    {
+        $searchModel = new MasterMetaTableInfoSearch();
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterMetaTableInfo");
     }
 
 

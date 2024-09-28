@@ -69,11 +69,10 @@ return [
             'enableStrictParsing' => true,
             'rules' => [
                 'site/file' => 'site/file',
-
+                'master-meta-info' => 'site/master-meta-info',
                 'social-login' => 'site/social-login',
                 'profile' => 'site/profile',
                 'logout' => 'site/logout',
-
 
                 'meta/<action>' => 'meta/default/<action>',
                 'master/<action>' => 'master/default/<action>',

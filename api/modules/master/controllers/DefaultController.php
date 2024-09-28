@@ -72,62 +72,62 @@ class DefaultController extends RestController
     {
         $searchModel = new MasterAirportSearch();
         $searchModel->status =  MasterAirportSearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterAirport");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterAirport");
     }
 
     public function actionAnimal()
     {
         $searchModel = new MasterAnimalSearch();
         $searchModel->status =  MasterAnimalSearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterAnimal");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterAnimal");
     }
 
     public function actionBird()
     {
         $searchModel = new MasterBirdSearch();
         $searchModel->status =  MasterBirdSearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterBird");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterBird");
     }
 
     public function actionBonusExperience()
     {
         $searchModel = new MasterBonusExperienceSearch();
         $searchModel->status =  MasterBonusExperienceSearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterBonusExperience");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterBonusExperience");
     }
 
     public function actionCity()
     {
         $searchModel = new MasterCitySearch();
         $searchModel->status =  MasterCitySearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterCity");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterCity");
     }
 
     public function actionCountry()
     {
         $searchModel = new MasterCountrySearch();
         $searchModel->status =  MasterCountrySearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterCountry");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterCountry");
     }
 
     public function actionFaq()
     {
         $searchModel = new MasterFaqSearch();
         $searchModel->status =  MasterFaqSearch::STATUS_ACTIVE;
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterFaq");
+        return $this->dataProviderSenderWithoutPaginationWithoutPagination($searchModel, $rootIndexName = "MasterFaq");
     }
 
     public function actionLocation()
     {
         $searchModel = new MasterLocationSearch();
         $searchModel->status =  MasterLocationSearch::STATUS_ACTIVE;
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterLocation");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterLocation");
     }
 
     public function actionMonth()
     {
         $searchModel = new MasterMonthSearch();
-        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterMonth");
+        return $this->dataProviderSenderWithoutPaginationWithoutPagination($searchModel, $rootIndexName = "MasterMonth");
     }
 
     public function actionOperatorCategory()
@@ -135,7 +135,7 @@ class DefaultController extends RestController
         $searchModel = new MasterOperatorCategorySearch();
         $searchModel->status =  MasterOperatorCategorySearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterOperatorCategory");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterOperatorCategory");
     }
 
     public function actionPackageFeature()
@@ -143,7 +143,7 @@ class DefaultController extends RestController
         $searchModel = new MasterPackagefeatureSearch();
         $searchModel->status =  MasterPackagefeatureSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterPackageFeature");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterPackageFeature");
     }
 
     public function actionPackageInclude()
@@ -151,7 +151,7 @@ class DefaultController extends RestController
         $searchModel = new MasterPackageIncludeSearch();
         $searchModel->status =  MasterPackageIncludeSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterPackageInclude");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterPackageInclude");
     }
 
     public function actionRailwayStation()
@@ -159,7 +159,7 @@ class DefaultController extends RestController
         $searchModel = new MasterRailwayStationSearch();
         $searchModel->status =  MasterRailwayStationSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterRailwayStation");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterRailwayStation");
     }
 
     public function actionShareSafariReason()
@@ -167,7 +167,7 @@ class DefaultController extends RestController
         $searchModel = new MasterShareSafariReasonSearch();
         $searchModel->status =  MasterShareSafariReasonSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterShareSafariReason");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterShareSafariReason");
     }
 
 
@@ -176,7 +176,7 @@ class DefaultController extends RestController
         $searchModel = new MasterStateSearch();
         $searchModel->status =  MasterStateSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterState");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterState");
     }
 
     public function actionSuggestionCategory()
@@ -184,7 +184,7 @@ class DefaultController extends RestController
         $searchModel = new MasterSuggestionCategorySearch();
         $searchModel->status =  MasterSuggestionCategorySearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterSuggestionCategory");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterSuggestionCategory");
     }
 
     public function actionVehicle()
@@ -192,6 +192,6 @@ class DefaultController extends RestController
         $searchModel = new MasterVehicleSearch();
         $searchModel->status =  MasterVehicleSearch::STATUS_ACTIVE;
 
-        return $this->dataProviderSender($searchModel, $rootIndexName = "MasterVehicle");
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "MasterVehicle");
     }
 }
