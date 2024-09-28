@@ -79,4 +79,14 @@ class MasterPackageInclude extends \yii\db\ActiveRecord implements \common\inter
             'updated_by' => 'Updated By',
         ];
     }
+
+    /** After record is saved
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $className = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
+        \common\models\MasterMetaTableInfo::upsert($className, SELF::find()->where(['status'=>SELF::STATUS_ACTIVE])->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
+        return  true;
+    }
 }

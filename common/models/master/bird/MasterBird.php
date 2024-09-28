@@ -84,6 +84,7 @@ class MasterBird extends \yii\db\ActiveRecord implements \common\interfaces\Stat
             [['slug'], 'unique'],
         ];
     }
+    
 
     /**
      * {@inheritdoc}
@@ -105,6 +106,17 @@ class MasterBird extends \yii\db\ActiveRecord implements \common\interfaces\Stat
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
         ];
+    }
+
+
+    /** After record is saved
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        $className = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
+        \common\models\MasterMetaTableInfo::upsert($className, SELF::find()->where(['status'=>SELF::STATUS_ACTIVE])->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
+        return  true;
     }
 
     public function getImagepath()
