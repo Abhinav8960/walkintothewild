@@ -100,6 +100,18 @@ class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\N
             'updated_by' => 'Updated By',
         ];
     }
+
+
+    /** After record is saved
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        \common\models\MasterMetaTableInfo::upsert(__CLASS__, SELF::find()->count(), SELF::find()->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
+        return  true;
+    }
+
+
     public function getCity()
     {
         return $this->hasOne(MasterCity::className(), ['id' => 'city_id']);

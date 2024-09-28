@@ -1269,4 +1269,6 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
     {
         return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Inactive', self::STATUS_DELETE => 'Deleted'];
     }
+
+
 }

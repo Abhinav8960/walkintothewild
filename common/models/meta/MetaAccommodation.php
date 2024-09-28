@@ -2,6 +2,7 @@
 
 namespace common\models\meta;
 
+use common\models\MasterMetaTableInfo;
 use Yii;
 
 /**
@@ -32,7 +33,7 @@ class MetaAccommodation extends \yii\db\ActiveRecord
             \yii\behaviors\BlameableBehavior::className(),
         ];
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -58,5 +59,14 @@ class MetaAccommodation extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    /** After record is saved
+     */
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        \common\models\MasterMetaTableInfo::upsert(__CLASS__, SELF::find()->count(), SELF::find()->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
+        return  true;
     }
 }

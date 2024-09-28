@@ -102,4 +102,9 @@ trait CommanRelationship
         }
         return $this->status;
     }
+
+    public function getModelName()
+    {
+        return __CLASS__;
+    }
 }

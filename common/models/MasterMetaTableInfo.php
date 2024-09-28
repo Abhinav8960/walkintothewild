@@ -47,4 +47,16 @@ class MasterMetaTableInfo extends \yii\db\ActiveRecord
             'last_updated_time' => 'Last Updated Time',
         ];
     }
+
+    public static function upsert($name, $total_count, $last_updated_time)
+    {
+        $model = self::find()->where(['name' => $name])->one();
+        if (!empty($model)) {
+            $model = new self();
+        }
+        $model->name = $name;
+        $model->total_count = $total_count;
+        $model->last_updated_time = $last_updated_time;
+        return $model->save(false);
+    }
 }
