@@ -63,10 +63,6 @@ class DefaultController extends FrontendBaseController
             // throw new NotFoundHttpException('The requested page does not exist.');
         }
         $searchModel = new SafariParkSearch();
-        // $searchModel->master_location_id = 7;
-        // $searchModel->session_id = 1;
-        // $searchModel->master_animal_id = 13;
-        // $searchModel->master_vehicle_id = 5;
         $searchModel->id = $model->slug; // for show Selected Park name in search
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -76,43 +72,7 @@ class DefaultController extends FrontendBaseController
         $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
         $operators = $operatordataProvider->getModels();
 
-        // $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
-        // $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
         $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
-
-
-
-
-        // $request = Yii::$app->request;
-        // $ip_address = $request->getRemoteIP();
-
-        // $suggestionmodel = new SafariSuggestionsForm();
-        // $suggestionmodel->name = Yii::$app->user->identity->name;
-        // $suggestionmodel->email = Yii::$app->user->identity->email;
-        // $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
-        // $suggestionmodel->park_id = isset($model) ? $model->id : '';
-        // $suggestionmodel->ip_address = $ip_address;
-        // $suggestionmodel->action_url = '/park/' . $slug . '';
-        // $suggestionmodel->action_validate_url = '/park/default/validate';
-
-        // if ($this->request->isPost) {
-        //     if ($suggestionmodel->load($this->request->post())) {
-        //         if ($suggestionmodel->validate()) {
-        //             $suggestionmodel->initializeForm();
-        //             if ($suggestionmodel->safari_suggestion_model->save(false)) {
-        //                 \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-        //                 return $this->redirect(['/park/' . $slug . '']);
-        //             }
-        //         } else {
-        //             print_r($suggestionmodel->errors);
-        //             exit;
-        //         }
-        //     }
-        // } else {
-        //     $suggestionmodel->safari_suggestion_model->loadDefaultValues();
-        // }
-
-
 
         $ratingsearchModel = new SafariParkRatingSearch();
         $ratingsearchModel->safari_park_id = $model->id;
@@ -124,12 +84,8 @@ class DefaultController extends FrontendBaseController
             'view',
             [
                 'model' => $model,
-                // 'first_month' => $first_month,
-                // 'last_month' => $last_month,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-                // 'suggestionmodel' => $suggestionmodel,
-
                 'operatorsearchModel' => $operatorsearchModel,
                 'operatordataProvider' => $operatordataProvider,
                 'operators' => $operators,
@@ -150,13 +106,8 @@ class DefaultController extends FrontendBaseController
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
             return $this->redirect(['/park']);
-            // throw new NotFoundHttpException('The requested page does not exist.');
         }
         $searchModel = new SafariParkSearch();
-        // $searchModel->master_location_id = 7;
-        // $searchModel->session_id = 1;
-        // $searchModel->master_animal_id = 13;
-        // $searchModel->master_vehicle_id = 5;
         $searchModel->id = $model->slug; // for show Selected Park name in search
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -166,43 +117,7 @@ class DefaultController extends FrontendBaseController
         $operatordataProvider = $operatorsearchModel->search($this->request->queryParams, $model->id);
         $operators = $operatordataProvider->getModels();
 
-        // $first_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_ASC])->one();
-        // $last_month = SafariParkMonth::find()->where(['safari_park_id' => $model->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->limit(1)->orderBy(['month_id' => SORT_DESC])->one();
         $shared_safaries = ShareSafari::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'park_id' => $model->id])->limit(4)->all();
-
-
-
-
-        // $request = Yii::$app->request;
-        // $ip_address = $request->getRemoteIP();
-
-        // $suggestionmodel = new SafariSuggestionsForm();
-        // $suggestionmodel->name = Yii::$app->user->identity->name;
-        // $suggestionmodel->email = Yii::$app->user->identity->email;
-        // $suggestionmodel->status = StatusInterface::STATUS_ACTIVE;
-        // $suggestionmodel->park_id = isset($model) ? $model->id : '';
-        // $suggestionmodel->ip_address = $ip_address;
-        // $suggestionmodel->action_url = '/park/' . $slug . '';
-        // $suggestionmodel->action_validate_url = '/park/default/validate';
-
-        // if ($this->request->isPost) {
-        //     if ($suggestionmodel->load($this->request->post())) {
-        //         if ($suggestionmodel->validate()) {
-        //             $suggestionmodel->initializeForm();
-        //             if ($suggestionmodel->safari_suggestion_model->save(false)) {
-        //                 \Yii::$app->session->setFlash('success', 'Data Submitted Successfully');
-        //                 return $this->redirect(['/park/' . $slug . '']);
-        //             }
-        //         } else {
-        //             print_r($suggestionmodel->errors);
-        //             exit;
-        //         }
-        //     }
-        // } else {
-        //     $suggestionmodel->safari_suggestion_model->loadDefaultValues();
-        // }
-
-
 
         $ratingsearchModel = new SafariParkRatingSearch();
         $ratingsearchModel->safari_park_id = $model->id;
@@ -214,12 +129,8 @@ class DefaultController extends FrontendBaseController
             'view',
             [
                 'model' => $model,
-                // 'first_month' => $first_month,
-                // 'last_month' => $last_month,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
-                // 'suggestionmodel' => $suggestionmodel,
-
                 'operatorsearchModel' => $operatorsearchModel,
                 'operatordataProvider' => $operatordataProvider,
                 'operators' => $operators,
@@ -237,7 +148,6 @@ class DefaultController extends FrontendBaseController
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
             return $this->redirect(['/park']);
-            // throw new NotFoundHttpException('The requested page does not exist.');
         }
 
         $my_review = SafariParkRating::find()->where(['safari_park_id' => $model->id, 'user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->one();
@@ -267,9 +177,7 @@ class DefaultController extends FrontendBaseController
         $model = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if (!$model) {
             return $this->redirect(['/park']);
-            // throw new NotFoundHttpException('The requested page does not exist.');
         }
-
 
         $suggestions = SafariSuggestions::find()->where(['park_id' => $model->id, 'status' => 1])->all();
 
@@ -544,7 +452,6 @@ class DefaultController extends FrontendBaseController
         $query->joinwith(['packagepark' => function ($query) use ($park_id) {
             $query->andWhere(['park_id' => $park_id, 'package_safari_park.status' => 1]);
         }]);
-
 
         return $this->render(
             '_package',

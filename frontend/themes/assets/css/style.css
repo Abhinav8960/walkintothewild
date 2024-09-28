@@ -299,8 +299,8 @@ a {
 }
 
 #ui_notifIt p {
-  font-size: 20px !important;
-  font-weight: 500 !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
 }
 
 .banner_searchBox {
@@ -6999,4 +6999,11 @@ select.custom_sort_by_input option.selected {
 
 .joinsafari .disabled{
   opacity: .7;
+  background: gray;
+}
+
+.btns-safaries .disabled{
+  opacity: .7;
+  background: gray;
+
 }

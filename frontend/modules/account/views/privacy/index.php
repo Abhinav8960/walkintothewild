@@ -11,7 +11,7 @@ use yii\helpers\Url;
     <div class="row margin_bottomfooter">
         <div class="col-12 d-flex align-items-center justify-content-between mb-4">
             <h6 class="fs-3 fw-bold ">Account Settings</h6>
-            <a class="btn btn-info bg-blues py-2 rounded-5" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity->user_handle]) ?>">View Profile</a>
+            <a class="btn btn-info bg-blues py-2 rounded-5" href="<?= Url::toRoute(['/profile/default/index', 'user_handle' => Yii::$app->user->identity ? Yii::$app->user->identity->user_handle : '']) ?>">View Profile</a>
         </div>
         <div class=" col-xxl-3 col-lg-4 mb-4">
             <?= $this->render('@frontend/modules/account/views/default/_sidebar', ['active' => 'privacy']); ?>
@@ -27,7 +27,7 @@ use yii\helpers\Url;
                     ]); ?>
                     <div class="row align-items-center ">
                         <div class="col-md-3">
-                          <label for="" class="Modal_label">  Gender</label>
+                            <label for="" class="Modal_label"> Gender</label>
                         </div>
                         <div class="col-md-9">
                             <?= $form->field($model, 'gender_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
@@ -35,14 +35,14 @@ use yii\helpers\Url;
                     </div>
                     <div class="row ">
                         <div class="col-md-3 ">
-                        <label for="" class="Modal_label">  Email</label>
+                            <label for="" class="Modal_label"> Email</label>
                         </div>
                         <div class="col-md-9 ">
                             <?= $form->field($model, 'email_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
                         </div>
                     </div>
 
-                    <div class="row ">
+                    <!-- <div class="row ">
                         <div class="col-md-3 ">
                         <label for="" class="Modal_label">  Photo</label>
                         </div>
@@ -58,7 +58,7 @@ use yii\helpers\Url;
                         <div class="col-md-9 ">
                             <?= $form->field($model, 'contribution_privacy')->dropDownList(GeneralModel::privacyoptions())->label(false) ?>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>

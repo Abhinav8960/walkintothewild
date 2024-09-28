@@ -12,7 +12,6 @@ use frontend\models\profile\UserForm;
 use common\models\operator\SafariOperator;
 use frontend\models\registration\SafariOperatorRequestPark;
 use frontend\models\registration\form\SafaritourRegistrationForm;
-use frontend\models\registration\SafariOperatorRequest;
 use frontend\models\registration\SafariOperatorRequestActivities;
 
 /**
@@ -20,6 +19,12 @@ use frontend\models\registration\SafariOperatorRequestActivities;
  */
 class DefaultController extends \frontend\controllers\FrontendBaseController
 {
+
+    /**
+     * Actions ids for Save Page Views
+     */
+    public $action_ids = ['index', 'profile-photo', 'cover-photo', 'registration-operator'];
+
     /**
      * Renders the index view for the module
      * @return string
@@ -28,7 +33,7 @@ class DefaultController extends \frontend\controllers\FrontendBaseController
     {
         $user_model = Yii::$app->user->identity;
 
-        if ($user_model->operator) {
+        if ($user_model && $user_model->operator) {
             return $this->redirect(['/manage']);
         }
         $model = new UserForm($user_model);

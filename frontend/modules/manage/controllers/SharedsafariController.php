@@ -42,23 +42,11 @@ class SharedsafariController extends FrontendBaseController
     public function actionIndex()
     {
         $safari_operator = $this->module->operatormodel();
-        //$fixed_safari = ShareSafari::find()->where(['host_user_id' => $safari_operator->id, 'status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'type' => 2]);
 
         $searchModel = new ShareSafariSearch();
         $dataProvider = $searchModel->managesearch($this->request->queryParams, [
             'safari_operator_id' => $safari_operator->id
         ]);
-        // $dataProvider->query->andWhere(['share_safari.host_user_id' => $safari_operator->id, 'share_safari.status' => [ShareSafari::STATUS_APPROVED, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT], 'share_safari.type' => 2]);
-        // $models = $dataProvider->getModels();
-        // $fixed_safari_provider = new ActiveDataProvider([
-        //     'query' => $fixed_safari,
-        //     'pagination' => [
-        //         'pageSize' => 10,
-        //     ],
-        //     'sort' => [
-        //         'defaultOrder' => ['updated_at' => SORT_DESC]
-        //     ]
-        // ]);
         return $this->render(
             'index',
             [
@@ -146,7 +134,7 @@ class SharedsafariController extends FrontendBaseController
     public function actionUpdateFixedDeparture($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
         $model->action_url = '/manage/sharedsafari/update-fixed-departure?slug=' . $slug . '';
         $model->action_validate_url = '/manage/sharedsafari/update-departure-validate?id=' . $shared_safari_departure_model->id . '';
@@ -201,7 +189,7 @@ class SharedsafariController extends FrontendBaseController
     public function actionItinerary($slug, $day = 1)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $share_safari_id = $shared_safari_departure_model->id;
         $share_safari_day_model = $this->findModelDay($share_safari_id, $day);
 
@@ -245,7 +233,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
         $model->scenario = 'inclusion';
 
@@ -314,7 +302,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model =  $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
         $model->scenario = 'getting_there';
 
@@ -344,7 +332,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new CreateDepartureForm($shared_safari_departure_model);
         $model->scenario = 'policy_info';
 
@@ -374,7 +362,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariFaqSearch();
         $searchModel->share_safari_id = $shared_safari_departure_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -397,7 +385,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new ShareSafariFaqForm();
         $model->share_safari_id = $shared_safari_departure_model->id;
         $model->status = ShareSafariFaq::STATUS_ACTIVE;
@@ -444,7 +432,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $model = new ShareSafariFaqSelectForm();
         $model->share_safari_id = $shared_safari_departure_model->id;
         $model->status = ShareSafariFaq::STATUS_ACTIVE;
@@ -476,7 +464,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         $searchModel = new ShareSafariGallerySearch();
         $searchModel->share_safari_id = $shared_safari_departure_model->id;
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -494,7 +482,7 @@ class SharedsafariController extends FrontendBaseController
     {
         $safari_operator = $this->module->operatormodel();
 
-        $shared_safari_departure_model = $this->findModel($slug);
+        $shared_safari_departure_model = $this->findModel($slug, $safari_operator->id);
         if ($id) {
             $share_safari_gallery_model = $this->findModelgallery($id);
             $model = new ShareSafariGalleryForm($share_safari_gallery_model);
@@ -562,7 +550,7 @@ class SharedsafariController extends FrontendBaseController
     public function actionComment($slug)
     {
         $safari_operator = $this->module->operatormodel();
-        $shared_safari_model = $this->findModel($slug);
+        $shared_safari_model = $this->findModel($slug, $safari_operator->id);
 
 
 
@@ -625,9 +613,9 @@ class SharedsafariController extends FrontendBaseController
         }
     }
 
-    protected function findModel($slug)
+    protected function findModel($slug, $host_user_id)
     {
-        if (($model = ShareSafari::findOne(['slug' => $slug, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
+        if (($model = ShareSafari::findOne(['slug' => $slug, 'host_user_id' => $host_user_id, 'status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_SUSPEND, ShareSafari::STATUS_FULL_SEAT]])) !== null) {
             return $model;
         }
         throw new NotFoundHttpException('The requested page does not exist.');

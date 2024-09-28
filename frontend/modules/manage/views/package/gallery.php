@@ -21,7 +21,7 @@ $this->params['title'] = $this->title;
                     <i class="fa fa-eye"></i> View
                 </a>
                 &nbsp;
-                <a  href="javascript:void(0)" class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery?package_id=' . $package_model->id]) ?>">
+                <a href="javascript:void(0)" class="packageBtn btn_newsafari organizeBtn newbg text-center rounded-2" value="<?= \yii\helpers\Url::toRoute(['/manage/package/create-gallery', 'slug' => $package_model->package_slug]) ?>">
                     + Add Gallery
                 </a>
             </div>
@@ -74,8 +74,8 @@ $this->params['title'] = $this->title;
                                                             'contentOptions' => ['style' => 'width: 15%;'],
                                                             'template' => '{update}',
                                                             'buttons' => [
-                                                                'update' => function ($url, $model) {
-                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?package_id=$model->package_id&id=$model->id", 'class' => 'packageBtn btn btn-info join_btn py-2', 'title' => 'Edit Gallery Image']);
+                                                                'update' => function ($url, $model) use ($package_model) {
+                                                                    return Html::Button('+ Edit Gallery Image', ['value' => "/manage/package/create-gallery?slug=$package_model->package_slug&id=$model->id", 'class' => 'packageBtn btn btn-info join_btn py-2', 'title' => 'Edit Gallery Image']);
                                                                 },
                                                             ]
                                                         ],

@@ -12,6 +12,11 @@ use common\models\notification\FrontendNotificationSearch;
 class NotificationController extends \frontend\controllers\FrontendBaseController
 {
     /**
+     * Actions ids for Save Page Views
+     */
+    public $action_ids = ['index', 'view'];
+
+    /**
      * Renders the index view for the module
      * @return string
      */

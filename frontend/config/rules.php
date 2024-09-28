@@ -88,6 +88,7 @@ return [
     '/operator/<slug>/articleall' => '/operator/default/articleall',
     '/operator/<slug>/contact' => '/operator/default/contact', //operator view url
     '/operator/<slug>/follower' => '/operator/default/follower',
+    '/operator/<slug>/following' => '/operator/default/following',
     '/operator/<slug>/report-operator' => '/operator/default/report-operator',
     '/operator/<slug>/sharedsafari' => '/operator/default/sharedsafari', //operator view url
     '/operator/<slug>/park' => '/operator/default/view', //operator view url
@@ -164,17 +165,17 @@ return [
     '/profile/search/unblocked/<id>' => '/profile/search/unblocked',
 
 
-    '/manage/package/update/<package_id>' => '/manage/package/update',
+    '/manage/package/update/<slug>' => '/manage/package/update',
     '/manage/package/view/<package_id>' => '/manage/package/view',
-    '/manage/package/itinerary/<package_id>/<day>' => '/manage/package/itinerary', //package profile itenary url          
-    '/manage/package/inclusion/<package_id>' => '/manage/package/inclusion', //package profile inclusion url          
-    '/manage/package/getting-there/<package_id>' => '/manage/package/getting-there', //package profile getting-there url          
-    '/manage/package/policy-info/<package_id>' => '/manage/package/policy-info', //package profile policy-info url          
-    '/manage/package/faq/<package_id>' => '/manage/package/faq', //package profile faq url          
-    '/manage/package/create-faq/<package_id>' => '/manage/package/create-faq', //package profile create faq url          
-    '/manage/package/select-faq/<package_id>' => '/manage/package/select-faq',
-    '/manage/package/gallery/<package_id>' => '/manage/package/gallery', //package profile faq url          
-    '/manage/package/create-gallery/<package_id>' => '/manage/package/create-gallery', //package profile create faq url          
+    '/manage/package/itinerary/<slug>/<day>' => '/manage/package/itinerary', //package profile itenary url          
+    '/manage/package/inclusion/<slug>' => '/manage/package/inclusion', //package profile inclusion url          
+    '/manage/package/getting-there/<slug>' => '/manage/package/getting-there', //package profile getting-there url          
+    '/manage/package/policy-info/<slug>' => '/manage/package/policy-info', //package profile policy-info url          
+    '/manage/package/faq/<slug>' => '/manage/package/faq', //package profile faq url          
+    '/manage/package/create-faq/<slug>' => '/manage/package/create-faq', //package profile create faq url          
+    '/manage/package/select-faq/<slug>' => '/manage/package/select-faq',
+    '/manage/package/gallery/<slug>' => '/manage/package/gallery', //package profile faq url          
+    '/manage/package/create-gallery/<slug>' => '/manage/package/create-gallery', //package profile create faq url          
 
 
     '/manage/sharedsafari/update-fixed-departure/<slug>' => '/manage/sharedsafari/update-fixed-departure',

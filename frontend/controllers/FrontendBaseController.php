@@ -93,9 +93,9 @@ class FrontendBaseController extends Controller
         }
         //end code to each request trace by sonu shokeen
 
-        if (in_array($action->id, $this->action_ids)) {
-            $this->savePageViews();
-        }
+        // if (in_array($action->id, $this->action_ids)) {
+        //     $this->savePageViews();
+        // }
 
         $event = new \yii\base\ActionEvent($action);
         $event->result = $result;

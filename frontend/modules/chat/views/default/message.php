@@ -109,8 +109,23 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
 
                                                     <a href="<?= Url::toRoute(['/chat/message/' . $user->user_handle . "/" . base64_encode($active_chat->id)]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
 
-                                                        <div class="chat-sidebar-user-card  click_mobile <?= $active_chat->id == $chat_id ? 'selected_chat' : '' ?>">
-                                                            <div class="d-flex chat-user_message">
+
+                                                    <div class="chat-sidebar-user-card  click_mobile <?= $active_chat->id == $chat_id ? 'selected_chat' : '' ?>">
+                                                        <div class="d-flex chat-user_message">
+                                                            <?php if ($active_chat->recipient_user_id == $user->id) { ?>
+                                                                <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
+                                                                    <?php
+                                                                    if (isset($user->operator)) { ?>
+                                                                        <img src="<?= $user->operator->logo ? $user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                    <?php } else { ?>
+                                                                        <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                    <?php }  ?>
+                                                                </h6>
+                                                            <?php } else { ?>
+                                                                <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                            <?php } ?>
+
+                                                            <div class="chat-user_name">
                                                                 <?php if ($active_chat->recipient_user_id == $user->id) { ?>
                                                                     <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
                                                                         <?php

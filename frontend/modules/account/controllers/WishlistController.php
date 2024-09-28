@@ -11,16 +11,20 @@ use Yii;
 class WishlistController extends \frontend\controllers\FrontendBaseController
 {
     /**
+     * Actions ids for Save Page Views
+     */
+    public $action_ids = ['index', 'share-safari'];
+
+    /**
      * Renders the index view for the module
      * @return string
      */
     public function actionIndex()
     {
-        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
         return $this->render(
             'index',
             [
-                'wishlist_items' => $wishlist_items,
+                'wishlist_items' => UserWishlist::find()->where(['item_type_id' => UserWishlist::SAFARI_PACKAGE, 'status' => 1, 'user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->all(),
             ]
         );
     }
@@ -31,11 +35,10 @@ class WishlistController extends \frontend\controllers\FrontendBaseController
      */
     public function actionShareSafari()
     {
-        $wishlist_items = UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => Yii::$app->user->identity->id])->all();
         return $this->render(
             'shared_safari',
             [
-                'wishlist_items' => $wishlist_items,
+                'wishlist_items' => UserWishlist::find()->where(['item_type_id' => UserWishlist::SHARED_SAFARI, 'status' => 1, 'user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : null])->all(),
             ]
         );
     }

@@ -51,7 +51,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                 <div class="safari text-center">
                     <div class="joinsafari package">
                         <h6 class=" titlePrice">₹ <?= number_format($model->total_price) ?> </h6>
-                        <a href="<?= Url::toRoute(['update', 'package_id' => $model->id]) ?>" data-pjax="0"><i class="fa fa-edit"></i> Update</a>
+                        <a href="<?= Url::toRoute(['update', 'slug' => $model->package_slug]) ?>" data-pjax="0"><i class="fa fa-edit"></i> Update</a>
                     </div>
                 </div>
             </div>

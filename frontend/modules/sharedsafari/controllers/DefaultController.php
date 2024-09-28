@@ -4,34 +4,27 @@ namespace frontend\modules\sharedsafari\controllers;
 
 use Yii;
 use yii\helpers\Url;
-use yii\helpers\Json;
-use common\models\MailLog;
+use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use frontend\models\ReplyForm;
+use common\models\MailLog;
 use common\models\UserWishlist;
 use common\models\park\SafariPark;
-use yii\web\NotFoundHttpException;
-use common\interfaces\StatusInterface;
-use frontend\models\ShareSafariSearch;
 use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafari;
-use frontend\models\form\SharedSafariForm;
 use common\models\master\month\MasterMonth;
-use frontend\models\ShareSafariCommentForm;
 use common\Helper\FrontendNotificationHelper;
-use common\models\GeneralModel;
-use frontend\models\form\CreateDepartureForm;
-use frontend\controllers\FrontendBaseController;
 use common\models\sharesafari\ShareSafariComment;
-use common\models\sharesafari\ShareSafariRequest;
-use frontend\models\form\SharedSafariRequestForm;
-use frontend\models\ShareSafariCommentReportForm;
-use common\models\sharesafari\ShareSafariParklist;
+use common\models\GeneralModel;
 use common\models\sharesafari\ShareSafariFaqSearch;
 use common\models\sharesafari\ShareSafariIntrested;
-use common\models\sharesafari\ShareSafariCommentReport;
-use frontend\models\form\ShareSafariRequestContactForm;
 use common\models\sharesafari\ShareSafariRequestContact;
+use frontend\models\form\SharedSafariForm;
+use frontend\models\ReplyForm;
+use frontend\models\ShareSafariCommentForm;
+use frontend\models\ShareSafariSearch;
+use frontend\controllers\FrontendBaseController;
+use frontend\models\ShareSafariCommentReportForm;
+use frontend\models\form\ShareSafariRequestContactForm;
 
 /**
  * DefaultController.
@@ -78,11 +71,14 @@ class DefaultController extends FrontendBaseController
 
     public function actionOrganizeSafari()
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $model = new SharedSafariForm();
         $model->host_user_id = Yii::$app->user->identity->id;
         $model->status = ShareSafari::STATUS_ACTIVE;
-        $model->type = 1;
-        $model->host_type = 1; //Yii::$app->user->identity->account_type;
+        $model->type = ShareSafari::TYPE_SAFARI;
+        $model->host_type = 1;
         if ($login_user = Yii::$app->user->identity) {
             if ($login_user->x_url <> '') {
                 $model->website_url = $login_user->x_url;
@@ -95,8 +91,8 @@ class DefaultController extends FrontendBaseController
             }
         }
 
-        $model->action_url = Url::toRoute(['/sharedsafari/default/organize-safari']); //'/sharedsafari/default/organize-safari';
-        $model->action_validate_url = Url::toRoute(['/sharedsafari/default/validate']); //'/sharedsafari/default/validate';
+        $model->action_url = Url::toRoute(['/sharedsafari/default/organize-safari']);
+        $model->action_validate_url = Url::toRoute(['/sharedsafari/default/validate']);
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->shared_safari_image = \yii\web\UploadedFile::getInstance($model, 'shared_safari_image');
@@ -104,14 +100,6 @@ class DefaultController extends FrontendBaseController
                     $model->initializeForm();
                     if ($model->shared_safari_model->save()) {
                         $model->UploadFiles($model->shared_safari_model->id);
-                        // if ($model->shared_safari_model->user) {
-                        //     $user = $model->shared_safari_model->user;
-                        //     $to_mail = $user->email;
-                        //     $subject = 'New Safari Request';
-                        //     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SAFARI_OPERATOR_FREE_QUOTE;
-                        //     $req = ['username' => $user->name];
-                        //     MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-                        // }
                         if ($model->shared_safari_model->user) {
                             $user = $model->shared_safari_model->user;
                             $username = $user->name;
@@ -162,7 +150,13 @@ class DefaultController extends FrontendBaseController
      */
     public function actionUpdate($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $shared_safari_model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+        if ($shared_safari_model->host_user_id != Yii::$app->user->identity->id) {
+            return $this->redirect(['index']);
+        }
         $model = new SharedSafariForm($shared_safari_model);
         $model->status = ShareSafari::STATUS_ACTIVE;
         $model->action_url = '/sharedsafari/default/update?slug=' . $slug . '';
@@ -219,14 +213,14 @@ class DefaultController extends FrontendBaseController
     public function actionView($slug)
     {
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
-
+        if (!$share_safari) {
+            return $this->redirect(['index']);
+        }
         $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $model = new ShareSafariCommentForm();
         $model->action_validate_url = '/sharedsafari/default/validate-comment';
 
-
-        // $replymodel = new ReplyForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($share_safari)) {
             Yii::$app->session->setFlash('success', 'Comment successfully submitted');
@@ -234,21 +228,10 @@ class DefaultController extends FrontendBaseController
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
         }
 
-
-        // if ($replymodel->load(Yii::$app->request->post()) && $replymodel->validate() && $replymodel->reply($share_safari)) {
-        //     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
-        //     return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
-        // }
-
-        if (!$share_safari) {
-            return $this->redirect(['index']);
-        }
-
         if ($share_safari->type == 1) {
             return $this->render('view', [
                 'share_safari' => $share_safari,
                 'model' => $model,
-                // 'replymodel' => $replymodel,
                 'login_safarioperator' => $login_safarioperator,
             ]);
         } else {
@@ -260,7 +243,6 @@ class DefaultController extends FrontendBaseController
             return $this->render('fixed_view', [
                 'share_safari' => $share_safari,
                 'model' => $model,
-                // 'replymodel' => $replymodel,
                 'faqs' => $faqs,
                 'login_safarioperator' => $login_safarioperator,
             ]);
@@ -269,13 +251,13 @@ class DefaultController extends FrontendBaseController
 
     public function actionReply($slug, $parent_id)
     {
-
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
-        // $login_safarioperator = SafariOperator::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : 0])->limit(1)->one();
 
         $replymodel = new ReplyForm();
         $replymodel->parent_id = $parent_id;
-        // $replymodel->action_url = '/package/default/view';
         $replymodel->action_validate_url = '/sharedsafari/default/validate-reply';
 
 
@@ -297,6 +279,9 @@ class DefaultController extends FrontendBaseController
      */
     public function actionJoin($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
@@ -353,6 +338,9 @@ class DefaultController extends FrontendBaseController
      */
     public function actionUnjoin($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $slug])->limit(1)->one();
         if ($share_safari) {
             if (Yii::$app->user->identity) {
@@ -391,6 +379,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionFlag($slug, $park_id, $share_safari_comment_id)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->one();
         if (!$share_safari) {
             return $this->redirect(['/sharedsafari']);
@@ -413,7 +404,7 @@ class DefaultController extends FrontendBaseController
                         $comments->flaged = 1;
                         $comments->save(false);
 
-                        /*Sent Email*/
+                        /*Send Email*/
                         $to_mail = Yii::$app->params['adminEmail'];
                         $subject = 'Flag Raised | Shared Safari : ' . substr($share_safari->share_safari_title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
@@ -444,13 +435,9 @@ class DefaultController extends FrontendBaseController
         }
     }
 
-    public function actionValidateflag($id = null)
+    public function actionValidateflag()
     {
         $model = new ShareSafariCommentReportForm();
-        if ($id != null) {
-            $flag_model = $this->findModel($id);
-            $model = new ShareSafariCommentReportForm($flag_model);
-        }
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             return \yii\widgets\ActiveForm::validate($model);
@@ -461,120 +448,123 @@ class DefaultController extends FrontendBaseController
     /**
      * Follow Operator
      */
-    public function actionRequestContact($slug, $park_id, $share_safari_comment_id)
-    {
-        $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+    // public function actionRequestContact($slug, $park_id, $share_safari_comment_id)
+    // {
+    //     if (!Yii::$app->user->identity) {
+    //         return $this->redirect(['index']);
+    //     }
+    //     $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
 
-        $share_safari_comment = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->one();
-        if ($share_safari && $share_safari_comment->user) {
-            $request_contact = ShareSafariRequestContact::find()->where(['user_id' => $share_safari_comment->user->id, 'share_safari_id' => $share_safari->id])->one();
-            if (!$request_contact) {
-                $request_contact = new ShareSafariRequestContact();
-            }
-            $agent = new \Jenssegers\Agent\Agent();
-            $agent->setUserAgent(Yii::$app->request->userAgent);
-            $request_contact->user_ip_address = Yii::$app->getRequest()->getUserIp();
-            $request_contact->user_agent =  Yii::$app->request->userAgent;
-            $request_contact->user_device  = $agent->device();
-            $request_contact->user_platform = $agent->platform();
-            $request_contact->user_browser = $agent->browser();
-            $request_contact->share_safari_id = $share_safari->id;
-            $request_contact->share_safari_comment_id = $share_safari_comment_id;
-            $request_contact->park_id = $park_id;
-            $request_contact->user_id = $share_safari_comment->user_id;
-            $request_contact->host_user_id = Yii::$app->user->identity->id;
-            $request_contact->email = $share_safari_comment->user->email;
-            $request_contact->name = $share_safari_comment->user->name;
-            $request_contact->request_token = Yii::$app->security->generateRandomString() . '_' . time();
-            $request_contact->is_filled = 0;
-            $request_contact->status = 1;
-            if ($request_contact->save(false)) {
-                Yii::$app->session->setFlash('success', 'You have requested contact to ' . $share_safari_comment->user->name);
+    //     $share_safari_comment = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->one();
+    //     if ($share_safari && $share_safari_comment->user) {
+    //         $request_contact = ShareSafariRequestContact::find()->where(['user_id' => $share_safari_comment->user->id, 'share_safari_id' => $share_safari->id])->one();
+    //         if (!$request_contact) {
+    //             $request_contact = new ShareSafariRequestContact();
+    //         }
+    //         $agent = new \Jenssegers\Agent\Agent();
+    //         $agent->setUserAgent(Yii::$app->request->userAgent);
+    //         $request_contact->user_ip_address = Yii::$app->getRequest()->getUserIp();
+    //         $request_contact->user_agent =  Yii::$app->request->userAgent;
+    //         $request_contact->user_device  = $agent->device();
+    //         $request_contact->user_platform = $agent->platform();
+    //         $request_contact->user_browser = $agent->browser();
+    //         $request_contact->share_safari_id = $share_safari->id;
+    //         $request_contact->share_safari_comment_id = $share_safari_comment_id;
+    //         $request_contact->park_id = $park_id;
+    //         $request_contact->user_id = $share_safari_comment->user_id;
+    //         $request_contact->host_user_id = Yii::$app->user->identity->id;
+    //         $request_contact->email = $share_safari_comment->user->email;
+    //         $request_contact->name = $share_safari_comment->user->name;
+    //         $request_contact->request_token = Yii::$app->security->generateRandomString() . '_' . time();
+    //         $request_contact->is_filled = 0;
+    //         $request_contact->status = 1;
+    //         if ($request_contact->save(false)) {
+    //             Yii::$app->session->setFlash('success', 'You have requested contact to ' . $share_safari_comment->user->name);
 
-                $to_mail = $request_contact->email;
-                $subject = 'Request Contact';
-                $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SHARE_SAFARI_REQUEST_CONTACT;
-                $req = ['username' => $request_contact->name, 'token' => $request_contact->request_token];
+    //             $to_mail = $request_contact->email;
+    //             $subject = 'Request Contact';
+    //             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_SHARE_SAFARI_REQUEST_CONTACT;
+    //             $req = ['username' => $request_contact->name, 'token' => $request_contact->request_token];
 
-                MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-            } else {
-                Yii::$app->session->setFlash('success', 'You can not request this user currently!');
-            }
+    //             MailLog::createMailLog($to_mail, $subject, $template, $req, []);
+    //         } else {
+    //             Yii::$app->session->setFlash('success', 'You can not request this user currently!');
+    //         }
 
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
-        } else {
-            return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
-        }
-    }
-
-
-    public function actionUserdetail($token)
-    {
-        if (Yii::$app->user->identity) {
-            $requent_contact = ShareSafariRequestContact::find()->where(['request_token' => $token])->limit(1)->one();
-            $share_safari = ShareSafari::find()->where(['id' => $requent_contact->share_safari_id])->limit(1)->one();
-
-            $model = new ShareSafariRequestContactForm($requent_contact);
-            $model->share_safari_id = $requent_contact->share_safari_id;
-            $model->park_id = $requent_contact->park_id;
-            $model->is_filled = 1;
-            $model->share_safari_comment_id = $requent_contact->share_safari_comment_id;
-
-            $model->action_url = '/sharedsafari/default/userdetail?token=' . $token . '';
-            $model->action_validate_url = '/sharedsafari/default/validateuserdetail?id=' . $requent_contact->id . '';
-            if ($this->request->isPost) {
-                if ($model->load($this->request->post())) {
-                    if ($model->validate()) {
-                        $model->initializeForm();
-                        if ($model->shared_safari_request_contact_model->save(false)) {
-                            Yii::$app->session->setFlash('success', 'Details updated successfully!');
-                            return $this->redirect([
-                                '/sharedsafari/default/view',
-                                'slug' => $share_safari->slug,
-                                'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
-                            ]);
-                        }
-                    }
-                }
-            } else {
-                $model->shared_safari_request_contact_model->loadDefaultValues();
-            }
-        } else {
-            return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/userdetail', 'token' => $token])]);
-        }
-
-        return $this->render('userdetail_form', [
-            'token' => $token,
-            'model' => $model
-        ]);
-    }
+    //         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
+    //     } else {
+    //         return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/index']));
+    //     }
+    // }
 
 
-    public function actionValidateuserdetail($id = null)
-    {
-        $model = new ShareSafariCommentReportForm();
-        if ($id != null) {
-            $shared_safari_request_contact_model = $this->findModel($id);
-            $model = new ShareSafariCommentReportForm($shared_safari_request_contact_model);
-        }
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-    }
+    // public function actionUserdetail($token)
+    // {
+    //     if (Yii::$app->user->identity) {
+    //         $requent_contact = ShareSafariRequestContact::find()->where(['request_token' => $token])->limit(1)->one();
+    //         $share_safari = ShareSafari::find()->where(['id' => $requent_contact->share_safari_id])->limit(1)->one();
+
+    //         $model = new ShareSafariRequestContactForm($requent_contact);
+    //         $model->share_safari_id = $requent_contact->share_safari_id;
+    //         $model->park_id = $requent_contact->park_id;
+    //         $model->is_filled = 1;
+    //         $model->share_safari_comment_id = $requent_contact->share_safari_comment_id;
+
+    //         $model->action_url = '/sharedsafari/default/userdetail?token=' . $token . '';
+    //         $model->action_validate_url = '/sharedsafari/default/validateuserdetail?id=' . $requent_contact->id . '';
+    //         if ($this->request->isPost) {
+    //             if ($model->load($this->request->post())) {
+    //                 if ($model->validate()) {
+    //                     $model->initializeForm();
+    //                     if ($model->shared_safari_request_contact_model->save(false)) {
+    //                         Yii::$app->session->setFlash('success', 'Details updated successfully!');
+    //                         return $this->redirect([
+    //                             '/sharedsafari/default/view',
+    //                             'slug' => $share_safari->slug,
+    //                             'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+    //                         ]);
+    //                     }
+    //                 }
+    //             }
+    //         } else {
+    //             $model->shared_safari_request_contact_model->loadDefaultValues();
+    //         }
+    //     } else {
+    //         return $this->redirect(['/site/auth?authclient=google&referrer=' . Url::toRoute(['/sharedsafari/default/userdetail', 'token' => $token])]);
+    //     }
+
+    //     return $this->render('userdetail_form', [
+    //         'token' => $token,
+    //         'model' => $model
+    //     ]);
+    // }
 
 
-    public function actionHistory($share_safari_id)
-    {
-        $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->orderBy([
-            'id' => SORT_DESC
-        ])->all();
-        if (Yii::$app->request->isAjax) {
-            return $this->renderAjax('history_view', [
-                'history_model' => $history_model
-            ]);
-        }
-    }
+    // public function actionValidateuserdetail($id = null)
+    // {
+    //     $model = new ShareSafariCommentReportForm();
+    //     if ($id != null) {
+    //         $shared_safari_request_contact_model = $this->findModel($id);
+    //         $model = new ShareSafariCommentReportForm($shared_safari_request_contact_model);
+    //     }
+    //     if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    //         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    //         return \yii\widgets\ActiveForm::validate($model);
+    //     }
+    // }
+
+
+    // public function actionHistory($share_safari_id)
+    // {
+    //     $history_model = ShareSafariRequest::find()->where(['share_safari_id' => $share_safari_id, 'status' => 1])->orderBy([
+    //         'id' => SORT_DESC
+    //     ])->all();
+    //     if (Yii::$app->request->isAjax) {
+    //         return $this->renderAjax('history_view', [
+    //             'history_model' => $history_model
+    //         ]);
+    //     }
+    // }
 
 
     protected function findModel($slug)
@@ -631,16 +621,16 @@ class DefaultController extends FrontendBaseController
         }
     }
 
-    public function actionCompleted($slug)
-    {
-        $model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
-        if ($model) {
-            $model->status = 2;
-            $model->save(false);
-            Yii::$app->session->setFlash('success', 'Thank You!!');
-            return $this->redirect(Yii::$app->request->referrer);
-        }
-    }
+    // public function actionCompleted($slug)
+    // {
+    //     $model = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
+    //     if ($model) {
+    //         $model->status = 2;
+    //         $model->save(false);
+    //         Yii::$app->session->setFlash('success', 'Thank You!!');
+    //         return $this->redirect(Yii::$app->request->referrer);
+    //     }
+    // }
 
 
 
@@ -650,6 +640,9 @@ class DefaultController extends FrontendBaseController
      */
     public function actionWishlist($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE, ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);
@@ -681,6 +674,9 @@ class DefaultController extends FrontendBaseController
 
     public function actionUnwishlist($slug)
     {
+        if (!Yii::$app->user->identity) {
+            return $this->redirect(['index']);
+        }
         $share_safari = ShareSafari::find()->where(['slug' => $slug])->limit(1)->one();
         if (empty($share_safari)) {
             return $this->redirect(['/sharedsafari']);

@@ -108,14 +108,14 @@ $this->params['title'] = $this->title; ?>
                                         if ($share_safari_intrested) { ?>
                                             <a class="join_btn leavesafrai text-center mt-sm-0 mt-2 d-block" href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST" data-pjax="0"> Leave Safari</a>
                                         <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST" data-pjax="0">Join Safari</a>
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block <?= (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '') ?>" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST" data-pjax="0">Join Safari</a>
                                         <?php }
                                     } else { ?>
-                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
-                                                                                                                                                        '/sharedsafari/default/view',
-                                                                                                                                                        'slug' => $share_safari->slug,
-                                                                                                                                                        'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
-                                                                                                                                                    ]) ?>" data-pjax="0"> Join Safari</a>
+                                        <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-block <?= (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '') ?>" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
+                                                                                                                                                                                                                                                    '/sharedsafari/default/view',
+                                                                                                                                                                                                                                                    'slug' => $share_safari->slug,
+                                                                                                                                                                                                                                                    'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''
+                                                                                                                                                                                                                                                ]) ?>" data-pjax="0"> Join Safari</a>
                                 <?php }
                                 } ?>
                             </div>
@@ -234,10 +234,10 @@ $this->params['title'] = $this->title; ?>
                                             if ($share_safari_intrested) { ?>
                                                 <a class="join_btn leavesafrai text-center mt-sm-0 mt-2 d-inline-block" href="<?= Url::toRoute(['/sharedsafari/default/unjoin', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST"> Leave Safari</a>
                                             <?php } else if ($share_safari->host_user_id != Yii::$app->user->identity->id) { ?>
-                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST">Join Safari</a>
+                                                <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block <?= (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '') ?>" href="<?= Url::toRoute(['/sharedsafari/default/join', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']) ?>" data-method="POST">Join Safari</a>
                                             <?php }
                                         } else { ?>
-                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
+                                            <a class="join_btn newbgjoin text-center mt-sm-0 mt-2 d-inline-block <?= (Yii::$app->user->identity && Yii::$app->user->identity->operator ? 'disabled' : '') ?>" href="/site/login?authclient=google&referrer=<?= Url::toRoute([
                                                                                                                                                                     '/sharedsafari/default/view',
                                                                                                                                                                     'slug' => $share_safari->slug,
                                                                                                                                                                     'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : ''

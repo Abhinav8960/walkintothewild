@@ -3,7 +3,6 @@
 namespace frontend\modules\account\controllers;
 
 use common\models\BlockedModel;
-use common\models\UserFollow;
 use Yii;
 
 /**
@@ -17,10 +16,8 @@ class BlockedMemberController extends \frontend\controllers\FrontendBaseControll
      */
     public function actionIndex()
     {
-        $user = Yii::$app->user->identity;
-        $model = BlockedModel::find()->where(['user_id' => $user->id, 'status' => 1])->all();
         return $this->render('index', [
-            'model' => $model,
+            'model' => BlockedModel::find()->where(['user_id' => Yii::$app->user->identity ? Yii::$app->user->identity->id : NULL, 'status' => 1])->all(),
         ]);
     }
 }
