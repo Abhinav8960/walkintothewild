@@ -41,7 +41,7 @@ class MasterMetaInfoUpdateController extends Controller
             '\common\models\meta\MetaAccommodation',
             '\common\models\meta\MetaAnimalType',
             '\common\models\meta\MetaBirdType',
-            '\common\models\meta\MetaLocation',
+            // '\common\models\meta\MetaLocation',
             '\common\models\meta\MetaOperatorCredibility',
             '\common\models\meta\MetaOtherWildlifeActivities',
             '\common\models\meta\MetaPackageRange',
