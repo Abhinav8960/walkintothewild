@@ -18,7 +18,8 @@ class RequestSanitization extends \yii\base\Component
 
         $excludedArrayForAuthentication = [
            
-            'social-login',            
+            'social-login',  
+            '/master-meta-info',          
             'master',
             'meta',
             'file',
