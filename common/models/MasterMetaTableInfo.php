@@ -51,7 +51,7 @@ class MasterMetaTableInfo extends \yii\db\ActiveRecord
     public static function upsert($name, $total_count, $last_updated_time)
     {
         $model = self::find()->where(['name' => $name])->one();
-        if (!empty($model)) {
+        if (empty($model)) {
             $model = new self();
         }
         $model->name = $name;

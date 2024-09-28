@@ -107,7 +107,9 @@ class MasterAirport extends \yii\db\ActiveRecord implements \common\interfaces\N
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        \common\models\MasterMetaTableInfo::upsert(__CLASS__, SELF::find()->count(), SELF::find()->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
+        parent::afterSave($insert, $changedAttributes);
+        $className = substr(get_class($this), strrpos(get_class($this), '\\') + 1);
+        \common\models\MasterMetaTableInfo::upsert($className, SELF::find()->count(), date('Y-m-d H:i:s', SELF::find()->max('updated_at')));
         return  true;
     }
 
