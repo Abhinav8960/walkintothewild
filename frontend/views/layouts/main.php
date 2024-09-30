@@ -99,7 +99,11 @@ if (!empty($is_sitemap_exist->description)) {
     <?php if (\Yii::$app->params['environment'] == "production") { ?>
         <!-- Google tag (gtag.js) -->
         <script defer data-domain="walkintothewild.in" src="https://plausible.io/js/script.outbound-links.pageview-props.tagged-events.js"></script>
-        <script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
+        <script>
+            window.plausible = window.plausible || function() {
+                (window.plausible.q = window.plausible.q || []).push(arguments)
+            }
+        </script>
         <meta name="google-adsense-account" content="ca-pub-6116324330184807">
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6116324330184807" crossorigin="anonymous"></script>
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-NPYSHF37NV"></script>
@@ -134,7 +138,7 @@ if (!empty($is_sitemap_exist->description)) {
 
 
     <div class="modal fade _standard-text" id="update-organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-md">
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h1>
