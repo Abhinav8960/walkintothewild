@@ -24,6 +24,7 @@ class RequestSanitization extends \yii\base\Component
             'meta',
             'file',
             'cms',
+            'sharesafari',
             
         ];
 

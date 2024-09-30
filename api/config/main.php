@@ -24,6 +24,9 @@ return [
         ],
         'cms' => [
             'class' => 'api\modules\cms\Module',
+        ],
+        'sharesafari' => [
+            'class' => 'api\modules\sharesafari\Module',
         ]
 
     ],
@@ -85,6 +88,7 @@ return [
                 'park/<slug>' => 'park/default/view',
 
                 'cms/<action>' => 'cms/default/<action>',
+                'sharesafari/<action>' => 'sharesafari/default/<action>',
 
 
 
