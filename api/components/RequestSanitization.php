@@ -23,6 +23,7 @@ class RequestSanitization extends \yii\base\Component
             'master',
             'meta',
             'file',
+            'cms',
             
         ];
 

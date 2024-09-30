@@ -22,6 +22,9 @@ return [
         'park' => [
             'class' => 'api\modules\park\Module',
         ],
+        'cms' => [
+            'class' => 'api\modules\cms\Module',
+        ]
 
     ],
     'components' => [
@@ -80,6 +83,10 @@ return [
 
                 'park' => 'park/default/index',
                 'park/<slug>' => 'park/default/view',
+
+                'cms/<action>' => 'cms/default/<action>',
+
+
 
 
             ],

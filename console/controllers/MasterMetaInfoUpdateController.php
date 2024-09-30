@@ -55,12 +55,12 @@ class MasterMetaInfoUpdateController extends Controller
 
         foreach ($master_arr as $ar) {
             $className = substr($ar, strrpos($ar, '\\') + 1);
-            \common\models\MasterMetaTableInfo::upsert($className, $ar::find()->where(['status'=>1])->count(), date('Y-m-d H:i:s', $ar::find()->max('updated_at')));
+            \common\models\MasterMetaTableInfo::upsert($className, $ar::find()->where(['status'=>1])->count(), $ar::find()->max('updated_at'));
         }
 
         foreach ($meta_arr as $ar) {
             $className = substr($ar, strrpos($ar, '\\') + 1);
-            \common\models\MasterMetaTableInfo::upsert($className, $ar::find()->count(), date('Y-m-d H:i:s', $ar::find()->max('updated_at')));
+            \common\models\MasterMetaTableInfo::upsert($className, $ar::find()->count(), $ar::find()->max('updated_at'));
         }
     }
 }
