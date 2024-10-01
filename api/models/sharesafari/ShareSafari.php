@@ -23,7 +23,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         $fields = parent::fields();
         $fields[] = 'types';
-        $fields[] = 'Sharedimagepath';
+        $fields[] = 'sharedimagepath';
         $fields[] = 'park';
         $fields[] = 'sharesafariIncludeds';
         $fields[] = 'sharesafaridays';
