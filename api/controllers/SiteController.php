@@ -168,7 +168,7 @@ class SiteController extends RestController
                         $user->avatar = $model->avatar;
                         $user->google_source_id = $model->source_id;
                         $user->status = User::STATUS_ACTIVE;
-                        $user->save(false);
+                        $user->save();
                         $auth = new Auth([
                             'user_id' => $user->id,
                             'source' => $model->source,
