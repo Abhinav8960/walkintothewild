@@ -5,7 +5,6 @@ namespace api\modules\sharesafari\controllers;
 use Yii;
 
 use api\behaviours\Verbcheck;
-use api\controllers\RestController;
 use api\models\sharesafari\ShareSafari;
 use api\models\sharesafari\ShareSafariIntrested;
 use api\models\sharesafari\ShareSafariSearch;
@@ -16,12 +15,16 @@ use common\models\operator\SafariOperator;
 use common\models\sharesafari\ShareSafariParklist;
 use frontend\models\form\CreateDepartureForm;
 use frontend\models\form\SharedSafariForm;
+use yii\filters\AccessControl;
+use api\behaviours\Apiauth;
 
 /**
  * Site controller
  */
-class DefaultController extends RestController
+class DefaultController extends SafariController
 {
+
+
     /**
      * @inheritdoc
      */
@@ -31,11 +34,34 @@ class DefaultController extends RestController
         $behaviors = parent::behaviors();
 
         return $behaviors + [
+            'apiauth' => [
+                'class' => Apiauth::className(),
+                'exclude' => ['social-login', 'master-meta-info'],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'actions' => ['organize-safari'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['join'],
+                        'allow' => $this->isSafariHost(),
+                        'roles' => ['@'],
+                    ],
+
+
+                ],
+            ],
             'verbs' => [
                 'class' => Verbcheck::className(),
                 'actions' => [
                     'index' => ['GET'],
                     'organize-safari' => ['POST'],
+                    'join' => ['POST'],
 
                 ],
             ],
@@ -100,9 +126,9 @@ class DefaultController extends RestController
         Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
-    public function actionJoin($id)
+    public function actionJoin($sharesafari_id)
     {
-        $share_safari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'id' => $id])->limit(1)->one();
+        $share_safari = $this->sharesafari;
         if ($share_safari) {
             if ($this->userinfo) {
                 if ($this->userinfo->operator) {
