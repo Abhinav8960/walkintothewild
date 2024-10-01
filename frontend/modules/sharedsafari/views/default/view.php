@@ -329,7 +329,7 @@ $this->params['title'] = $this->title; ?>
 <!-- Modal -->
 
 <div class="modal fade _standard-text" id="organize-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Update Safari</h1>
