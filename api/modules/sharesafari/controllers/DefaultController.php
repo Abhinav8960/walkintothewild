@@ -36,11 +36,11 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'master-meta-info'],
+                'exclude' => ['index'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','organize-safari', 'join'],
+                'only' => ['organize-safari', 'join'],
                 'rules' => [
                     [
                         'actions' => ['organize-safari'],

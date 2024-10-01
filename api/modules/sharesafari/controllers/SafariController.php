@@ -23,6 +23,10 @@ class SafariController extends RestController
         $this->sharesafari_id = \Yii::$app->request->get('sharesafari_id');
         $this->sharesafari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'id' =>  $this->sharesafari_id])->limit(1)->one();
 
+        if(!empty($this->sharesafari_id) && empty($this->sharesafari)){
+            Yii::$app->api->sendFailedStringResponse(['Safari not found']);
+        }
+
     }
 
     /**
