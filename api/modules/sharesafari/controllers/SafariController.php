@@ -29,7 +29,7 @@ class SafariController extends RestController
     /**
      * @inheritdoc
      */
-    private function isSafariHost()
+    protected function isSafariHost()
     {
 
         if($this->userinfoId == $this->sharesafari->host_user_id){
