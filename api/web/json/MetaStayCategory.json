@@ -1,0 +1,21 @@
+{
+    "MetaStayCategory": {
+        "summary": {
+            "last_updated_time": 1727786037
+        },
+        "data": [
+            {
+                "id": 1,
+                "title": "Forest Rest House"
+            },
+            {
+                "id": 2,
+                "title": "Hotel"
+            },
+            {
+                "id": 3,
+                "title": "Resorts"
+            }
+        ]
+    }
+}

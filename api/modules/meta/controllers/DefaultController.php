@@ -37,6 +37,7 @@ class DefaultController extends RestController
             'verbs' => [
                 'class' => Verbcheck::className(),
                 'actions' => [
+                    'all' => ['GET'],
                     'accommodation' => ['GET'],
                     'animal-type' => ['GET'],
                     'bird-type' => ['GET'],
@@ -55,6 +56,41 @@ class DefaultController extends RestController
         ];
     }
 
+
+    private function readFolderAndFiles($directory)
+    {
+        if (!is_dir($directory)) {
+            echo "Error: $directory is not a valid directory.\n";
+            return;
+        }
+
+        $fileContent = [];
+
+        $files = scandir($directory);
+        foreach ($files as $file) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            $filePath = $directory . '/' . $file;
+            if (is_dir($filePath)) {
+                $this->readFolderAndFiles($filePath); // Recursively read subdirectories
+            } else {
+                $content =  file_get_contents($filePath);
+                $fileContent[] = json_decode($content, true);
+            }
+        }
+        return $fileContent;
+    }
+
+    public function actionAll()
+    {
+
+        $directory = Yii::getAlias('@app').'/web/json';
+        $data = $this->readFolderAndFiles($directory);
+
+        return Yii::$app->api->sendResponse($data);
+    }
 
     public function actionAccommodation()
     {

@@ -1,0 +1,33 @@
+{
+    "MetaPackageRange": {
+        "summary": {
+            "last_updated_time": 1727786037
+        },
+        "data": [
+            {
+                "id": 1,
+                "title": "Premium",
+                "min_range": 1000,
+                "max_range": 5000
+            },
+            {
+                "id": 2,
+                "title": "Standard",
+                "min_range": 10000,
+                "max_range": 50000
+            },
+            {
+                "id": 3,
+                "title": "Economical",
+                "min_range": 10000,
+                "max_range": 50000
+            },
+            {
+                "id": 4,
+                "title": "Not Included",
+                "min_range": 0,
+                "max_range": 0
+            }
+        ]
+    }
+}

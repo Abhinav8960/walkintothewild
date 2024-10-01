@@ -1,0 +1,21 @@
+{
+    "MetaSafariSession": {
+        "summary": {
+            "last_updated_time": 1727786037
+        },
+        "data": [
+            {
+                "id": 1,
+                "title": "Morning"
+            },
+            {
+                "id": 2,
+                "title": "Evening"
+            },
+            {
+                "id": 3,
+                "title": "Night"
+            }
+        ]
+    }
+}

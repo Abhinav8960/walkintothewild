@@ -1,0 +1,19 @@
+{
+    "MetaZoneType": {
+        "summary": {
+            "last_updated_time": 1727786037
+        },
+        "data": [
+            {
+                "id": 1,
+                "name": "Core Zone\r\n",
+                "color_code": "green"
+            },
+            {
+                "id": 2,
+                "name": "Buffer Zone\r\n",
+                "color_code": "yellow"
+            }
+        ]
+    }
+}
