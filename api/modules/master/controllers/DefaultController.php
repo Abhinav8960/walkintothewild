@@ -156,6 +156,7 @@ class DefaultController extends RestController
 
     public function actionRailwayStation()
     {
+        // ini_set("memory_limit", "-1");
         $searchModel = new MasterRailwayStationSearch();
         $searchModel->status =  MasterRailwayStationSearch::STATUS_ACTIVE;
 
