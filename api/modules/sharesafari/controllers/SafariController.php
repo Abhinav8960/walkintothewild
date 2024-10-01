@@ -35,8 +35,6 @@ class SafariController extends RestController
     {
         if (!empty($this->sharesafari)) {
             if ($this->userinfoId == $this->sharesafari->host_user_id) {
-        if (!empty($this->sharesafari)) {
-            if ($this->userinfoId == $this->sharesafari->host_user_id) {
                 return false;
             }
         }
