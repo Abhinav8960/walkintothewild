@@ -1,0 +1,3116 @@
+{
+    "MasterAirport": {
+        "summary": {
+            "last_updated_time": 1727786037
+        },
+        "data": [
+            {
+                "id": 1,
+                "name": "Donakonda Airport",
+                "slug": "donakonda-airport",
+                "iata_code": "",
+                "icao_code": "VODK",
+                "city": null,
+                "state": {
+                    "id": 33,
+                    "state_name": "Andhra Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 2,
+                "name": "Kurnool Airport",
+                "slug": "kurnool-airport",
+                "iata_code": "KJB",
+                "icao_code": "VOKU",
+                "city": {
+                    "id": 496,
+                    "city_name": "Kurnool"
+                },
+                "state": {
+                    "id": 33,
+                    "state_name": "Andhra Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 3,
+                "name": "Sri Sathya Sai Airport",
+                "slug": "sri-sathya-sai-airport",
+                "iata_code": "PUT",
+                "icao_code": "VOPN",
+                "city": null,
+                "state": {
+                    "id": 33,
+                    "state_name": "Andhra Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 4,
+                "name": "Rajahmundry Airport",
+                "slug": "rajahmundry-airport",
+                "iata_code": "RJA",
+                "icao_code": "VORY",
+                "city": null,
+                "state": {
+                    "id": 33,
+                    "state_name": "Andhra Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 5,
+                "name": "Tirupati International Airport",
+                "slug": "tirupati-international-airport",
+                "iata_code": "TIR",
+                "icao_code": "VOTP",
+                "city": null,
+                "state": {
+                    "id": 33,
+                    "state_name": "Andhra Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 6,
+                "name": "Vijayawada International Airport",
+                "slug": "vijayawada-international-airport",
+                "iata_code": "VGA",
+                "icao_code": "VOBZ",
+                "city": null,
+                "state": {
+                    "id": 33,
+                    "state_name": "Andhra Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 7,
+                "name": "Visakhapatnam International Airport",
+                "slug": "visakhapatnam-international-airport",
+                "iata_code": "VTZ",
+                "icao_code": "VOVZ",
+                "city": null,
+                "state": {
+                    "id": 33,
+                    "state_name": "Andhra Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 8,
+                "name": "Daporijo Airport",
+                "slug": "daporijo-airport",
+                "iata_code": "DEP",
+                "icao_code": "VEDZ",
+                "city": null,
+                "state": {
+                    "id": 1,
+                    "state_name": "Arunachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 9,
+                "name": "Donyi Polo Airport",
+                "slug": "donyi-polo-airport",
+                "iata_code": "HGI",
+                "icao_code": "VEHO",
+                "city": null,
+                "state": {
+                    "id": 1,
+                    "state_name": "Arunachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 10,
+                "name": "Pasighat Airport",
+                "slug": "pasighat-airport",
+                "iata_code": "IXT",
+                "icao_code": "VEPG",
+                "city": null,
+                "state": {
+                    "id": 1,
+                    "state_name": "Arunachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 11,
+                "name": "Tezu Airport",
+                "slug": "tezu-airport",
+                "iata_code": "TEI",
+                "icao_code": "VETJ",
+                "city": null,
+                "state": {
+                    "id": 1,
+                    "state_name": "Arunachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 12,
+                "name": "Ziro Airport",
+                "slug": "ziro-airport",
+                "iata_code": "ZER",
+                "icao_code": "VEZO",
+                "city": null,
+                "state": {
+                    "id": 1,
+                    "state_name": "Arunachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 13,
+                "name": "Rupsi Airport",
+                "slug": "rupsi-airport",
+                "iata_code": "RUP",
+                "icao_code": "VERU",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 14,
+                "name": "Dibrugarh Airport",
+                "slug": "dibrugarh-airport",
+                "iata_code": "DIB",
+                "icao_code": "VEMN",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 15,
+                "name": "Lokpriya Gopinath Bordoloi International Airport",
+                "slug": "lokpriya-gopinath-bordoloi-international-airport",
+                "iata_code": "GAU",
+                "icao_code": "VEGT",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 16,
+                "name": "Jorhat Airport",
+                "slug": "jorhat-airport",
+                "iata_code": "JRH",
+                "icao_code": "VEJT",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 17,
+                "name": "Lilabari Airport",
+                "slug": "lilabari-airport",
+                "iata_code": "IXI",
+                "icao_code": "VELR",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 18,
+                "name": "Silchar Airport",
+                "slug": "silchar-airport",
+                "iata_code": "IXS",
+                "icao_code": "VEKU",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 19,
+                "name": "Tezpur Airport",
+                "slug": "tezpur-airport",
+                "iata_code": "TEZ",
+                "icao_code": "VETZ",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 20,
+                "name": "Darbhanga Airport",
+                "slug": "darbhanga-airport",
+                "iata_code": "DBR",
+                "icao_code": "VEDH",
+                "city": null,
+                "state": {
+                    "id": 3,
+                    "state_name": "Bihar"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 21,
+                "name": "Gaya Airport",
+                "slug": "gaya-airport",
+                "iata_code": "GAY",
+                "icao_code": "VEGY",
+                "city": null,
+                "state": {
+                    "id": 3,
+                    "state_name": "Bihar"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 22,
+                "name": "Purnia Airport",
+                "slug": "purnia-airport",
+                "iata_code": "",
+                "icao_code": "VEPU",
+                "city": null,
+                "state": {
+                    "id": 3,
+                    "state_name": "Bihar"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 23,
+                "name": "Muzaffarpur Airport",
+                "slug": "muzaffarpur-airport",
+                "iata_code": "MZU",
+                "icao_code": "VEMZ",
+                "city": null,
+                "state": {
+                    "id": 3,
+                    "state_name": "Bihar"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 24,
+                "name": "Jay Prakash Narayan Airport",
+                "slug": "jay-prakash-narayan-airport",
+                "iata_code": "PAT",
+                "icao_code": "VEPT",
+                "city": null,
+                "state": {
+                    "id": 3,
+                    "state_name": "Bihar"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 25,
+                "name": "Raxaul Airport",
+                "slug": "raxaul-airport",
+                "iata_code": "",
+                "icao_code": "VERL",
+                "city": null,
+                "state": {
+                    "id": 3,
+                    "state_name": "Bihar"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 26,
+                "name": "Swami Vivekananda Airport",
+                "slug": "swami-vivekananda-airport",
+                "iata_code": "RPR",
+                "icao_code": "VERP",
+                "city": null,
+                "state": {
+                    "id": 5,
+                    "state_name": "Chhattisgarh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 27,
+                "name": "Bilaspur Airport",
+                "slug": "bilaspur-airport",
+                "iata_code": "PAB",
+                "icao_code": "VEBU",
+                "city": null,
+                "state": {
+                    "id": 5,
+                    "state_name": "Chhattisgarh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 28,
+                "name": "Jagdalpur Airport",
+                "slug": "jagdalpur-airport",
+                "iata_code": "JGB",
+                "icao_code": "VEJR",
+                "city": null,
+                "state": {
+                    "id": 5,
+                    "state_name": "Chhattisgarh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 29,
+                "name": "Ambikapur Airport",
+                "slug": "ambikapur-airport",
+                "iata_code": "",
+                "icao_code": "VEAP",
+                "city": null,
+                "state": {
+                    "id": 5,
+                    "state_name": "Chhattisgarh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 30,
+                "name": "Raigarh Airport",
+                "slug": "raigarh-airport",
+                "iata_code": "",
+                "icao_code": "VERH",
+                "city": null,
+                "state": {
+                    "id": 5,
+                    "state_name": "Chhattisgarh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 31,
+                "name": "Korba Airport",
+                "slug": "korba-airport",
+                "iata_code": "",
+                "icao_code": "IN-0026",
+                "city": null,
+                "state": {
+                    "id": 5,
+                    "state_name": "Chhattisgarh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 32,
+                "name": "Dabolim Airport",
+                "slug": "dabolim-airport",
+                "iata_code": "GOI",
+                "icao_code": "VOGO",
+                "city": null,
+                "state": {
+                    "id": 8,
+                    "state_name": "Goa"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 33,
+                "name": "Manohar International Airport",
+                "slug": "manohar-international-airport",
+                "iata_code": "GOX",
+                "icao_code": "VOGA",
+                "city": null,
+                "state": {
+                    "id": 8,
+                    "state_name": "Goa"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 34,
+                "name": "Sardar Vallabhbhai Patel International Airport",
+                "slug": "sardar-vallabhbhai-patel-international-airport",
+                "iata_code": "AMD",
+                "icao_code": "VAAH",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 35,
+                "name": "Amreli Airport",
+                "slug": "amreli-airport",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 36,
+                "name": "Bhavnagar Airport",
+                "slug": "bhavnagar-airport",
+                "iata_code": "BHU",
+                "icao_code": "VABV",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 37,
+                "name": "Bhuj Airport",
+                "slug": "bhuj-airport",
+                "iata_code": "BHJ",
+                "icao_code": "VABJ",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 38,
+                "name": "Deesa Airport",
+                "slug": "deesa-airport",
+                "iata_code": "",
+                "icao_code": "VADS",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 39,
+                "name": "Jamnagar Airport",
+                "slug": "jamnagar-airport",
+                "iata_code": "JGA",
+                "icao_code": "VAJM",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 40,
+                "name": "Keshod Airport",
+                "slug": "keshod-airport",
+                "iata_code": "IXK",
+                "icao_code": "VAKS",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 41,
+                "name": "Kandla Airport",
+                "slug": "kandla-airport",
+                "iata_code": "IXY",
+                "icao_code": "VAKE",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 42,
+                "name": "Mundra Airport",
+                "slug": "mundra-airport",
+                "iata_code": "",
+                "icao_code": "VAMA",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 43,
+                "name": "Mithapur Airstrip",
+                "slug": "mithapur-airstrip",
+                "iata_code": "",
+                "icao_code": "IN-0106",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 44,
+                "name": "Porbandar Airport",
+                "slug": "porbandar-airport",
+                "iata_code": "PBD",
+                "icao_code": "VAPR",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 45,
+                "name": "Rajkot International Airport",
+                "slug": "rajkot-international-airport",
+                "iata_code": "HSR",
+                "icao_code": "VAHS",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 46,
+                "name": "Rajkot Airport",
+                "slug": "rajkot-airport",
+                "iata_code": "RAJ",
+                "icao_code": "VARK",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 47,
+                "name": "Surat International Airport",
+                "slug": "surat-international-airport",
+                "iata_code": "STV",
+                "icao_code": "VASU",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 48,
+                "name": "Vadodara Airport",
+                "slug": "vadodara-airport",
+                "iata_code": "BDQ",
+                "icao_code": "VABO",
+                "city": null,
+                "state": {
+                    "id": 9,
+                    "state_name": "Gujarat"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 49,
+                "name": "Hisar Airport",
+                "slug": "hisar-airport",
+                "iata_code": "HSS",
+                "icao_code": "VIHR",
+                "city": null,
+                "state": {
+                    "id": 10,
+                    "state_name": "Haryana"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 50,
+                "name": "Kangra Airport",
+                "slug": "kangra-airport",
+                "iata_code": "DHM",
+                "icao_code": "VIGG",
+                "city": null,
+                "state": {
+                    "id": 11,
+                    "state_name": "Himachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 51,
+                "name": "Kullu–Manali Airport",
+                "slug": "kullu-manali-airport",
+                "iata_code": "KUU",
+                "icao_code": "VIBR",
+                "city": null,
+                "state": {
+                    "id": 11,
+                    "state_name": "Himachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 52,
+                "name": "Shimla Airport",
+                "slug": "shimla-airport",
+                "iata_code": "SLV",
+                "icao_code": "VISM",
+                "city": null,
+                "state": {
+                    "id": 11,
+                    "state_name": "Himachal Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 53,
+                "name": "Bokaro Airport",
+                "slug": "bokaro-airport",
+                "iata_code": "",
+                "icao_code": "VEBK",
+                "city": null,
+                "state": {
+                    "id": 13,
+                    "state_name": "Jharkhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 54,
+                "name": "Deoghar Airport",
+                "slug": "deoghar-airport",
+                "iata_code": "DGH",
+                "icao_code": "VEDO",
+                "city": null,
+                "state": {
+                    "id": 13,
+                    "state_name": "Jharkhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 55,
+                "name": "Dhalbhumgarh Airport",
+                "slug": "dhalbhumgarh-airport",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 13,
+                    "state_name": "Jharkhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 56,
+                "name": "Dumka Airport",
+                "slug": "dumka-airport",
+                "iata_code": "",
+                "icao_code": "VEDK",
+                "city": null,
+                "state": {
+                    "id": 13,
+                    "state_name": "Jharkhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 57,
+                "name": "Chakulia Airport",
+                "slug": "chakulia-airport",
+                "iata_code": "",
+                "icao_code": "VECK",
+                "city": null,
+                "state": {
+                    "id": 13,
+                    "state_name": "Jharkhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 58,
+                "name": "Sonari Airport",
+                "slug": "sonari-airport",
+                "iata_code": "IXW",
+                "icao_code": "VEJS",
+                "city": null,
+                "state": {
+                    "id": 13,
+                    "state_name": "Jharkhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 59,
+                "name": "Birsa Munda Airport",
+                "slug": "birsa-munda-airport",
+                "iata_code": "IXR",
+                "icao_code": "VERC",
+                "city": null,
+                "state": {
+                    "id": 13,
+                    "state_name": "Jharkhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 60,
+                "name": "Belgavi Airport",
+                "slug": "belgavi-airport",
+                "iata_code": "IXG",
+                "icao_code": "VOBM",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 61,
+                "name": "Jindal Vijaynagar Airport",
+                "slug": "jindal-vijaynagar-airport",
+                "iata_code": "VDY",
+                "icao_code": "VOJV",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 62,
+                "name": "Kempegowda International Airport",
+                "slug": "kempegowda-international-airport",
+                "iata_code": "BLR",
+                "icao_code": "VOBL",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 63,
+                "name": "HAL Airport",
+                "slug": "hal-airport",
+                "iata_code": "",
+                "icao_code": "VOBG",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 64,
+                "name": "Bidar Airport",
+                "slug": "bidar-airport",
+                "iata_code": "IXX",
+                "icao_code": "VOBR",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 65,
+                "name": "Hubli Airport",
+                "slug": "hubli-airport",
+                "iata_code": "HBX",
+                "icao_code": "VOHB",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 66,
+                "name": "Kalaburagi Airport",
+                "slug": "kalaburagi-airport",
+                "iata_code": "GBI",
+                "icao_code": "VOGB",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 67,
+                "name": "Baldota Airport",
+                "slug": "baldota-airport",
+                "iata_code": "",
+                "icao_code": "VOKP",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 68,
+                "name": "Mangalore International Airport",
+                "slug": "mangalore-international-airport",
+                "iata_code": "IXE",
+                "icao_code": "VOML",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 69,
+                "name": "Mysore Airport",
+                "slug": "mysore-airport",
+                "iata_code": "MYQ",
+                "icao_code": "VOMY",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 70,
+                "name": "Kuvempu Airport",
+                "slug": "kuvempu-airport",
+                "iata_code": "RQY",
+                "icao_code": "VOSH",
+                "city": null,
+                "state": {
+                    "id": 34,
+                    "state_name": "Karnataka"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 71,
+                "name": "Kannur International Airport",
+                "slug": "kannur-international-airport",
+                "iata_code": "CNN",
+                "icao_code": "VOKN",
+                "city": null,
+                "state": {
+                    "id": 14,
+                    "state_name": "Kerala"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 72,
+                "name": "Cochin International Airport",
+                "slug": "cochin-international-airport",
+                "iata_code": "COK",
+                "icao_code": "VOCI",
+                "city": null,
+                "state": {
+                    "id": 14,
+                    "state_name": "Kerala"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 73,
+                "name": "Kozhikode International Airport",
+                "slug": "kozhikode-international-airport",
+                "iata_code": "CCJ",
+                "icao_code": "VOCL",
+                "city": null,
+                "state": {
+                    "id": 14,
+                    "state_name": "Kerala"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 74,
+                "name": "Thiruvananthapuram International Airport",
+                "slug": "thiruvananthapuram-international-airport",
+                "iata_code": "TRV",
+                "icao_code": "VOTV",
+                "city": null,
+                "state": {
+                    "id": 14,
+                    "state_name": "Kerala"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 75,
+                "name": "Raja Bhoj Airport",
+                "slug": "raja-bhoj-airport",
+                "iata_code": "BHO",
+                "icao_code": "VABP",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 76,
+                "name": "Rajmata Vijaya Raje Scindia Airport",
+                "slug": "rajmata-vijaya-raje-scindia-airport",
+                "iata_code": "GWL",
+                "icao_code": "VIGR",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 77,
+                "name": "Devi Ahilyabai Holkar International Airport",
+                "slug": "devi-ahilyabai-holkar-international-airport",
+                "iata_code": "IDR",
+                "icao_code": "VAID",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 78,
+                "name": "Jabalpur Airport",
+                "slug": "jabalpur-airport",
+                "iata_code": "JLR",
+                "icao_code": "VAJB",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 79,
+                "name": "Khajuraho Airport",
+                "slug": "khajuraho-airport",
+                "iata_code": "HJR",
+                "icao_code": "VAKJ",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 80,
+                "name": "Khandwa Airport",
+                "slug": "khandwa-airport",
+                "iata_code": "",
+                "icao_code": "VAKD",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 81,
+                "name": "Birlagram Airport",
+                "slug": "birlagram-airport",
+                "iata_code": "",
+                "icao_code": "VA1C",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 82,
+                "name": "Panna Airport",
+                "slug": "panna-airport",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 83,
+                "name": "Satna Airport",
+                "slug": "satna-airport",
+                "iata_code": "TNI",
+                "icao_code": "VIST",
+                "city": null,
+                "state": {
+                    "id": 16,
+                    "state_name": "Madhya Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 84,
+                "name": "Akola Airport",
+                "slug": "akola-airport",
+                "iata_code": "AKD",
+                "icao_code": "VAAK",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 85,
+                "name": "Aurangabad Airport",
+                "slug": "aurangabad-airport",
+                "iata_code": "IXU",
+                "icao_code": "VAAU",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 86,
+                "name": "Baramati Airport",
+                "slug": "baramati-airport",
+                "iata_code": "",
+                "icao_code": "IN-0024",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 87,
+                "name": "Gondia Airport",
+                "slug": "gondia-airport",
+                "iata_code": "GDB",
+                "icao_code": "VAGD",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 88,
+                "name": "Jalgaon Airport",
+                "slug": "jalgaon-airport",
+                "iata_code": "JLG",
+                "icao_code": "VAJL",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 89,
+                "name": "Kolhapur Airport",
+                "slug": "kolhapur-airport",
+                "iata_code": "KLH",
+                "icao_code": "VAKP",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 90,
+                "name": "Latur Airport",
+                "slug": "latur-airport",
+                "iata_code": "LTU",
+                "icao_code": "VOLT",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 91,
+                "name": "Chhatrapati Shivaji Maharaj International Airport",
+                "slug": "chhatrapati-shivaji-maharaj-international-airport",
+                "iata_code": "BOM",
+                "icao_code": "VABB",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 92,
+                "name": "Juhu Aerodrome",
+                "slug": "juhu-aerodrome",
+                "iata_code": "",
+                "icao_code": "VAJJ",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 93,
+                "name": "Dr. Babasaheb Ambedkar International Airport",
+                "slug": "dr-babasaheb-ambedkar-international-airport",
+                "iata_code": "NAG",
+                "icao_code": "VANP",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 94,
+                "name": "Shri Guru Gobind Singh Ji Airport",
+                "slug": "shri-guru-gobind-singh-ji-airport",
+                "iata_code": "NDC",
+                "icao_code": "VAND",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 95,
+                "name": "Nashik Airport",
+                "slug": "nashik-airport",
+                "iata_code": "ISK",
+                "icao_code": "VAOZ",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 96,
+                "name": "Osmanabad Airport",
+                "slug": "osmanabad-airport",
+                "iata_code": "OMN",
+                "icao_code": "IN-0375",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 97,
+                "name": "Pune Airport",
+                "slug": "pune-airport",
+                "iata_code": "PNQ",
+                "icao_code": "VAPO",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 98,
+                "name": "Ratnagiri Airport",
+                "slug": "ratnagiri-airport",
+                "iata_code": "RTC",
+                "icao_code": "VARG",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 99,
+                "name": "Shirdi Airport",
+                "slug": "shirdi-airport",
+                "iata_code": "SAG",
+                "icao_code": "VASD",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 100,
+                "name": "Solapur Airport",
+                "slug": "solapur-airport",
+                "iata_code": "SSE",
+                "icao_code": "VASL",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 101,
+                "name": "Sindhudurg Airport",
+                "slug": "sindhudurg-airport",
+                "iata_code": "SDW",
+                "icao_code": "VOSR",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 102,
+                "name": "Sant Gadge Baba Yavatmal Airport",
+                "slug": "sant-gadge-baba-yavatmal-airport",
+                "iata_code": "YTL",
+                "icao_code": "VA78",
+                "city": null,
+                "state": {
+                    "id": 17,
+                    "state_name": "Maharashtra"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 103,
+                "name": "Imphal International Airport",
+                "slug": "imphal-international-airport",
+                "iata_code": "IMF",
+                "icao_code": "VEIM",
+                "city": null,
+                "state": {
+                    "id": 18,
+                    "state_name": "Manipur"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 104,
+                "name": "Shillong Airport",
+                "slug": "shillong-airport",
+                "iata_code": "SHL",
+                "icao_code": "VEBI",
+                "city": null,
+                "state": {
+                    "id": 19,
+                    "state_name": "Meghalaya"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 105,
+                "name": "Shella Airport",
+                "slug": "shella-airport",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 19,
+                    "state_name": "Meghalaya"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 106,
+                "name": "Turial Airport",
+                "slug": "turial-airport",
+                "iata_code": "",
+                "icao_code": "VEAZ",
+                "city": null,
+                "state": {
+                    "id": 20,
+                    "state_name": "Mizoram"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 107,
+                "name": "Lengpui Airport",
+                "slug": "lengpui-airport",
+                "iata_code": "AJL",
+                "icao_code": "VELP",
+                "city": null,
+                "state": {
+                    "id": 20,
+                    "state_name": "Mizoram"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 108,
+                "name": "Dimapur Airport",
+                "slug": "dimapur-airport",
+                "iata_code": "DMU",
+                "icao_code": "VEMR",
+                "city": null,
+                "state": {
+                    "id": 21,
+                    "state_name": "Nagaland"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 109,
+                "name": "Savitri Jindal Airport",
+                "slug": "savitri-jindal-airport",
+                "iata_code": "",
+                "icao_code": "VEAL",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 110,
+                "name": "Rangeilunda Airport",
+                "slug": "rangeilunda-airport",
+                "iata_code": "QBM",
+                "icao_code": "VEBM",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 111,
+                "name": "Biju Patnaik International Airport",
+                "slug": "biju-patnaik-international-airport",
+                "iata_code": "BBI",
+                "icao_code": "VEBS",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 112,
+                "name": "Jeypore Airport",
+                "slug": "jeypore-airport",
+                "iata_code": "PYB",
+                "icao_code": "VEJP",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 113,
+                "name": "Veer Surendra Sai Airport",
+                "slug": "veer-surendra-sai-airport",
+                "iata_code": "JRG",
+                "icao_code": "VEJH",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 114,
+                "name": "Satibhata Airstrip",
+                "slug": "satibhata-airstrip",
+                "iata_code": "",
+                "icao_code": "VEPP",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 115,
+                "name": "Rourkela Airport",
+                "slug": "rourkela-airport",
+                "iata_code": "RRK",
+                "icao_code": "VERK",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 116,
+                "name": "Utkela Airport",
+                "slug": "utkela-airport",
+                "iata_code": "UKE",
+                "icao_code": "VEUK",
+                "city": null,
+                "state": {
+                    "id": 22,
+                    "state_name": "Odisha"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 117,
+                "name": "Beas Airport",
+                "slug": "beas-airport",
+                "iata_code": "",
+                "icao_code": "VIBS",
+                "city": null,
+                "state": {
+                    "id": 24,
+                    "state_name": "Punjab"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 118,
+                "name": "Sri Guru Ram Dass Jee International Airport",
+                "slug": "sri-guru-ram-dass-jee-international-airport",
+                "iata_code": "ATQ",
+                "icao_code": "VIAR",
+                "city": null,
+                "state": {
+                    "id": 24,
+                    "state_name": "Punjab"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 119,
+                "name": "Bathinda Airport",
+                "slug": "bathinda-airport",
+                "iata_code": "BUP",
+                "icao_code": "VIBT",
+                "city": null,
+                "state": {
+                    "id": 24,
+                    "state_name": "Punjab"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 120,
+                "name": "Adampur Airport",
+                "slug": "adampur-airport",
+                "iata_code": "AIP",
+                "icao_code": "VIAX",
+                "city": null,
+                "state": {
+                    "id": 24,
+                    "state_name": "Punjab"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 121,
+                "name": "Ludhiana Airport",
+                "slug": "ludhiana-airport",
+                "iata_code": "LUH",
+                "icao_code": "VILD",
+                "city": null,
+                "state": {
+                    "id": 24,
+                    "state_name": "Punjab"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 122,
+                "name": "Pathankot Airport",
+                "slug": "pathankot-airport",
+                "iata_code": "IXP",
+                "icao_code": "VIPK",
+                "city": null,
+                "state": {
+                    "id": 24,
+                    "state_name": "Punjab"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 123,
+                "name": "Kishangarh Airport",
+                "slug": "kishangarh-airport",
+                "iata_code": "KQH",
+                "icao_code": "VIKG",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 124,
+                "name": "Banasthali Airstrip",
+                "slug": "banasthali-airstrip",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 125,
+                "name": "Bikaner Airport",
+                "slug": "bikaner-airport",
+                "iata_code": "BKB",
+                "icao_code": "VIBK",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 126,
+                "name": "Jaipur International Airport",
+                "slug": "jaipur-international-airport",
+                "iata_code": "JAI",
+                "icao_code": "VIJP",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 127,
+                "name": "Jaisalmer Airport",
+                "slug": "jaisalmer-airport",
+                "iata_code": "JSA",
+                "icao_code": "VIJR",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 128,
+                "name": "Jodhpur Airport",
+                "slug": "jodhpur-airport",
+                "iata_code": "JDH",
+                "icao_code": "VIJO",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 129,
+                "name": "Kankroli Airstrip",
+                "slug": "kankroli-airstrip",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 130,
+                "name": "Kota Airport",
+                "slug": "kota-airport",
+                "iata_code": "KTU",
+                "icao_code": "VIKO",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 131,
+                "name": "Maharana Pratap Airport",
+                "slug": "maharana-pratap-airport",
+                "iata_code": "UDR",
+                "icao_code": "VAUD",
+                "city": null,
+                "state": {
+                    "id": 25,
+                    "state_name": "Rajasthan"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 132,
+                "name": "Pakyong Airport",
+                "slug": "pakyong-airport",
+                "iata_code": "PYG",
+                "icao_code": "VEPY",
+                "city": null,
+                "state": {
+                    "id": 26,
+                    "state_name": "Sikkim"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 133,
+                "name": "Chennai International Airport",
+                "slug": "chennai-international-airport",
+                "iata_code": "MAA",
+                "icao_code": "VOMM",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 134,
+                "name": "Coimbatore International Airport",
+                "slug": "coimbatore-international-airport",
+                "iata_code": "CJB",
+                "icao_code": "VOCB",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 135,
+                "name": "Hosur Aerodrome",
+                "slug": "hosur-aerodrome",
+                "iata_code": "",
+                "icao_code": "VO95",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 136,
+                "name": "Madurai Airport",
+                "slug": "madurai-airport",
+                "iata_code": "IXM",
+                "icao_code": "VOMD",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 137,
+                "name": "Neyveli Airport",
+                "slug": "neyveli-airport",
+                "iata_code": "NVY",
+                "icao_code": "VONY",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 138,
+                "name": "Salem Airport",
+                "slug": "salem-airport",
+                "iata_code": "SXV",
+                "icao_code": "VOSM",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 139,
+                "name": "Thanjavur Airport",
+                "slug": "thanjavur-airport",
+                "iata_code": "TJV",
+                "icao_code": "VOTJ",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 140,
+                "name": "Tuticorin Airport",
+                "slug": "tuticorin-airport",
+                "iata_code": "TCR",
+                "icao_code": "VOTK",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 141,
+                "name": "Tiruchirappalli International Airport",
+                "slug": "tiruchirappalli-international-airport",
+                "iata_code": "TRZ",
+                "icao_code": "VOTR",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 142,
+                "name": "Vellore Airport",
+                "slug": "vellore-airport",
+                "iata_code": "",
+                "icao_code": "VOVR",
+                "city": null,
+                "state": {
+                    "id": 27,
+                    "state_name": "Tamil Nadu"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 143,
+                "name": "Begumpet Airport",
+                "slug": "begumpet-airport",
+                "iata_code": "BPM",
+                "icao_code": "VOHY",
+                "city": null,
+                "state": {
+                    "id": 28,
+                    "state_name": "Telangana"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 144,
+                "name": "Rajiv Gandhi International Airport",
+                "slug": "rajiv-gandhi-international-airport",
+                "iata_code": "HYD",
+                "icao_code": "VOHS",
+                "city": null,
+                "state": {
+                    "id": 28,
+                    "state_name": "Telangana"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 145,
+                "name": "Nadirgul Airfield",
+                "slug": "nadirgul-airfield",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 28,
+                    "state_name": "Telangana"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 146,
+                "name": "Warangal Airport",
+                "slug": "warangal-airport",
+                "iata_code": "WGC",
+                "icao_code": "VOWA",
+                "city": null,
+                "state": {
+                    "id": 28,
+                    "state_name": "Telangana"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 147,
+                "name": "Maharaja Bir Bikram Airport",
+                "slug": "maharaja-bir-bikram-airport",
+                "iata_code": "IXA",
+                "icao_code": "VEAT",
+                "city": null,
+                "state": {
+                    "id": 2,
+                    "state_name": "Assam"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 148,
+                "name": "Kailashahar Airport",
+                "slug": "kailashahar-airport",
+                "iata_code": "IXH",
+                "icao_code": "VEKR",
+                "city": null,
+                "state": {
+                    "id": 29,
+                    "state_name": "Tripura"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 149,
+                "name": "Kamalpur Airport",
+                "slug": "kamalpur-airport",
+                "iata_code": "IXQ",
+                "icao_code": "VEKN",
+                "city": null,
+                "state": {
+                    "id": 29,
+                    "state_name": "Tripura"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 150,
+                "name": "Khowai Airport",
+                "slug": "khowai-airport",
+                "iata_code": "IXN",
+                "icao_code": "VEKW",
+                "city": null,
+                "state": {
+                    "id": 29,
+                    "state_name": "Tripura"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 151,
+                "name": "Agra Airport",
+                "slug": "agra-airport",
+                "iata_code": "AGR",
+                "icao_code": "VIAG",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 152,
+                "name": "Fursatganj Airfield",
+                "slug": "fursatganj-airfield",
+                "iata_code": "",
+                "icao_code": "VERB",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 153,
+                "name": "Aligarh Airport",
+                "slug": "aligarh-airport",
+                "iata_code": "HRH",
+                "icao_code": "VIAH",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 154,
+                "name": "Maharishi Valmiki International Airport",
+                "slug": "maharishi-valmiki-international-airport",
+                "iata_code": "AYJ",
+                "icao_code": "VEAY",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 155,
+                "name": "Azamgarh Airport",
+                "slug": "azamgarh-airport",
+                "iata_code": "",
+                "icao_code": "VEAH",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 156,
+                "name": "Bareilly Airport",
+                "slug": "bareilly-airport",
+                "iata_code": "BEK",
+                "icao_code": "VIBY",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 157,
+                "name": "Chitrakoot Airport",
+                "slug": "chitrakoot-airport",
+                "iata_code": "",
+                "icao_code": "VECT",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 158,
+                "name": "Hindon Airport",
+                "slug": "hindon-airport",
+                "iata_code": "HDO",
+                "icao_code": "VIDX",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 159,
+                "name": "Andhau Airstrip",
+                "slug": "andhau-airstrip",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 160,
+                "name": "Gorakhpur Airport",
+                "slug": "gorakhpur-airport",
+                "iata_code": "GOP",
+                "icao_code": "VEGK",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 161,
+                "name": "Kanpur Civil Aerodrome",
+                "slug": "kanpur-civil-aerodrome",
+                "iata_code": "",
+                "icao_code": "VICX",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 162,
+                "name": "Kanpur Airport",
+                "slug": "kanpur-airport",
+                "iata_code": "KNU",
+                "icao_code": "VIKA",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 163,
+                "name": "Kushinagar International Airport",
+                "slug": "kushinagar-international-airport",
+                "iata_code": "KBK",
+                "icao_code": "VEKI",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 164,
+                "name": "Lalitpur Airport",
+                "slug": "lalitpur-airport",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 165,
+                "name": "Chaudhary Charan Singh International Airport",
+                "slug": "chaudhary-charan-singh-international-airport",
+                "iata_code": "LKO",
+                "icao_code": "VILK",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 166,
+                "name": "Meerut Airport",
+                "slug": "meerut-airport",
+                "iata_code": "",
+                "icao_code": "VI2B",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 167,
+                "name": "Moradabad Airport",
+                "slug": "moradabad-airport",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 168,
+                "name": "Prayagraj Airport",
+                "slug": "prayagraj-airport",
+                "iata_code": "IXD",
+                "icao_code": "VEAB",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 169,
+                "name": "Muirpur Airport",
+                "slug": "muirpur-airport",
+                "iata_code": "",
+                "icao_code": "VU1D",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 170,
+                "name": "Shravasti Airport",
+                "slug": "shravasti-airport",
+                "iata_code": "",
+                "icao_code": "VISV",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 171,
+                "name": "Lal Bahadur Shastri International Airport",
+                "slug": "lal-bahadur-shastri-international-airport",
+                "iata_code": "VNS",
+                "icao_code": "VEBN",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 172,
+                "name": "Noida International Airport",
+                "slug": "noida-international-airport",
+                "iata_code": "DXN",
+                "icao_code": "VIND",
+                "city": null,
+                "state": {
+                    "id": 30,
+                    "state_name": "Uttar Pradesh"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 173,
+                "name": "Dehradun Airport",
+                "slug": "dehradun-airport",
+                "iata_code": "DED",
+                "icao_code": "VIDN",
+                "city": null,
+                "state": {
+                    "id": 31,
+                    "state_name": "Uttarakhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 174,
+                "name": "Pantnagar Airport",
+                "slug": "pantnagar-airport",
+                "iata_code": "PGH",
+                "icao_code": "VIPT",
+                "city": null,
+                "state": {
+                    "id": 31,
+                    "state_name": "Uttarakhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 175,
+                "name": "Pithoragarh Airport",
+                "slug": "pithoragarh-airport",
+                "iata_code": "NNS",
+                "icao_code": "VIDF",
+                "city": null,
+                "state": {
+                    "id": 31,
+                    "state_name": "Uttarakhand"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 176,
+                "name": "Asansol Airfield",
+                "slug": "asansol-airfield",
+                "iata_code": "",
+                "icao_code": "",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 177,
+                "name": "Burnpur Airport",
+                "slug": "burnpur-airport",
+                "iata_code": "",
+                "icao_code": "VEBB",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 178,
+                "name": "Balurghat Airport",
+                "slug": "balurghat-airport",
+                "iata_code": "RGH",
+                "icao_code": "VEBG",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 179,
+                "name": "Cooch Behar Airport",
+                "slug": "cooch-behar-airport",
+                "iata_code": "COH",
+                "icao_code": "VECO",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 180,
+                "name": "Kazi Nazrul Islam Airport",
+                "slug": "kazi-nazrul-islam-airport",
+                "iata_code": "RDP",
+                "icao_code": "VEDG",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 181,
+                "name": "Behala Airport",
+                "slug": "behala-airport",
+                "iata_code": "",
+                "icao_code": "VEBA",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 182,
+                "name": "Netaji Subhas Chandra Bose International Airport",
+                "slug": "netaji-subhas-chandra-bose-international-airport",
+                "iata_code": "CCU",
+                "icao_code": "VECC",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 183,
+                "name": "Malda Airport",
+                "slug": "malda-airport",
+                "iata_code": "LDA",
+                "icao_code": "VEMH",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 184,
+                "name": "Bagdogra International Airport",
+                "slug": "bagdogra-international-airport",
+                "iata_code": "IXB",
+                "icao_code": "VEBD",
+                "city": null,
+                "state": {
+                    "id": 32,
+                    "state_name": "West Bengal"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 185,
+                "name": "Veer Savarkar International Airport",
+                "slug": "veer-savarkar-international-airport",
+                "iata_code": "IXZ",
+                "icao_code": "VOPB",
+                "city": null,
+                "state": {
+                    "id": 35,
+                    "state_name": "Andaman and Nicobar Islands"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 186,
+                "name": "Shaheed Bhagat Singh International Airport",
+                "slug": "shaheed-bhagat-singh-international-airport",
+                "iata_code": "IXC",
+                "icao_code": "VICG",
+                "city": null,
+                "state": {
+                    "id": 4,
+                    "state_name": "Chandigarh (union territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 187,
+                "name": "Diu Airport",
+                "slug": "diu-airport",
+                "iata_code": "DIU",
+                "icao_code": "VADU",
+                "city": null,
+                "state": {
+                    "id": 6,
+                    "state_name": "Dadra and Nagar Haveli and Daman and Diu (union territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 188,
+                "name": "Indira Gandhi International Airport",
+                "slug": "indira-gandhi-international-airport",
+                "iata_code": "DEL",
+                "icao_code": "VIDP",
+                "city": null,
+                "state": {
+                    "id": 7,
+                    "state_name": "Delhi (national capital territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 189,
+                "name": "Safdarjung Airport",
+                "slug": "safdarjung-airport",
+                "iata_code": "",
+                "icao_code": "VIDD",
+                "city": null,
+                "state": {
+                    "id": 7,
+                    "state_name": "Delhi (national capital territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 190,
+                "name": "Jammu Airport",
+                "slug": "jammu-airport",
+                "iata_code": "IXJ",
+                "icao_code": "VIJU",
+                "city": null,
+                "state": {
+                    "id": 12,
+                    "state_name": "Jammu and Kashmir (union territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 191,
+                "name": "Srinagar International Airport",
+                "slug": "srinagar-international-airport",
+                "iata_code": "SXR",
+                "icao_code": "VISR",
+                "city": null,
+                "state": {
+                    "id": 12,
+                    "state_name": "Jammu and Kashmir (union territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 192,
+                "name": "Kushok Bakula Rimpochee Airport",
+                "slug": "kushok-bakula-rimpochee-airport",
+                "iata_code": "IXL",
+                "icao_code": "VILH",
+                "city": null,
+                "state": {
+                    "id": 15,
+                    "state_name": "Ladakh (union territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 193,
+                "name": "Agatti Airport",
+                "slug": "agatti-airport",
+                "iata_code": "AGX",
+                "icao_code": "VOAT",
+                "city": null,
+                "state": {
+                    "id": 36,
+                    "state_name": "Lakshadweep"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            },
+            {
+                "id": 194,
+                "name": "Puducherry Airport",
+                "slug": "puducherry-airport",
+                "iata_code": "PNY",
+                "icao_code": "VOPC",
+                "city": null,
+                "state": {
+                    "id": 23,
+                    "state_name": "Puducherry (union territory)"
+                },
+                "country": {
+                    "id": 1,
+                    "country_name": "India"
+                }
+            }
+        ]
+    }
+}

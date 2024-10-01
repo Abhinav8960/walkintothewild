@@ -14,19 +14,18 @@ use api\models\sharesafari\ShareSafari;
 class SafariController extends RestController
 {
 
-    public $sharesafari_id;
+    public $slug;
     public $sharesafari;
 
     public function init()
     {
         parent::init();
-        $this->sharesafari_id = \Yii::$app->request->get('sharesafari_id');
-        $this->sharesafari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'id' =>  $this->sharesafari_id])->limit(1)->one();
+        $this->slug = \Yii::$app->request->get('slug');
+        $this->sharesafari = ShareSafari::find()->where(['status' => ShareSafari::STATUS_ACTIVE, 'slug' => $this->slug])->limit(1)->one();
 
-        if(!empty($this->sharesafari_id) && empty($this->sharesafari)){
+        if (!empty($this->slug) && empty($this->sharesafari)) {
             Yii::$app->api->sendFailedStringResponse(['Safari not found']);
         }
-
     }
 
     /**
@@ -34,8 +33,8 @@ class SafariController extends RestController
      */
     protected function isSafariHost()
     {
-        if(!empty($this->sharesafari)){
-            if($this->userinfoId == $this->sharesafari->host_user_id){
+        if (!empty($this->sharesafari)) {
+            if ($this->userinfoId == $this->sharesafari->host_user_id) {
                 return false;
             }
         }

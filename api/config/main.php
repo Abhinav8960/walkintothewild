@@ -89,7 +89,7 @@ return [
 
                 'cms/<action>' => 'cms/default/<action>',
                 'sharesafari' => 'sharesafari/default/index',
-                'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
+                'sharesafari/<action>/<slug>' => 'sharesafari/default/<action>',
 
 
 
