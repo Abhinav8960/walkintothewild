@@ -6,9 +6,8 @@ use api\models\cms\flagreason\Flagreason;
 use Yii;
 use api\models\User;
 use api\models\park\SafariPark;
-use yii\base\Model;
 
-class ShareSafariCommentReport extends Model
+class ShareSafariCommentReport extends \common\models\sharesafari\ShareSafariCommentReport
 {
     public function fields()
     {

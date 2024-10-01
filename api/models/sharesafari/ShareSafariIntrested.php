@@ -4,9 +4,8 @@ namespace api\models\sharesafari;
 
 use Yii;
 use api\models\User;
-use yii\base\Model;
 
-class ShareSafariIntrested extends Model
+class ShareSafariIntrested extends \common\models\sharesafari\ShareSafariIntrested
 {
 
     public function fields()

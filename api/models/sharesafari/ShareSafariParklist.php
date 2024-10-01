@@ -7,7 +7,7 @@ use api\models\User;
 use Yii;
 
 
-class ShareSafariParklist extends \yii\db\ActiveRecord
+class ShareSafariParklist extends \common\models\sharesafari\ShareSafariParklist
 {
     public function fields()
     {

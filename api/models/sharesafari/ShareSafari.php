@@ -6,9 +6,9 @@ use Yii;
 use api\models\User;
 use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafariComment;
-// use api\models\sharesafari\ShareSafariDay;
-// use api\models\sharesafari\ShareSafariGallery;
-// use api\models\sharesafari\ShareSafariIncluded;
+use api\models\sharesafari\ShareSafariDay;
+use api\models\sharesafari\ShareSafariGallery;
+use api\models\sharesafari\ShareSafariIncluded;
 use api\models\sharesafari\ShareSafariIntrested;
 use api\models\sharesafari\ShareSafariParklist;
 use api\models\operator\SafariOperator;
@@ -23,7 +23,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         $fields = parent::fields();
         $fields[] = 'types';
+        $fields[] = 'Sharedimagepath';
         $fields[] = 'park';
+        $fields[] = 'sharesafariIncludeds';
+        $fields[] = 'sharesafaridays';
+        $fields[] = 'sharesafarigallery';
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             $hold_fields = [
                 'delete_reason_id',
@@ -60,6 +64,10 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                     'delete_reason',
                     'share_safari_request_id',
                     'type',
+                    'image',
+                    'privacy_policy',
+                    'change_policy',
+                    'what_you_must_carry',
                     'estimate_price_min',
                     'estimate_price_max',
                     'park_id',
@@ -174,20 +182,20 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         }
     }
 
-    // public function getSharesafariIncludeds()
-    // {
-    //     return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
-    // }
+    public function getSharesafariIncludeds()
+    {
+        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+    }
 
-    // public function getSharesafaridays()
-    // {
-    //     return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id']);
-    // }
+    public function getSharesafaridays()
+    {
+        return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id']);
+    }
 
-    // public function getSharesafarigallery()
-    // {
-    //     return $this->hasMany(ShareSafariGallery::className(), ['share_safari_id' => 'id']);
-    // }
+    public function getSharesafarigallery()
+    {
+        return $this->hasMany(ShareSafariGallery::className(), ['share_safari_id' => 'id']);
+    }
 
     public function getOrganizedslug()
     {
@@ -233,20 +241,6 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getTypes()
     {
-        return $this->type = ShareSafari::TYPE_SAFARI ? "Share Safari" : "Fixed Departure";
-    }
-
-    public function getNecessaryfields()
-    {
-        if ($this->type = ShareSafari::TYPE_SAFARI) {
-            return [
-                'estimate_price_min' => $this->estimate_price_min,
-                'estimate_price_max' => $this->estimate_price_max,
-            ];
-        } else {
-            return [
-                'cost_per_person' => $this->cost_per_person,
-            ];
-        }
+        return $this->type == ShareSafari::TYPE_SAFARI ? "Share Safari" : "Fixed Departure";
     }
 }

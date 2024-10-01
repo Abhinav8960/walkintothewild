@@ -38,6 +38,7 @@ class DefaultController extends RestController
     {
         $searchModel = new ShareSafariSearch();
         $searchModel->status =  ShareSafariSearch::STATUS_ACTIVE;
+        $searchModel->type =  ShareSafariSearch::TYPE_FIXED_DEPARTURE;
         return $this->dataProviderSender($searchModel, $rootIndexName = "Share Safari");
     }
 }

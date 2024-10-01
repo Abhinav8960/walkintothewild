@@ -7,7 +7,7 @@ use api\models\User;
 use api\models\park\SafariPark;
 
 
-class ShareSafariComment extends \yii\db\ActiveRecord
+class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
 {
     public function fields()
     {
