@@ -99,7 +99,7 @@ class CreateDepartureForm extends \yii\base\Model
     public function rules()
     {
         return [
-            [['share_safari_title', 'host_type', 'park_list', 'share_safari_agenda_id', 'no_of_safari', 'cost_per_person', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => 'Required'],
+            [['share_safari_title', 'host_type', 'park_list', 'share_safari_agenda_id', 'no_of_safari', 'cost_per_person', 'total_seat', 'share_seat', 'start_date', 'end_date', 'safari_plan'], 'required', 'message' => '{attribute}:Required'],
             [['host_user_id', 'host_type', 'park_id', 'share_safari_agenda_id', 'no_of_safari', 'stay_category_id', 'cost_per_person', 'total_seat', 'share_seat', 'tour_duration', 'status', 'type'], 'integer'],
             [['start_date', 'end_date', 'park_list', 'rand_text'], 'safe'],
             [['share_safari_title'], 'string', 'max' => 50],
@@ -187,7 +187,7 @@ class CreateDepartureForm extends \yii\base\Model
         } else {
             $this->shared_safari_departure_model->share_seat = $this->share_seat;
         }
-        
+
         $this->shared_safari_departure_model->tour_duration = abs((round(strtotime($this->end_date) - strtotime($this->start_date)) / (60 * 60 * 24))) + 1;
         $this->shared_safari_departure_model->status = $this->status;
 
