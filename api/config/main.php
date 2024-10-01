@@ -88,7 +88,8 @@ return [
                 'park/<slug>' => 'park/default/view',
 
                 'cms/<action>' => 'cms/default/<action>',
-                'sharesafari/<action>' => 'sharesafari/default/<action>',
+                'sharesafari' => 'sharesafari/default/index',
+                'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
 
 
 

@@ -40,7 +40,7 @@ class DefaultController extends SafariController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index'],
+                'only' => ['index','organize-safari', 'join'],
                 'rules' => [
                     [
                         'actions' => ['organize-safari'],
