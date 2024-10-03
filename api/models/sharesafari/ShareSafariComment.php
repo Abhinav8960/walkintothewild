@@ -13,7 +13,7 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
     {
         $fields = parent::fields();
         $fields[] = 'park';
-        $fields[] = 'sharesafari';
+        // $fields[] = 'sharesafari';
         $fields[] = 'user';
         $fields[] = 'parent';
         $fields[] = 'reports';
@@ -24,10 +24,10 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
     }
 
 
-    public function getSharesafari()
-    {
-        return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
-    }
+    // public function getSharesafari()
+    // {
+    //     return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
+    // }
 
     public function getPark()
     {
