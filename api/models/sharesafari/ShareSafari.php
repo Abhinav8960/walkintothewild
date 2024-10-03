@@ -28,6 +28,14 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'sharesafariIncludeds';
         $fields[] = 'sharesafaridays';
         $fields[] = 'sharesafarigallery';
+
+        // if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/view'])) {
+
+        // }
+        
+
+
+
         if ($this->type == ShareSafari::TYPE_SAFARI) {
             $hold_fields = [
                 'delete_reason_id',
