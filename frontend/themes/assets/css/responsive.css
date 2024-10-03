@@ -1592,6 +1592,10 @@ margin-bottom: 0 !important;
 
 }
 @media only screen and (max-width: 767px) {
+  .showbox .chat_box .card-body{
+
+    margin-top: 24px;
+  }
   .chatbox-wrap {
     width: 100%;
     position: absolute;
@@ -2059,6 +2063,7 @@ display: none;
   }
 }
 @media only screen and (max-width: 576px) {
+ 
   .JoinPadding.phone_padding{
 
 padding-bottom: 0 !important;
