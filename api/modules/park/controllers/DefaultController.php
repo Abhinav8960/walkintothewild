@@ -66,4 +66,13 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
         
     }
+
+
+    public function actionFilterParklist()
+    {
+        $searchModel = new SafariParkSearch();
+        $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
+        $searchModel->show_in_filter = 1;
+        return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "SafariPark");
+    }
 }
