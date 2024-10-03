@@ -532,7 +532,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     function initializeOwlCarousel() {
-        if ($(window).width() <= 1390) {
+        if ($(window).width() <= 1600) {
             $('.slider_profilemobilechat').addClass('owl-carousel');
             $('.slider_profilemobilechat').owlCarousel({
                 loop: false,
@@ -573,7 +573,14 @@ $(document).ready(function () {
                     ,
                     1200: {
                         items: 1,
-                        stagePadding:20,
+                        stagePadding:30,
+                      
+
+                    }
+                    ,
+                    1400: {
+                        items: 2,
+                       
                       
 
                     }
