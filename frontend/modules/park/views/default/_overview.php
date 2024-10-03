@@ -9,12 +9,18 @@ $locked_months = \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['
 $total_closed_zone = 0;
 if ($model->bufferzones) {
     foreach ($model->bufferzones as $bufferzone) {
-        if ($bufferzone->is_open_in_monsoon == 0) {
-            $total_closed_zone++;
-        } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 0) {
-            $total_closed_zone++;
-        } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 1) {
-            $class = '';
+        if (!in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months))) {
+            if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A') {
+                $total_closed_zone++;
+            }
+        } else {
+            if ($bufferzone->is_open_in_monsoon == 0) {
+                $total_closed_zone++;
+            } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 0) {
+                $total_closed_zone++;
+            } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 1) {
+                $class = '';
+            }
         }
     }
 }
@@ -399,13 +405,22 @@ if ($model->corezones) {
                                     <?php if ($model->bufferzones) {
                                         foreach ($model->bufferzones as $bufferzone) {
                                             $class = '';
-                                            if ($bufferzone->is_open_in_monsoon == 0) {
-                                                $class = 'bufferzone_inactive';
-                                            } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 0) {
-                                                $class = 'bufferzone_inactive';
-                                            } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 1) {
-                                                $class = '';
-                                            }    ?>
+                                            if (!in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months))) {
+                                                if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A') {
+                                                    $class = 'bufferzone_inactive';
+                                                }
+                                            } else {
+                                                if ($bufferzone->is_open_in_monsoon == 0) {
+                                                    $class = 'bufferzone_inactive';
+                                                } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 0) {
+                                                    $class = 'bufferzone_inactive';
+                                                } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 1) {
+                                                    $class = '';
+                                                }
+                                            }
+
+
+                                    ?>
                                             <tr class="<?= $class ?>">
                                                 <td><?= $bufferzone->zone_name ?></td>
                                                 <td><?= $bufferzone->entry_gate_name ?></td>
