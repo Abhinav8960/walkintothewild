@@ -24,7 +24,55 @@ class User extends \common\models\User
         $fields[] = 'coverimage';
 
 
-        $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_safari_operator", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image", "user_handle",     "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index'])) {
+            $hold_fields = [
+                'id',
+                "password_hash",
+                "auth_key",
+                "facebook_url",
+                "whatsapp_url",
+                "x_url",
+                "insta_url",
+                "website_url",
+                "youtube_url",
+                "about",
+                "user_bio",
+                "date_of_birth",
+                "gender",
+                "token_key",
+                "is_adminstrator",
+                "is_admin",
+                "is_safari_operator",
+                "is_birding_operator",
+                "is_cms_manager",
+                "is_resort_manager",
+                "is_report_manager",
+                "is_community_manager",
+                "avatar",
+                "gmail",
+                "google_source_id",
+                "profile_image",
+                "cover_image",
+                "user_handle",
+                "blocked_at",
+                "account_type",
+                "password_updated_at",
+                "gender_privacy",
+                "email_privacy",
+                "photo_privacy",
+                "contribution_privacy",
+                "can_login",
+                "verification_token",
+                "status",
+                'password_reset_token',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at'
+            ];
+        } else {
+            $hold_fields = ['id', "token_key", "is_adminstrator", "is_admin", "is_safari_operator", "is_birding_operator", "is_cms_manager", "is_resort_manager", "is_report_manager", "is_community_manager", "avatar", "gmail", "google_source_id", "profile_image", "cover_image", "user_handle",     "blocked_at", "account_type", "password_updated_at", "gender_privacy", "email_privacy", "photo_privacy", "contribution_privacy", "can_login", "status", 'password_reset_token', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        }
         return array_diff($fields, $hold_fields);
         return $fields;
     }

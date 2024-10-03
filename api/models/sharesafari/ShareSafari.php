@@ -28,12 +28,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'sharesafariIncludeds';
         $fields[] = 'sharesafaridays';
         $fields[] = 'sharesafarigallery';
-
-        // if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/view'])) {
-
-        // }
-        
-
+        $fields[] = 'intrestedUser';
 
 
         if ($this->type == ShareSafari::TYPE_SAFARI) {
@@ -60,6 +55,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                 'share_safari_exclusion',
                 'total_view',
                 'status',
+                'intrestedUser.auth_key',
                 'created_by',
                 'updated_by',
                 'created_at',
@@ -80,6 +76,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                     'estimate_price_max',
                     'park_id',
                     'total_view',
+                    'intrestedUser.auth_key',
                     'status',
                     'created_by',
                     'updated_by',
@@ -127,6 +124,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getIntrested()
     {
         return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id']);
+    }
+
+    public function getIntrestedUser()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->via('intrested');
     }
 
     public function getSharedimagepath()
