@@ -39,20 +39,20 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                         <button class="nav-link <?php if (empty($chat_id)) {
                                                                     echo 'active';
                                                                 } ?> 
-                                                                chatFonts" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Direct Messages</button>
+                                                                chatFonts" id="direct-message-tab" data-bs-toggle="pill" data-bs-target="#direct-message" type="button" role="tab" aria-controls="direct-message" aria-selected="true">Direct Messages</button>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link <?php if (!empty($chat_id)) {
                                                                     echo 'active';
-                                                                } ?>  chatFonts" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Quote Request (<?= count($active_quote_chat_list) ?>)</button>
+                                                                } ?>  chatFonts" id="quote-request-tab" data-bs-toggle="pill" data-bs-target="#quote-request" type="button" role="tab" aria-controls="quote-request" aria-selected="false">Quote Request (<?= count($active_quote_chat_list) ?>)</button>
                                     </li>
                                 </ul>
                             </div>
                             <div class="tab-content pt-3" id="pills-tabContent">
                                 <!-- direct msg user lists -->
-                                <div id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" class="tab-pane fade <?php if (empty($chat_id) || $searchModel->name <> '') {
-                                                                                                                                echo 'show active mt-4';
-                                                                                                                            } ?>">
+                                <div id="direct-message" role="tabpanel" aria-labelledby="direct-message-tab" class="tab-pane fade <?php if (empty($chat_id) || $searchModel->name <> '') {
+                                                                                                                                        echo 'show active mt-4';
+                                                                                                                                    } ?>">
                                     <div class="chat-search-user mb-3 position-relative">
                                         <?= $this->render('_search', ['searchModel' => $searchModel, 'login_user' => $login_user, 'autofocus' => false, 'chat_type' => 1]) ?>
                                         <div class="secrchIcons">
@@ -89,14 +89,10 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                     </div>
                                 </div>
 
-                                <!-- quote msg user lists -->
-                                <div id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" class="tab-pane fade 
-                                <?php if (!empty($chat_id) && $searchModel->name == '') {
-                                    echo 'show active mt-4';
-                                } ?>">
-
-                                    <!-- start quote user search here -->
-                                    <!-- end quote user search here-->
+                                <!-- Quote Request List -->
+                                <div id="quote-request" role="tabpanel" aria-labelledby="quote-request-tab" class="tab-pane fade <?php if (!empty($chat_id) && $searchModel->name == '') {
+                                                                                                                                        echo 'show active mt-4';
+                                                                                                                                    } ?>">
                                     <div class="chat-cardlist pt-3">
                                         <div class="chatboxslid">
                                             <?php if ($searchModel->name == '' && $active_quote_chat_list) {
@@ -110,34 +106,22 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                                     <a href="<?= Url::toRoute(['/chat/message/' . $user->user_handle . "/" . base64_encode($active_chat->id)]) ?>" class="chat-link mb-3 d-block" data-pjax="0">
 
 
-                                                    <div class="chat-sidebar-user-card  click_mobile <?= $active_chat->id == $chat_id ? 'selected_chat' : '' ?>">
-                                                        <div class="d-flex chat-user_message">
-                                                            <?php if ($active_chat->recipient_user_id == $user->id) { ?>
-                                                                <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
-                                                                    <?php
-                                                                    if (isset($user->operator)) { ?>
-                                                                        <img src="<?= $user->operator->logo ? $user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                        <div class="chat-sidebar-user-card  click_mobile <?= $active_chat->id == $chat_id ? 'selected_chat' : '' ?>">
+                                                            <div class="d-flex chat-user_message">
+                                                                <div class="chat-user_name">
+                                                                    <?php if ($active_chat->recipient_user_id == $user->id) { ?>
+                                                                        <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
+                                                                            <?php
+                                                                            if (isset($user->operator)) { ?>
+                                                                                <img src="<?= $user->operator->logo ? $user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                            <?php } else { ?>
+                                                                                <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
+                                                                            <?php }  ?>
+                                                                        </h6>
                                                                     <?php } else { ?>
                                                                         <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
-                                                                    <?php }  ?>
-                                                                </h6>
-                                                            <?php } else { ?>
-                                                                <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
-                                                            <?php } ?>
-
-                                                            <div class="chat-user_name">
-                                                                <?php if ($active_chat->recipient_user_id == $user->id) { ?>
-                                                                    <h6 class="fs-6 mb-0" style="color: #4c4c4c;">
-                                                                        <?php
-                                                                        if (isset($user->operator)) { ?>
-                                                                            <img src="<?= $user->operator->logo ? $user->operator->imagepath : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
-                                                                        <?php } else { ?>
-                                                                            <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
-                                                                        <?php }  ?>
-                                                                    </h6>
-                                                                <?php } else { ?>
-                                                                    <img src="<?= $user->profileimage ? $user->profileimage : $this->params['baseurl'] . '/img/user.png' ?>" alt="" class="rounded-circle user-icon" onerror="this.src='<?= $this->params['baseurl'] . '/img/Share-Safari/dpmain.png' ?>';" style="background-color:#000;">
-                                                                <?php } ?>
+                                                                    <?php } ?>
+                                                                </div>
 
                                                                 <div class="chat-user_name">
                                                                     <?php if ($active_chat->recipient_user_id == $user->id) { ?>
@@ -160,9 +144,6 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                                             <?php }
                                             }
 
-                                            // if ($searchModel->name) {
-                                            //     echo $this->render('_default_userlist', ['dataProvider' => $dataProvider]);
-                                            // }
                                             ?>
                                         </div>
                                     </div>
