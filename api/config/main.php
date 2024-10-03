@@ -85,6 +85,7 @@ return [
                 'master/<action>/<slug>' => 'master/default/<action>',
 
                 'park' => 'park/default/index',
+                'filter-parklist' => 'park/default/filter-parklist',
                 'park/<slug>' => 'park/default/view',
 
                 'cms/<action>' => 'cms/default/<action>',
