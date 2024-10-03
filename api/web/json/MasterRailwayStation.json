@@ -1,9 +1,7 @@
 {
     "MasterRailwayStation": {
         "summary": {
-            "query_params": {
-                "pagination": "0"
-            }
+            "last_updated_time": 1727786037
         },
         "data": [
             {

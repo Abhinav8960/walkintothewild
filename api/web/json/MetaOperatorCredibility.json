@@ -1,0 +1,33 @@
+{
+    "MetaOperatorCredibility": {
+        "summary": {
+            "last_updated_time": 1727786037
+        },
+        "data": [
+            {
+                "id": 1,
+                "title": "Registered Company"
+            },
+            {
+                "id": 2,
+                "title": "Has a Website"
+            },
+            {
+                "id": 3,
+                "title": "Offers Other Wildlife Activities"
+            },
+            {
+                "id": 4,
+                "title": "Has Cancellation Policy"
+            },
+            {
+                "id": 5,
+                "title": "Wildlife Photographer"
+            },
+            {
+                "id": 6,
+                "title": "Wildlife Influencer"
+            }
+        ]
+    }
+}

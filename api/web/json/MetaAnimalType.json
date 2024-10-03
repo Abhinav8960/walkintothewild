@@ -1,0 +1,17 @@
+{
+    "MetaAnimalType": {
+        "summary": {
+            "last_updated_time": 1727786037
+        },
+        "data": [
+            {
+                "id": 1,
+                "title": "Usual"
+            },
+            {
+                "id": 2,
+                "title": "Exotic"
+            }
+        ]
+    }
+}
