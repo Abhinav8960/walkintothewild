@@ -31,6 +31,7 @@ class DefaultController extends RestController
                 'actions' => [
                     'index' => ['GET'],
                     'view' => ['GET'],
+                    'filter-parklist' => ['GET'],
 
                 ],
             ],
