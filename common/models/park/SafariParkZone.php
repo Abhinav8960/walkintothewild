@@ -61,6 +61,7 @@ class SafariParkZone extends \yii\db\ActiveRecord implements \common\interfaces\
             [['safari_park_id', 'master_zone_type_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['zone_name', 'entry_gate_name'], 'string', 'max' => 255],
             [['entry_gate_latitude', 'entry_gate_longitude'], 'string', 'max' => 50],
+            ['open_after_date', 'safe'],
         ];
     }
 
