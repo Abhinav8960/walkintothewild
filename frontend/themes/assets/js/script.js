@@ -532,6 +532,74 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     function initializeOwlCarousel() {
+        if ($(window).width() <= 1600) {
+            $('.slider_profilemobilechat').addClass('owl-carousel');
+            $('.slider_profilemobilechat').owlCarousel({
+                loop: false,
+                margin: 10,
+                nav: false,
+                responsiveClass: true,
+                center: false,
+                dots: false,
+                stagePadding: 10,
+                responsive: {
+                    0: {
+                        items: 2,
+                        
+
+
+                    },
+                    300: {
+                        items: 2,
+                      
+
+                    },
+
+                    400: {
+                        items: 2,
+                       
+
+                    },
+                    700: {
+                        items: 1,
+                        stagePadding:20
+
+                    },
+                    991: {
+                        items: 1,
+                        stagePadding:10
+
+                    }
+                    ,
+                    1200: {
+                        items: 1,
+                        stagePadding:30,
+                      
+
+                    }
+                    ,
+                    1400: {
+                        items: 2,
+                       
+                      
+
+                    }
+                }
+            });
+        } else {
+            $('.slider_profilemobilechat').trigger('destroy.owl.carousel').removeClass('owl-carousel owl-loaded');
+            $('.slider_profilemobilechat').find('.owl-stage-outer').children().unwrap();
+        }
+    }
+
+    initializeOwlCarousel();
+
+    $(window).resize(function () {
+        initializeOwlCarousel();
+    });
+});
+$(document).ready(function () {
+    function initializeOwlCarousel() {
         if ($(window).width() <= 991) {
             $('.slider_accountsidebar').addClass('owl-carousel');
             $('.slider_accountsidebar').owlCarousel({

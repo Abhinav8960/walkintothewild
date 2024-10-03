@@ -129,7 +129,7 @@ $this->title = $user->name;
             </div>
         </div>
         <div class="advertisment mt-5" style ="display: none">
-            <div class="google-ad-box style=" border:none">
+            <div class="google-ad-box" style="border:none">
                 
             </div>
         </div>

@@ -33,7 +33,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                             ]); ?>
 
                             <div class="tablmassage safartabs">
-                                <ul class="nav  nav-tabs " id="pills-tab" role="tablist" style="justify-content:between">
+                                <ul class="nav  nav-tabs slider_profilemobilechat " id="pills-tab" role="tablist" style="justify-content:between">
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link <?php if (empty($chat_id)) {
                                                                     echo 'active';
