@@ -26,71 +26,152 @@ class SafariPark extends \common\models\park\SafariPark
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'featureimagepath';
 
-        $fields[] = 'sessions';
-        $fields[] = 'months';
-        $fields[] = 'city';
-        $fields[] = 'state';
-        $fields[] = 'country';
-        $fields[] = 'location';
-        if (in_array(\Yii::$app->controller->action->uniqueId, ['park/default/view'])) {
-            $fields[] = 'bufferzones';
-            $fields[] = 'corezones';
-            $fields[] = 'airport';
-            $fields[] = 'vehicles';
-            // $fields[] = 'airportdata';
-            // $fields[] = 'airportlist';
-            $fields[] = 'railwaystation';
-            $fields[] = 'railwaystationtwo';
-            $fields[] = 'railwaystationlist';
-            $fields[] = 'gallery';
-            $fields[] = 'animals';
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/filter-parklist'])) {
+            $fields[] = 'featureimagepath';
+            $fields[] = 'sessions';
+            $fields[] = 'months';
+            $fields[] = 'city';
+            $fields[] = 'state';
+            $fields[] = 'country';
+            $fields[] = 'location';
+            if (in_array(\Yii::$app->controller->action->uniqueId, ['park/default/view'])) {
+                $fields[] = 'bufferzones';
+                $fields[] = 'corezones';
+                $fields[] = 'airport';
+                $fields[] = 'vehicles';
+                // $fields[] = 'airportdata';
+                // $fields[] = 'airportlist';
+                $fields[] = 'railwaystation';
+                $fields[] = 'railwaystationtwo';
+                $fields[] = 'railwaystationlist';
+                $fields[] = 'gallery';
+                $fields[] = 'animals';
+            }
+
+            $hold_fields = [
+                'nearest_railway_station',
+                'nearest_railway_station_distance',
+                'nearest_airport',
+                'nearest_airport_distance',
+                'nearest_railway_station_two',
+                'nearest_railway_station_distance_two',
+                'nearest_railway_station_three',
+                'nearest_railway_station_distance_three',
+                'nearest_railway_station_four',
+                'nearest_railway_station_distance_four',
+                'nearest_railway_station_five',
+                'nearest_railway_station_distance_five',
+                'nearest_airport_two',
+                'nearest_airport_distance_two',
+                'nearest_airport_three',
+                'nearest_airport_distance_three',
+                'nearest_airport_four',
+                'nearest_airport_distance_four',
+                'nearest_airport_five',
+                'nearest_airport_distance_five',
+                'is_published',
+                'master_location_id',
+                'country_name',
+                'state_name',
+                'city_name',
+                'status',
+                'country_id',
+                'state_id',
+                'city_id',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at'
+            ];
+        } else {
+            $hold_fields = [
+                'id',
+                'show_in_filter',
+                'park_type_id',
+                'logo',
+                'feature_image',
+                'pincode',
+                'nearest_railway_station_two',
+                'nearest_railway_station_distance_two',
+                'nearest_railway_station_three',
+                'nearest_railway_station_distance_three',
+                'nearest_railway_station_four',
+                'nearest_railway_station_distance_four',
+                'nearest_railway_station_five',
+                'nearest_railway_station_distance_five',
+                'nearest_airport_two',
+                'nearest_airport_distance_two',
+                'nearest_airport_three',
+                'nearest_airport_distance_three',
+                'nearest_airport_four',
+                'nearest_airport_distance_four',
+                'nearest_airport_five',
+                'nearest_airport_distance_five',
+                'about_title',
+                'about_description',
+                'module_title',
+                'module_description',
+                'florafauna',
+                'animal_text',
+                'month_note',
+                'safri_cost_note',
+                'is_published',
+                'is_most_demanding',
+                'is_shared_safari',
+                'google_rating',
+                'google_review_count',
+                'total_view',
+                'sequence',
+                'animal_type_sequence',
+                'short_description',
+                'long_description',
+                'meta_description',
+                'meta_keywords',
+                'master_location_id',
+                'country_id',
+                'state_id',
+                'city_id',
+                'status',
+                'created_at',
+                'updated_at',
+                'created_by',
+                'updated_by',
+                'nearest_airport_distance',
+                'nearest_railway_station_distance',
+
+                'official_website',
+                'country_name',
+                'state_name',
+                'city_name',
+                'avg_safari_price_min',
+                'avg_safari_price_max',
+                'nearest_railway_station',
+                'nearest_airport',
+                'nearest_bus_station',
+                'meta_title',
+                'latitude',
+                'longitude',
+                'status',
+                'country_id',
+                'state_id',
+                'city_id',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'updated_at'
+            ];
         }
+
 
         // $fields[] = 'safarioperatorlist';
         // $fields[] = 'rareanimals';
-        
+
         // $fields[] = 'accomodations';
         // $fields[] = 'suggestions';
         // $fields[] = 'bonusexperience';
 
 
-        $hold_fields = [
-            'nearest_railway_station',
-            'nearest_railway_station_distance',
-            'nearest_airport',
-            'nearest_airport_distance',
-            'nearest_railway_station_two',
-            'nearest_railway_station_distance_two',
-            'nearest_railway_station_three',
-            'nearest_railway_station_distance_three',
-            'nearest_railway_station_four',
-            'nearest_railway_station_distance_four',
-            'nearest_railway_station_five',
-            'nearest_railway_station_distance_five',
-            'nearest_airport_two',
-            'nearest_airport_distance_two',
-            'nearest_airport_three',
-            'nearest_airport_distance_three',
-            'nearest_airport_four',
-            'nearest_airport_distance_four',
-            'nearest_airport_five',
-            'nearest_airport_distance_five',
-            'is_published',
-            'master_location_id',
-            'country_name',
-            'state_name',
-            'city_name',
-            'status',
-            'country_id',
-            'state_id',
-            'city_id',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'updated_at'
-        ];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
@@ -324,7 +405,7 @@ class SafariPark extends \common\models\park\SafariPark
     // }
 
 
-    
+
 
     public function getBonusexperience()
     {
