@@ -1,7 +1,6 @@
 <?php
 
 use common\models\GeneralModel;
-use dosamigos\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 
@@ -24,11 +23,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-12">
-                <?= $form->field($model, 'long_description')->widget(CKEditor::className(), [
-                    'options' => ['rows' => 4],
-                    'preset' => 'full',
-
-                ]) ?>
+                <?= $form->field($model, 'long_description')->textarea() ?>
             </div>
 
 
@@ -184,11 +179,7 @@ use yii\bootstrap5\ActiveForm;
             </div>
 
             <div class="col-md-12">
-                <?= $form->field($model, 'about_description')->widget(CKEditor::className(), [
-                    'options' => ['rows' => 4],
-                    'preset' => 'full',
-
-                ]) ?>
+                <?= $form->field($model, 'about_description')->textarea() ?>
             </div>
         </div>
         <hr>
@@ -239,3 +230,17 @@ use yii\bootstrap5\ActiveForm;
         display: block !important;
     }
 </style>
+
+
+<style>
+    .ck-editor__editable {
+        min-height: 150px;
+    }
+</style>
+<?php
+$script = <<< JS
+editor('safariparkform-long_description');
+editor('safariparkform-about_description');
+JS;
+$this->registerJs($script);
+?>

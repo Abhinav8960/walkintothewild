@@ -318,7 +318,7 @@ if ($model->corezones) {
         </div>
         <div class="row pt-2">
             <div class="col-lg-6 col-xl-6 mb-3 mb-xl-0">
-                <div class="row gx-2 <?= $total_core_closed_zone == count($model->corezones) || in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
+                <div class="row gx-2 <?= $total_core_closed_zone == count($model->corezones) && in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months)) ? 'inactive_core_zone' : '' ?>">
                     <div class="col-sm-3 mb-sm-0 mb-3 ">
                         <div class="coreZone h-100">
                             <h3>CORE ZONE</h3>
@@ -347,6 +347,10 @@ if ($model->corezones) {
                                                 $class = '';
                                             }
                                             if ($corezone->is_open_in_monsoon == 1) {
+                                                $class = 'zone_active';
+                                            }
+
+                                            if (!in_array(GeneralModel::removeLeadingChar(date('m')), array_keys($locked_months))) {
                                                 $class = 'zone_active';
                                             }
                                     ?>
