@@ -13,7 +13,7 @@ class ShareSafariParklist extends \common\models\sharesafari\ShareSafariParklist
     {
         $fields = parent::fields();
         $fields[] = 'user';
-        $fields[] = 'sharesafari';
+        // $fields[] = 'sharesafari';
         $fields[] = 'park';
         $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
@@ -25,10 +25,10 @@ class ShareSafariParklist extends \common\models\sharesafari\ShareSafariParklist
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-    public function getSharesafari()
-    {
-        return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
-    }
+    // public function getSharesafari()
+    // {
+    //     return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
+    // }
 
     public function getPark()
     {
