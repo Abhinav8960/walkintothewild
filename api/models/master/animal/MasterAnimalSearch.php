@@ -46,6 +46,7 @@ class MasterAnimalSearch extends MasterAnimal
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['name' => SORT_ASC]],
         ]);
 
         $this->load($params);
