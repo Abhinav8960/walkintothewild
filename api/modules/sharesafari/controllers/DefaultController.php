@@ -37,7 +37,7 @@ class DefaultController extends SafariController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index'],
+                'exclude' => ['index','view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -65,6 +65,7 @@ class DefaultController extends SafariController
                 'class' => Verbcheck::className(),
                 'actions' => [
                     'index' => ['GET'],
+                    'view' => ['GET'],
                     'organize-safari' => ['POST'],
                     'join' => ['POST'],
 
@@ -78,6 +79,18 @@ class DefaultController extends SafariController
     {
         $searchModel = new ShareSafariSearch();
         return $this->dataProviderSender($searchModel, $rootIndexName = "Share Safari");
+    }
+
+
+    public function actionView($slug)
+    {
+        $share_safari = ShareSafari::find()->where(['status' => [ShareSafari::STATUS_ACTIVE,  ShareSafari::STATUS_FULL_SEAT], 'slug' => $slug])->limit(1)->one();
+        if (!$share_safari) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+        }
+        $searchModel = new ShareSafariSearch();
+        $searchModel->id = $share_safari->id;
+        return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     }
 
     public function actionOrganizeSafari()

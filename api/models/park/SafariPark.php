@@ -27,7 +27,7 @@ class SafariPark extends \common\models\park\SafariPark
     {
         $fields = parent::fields();
 
-        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/filter-parklist','sharesafari/default/index'])) {
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/filter-parklist','sharesafari/default/index','sharesafari/default/view'])) {
             $fields[] = 'featureimagepath';
             $fields[] = 'sessions';
             $fields[] = 'months';
