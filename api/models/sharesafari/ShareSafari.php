@@ -2,6 +2,7 @@
 
 namespace api\models\sharesafari;
 
+use api\models\master\packageinclude\MasterPackageInclude;
 use Yii;
 use api\models\User;
 use api\models\park\SafariPark;
@@ -23,9 +24,10 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         $fields = parent::fields();
         $fields[] = 'types';
+        $fields[] = 'hosttype';
         $fields[] = 'sharedimagepath';
         $fields[] = 'park';
-        $fields[] = 'sharesafariIncludeds';
+        $fields[] = 'includeds';
         $fields[] = 'sharesafaridays';
         $fields[] = 'sharesafarigallery';
         $fields[] = 'intrestedUser';
@@ -59,7 +61,8 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                 'created_by',
                 'updated_by',
                 'created_at',
-                'updated_at'
+                'updated_at',
+                'host_type'
             ];
         } else {
             $hold_fields =
@@ -83,6 +86,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                     'created_at',
                     'created_by',
                     'updated_at',
+                    'host_type'
                 ];
         }
 
@@ -195,6 +199,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getSharesafariIncludeds()
     {
         return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+    }
+
+    public function getIncludeds()
+    {
+        return $this->hasMany(MasterPackageInclude::class, ['id' => 'include_id'])->via('sharesafariIncludeds');
     }
 
     public function getSharesafaridays()
