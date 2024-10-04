@@ -2,6 +2,7 @@
 
 namespace api\models\sharesafari;
 
+use api\models\master\packageinclude\MasterPackageInclude;
 use Yii;
 use api\models\User;
 use api\models\park\SafariPark;
@@ -23,68 +24,43 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     {
         $fields = parent::fields();
         $fields[] = 'types';
+        $fields[] = 'sharesafariagenda';
+        $fields[] = 'budget';
+        $fields[] = 'organizedbyname';
+        $fields[] = 'hosttype';
         $fields[] = 'sharedimagepath';
         $fields[] = 'park';
-        $fields[] = 'sharesafariIncludeds';
+        $fields[] = 'includeds';
         $fields[] = 'sharesafaridays';
         $fields[] = 'sharesafarigallery';
         $fields[] = 'intrestedUser';
 
 
-        if ($this->type == ShareSafari::TYPE_SAFARI) {
-            $hold_fields = [
+
+        $hold_fields =
+            [
                 'delete_reason_id',
                 'delete_reason',
-                'cut_off_date',
                 'share_safari_request_id',
+                'share_safari_agenda_id',
+                'stay_category_id',
                 'type',
-                'cost_per_person',
-                'park_id',
-                'share_safari_terms_condtition',
+                'image',
                 'privacy_policy',
                 'change_policy',
                 'what_you_must_carry',
-                'date_change_policy',
-                'refund_policy',
-                'getting_there',
-                'breakfast_included',
-                'lunch_included',
-                'dinner_included',
-                'meal_not_included',
-                'share_safari_inclusion',
-                'share_safari_exclusion',
+                'park_id',
                 'total_view',
+                'host_user_id',
                 'status',
-                'intrestedUser.auth_key',
                 'created_by',
                 'updated_by',
                 'created_at',
-                'updated_at'
+                'created_by',
+                'updated_at',
+                'host_type'
             ];
-        } else {
-            $hold_fields =
-                [
-                    'delete_reason_id',
-                    'delete_reason',
-                    'share_safari_request_id',
-                    'type',
-                    'image',
-                    'privacy_policy',
-                    'change_policy',
-                    'what_you_must_carry',
-                    'estimate_price_min',
-                    'estimate_price_max',
-                    'park_id',
-                    'total_view',
-                    'intrestedUser.auth_key',
-                    'status',
-                    'created_by',
-                    'updated_by',
-                    'created_at',
-                    'created_by',
-                    'updated_at',
-                ];
-        }
+
 
         return array_diff($fields, $hold_fields);
         return $fields;
@@ -134,7 +110,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getSharedimagepath()
     {
 
-        return isset($this->image) ? ('/storage/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image) ? (\Yii::$app->params['frontend_url'] . '/storage/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()
@@ -197,6 +173,11 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
     }
 
+    public function getIncludeds()
+    {
+        return $this->hasMany(MasterPackageInclude::class, ['id' => 'include_id'])->via('sharesafariIncludeds');
+    }
+
     public function getSharesafaridays()
     {
         return $this->hasMany(ShareSafariDay::class, ['share_safari_id' => 'id']);
@@ -252,5 +233,32 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getTypes()
     {
         return $this->type == ShareSafari::TYPE_SAFARI ? "Share Safari" : "Fixed Departure";
+    }
+
+    // public function getSharesafariagenda()
+    // {
+    //     return $this->share_safari_agenda_id == 1 ? "Photography" : "Safari Experience";
+    // }
+
+    public function getSharesafariagenda()
+    {
+        $options = [
+            '1' => 'Photography',
+            // '2' => 'Vlogging',
+            '3' => 'Safari Experience'
+        ];
+        return isset($options[$this->share_safari_agenda_id]) ? $options[$this->share_safari_agenda_id] : $this->share_safari_agenda_id;
+    }
+
+    public function getBudget()
+    {
+        $options = [
+            '1' => 'Premium',
+            '2' => 'Standard',
+            '3' => 'Economical',
+            '4' => 'Not Included',
+
+        ];
+        return isset($options[$this->stay_category_id]) ? $options[$this->stay_category_id] : $this->stay_category_id;
     }
 }
