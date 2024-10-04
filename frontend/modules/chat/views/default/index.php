@@ -22,7 +22,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
         </div>
         <div class="col-md-12">
             <div class="row  itenary_tabs">
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 col-xl-4 col-xxl-3 mb-3">
                     <div class="chat-card-sidebar card">
                         <div class="card-body">
                             <?php Pjax::begin([
@@ -158,7 +158,7 @@ $emoji_base_url =  $this->assetManager->getBundle('\frontend\assets\EmojiAsset')
                     </div>
                 </div>
 
-                <div class="col-md-9 d-md-block d-none">
+                <div class="col-md-8 col-xl-8 col-xxl-9 d-md-block  d-none">
                     <?php Pjax::begin([
                         'id' => 'grid-data-chat',
                         'enablePushState' => FALSE,
