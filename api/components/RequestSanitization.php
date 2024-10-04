@@ -25,6 +25,8 @@ class RequestSanitization extends \yii\base\Component
             'file',
             'cms',
             'sharesafari',
+            'park',
+            'filter-parklist',
             
         ];
 
