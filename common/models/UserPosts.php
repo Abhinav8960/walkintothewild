@@ -19,7 +19,7 @@ use Yii;
  * @property int|null $updated_at
  * @property int|null $updated_by
  */
-class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\StatusInterface
+class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewStatusInterface
 {
     use CommanRelationship;
     /**

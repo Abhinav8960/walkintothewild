@@ -27,6 +27,9 @@ return [
         ],
         'sharesafari' => [
             'class' => 'api\modules\sharesafari\Module',
+        ],
+        'posts' => [
+            'class' => 'api\modules\posts\Module',
         ]
 
     ],
