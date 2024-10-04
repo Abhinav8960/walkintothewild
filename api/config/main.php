@@ -91,7 +91,7 @@ return [
                 'cms/<action>' => 'cms/default/<action>',
                 'sharesafari' => 'sharesafari/default/index',
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',
-                'sharesafari/<action>/<slug>' => 'sharesafari/default/<action>',
+                'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
 
 
 
