@@ -20,6 +20,7 @@ class SafariParkZoneForm extends model
     public $entry_gate_latitude;
     public $entry_gate_longitude;
     public $is_open_in_monsoon;
+    public $open_after_date;
     public $status;
     public $status_option = [];
     public $safari_park_zone_model;
@@ -44,6 +45,7 @@ class SafariParkZoneForm extends model
             $this->entry_gate_latitude = $this->safari_park_zone_model->entry_gate_latitude;
             $this->entry_gate_longitude = $this->safari_park_zone_model->entry_gate_longitude;
             $this->is_open_in_monsoon = $this->safari_park_zone_model->is_open_in_monsoon;
+            $this->open_after_date = $this->safari_park_zone_model->open_after_date;
             $this->status = $this->safari_park_zone_model->status;
         }
 
@@ -63,19 +65,25 @@ class SafariParkZoneForm extends model
             [['safari_park_id', 'master_zone_type_id', 'status'], 'integer'],
             [['zone_name', 'entry_gate_name'], 'string', 'max' => 255],
             [['entry_gate_latitude', 'entry_gate_longitude'], 'string', 'max' => 50],
-            [['master_zone_type_name'], 'safe'],
+            [['master_zone_type_name', 'open_after_date'], 'safe'],
             [
-                'zone_name', 'unique', 'when' => function ($model, $attribute) {
+                'zone_name',
+                'unique',
+                'when' => function ($model, $attribute) {
                     return strtolower($this->safari_park_zone_model->$attribute) != strtolower($model->$attribute);
                 },
-                'targetClass' => SafariParkZone::className(), 'targetAttribute' => ['safari_park_id', 'master_zone_type_id', 'zone_name'],
+                'targetClass' => SafariParkZone::className(),
+                'targetAttribute' => ['safari_park_id', 'master_zone_type_id', 'zone_name'],
                 'message' => 'This Zone Name has already been taken'
             ],
             [
-                'entry_gate_name', 'unique', 'when' => function ($model, $attribute) {
+                'entry_gate_name',
+                'unique',
+                'when' => function ($model, $attribute) {
                     return strtolower($this->safari_park_zone_model->$attribute) != strtolower($model->$attribute);
                 },
-                'targetClass' => SafariParkZone::className(), 'targetAttribute' => ['safari_park_id', 'master_zone_type_id', 'entry_gate_name'],
+                'targetClass' => SafariParkZone::className(),
+                'targetAttribute' => ['safari_park_id', 'master_zone_type_id', 'entry_gate_name'],
                 'message' => 'This Entry Gate Name has already been taken'
             ],
 
@@ -96,6 +104,7 @@ class SafariParkZoneForm extends model
             'entry_gate_latitude' => 'Entry Gate Latitude *',
             'entry_gate_longitude' => 'Entry Gate Longitude *',
             'status' => 'Status',
+            'open_after_date' => 'Open in Upcoming Date',
         ];
     }
     /**
@@ -115,6 +124,7 @@ class SafariParkZoneForm extends model
         $this->safari_park_zone_model->entry_gate_latitude = $this->entry_gate_latitude;
         $this->safari_park_zone_model->entry_gate_longitude = $this->entry_gate_longitude;
         $this->safari_park_zone_model->is_open_in_monsoon = $this->is_open_in_monsoon;
+        $this->safari_park_zone_model->open_after_date = $this->open_after_date;
         $this->safari_park_zone_model->status = $this->status;
     }
 }

@@ -370,6 +370,9 @@ if ($model->corezones) {
                                                     $class = 'zone_active';
                                                 }
                                             }
+                                            if (isset($corezone->open_after_date) && $corezone->open_after_date <> '' && $corezone->open_after_date > date('Y-m-d')) {
+                                                $class = 'inactive_core_zone';
+                                            }
 
                                     ?>
                                             <tr class="<?= $class ?>">
@@ -417,6 +420,10 @@ if ($model->corezones) {
                                                 } else if ($bufferzone->zone_name == 'N/A' && $bufferzone->entry_gate_name == 'N/A' && $bufferzone->is_open_in_monsoon == 1) {
                                                     $class = '';
                                                 }
+                                            }
+
+                                            if (isset($bufferzone->open_after_date) && $bufferzone->open_after_date <> '' && $bufferzone->open_after_date > date('Y-m-d')) {
+                                                $class = 'bufferzone_inactive';
                                             }
 
 

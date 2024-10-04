@@ -32,6 +32,11 @@ use yii\bootstrap5\ActiveForm;
                 <?= $form->field($model, 'is_open_in_monsoon')->radioList([1 => 'Yes', 0 => 'No']) ?>
             </div>
 
+
+            <div class="col-md-6">
+                <?= $form->field($model, 'open_after_date')->textInput(['type' => 'date', 'placeholder' => 'Open in Upcoming date']) ?>
+            </div>
+
             <?php if ($model->safari_park_zone_model->id) { ?>
                 <div class="col-md-6">
                     <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
