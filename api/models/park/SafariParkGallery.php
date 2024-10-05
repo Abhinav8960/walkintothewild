@@ -47,7 +47,7 @@ class SafariParkGallery extends \common\models\park\SafariParkGallery
     public function getImagepath()
     {
         if ($this->image != '') {
-            return \Yii::$app->params['frontend_url'] . 'storage/safariparkgallery/' . $this->id . '/' . $this->image;
+            return \Yii::$app->params['frontend_url_for_api'] . 'storage/safariparkgallery/' . $this->id . '/' . $this->image;
         }
     }
 }

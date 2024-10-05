@@ -80,7 +80,7 @@ class User extends \common\models\User
     public function getProfileimage()
     {
         if ($this->profile_image != '') {
-            return \Yii::$app->params['frontend_url'] . 'storage/user/' . $this->id . '/' . $this->profile_image;
+            return \Yii::$app->params['frontend_url_for_api'] . 'storage/user/' . $this->id . '/' . $this->profile_image;
         }
 
         if ($this->avatar != '') {
@@ -91,7 +91,7 @@ class User extends \common\models\User
     public function getCoverimage()
     {
         if ($this->cover_image != '') {
-            return \Yii::$app->params['frontend_url'] . 'storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
+            return \Yii::$app->params['frontend_url_for_api'] . 'storage/user_cover_image/' . $this->id . '/' . $this->cover_image;
         }
     }
 
