@@ -110,7 +110,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getSharedimagepath()
     {
 
-        return isset($this->image) ? (\Yii::$app->params['frontend_url_for_api'] . '/storage/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
+        return isset($this->image) ? (\Yii::$app->params['frontend_url_for_api'] . 'storage/share_safari/' . $this->id . '/' . $this->image) : (isset($this->park) && isset($this->park->logo) ? $this->park->logoimagepath : '');
     }
 
     public function getComments()
