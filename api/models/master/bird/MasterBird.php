@@ -39,7 +39,7 @@ class MasterBird extends \common\models\master\bird\MasterBird
     public function getImagepath()
     {
         if ($this->image != '') {
-            return  \Yii::$app->params['frontend_url'] . 'storage/bird/' . $this->id . '/' . $this->image;
+            return  \Yii::$app->params['frontend_url_for_api'] . 'storage/bird/' . $this->id . '/' . $this->image;
         }
     }
 

@@ -174,12 +174,16 @@ class RestController extends Controller
 
     private function reponseSender($data = [], $rootIndexName, $dataProvider, $singleRecord = false)
     {
-        $data[$rootIndexName]['summary']['query_params'] = $this->query_params;
 
         // $data[$rootIndexName]['values'] = $dataProvider->join(['clients', 'projectphase'])->getModels();
-        $data[$rootIndexName]['data'] = $this->serializeData($dataProvider->getModels());
         if ($singleRecord == true) {
-            $data[$rootIndexName]['data'] = $this->serializeData($dataProvider->query->one());
+            $data['summary']['query_params'] = $this->query_params;
+
+            $data['data'] = $this->serializeData($dataProvider->query->one());
+        } else {
+            $data[$rootIndexName]['summary']['query_params'] = $this->query_params;
+
+            $data[$rootIndexName]['data'] = $this->serializeData($dataProvider->getModels());
         }
         return Yii::$app->api->sendResponse($data);
     }

@@ -7007,3 +7007,7 @@ select.custom_sort_by_input option.selected {
   background: gray;
 
 }
+
+.slider_profilemobilechat .owl-stage{
+  padding-left: 0 !important;
+}
