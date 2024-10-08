@@ -73,12 +73,12 @@ class DefaultController extends RestController
 
         $model->load(\Yii::$app->request->post());
         $model->setAttributes(\Yii::$app->request->post());
-        $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
+        $model->file = \yii\web\UploadedFile::getInstanceByName('file');
 
         if ($model->validate()) {
             $model->initializeForm();
             if ($model->user_photo_model->save()) {
-                $model->UploadFile();
+                $model->uploadFile();
                 Yii::$app->api->sendResponse($data = [$model->user_photo_model->attributes], ['message' => "Post added successfully"]);
             }
         }

@@ -60,7 +60,7 @@ class UserPostsForm extends Model
     {
         return [
             [['caption'], 'required'],
-            [['file'], 'safe'],
+            [['file'], 'required'],
             [
                 ['file'],
                 'image',
@@ -87,7 +87,7 @@ class UserPostsForm extends Model
 
     public function initializeForm()
     {
-  
+
         $this->user_photo_model->caption = $this->caption;
         $this->user_photo_model->description = $this->description;
         $this->user_photo_model->user_id = $this->user_id;
@@ -113,10 +113,9 @@ class UserPostsForm extends Model
                 chmod($storagePath, 0777);
             }
             $userPath = $storagePath . '/' . $this->user_photo_model->user_id;
-
-            if (!file_exists($storagePath)) {
-                mkdir($storagePath);
-                chmod($storagePath, 0777);
+            if (!file_exists($userPath)) {
+                mkdir($userPath);
+                chmod($userPath, 0777);
             }
 
             $fileName = 'user' . time() . '.' . $this->file->extension;
