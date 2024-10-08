@@ -168,14 +168,16 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         }
     }
 
-    public function getSharesafariIncludeds()
-    {
-        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
-    }
+    // public function getSharesafariIncludeds()
+    // {
+    //     return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+    // }
 
     public function getIncludeds()
     {
-        return $this->hasMany(MasterPackageInclude::class, ['id' => 'include_id'])->via('sharesafariIncludeds');
+        return $this->hasMany(ShareSafariIncluded::class, ['share_safari_id' => 'id']);
+
+        // return $this->hasMany(MasterPackageInclude::class, ['id' => 'include_id'])->via('sharesafariIncludeds');
     }
 
     public function getSharesafaridays()
