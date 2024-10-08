@@ -16,8 +16,9 @@ class UserPostSearch extends UserPosts
     public function rules()
     {
         return [
-            [['user_id', 'type_of_post', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['caption'], 'string'],
+            [['type_of_post', 'user_id', 'height', 'width', 'like_count', 'location', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['caption', 'description'], 'string'],
+            [['latitude', 'longitude'], 'number'],
             [['file'], 'string', 'max' => 512],
         ];
     }

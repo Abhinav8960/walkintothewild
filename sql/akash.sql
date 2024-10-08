@@ -281,3 +281,7 @@ ALTER TABLE `article_topic` CHANGE `master_article_topic_id` `master_topic_id` I
 
 ALTER TABLE `article` ADD `sequence` INT NULL AFTER `article_date`;
 
+-- 7-oct-2024
+
+ALTER TABLE `user_posts` ADD `height` INT NULL AFTER `caption`, ADD `width` INT NULL AFTER `height`, ADD `like_count` INT NULL AFTER `width`, ADD `location` INT NULL AFTER `like_count`, ADD `latitude` INT NULL DEFAULT NULL AFTER `location`, ADD `longitude` INT NULL DEFAULT NULL AFTER `latitude`, ADD `description` TEXT NULL AFTER `longitude`;
+
