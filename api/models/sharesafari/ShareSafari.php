@@ -34,6 +34,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'sharesafaridays';
         $fields[] = 'sharesafarigallery';
         $fields[] = 'intrestedUser';
+        $fields[] = 'sharesafariFaqs';
 
 
 
@@ -262,5 +263,10 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
         ];
         return isset($options[$this->stay_category_id]) ? $options[$this->stay_category_id] : $this->stay_category_id;
+    }
+
+    public function getSharesafariFaqs()
+    {
+        return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id']);
     }
 }
