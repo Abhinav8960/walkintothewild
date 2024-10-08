@@ -96,6 +96,9 @@ return [
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',
                 'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
 
+                'posts' => 'posts/default/index',
+                'posts/<action>' => 'posts/default/<action>',
+
 
 
 
