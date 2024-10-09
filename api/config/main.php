@@ -27,6 +27,9 @@ return [
         ],
         'sharesafari' => [
             'class' => 'api\modules\sharesafari\Module',
+        ],
+        'posts' => [
+            'class' => 'api\modules\posts\Module',
         ]
 
     ],
@@ -92,6 +95,9 @@ return [
                 'sharesafari' => 'sharesafari/default/index',
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',
                 'sharesafari/<slug>/<action>' => 'sharesafari/default/<action>',
+
+                'posts' => 'posts/default/index',
+                'posts/<action>' => 'posts/default/<action>',
 
 
 
