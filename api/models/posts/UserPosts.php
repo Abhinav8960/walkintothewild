@@ -19,7 +19,7 @@ class UserPosts extends \common\models\UserPosts
     public function getImagepath()
     {
         if ($this->file != '') {
-            return '/storage/userpost/' . $this->user_id . '/' . $this->file;
+            return Yii::$app->params['frontend_url'] . 'storage/userpost/' . $this->user_id . '/' . $this->file;
         }
     }
 }

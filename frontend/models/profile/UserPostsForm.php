@@ -67,8 +67,8 @@ class UserPostsForm extends Model
                 'extensions' => ['jpeg', 'jpg', 'png','mp4', 'avi', 'mkv','webm'],
                 // 'maxSize' => 250 * 1024
             ],
-            [['user_id', 'type_of_post', 'height', 'width', 'like_count', 'location', 'status'], 'integer'],
-            [['caption', 'description'], 'string'],
+            [['user_id', 'type_of_post', 'height', 'width', 'like_count', 'status'], 'integer'],
+            [['caption', 'description','location'], 'string'],
             [['latitude', 'longitude'], 'number'],
 
 
