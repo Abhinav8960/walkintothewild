@@ -57,8 +57,15 @@ use common\models\User;
  */
 class SafariOperator extends \common\models\operator\SafariOperator
 {
-    
 
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields[] = 'imagepath';
+        $hold_fields = ['logo','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
+    }
 
     public function getPark()
     {
@@ -93,7 +100,7 @@ class SafariOperator extends \common\models\operator\SafariOperator
     public function getImagepath()
     {
         if ($this->logo != '') {
-            return '/storage/safarioperator/' . $this->id . '/' . $this->logo;
+            return Yii::$app->params['frontend_url_for_api'] . 'storage/safarioperator/' . $this->id . '/' . $this->logo;
         }
     }
 

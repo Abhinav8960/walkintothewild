@@ -16,6 +16,7 @@ use api\models\master\railwaystation\MasterRailwayStation;
 use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaAccommodation;
 use api\models\meta\MetaSafariSession;
+use api\models\operator\SafariOperator;
 use api\models\suggestions\SafariSuggestions;
 use api\models\UserExperience;
 use common\models\park\SafariParkMonth;
@@ -27,7 +28,7 @@ class SafariPark extends \common\models\park\SafariPark
     {
         $fields = parent::fields();
 
-        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/filter-parklist','sharesafari/default/index','sharesafari/default/view'])) {
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['park/default/filter-parklist', 'sharesafari/default/index', 'sharesafari/default/view'])) {
             $fields[] = 'featureimagepath';
             $fields[] = 'sessions';
             $fields[] = 'months';
@@ -35,6 +36,9 @@ class SafariPark extends \common\models\park\SafariPark
             $fields[] = 'state';
             $fields[] = 'country';
             $fields[] = 'location';
+            // $fields[] = 'safarioperatorlist';
+            $fields[] = 'operator';
+
             if (in_array(\Yii::$app->controller->action->uniqueId, ['park/default/view'])) {
                 $fields[] = 'bufferzones';
                 $fields[] = 'corezones';
@@ -47,6 +51,9 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'railwaystationlist';
                 $fields[] = 'gallery';
                 $fields[] = 'animals';
+                // $fields[] = 'safarioperatorlist';
+                $fields[] = 'operator';
+                
             }
 
             $hold_fields = [
@@ -318,6 +325,11 @@ class SafariPark extends \common\models\park\SafariPark
     public function getSafarioperatorlist()
     {
         return $this->hasMany(SafariOperatorPark::className(), ['park_id' => 'id'])->andWhere(['safari_operator_park.status' => 1]);
+    }
+
+    public function getOperator()
+    {
+        return $this->hasMany(SafariOperator::className(), ['id' => 'safari_operator_id'])->via('safarioperatorlist')->andWhere(['safari_operator.status' => 1]);
     }
 
     public function getGalleryimag()
