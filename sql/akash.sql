@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 09, 2024 at 11:57 AM
+-- Generation Time: Oct 09, 2024 at 12:08 PM
 -- Server version: 8.0.39-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.19
 
@@ -27,6 +27,7 @@ SET time_zone = "+00:00";
 -- Table structure for table `user_posts`
 --
 
+DROP TABLE IF EXISTS `user_posts`;
 CREATE TABLE `user_posts` (
   `id` int NOT NULL,
   `type_of_post` int DEFAULT NULL,
