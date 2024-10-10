@@ -45,7 +45,7 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'airport';
                 $fields[] = 'vehicles';
                 // $fields[] = 'airportdata';
-                // $fields[] = 'airportlist';
+                $fields[] = 'airportlist';
                 $fields[] = 'railwaystation';
                 $fields[] = 'railwaystationtwo';
                 $fields[] = 'railwaystationlist';
