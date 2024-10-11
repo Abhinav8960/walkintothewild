@@ -136,11 +136,11 @@ class DefaultController extends SafariController
                         GeneralModel::sendmailfromlog($maillog_data['log_id']);
                     }
                 }
-                Yii::$app->api->sendResponse($data = [$model->shared_safari_model->attributes], ['message' => "Shared safari created successfully"]);
+                return Yii::$app->api->sendResponse($data = [$model->shared_safari_model->attributes], ['message' => "Shared safari created successfully"]);
             }
         }
 
-        Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+        return  Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
     }
 
     public function actionJoin($slug)
@@ -169,11 +169,11 @@ class DefaultController extends SafariController
                 $share_safari_intrested->intrested_at = time();
                 if ($share_safari_intrested->save(false)) {
                     FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
-                    Yii::$app->api->sendResponse($data = [], ['message' => "You joined this shared safari!"]);
+                    return Yii::$app->api->sendResponse($data = [], ['message' => "You joined this shared safari!"]);
                 }
             }
         }
-        Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+        return  Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
     }
 
 
@@ -197,11 +197,11 @@ class DefaultController extends SafariController
                 $share_safari_intrested->unintrested_at = time();
                 if ($share_safari_intrested->save(false)) {
                     FrontendNotificationHelper::sharedSafariLeave($share_safari, $this->userinfo);
-                    Yii::$app->api->sendResponse($data = [], ['message' => "You unjoined this shared safari!"]);
+                    return   Yii::$app->api->sendResponse($data = [], ['message' => "You unjoined this shared safari!"]);
                 }
             }
         }
-        Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
     }
 
 
@@ -220,10 +220,10 @@ class DefaultController extends SafariController
             $wishlist->item_type = 'share-safari';
             $wishlist->status = 1;
             if ($wishlist->save(false)) {
-                Yii::$app->api->sendResponse($data = [], ['message' => "You added share safari to wishlist!"]);
+                return  Yii::$app->api->sendResponse($data = [], ['message' => "You added share safari to wishlist!"]);
             }
         }
-        Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
     }
 
     public function actionUnwishlist($slug)
@@ -234,11 +234,11 @@ class DefaultController extends SafariController
                 if ($wishlist) {
                     $wishlist->status = 0;
                     if ($wishlist->save(false)) {
-                        Yii::$app->api->sendResponse($data = [], ['message' => "You removed share safari from wishlist!"]);
+                        return  Yii::$app->api->sendResponse($data = [], ['message' => "You removed share safari from wishlist!"]);
                     } 
                 }
         }
-        Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
+        return Yii::$app->api->sendFailedStringResponse($share_safari->firstErrors, 400);
     }
 
 
