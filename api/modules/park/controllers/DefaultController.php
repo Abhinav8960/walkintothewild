@@ -47,6 +47,7 @@ class DefaultController extends RestController
     {
         $searchModel = new SafariParkSearch();
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
+
         return $this->dataProviderSender($searchModel, $rootIndexName = "SafariPark");
     }
 

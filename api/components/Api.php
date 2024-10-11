@@ -34,19 +34,19 @@ class Api extends Component
             $response = array_merge($response, $additional_info);
         }
 
-        $response = Json::encode($response, JSON_PRETTY_PRINT);
+
+        // $response = Json::encode($response, JSON_PRETTY_PRINT);
 
 
         if (isset($_GET['callback'])) {
             /* this is required for angularjs1.0 client factory API calls to work */
             $response = $_GET['callback'] . "(" . $response . ")";
 
-            echo $response;
+            return $response;
         } else {
-            echo $response;
+            return $response;
         }
 
-        exit;
     }
 
 
@@ -60,7 +60,8 @@ class Api extends Component
             $msg['message'] = $additional_info;
             $response = array_merge($response, $msg);
         }
-        echo $response = json_encode($response);
+        // return $response = json_encode($response);
+        return $response;
 
 
         exit;
@@ -75,7 +76,8 @@ class Api extends Component
         // if (!empty($additional_info)) {
         //     $response = array_merge($response, $msg);
         // }
-        echo $response = json_encode($response);
+        // return $response = json_encode($response);
+        return $response;
 
 
         exit;
@@ -100,16 +102,16 @@ class Api extends Component
             $response = array_merge($response, $additional_info);
         }
 
-        $response = Json::encode($response, JSON_PRETTY_PRINT);
+        // $response = Json::encode($response, JSON_PRETTY_PRINT);
 
 
         if (isset($_GET['callback'])) {
             /* this is required for angularjs1.0 client factory API calls to work */
             $response = $_GET['callback'] . "(" . $response . ")";
 
-            echo $response;
+            return $response;
         } else {
-            echo $response;
+            return $response;
         }
 
         exit;
