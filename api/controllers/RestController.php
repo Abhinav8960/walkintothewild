@@ -56,7 +56,6 @@ class RestController extends Controller
             '*',                        // star allows all domains
             'http://localhost:3000',
             'http://localhost:8081',
-            'https://spider.triline.in',
         ];
     }
 
