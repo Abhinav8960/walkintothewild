@@ -89,7 +89,6 @@ return [
 
                 'park' => 'park/default/index',
                 'filter-parklist' => 'park/default/filter-parklist',
-                'park/check' => 'park/default/check',
                 'park/<slug>' => 'park/default/view',
 
                 'cms/<action>' => 'cms/default/<action>',
