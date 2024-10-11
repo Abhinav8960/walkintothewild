@@ -31,6 +31,7 @@ class DefaultController extends RestController
                 'actions' => [
                     'index' => ['GET'],
                     'view' => ['GET'],
+                    'check' => ['GET'],
                     'filter-parklist' => ['GET'],
 
                 ],
@@ -65,7 +66,6 @@ class DefaultController extends RestController
         $searchModel->id = $model->id; // for show Selected Park name in search
 
         return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
-        
     }
 
 
@@ -75,5 +75,10 @@ class DefaultController extends RestController
         $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
         $searchModel->show_in_filter = 1;
         return $this->dataProviderSenderWithoutPagination($searchModel, $rootIndexName = "SafariPark");
+    }
+
+    public function actionCheck()
+    {
+        return ['Hello'];
     }
 }

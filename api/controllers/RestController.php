@@ -206,11 +206,12 @@ class RestController extends Controller
 
         //start code to each request trace by sonu shokeen
         $request = Yii::$app->request;
-        $user = Yii::$app->user;
-        $agent = new \Jenssegers\Agent\Agent();
-        $agent->setUserAgent(Yii::$app->request->userAgent);
+        $user = $this->userinfo;
+        // $agent = new \Jenssegers\Agent\Agent();
+        // $agent->setUserAgent(Yii::$app->request->userAgent);
         $refer_url = Yii::$app->request->referrer;
         $response = Yii::$app->response;
+     
 
         $route = "";
         $route_map = $request->resolve();
@@ -218,19 +219,19 @@ class RestController extends Controller
             $route = $route_map[0];
         }
 
-        $system_type = '';
-        if ($agent->isMobile()) {
-            $system_type = 'Mobile';
-        } else if ($agent->isTablet()) {
-            $system_type = 'Tablet';
-        } else if ($agent->isDesktop()) {
-            $system_type = 'Desktop';
-        }
+        // $system_type = '';
+        // if ($agent->isMobile()) {
+        //     $system_type = 'Mobile';
+        // } else if ($agent->isTablet()) {
+        //     $system_type = 'Tablet';
+        // } else if ($agent->isDesktop()) {
+        //     $system_type = 'Desktop';
+        // }
 
-        $isAjax = 0;
-        if ($request->isAjax) {
-            $isAjax = 1;
-        }
+        // $isAjax = 0;
+        // if ($request->isAjax) {
+        //     $isAjax = 1;
+        // }
 
         $userid = 0;
         if (isset($user->id) && !empty($user->id)) {
@@ -254,17 +255,17 @@ class RestController extends Controller
             $model->request_type = $request->method;
             $model->request_parameter = json_encode($request->queryParams);
             $model->user_ip = $request->getRemoteIP();
-            $model->request_data = json_encode($request->post());
+            $model->request_data = json_encode($request->get());
             $model->request_code = $response->statusCode;
             $model->is_server_error = $response->isServerError;
             $model->is_client_error = $response->isClientError;
             $model->response_error = $response->statusText;
-            $model->isAjax = $isAjax;
-            $model->device = $agent->device();
-            $model->system = $system_type;
-            $model->platform = $agent->platform();
-            $model->browser = $agent->browser();
-            $model->browser_version = $agent->version($agent->browser());
+            $model->isAjax = NULL;
+            $model->device =  NULL;
+            $model->system =  NULL;
+            $model->platform =  NULL;
+            $model->browser =  NULL;
+            $model->browser_version =  NULL;
             $model->save(false);
         }
         //end code to each request trace by sonu shokeen
