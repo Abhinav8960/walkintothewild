@@ -53,6 +53,7 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'animals';
                 // $fields[] = 'safarioperatorlist';
                 $fields[] = 'operator';
+                $fields[] = 'lockedOnce';
                 
             }
 
@@ -436,5 +437,14 @@ class SafariPark extends \common\models\park\SafariPark
         if ($this->logo != '') {
             return \Yii::$app->params['frontend_url_for_api'] . 'storage/safaripark/' . $this->id . '/' . $this->logo;
         }
+    }
+
+
+
+    public function getLockedOnce()
+    {
+        return \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['safari_park_id' => $this->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->orderBy(['month_id' => SORT_ASC])->all(), 'month_id', 'mastermonth.month_name');
+
+        
     }
 }
