@@ -53,8 +53,7 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'animals';
                 // $fields[] = 'safarioperatorlist';
                 $fields[] = 'operator';
-                $fields[] = 'lockedOnce';
-                
+                $fields[] = 'lockedMonths';
             }
 
             $hold_fields = [
@@ -439,12 +438,14 @@ class SafariPark extends \common\models\park\SafariPark
         }
     }
 
-
-
-    public function getLockedOnce()
+    public function getSafariParkMonths()
     {
-        return \yii\helpers\ArrayHelper::map(SafariParkMonth::find()->where(['safari_park_id' => $this->id, 'status' => SafariParkMonth::STATUS_ACTIVE])->orderBy(['month_id' => SORT_ASC])->all(), 'month_id', 'mastermonth.month_name');
 
-        
+        return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['status' => 1]);
+    }
+
+    public function getLockedMonths()
+    {
+        return $this->hasMany(MasterMonth::className(), ['month' => 'month_id'])->via('safariParkMonths');
     }
 }
