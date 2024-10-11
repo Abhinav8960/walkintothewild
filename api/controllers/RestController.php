@@ -211,7 +211,7 @@ class RestController extends Controller
         // $agent->setUserAgent(Yii::$app->request->userAgent);
         $refer_url = Yii::$app->request->referrer;
         $response = Yii::$app->response;
-     
+
 
         $route = "";
         $route_map = $request->resolve();
@@ -246,6 +246,7 @@ class RestController extends Controller
         $request_url = $request->pathInfo;
         if (strpos($request_url, 'storage') === false) {
             $model = new FrontendRequestLog();
+            $model->isApi = 1;
             $model->user_id = $userid;
             $model->slug = $slug;
             $model->route = $route;

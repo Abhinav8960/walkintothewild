@@ -48,6 +48,15 @@ use kartik\select2\Select2;
     </div>
 
     <div class="col-md-2">
+        <?= $form->field($model, 'isApi')->dropDownList(
+            ['1' => 'Api Request'],
+            [
+                'prompt' => 'Select For Api Request Check',
+            ]
+        ) ?>
+    </div>
+
+    <div class="col-md-2">
         <?= $form->field($model, 'request_code')->dropDownList(
             $request_codes_list,
             [

@@ -17,7 +17,7 @@ class FrontendRequestLogSearch extends FrontendRequestLog
     public function rules()
     {
         return [
-            [['id', 'user_id', 'request_code', 'is_server_error', 'is_client_error', 'isAjax', 'is_count'], 'integer'],
+            [['id', 'user_id', 'request_code', 'is_server_error', 'is_client_error', 'isAjax', 'is_count', 'isApi'], 'integer'],
             [['user_ip', 'slug', 'route', 'request_url', 'request_type', 'request_parameter', 'request_data', 'response_error', 'device', 'system', 'platform', 'browser', 'browser_version', 'created_at', 'request_group', 'is_count', 'is_reqeust_trace'], 'safe'],
         ];
     }
@@ -67,6 +67,7 @@ class FrontendRequestLogSearch extends FrontendRequestLog
             'isAjax' => $this->isAjax,
             'is_count' => $this->is_count,
             'created_at' => $this->created_at,
+            'isApi' => $this->isApi,
             'is_reqeust_trace' => $this->is_reqeust_trace,
         ]);
 
