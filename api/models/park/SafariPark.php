@@ -46,6 +46,9 @@ class SafariPark extends \common\models\park\SafariPark
                 $fields[] = 'vehicles';
                 // $fields[] = 'airportdata';
                 $fields[] = 'airportlist';
+                $fields[] = 'safariVehicleslist';
+                $fields[] =  'safariSessionslist';
+                $fields[] =  'lockedMonthslist';
                 $fields[] = 'railwaystation';
                 $fields[] = 'railwaystationtwo';
                 $fields[] = 'railwaystationlist';
@@ -359,6 +362,17 @@ class SafariPark extends \common\models\park\SafariPark
     }
 
 
+    public function getSafariSessionslist()
+    {
+        $sessions = $this->hasMany(MetaSafariSession::className(), ['id' => 'session_id'])->via('safariSessions')->all();
+        $arr = [];
+        foreach ($sessions as $session) {
+            $arr[] = $session['title'];
+        }
+        return implode(", ", $arr);
+    }
+
+
     public function getSessions()
     {
         return $this->hasMany(MetaSafariSession::className(), ['id' => 'session_id'])->via('safariSessions');
@@ -368,6 +382,16 @@ class SafariPark extends \common\models\park\SafariPark
     public function getSafariVehicles()
     {
         return $this->hasMany(SafariParkVehicle::className(), ['safari_park_id' => 'id'])->andWhere(['safari_parks_vehicle.status' => 1]);
+    }
+
+    public function getSafariVehicleslist()
+    {
+        $vehicles = $this->hasMany(MasterVehicle::className(), ['id' => 'vehicle_id'])->via('safariVehicles')->all();
+        $arr = [];
+        foreach ($vehicles as $vehicle) {
+            $arr[] = $vehicle['vehicle_name'];
+        }
+        return implode(", ", $arr);
     }
 
     public function getVehicles()
@@ -442,6 +466,16 @@ class SafariPark extends \common\models\park\SafariPark
     {
 
         return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['status' => 1]);
+    }
+
+    public function getLockedMonthslist()
+    {
+        $closed_months = $this->hasMany(MasterMonth::className(), ['month' => 'month_id'])->via('safariParkMonths')->all();
+        $arr = [];
+        foreach ($closed_months as $month) {
+            $arr[] = $month['month_name'];
+        }
+        return implode(", ", $arr);
     }
 
     public function getLockedMonths()
