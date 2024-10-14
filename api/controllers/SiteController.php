@@ -126,7 +126,7 @@ class SiteController extends RestController
 
                     // $data['expires_at'] = $accesstoken->expires_at;
 
-                    \Yii::$app->api->sendResponse($data);
+                   return \Yii::$app->api->sendResponse($data);
                     // $this->updateUserInfo($user);
                 } else {
 
@@ -148,10 +148,10 @@ class SiteController extends RestController
 
 
 
-                            \Yii::$app->api->sendResponse($data);
+                           return \Yii::$app->api->sendResponse($data);
                         } else {
 
-                            Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
+                            return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
                         }
                     } else {
 
@@ -186,10 +186,10 @@ class SiteController extends RestController
 
 
 
-                Yii::$app->api->sendFailedStringResponse(['you are not register with us, check source']);
+                return  Yii::$app->api->sendFailedStringResponse(['you are not register with us, check source']);
             }
         } else {
-            Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
+            return Yii::$app->api->sendFailedStringResponse($model->firstErrors, 400);
         }
     }
 
@@ -218,7 +218,7 @@ class SiteController extends RestController
 
 
 
-        \Yii::$app->api->sendResponse($data);
+       return \Yii::$app->api->sendResponse($data);
     }
 
     public function actionLogout()
@@ -234,9 +234,9 @@ class SiteController extends RestController
 
         if ($model->delete()) {
 
-            Yii::$app->api->sendResponse($data = [], ['message' => "Logged Out Successfully"]);
+           return Yii::$app->api->sendResponse($data = [], ['message' => "Logged Out Successfully"]);
         } else {
-            Yii::$app->api->sendResponse([], "Invalid Request");
+            return Yii::$app->api->sendResponse([], "Invalid Request");
         }
     }
 }
