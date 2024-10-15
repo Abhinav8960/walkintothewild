@@ -68,6 +68,9 @@ class DefaultController extends SafariController
                     'view' => ['GET'],
                     'organize-safari' => ['POST'],
                     'join' => ['POST'],
+                    'unjoin' => ['POST'],
+                    'wishlist' => ['POST'],
+                    'unwishlist' => ['POST'],
 
                 ],
             ],
@@ -151,7 +154,7 @@ class DefaultController extends SafariController
                 if ($this->userinfo->operator) {
                     return Yii::$app->api->sendResponse($data = [], ['message' => "Only individual users are allowed to join a shared safari. Tour operators cannot participate in shared safaris."]);
                 }
-                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->one();
+                $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
                 if (!$share_safari_intrested) {
                     $share_safari_intrested = new ShareSafariIntrested();
                 }
@@ -181,7 +184,7 @@ class DefaultController extends SafariController
     {
         $share_safari = $this->sharesafari;
         if ($share_safari) {
-            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->one();
+            $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => $this->userinfoId, 'share_safari_id' => $share_safari->id])->limit(1)->one();
             if ($share_safari_intrested) {
                 $agent = new \Jenssegers\Agent\Agent();
                 $agent->setUserAgent(Yii::$app->request->userAgent);
