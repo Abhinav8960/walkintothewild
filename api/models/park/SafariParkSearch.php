@@ -101,7 +101,7 @@ class SafariParkSearch extends SafariPark
 
         if ($this->master_animal_id && $this->master_animal_id != 0) {
             $query->joinwith(['animals' => function ($query) {
-                $query->andFilterWhere(['safari_parks_animal.master_animal_id' => $this->master_animal_id]);
+                $query->andFilterWhere(['master_animal.id' => $this->master_animal_id]);
             }]);
         }
 
@@ -116,13 +116,13 @@ class SafariParkSearch extends SafariPark
 
         if ($this->master_rare_animal_id && $this->master_rare_animal_id != 0) {
             $query->joinwith(['animals' => function ($query) {
-                $query->andFilterWhere(['safari_parks_animal.master_animal_id' => $this->master_rare_animal_id]);
+                $query->andFilterWhere(['master_animal.id' => $this->master_rare_animal_id]);
             }]);
         }
 
         if ($this->master_vehicle_id && $this->master_vehicle_id != 0) {
             $query->joinwith(['vehicles' => function ($query) {
-                $query->andFilterWhere(['safari_parks_vehicle.vehicle_id' => $this->master_vehicle_id]);
+                $query->andFilterWhere(['master_vehicle.id' => $this->master_vehicle_id]);
             }]);
         }
 

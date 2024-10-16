@@ -102,7 +102,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getIntrested()
     {
-        return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['status' => 1]);
+        return $this->hasMany(ShareSafariIntrested::className(), ['share_safari_id' => 'id'])->andWhere(['share_safari_intrested.status' => 1]);
     }
 
     public function getIntrestedUser()
@@ -275,7 +275,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 2])->andWhere(['status' => 1]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 2])->andWhere(['user_wishlist.status' => 1]);
     }
 
 
