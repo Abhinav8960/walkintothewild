@@ -15,7 +15,7 @@ class RequestSanitization extends \yii\base\Component
     public function init()
     {
 
-
+        \Yii::$app->params['active_user_id']  = NULL;
         $excludedArrayForAuthentication = [
            
             'social-login',  
@@ -24,7 +24,6 @@ class RequestSanitization extends \yii\base\Component
             'meta',
             'file',
             'cms',
-            'sharesafari',
             'park',
             'filter-parklist',
             'posts',

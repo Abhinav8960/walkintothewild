@@ -13,6 +13,7 @@ use api\models\sharesafari\ShareSafariIncluded;
 use api\models\sharesafari\ShareSafariIntrested;
 use api\models\sharesafari\ShareSafariParklist;
 use api\models\operator\SafariOperator;
+use api\models\UserWishlist;
 
 class ShareSafari extends \common\models\sharesafari\ShareSafari
 {
@@ -35,6 +36,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'sharesafarigallery';
         $fields[] = 'intrestedUser';
         $fields[] = 'sharesafariFaqs';
+        $fields[] = 'isWishlist';
 
 
 
@@ -268,5 +270,22 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function getSharesafariFaqs()
     {
         return $this->hasMany(ShareSafariFaq::className(), ['share_safari_id' => 'id']);
+    }
+
+
+    public function getActiveUserWishlist()
+    {
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 2]);
+    }
+
+
+
+    public function getIsWishlist()
+    {
+        $is_whislist = $this->activeUserWishlist;
+        if (!empty($is_whislist)) {
+            return true;
+        }
+        return false;
     }
 }
