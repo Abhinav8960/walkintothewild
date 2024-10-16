@@ -321,7 +321,7 @@ class SafariPark extends \common\models\park\SafariPark
 
     public function getGallery()
     {
-        return $this->hasMany(SafariParkGallery::className(), ['safari_park_id' => 'id'])->andWhere(['status' => 1]);
+        return $this->hasMany(SafariParkGallery::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_gallery.status' => 1]);
     }
 
 
@@ -347,7 +347,7 @@ class SafariPark extends \common\models\park\SafariPark
 
     public function getAnimals()
     {
-        return $this->hasMany(MasterAnimal::className(), ['id' => 'master_animal_id'])->andWhere(['status' => 1])->via('safariAnimals');
+        return $this->hasMany(MasterAnimal::className(), ['id' => 'master_animal_id'])->andWhere(['master_animal.status' => 1])->via('safariAnimals');
     }
 
 
@@ -465,7 +465,7 @@ class SafariPark extends \common\models\park\SafariPark
     public function getSafariParkMonths()
     {
 
-        return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['status' => 1]);
+        return $this->hasMany(SafariParkMonth::className(), ['safari_park_id' => 'id'])->andWhere(['safari_park_month.status' => 1]);
     }
 
     public function getLockedMonthslist()
