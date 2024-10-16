@@ -275,7 +275,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
 
     public function getActiveUserWishlist()
     {
-        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 2]);
+        return $this->hasOne(UserWishlist::className(), ['item_id' => 'id'])->where(['user_id' => \Yii::$app->params['active_user_id'], 'item_type_id' => 2])->andWhere(['status' => 1]);
     }
 
 
