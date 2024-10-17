@@ -94,19 +94,19 @@ class SitemapController extends FrontendBaseController
   /**
    * Renders the HTML sitemap.
    */
-  public function actionList()
-  {
-    // Fetch pages from the database
-    $pages = $this->getPages();
+  // public function actionList()
+  // {
+  //   // Fetch pages from the database
+  //   $pages = $this->getPages();
 
-    // Organize data into categories and sub-categories
-    $sitemapData = $this->organizePages($pages);
+  //   // Organize data into categories and sub-categories
+  //   $sitemapData = $this->organizePages($pages);
 
-    // Render the HTML and return it
-    return $this->render('list', [
-      'sitemapData' => $sitemapData,
-    ]);
-  }
+  //   // Render the HTML and return it
+  //   return $this->render('list', [
+  //     'sitemapData' => $sitemapData,
+  //   ]);
+  // }
   /**
    * Fetches pages from the database.
    *
