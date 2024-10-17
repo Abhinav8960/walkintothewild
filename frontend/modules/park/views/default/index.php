@@ -66,11 +66,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 <?php } ?>
 <section class="articals_wrapper margin_bottomfooter mb-5 py-3 <?= $searchModel->master_rare_animal_id == '' ? 'margin-setposi' : '' ?>">
     <div class="container-fluid">
-        <div class="advertisment pt-md-2 pt-5" style ="display: none" >
+        <!-- <div class="advertisment pt-md-2 pt-5" style ="display: none" >
             <div class="google-ad-box  mb-5" style="border:none">
                 
             </div>
-        </div>
+        </div> -->
         <div class="row mb-4 sticky_set e">
             <div class="col-xl-2 col-lg-3 col-12 mb-lg-0 mb-3 ps-xxl-5 pe-xl-2 pt-3">
                 <div id="targetDiv">
@@ -80,7 +80,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     ]) ?>
                 </div>
 
-                <div class="advertisment d-lg-block d-none mt-5" style="display:none !important;">
+                <!-- <div class="advertisment d-lg-block d-none mt-5" style="display:none !important;">
                     <div class="google-ad300  mb-5" style="border:none">
                         
                     </div>
@@ -89,7 +89,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                     <div class="google-add600hight  mb-5">
 
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="col-lg-9 col-xl-10 col-12 paddingset_desktop ">
                 <div class="topfilter d-lg-flex d-none justify-content-between align-items-center w-100 mb-2">

@@ -296,11 +296,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                         </div>
                     </div>
                 </div>-->
-                <div class="advertisment  mt-5" style="display: none">
+                <!-- <div class="advertisment  mt-5" style="display: none">
                     <div class="google-ad-box  ">
 
                     </div>
-                </div>
+                </div> -->
                 <div class="row  mt-5 itenary_tabs">
                     <div class="col-lg-12 col-xl-11 safartabs position-relative">
                         <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">
@@ -496,11 +496,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
         </div>
         <?= $this->render('_recommended_safari_list', ['safari_park' => $share_safari->park, 'active_safari' => $share_safari]) ?>
 
-        <div class="advertisment pt-md-2 pt-5" style="display: none !important">
+        <!-- <div class="advertisment pt-md-2 pt-5" style="display: none !important">
             <div class="google-ad-box  mb-5" style="border:none">
 
             </div>
-        </div>
+        </div> -->
 
 </section>
 

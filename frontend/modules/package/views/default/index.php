@@ -65,11 +65,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
   <?php } ?>
   <div class="container-fluid ">
 
-        <div class="advertisment pt-md-2 pt-5" style ="display: none" >
+    <!-- <div class="advertisment pt-md-2 pt-5" style ="display: none" >
             <div class="google-ad-box  mb-5" style="border:none">
                 
             </div>
-        </div>
+        </div> -->
     <?php
     Pjax::begin([
       'id' => 'grid-data',
@@ -99,7 +99,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
               ]) ?>
             </div>
 
-                <div class="advertisment d-lg-block d-none mt-5"  style="display: none">
+            <!-- <div class="advertisment d-lg-block d-none mt-5"  style="display: none">
                     <div class="google-ad300  mb-5" style="border:none">
                         
                     </div>
@@ -108,7 +108,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="google-add600hight  mb-5">
 
                     </div>
-                </div>
+                </div> -->
 
           </div>
           <div class="col-lg-9 col-xl-9 col-xxl-10  px-lg-5">
@@ -197,6 +197,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                 foreach ($models as $model) {
                   $count++; ?>
                   <div class="col mb-xl-4 mb-md-3 mb-4 padding_righ">
+                    <?= $this->render('_package_card', ['model' => $model]) ?>
+                  </div>
+                  <!-- <div class="col mb-xl-4 mb-md-3 mb-4 padding_righ">
+
                     <?php if ($count == 4 or ($count > 3 && $count % 3 == 0)) $r = rand(0, 2);
                     if ($count % 3 == $r) { //echo $count; 
                     ?>
@@ -212,8 +216,8 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                       (adsbygoogle = window.adsbygoogle || []).push({});
                     </script>
                   <?php  } ?>
-                  <?= $this->render('_package_card', ['model' => $model]) ?>
-                  </div>
+                  <?php // $this->render('_package_card', ['model' => $model]) ?>
+                  </div> -->
               <?php }
               } ?>
 

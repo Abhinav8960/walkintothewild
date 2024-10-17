@@ -181,9 +181,9 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
     </section>
 <?php } ?>
 <section class="px-md-0 px-3" style="display: none">
-    <div class="google-ad-box margin-topset" style="border:none">
+    <!-- <div class="google-ad-box margin-topset" style="border:none">
 
-    </div>
+    </div> -->
 </section>
 <section class="safariduring_sesons paddiinTop_add">
     <?= \frontend\widgets\FeatureParkWidget::widget(['section_title' => $banner ? $banner->feature_park_title : '']) ?>

@@ -57,11 +57,11 @@ if ($article->meta_title != '') {
 
 <section class="articals_wrapper py-3 margin_bottomfooter ">
     <div class="container-lg">
-        <div class="advertisment pt-md-2 pt-5" style="display: none">
+        <!-- <div class="advertisment pt-md-2 pt-5" style="display: none">
             <div class="google-ad-box  mb-5" style="border:none">
 
             </div>
-        </div>
+        </div> -->
         <div class="row mb-4 justify-content-center">
             <div class="col-lg-12 col-xl-12 pe-lg-0">
                 <div class="row justify-content-center gx-xl-5 gx-lg-2">
@@ -119,11 +119,11 @@ if ($article->meta_title != '') {
                                     ]) ?>
                                 </div>
 
-                                <div class="advertisment mt-5" style="display: none">
+                                <!-- <div class="advertisment mt-5" style="display: none">
                                     <div class="google-ad300  mb-5" style="border:none">
 
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>
@@ -139,10 +139,10 @@ if ($article->meta_title != '') {
                             </div>
                             <?= $this->render('_topic_search') ?>
                         </div>
-                        <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important"">
+                        <!-- <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important"">
                             <div class=" google-ad-box mb-5" style="border:none">
 
-                        </div>
+                        </div> -->
                     </div>
 
                 </div>

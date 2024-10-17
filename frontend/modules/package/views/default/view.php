@@ -258,11 +258,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                             </div>
                         </div>
                     </div>
-                    <div class="advertisment mt-4 mb-5" style="display:none">
+                    <!-- <div class="advertisment mt-4 mb-5" style="display:none">
                         <div class="google-ad-box ">
 
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row  mt-4 itenary_tabs">
                         <div class="col-lg-12 col-xl-11 safartabs position-relative">
                             <ul class="nav nav-tabs slider_packagemobile d-flex gap-2" id="myTab" role="tablist">
@@ -394,11 +394,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     </div>
                 </div>
 
-                <div class="advertisment pt-md-2 pt-5" style="display: none !important">
+                <!-- <div class="advertisment pt-md-2 pt-5" style="display: none !important">
                     <div class="google-ad-box  mb-5" style="border:none">
 
                     </div>
-                </div>
+                </div> -->
 
             </div>
 
@@ -461,7 +461,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     } ?>
                 </div>
 
-                <div class="advertisment mt-5" style="display: none">
+                <!-- <div class="advertisment mt-5" style="display: none">
                     <div class="google-ad300  mb-5" style="border:none">
 
                     </div>
@@ -470,7 +470,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                     <div class="google-add600hight  mb-5">
 
                     </div>
-                </div>
+                </div> -->
 
             </div>
 

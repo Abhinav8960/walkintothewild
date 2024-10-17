@@ -52,7 +52,7 @@ Pjax::begin([
             ]) ?>
         </div>
 
-        <div class="advertisment d-lg-block d-none mt-5" style="display:none !important;">
+        <!-- <div class="advertisment d-lg-block d-none mt-5" style="display:none !important;">
             <div class="google-ad300  mb-5">
 
             </div>
@@ -61,7 +61,7 @@ Pjax::begin([
             <div class="google-add600hight  mb-5">
 
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="col-lg-8 col-xl-9 col-xxl-10 position-relative">
         <div class="topfilter d-lg-flex d-none justify-content-between  w-100 mb-2">

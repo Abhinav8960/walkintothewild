@@ -53,11 +53,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
 <section class="articals_wrapper py-3  margin_bottomfooter  paddiinTop_add">
     <div class="container-fluid">
-        <div class="advertisment pt-md-2 pt-5" style ="display: none" >
+        <!-- <div class="advertisment pt-md-2 pt-5" style ="display: none" >
             <div class="google-ad-box  mb-5" style="border:none">
                 
             </div>
-        </div>
+        </div> -->
         </div>
         <div class="row my-4 justify-content-center">
             <div class="col-xl-11 col-lg-12">
@@ -109,11 +109,11 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
 
                             ]) ?>
                         </div>
-                        <div class="advertisment pt-md-2 pt-5" style="display: none !important" >
+                        <!-- <div class="advertisment pt-md-2 pt-5" style="display: none !important" >
                             <div class="google-ad-box  mb-5" style="border:none">
                                 
                             </div>
-                        </div>
+                        </div> -->
                         
                     </div>
                     <div class="col-lg-9 col-xl-9 col-xxl-10 pe-lg-0">
@@ -224,11 +224,12 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     $count++;
                             ?>
                                     <div class="col mb-xl-2 mb-md-3 mb-4">
-
+                                    <?= $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
+                                    </div>
                                         <?php if ($count == 5 or ($count > 5 && $count % 4 == 0)) $r = rand(0, 3);
                                         if ($count % 4 == $r) {  //echo $count; 
                                         ?>
-                                            <ins class="adsbygoogle"
+                                            <!-- <ins class="adsbygoogle"
                                                 style="display:block"
                                                 data-ad-format="fluid"
                                                 data-ad-layout-key="-6d+ep+q-5u+9i"
@@ -238,10 +239,10 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $park_constant])->l
                                     <div class="col mb-xl-2 mb-md-3 mb-4">
                                         <script>
                                             (adsbygoogle = window.adsbygoogle || []).push({});
-                                        </script>
+                                        </script> -->
                                     <?php  } ?>
-                                    <?= $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
-                                    </div>
+                                    <?php // $this->render('_shared_safari_card', ['share_safari' => $share_safari]) ?>
+                                    <!-- </div> -->
                             <?php }
                             } ?>
                         </div>

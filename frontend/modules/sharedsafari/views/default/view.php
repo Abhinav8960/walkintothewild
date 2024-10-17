@@ -248,11 +248,11 @@ $this->params['title'] = $this->title; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="advertisment my-4" style="display:none">
+                    <!-- <div class="advertisment my-4" style="display:none">
                         <div class="google-ad-box  ">
 
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -286,11 +286,11 @@ $this->params['title'] = $this->title; ?>
                     </div>
                 </div>
 
-                <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important">
+                <!-- <div class="advertisment pt-md-2 pt-5" style="padding-top: 2.5rem !important; display: none !important">
                     <div class="google-ad-box  mb-5" style="border:none">
 
                     </div>
-                </div>
+                </div> -->
 
 
             </div>

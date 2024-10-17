@@ -133,11 +133,11 @@ if ($model->meta_title != '') {
                 </div>
             </div>
         </div>
-        <div class="advertisment py-3" style="display:none">
+        <!-- <div class="advertisment py-3" style="display:none">
             <div class="google-ad970 ">
 
             </div>
-        </div>
+        </div> -->
         <div class="row pt-5 itenary_tabs justify-content-center position-relative" id="safari_tour_operator_container">
             <div class="col-xxl-11 safartabs position-relative">
                 <ul class="nav nav-tabs slider_addmobile3 owl-theme owl-carousel">
