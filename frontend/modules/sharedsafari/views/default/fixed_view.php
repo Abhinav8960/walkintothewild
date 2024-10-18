@@ -93,7 +93,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                                     if ($flaged->user_flaged && $flaged->userflaged) { ?>
                                                         <div class="flagbadge d-flex gap-2 align-items-center" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="top" data-bs-title="<?= $flaged->userflaged->description ?>">
                                                             <i class="fa fa-exclamation-triangle" aria-hidden="true" style="font-size:20px;color:red"></i>
-                                                            <p class="btn text-white px-2 py-0 mb-0" style="background-color:red; border-radius:6px !important; font-size:18px !important"><?= $flaged->userflaged->user_flag ?></p>
+                                                            <p class="btn text-white px-2 py-0 mb-0" style="background-color:red; border-radius:6px !important; font-size:12px !important"><?= $flaged->userflaged->user_flag ?></p>
                                                         </div>
                                             <?php }
                                                 }
