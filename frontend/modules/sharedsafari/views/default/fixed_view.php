@@ -86,7 +86,18 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                             <h6><span style="color:black;">Fixed Departure</span> <?= date('d M y', strtotime($share_safari->start_date)) ?> - <?= date('d M y', strtotime($share_safari->end_date)) ?> <?= isset($share_safari->cut_off_date) ? ' | <span style="color:black;">Cut off Date</span> ' . date('d M y', strtotime($share_safari->cut_off_date)) : '' ?> </h6>
                                         </div>
                                         <h6 class="titler_safari"><a href="<?= Url::toRoute(['/park/default/view', 'slug' => $share_safari->park->slug]) ?>" data-pjax="0"><i class="fa-solid fa-location-dot me-1"></i> <?= $share_safari->park->title ?></a></h6>
-                                        <p class="mb-0 pt-1">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
+                                        <div class="d-flex gap-2 align-items-center">
+                                            <p class="mb-0 pt-1">Organized by <a href="<?= $share_safari->organizedbyprofileurl <> '' ? $share_safari->organizedbyprofileurl : '#' ?>" data-pjax="0"><strong><?= $share_safari->organizedbyname ?></strong></a></p>
+                                            <?php if ($operator = $share_safari->safarioperator) {
+                                                if ($flaged = $operator->user) {
+                                                    if ($flaged->user_flaged && $flaged->userflaged) { ?>
+                                                        <div class="flagbadge" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="top" data-bs-title="<?= $flaged->userflaged->description ?>">
+                                                            <p class="btn btn-danger bg-orange text-white px-2 py-0 mb-0"><?= $flaged->userflaged->user_flag ?></p>
+                                                        </div>
+                                            <?php }
+                                                }
+                                            } ?>
+                                        </div>
 
                                     </div>
 

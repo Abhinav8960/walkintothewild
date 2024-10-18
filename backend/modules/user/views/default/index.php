@@ -74,6 +74,14 @@ if (Yii::$app->user->identity && (Yii::$app->user->identity->is_adminstrator == 
                             return implode(', ', $roles);
                         }
                     ],
+                    [
+                        'label' => 'User Flag',
+                        'contentOptions' => ['style' => 'width: 20%;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset($model->userflaged) ? $model->userflaged->user_flag : '';
+                        }
+                    ],
                     'created_at:dateTime:Created at',
                     'updated_at:dateTime:Last Updated at',
                     [

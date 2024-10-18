@@ -61,6 +61,7 @@ use yii\helpers\ArrayHelper;
 use common\models\trierror\SitePages;
 use common\models\MailLog;
 use common\models\MailLogRecipients;
+use common\models\master\userflag\MasterUserFlag;
 
 class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStatusInterface
 {
@@ -1270,5 +1271,8 @@ class GeneralModel extends \yii\base\Model implements \common\interfaces\NewStat
         return [self::STATUS_ACTIVE => 'Active', self::STATUS_SUSPEND => 'Inactive', self::STATUS_DELETE => 'Deleted'];
     }
 
-
+    public static function userflagedoption()
+    {
+        return ArrayHelper::map(MasterUserFlag::find()->where(['status' => self::STATUS_ACTIVE])->orderBy(['user_flag' => SORT_ASC])->all(), 'id', 'user_flag');
+    }
 }

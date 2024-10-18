@@ -9,6 +9,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use common\behaviors\UserHandleBehavior;
+use common\models\master\userflag\MasterUserFlag;
 use common\models\sharesafari\ShareSafari;
 use common\models\operator\SafariOperator;
 
@@ -82,7 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name'], 'safe'],
-            [['user_handle', 'user_bio'], 'safe']
+            [['user_handle', 'user_bio','user_flaged'], 'safe']
         ];
     }
 
@@ -482,5 +483,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function getOperator()
     {
         return $this->hasOne(SafariOperator::className(), ['user_id' => 'id'])->andWhere(['safari_operator.status' => SafariOperator::STATUS_ACTIVE]);
+    }
+
+    public function getUserflaged()
+    {
+        return $this->hasOne(MasterUserFlag::class, ['id' => 'user_flaged']);
     }
 }

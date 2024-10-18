@@ -62,6 +62,16 @@ $this->params['title'] = $this->title;
                             ],
                         ]) ?>
                     </div>
+
+                    <div class="col-md-4 select_width">
+                        <?= $form->field($model, 'user_flaged')->widget(\kartik\select2\Select2::classname(), [
+                            'data' => GeneralModel::userflagedoption(),
+                            'options' => ['placeholder' => 'User Flaged Option'],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ]) ?>
+                    </div>
                 </div>
 
                 <div class="col-md-12 mt-2">

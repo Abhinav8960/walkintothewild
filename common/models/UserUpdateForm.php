@@ -24,6 +24,7 @@ class UserUpdateForm extends Model
     public $is_resort_manager;
     public $is_community_manager;
     public $role_id;
+    public $user_flaged;
 
     // 1 => 'Administrator',
     // 2 => 'Admin',
@@ -72,6 +73,8 @@ class UserUpdateForm extends Model
             if ($this->user_model->is_community_manager == 1) {
                 $this->role_id[] = 8;
             }
+
+            $this->user_flaged = $this->user_model->user_flaged;
         }
     }
 
@@ -113,6 +116,7 @@ class UserUpdateForm extends Model
                 'message' => 'This email address has already been taken'
             ],
             ['password', 'string', 'min' => 4],
+            ['user_flaged','integer'],
         ];
     }
 
@@ -123,7 +127,8 @@ class UserUpdateForm extends Model
             'email' => 'Email',
             'username' => 'Login ID',
             'password' => 'Password',
-            'role_id' => 'Select User Role'
+            'role_id' => 'Select User Role',
+            'user_flaged' => 'User Flaged',
         ];
     }
 
@@ -185,6 +190,7 @@ class UserUpdateForm extends Model
         }
 
         $this->user_model->name = $this->name;
+        $this->user_model->user_flaged = $this->user_flaged;
         $this->user_model->save(false);
     }
 }
