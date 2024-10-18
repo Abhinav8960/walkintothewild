@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 /**
  * @author Amr Alshroof
  */
-class FirebaseNotifications extends BaseObject
+class FirebaseNotificationHelper extends BaseObject
 {
     /**
      * @var string the auth_key Firebase cloude messageing server key.
@@ -74,19 +74,19 @@ class FirebaseNotifications extends BaseObject
     }
 
     /**
-     * high level method to send notification for a specific tokens (registration_ids) with FCM
+     * high level method to send notification for a specific firebase_token (registration_ids) with FCM
      * see https://firebase.google.com/docs/cloud-messaging/http-server-ref
      * see https://firebase.google.com/docs/cloud-messaging/concept-options#notifications_and_data_messages
      * 
-     * @param array  $tokens the registration ids
+     * @param array  $firebase_token the registration ids
      * @param array  $notification can be something like {title:, body:, sound:, badge:, click_action:, }
      * @param array  $options other FCM options https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
      * @return mixed
      */
-    public function sendNotification($tokens = [], $notification, $options = [])
+    public function sendNotification($firebase_token = [], $notification, $options = [])
     {
         $body = [
-            'registration_ids' => $tokens,
+            'registration_ids' => $firebase_token,
             'notification' => $notification,
         ];
         $body = ArrayHelper::merge($body, $options);
