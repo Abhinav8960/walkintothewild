@@ -2029,6 +2029,15 @@ display: none;
 }
 
 @media (min-width: 576px) {
+
+  
+.safritimg.innerImg img {
+  border-radius: 10px;
+  height: 100%;
+  -o-object-fit: cover;
+  height: 122px;
+  object-fit: cover;
+}
   .title_white br {
     display: none;
   }

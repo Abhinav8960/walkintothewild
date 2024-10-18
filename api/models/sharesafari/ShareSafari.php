@@ -37,6 +37,7 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
         $fields[] = 'intrestedUser';
         $fields[] = 'sharesafariFaqs';
         $fields[] = 'isWishlist';
+        $fields[] = 'comments';
 
 
 

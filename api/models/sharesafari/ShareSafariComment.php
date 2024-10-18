@@ -12,13 +12,13 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'park';
+        // $fields[] = 'park';
         // $fields[] = 'sharesafari';
         $fields[] = 'user';
-        $fields[] = 'parent';
-        $fields[] = 'reports';
+        // $fields[] = 'parent';
+        // $fields[] = 'reports';
         $fields[] = 'replies';
-        $hold_fields = ['status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['id','user_id','comment_id','flaged','is_deleted','share_safari_id','park_id','parent_id','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
@@ -29,10 +29,10 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
     //     return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
     // }
 
-    public function getPark()
-    {
-        return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
-    }
+    // public function getPark()
+    // {
+    //     return $this->hasOne(SafariPark::className(), ['id' => 'park_id']);
+    // }
 
 
     public function getUser()
