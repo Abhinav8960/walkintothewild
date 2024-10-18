@@ -90,7 +90,8 @@ $this->params['title'] = $this->title; ?>
 
                                             <?php if ($flaged = $share_safari->user) {
                                                 if ($flaged->user_flaged && $flaged->userflaged) { ?>
-                                                    <div class="flagbadge" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="top" data-bs-title="<?= $flaged->userflaged->description ?>">
+                                                    <div class="flagbadge d-flex gap-2 align-items-center" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" data-bs-placement="top" data-bs-title="<?= $flaged->userflaged->description ?>">
+                                                        <i class="fa fa-exclamation-triangle" aria-hidden="true" style="font-size:20px;color:red"></i>
                                                         <p class="btn btn-danger bg-orange text-white px-2 py-0 mb-0"><?= $flaged->userflaged->user_flag ?></p>
                                                     </div>
                                             <?php }
