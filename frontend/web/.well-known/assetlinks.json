@@ -1,0 +1,11 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.walkintothewild",
+      "sha256_cert_fingerprints": [
+        "98:6B:5D:ED:AE:63:AE:2E:56:6F:1C:AE:D1:FA:70:39:5E:14:C1:D4:3E:16:A1:52:07:8D:F3:2A:80:14:04:3E",
+        "8D:66:0B:70:C0:1A:31:83:CB:59:5A:78:9A:D7:AF:86:23:74:9E:D4:40:36:34:19:E1:5F:10:4C:A3:26:E2:67"
+      ]
+    }
+  }]
