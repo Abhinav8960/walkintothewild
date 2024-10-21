@@ -17,6 +17,7 @@ use api\models\master\vehicle\MasterVehicle;
 use api\models\meta\MetaAccommodation;
 use api\models\meta\MetaSafariSession;
 use api\models\operator\SafariOperator;
+use api\models\sharesafari\ShareSafari;
 use api\models\suggestions\SafariSuggestions;
 use api\models\UserExperience;
 use common\models\park\SafariParkMonth;
@@ -57,6 +58,7 @@ class SafariPark extends \common\models\park\SafariPark
                 // $fields[] = 'safarioperatorlist';
                 $fields[] = 'operator';
                 $fields[] = 'lockedMonths';
+                $fields[] = 'sharedsafari';
             }
 
             $hold_fields = [
@@ -481,5 +483,11 @@ class SafariPark extends \common\models\park\SafariPark
     public function getLockedMonths()
     {
         return $this->hasMany(MasterMonth::className(), ['month' => 'month_id'])->via('safariParkMonths');
+    }
+
+
+    public function getSharedsafari()
+    {
+        return $this->hasMany(ShareSafari::className(), ['park_id' => 'id'])->andWhere(['share_safari.status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'share_safari.start_date', date("Y-m-d")]);
     }
 }

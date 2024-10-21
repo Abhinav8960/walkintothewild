@@ -24,25 +24,24 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
     public function fields()
     {
         $fields = parent::fields();
-        $fields[] = 'types';
-        $fields[] = 'sharesafariagenda';
-        $fields[] = 'budget';
-        $fields[] = 'organizedbyname';
-        $fields[] = 'hosttype';
-        $fields[] = 'sharedimagepath';
-        $fields[] = 'park';
-        $fields[] = 'includeds';
-        $fields[] = 'sharesafaridays';
-        $fields[] = 'sharesafarigallery';
-        $fields[] = 'intrestedUser';
-        $fields[] = 'sharesafariFaqs';
-        $fields[] = 'isWishlist';
-        $fields[] = 'comments';
 
+        if (!in_array(\Yii::$app->controller->action->uniqueId,  ['park/default/view'])) {
+            $fields[] = 'types';
+            $fields[] = 'sharesafariagenda';
+            $fields[] = 'budget';
+            $fields[] = 'organizedbyname';
+            $fields[] = 'hosttype';
+            $fields[] = 'sharedimagepath';
+            $fields[] = 'park';
+            $fields[] = 'includeds';
+            $fields[] = 'sharesafaridays';
+            $fields[] = 'sharesafarigallery';
+            $fields[] = 'intrestedUser';
+            $fields[] = 'sharesafariFaqs';
+            $fields[] = 'isWishlist';
+            $fields[] = 'comments';
 
-
-        $hold_fields =
-            [
+            $hold_fields = [
                 'delete_reason_id',
                 'delete_reason',
                 'share_safari_request_id',
@@ -64,6 +63,33 @@ class ShareSafari extends \common\models\sharesafari\ShareSafari
                 'updated_at',
                 'host_type'
             ];
+        } else {
+            $hold_fields = [
+                'delete_reason_id',
+                'delete_reason',
+                'share_safari_request_id',
+                'share_safari_agenda_id',
+                'stay_category_id',
+                'type',
+                'image',
+                'park',
+                'privacy_policy',
+                'change_policy',
+                'what_you_must_carry',
+                'park_id',
+                'total_view',
+                'host_user_id',
+                'status',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'created_by',
+                'updated_at',
+                'host_type'
+            ];
+        }
+
+
 
 
         return array_diff($fields, $hold_fields);
