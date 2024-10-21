@@ -1,94 +1,100 @@
 <?php
 
-namespace common\helper;
+namespace common\Helper;
 
+use Exception;
 use yii\base\BaseObject;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * @author Amr Alshroof
+ * Firebase Notification Helper for sending notifications via FCM.
  */
 class FirebaseNotificationHelper extends BaseObject
 {
     /**
-     * @var string the auth_key Firebase cloude messageing server key.
+     * @var string the Firebase Cloud Messaging server key or OAuth token.
      */
     public $authKey;
 
-    public $timeout = 5;
-    public $sslVerifyHost = false;
-    public $sslVerifyPeer = false;
+    /**
+     * @var string the project ID from Firebase settings.
+     */
+    public $projectId;
 
     /**
-     * @var string the api_url for Firebase cloude messageing.
+     * @var string the API URL for Firebase Cloud Messaging.
      */
-    public $apiUrl = 'https://fcm.googleapis.com/fcm/send';
+    public $apiUrl;
 
     public function init()
     {
-        if (!$this->authKey) throw new \Exception("Empty authKey");
+        parent::init(); // Call the parent init method
+        if (empty($this->authKey)) {
+            throw new \Exception("Empty authKey");
+        }
+        if (empty($this->projectId)) {
+            throw new \Exception("Empty projectId");
+        }
+        // Set the API URL after projectId is set
+        $this->apiUrl = "https://fcm.googleapis.com/v1/projects/{$this->projectId}/messages:send";
     }
 
     /**
-     * send raw body to FCM
+     * Sends raw body to FCM.
+     *
      * @param array $body
      * @return mixed
+     * @throws \Exception if the request fails
      */
     public function send($body)
     {
+        // Adjust the Authorization header based on your auth method
         $headers = [
-            "Authorization:key={$this->authKey}",
+            "Authorization: key={$this->authKey}", // Use Bearer for OAuth tokens
             'Content-Type: application/json',
-            'Expect: ',
         ];
 
         $ch = curl_init($this->apiUrl);
+
         curl_setopt_array($ch, [
-            CURLOPT_POST           => true,
-            CURLOPT_SSL_VERIFYHOST => $this->sslVerifyHost,
-            CURLOPT_SSL_VERIFYPEER => $this->sslVerifyPeer,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_BINARYTRANSFER => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER         => false,
-            CURLOPT_FRESH_CONNECT  => false,
-            CURLOPT_FORBID_REUSE   => false,
-            CURLOPT_HTTPHEADER     => $headers,
-            CURLOPT_TIMEOUT        => $this->timeout,
-            CURLOPT_POSTFIELDS     => json_encode($body),
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_POSTFIELDS => json_encode($body),
+            // CURLOPT_SSL_VERIFYPEER => false, 
+            // CURLOPT_TIMEOUT => 30, 
         ]);
-        $result = curl_exec($ch);
-        if ($result === false) {
-            Yii::error('Curl failed: ' . curl_error($ch) . ", with result=$result");
-            throw new \Exception("Could not send notification");
-        }
-        $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($code < 200 || $code >= 300) {
-            Yii::error("got unexpected response code $code with result=$result");
-            throw new \Exception("Could not send notification");
+
+        $response = curl_exec($ch);
+        if ($response === false) {
+            throw new Exception('Curl error: ' . curl_error($ch));
         }
         curl_close($ch);
-        $result = json_decode($result, true);
-        return $result;
+        return json_decode($response, true);
     }
 
     /**
-     * high level method to send notification for a specific firebase_token (registration_ids) with FCM
-     * see https://firebase.google.com/docs/cloud-messaging/http-server-ref
-     * see https://firebase.google.com/docs/cloud-messaging/concept-options#notifications_and_data_messages
-     * 
-     * @param array  $firebase_token the registration ids
-     * @param array  $notification can be something like {title:, body:, sound:, badge:, click_action:, }
-     * @param array  $options other FCM options https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
+     * High-level method to send notification for a specific Firebase token (registration_ids) with FCM.
+     *
+     * @param array $firebaseToken the registration IDs
+     * @param array $notification notification data (title, body, etc.)
+     * @param array $options other FCM options
      * @return mixed
+     * @throws \Exception if the notification fails to send
      */
-    public function sendNotification($firebase_token = [], $notification, $options = [])
+    public function sendNotification($firebaseToken = [], $notification, $options = [])
     {
+        if (empty($firebaseToken)) {
+            throw new \Exception("Firebase token array cannot be empty.");
+        }
+
         $body = [
-            'registration_ids' => $firebase_token,
+            'tokens' => $firebaseToken, // Use 'tokens' for multiple recipients
             'notification' => $notification,
         ];
+
         $body = ArrayHelper::merge($body, $options);
         return $this->send($body);
     }
