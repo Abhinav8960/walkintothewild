@@ -29,45 +29,53 @@ class FirebaseNotificationHelper extends BaseObject
 
     public function init()
     {
-        parent::init(); // Call the parent init method
-        if (empty($this->authKey)) {
-            throw new \Exception("Empty authKey");
+        parent::init();
+        if (empty($this->authKey) || empty($this->projectId)) {
+            throw new Exception("Firebase credentials are required.");
         }
-        if (empty($this->projectId)) {
-            throw new \Exception("Empty projectId");
-        }
-        // Set the API URL after projectId is set
         $this->apiUrl = "https://fcm.googleapis.com/v1/projects/{$this->projectId}/messages:send";
     }
 
-    /**
-     * Sends raw body to FCM.
-     *
-     * @param array $body
-     * @return mixed
-     * @throws \Exception if the request fails
-     */
+   
     public function send($body)
     {
-        // Adjust the Authorization header based on your auth method
+
         $headers = [
-            "Authorization: key={$this->authKey}", // Use Bearer for OAuth tokens
+            "Authorization: Bearer {$this->authKey}", 
             'Content-Type: application/json',
         ];
+        
+        // $ch = curl_init($this->apiUrl);
+        // curl_setopt_array($ch, [
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_POST => true,
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_HTTPHEADER => $headers,
+        //     CURLOPT_POSTFIELDS => json_encode($body),
+        // ]);
 
-        $ch = curl_init($this->apiUrl);
+        // $response = curl_exec($ch);
+        // if ($response === false) {
+        //     throw new Exception('Curl error: ' . curl_error($ch));
+        // }
+        // curl_close($ch);
 
-        curl_setopt_array($ch, [
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_POST => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_POSTFIELDS => json_encode($body),
-            // CURLOPT_SSL_VERIFYPEER => false, 
-            // CURLOPT_TIMEOUT => 30, 
-        ]);
+        // return json_decode($response, true);
 
+
+        $ch = curl_init();
+       
+        curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['message' => $body]));
+        
+       
         $response = curl_exec($ch);
+        dd($response);
+
         if ($response === false) {
             throw new Exception('Curl error: ' . curl_error($ch));
         }

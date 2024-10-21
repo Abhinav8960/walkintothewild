@@ -17,16 +17,21 @@ class NotificationController extends FrontendBaseController
         $token = 'cZM3VdFASAScms7KuxpAcf:APA91bFsL5_4XNKGWAaA47ZuLaTiHnbXTTm2SUsb7Y2Pb26-FhKzf18xqTa48plEZIX8f27jj5StyWqqL0EkUWU6Scn5vUthTS3QIdeA_7b8Dd7QFXOmxCMJfoY3xRHpbMtxXQXAw7uA'; // Replace with the recipient device token
         $title = 'Test Notification';
         $body = 'This Test Notification !';
-        $message = [
+        $notification = [
             'title' => $title,
             'body' => $body,
         ];
 
-        $service = new FirebaseNotificationHelper(['authKey' => Yii::$app->params['private_key'],'projectId' => Yii::$app->params['project_id']]);
+        $service = new FirebaseNotificationHelper([
+            'authKey' => Yii::$app->params['firebase']['private_key'],
+            'projectId' => Yii::$app->params['firebase']['project_id'],
+        ]);
 
-        $response = $service->sendNotification($token, $message);
-
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        return $response;
+        try {
+            $response = $service->sendNotification($token, $notification);
+            return $this->asJson($response);
+        } catch (\Exception $e) {
+            return $this->asJson(['error' => $e->getMessage()]);
+        }
     }
 }
