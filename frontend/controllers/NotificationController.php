@@ -38,12 +38,12 @@ class NotificationController extends FrontendBaseController
 
     public function actionSendNotification()
     {
-        $token = 'cZM3VdFASAScms7KuxpAcf:APA91bFsL5_4XNKGWAaA47ZuLaTiHnbXTTm2SUsb7Y2Pb26-FhKzf18xqTa48plEZIX8f27jj5StyWqqL0EkUWU6Scn5vUthTS3QIdeA_7b8Dd7QFXOmxCMJfoY3xRHpbMtxXQXAw7uA';
+        $token = 'fTBasX2AS_yCG3fQNTEiRs:APA91bE_EGTli28PKgcHH6RR9qfx28CGff0CUC5DWAjH9qY43gpca44o19ioj1bqDg7GwqVbhvNZvakE66Y1y8B2nRpXj3uQLX1Rie7_KeW7ROrOZXGmkhMM2uaqkZ4ACVWzwEPI2tEY';
         $projectId = 'walkintothewild-24344';
         $firebaseMessaging = new FirebaseMessaging($projectId);
         $message = [
             'token' => $token,
-            'notification' => [
+            'data' => [
                 'title' => 'Check New Way',
                 'body' => 'Dynamic Way',
             ],

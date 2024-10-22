@@ -21,7 +21,7 @@ class FirebaseMessaging
         $client = new Client();
         $client->setAuthConfig($this->serviceAccountPath);
         $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
-        $client->useApplicationDefaultCredentials();
+        // $client->useApplicationDefaultCredentials();
         $token = $client->fetchAccessTokenWithAssertion();
         return $token['access_token'];
     }
