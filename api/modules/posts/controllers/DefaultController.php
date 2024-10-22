@@ -65,8 +65,6 @@ class DefaultController extends RestController
 
     public function actionCreate()
     {
-        // Yii::$app->api->sendResponse($data = [$_FILES], ['message' => "Post added successfully"]);
-
         $model = new UserPostsForm();
         $model->user_id = $this->userinfoId;
         $model->status = UserPosts::STATUS_ACTIVE;
