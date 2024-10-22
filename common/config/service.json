@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "walkintothewild-24344",
+    "private_key_id": "c5aefd7e6ea9b7985bd815ea093dab4691143477",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCQ/OayvuzB9R99\nQZFr69LvD1WUAzMVjkiypK/+IzL/5VW47g1UYyh9YN/8SYE84TY7MYEaK+dcNSB7\nCZeKKiUtsXoZ83Cs7Rsx5E2Q8WeWlJFW1kV6LjPGGhcZ/VFeNTGT6R+RdaFeNawI\nGyP5TFuuErxu6mH+6zv4NbYsnQVxS4lVoWHlR3pOoKbi6EFr181QcgHyQNj01SEl\n07dY4SfoXPV6VvZpnZfXOn9TnRXhqrtIkEqF2+38UahI9MDJ+3NET+ibGhAIyNUK\nMsN/ydIwToD9uwwPpoNVcwnQUIS3KVs1WUEZ+2GyRm5P0cKiSpXGS5iSJlw8BIqZ\n74KiwytzAgMBAAECggEAFQgajviTGi+XOcbhHr6UAomUPbxDv29nAZhSJJNb5TLn\nPxmJECIHeuh/6qDfARh06BvuQQBNYgVy3hDYzU9VGqO8Coz9s0KnHJL5jXpMhH4D\nTI1t1qNib0IpnQ4vV3MalfzNz36OFz8XOAsif29MJ/F1KWxmera0zvSQ+zfBKls1\nZr/R2PWczA4IAT2LS46sZHNfFyyfvATTaMDw53yd9X0VjdjCKiT6LBj9tYuAW34Y\nCQcRxt8E9nEkeQOVLqnpv1LBJmpiv7I6/NOcFDtbK+QB7eiIqwqvZ2fRMy7dE//7\nmsaQEf8is/e3/HkX4uZO5cQRulQ+AaFssR5aSiZIgQKBgQDMG200LEP7RhczPLgE\nKkGjH22bkBgpgYsfQFbBwP18DbPClEJCnfP2F4DB9heN8X8bhP7QPHnow/gUG0R5\nSOa1AMi6J5A0HaMk4CeKmkEwof4ngYnwhP5qFGm8ZaFvNqgDC0ThkOtXDqY+bhsv\njhrrjvcehxLG2HVdsI4iSirwGQKBgQC12Z+W1JpbJ9dmKyxiEI9FwQBIg5gE4tRm\nNRRJ4sgFjxuCUAuCq/Ivwjm6Gf0BnDH97fW4Pd85bAgj9E++k0Xr5rN5mqax7QYX\nc4rf7eD499Liu5rZYX3PFzFIqxhZbaByzZpK6TyUkq9yn4w7uRvedJNAbG7Fs7a3\nODd92J15awKBgQCme3iHpdONkY467LvsKcuAEpKE4PPUZyXjR8d8Ir6gAU0u2V9y\nlwP3JxSPIPv1e5YCDGkL0Uhe4/nl7JfdlekYmpsfvEWTPNllqrCWDVw/HuL/tlmd\nJd2fCSd11C/pVtuUIAz/MAXF7N0M7yKdl3u9x88px2M5bjXNRcWpknWTgQKBgDaj\nU4LzEAmxd9OXxzcTuKiBq78d4tAdAypOanEktWqOK/rEaCDz3smgts2Gv3D7aD3e\ngITB+k77eZqr7kXZZBnT8DrqT4mIKNtk+OX9SCol8/Px4D3OQAm38zPdTGyaNqon\nwmMdnvkY9aQf8feDz67QIeoqakH2lECKoImsSuxPAoGBALX+WUdglzn3vPi/RBQa\nEg+EqeD2EKQX40TrFIbxkLzXjxyVZGndIn+PQNSI3QpV+Cdr1itc8XkvemMaf1su\nICGMdrKVv8hqT8m246SviumGKHUUWvTVjlJHGmzZKmkz+RFbNzin3dNXnZK5dVBv\nHjOi1+hJVJuMsdk+Fx/7RVug\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-gvj1v@walkintothewild-24344.iam.gserviceaccount.com",
+    "client_id": "105225056708994726105",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-gvj1v%40walkintothewild-24344.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  
