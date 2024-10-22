@@ -16,18 +16,18 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
         // $fields[] = 'sharesafari';
         $fields[] = 'user';
         // $fields[] = 'parent';
-        // $fields[] = 'reports';
+        $fields[] = 'willflag';
         $fields[] = 'replies';
-        $hold_fields = ['id','user_id','comment_id','flaged','is_deleted','share_safari_id','park_id','parent_id','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        $hold_fields = ['id', 'user_id', 'comment_id', 'flaged', 'is_deleted', 'share_safari_id', 'park_id', 'parent_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
         return array_diff($fields, $hold_fields);
         return $fields;
     }
 
 
-    // public function getSharesafari()
-    // {
-    //     return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
-    // }
+    public function getSharesafari()
+    {
+        return $this->hasOne(ShareSafari::className(), ['id' => 'share_safari_id']);
+    }
 
     // public function getPark()
     // {
@@ -54,5 +54,14 @@ class ShareSafariComment extends \common\models\sharesafari\ShareSafariComment
     public function getReplies()
     {
         return $this->hasMany(self::class, ['parent_id' => 'id']);
+    }
+
+    public function getWillflag()
+    {
+        $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' =>  \Yii::$app->params['active_user_id'], 'share_safari_id' => $this->sharesafari->id, 'status' => 1])->limit(1)->one();
+        if ($share_safari_intrested && $share_safari_intrested->user_id != $this->user_id) {
+            return true;
+        }
+        return false;
     }
 }
