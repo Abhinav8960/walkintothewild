@@ -155,7 +155,7 @@ class UserPostsForm extends Model
             $storagePath = 'watchpost';
             $userPath = $storagePath . '/' . $this->user_photo_model->user_id . '/media';
 
-            $fileName = $this->user_photo_model->user_id . '_media_' . '.' . $this->file->extension;
+            $fileName = $this->user_photo_model->user_id . '_media_' . time() . '.' . $this->file->extension;
             $filePath = $userPath . '/' . $fileName;
 
             // $fileName = FsHelper::UserPostUploadFile($this->file, $filePath, $fileName, $this->caption, $this->user_id);
