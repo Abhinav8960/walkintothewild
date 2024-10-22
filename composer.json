@@ -39,7 +39,10 @@
         "skeeks/yii2-mobile-detect": "^1.0.2",
         "pusher/pusher-php-server": "^7.2",
         "daxslab/yii2-taggedview": "*",
-        "aws/aws-sdk-php": "^3.281"
+        "aws/aws-sdk-php": "^3.281",
+        "yiisoft/yii2-imagine": "^2.3",
+        "diecoding/yii2-flysystem": "^1.7",
+        "league/flysystem-aws-s3-v3": "^3.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
