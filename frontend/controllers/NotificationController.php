@@ -39,23 +39,16 @@ class NotificationController extends FrontendBaseController
 
     public function actionSendNotification()
     {
-
-        $token = 'cZdcYFJ0TTSnVLEhZizrRv:APA91bHZL174NVvaIzt5ftUul7nqlKpJCeJmD5orSxt8yOyjGl1EeZGpSjSBvX9zBrdVqJB2S3GJzFNBQeUJqpmhlYfYW5eqjUCCv0kO5HZJbX-SroOB-tfzkUn4rIeClSpObLKgbEyl';
-        // $firebaseMessaging = new FirebaseMessaging();
-        // $message = [
-        //     'token' => $token,
-        //     'notification' => [
-        //         'title' => 'Check New Way',
-        //         'body' => 'Dynamic Way',
-        //     ],
-        // ];
-
-
-
-        $firebaseClient = new FirebaseClient();
-        $firebaseClient->sendNotification('Check New Way', 'Dynamic Way', $token);
-        die();
-
+        $token = 'fTBasX2AS_yCG3fQNTEiRs:APA91bE_EGTli28PKgcHH6RR9qfx28CGff0CUC5DWAjH9qY43gpca44o19ioj1bqDg7GwqVbhvNZvakE66Y1y8B2nRpXj3uQLX1Rie7_KeW7ROrOZXGmkhMM2uaqkZ4ACVWzwEPI2tEY';
+        $projectId = 'walkintothewild-24344';
+        $firebaseMessaging = new FirebaseMessaging($projectId);
+        $message = [
+            'token' => $token,
+            'data' => [
+                'title' => 'Check New Way',
+                'body' => 'Dynamic Way',
+            ],
+        ];
 
         try {
             $accessToken = $firebaseMessaging->getAccessToken();

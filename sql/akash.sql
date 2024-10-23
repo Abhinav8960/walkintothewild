@@ -82,5 +82,7 @@ COMMIT;
 
 ALTER TABLE `site_frontend_request` ADD `isApi` TINYINT NULL DEFAULT '0' AFTER `isAjax`;
 
--- 18-oct-2024
-ALTER TABLE `user` ADD `user_flaged` INT NULL AFTER `updated_at`;
+
+--22-Oct-2024
+
+ALTER TABLE `user_posts` ADD `total_view` INT NULL DEFAULT '0' AFTER `status`;

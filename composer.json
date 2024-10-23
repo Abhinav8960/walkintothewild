@@ -40,8 +40,11 @@
         "pusher/pusher-php-server": "^7.2",
         "daxslab/yii2-taggedview": "*",
         "aws/aws-sdk-php": "^3.281",
-        "google/apiclient": "^2.18",
-        "kreait/firebase-php": "^7.0"
+        "kreait/firebase-php": "^7.0",
+        "yiisoft/yii2-imagine": "^2.3",
+        "diecoding/yii2-flysystem": "^1.7",
+        "league/flysystem-aws-s3-v3": "^3.0",
+        "google/apiclient": "^2.18"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

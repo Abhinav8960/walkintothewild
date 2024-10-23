@@ -16,10 +16,18 @@ class UserPosts extends \common\models\UserPosts
         return $fields;
     }
 
+    // public function getImagepath()
+    // {
+    //     if ($this->file != '') {
+    //         return Yii::$app->params['frontend_url'] . 'storage/userpost/' . $this->user_id . '/' . $this->file;
+    //     }
+    // }
+
     public function getImagepath()
     {
-        if ($this->file != '') {
-            return Yii::$app->params['frontend_url'] . 'storage/userpost/' . $this->user_id . '/' . $this->file;
-        }
+        // return \Yii::$app->fs->temporaryUrl('images/'.$this->id . '.' . strtolower($this->extension),  new \DateTimeImmutable('+1 Minutes'));
+
+
+        return  \Yii::$app->get('fs')->publicUrl('watchpost/' . $this->user_id . '/media/' . $this->file);
     }
 }

@@ -20,9 +20,17 @@ class FirebaseMessaging
 
     public function getAccessToken()
     {
+<<<<<<< HEAD
         $this->client->addScope('https://www.googleapis.com/auth/firebase.messaging');
         $this->client->useApplicationDefaultCredentials();
         $token = $this->client->fetchAccessTokenWithAssertion();
+=======
+        $client = new Client();
+        $client->setAuthConfig($this->serviceAccountPath);
+        $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
+        // $client->useApplicationDefaultCredentials();
+        $token = $client->fetchAccessTokenWithAssertion();
+>>>>>>> 8d21dcba7bc8e800d2b93c57c3efc56b1986e361
         return $token['access_token'];
     }
 

@@ -56,7 +56,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
     {
         return [
             [['type_of_post', 'user_id', 'height', 'width', 'like_count', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['caption', 'description', 'location'], 'string'],
+            [['caption', 'description', 'location', 'filepath', 'etag'], 'string'],
             [['latitude', 'longitude'], 'number'],
             [['file'], 'string', 'max' => 512],
         ];
@@ -81,10 +81,10 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         ];
     }
 
-    public function getImagepath()
-    {
-        if ($this->file != '') {
-            return '/storage/userpost/' . $this->user_id . '/' . $this->file;
-        }
-    }
+    // public function getImagepath()
+    // {
+    //     if ($this->file != '') {
+    //         return '/storage/userpost/' . $this->user_id . '/' . $this->file;
+    //     }
+    // }
 }
