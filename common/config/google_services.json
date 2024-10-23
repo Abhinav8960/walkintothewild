@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "104314574254",
+    "project_id": "walkintothewild-24344",
+    "storage_bucket": "walkintothewild-24344.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104314574254:android:55f508dec16dea60e8243f",
+        "android_client_info": {
+          "package_name": "com.walkintothewild"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "104314574254-gitn3cisdabavlhsnrjcag8pgrve143a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.walkintothewild",
+            "certificate_hash": "839f5767ba02dbe3efe5d4931631bd97eff24bd2"
+          }
+        },
+        {
+          "client_id": "104314574254-httjffoqrfv5p9nsrm5248kmtgo6g5eh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.walkintothewild",
+            "certificate_hash": "c353ab5f6867a69b6dac3372cc4d52da75722d3c"
+          }
+        },
+        {
+          "client_id": "104314574254-agv8e7m2vc3dfvi7bplarvqqpblivels.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfN1HZJA4zFKm3F_evH3gjU4CE8kOPN38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "104314574254-agv8e7m2vc3dfvi7bplarvqqpblivels.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
