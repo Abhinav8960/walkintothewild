@@ -47,15 +47,10 @@ class FirebaseMessaging
 
         if ($response === false) {
             \Yii::info(time() . ' Firebase Messaging  ::' . curl_error($ch), 'firebase');
-
             throw new \Exception('Curl error: ' . curl_error($ch));
         }
 
         curl_close($ch);
         return json_decode($response, true);
     }
-
-
-
-   
 }

@@ -19,6 +19,7 @@ use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\models\sharesafari\ShareSafariComment;
 use api\models\UserWishlist;
+use common\models\firebasenotification\FirebaseNotificationLog;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
@@ -175,6 +176,13 @@ class DefaultController extends SafariController
                 $share_safari_intrested->status = 1;
                 $share_safari_intrested->intrested_at = time();
                 if ($share_safari_intrested->save(false)) {
+                    /**Firebase Notification start */
+                    $user_ids = $share_safari->getIntrested()->joinWith('user')->where(['user.status' => 10, 'share_safari_intrested.status' => 1])->select('user_id')->column();
+                    $title = 'Join Safari';
+                    $message = 'You Join Safari';
+                    $sent_data = 'Share Safari';
+                    FirebaseNotificationLog::setActivity($title, $message, $user_ids, $sent_data);
+                    /**Firebase Notification end */
                     FrontendNotificationHelper::sharedSafariJoin($share_safari, $this->userinfo);
                     return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You joined this shared safari!"]);
                 }
