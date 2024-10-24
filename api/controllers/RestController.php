@@ -23,6 +23,7 @@ class RestController extends Controller
 
     public $userinfo;
     public $userinfoId;
+    public $access_token;
 
     public $pageSize = 10;
 
@@ -120,6 +121,7 @@ class RestController extends Controller
             $access_token = UserSession::findOne(['token' => $accessToken]);
 
             if ($access_token) {
+                $this->access_token = $access_token;
                 // if ($access_token->expires_at < time()) {
                 //     Yii::$app->api->sendFailedResponse([], 'Access token expired');
                 // };

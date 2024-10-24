@@ -35,10 +35,10 @@ class SiteController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'profile'],
+                'only' => ['logout', 'profile', 'update-token'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'profile'],
+                        'actions' => ['logout', 'profile', 'update-token'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -56,6 +56,7 @@ class SiteController extends RestController
                     'logout' => ['POST', 'GET'],
                     'profile' => ['GET'],
                     'social-login' => ['POST'],
+                    'update-token' => ['POST'],
 
                 ],
             ],
@@ -126,7 +127,7 @@ class SiteController extends RestController
 
                     // $data['expires_at'] = $accesstoken->expires_at;
 
-                   return \Yii::$app->api->sendResponse($data);
+                    return \Yii::$app->api->sendResponse($data);
                     // $this->updateUserInfo($user);
                 } else {
 
@@ -148,7 +149,7 @@ class SiteController extends RestController
 
 
 
-                           return \Yii::$app->api->sendResponse($data);
+                            return \Yii::$app->api->sendResponse($data);
                         } else {
 
                             return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
@@ -218,7 +219,7 @@ class SiteController extends RestController
 
 
 
-       return \Yii::$app->api->sendResponse($data);
+        return \Yii::$app->api->sendResponse($data);
     }
 
     public function actionLogout()
@@ -234,9 +235,25 @@ class SiteController extends RestController
 
         if ($model->delete()) {
 
-           return Yii::$app->api->sendResponse($data = [], ['message' => "Logged Out Successfully"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Logged Out Successfully"]);
         } else {
             return Yii::$app->api->sendResponse([], "Invalid Request");
         }
+    }
+
+
+    public function actionUpdateToken($firebase_token)
+    {
+        if ($this->access_token) {
+            $model = UserSession::find()->where(['token' => $this->access_token])->limit(1)->one();
+            if ($model) {
+                $model->firebase_token = $firebase_token;
+                $model->is_firebase_token_active = true;
+                $model->save(false);
+                return Yii::$app->api->sendResponse($data = [], ['message' => "Update Successfully"]);
+            }
+            return Yii::$app->api->sendResponse([], "Not Found");
+        }
+        return Yii::$app->api->sendResponse([], "Invalid Request");
     }
 }

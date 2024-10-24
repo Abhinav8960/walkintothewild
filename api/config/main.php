@@ -82,6 +82,7 @@ return [
                 'social-login' => 'site/social-login',
                 'profile' => 'site/profile',
                 'logout' => 'site/logout',
+                'update-token' => 'site/update-token',
 
                 'meta/<action>' => 'meta/default/<action>',
                 'master/<action>' => 'master/default/<action>',
