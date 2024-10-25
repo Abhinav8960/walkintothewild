@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 
 use api\behaviours\Verbcheck;
 use api\behaviours\Apiauth;
+use api\models\cms\contentmanagement\ContentManagement;
 use api\models\MasterMetaTableInfoSearch;
 use api\models\SocialLoginForm;
 use common\models\AccessTokens;
@@ -31,7 +32,7 @@ class SiteController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['social-login', 'master-meta-info'],
+                'exclude' => ['social-login', 'master-meta-info', 'termofuse', 'privacypolicy'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
@@ -56,6 +57,8 @@ class SiteController extends RestController
                     'logout' => ['POST', 'GET'],
                     'profile' => ['GET'],
                     'social-login' => ['POST'],
+                    'termofuse' => ['GET'],
+                    'privacypolicy' => ['GET'],
 
                 ],
             ],
@@ -126,7 +129,7 @@ class SiteController extends RestController
 
                     // $data['expires_at'] = $accesstoken->expires_at;
 
-                   return \Yii::$app->api->sendResponse($data);
+                    return \Yii::$app->api->sendResponse($data);
                     // $this->updateUserInfo($user);
                 } else {
 
@@ -148,7 +151,7 @@ class SiteController extends RestController
 
 
 
-                           return \Yii::$app->api->sendResponse($data);
+                            return \Yii::$app->api->sendResponse($data);
                         } else {
 
                             return Yii::$app->api->sendFailedStringResponse(['Source id is already available in records and not matching with given']);
@@ -218,7 +221,7 @@ class SiteController extends RestController
 
 
 
-       return \Yii::$app->api->sendResponse($data);
+        return \Yii::$app->api->sendResponse($data);
     }
 
     public function actionLogout()
@@ -234,9 +237,28 @@ class SiteController extends RestController
 
         if ($model->delete()) {
 
-           return Yii::$app->api->sendResponse($data = [], ['message' => "Logged Out Successfully"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Logged Out Successfully"]);
         } else {
             return Yii::$app->api->sendResponse([], "Invalid Request");
         }
+    }
+
+
+    public function actionTermofuse()
+    {
+        $term_of_use = ContentManagement::findOne(['id' => ContentManagement::CM_TERM_AND_CONDITION]);
+        if ($term_of_use) {
+            return \Yii::$app->api->sendResponse($data = [$term_of_use], ['message' => "Success"]);
+        }
+        return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
+    }
+
+    public function actionPrivacypolicy()
+    {
+        $privacy_policy = ContentManagement::findOne(['id' => ContentManagement::CMS_PRIVACY_POLICY]);
+        if ($privacy_policy) {
+            return \Yii::$app->api->sendResponse($data = [$privacy_policy], ['message' => "Success"]);
+        }
+        return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
     }
 }
