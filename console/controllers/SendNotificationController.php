@@ -38,13 +38,14 @@ class SendNotificationController extends Controller
      */
     protected function sendnotification()
     {
-        $logs = FirebaseNotificationLog::find()->where(['status' => 1, 'is_send' => 0])->limit(100)->orderBy(['id' => SORT_DESC])->all();
+        $logs = FirebaseNotificationLog::find()->where(['status' => 1, 'is_cron_run' => 0])->limit(100)->orderBy(['id' => SORT_DESC])->all();
         if ($logs) {
             foreach ($logs as $log) {
                 $firebase = UserSession::find()
                     ->where(['user_id' => $log->user_id, 'app_name' => 'Api'])
                     ->andWhere(['not', ['firebase_token' => null]])
                     ->andWhere(['!=', 'firebase_token', ''])
+                    ->andWhere(['is_firebase_token_active' => 1])
                     ->limit(1)
                     ->one();
                 if ($firebase) {
@@ -55,27 +56,42 @@ class SendNotificationController extends Controller
                             'title' => $log->title,
                             'body' => $log->message,
                         ],
-                        'data' => [
-                            'objective' => $log->sent_data,
-                        ]
                     ];
+
+                    if (!empty($log->sent_data)) {
+                        $message['data'] = json_decode($log->sent_data, true);
+                    }
                     try {
                         $accessToken = $firebaseMessaging->getAccessToken();
                         $response = $firebaseMessaging->sendMessage($accessToken, $message);
                         if (isset($response['error'])) {;
+                            $this->tokendisabled($firebase->firebase_token);
                             echo 'Firebase error: ' . json_encode($response['error']);
                         }
                         $log->is_send = 1;
-                        $log->save();
                         echo 'Notification Sent';
                     } catch (\Exception $e) {
+                        $this->tokendisabled($firebase->firebase_token);
                         echo 'Notification send error: ' . $e->getMessage(), 'firebase';
                     }
                 }
+
+                $log->is_cron_run = 1;
+                $log->save(false);
             }
         }
     }
 
+
+    private function tokendisabled($token)
+    {
+        $user = UserSession::find()->where(['firebase_token' => $token])->limit(1)->one();
+        if ($user) {
+            $user->is_firebase_token = 0;
+            $user->save(false);
+        }
+        return true;
+    }
 
     // protected function sendnotification()
     // {

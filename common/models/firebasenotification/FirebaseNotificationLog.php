@@ -42,7 +42,7 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             [['status', 'created_at'], 'required'],
             [['message', 'action'], 'string'],
             [['sent_data'], 'safe'],
-            [['status', 'is_send', 'created_by', 'created_at'], 'integer'],
+            [['status', 'is_send', 'created_by', 'created_at','is_cron_run'], 'integer'],
             [['type', 'image_url', 'action'], 'string', 'max' => 255],
             [['title'], 'string', 'max' => 250],
         ];
@@ -61,6 +61,7 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             'sent_data' => 'Sent Data',
             'image_url' => 'Image Url',
             'action' => 'Action',
+            'is_cron_run' => 'Cron Run',
             'status' => 'Status',
             'created_by' => 'Created By',
             'created_at' => 'Created At',
@@ -95,6 +96,7 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
             $model->action = ($action !== null) ? $action : NULL;
             $model->user_id = $user_id;
             $model->is_send = 0;
+            $model->is_cron_run = 0;
             $model->status = 1;
             $model->created_by = (int)self::getUserID();
             $model->save(false);
@@ -140,4 +142,5 @@ class FirebaseNotificationLog extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::classname(), ['id' => 'created_by']);
     }
+    
 }
