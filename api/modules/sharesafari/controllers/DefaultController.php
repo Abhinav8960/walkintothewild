@@ -6,7 +6,6 @@ use Yii;
 
 use api\behaviours\Verbcheck;
 use api\models\sharesafari\ShareSafari;
-use api\models\sharesafari\ShareSafariIntrested;
 use api\models\sharesafari\ShareSafariSearch;
 use common\Helper\FrontendNotificationHelper;
 use common\models\GeneralModel;
@@ -18,7 +17,9 @@ use frontend\models\form\SharedSafariForm;
 use yii\filters\AccessControl;
 use api\behaviours\Apiauth;
 use api\models\sharesafari\ShareSafariComment;
-use api\models\UserWishlist;
+// use api\models\UserWishlist;
+use common\models\sharesafari\ShareSafariIntrested;
+use common\models\UserWishlist;
 use frontend\models\ReplyForm;
 use frontend\models\ShareSafariCommentForm;
 use frontend\models\ShareSafariCommentReportForm;
