@@ -55,6 +55,7 @@ class SendNotificationController extends Controller
                         'notification' => [
                             'title' => $log->title,
                             'body' => $log->message,
+                            'image' => $log->image_url,
                         ],
                     ];
 
@@ -69,7 +70,6 @@ class SendNotificationController extends Controller
                             echo 'Firebase error: ' . json_encode($response['error']);
                         }
                         $log->is_send = 1;
-                        echo 'Notification Sent';
                     } catch (\Exception $e) {
                         $this->tokendisabled($firebase->firebase_token);
                         echo 'Notification send error: ' . $e->getMessage(), 'firebase';
@@ -96,15 +96,16 @@ class SendNotificationController extends Controller
     // protected function sendnotification()
     // {
     //     $firebaseMessaging = new FirebaseMessaging();
+    //     $image_url = '';
     //     $message = [
-    //         'token' => 'dhFiI9wTQhqpqNBZeL4MD3:APA91bFvc5JxK3v6yu07s3zG2h0LV6-0crPTN_tvEYV9kqQr5ttWAVB7iaDp-6_eLdnXhGAZ2UK0vOWrB5tijaxbiy9tGb3UcvQfmwSnGxlq9DyIxkRJnGXVOXA6ozrMWilOPUnIMpke',
+    //         'token' => '',
     //         'notification' => [
     //             'title' => 'check',
     //             'body' => 'Error',
+    //             'image' =>  $image_url,
+
     //         ],
-    //         'data' => [
-    //             'objective' => 'Error My test',
-    //         ]
+
     //     ];
     //     try {
     //         $accessToken = $firebaseMessaging->getAccessToken();
@@ -112,12 +113,9 @@ class SendNotificationController extends Controller
     //         if (isset($response['error'])) {
     //             echo 'Firebase error: ' . json_encode($response['error']);
     //         }
-    //         echo 'Notification Sent';
-    //         // return ['status' => 'success', 'response' => $response];
     //     } catch (\Exception $e) {
     //         echo 'Notification send error: ' . $e->getMessage(), 'firebase';
     //         echo $e->getMessage();
-    //         // return ['status' => 'error', 'message' => $e->getMessage()];
     //     }
     // }
 }
