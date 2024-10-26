@@ -36,10 +36,10 @@ class SiteController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'profile'],
+                'only' => ['logout', 'profile', 'update-token'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'profile'],
+                        'actions' => ['logout', 'profile', 'update-token'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -59,6 +59,7 @@ class SiteController extends RestController
                     'social-login' => ['POST'],
                     'termofuse' => ['GET'],
                     'privacypolicy' => ['GET'],
+                    'update-token' => ['POST'],
 
                 ],
             ],
@@ -260,5 +261,19 @@ class SiteController extends RestController
             return \Yii::$app->api->sendResponse($data = [$privacy_policy], ['message' => "Success"]);
         }
         return Yii::$app->api->sendResponse($data = [], ['message' => "Not Found"]);
+    }
+    public function actionUpdateToken($firebase_token)
+    {
+        if ($this->access_token) {
+            $model = UserSession::find()->where(['token' => $this->access_token])->limit(1)->one();
+            if ($model) {
+                $model->firebase_token = $firebase_token;
+                $model->is_firebase_token_active = true;
+                $model->save(false);
+                return Yii::$app->api->sendResponse($data = [], ['message' => "Update Successfully"]);
+            }
+            return Yii::$app->api->sendResponse([], "Not Found");
+        }
+        return Yii::$app->api->sendResponse([], "Invalid Request");
     }
 }

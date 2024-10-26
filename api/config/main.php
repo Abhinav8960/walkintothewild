@@ -84,6 +84,7 @@ return [
                 'logout' => 'site/logout',
                 'termofuse' => 'site/termofuse',
                 'privacypolicy' => 'site/privacypolicy',
+                'update-token' => 'site/update-token',
 
                 'meta/<action>' => 'meta/default/<action>',
                 'master/<action>' => 'master/default/<action>',

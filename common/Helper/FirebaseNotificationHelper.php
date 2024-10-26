@@ -1,95 +1,34 @@
 <?php
 
-namespace common\helper;
+namespace common\Helper;
 
+use common\models\firebasenotification\FirebaseNotificationLog;
+use common\models\sharesafari\ShareSafari;
+use common\models\User;
 use yii\base\BaseObject;
-use Yii;
-use yii\helpers\ArrayHelper;
 
-/**
- * @author Amr Alshroof
- */
 class FirebaseNotificationHelper extends BaseObject
 {
-    /**
-     * @var string the auth_key Firebase cloude messageing server key.
-     */
-    public $authKey;
-
-    public $timeout = 5;
-    public $sslVerifyHost = false;
-    public $sslVerifyPeer = false;
-
-    /**
-     * @var string the api_url for Firebase cloude messageing.
-     */
-    public $apiUrl = 'https://fcm.googleapis.com/fcm/send';
-
-    public function init()
+    public static function sharedSafariJoin(ShareSafari $share_safari, User $user)
     {
-        if (!$this->authKey) throw new \Exception("Empty authKey");
+        /**Firebase Notification start */
+        $user_ids = $share_safari->getIntrested()->joinWith('user')->where(['user.status' => 10, 'share_safari_intrested.status' => 1])->where(['!=','user.id',$user->id])->select('user_id')->column();
+        $title = 'Join Safari';
+        $message = $user->name.' join Safari '.$share_safari->share_safari_title;
+        $sent_data = 'Share Safari';
+        FirebaseNotificationLog::setActivity($title, $message, $user_ids, $sent_data);
+        /**Firebase Notification end */
     }
 
-    /**
-     * send raw body to FCM
-     * @param array $body
-     * @return mixed
-     */
-    public function send($body)
-    {
-        $headers = [
-            "Authorization:key={$this->authKey}",
-            'Content-Type: application/json',
-            'Expect: ',
-        ];
 
-        $ch = curl_init($this->apiUrl);
-        curl_setopt_array($ch, [
-            CURLOPT_POST           => true,
-            CURLOPT_SSL_VERIFYHOST => $this->sslVerifyHost,
-            CURLOPT_SSL_VERIFYPEER => $this->sslVerifyPeer,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_BINARYTRANSFER => true,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HEADER         => false,
-            CURLOPT_FRESH_CONNECT  => false,
-            CURLOPT_FORBID_REUSE   => false,
-            CURLOPT_HTTPHEADER     => $headers,
-            CURLOPT_TIMEOUT        => $this->timeout,
-            CURLOPT_POSTFIELDS     => json_encode($body),
-        ]);
-        $result = curl_exec($ch);
-        if ($result === false) {
-            Yii::error('Curl failed: ' . curl_error($ch) . ", with result=$result");
-            throw new \Exception("Could not send notification");
-        }
-        $code = (int)curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($code < 200 || $code >= 300) {
-            Yii::error("got unexpected response code $code with result=$result");
-            throw new \Exception("Could not send notification");
-        }
-        curl_close($ch);
-        $result = json_decode($result, true);
-        return $result;
-    }
-
-    /**
-     * high level method to send notification for a specific firebase_token (registration_ids) with FCM
-     * see https://firebase.google.com/docs/cloud-messaging/http-server-ref
-     * see https://firebase.google.com/docs/cloud-messaging/concept-options#notifications_and_data_messages
-     * 
-     * @param array  $firebase_token the registration ids
-     * @param array  $notification can be something like {title:, body:, sound:, badge:, click_action:, }
-     * @param array  $options other FCM options https://firebase.google.com/docs/cloud-messaging/http-server-ref#downstream-http-messages-json
-     * @return mixed
-     */
-    public function sendNotification($firebase_token = [], $notification, $options = [])
+    public static function sharedSafariLeave(ShareSafari $share_safari, User $user)
     {
-        $body = [
-            'registration_ids' => $firebase_token,
-            'notification' => $notification,
-        ];
-        $body = ArrayHelper::merge($body, $options);
-        return $this->send($body);
+           /**Firebase Notification start */
+           $user_ids = $share_safari->getIntrested()->joinWith('user')->where(['user.status' => 10, 'share_safari_intrested.status' => 1])->where(['!=','user.id',$user->id])->select('user_id')->column();
+           $title = 'Unjoin Safari';
+           $message = $user->name.' unjoin Safari '.$share_safari->share_safari_title;
+           $sent_data = 'Share Safari';
+           FirebaseNotificationLog::setActivity($title, $message, $user_ids, $sent_data);
+           /**Firebase Notification end */
     }
 }

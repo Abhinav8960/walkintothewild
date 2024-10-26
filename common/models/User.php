@@ -83,7 +83,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             [['is_adminstrator', 'is_admin', 'is_safari_operator', 'is_birding_operator', 'is_cms_manager', 'is_resort_manager', 'name'], 'safe'],
-            [['user_handle', 'user_bio','user_flaged'], 'safe']
+            [['user_handle', 'user_bio', 'user_flaged'], 'safe']
         ];
     }
 
@@ -488,5 +488,18 @@ class User extends ActiveRecord implements IdentityInterface
     public function getUserflaged()
     {
         return $this->hasOne(MasterUserFlag::class, ['id' => 'user_flaged']);
+    }
+
+
+    public function actionBroadcast()
+    {
+        $firebaseHandler = new \common\components\NotificationHandler\FirebaseNotificationHandler();
+
+        // Get the list of user tokens from your database
+        $userTokens = User::find()->select('firebase_token')->all();
+
+        foreach ($userTokens as $userToken) {
+            $firebaseHandler->sendNotification('Broadcast Title', 'Broadcast Message', $userToken->firebase_token);
+        }
     }
 }
