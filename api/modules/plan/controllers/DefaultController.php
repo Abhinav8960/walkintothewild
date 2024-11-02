@@ -41,14 +41,24 @@ class DefaultController extends RestController
      */
     public function actionFeaturedPark()
     {
-        $feature_park = SafariPark::find()->where(['status' => SafariPark::STATUS_ACTIVE])->andWhere(['!=', 'sequence', ''])->orderBy(['sequence' => SORT_ASC])->asArray()->all();
-        return $this->dataSender($feature_park, $rootIndexName = "Feature Park");
+        $searchModel = new SafariParkSearch();
+        $searchModel->status = SafariParkSearch::STATUS_ACTIVE;
+
+        $condition = ['!=', 'sequence', ''];
+        $defaultsort = ['sequence' => SORT_ASC];
+        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "FeaturePark", $condition, $defaultsort);
     }
 
 
     public function actionRareAnimal()
     {
-        $rare_exotic_animal =  MasterAnimal::find()->where(['status' => MasterAnimal::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->asArray()->all();
-        return $this->dataSender($rare_exotic_animal, $rootIndexName = "Rare Animal Exotic");
+        $searchModel = new MasterAnimalSearch();
+        $searchModel->status = MasterAnimalSearch::STATUS_ACTIVE;
+        $defaultsort = ['is_feature_sequence' => SORT_ASC];
+        $condition = ['!=', 'is_feature_sequence', ''];
+
+        return $this->dataProviderSenderWithCondition($searchModel, $rootIndexName = "RareAnimalExotic", $condition, $defaultsort);
+        // $rare_exotic_animal =  MasterAnimal::find()->where(['status' => MasterAnimal::STATUS_ACTIVE])->andWhere(['!=', 'is_feature_sequence', ''])->limit(10)->orderBy(['is_feature_sequence' => SORT_ASC])->asArray()->all();
+        // return $this->dataSender($rare_exotic_animal, $rootIndexName = "Rare Animal Exotic");
     }
 }
