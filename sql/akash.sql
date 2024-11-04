@@ -78,11 +78,8 @@ COMMIT;
 
 
 
--- 11-Oct-2024
+-- Run for serve 
 
 ALTER TABLE `site_frontend_request` ADD `isApi` TINYINT NULL DEFAULT '0' AFTER `isAjax`;
 
-
---22-Oct-2024
-
-ALTER TABLE `user_posts` ADD `total_view` INT NULL DEFAULT '0' AFTER `status`;
+ALTER TABLE user_session  ADD is_firebase_token_active BOOLEAN NOT NULL DEFAULT TRUE  AFTER firebase_token;
