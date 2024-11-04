@@ -30,6 +30,9 @@ return [
         ],
         'posts' => [
             'class' => 'api\modules\posts\Module',
+        ],
+        'plan' => [
+            'class' => 'api\modules\plan\Module',
         ]
 
     ],
@@ -104,7 +107,8 @@ return [
 
 
 
-
+                'featured-park' => 'plan/default/featured-park',
+                'rare-animal' => 'plan/default/rare-animal',
             ],
 
         ],

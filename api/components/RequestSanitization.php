@@ -27,6 +27,7 @@ class RequestSanitization extends \yii\base\Component
             'park',
             'filter-parklist',
             'posts',
+            'plan',
             
         ];
 

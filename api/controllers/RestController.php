@@ -201,6 +201,44 @@ class RestController extends Controller
     }
 
 
+    protected function dataProviderSenderWithCondition($searchModel, $rootIndexName = 0, $condition = NULL, $defaultsort = NULL,  $singleRecord = false, $paginationNeededAsPerQuery = 1)
+    {
+        $data = [];
+        $searchModel->load(\Yii::$app->request->queryParams);
+        $searchModel->setAttributes(\Yii::$app->request->queryParams);
+
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        if (!empty($condition)) {
+            $dataProvider->query->andWhere($condition);
+        }
+
+        if (!empty($defaultsort)) {
+            $dataProvider->sort->defaultOrder = $defaultsort;
+        }
+
+        if ($paginationNeededAsPerQuery == 1) {
+            if (isset($this->query_params['pagination']) && $this->query_params['pagination'] == 0) {
+                $dataProvider->pagination = false;
+            }
+        }
+        // print_r($dataProvider->pagination);
+
+        // die();
+        if ($dataProvider->pagination && $singleRecord == false) {
+
+            $dataProvider->pagination->pageSize = $this->pageSize;
+            $dataProvider->pagination->validatePage = false;
+
+            $data[$rootIndexName]['summary']['total'] = $dataProvider->getTotalCount();
+            $data[$rootIndexName]['summary']['page'] = \Yii::$app->request->get('page') ? \Yii::$app->request->get('page') : 1;
+            $data[$rootIndexName]['summary']['pageSize'] = $dataProvider->pagination->pageSize;
+            $data[$rootIndexName]['summary']['total_page'] = ceil($dataProvider->getTotalCount() / $dataProvider->pagination->pageSize);
+        }
+
+        return $this->reponseSender($data, $rootIndexName, $dataProvider, $singleRecord);
+    }
+
+
 
     public function afterAction($action, $result)
     {
