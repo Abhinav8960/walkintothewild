@@ -39,6 +39,7 @@ class FrontendNotification extends \yii\db\ActiveRecord
     const ACTION_SHAREDSAFARI_NEW_COMMENT_TO_HOST = 8;
     const ACTION_SHAREDSAFARI_NEW_COMMENT_TO_INTREST = 9;
     const ACTION_SHAREDSAFARI_NEW_REPLY_TO_HOST = 10;
+    const ACTION_UPDATE_FIXED_DEPARTURE = 11;
 
     /**
      * {@inheritdoc}

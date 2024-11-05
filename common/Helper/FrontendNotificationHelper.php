@@ -276,6 +276,31 @@ class FrontendNotificationHelper
         }
     }
 
+    public static function fixedDepartureUpdate(ShareSafari $share_safari)
+    {
+        if ($share_safari) {
+            $intrested_users = $share_safari->getIntrested()->where(['status' => 1])->all();
+            if ($intrested_users) {
+                foreach ($intrested_users as $intrested_user) {
+                    $model = new FrontendNotification();
+                    $model->action_id = FrontendNotification::ACTION_UPDATE_FIXED_DEPARTURE;
+                    $model->notification_url = Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug]);
+                    $model->parent_id = $share_safari->id;
+                    $model->channel = 'UserNotificationChannel';
+                    $model->status = 1;
+                    $model->user_id = $intrested_user->user_id;
+                    $model->is_seen = false;
+                    $model->is_read = False;
+                    $park_name = $share_safari->park ? $share_safari->park->title : '';
+                    $model->notification_text = "The details of a Fixed Departure you have joined have been updated  | " . $park_name;
+                    if ($model->save(false)) {
+                        self::eventSendtoPusher($model);
+                    }
+                }
+            }
+        }
+    }
+
     public static function sharedSafariComment(ShareSafari $share_safari)
     {
         if ($share_safari) {
