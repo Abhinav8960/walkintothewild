@@ -5,8 +5,8 @@ use yii\helpers\Html;
 ?>
 
 <div class="contact-form" style="font-family: Arial, sans-serif; font-size: 14px; color: #333; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <p style="font-weight: bold; margin-bottom: 10px;">Hi <?= $username ?></p>
-    <p style="margin-bottom: 20px;">A new comment has been posted in the <?= $shared_safari && isset($shared_safari['share_safari_title']) ? $shared_safari['share_safari_title'] : '' ?>. Join the conversation to discuss and finalize the shared safari plans.</p>
+    <p style="font-weight: bold; margin-bottom: 10px;">Hi <?= $creator_name ?></p>
+    <p style="margin-bottom: 20px;"> There's a new reply on your package. Check the latest reply to respond and finalize your package plans.</p>
     <br>
 
     <br>
