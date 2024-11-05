@@ -22,13 +22,13 @@ class SendNotificationController extends Controller
      */
     public function actionIndex()
     {
-        if (\Yii::$app->params['environment'] == "local") {
+        
             if ($this->sendnotification()) {
                 echo 'Notification Send Done';
             } else {
                 echo "No Notification to send";
             }
-        }
+        
     }
 
     /**
