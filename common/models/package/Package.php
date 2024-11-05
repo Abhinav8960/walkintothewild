@@ -206,7 +206,8 @@ class Package extends \yii\db\ActiveRecord implements \common\interfaces\NewStat
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
+        return $this->safarioperator ? $this->safarioperator->user : null;
+        // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
     }
 
     public function getSafarioperator()
