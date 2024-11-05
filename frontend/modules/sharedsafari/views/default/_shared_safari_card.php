@@ -124,7 +124,7 @@ $this->params['baseurl'] = $webasset->baseUrl;
                         if ($share_safari->status == ShareSafari::STATUS_SUSPEND) { // Closed
                             echo '<a href="#">Closed Safari</a>';
                         } else if ($share_safari->status == ShareSafari::STATUS_FULL_SEAT) { // No Seat
-                            echo '<a style="background-color:gray;" href="#">No seats</a>';
+                            echo '<a style="background-color:gray;" href="#">Seats Full</a>';
                         } else { // Open Safari
                             if (Yii::$app->user->identity) {
                                 $share_safari_intrested = ShareSafariIntrested::find()->where(['user_id' => Yii::$app->user->identity->id, 'share_safari_id' => $share_safari->id, 'status' => 1])->limit(1)->one();
