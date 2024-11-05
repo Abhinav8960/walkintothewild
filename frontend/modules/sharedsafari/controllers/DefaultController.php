@@ -276,7 +276,8 @@ class DefaultController extends FrontendBaseController
                 }
             }
             
-
+            FrontendNotificationHelper::sharedSafariComment($share_safari);
+            FrontendNotificationHelper::sharedSafariCommentToIntrest($share_safari);
             Yii::$app->session->setFlash('success', 'Comment successfully submitted');
 
             return $this->redirect(\yii\helpers\Url::toRoute(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']));
@@ -331,6 +332,7 @@ class DefaultController extends FrontendBaseController
                     if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
                         GeneralModel::sendmailfromlog($maillog_data['log_id']);
                     }
+                    FrontendNotificationHelper::sharedSafariReply($share_safari);
                     Yii::$app->session->setFlash('success', 'Reply successfully submitted');
                     return $this->redirect(['/sharedsafari/default/view', 'slug' => $share_safari->slug, 'organized_slug' => $share_safari->organizedslug ? $share_safari->organizedslug : '']);
                 }
