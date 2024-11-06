@@ -103,7 +103,7 @@ class DefaultController extends FrontendBaseController
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->comment($package)) {
             // Notification for New Comment
-            if (Yii::$app->user->identity && $package->owned_by_id != Yii::$app->user->identity->id) {
+            if (Yii::$app->user->identity) {
                 $user = Yii::$app->user->identity;
                 $username = $user->name;
                 $to_mail = $package->user->username;
@@ -169,7 +169,7 @@ class DefaultController extends FrontendBaseController
                     // Notification for Reply Comment
                     $reply_comment = $replymodel->commentbyParent();
                     if ($reply_comment) {
-                        if (Yii::$app->user->identity && $package->owned_by_id != Yii::$app->user->identity->id) {
+                        if (Yii::$app->user->identity) {
                             $user = Yii::$app->user->identity;
                             $username = $user->name;
                             $to_mail = $package->user->username;

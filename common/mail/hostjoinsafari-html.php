@@ -8,7 +8,7 @@ use yii\helpers\Html;
     <p style="font-weight: bold; margin-bottom: 10px;">Hi <?= $creator_name ?></p>
     <p style="margin-bottom: 20px;"> Someone has joined your shared safari. Visit the interested member section to review and connect for your trip planning.</p>
     <br>
-    <p><a href="<?= $shared_safari_url && isset($shared_safari_url) ? $shared_safari_url :''?>">Click here to Redirect</a></p>
+    <p><a href="<?= $shared_safari_url && isset($shared_safari_url) ? $shared_safari_url :''?>">View Update</a></p>
     <br>
 
     <br>
