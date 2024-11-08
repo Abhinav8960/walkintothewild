@@ -1,20 +1,19 @@
 <?php
 
-namespace frontend\models;
+namespace common\models\postscomment\form;
 
-
-use common\models\cms\article\Article;
-use common\models\cms\article\ArticleComment;
+use api\models\posts\UserPostComment;
+use common\models\UserPosts;
 use Yii;
 use yii\base\Model;
 
 
 /**
- * PackageReplyForm is the model behind the reply form.
+ * UserPostReplyForm is the model behind the reply form.
  */
-class ArticleReplyForm extends Model
+class UserPostReplyForm extends Model
 {
-    public $comment;
+    public $message;
     public $parent_id;
     public $action_url;
     public $action_validate_url;
@@ -26,25 +25,24 @@ class ArticleReplyForm extends Model
     public function rules()
     {
         return [
-            [['comment', 'parent_id'], 'required'],
-            ['comment', 'validateContent'],
-            ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
-                    $this->addError('comment', 'Invalid Characters!!!');
+            [['message', 'parent_id'], 'required'],
+            ['message', 'validateContent'],
+            ['message', function () {
+                if (!preg_match('/^[a-zA-Z0-9.,; ]*$/', $this->message)) {
+                    $this->addError('message', 'Invalid Characters!!!');
                 }
             }],
         ];
     }
 
 
-    public function reply(Article $article)
+    public function reply(UserPosts $userpost)
     {
-
-        $reply = new ArticleComment();
-        $reply->comment = $this->comment;
+        $reply = new UserPostComment();
+        $reply->message = $this->message;
         $reply->comment_datetime = date('Y-m-d H:i:s');
         $reply->user_id = Yii::$app->user->id;
-        $reply->article_id = $article->id;
+        $reply->user_posts_id = $userpost->id;
         $reply->parent_id = $this->parent_id;
 
         if ($reply->save(false)) {
@@ -55,7 +53,7 @@ class ArticleReplyForm extends Model
 
     public function commentbyParent()
     {
-        return ArticleComment::findone($this->parent_id);
+        return UserPostComment::findone($this->parent_id);
     }
 
     public function validateContent($attribute, $params)

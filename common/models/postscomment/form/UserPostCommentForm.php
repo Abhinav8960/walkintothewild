@@ -1,18 +1,18 @@
 <?php
 
-namespace frontend\models;
+namespace common\models\postscomment\form;
 
-use common\models\cms\article\Article;
-use common\models\cms\article\ArticleComment;
+use common\models\postscomment\UserPostComment;
+use common\models\UserPosts;
 use Yii;
 use yii\base\Model;
 
 /**
- * ContactForm is the model behind the contact form.
+ * UserPostCommentForm is the model behind the UserPostComment form.
  */
-class ArticleCommentForm extends Model
+class UserPostCommentForm extends Model
 {
-    public $comment;
+    public $message;
     public $action_url;
     public $action_validate_url;
 
@@ -23,11 +23,11 @@ class ArticleCommentForm extends Model
     public function rules()
     {
         return [
-            [['comment'], 'required'],
-            ['comment', 'validateContent'],
-            ['comment', function () {
-                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->comment)) {
-                    $this->addError('comment', 'Invalid Characters!!!');
+            [['message'], 'required'],
+            ['message', 'validateContent'],
+            ['message', function () {
+                if (!preg_match('/^[a-zA-Z0-9.,;\' ]*$/', $this->message)) {
+                    $this->addError('message', 'Invalid Characters!!!');
                 }
             }],
         ];
@@ -35,15 +35,13 @@ class ArticleCommentForm extends Model
 
 
     
-    public function comment(Article $article)
-    {
-
-     
-        $comment = new ArticleComment();
-        $comment->comment = $this->comment;
+    public function comment(UserPosts $userpost)
+    {     
+        $comment = new UserPostComment();
+        $comment->message = $this->message;
         $comment->comment_datetime = date('Y-m-d H:i:s');
         $comment->user_id = Yii::$app->user->id;
-        $comment->article_id = $article->id;
+        $comment->user_posts_id = $userpost->id;
         $comment->status = 1;
 
         if ($comment->save(false)) {

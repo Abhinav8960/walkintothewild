@@ -247,7 +247,14 @@ class DefaultController extends FrontendBaseController
             if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
                 $user = Yii::$app->user->identity;
                 $username = $user->name;
-                $to_mail = $share_safari->user->username;
+                if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                    $to_mail = $share_safari->user->username;
+                } else {
+                    $to_mail = $share_safari->safarioperator->user->username;
+                }
+
+
+
                 $creator_name = $share_safari->organizedbyname;
                 $subject = 'New Comment : Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                 $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_ONCOMMENT_SAFARI;
@@ -328,7 +335,11 @@ class DefaultController extends FrontendBaseController
                     if (Yii::$app->user->identity && $share_safari->host_user_id != Yii::$app->user->identity->id) {
                         $user = Yii::$app->user->identity;
                         $username = $user->name;
-                        $to_mail = $share_safari->user->username;
+                        if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                            $to_mail = $share_safari->user->username;
+                        } else {
+                            $to_mail = $share_safari->safarioperator->user->username;
+                        }
                         $creator_name = $share_safari->organizedbyname;
                         $subject = 'New Reply : Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                         $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_COMMENT_REPLY_SAFARI;
@@ -394,7 +405,11 @@ class DefaultController extends FrontendBaseController
 
                     $user = Yii::$app->user->identity;
                     $username = $user->name;
-                    $to_mail = $share_safari->user->username;
+                    if ($share_safari->type == ShareSafari::TYPE_SAFARI) {
+                        $to_mail = $share_safari->user->username;
+                    } else {
+                        $to_mail = $share_safari->safarioperator->user->username;
+                    }
                     $creator_name = $share_safari->organizedbyname;
                     $subject = 'New Member Alert: Shared Safari | ' . substr($share_safari->share_safari_title, 0, 20) . ' - ' . date('Y-m-d H:i:s');
                     $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_TO_HOST_JOIN_SAFARI;

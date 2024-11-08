@@ -8,6 +8,8 @@ use yii\helpers\Html;
     <p style="font-weight: bold; margin-bottom: 10px;">Hi <?= $username && isset($username) ? $username : '' ?></p>
     <p style="margin-bottom: 20px;">The description or details of your shared safari have been updated by the creator. Visit to see the latest changes.</p>
     <br>
+    <p><a href="<?= $shared_safari_url && isset($shared_safari_url) ? $shared_safari_url :''?>">View Update</a></p>
+    <br>
     <br>
     <p style="margin-top: 2% !important; font-size: 12px; color: #666;">Thank you!</p>
     <p style="font-size: 12px; color: #666;">Best regards,</p>

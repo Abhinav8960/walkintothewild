@@ -8,6 +8,8 @@ use yii\helpers\Html;
     <p style="font-weight: bold; margin-bottom: 10px;">Hi <?= $creator_name ?></p>
     <p style="margin-bottom: 20px;"> There's a new comment on your package. Check the latest comment to respond and finalize your package plans.</p>
     <br>
+    <p><a href="<?= $package_url && isset($package_url) ? $package_url : '' ?>">View Update</a></p>
+    <br>
 
     <br>
     <p style="margin-top: 2% !important; font-size: 12px; color: #666;">Thank you!</p>

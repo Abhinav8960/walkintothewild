@@ -7,6 +7,8 @@ use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\posts\UserPosts;
 use api\models\posts\UserPostSearch;
+use common\models\postscomment\form\UserPostCommentForm;
+use common\models\postscomment\form\UserPostReplyForm;
 use frontend\models\profile\UserPostsForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -25,18 +27,18 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index'],
+                'exclude' => ['index','view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['create'],
                 'rules' => [
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create','comment','reply'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                   
+
                 ],
             ],
             'verbs' => [
@@ -46,6 +48,8 @@ class DefaultController extends RestController
                     'view' => ['GET'],
                     'user-posts' => ['GET'],
                     'create' => ['POST'],
+                    'comment' => ['POST'],
+                    'reply' => ['POST'],
                 ],
             ],
         ];
@@ -77,7 +81,7 @@ class DefaultController extends RestController
             $model->initializeForm();
             if ($model->user_photo_model->save()) {
                 $model->uploadFile();
-               return Yii::$app->api->sendResponse($data = [$model->user_photo_model->attributes], ['message' => "Post added successfully"]);
+                return Yii::$app->api->sendResponse($data = [$model->user_photo_model->attributes], ['message' => "Post added successfully"]);
             }
         }
 
@@ -96,6 +100,45 @@ class DefaultController extends RestController
         $searchModel = new UserPostSearch();
         $searchModel->id = $userpost->id;
         return $this->dataProviderSender($searchModel, $rootIndexName = "UserPosts", $additionalSearchQueryParams = [], $singleRecord = true);
+    }
+
+
+    public function actionComment($id)
+    {
+        $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$userpost) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
+
+        $model = new UserPostCommentForm();
+        $model->attributes = $this->request;
+        if ($model->validate() && $model->comment($userpost)) {
+            return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
+        }
+
+        return Yii::$app->api->sendFailedStringResponse($userpost->firstErrors, 400);
+    }
+
+
+    public function actionReply($id, $parent_id)
+    {
+        $userpost = UserPosts::find()->where(['id' => $id, 'status' => UserPosts::STATUS_ACTIVE])->limit(1)->one();
+        if (!$userpost) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Post Not Found!!!"]);
+        }
+
+        $replymodel = new UserPostReplyForm();
+        $replymodel->parent_id = $parent_id;
+
+        $replymodel->attributes = $this->request;
+
+        if ($replymodel->validate()) {
+            if ($replymodel->reply($userpost)) {
+                return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
+            }
+        }
+
+        return Yii::$app->api->sendFailedStringResponse($userpost->firstErrors, 400);
     }
 
     /**
