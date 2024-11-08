@@ -5,6 +5,7 @@ namespace api\modules\posts\controllers;
 use api\behaviours\Apiauth;
 use api\behaviours\Verbcheck;
 use api\controllers\RestController;
+use api\models\posts\UserPostCommentLike;
 use api\models\posts\UserPosts;
 use api\models\posts\UserPostSearch;
 use common\models\postscomment\form\UserPostCommentForm;
@@ -27,14 +28,14 @@ class DefaultController extends RestController
         return $behaviors + [
             'apiauth' => [
                 'class' => Apiauth::className(),
-                'exclude' => ['index','view'],
+                'exclude' => ['index', 'view'],
             ],
             'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['create'],
                 'rules' => [
                     [
-                        'actions' => ['create','comment','reply'],
+                        'actions' => ['create', 'comment', 'reply', 'like'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -139,6 +140,25 @@ class DefaultController extends RestController
         }
 
         return Yii::$app->api->sendFailedStringResponse($userpost->firstErrors, 400);
+    }
+
+
+    public function actionLike($user_post_comment_id)
+    {
+
+        $like = UserPostCommentLike::find()->where(['user_id' => $this->userinfoId, 'user_post_comment_id' => $user_post_comment_id, 'status' => UserPostCommentLike::STATUS_ACTIVE])->one();
+        if (!$like) {
+            $like = new UserPostCommentLike();
+            $like->user_id = $this->userinfoId;
+            $like->user_post_comment_id = $user_post_comment_id;
+            $like->status = UserPostCommentLike::STATUS_ACTIVE;
+            if ($like->save(false)) {
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Liked Comment or Reply"]);
+            }
+        } else {
+            $like->delete();
+            return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Remove Liked Successfully"]);
+        }
     }
 
     /**
