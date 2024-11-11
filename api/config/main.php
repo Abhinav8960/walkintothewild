@@ -96,7 +96,7 @@ return [
                 'park' => 'park/default/index',
                 'filter-parklist' => 'park/default/filter-parklist',
                 'park/<slug>' => 'park/default/view',
-
+                'park/<slug>/<action>' => 'park/default/<action>',
                 'cms/<action>' => 'cms/default/<action>',
                 'sharesafari' => 'sharesafari/default/index',
                 'sharesafari/organize-safari' => 'sharesafari/default/organize-safari',

@@ -24,7 +24,7 @@ class User extends \common\models\User
         $fields[] = 'coverimage';
 
 
-        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index','sharesafari/default/view','posts/default/view','posts/default/index'])) {
+        if (in_array(\Yii::$app->controller->action->uniqueId, ['sharesafari/default/index', 'sharesafari/default/view', 'posts/default/view', 'posts/default/index', 'park/default/reviewlist'])) {
             $hold_fields = [
                 'id',
                 "password_hash",
