@@ -33,6 +33,9 @@ return [
         ],
         'plan' => [
             'class' => 'api\modules\plan\Module',
+        ],
+        'package' => [
+            'class' => 'api\modules\package\Module',
         ]
 
     ],
@@ -110,6 +113,9 @@ return [
 
                 'featured-park' => 'plan/default/featured-park',
                 'rare-animal' => 'plan/default/rare-animal',
+
+                'package' => 'package/default/index',
+                'package/<slug>' => 'package/default/view'
             ],
 
         ],
