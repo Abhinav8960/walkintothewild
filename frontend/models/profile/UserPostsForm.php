@@ -24,8 +24,8 @@ class UserPostsForm extends Model
     public $width;
     public $like_count;
     public $location;
-    public $latitude;
-    public $longitude;
+    // public $latitude;
+    // public $longitude;
 
     public $user_photo_model;
     public $action_url;
@@ -48,8 +48,8 @@ class UserPostsForm extends Model
             $this->width = $this->user_photo_model->width;
             $this->like_count = $this->user_photo_model->like_count;
             $this->location = $this->user_photo_model->location;
-            $this->latitude = $this->user_photo_model->latitude;
-            $this->longitude = $this->user_photo_model->longitude;
+            // $this->latitude = $this->user_photo_model->latitude;
+            // $this->longitude = $this->user_photo_model->longitude;
 
             $this->status = $this->user_photo_model->status;
         }
@@ -66,10 +66,11 @@ class UserPostsForm extends Model
                 ['file'],
                 'file',
                 'extensions' => ['jpeg', 'jpg', 'png', 'mp4', 'avi', 'mkv', 'webm'],
+                'maxSize' => 1024 * 1024 * 10
             ],
             [['user_id', 'type_of_post', 'height', 'width', 'like_count', 'status'], 'integer'],
             [['caption', 'description', 'location'], 'string'],
-            [['latitude', 'longitude'], 'number'],
+            // [['latitude', 'longitude'], 'number'],
         ];
     }
 
@@ -103,8 +104,8 @@ class UserPostsForm extends Model
         // $this->user_photo_model->width = $this->width;
         $this->user_photo_model->like_count = $this->like_count;
         $this->user_photo_model->location = $this->location;
-        $this->user_photo_model->latitude = $this->latitude;
-        $this->user_photo_model->longitude = $this->longitude;
+        // $this->user_photo_model->latitude = $this->latitude;
+        // $this->user_photo_model->longitude = $this->longitude;
         $this->user_photo_model->status = $this->status;
     }
 
