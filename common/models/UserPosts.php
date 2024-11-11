@@ -57,7 +57,7 @@ class UserPosts extends \yii\db\ActiveRecord implements \common\interfaces\NewSt
         return [
             [['type_of_post', 'user_id', 'height', 'width', 'like_count', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['caption', 'description', 'location', 'filepath', 'etag'], 'string'],
-            [['latitude', 'longitude'], 'number'],
+            // [['latitude', 'longitude'], 'number'],
             [['file'], 'string', 'max' => 512],
         ];
     }
