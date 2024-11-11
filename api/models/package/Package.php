@@ -1,0 +1,277 @@
+<?php
+
+namespace api\models\package;
+
+use api\models\master\vehicle\MasterVehicle;
+use api\models\meta\MetaPackageRange;
+use api\models\operator\SafariOperator;
+use Yii;
+use common\models\User;
+
+
+class Package extends \common\models\package\Package
+{
+    public function fields()
+    {
+        $fields = parent::fields();
+
+
+        $fields[] = 'packagename';
+        $fields[] = 'packageincluded';
+        $fields[] = 'safarioperator';
+        $fields[] = 'packagepark';
+        $fields[] = 'pickdrop';
+        $fields[] = 'imagepath';
+        $fields[] = 'imagebannerpath';
+        $fields[] =  'packagedays';
+        $fields[] = 'comments';
+
+
+        $hold_fields = [
+            'owned_by_id',
+            'package_name',
+            'total_view',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'created_by',
+            'updated_at',
+        ];
+
+        return array_diff($fields, $hold_fields);
+        return $fields;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['package_name', 'package_slug'], 'required'],
+            [['no_of_day', 'no_of_night', 'no_of_safari', 'stay_category_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'status', 'popular_package'], 'integer'],
+            [['cost_per_person'], 'number'],
+            [['package_description', 'package_inclusion', 'package_itinerary_overview', 'package_exclusion', 'package_terms_condtition'], 'string'],
+            [['package_name'], 'string', 'max' => 512],
+            [['package_slug'], 'string', 'max' => 720],
+            [['start_location', 'end_location'], 'string', 'max' => 255],
+        ];
+    }
+
+
+    public function getPackagename()
+    {
+
+        $name = $this->package_name;
+
+        if ($singlepark = $this->singlepark) {
+            if ($park = $singlepark->park) {
+                $title_sub = explode(" ", $park->title);
+                if (isset($title_sub[0])) {
+                    $name .= " - " . $title_sub[0];
+                }
+            }
+        }
+
+        return $name;
+    }
+
+    public function getPackageincluded()
+    {
+        return $this->hasMany(PackageIncluded::className(), ['package_id' => 'id'])->andWhere(['package_included.status' => PackageIncluded::STATUS_ACTIVE]);
+    }
+
+
+    public function getPackagefeatures()
+    {
+        return $this->hasMany(PackageFeature::className(), ['package_id' => 'id'])->andWhere(['package_feature.status' => PackageFeature::STATUS_ACTIVE]);
+    }
+
+
+    public function getPackageIncludeds()
+    {
+        return $this->hasMany(PackageIncluded::class, ['package_id' => 'id']);
+    }
+
+    public function getPackagedays()
+    {
+        return $this->hasMany(PackageDay::class, ['package_id' => 'id']);
+    }
+
+    public function getImagepath()
+    {
+        $image_path = '';
+        if (isset($this->package_image)) {
+            $image_path = \Yii::$app->params['frontend_url_for_api'] . 'storage/package/' . $this->id . '/' . $this->package_image;
+        } else {
+
+            if (isset($this->singlepark)) {
+                if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
+                    $image_path = $this->singlepark->park->logoimagepath;
+                } else {
+                    $image_path = '';
+                }
+            } else {
+                $image_path = '';
+            }
+        }
+
+        return $image_path;
+    }
+
+
+    public function getImagebannerpath()
+    {
+        $image_path = '';
+        if (isset($this->package_banner_image)) {
+            $image_path = \Yii::$app->params['frontend_url_for_api'] . 'storage/package/' . $this->id . '/' . $this->package_banner_image;
+        } else {
+
+            if (isset($this->singlepark)) {
+                if (isset($this->singlepark->park) && isset($this->singlepark->park->logo)) {
+                    $image_path = $this->singlepark->park->logoimagepath;
+                } else {
+                    $image_path = '';
+                }
+            } else {
+                $image_path = '';
+            }
+        }
+
+        return $image_path;
+    }
+
+    public function getComments()
+    {
+        return $this->hasMany(PackageComment::class, ['package_id' => 'id']);
+    }
+
+
+    public function getUser()
+    {
+        return $this->safarioperator ? $this->safarioperator->user : null;
+        // return $this->hasOne(User::className(), ['id' => 'owned_by_id']);
+    }
+
+    public function getSafarioperator()
+    {
+        return $this->hasOne(SafariOperator::class, ['id' => 'owned_by_id']);
+    }
+
+    public function getMastervehicle()
+    {
+        return $this->hasOne(MasterVehicle::class, ['id' => 'master_vehicle_id']);
+    }
+
+
+    public function getPickdrop()
+    {
+        $package_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+        return ($package_includes) ? 'Included' : 'Not Included';
+    }
+
+
+    /**
+     * Parks List
+     */
+    public function getSinglepark()
+    {
+        return $this->hasOne(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
+
+    /**
+     * Parks List
+     */
+    public function getPackagepark()
+    {
+        return $this->hasMany(PackageSafariPark::className(), ['package_id' => 'id']);
+    }
+
+    public function getPackagerange()
+    {
+        return $this->hasOne(MetaPackageRange::class, ['id' => 'stay_category_id']);
+    }
+
+    public function getPackagegallery()
+    {
+        return $this->hasMany(PackageGallery::className(), ['package_id' => 'id']);
+    }
+
+    public function getPackagedaynightlabels()
+    {
+        $options = [
+            1 => '0N/1D',
+            2 => '1N/2D',
+            3 => '2N/3D',
+            4 => '3N/4D',
+            5 => '4N/5D',
+            6 => '5N/6D',
+            7 => '6N/7D',
+            8 => '7N/8D',
+            9 => '8N/9D',
+            10 => '9N/10D',
+            11 => '10N/11D',
+            12 => '11N/12D',
+            13 => '12N/13D',
+            14 => '13N/14D',
+            15 => '14N/15D',
+        ];
+
+        return isset($options[$this->no_of_day]) ? $options[$this->no_of_day] : "";
+    }
+
+
+    public function getPickanddrop()
+    {
+        $pick_drop_includes = PackageIncluded::find()->where(['package_id' => $this->id, 'include_id' => 3, 'selection' => 1, 'status' => PackageIncluded::STATUS_ACTIVE])->limit(1)->one();
+
+        return ($pick_drop_includes) ? 'Included' : 'Not Included';
+    }
+
+
+
+    public function getMeals()
+    {
+
+        $meals_text = '';
+        if ($this->breakfast_included == 1 || $this->lunch_included == 1 || $this->dinner_included == 1) {
+            $meals_text = 'Included';
+        }
+
+
+
+        return ($meals_text) ? $meals_text : 'Not Included';
+    }
+
+    public function getMealslisting()
+    {
+        if ($this->breakfast_included == 1 || $this->lunch_included == 1 || $this->dinner_included == 1) {
+            return 'Included';
+        }
+
+
+        return 'Not Included';
+    }
+
+    public function getMealslabel()
+    {
+        $mealOptions = [];
+
+
+        if ($this->breakfast_included == 1) {
+            $mealOptions[] = 'Breakfast';
+        }
+        if ($this->lunch_included == 1) {
+            $mealOptions[] = 'Lunch';
+        }
+        if ($this->dinner_included == 1) {
+            $mealOptions[] = 'Dinner';
+        }
+        if ($this->meal_not_included == 1) {
+            $mealOptions[] = 'Not Included';
+        }
+
+        return $mealOptions ? implode(', ', $mealOptions) : 'Not Included';
+    }
+}
