@@ -79,6 +79,8 @@ class DefaultController extends RestController
         return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     }
 
+  
+
 
 
     public function actionComment($slug)

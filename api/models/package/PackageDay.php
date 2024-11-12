@@ -30,7 +30,13 @@ use Yii;
  */
 class PackageDay extends \common\models\package\PackageDay
 {
-    
+    public function fields()
+    {
+        $fields = parent::fields();
+        $hold_fields = ['id', 'package_id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        return array_diff($fields, $hold_fields);
+        return $fields;
+    }
 
     public function getImagepath()
     {
