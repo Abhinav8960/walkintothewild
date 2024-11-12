@@ -2,6 +2,7 @@
 
 namespace api\models\package;
 
+use api\models\master\packageinclude\MasterPackageInclude;
 use Yii;
 
 /**
@@ -21,8 +22,13 @@ class PackageIncluded  extends \common\models\package\PackageIncluded
     public function fields()
     {
         $fields = parent::fields();
+        $fields[] = 'packageInclude';
+        $fields[] = 'includeoption';
         $hold_fields = [
             'id',
+            'selection',
+            'include_id',
+            'package_id',
             'status',
             'created_by',
             'updated_by',
@@ -32,5 +38,21 @@ class PackageIncluded  extends \common\models\package\PackageIncluded
         ];
 
         return array_diff($fields, $hold_fields);
+    }
+
+    public function getPackageInclude()
+    {
+        return $this->hasMany(MasterPackageInclude::class, ['id' => 'include_id']);
+    }
+
+    public function getIncludeoption()
+    {
+        if ($this->selection == 1) {
+            return 'Include';
+        } elseif ($this->selection == 2) {
+            return 'Not Include';
+        } else {
+            return 'Optional';
+        }
     }
 }
