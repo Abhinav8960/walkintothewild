@@ -9,6 +9,7 @@ use api\behaviours\Verbcheck;
 use api\controllers\RestController;
 use api\models\package\Package;
 use api\models\package\PackageSearch;
+use api\models\UserWishlist;
 use frontend\models\PackageCommentForm;
 use frontend\models\PackageReplyForm;
 use yii\filters\AccessControl;
@@ -33,10 +34,10 @@ class DefaultController extends RestController
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create'],
+                'only' => ['comment', 'reply', 'wishlist', 'unwishlist'],
                 'rules' => [
                     [
-                        'actions' => ['comment', 'reply'],
+                        'actions' => ['comment', 'reply', 'wishlist', 'unwishlist'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -69,27 +70,27 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
         $searchModel = new PackageSearch();
         $searchModel->id = $package->id;
         return $this->dataProviderSender($searchModel, $rootIndexName = 0, $additionalSearchQueryParams = [], $singleRecord = true);
     }
 
-   
+
 
     public function actionComment($slug)
     {
+
         $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
         $model = new PackageCommentForm();
         $model->attributes = $this->request;
         if ($model->validate() && $model->comment($package)) {
             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Comment Successfully!"]);
         }
-
         return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
     }
 
@@ -98,12 +99,11 @@ class DefaultController extends RestController
     {
         $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
         if (!$package) {
-            return Yii::$app->api->sendResponse($data = [], ['message' => "Shared Safari Not Found!!!"]);
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
         }
 
         $replymodel = new PackageReplyForm();
         $replymodel->parent_id = $parent_id;
-
         $replymodel->attributes = $this->request;
 
         if ($replymodel->validate()) {
@@ -111,43 +111,48 @@ class DefaultController extends RestController
                 return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reply submitted Successfully!"]);
             }
         }
-
-
         return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
     }
 
-    // public function actionFlag($slug, $park_id, $share_safari_comment_id)
-    // {
-    //     $share_safari = ShareSafari::find()->where(['slug' => $slug])->one();
-    //     if (!$share_safari) {
-    //         return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Share Safari Not found!"]);
-    //     }
+    public function actionWishlist($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        if ($package) {
+            $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
+            if (!$wishlist) {
+                $wishlist = new UserWishlist();
+            }
+            $wishlist->user_id = $this->userinfoId;
+            $wishlist->item_id = $package->id;
+            $wishlist->item_type_id = UserWishlist::SAFARI_PACKAGE;
+            $wishlist->item_type = 'package';
+            $wishlist->status = 1;
+            if ($wishlist->save(false)) {
+                return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You added Package to wishlist!"]);
+            }
+        }
+        return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
+    }
 
-    //     $comments = ShareSafariComment::find()->where(['id' => $share_safari_comment_id])->limit(1)->one();
-
-    //     $model = new ShareSafariCommentReportForm();
-    //     $model->share_safari_id = $share_safari->id;
-    //     $model->park_id = $park_id;
-    //     $model->share_safari_comment_id = $share_safari_comment_id;
-
-    //     $model->attributes = $this->request;
-    //     if ($model->validate()) {
-    //         $model->initializeForm();
-    //         if ($model->flag_model->save(false)) {
-    //             $comments->flaged = 1;
-    //             $comments->save(false);
-    //             /*Send Email*/
-    //             $to_mail = Yii::$app->params['adminEmail'];
-    //             $subject = 'Flag Raised | Shared Safari : ' . substr($share_safari->share_safari_title, 0, 20) . '| Comment : ' . substr($comments->comment, 0, 20) . ' - ' . date('Y-m-d H:i:s');
-    //             $template = \common\Helper\EmailTemplate::EMAIL_TEMPLATE_NEW_FLAGED_RAISEDBY_USER;
-    //             $req = ['comment' => $comments->comment, 'report_details' => $model->flag_model->report_detail, 'username' => isset(Yii::$app->user->identity) ? Yii::$app->user->identity->name : ''];
-    //             $maillog_data = MailLog::createMailLog($to_mail, $subject, $template, $req, []);
-    //             if (isset($maillog_data['log_id']) && !empty($maillog_data['log_id'])) {
-    //                 GeneralModel::sendmailfromlog($maillog_data['log_id']);
-    //             }
-
-    //             return Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "Reported successfully!"]);
-    //         }
-    //     }
-    // }
+    public function actionUnwishlist($slug)
+    {
+        $package = Package::find()->where(['status' => Package::STATUS_ACTIVE, 'package_slug' => $slug])->limit(1)->one();
+        if (!$package) {
+            return Yii::$app->api->sendResponse($data = [], ['message' => "Package Not Found!!!"]);
+        }
+        if ($package) {
+            $wishlist = UserWishlist::find()->where(['user_id' => $this->userinfoId, 'item_id' => $package->id, 'item_type_id' => UserWishlist::SAFARI_PACKAGE])->one();
+            if ($wishlist) {
+                $wishlist->status = 0;
+                if ($wishlist->save(false)) {
+                    return  Yii::$app->api->sendResponse($data = ['status' => 1], ['message' => "You removed Package to wishlist!"]);
+                }
+                return Yii::$app->api->sendResponse($data = ['status' => 0], ['message' => "Not removed Package from wishlist!"]);
+            }
+        }
+        return Yii::$app->api->sendFailedStringResponse($package->firstErrors, 400);
+    }
 }
