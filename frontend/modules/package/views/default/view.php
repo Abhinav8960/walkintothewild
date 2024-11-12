@@ -246,7 +246,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
 
 
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-12 pt-4">
                             <div class="text_safaripackage package_description profile-description">
                                 <div class="text show-more-height">
@@ -257,7 +257,7 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                 <div class="package-show-more show-more">See More</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <!-- <div class="advertisment mt-4 mb-5" style="display:none">
                         <div class="google-ad-box ">
 
@@ -312,6 +312,14 @@ $banner = Banner::find()->where(['status' => 1, 'page_id' => $page_constant])->l
                                     <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
 
                                         <div class="accordion-body profile-description package_itinerary_overview">
+
+                                            <div class="text show-more-height">
+                                                <p>
+                                                    <?= $package->package_description  ?>
+                                                </p>
+                                            </div>
+                                            <div class="package-show-more show-more">See More</div>
+
                                             <?php if ($package->package_itinerary_overview <> '') { ?>
                                                 <div class="text show-more-height">
                                                     <?= isset($package->package_itinerary_overview) ? $package->package_itinerary_overview : '' ?>

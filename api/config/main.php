@@ -33,7 +33,13 @@ return [
         ],
         'plan' => [
             'class' => 'api\modules\plan\Module',
-        ]
+        ],
+        'package' => [
+            'class' => 'api\modules\package\Module',
+        ],
+        'operator' => [
+            'class' => 'api\modules\operator\Module',
+        ],
 
     ],
     'components' => [
@@ -111,6 +117,12 @@ return [
 
                 'featured-park' => 'plan/default/featured-park',
                 'rare-animal' => 'plan/default/rare-animal',
+
+                'package' => 'package/default/index',
+                'package/<slug>' => 'package/default/view',
+                'package/<slug>/<action>' => 'package/default/<action>',
+
+                'operator/<slug>' => 'operator/default/view',
             ],
 
         ],
