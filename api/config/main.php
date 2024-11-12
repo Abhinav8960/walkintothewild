@@ -36,7 +36,10 @@ return [
         ],
         'package' => [
             'class' => 'api\modules\package\Module',
-        ]
+        ],
+        'operator' => [
+            'class' => 'api\modules\operator\Module',
+        ],
 
     ],
     'components' => [
@@ -117,6 +120,8 @@ return [
                 'package' => 'package/default/index',
                 'package/<slug>' => 'package/default/view',
                 'package/<slug>/<action>' => 'package/default/<action>',
+
+                'operator/<slug>' => 'operator/default/view',
             ],
 
         ],
