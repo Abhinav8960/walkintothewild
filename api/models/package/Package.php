@@ -26,6 +26,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'imagebannerpath';
             $fields[] =  'packagedays';
             $fields[] = 'comments';
+            $fields[] = 'faqs';
             $hold_fields = [
                 'start_location',
                 'end_location',
@@ -60,6 +61,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'safarioperator';
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
+            $fields[] = 'faqs';
             $hold_fields = [
                 'package_agenda_id',
                 'safari_type',
@@ -340,5 +342,10 @@ class Package extends \common\models\package\Package
         }
 
         return $mealOptions ? implode(', ', $mealOptions) : 'Not Included';
+    }
+
+    public function getFaqs()
+    {
+        return $this->hasMany(PackageFaq::className(), ['package_id' => 'id'])->andWhere(['package_faq.status' => PackageFaq::STATUS_ACTIVE]);
     }
 }
