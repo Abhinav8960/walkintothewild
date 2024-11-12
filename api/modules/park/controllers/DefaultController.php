@@ -6,6 +6,7 @@ use api\controllers\RestController;
 use api\models\park\SafariPark;
 use api\models\sharesafari\ShareSafari;
 use api\behaviours\Verbcheck;
+use api\models\master\animal\MasterAnimal;
 use api\models\operator\SafariOperatorSearch;
 use api\models\park\SafariParkRating;
 use api\models\park\SafariParkRatingSearch;
@@ -34,6 +35,7 @@ class DefaultController extends RestController
                     'index' => ['GET'],
                     'view' => ['GET'],
                     'filter-parklist' => ['GET'],
+                    'reviewlist' => ['GET']
 
                 ],
             ],
