@@ -15,29 +15,96 @@ class Package extends \common\models\package\Package
     {
         $fields = parent::fields();
 
+        if (in_array(\Yii::$app->controller->action->uniqueId,  ['package/default/view'])) {
+            $fields[] = 'packagename';
+            $fields[] = 'packageincluded';
+            $fields[] = 'safarioperator';
+            $fields[] = 'packagepark';
+            $fields[] = 'pickanddrop';
+            $fields[] = 'meals';
+            $fields[] = 'imagepath';
+            $fields[] = 'imagebannerpath';
+            $fields[] =  'packagedays';
+            $fields[] = 'comments';
+            $hold_fields = [
+                'start_location',
+                'end_location',
+                'start_date',
+                'end_date',
+                'package_image',
+                'package_banner_image',
+                'owned_by_id',
+                'package_name',
+                'type',
+                'gst_percentage',
+                'master_vehicle_id',
+                'breakfast_included',
+                'lunch_included',
+                'dinner_included',
+                'meal_not_included',
+                'popular_package',
+                'delete_reason_id',
+                'delete_reason',
+                'total_view',
+                'status',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'created_by',
+                'updated_at',
+            ];
+        } else {
+            $fields[] = 'pickanddrop';
+            $fields[] = 'mealslisting';
+            $fields[] = 'packagerange';
+            $fields[] = 'safarioperator';
+            $fields[] = 'imagepath';
+            $fields[] = 'imagebannerpath';
+            $hold_fields = [
+                'package_agenda_id',
+                'safari_type',
+                'start_location',
+                'end_location',
+                'start_date',
+                'end_date',
+                'package_image',
+                'package_banner_image',
+                'stay_category_id',
+                'cost_per_person',
+                'type',
+                'gst_percentage',
+                'package_description',
+                'package_itinerary_overview',
+                'package_inclusion',
+                'package_exclusion',
+                'package_terms_condtition',
+                'privacy_policy',
+                'change_policy',
+                'what_you_must_carry',
+                'date_change_policy',
+                'refund_policy',
+                'getting_there',
+                'master_vehicle_id',
+                'breakfast_included',
+                'lunch_included',
+                'dinner_included',
+                'meal_not_included',
+                'popular_package',
+                'delete_reason_id',
+                'delete_reason',
+                'owned_by_id',
+                'package_name',
+                'total_view',
+                'status',
+                'created_by',
+                'updated_by',
+                'created_at',
+                'created_by',
+                'updated_at',
+            ];
+        }
 
-        $fields[] = 'packagename';
-        $fields[] = 'packageincluded';
-        $fields[] = 'safarioperator';
-        $fields[] = 'packagepark';
-        $fields[] = 'pickdrop';
-        $fields[] = 'imagepath';
-        $fields[] = 'imagebannerpath';
-        $fields[] =  'packagedays';
-        $fields[] = 'comments';
 
-
-        $hold_fields = [
-            'owned_by_id',
-            'package_name',
-            'total_view',
-            'status',
-            'created_by',
-            'updated_by',
-            'created_at',
-            'created_by',
-            'updated_at',
-        ];
 
         return array_diff($fields, $hold_fields);
         return $fields;

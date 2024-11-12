@@ -19,7 +19,25 @@ use Yii;
  */
 class PackageSafariPark extends \common\models\package\PackageSafariPark
 {
-   
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        $fields[] = 'park';
+        $hold_fields = [
+            'id',
+            'park_id',
+            'package_id',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'created_by',
+            'updated_at',
+        ];
+
+        return array_diff($fields, $hold_fields);
+    }
     public function getPark()
     {
         return $this->hasOne(SafariPark::class, ['id' => 'park_id']);

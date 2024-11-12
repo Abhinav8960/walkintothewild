@@ -18,5 +18,19 @@ use Yii;
  */
 class PackageIncluded  extends \common\models\package\PackageIncluded
 {
-   
+    public function fields()
+    {
+        $fields = parent::fields();
+        $hold_fields = [
+            'id',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'created_by',
+            'updated_at',
+        ];
+
+        return array_diff($fields, $hold_fields);
+    }
 }
