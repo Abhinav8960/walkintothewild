@@ -116,7 +116,8 @@ return [
                 'rare-animal' => 'plan/default/rare-animal',
 
                 'package' => 'package/default/index',
-                'package/<slug>' => 'package/default/view'
+                'package/<slug>' => 'package/default/view',
+                'package/<slug>/<action>' => 'package/default/<action>',
             ],
 
         ],
