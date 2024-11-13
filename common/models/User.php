@@ -490,16 +490,12 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(MasterUserFlag::class, ['id' => 'user_flaged']);
     }
 
-
-    public function actionBroadcast()
+    public function getSafarioperatorname()
     {
-        $firebaseHandler = new \common\components\NotificationHandler\FirebaseNotificationHandler();
-
-        // Get the list of user tokens from your database
-        $userTokens = User::find()->select('firebase_token')->all();
-
-        foreach ($userTokens as $userToken) {
-            $firebaseHandler->sendNotification('Broadcast Title', 'Broadcast Message', $userToken->firebase_token);
+        if ($this->is_safari_operator == 1) {
+            return $this->operator ? $this->operator->businessname : $this->name;
+        } else {
+            return $this->name;
         }
     }
 }

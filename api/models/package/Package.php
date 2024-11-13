@@ -61,6 +61,8 @@ class Package extends \common\models\package\Package
             $fields[] = 'safarioperator';
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
+            $fields[] = 'packagename';
+            $fields[] = 'packagedaynightlabels';
             $hold_fields = [
                 'package_agenda_id',
                 'safari_type',
