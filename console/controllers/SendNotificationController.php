@@ -87,7 +87,7 @@ class SendNotificationController extends Controller
     {
         $user = UserSession::find()->where(['firebase_token' => $token])->limit(1)->one();
         if ($user) {
-            $user->is_firebase_token = 0;
+            $user->is_firebase_token_active = 0;
             $user->save(false);
         }
         return true;
