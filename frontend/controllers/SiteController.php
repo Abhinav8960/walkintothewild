@@ -568,23 +568,52 @@ class SiteController extends FrontendBaseController
      */
     public function actionGetanimal($text = '')
     {
+        $fordorp_item = '';
+        $animallist = '';
         if ($text <> '') {
             $animals = MasterAnimal::find()
                 ->where(['is_searchable' => 1, 'status' => 1])
                 ->andFilterWhere(['like', 'name', $text])
                 ->all();
-            // echo '<input type="text" class="animal_search" >';
-            echo '<div class="dropdown-item" data-value="">Any / All</div>';
+            $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
+            $animallist .= "<option value=''></option>";
             foreach ($animals as $animal) {
-                echo "<div class='dropdown-item' data-value='$animal->id'>$animal->name </div>";
+                $fordorp_item .= "<div class='dropdown-item' data-value='$animal->id'>$animal->name </div>";
+                $animallist .= "<option value='" . $animal->id . "'>" . $animal->name . "</option>";
             }
         } else {
             $animalfilteroption = GeneralModel::animalfilteroption();
-            // echo '<input type="text" class="animal_search" >';
-            echo '<div class="dropdown-item" data-value="">Any / All</div>';
+            $fordorp_item .= '<div class="dropdown-item" data-value="">Any / All</div>';
+            $animallist .= "<option value=''></option>";
             foreach ($animalfilteroption as $value => $label) {
-                echo "<div class='dropdown-item' data-value='$value'>$label </div>";
+                $fordorp_item .= "<div class='dropdown-item' data-value='$value'>$label </div>";
+                $animallist .= "<option value='" . $value . "'>" . $label . "</option>";
             }
+        }
+
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return ['fordorp_item' => $fordorp_item, 'animallist' => $animallist];
+    }
+
+
+    //School city depend on School State
+    public function actionCitylist($state_id)
+    {
+        $countCity = MasterCity::find()
+            ->where(['state_id' => $state_id, 'status' => 1])
+            ->count();
+
+        $Cities = MasterCity::find()
+            ->where(['state_id' => $state_id,])
+            ->all();
+
+        if ($countCity > 0) {
+            echo "<option value=''>Select City</option>";
+            foreach ($Cities as $city) {
+                echo "<option value='" . $city->id . "'>" . $city->name . "</option>";
+            }
+        } else {
+            echo "<option value=''>Select City</option>";
         }
     }
 }

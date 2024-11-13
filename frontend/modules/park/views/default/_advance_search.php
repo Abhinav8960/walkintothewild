@@ -100,11 +100,15 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
-                        <?php foreach ($animalfilteroption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
+                        <input type="text" class="animal_search" placeholder="Type Animal Name to find">
+                        <div id="master_animal_dropdown">
+                            <div class="dropdown-item" data-value="">Any / All</div>
+                            <?php foreach ($animalfilteroption as $value => $label) : ?>
+                                <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
+
                     <?= $form->field($model, 'master_animal_id')->dropDownList(
                         $animalfilteroption,
                         [
@@ -172,7 +176,7 @@ $vehicleoption = GeneralModel::vehicleoption();
                 </div>
             </div>
             <div class="select_boxes d-flex gap-2 align-items-center">
-                <h6 class="fs-5"> <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Park' ?></h6>/    <h6 class="fs-5"><?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'or Location' ?></h6>
+                <h6 class="fs-5"> <?= isset($parkoption[$model->safari_park_id]) ? $parkoption[$model->safari_park_id] : 'Park' ?></h6>/ <h6 class="fs-5"><?= isset($locationoption[$model->master_location_id]) ? $locationoption[$model->master_location_id] : 'or Location' ?></h6>
             </div>
             <!-- <i class="fa-solid fa-chevron-right px-2"></i>
             <div class="select_boxes">
@@ -268,6 +272,15 @@ $('#search_submit_btn').click(function(){
         dataType:'html'
     });
 });
+
+    $('.animal_search').on('keyup', function(){
+        setTimeout(() => {
+            $.get("/site/getanimal?text="+$(this).val(), function( data ) {
+                $("#master_animal_dropdown").html( data.fordorp_item );
+                $( "select#safariparksearch-master_animal_id" ).html( data.animallist );
+            });
+        }, 500);
+    }); 
 
 JS;
 $this->registerJs($script);
