@@ -11,17 +11,19 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use frontend\models\AuthTemp;
 use frontend\models\LoginForm;
-use frontend\models\GmailLoginForm;
 use yii\filters\AccessControl;
+use common\models\GeneralModel;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\RenderedContent;
+use frontend\models\GmailLoginForm;
 use yii\authclient\ClientInterface;
 use frontend\components\AuthHandler;
 use frontend\models\VerifyEmailForm;
 use yii\web\BadRequestHttpException;
 use frontend\models\ResetPasswordForm;
 use yii\base\InvalidArgumentException;
+use common\models\master\animal\MasterAnimal;
 use common\models\trierror\form\ErrorLogForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResendVerificationEmailForm;
@@ -558,5 +560,31 @@ class SiteController extends FrontendBaseController
         return $this->render('verify_login_form', [
             'model' => $model,
         ]);
+    }
+
+
+    /**
+     * Get Animal List
+     */
+    public function actionGetanimal($text = '')
+    {
+        if ($text <> '') {
+            $animals = MasterAnimal::find()
+                ->where(['is_searchable' => 1, 'status' => 1])
+                ->andFilterWhere(['like', 'name', $text])
+                ->all();
+            // echo '<input type="text" class="animal_search" >';
+            echo '<div class="dropdown-item" data-value="">Any / All</div>';
+            foreach ($animals as $animal) {
+                echo "<div class='dropdown-item' data-value='$animal->id'>$animal->name </div>";
+            }
+        } else {
+            $animalfilteroption = GeneralModel::animalfilteroption();
+            // echo '<input type="text" class="animal_search" >';
+            echo '<div class="dropdown-item" data-value="">Any / All</div>';
+            foreach ($animalfilteroption as $value => $label) {
+                echo "<div class='dropdown-item' data-value='$value'>$label </div>";
+            }
+        }
     }
 }

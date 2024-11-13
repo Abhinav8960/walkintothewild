@@ -96,10 +96,13 @@ $vehicleoption = GeneralModel::vehicleoption();
                         <?= isset($animalfilteroption[$model->master_animal_id]) ? $animalfilteroption[$model->master_animal_id] : 'Select Animal' ?>
                     </div>
                     <div class="dropdown custom_dropdown">
-                        <div class="dropdown-item" data-value="">Any / All</div>
-                        <?php foreach ($animalfilteroption as $value => $label) : ?>
-                            <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
-                        <?php endforeach; ?>
+                        <input type="text" class="animal_search" placeholder="Type Animal Name to find">
+                        <div id="master_animal_dropdown">
+                            <div class="dropdown-item" data-value="">Any / All</div>
+                            <?php foreach ($animalfilteroption as $value => $label) : ?>
+                                <div class="dropdown-item" data-value="<?= $value ?>"><?= $label ?></div>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                     <?= $form->field($model, 'master_animal_id')->dropDownList(
                         $animalfilteroption,
@@ -229,6 +232,14 @@ $('#search_submit_btn').click(function(){
     });
 });
 
+ $('.animal_search').on('keyup', function(){
+    console.log('ssj');
+        setTimeout(() => {
+            $.get("/site/getanimal?text="+$(this).val(), function( data ) {
+                $("#master_animal_dropdown").html( data );
+            });
+        }, 500);
+    }); 
 JS;
 $this->registerJs($script);
 ?>

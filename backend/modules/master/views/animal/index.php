@@ -36,7 +36,15 @@ $this->params['buttons'][] = Html::a('+ Create', ['create'], ['class' => 'btn bt
                         'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
                         'format' => 'raw',
                         'value' => function ($model) {
-                            return isset($model->is_filter) ? GeneralModel::yesnooption()[$model->is_filter] : '';
+                            return isset(GeneralModel::yesnooption()[$model->is_filter]) ? GeneralModel::yesnooption()[$model->is_filter] : '';
+                        }
+                    ],
+                    [
+                        'label' => 'Is Searchable',
+                        'contentOptions' => ['style' => 'width: 10%; text-align: center;'],
+                        'format' => 'raw',
+                        'value' => function ($model) {
+                            return isset(GeneralModel::yesnooption()[$model->is_searchable]) ? GeneralModel::yesnooption()[$model->is_searchable] : '';
                         }
                     ],
                     'created_at:dateTime:Created at',

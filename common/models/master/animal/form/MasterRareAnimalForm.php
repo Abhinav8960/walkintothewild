@@ -45,6 +45,7 @@ class MasterRareAnimalForm extends model
             $this->name = $this->rare_animal_model->name;
             $this->short_description = $this->rare_animal_model->short_description;
             $this->status = $this->rare_animal_model->status;
+            $this->is_searchable = $this->rare_animal_model->is_searchable;
 
             $this->assigned_park = SafariParkAnimal::find()->select('safari_park_id')->where(['master_animal_id' => $this->rare_animal_model->id, 'status' => 1])->column();
         }
@@ -64,7 +65,8 @@ class MasterRareAnimalForm extends model
             'banner',
             'status',
             'know_as',
-            'assigned_park'
+            'assigned_park',
+            'is_searchable',
         ];
         $scenarios['update'] = [
             'name',
@@ -73,7 +75,8 @@ class MasterRareAnimalForm extends model
             'know_as',
             'feature_image',
             'banner',
-            'assigned_park'
+            'assigned_park',
+            'is_searchable',
         ];
         return $scenarios;
     }
@@ -82,7 +85,7 @@ class MasterRareAnimalForm extends model
     {
         return [
             [['name', 'short_description'], 'required'],
-            [['status'], 'integer'],
+            [['status', 'is_searchable'], 'integer'],
             ['assigned_park', 'safe'],
             [['name'], 'string', 'max' => 125],
             [['name', 'know_as'], 'string', 'max' => 125],
@@ -136,6 +139,7 @@ class MasterRareAnimalForm extends model
             'short_description' => 'Short Description',
             'status' => 'Status',
             'assigned_park' => 'Assigned Park',
+            'is_searchable' => 'Searchable'
         ];
     }
     /**
@@ -150,6 +154,7 @@ class MasterRareAnimalForm extends model
         $this->rare_animal_model->name = $this->name;
         $this->rare_animal_model->short_description = $this->short_description;
         $this->rare_animal_model->status = $this->status;
+        $this->rare_animal_model->is_searchable = $this->is_searchable;
     }
 
 

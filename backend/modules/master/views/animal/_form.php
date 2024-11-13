@@ -24,6 +24,10 @@ use yii\bootstrap5\ActiveForm;
         <?= $form->field($model, 'is_filter_sequence')->textInput(['maxlength' => true, 'placeholder' => 'Filter Sequence']) ?>
     </div>
 
+    <div class="col-md-3">
+        <?= $form->field($model, 'is_searchable')->dropDownList(GeneralModel::yesnooption(), ['prompt' => 'Select']) ?>
+    </div>
+
     <?php if ($model->animal_model->id) { ?>
         <div class="col-md-6">
             <?= $form->field($model, 'status')->dropDownList($model->status_option, ['prompt' => 'Select Status']) ?>
