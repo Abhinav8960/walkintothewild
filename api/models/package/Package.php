@@ -62,6 +62,7 @@ class Package extends \common\models\package\Package
             $fields[] = 'imagepath';
             $fields[] = 'imagebannerpath';
             $fields[] = 'packagename';
+            $fields[] = 'packagepark';
             $fields[] = 'packagedaynightlabels';
             $hold_fields = [
                 'package_agenda_id',
