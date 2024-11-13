@@ -123,6 +123,7 @@ return [
                 'package/<slug>/<action>' => 'package/default/<action>',
 
                 'operator/<slug>' => 'operator/default/view',
+                'operator/<slug>/<action>' => 'operator/default/<action>',
             ],
 
         ],
