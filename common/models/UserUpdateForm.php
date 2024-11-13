@@ -83,7 +83,7 @@ class UserUpdateForm extends Model
     public function rules()
     {
         return [
-            [['role_id'], 'required'],
+            [['role_id'], 'safe'],
             ['username', 'filter', 'filter' => 'trim'],
             ['username', 'email'],
             ['username', 'required'],
