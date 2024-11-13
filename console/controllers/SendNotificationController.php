@@ -20,15 +20,14 @@ class SendNotificationController extends Controller
      *
      * @return void
      */
+
     public function actionIndex()
     {
-        
-            if ($this->sendnotification()) {
-                echo 'Notification Send Done';
-            } else {
-                echo "No Notification to send";
-            }
-        
+        if ($this->sendNotification()) {
+            echo date('Y-m-d H:i:s') . ' - Notification Sent Successfully' . PHP_EOL;
+        } else {
+            echo "No notification to send" . PHP_EOL;
+        }
     }
 
     /**
@@ -59,9 +58,9 @@ class SendNotificationController extends Controller
                         ],
                     ];
 
-                    if (!empty($log->sent_data)) {
-                        $message['data'] = json_decode($log->sent_data, true);
-                    }
+                    // if (!empty($log->sent_data)) {
+                    //     $message['data'] = json_decode($log->sent_data, true);
+                    // }
                     try {
                         $accessToken = $firebaseMessaging->getAccessToken();
                         $response = $firebaseMessaging->sendMessage($accessToken, $message);
