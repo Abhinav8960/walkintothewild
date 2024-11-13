@@ -2,6 +2,8 @@
 
 namespace api\models\operator;
 
+use api\models\package\Package as PackagePackage;
+use api\models\UserFollow;
 use Yii;
 use common\models\package\Package;
 use common\traits\CommanRelationship;
@@ -60,9 +62,23 @@ class SafariOperator extends \common\models\operator\SafariOperator
 
     public function fields()
     {
+
         $fields = parent::fields();
-        $fields[] = 'imagepath';
-        $hold_fields = ['logo','status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        if (!in_array(\Yii::$app->controller->action->uniqueId, ['operator/default/view'])) {
+            $fields[] = 'imagepath';
+            $hold_fields = ['logo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        } else {
+            $fields[] = 'imagepath';
+            $fields[] = 'parkcount';
+            $fields[] = 'packagecount';
+            $fields[] = 'sharedsafaricount';
+            $fields[] = 'sharedsafari';
+            $fields[] = 'packages';
+            // $fields[] = 'followerlist';
+            $fields[] = 'followerlistcount';
+            $hold_fields = ['logo', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'];
+        }
+
         return array_diff($fields, $hold_fields);
         return $fields;
     }
@@ -92,10 +108,37 @@ class SafariOperator extends \common\models\operator\SafariOperator
         ])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
     }
 
+    public function getSharedsafari()
+    {
+        return $this->hasMany(ShareSafari::className(), ['host_user_id' => 'id'])->andWhere(['type' => ShareSafari::TYPE_FIXED_DEPARTURE, 'status' => ShareSafari::STATUS_ACTIVE])->andWhere(['>=', 'start_date', date("Y-m-d")]);
+    }
+
+    public function getPackages()
+    {
+        return $this->hasMany(Package::className(), ['owned_by_id' => 'id'])->andWhere(['status' => Package::STATUS_ACTIVE]);
+    }
+
+    public function getsafaricount()
+    {
+        return ShareSafari::find()->where([
+            'status' => ShareSafari::STATUS_ACTIVE,
+            'host_user_id' => $this->user_id,
+            'type' => ShareSafari::TYPE_SAFARI
+        ])->andWhere(['>=', 'start_date', date("Y-m-d")])->count();
+    }
+
+
     public function getFollowerlist()
     {
-        return $this->hasMany(SafariOperatorFollow::className(), ['safari_operator_id' => 'id']);
+        return $this->hasMany(UserFollow::className(), ['follow_user_id' => 'user_id'])->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1]);
     }
+
+    public function getFollowerlistcount()
+    {
+        return $this->hasMany(UserFollow::className(), ['follow_user_id' => 'user_id'])->joinWith('user')->where(['user.status' => User::STATUS_ACTIVE, 'user_follower.status' => 1])->count();
+    }
+
+
 
     public function getImagepath()
     {
